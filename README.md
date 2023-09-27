@@ -11,7 +11,7 @@ The documentation project is built with technologies we use in our projects:
 
 ## Roadmap
 
-See the [open issues](#) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/it-at-m/Praktikumsplaner/issues) for a full list of proposed features (and known issues).
 
 ## Set up
 
