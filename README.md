@@ -1,6 +1,6 @@
 # Praktikumsplaner
 
-__Praktikumsplaner__ is an application designed for the management and allocation of internship positions to junior staff.
+__Praktikumsplaner__ is an application designed for the management and allocation of traineeship positions to junior staff.
 
 ### Built with
 
