@@ -35,7 +35,7 @@ More about this in the [CODE_OF_CONDUCT](/CODE_OF_CONDUCT.md) file.
 
 ## License
 
-tbd.
+Distributed under the MIT License. See [LICENSE](LICENSE) file for more information.
 
 ## Contact
 
