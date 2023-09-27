@@ -4,14 +4,20 @@ __Praktikumsplaner__ is an application designed for the management and allocatio
 
 ### Built with
 
+The documentation project is built with technologies we use in our projects:
+
 * [Spring Boot](https://spring.io/projects/spring-boot)
 * [Vue.js](https://vuejs.org/)
+
+## Roadmap
+
+See the [open issues](#) for a full list of proposed features (and known issues).
 
 ## Set up
 
 tbd.
 
-## Releases 
+## Documentation
 
 tbd.
 
@@ -39,4 +45,4 @@ Distributed under the MIT License. See [LICENSE](LICENSE) file for more informat
 
 ## Contact
 
-tbd. 
+it@M - opensource@muenchen.de
