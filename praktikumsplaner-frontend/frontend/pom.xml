@@ -8,8 +8,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>praktikumsplaner_frontend_frontend</name>
-
-
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
@@ -28,9 +26,7 @@
             </activation>
 
             <build>
-
                 <plugins>
-
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
@@ -95,7 +91,6 @@
                             </filesets>
                         </configuration>
                     </plugin>
-
                 </plugins>
 
                 <resources>
@@ -104,9 +99,7 @@
                         <targetPath>static</targetPath>
                     </resource>
                 </resources>
-
             </build>
-
         </profile>
 
         <profile>
