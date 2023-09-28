@@ -21,13 +21,6 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-scm-plugin</artifactId>
-                <version>1.10.0</version>
-                <configuration>
-                    <tag>RT-REL-${project.version}</tag>
-                </configuration>
-            </plugin>
-            <plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>${sonar.scanner.version}</version>
