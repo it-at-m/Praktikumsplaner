@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
 
-    <groupId>de.muenchen.oss.praktikumsplaner.apigateway</groupId>
+    <groupId>de.muenchen.oss.praktikumsplaner</groupId>
     <artifactId>praktikumsplaner-frontend-apigateway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -150,7 +150,7 @@
 
         <!-- Frontend Lib -->
         <dependency>
-            <groupId>de.muenchen.oss.praktikumsplaner.frontend</groupId>
+            <groupId>de.muenchen.oss.praktikumsplaner</groupId>
             <artifactId>praktikumsplaner-frontend-frontend</artifactId>
             <version>${project.version}</version>
             <scope>runtime</scope>
