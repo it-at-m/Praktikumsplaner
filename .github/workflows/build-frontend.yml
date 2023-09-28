@@ -19,4 +19,4 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots --no-transfer-progress -f praktikumsplaner-backend/pom.xml verify
+        run: mvn --batch-mode --update-snapshots --no-transfer-progress -f praktikumsplaner-frontend/pom.xml verify
