@@ -13,18 +13,18 @@
 
 
     <properties>
-       		<!-- SonarQube -->
-		<sonar.scanner.version>3.9.0.2155</sonar.scanner.version>
+            <!-- SonarQube -->
+        <sonar.scanner.version>3.9.0.2155</sonar.scanner.version>
     </properties>
 
 
     <build>
         <plugins>
             <plugin>
-				<groupId>org.sonarsource.scanner.maven</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>${sonar.scanner.version}</version>
-			</plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar.scanner.version}</version>
+            </plugin>
         </plugins>
     </build>
 
