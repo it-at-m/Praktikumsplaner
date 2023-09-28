@@ -1,12 +1,6 @@
 name: build backend-image
 
-on:
-  workflow_dispatch:
-  push:
-    branches: 
-      - dev
-    paths:
-      - 'praktikumsplaner-backend/**'
+on: [workflow_dispatch]
 
 jobs:
   build-and-docker-push:
