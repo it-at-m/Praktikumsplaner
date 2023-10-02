@@ -7,8 +7,9 @@ services:
       - "8080:8082"
     profiles:
       - frontend
-    environment:
-      SPRING_PROFILES_ACTIVE: "local,no-security"
+    pull_policy: always
+    env_file:
+      - local-docker-frontend.env
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
@@ -18,8 +19,9 @@ services:
     image: itatm/praktikumsplaner-backend:latest
     ports:
       - "39146:39146"
-    environment:
-      SPRING_PROFILES_ACTIVE: "local,no-security"
+    pull_policy: always
+    env_file:
+      - local-docker-backend.env
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
