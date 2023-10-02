@@ -1,0 +1,30 @@
+name: local-latest
+services:
+  pp-frontend:
+    container_name: pp-frontend-latest
+    image: itatm/praktikumsplaner-frontend:latest
+    ports:
+      - "8080:8082"
+    profiles:
+      - frontend
+    environment:
+      SPRING_PROFILES_ACTIVE: "local,no-security"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - internal
+  pp-backend:
+    container_name: pp-backend-latest
+    image: itatm/praktikumsplaner-backend:latest
+    ports:
+      - "39146:39146"
+    environment:
+      SPRING_PROFILES_ACTIVE: "local,no-security"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - internal
+
+
+networks:
+  internal:
