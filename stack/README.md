@@ -14,3 +14,5 @@ docker compose up -d
 # Includes the frontend service on startup
 docker compose --profile frontend up -d
 ```
+
+additional configuration for the services is done via `*.env`-Files
