@@ -1,6 +1,6 @@
 ---
-name: Default issue
-about: Describe a general issue to be included in the project.
+name: User story
+about: Describe a user story to be included in the project.
 title: ''
 labels: ''
 assignees: ''
