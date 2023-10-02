@@ -1,6 +1,6 @@
 ---
 name: Default issue
-about: Describe a general issue to be included in the project.7
+about: Describe a general issue to be included in the project.
 title: ''
 labels: ''
 assignees: ''
