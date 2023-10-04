@@ -2,6 +2,9 @@ name: build frontend
 
 on:
   push:
+    branches-ignore:
+      - 'dev'
+      - 'main'
     paths:
       - 'praktikumsplaner-frontend/**'
   pull_request:
