@@ -2,8 +2,9 @@ name: build frontend-image
 
 on:
   push:
-    branches: 
+    branches:
       - 'dev'
+      - 'main'
     paths:
       - 'praktikumsplaner-frontend/**'
 
