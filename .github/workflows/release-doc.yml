@@ -3,6 +3,9 @@ name: Release Docs
 on:
   workflow_call:
   workflow_dispatch:
+  push:
+    branches:
+      - dev
 
 jobs:
   release-docs:
