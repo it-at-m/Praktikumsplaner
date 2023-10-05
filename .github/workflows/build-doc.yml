@@ -1,0 +1,27 @@
+name: build docs
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'doc/**'
+  pull_request:
+    types: [ opened, reopened ]
+    paths:
+      - 'doc/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./doc
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - run: npm install
+      - run: npm run build
