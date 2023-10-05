@@ -3,8 +3,11 @@ import { API_BASE } from "@/Constants";
 import { EXCEL_BASE } from "@/Constants";
 
 export default {
-    uploadExcelFile(file: File): Promise<void> {
-        return fetch(`${API_BASE}${EXCEL_BASE}`, FetchUtils.getPOSTConfig(file))
+    uploadExcelFile(string: string): Promise<void> {
+        return fetch(
+            `${API_BASE}/api/aa-a-backend-service${EXCEL_BASE}`,
+            FetchUtils.getPOSTConfig(string)
+        )
             .then((response) => {
                 FetchUtils.defaultResponseHandler(response);
             })

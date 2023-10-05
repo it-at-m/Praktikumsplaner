@@ -55,7 +55,16 @@ function cancel() {
 
 function uploadFile() {
     if (!excelDatei.value) return;
-    ExcelService.uploadExcelFile(excelDatei.value);
+
+    // File Reader encodes as Base64
+    const reader = new FileReader();
+    reader.readAsDataURL(excelDatei.value);
+    reader.onloadend = () => {
+        if (typeof reader.result == "string") {
+            // Base64 String starts after the comma
+            ExcelService.uploadExcelFile(reader.result.split(",")[1]);
+        }
+    };
 }
 </script>
 
