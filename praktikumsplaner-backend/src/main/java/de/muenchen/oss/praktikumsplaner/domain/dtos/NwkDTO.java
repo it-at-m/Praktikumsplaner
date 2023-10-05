@@ -25,7 +25,7 @@ public class NwkDTO {
     public String nachname;
 
     @NotNull(message = "Der Studiengang ist erforderlich")
-    @Pattern(regexp = "BWI|BSc|VI|FISI")
+    @Pattern(regexp = "BWI|BSC|VI|FISI")
     public String studiengang;
 
     @NotNull(message = "Der Jahrgang ist erforderlich")
