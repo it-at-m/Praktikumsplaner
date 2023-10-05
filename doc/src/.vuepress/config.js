@@ -4,7 +4,7 @@ const title = "Praktikumsplaner";
 const title_de = title;
 
 module.exports = {
-  base: "/",
+  base: "/Praktikumsplaner/",
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
