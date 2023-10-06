@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Set;
-import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -22,7 +21,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 public class ExcelService {
 
     public List<NwkDTO> excelToNwkDTOList(String fileString) throws IOException {
@@ -45,12 +43,12 @@ public class ExcelService {
             for (Cell cell : row) {
                 String cellValue = dataFormatter.formatCellValue(cell);
                 switch (cell.getColumnIndex()) {
-                    case 0 -> nwkDTO.setNachname(cellValue);
-                    case 1 -> nwkDTO.setVorname(cellValue);
-                    case 2 -> nwkDTO.setStudiengang(cellValue);
-                    case 3 -> nwkDTO.setJahrgang(cellValue);
-                    default -> {
-                    }
+                case 0 -> nwkDTO.setNachname(cellValue);
+                case 1 -> nwkDTO.setVorname(cellValue);
+                case 2 -> nwkDTO.setStudiengang(cellValue);
+                case 3 -> nwkDTO.setJahrgang(cellValue);
+                default -> {
+                }
                 }
             }
             if (isEmpty(nwkDTO)) {
