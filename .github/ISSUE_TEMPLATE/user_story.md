@@ -21,3 +21,12 @@ Als [Rolle] möchte ich [Funktionalität], damit ich [Grund].
 - [ ] Die User Story ist klar und verständlich aus der Perspektive der betroffenen Persona formuliert.
 - [ ] Vollständige und klare Akzeptanzkriterien sind definiert.
 - [ ] Die Aufwandsschätzung für das Issue wurde durchgeführt und dokumentiert.
+
+---
+**Definition of Done (DoD):**
+
+- [ ] Unittest gepflegt
+- [ ] Dokumentation ist gepflegt
+- [ ] Usability Test wurden durchgeführt
+- [ ] Auf Testumgebung verfügbar
+- [ ] Akzeptanzkriterien sind alle erfüllt
