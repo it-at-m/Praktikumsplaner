@@ -6,7 +6,7 @@ export default {
     uploadExcelFile(string: string): Promise<void> {
         return fetch(
             `${API_BASE}/api/aa-a-backend-service${EXCEL_BASE}`,
-            FetchUtils.getPOSTConfig(string)
+            FetchUtils.getPOSTConfigString(string)
         )
             .then((response) => {
                 FetchUtils.defaultResponseHandler(response);

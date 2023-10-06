@@ -30,6 +30,22 @@ export default class FetchUtils {
     }
 
     /**
+     * Liefert eine default POST-Config für fetch die nur Strings akzeptiert
+     * @param body Optional zu übertragender Body
+     */
+    // eslint-disable-next-line
+    static getPOSTConfigString(body: string): RequestInit {
+        return {
+            method: "POST",
+            body: body ? body : undefined,
+            headers: FetchUtils.getHeaders(),
+            mode: "cors",
+            credentials: "same-origin",
+            redirect: "manual",
+        };
+    }
+
+    /**
      * Liefert eine default PUT-Config für fetch
      * In dieser wird, wenn vorhanden, die Version der zu aktualisierenden Entität
      * als "If-Match"-Header mitgesetzt.
