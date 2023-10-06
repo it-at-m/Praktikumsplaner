@@ -3,6 +3,8 @@ services:
   pp-frontend:
     container_name: pp-frontend-latest
     image: itatm/praktikumsplaner-frontend:latest
+    depends_on:
+      - keycloak
     ports:
       - "8080:8082"
     profiles:
@@ -12,8 +14,10 @@ services:
       - local-docker-frontend.env
     extra_hosts:
       - "host.docker.internal:host-gateway"
+      - "kubernetes.docker.internal:host-gateway"
     networks:
       - internal
+      - local-keycloak
   pp-backend:
     container_name: pp-backend-latest
     image: itatm/praktikumsplaner-backend:latest
@@ -24,9 +28,56 @@ services:
       - local-docker-backend.env
     extra_hosts:
       - "host.docker.internal:host-gateway"
+      - "kubernetes.docker.internal:host-gateway"
     networks:
       - internal
+      - local-keycloak
 
+  # Keycloak (SSO)
+  keycloak:
+    image: quay.io/keycloak/keycloak:20.0.3
+    container_name: pp-keycloak
+    command:
+      - start-dev --http-relative-path /auth
+    depends_on:
+      - postgres-keycloak
+    ports:
+      - 8100:8080
+    env_file:
+      - local-keycloak.env
+    networks:
+      - local-keycloak
+
+  init-keycloak:
+    image: klg71/keycloakmigration
+    depends_on:
+      - keycloak
+    env_file:
+      - local-docker-keycloak.env
+    environment:
+      ADMIN_USER: admin
+      ADMIN_PASSWORD: change_me
+      BASEURL: http://pp-keycloak:8080/auth # uses internal docker network to access the keycloak via its back channel port
+      WAIT_FOR_KEYCLOAK: 'true'
+      KEYCLOAK_CHANGELOG: /migration/keycloak-changelog.yml
+    volumes:
+      - './keycloak/migration:/migration'
+    networks:
+      - local-keycloak
+
+
+  postgres-keycloak:
+    image: postgres:13.2
+    container_name: pp-postgres-keycloak
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak-user
+      POSTGRES_PASSWORD: keycloak-secret
+    networks:
+      - local-keycloak
+      - dbs
 
 networks:
   internal:
+  local-keycloak:
+  dbs:
