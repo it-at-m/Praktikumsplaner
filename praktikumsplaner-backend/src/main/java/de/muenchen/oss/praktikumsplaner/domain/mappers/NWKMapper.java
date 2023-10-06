@@ -7,4 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface NWKMapper {
     NWK toEntity(NwkDTO nwkDTO);
+
+    NwkDTO toDTO(NWK nwk);
 }
