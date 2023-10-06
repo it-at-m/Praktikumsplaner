@@ -3,25 +3,27 @@ package de.muenchen.oss.praktikumsplaner.domain.dtos;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
+@AllArgsConstructor
 @NoArgsConstructor
 public class NwkDTO {
+    private UUID id;
 
     @NotNull(message = "Der Vorname ist erforderlich")
-    // TO-DO: Maximales Char Limit noch nicht festgelegt
-    @Size(max = 255, message = "Der Vorname darf nur {max} Zeichen lang sein")
+    // TO-DO: Maximales Char Limit vorübergehend auf 255 limitiert
+    @Size(min = 2, max = 255, message = "Der Vorname darf nur {max} Zeichen lang sein")
     public String vorname;
 
     @NotNull(message = "Der Nachname ist erforderlich")
-    // TO-DO: Maximales Char Limit noch nicht festgelegt
-    @Size(max = 255, message = "Der Nachname darf nur {max} Zeichen lang sein")
+    // TO-DO: Maximales Char Limit vorübergehend auf 255 limitiert
+    @Size(min = 2, max = 255, message = "Der Nachname darf nur {max} Zeichen lang sein")
     public String nachname;
 
     @NotNull(message = "Der Studiengang ist erforderlich")
