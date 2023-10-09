@@ -3,12 +3,12 @@ package de.muenchen.oss.praktikumsplaner.service;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
+import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ExcelService {
         return getAllNwkFromSheet(sheet);
     }
 
-    private List<NwkDTO> getAllNwkFromSheet(XSSFSheet sheet) throws InvalidObjectException {
+    private List<NwkDTO> getAllNwkFromSheet(XSSFSheet sheet) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         List<NwkDTO> nwkDTOList = new ArrayList<>();
@@ -59,7 +59,7 @@ public class ExcelService {
             if (violations.isEmpty()) {
                 nwkDTOList.add(nwkDTO);
             } else {
-                throw new InvalidObjectException("Ein NWK Datensatz ist Fehlerhaft. Hochladen wurde abgebrochen.");
+                throw new ValidationException("Ein NWK Datensatz ist Fehlerhaft. Hochladen wurde abgebrochen.");
             }
         }
         return nwkDTOList;
