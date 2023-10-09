@@ -25,8 +25,6 @@ Als [Rolle] möchte ich [Funktionalität], damit ich [Grund].
 ---
 **Definition of Done (DoD):**
 
-- [ ] Unittest gepflegt
-- [ ] Dokumentation ist gepflegt
 - [ ] Usability Test wurden durchgeführt
 - [ ] Auf Testumgebung verfügbar
 - [ ] Akzeptanzkriterien sind alle erfüllt
