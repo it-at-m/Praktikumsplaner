@@ -34,11 +34,7 @@ public class NwkDTO {
     @Pattern(regexp = "\\d\\d/\\d\\d")
     public String jahrgang;
 
-    /*
-     * // Teil der Vorlage, aber nicht in den Anforderungen beschrieben
-     *
-     * @Pattern(regexp = "^(Mo|Di|Mi|Do|Fr|Sa)( \\+ (Mo|Di|Mi|Do|Fr|Sa)){1,5}")
-     * // Matched Tag + Tag + ... bis maximal 6 Tage dastehen
-     * public String vorlesungstage;
-     */
+    // Matched Tag + Tag + ... bis maximal 6 Tage dastehen
+    @Pattern(regexp = "(Mo|Di|Mi|Do|Fr|Sa)( \\+ (Mo|Di|Mi|Do|Fr|Sa)){0,5}")
+    public String vorlesungstage;
 }
