@@ -19,8 +19,9 @@ public class NWKMapperTest {
         final String vorname = "max";
         final String studiengang = "BSC";
         final String jahrgang = "22/26";
+        final String vorlesungstage = "Mo + Di";
 
-        NWK nwk = new NWK(nachname, vorname, studiengang, jahrgang);
+        NWK nwk = new NWK(nachname, vorname, studiengang, jahrgang, vorlesungstage);
         NwkDTO nwkDTO = mapper.toDTO(nwk);
 
         assertEquals(nwk.getNachname(), nwkDTO.getNachname());
@@ -37,9 +38,10 @@ public class NWKMapperTest {
         final String vorname = "max";
         final String studiengang = "BSC";
         final String jahrgang = "22/26";
+        final String vorlesungstage = "Mo + Di";
         final UUID id = UUID.randomUUID();
 
-        NwkDTO nwkDTO = new NwkDTO(id, nachname, vorname, studiengang, jahrgang);
+        NwkDTO nwkDTO = new NwkDTO(id, nachname, vorname, studiengang, jahrgang, vorlesungstage);
 
         NWK nwk = mapper.toEntity(nwkDTO);
 

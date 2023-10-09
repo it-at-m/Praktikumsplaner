@@ -39,8 +39,9 @@ public class ExcelServiceTest {
         final String vorname = "Max";
         final String studiengang = "BSC";
         final String jahrgang = "21/24";
+        final String vorlesungstage = "Mo + Di";
 
-        NwkDTO max = new NwkDTO(null, vorname, nachname, studiengang, jahrgang);
+        NwkDTO max = new NwkDTO(null, vorname, nachname, studiengang, jahrgang, vorlesungstage);
         List<NwkDTO> maxList = new ArrayList<>();
         maxList.add(max);
 

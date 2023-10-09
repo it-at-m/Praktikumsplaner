@@ -47,6 +47,7 @@ public class ExcelService {
                 case 1 -> nwkDTO.setVorname(cellValue);
                 case 2 -> nwkDTO.setStudiengang(cellValue);
                 case 3 -> nwkDTO.setJahrgang(cellValue);
+                case 4 -> nwkDTO.setVorlesungstage(cellValue);
                 default -> {
                 }
                 }
