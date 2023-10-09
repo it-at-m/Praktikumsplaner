@@ -34,6 +34,8 @@ changes:
         usermodel.clientRoleMapping.clientId: ${SSO_CLIENT_ID}
         usermodel.clientRoleMapping.rolePrefix: "ROLE_"
 
+  # !!! very import must have. Without that default scope u dont have access to userinfo-endpoint
+  # which means the frontend ist unuseable
   - assignDefaultClientScope:
       clientId: ${SSO_CLIENT_ID}
       clientScopeName: openid
