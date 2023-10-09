@@ -54,6 +54,10 @@ from Frontend noch nicht vollständig eingerichtet ist. Die Einrichtung vom Keyc
 Sobald alle Services, ausgenommen vom `init-*` gestartet sind kann auf die Anwendung via http://localhost:8080
 zugegriffen werden. Zur Authentifizierung den Benutzer `testuser` mit dem Passwort `test` verwenden.
 
+**⚠ Proxyhinweis**
+
+Wenn im Browser ein Proxy eingerichtet ist bitte darauf achten dass dieser nicht `kubernetes.docker.internal` auflöst.
+
 ### Frontendentwicklung (in Progress)
 
 *TBD*
