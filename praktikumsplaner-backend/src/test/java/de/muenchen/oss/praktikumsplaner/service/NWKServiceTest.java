@@ -34,7 +34,8 @@ public class NWKServiceTest {
         final String vorlesungstage = "Mo + Di";
 
         NWK nwk = new NWK(nachname, vorname, studiengang, jahrgang, vorlesungstage);
-        NwkDTO nwkDTO = new NwkDTO(nwk.getId(), nwk.getNachname(), nwk.getVorname(), nwk.getStudiengang(), nwk.getJahrgang(), nwk.getVorlesungstage());
+        NwkDTO nwkDTO = NwkDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+                .vorlesungstage(vorlesungstage).build();
 
         Mockito.when(mapper.toEntity(nwkDTO)).thenReturn(nwk);
         Mockito.when(mapper.toDTO(nwk)).thenReturn(nwkDTO);
@@ -43,7 +44,7 @@ public class NWKServiceTest {
         NwkDTO result = service.saveNWK(nwkDTO);
 
         assertNotNull(result);
-        assertEquals(result.getNachname(), nwkDTO.getNachname());
+        assertEquals(result.nachname(), nwkDTO.nachname());
 
     }
 
@@ -56,7 +57,8 @@ public class NWKServiceTest {
         final String vorlesungstage = "Mo + Di";
 
         NWK nwk = new NWK(nachname, vorname, studiengang, jahrgang, vorlesungstage);
-        NwkDTO nwkDTO = new NwkDTO(nwk.getId(), nwk.getNachname(), nwk.getVorname(), nwk.getStudiengang(), nwk.getJahrgang(), nwk.getVorlesungstage());
+        NwkDTO nwkDTO = NwkDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+                .vorlesungstage(vorlesungstage).build();
         List<NwkDTO> nwkDTOS = new ArrayList<>();
         nwkDTOS.add(nwkDTO);
 
@@ -67,6 +69,6 @@ public class NWKServiceTest {
         List<NwkDTO> result = service.saveNWK(nwkDTOS);
 
         assertNotNull(result);
-        assertEquals(result.get(0).getNachname(), nwkDTOS.get(0).getNachname());
+        assertEquals(result.get(0).nachname(), nwkDTOS.get(0).nachname());
     }
 }
