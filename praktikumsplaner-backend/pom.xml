@@ -37,6 +37,7 @@
         <org.projectlombok.lombok.version>1.18.26</org.projectlombok.lombok.version>
         <org.projectlombok.mapstructbinding.version>0.2.0</org.projectlombok.mapstructbinding.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+        <org.apache.poi.version>5.2.2</org.apache.poi.version>
     </properties>
 
 
@@ -160,12 +161,12 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>5.2.2</version>
+            <version>${org.apache.poi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.2.2</version>
+            <version>${org.apache.poi.version}</version>
         </dependency>
 
         <!-- Validation -->
