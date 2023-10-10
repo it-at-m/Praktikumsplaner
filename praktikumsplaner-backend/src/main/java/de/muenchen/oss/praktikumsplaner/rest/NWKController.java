@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/excel")
+@RequestMapping(value = "/nachwuchskraft")
 public class NWKController {
     private final NWKService nwkService;
     private final ExcelService excelService;
 
-    @PostMapping("/")
+    @PostMapping("/import")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveNWKExcel(@RequestBody String fileString) throws IOException {
         nwkService.saveNWK(excelService.excelToNwkDTOList(fileString));
