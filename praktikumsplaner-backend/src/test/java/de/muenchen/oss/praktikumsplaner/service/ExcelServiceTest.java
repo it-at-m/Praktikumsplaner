@@ -1,7 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
-import jakarta.validation.ValidationException;
+import jakarta.validation.ConstraintViolationException;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,6 +55,6 @@ public class ExcelServiceTest {
 
     @Test
     public void excelToNwkDTOListTestInvalidData() {
-        assertThrows(ValidationException.class, () -> service.excelToNwkDTOList(base64EncodedExcel2NWKInvalidData));
+        assertThrows(ConstraintViolationException.class, () -> service.excelToNwkDTOList(base64EncodedExcel2NWKInvalidData));
     }
 }
