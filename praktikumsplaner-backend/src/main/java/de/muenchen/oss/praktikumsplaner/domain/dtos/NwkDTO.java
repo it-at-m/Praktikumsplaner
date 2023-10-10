@@ -6,9 +6,6 @@ import jakarta.validation.constraints.Size;
 import java.util.UUID;
 import lombok.Builder;
 
-/**
- * @param vorlesungstage Matched Tag + Tag + ... bis maximal 6 Tage dastehen
- */
 @Builder
 public record NwkDTO(UUID id,
                      @NotNull(message = "Der Vorname ist erforderlich") @Size(min = 2, max = 255, message = "Der Vorname darf nur zwischen {min} und {max} Zeichen lang sein") String vorname,
