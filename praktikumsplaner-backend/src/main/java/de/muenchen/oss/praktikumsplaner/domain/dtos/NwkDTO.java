@@ -18,12 +18,12 @@ public class NwkDTO {
 
     @NotNull(message = "Der Vorname ist erforderlich")
     // TO-DO: Maximales Char Limit vorübergehend auf 255 limitiert
-    @Size(min = 2, max = 255, message = "Der Vorname darf nur {max} Zeichen lang sein")
+    @Size(min = 2, max = 255, message = "Der Vorname darf nur zwischen {min} und {max} Zeichen lang sein")
     public String vorname;
 
     @NotNull(message = "Der Nachname ist erforderlich")
     // TO-DO: Maximales Char Limit vorübergehend auf 255 limitiert
-    @Size(min = 2, max = 255, message = "Der Nachname darf nur {max} Zeichen lang sein")
+    @Size(min = 2, max = 255, message = "Der Nachname darf nur zwischen {min} und {max} Zeichen lang sein")
     public String nachname;
 
     @NotNull(message = "Der Studiengang ist erforderlich")
