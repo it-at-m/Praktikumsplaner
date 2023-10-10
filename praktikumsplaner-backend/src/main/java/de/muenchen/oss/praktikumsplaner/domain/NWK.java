@@ -19,6 +19,9 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+/*
+    * NWK is short for Nachwuchskraft (young talent)
+ */
 public class NWK extends BaseEntity {
 
     @NotNull(message = "Der Vorname ist erforderlich")
