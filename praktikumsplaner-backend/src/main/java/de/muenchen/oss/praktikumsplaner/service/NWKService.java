@@ -2,7 +2,7 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
-import de.muenchen.oss.praktikumsplaner.rest.NWKRepository;
+import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
