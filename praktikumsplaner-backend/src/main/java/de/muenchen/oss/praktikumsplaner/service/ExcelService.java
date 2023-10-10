@@ -59,7 +59,7 @@ public class ExcelService {
                 }
                 }
             }
-            if (isEmpty(nwkDTO)) {
+            if (isNwkTDOEmpty(nwkDTO)) {
                 continue;
             }
             Set<ConstraintViolation<NwkDTO>> violations = validator.validate(nwkDTO);
@@ -72,7 +72,7 @@ public class ExcelService {
         return nwkDTOList;
     }
 
-    private boolean isEmpty(NwkDTO nwkDTO) {
+    protected boolean isNwkTDOEmpty(NwkDTO nwkDTO) {
         return nwkDTO.getVorname().isEmpty() && nwkDTO.getNachname().isEmpty()
                 && nwkDTO.getStudiengang().isEmpty() && nwkDTO.getJahrgang().isEmpty();
     }
