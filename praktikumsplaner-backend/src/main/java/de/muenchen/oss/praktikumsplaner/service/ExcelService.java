@@ -2,8 +2,8 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
-import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import java.io.ByteArrayInputStream;
@@ -22,32 +22,39 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ExcelService {
+    private static final int ZERO = 0;
 
-    public List<NwkDTO> excelToNwkDTOList(String fileString) throws IOException {
-        InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(fileString));
-        XSSFWorkbook workbook = new XSSFWorkbook(stream);
-        XSSFSheet sheet = workbook.getSheetAt(0);
+    private static final int NACHNAME_COLUM = 0;
+    private static final int VORNAME_COLUM = 1;
+    private static final int STUDIENGANG_COLUM = 2;
+    private static final int JAHRGANG_COLUM = 3;
+    private static final int VORLESUNGSTAGE_COLUM = 4;
+
+    public List<NwkDTO> excelToNwkDTOList(String base64String) throws IOException {
+        final InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
+        final XSSFWorkbook workbook = new XSSFWorkbook(stream);
+        final XSSFSheet sheet = workbook.getSheetAt(ZERO);
 
         return getAllNwkFromSheet(sheet);
     }
 
     private List<NwkDTO> getAllNwkFromSheet(XSSFSheet sheet) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
+        final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        final Validator validator = factory.getValidator();
         List<NwkDTO> nwkDTOList = new ArrayList<>();
-        DataFormatter dataFormatter = new DataFormatter();
+        final DataFormatter dataFormatter = new DataFormatter();
 
         for (Row row : sheet) {
             NwkDTO nwkDTO = new NwkDTO();
             if (row.getRowNum() == 0) continue;
             for (Cell cell : row) {
-                String cellValue = dataFormatter.formatCellValue(cell);
+                final String cellValue = dataFormatter.formatCellValue(cell);
                 switch (cell.getColumnIndex()) {
-                case 0 -> nwkDTO.setNachname(cellValue);
-                case 1 -> nwkDTO.setVorname(cellValue);
-                case 2 -> nwkDTO.setStudiengang(cellValue);
-                case 3 -> nwkDTO.setJahrgang(cellValue);
-                case 4 -> nwkDTO.setVorlesungstage(cellValue);
+                    case NACHNAME_COLUM -> nwkDTO.setNachname(cellValue);
+                    case VORNAME_COLUM -> nwkDTO.setVorname(cellValue);
+                    case STUDIENGANG_COLUM -> nwkDTO.setStudiengang(cellValue);
+                    case JAHRGANG_COLUM -> nwkDTO.setJahrgang(cellValue);
+                    case VORLESUNGSTAGE_COLUM -> nwkDTO.setVorlesungstage(cellValue);
                 default -> {
                 }
                 }
@@ -59,13 +66,13 @@ public class ExcelService {
             if (violations.isEmpty()) {
                 nwkDTOList.add(nwkDTO);
             } else {
-                throw new ValidationException("Ein NWK Datensatz ist Fehlerhaft. Hochladen wurde abgebrochen.");
+                throw new ConstraintViolationException(violations);
             }
         }
         return nwkDTOList;
     }
 
-    public boolean isEmpty(NwkDTO nwkDTO) {
+    private boolean isEmpty(NwkDTO nwkDTO) {
         return nwkDTO.getVorname().isEmpty() && nwkDTO.getNachname().isEmpty()
                 && nwkDTO.getStudiengang().isEmpty() && nwkDTO.getJahrgang().isEmpty();
     }
