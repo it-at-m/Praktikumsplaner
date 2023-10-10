@@ -12,7 +12,7 @@ import java.io.IOException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Is thrown when there is a faulty data in the dataset
+    // Is thrown when there is faulty data in the dataset
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
         return ex.getMessage();
     }
 
-    // Is thrown when a non Excel File is Imported
+    // Is thrown when a non Excel file is Imported
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         return ex.getMessage();
     }
 
-    // Is thrown when an Excel file that is in the right format is imported
+    // Is thrown when an Excel file that isn't in the correct format is imported
     @ExceptionHandler(NullPointerException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
