@@ -1,12 +1,12 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
+import jakarta.validation.ValidationException;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.IOException;
-import java.io.InvalidObjectException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +55,6 @@ public class ExcelServiceTest {
 
     @Test
     public void excelToNwkDTOListTestInvalidData() {
-        assertThrows(InvalidObjectException.class, () -> service.excelToNwkDTOList(base64EncodedExcel2NWKInvalidData));
+        assertThrows(ValidationException.class, () -> service.excelToNwkDTOList(base64EncodedExcel2NWKInvalidData));
     }
 }
