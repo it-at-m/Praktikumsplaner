@@ -1,11 +1,10 @@
 import FetchUtils from "@/api/FetchUtils";
-import { API_BASE } from "@/Constants";
-import { EXCEL_BASE } from "@/Constants";
+import { API_BASE, NWK_BASE } from "@/Constants";
 
 export default {
     uploadExcelFile(string: string): Promise<void> {
         return fetch(
-            `${API_BASE}/api/aa-a-backend-service${EXCEL_BASE}`,
+            `${API_BASE}/api/aa-a-backend-service${NWK_BASE}/import`,
             FetchUtils.getPOSTConfigString(string)
         )
             .then((response) => {
