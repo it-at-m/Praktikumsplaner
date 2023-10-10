@@ -20,10 +20,6 @@ public class NWKService {
     }
 
     public List<NwkDTO> saveNWK(List<NwkDTO> nwkDTOList) {
-        List<NwkDTO> nwkDTOS = new ArrayList<>();
-        for (NwkDTO nwkDTO : nwkDTOList) {
-            nwkDTOS.add(saveNWK(nwkDTO));
-        }
-        return nwkDTOS;
+        return nwkDTOList.stream().map(this::saveNWK).toList();
     }
 }
