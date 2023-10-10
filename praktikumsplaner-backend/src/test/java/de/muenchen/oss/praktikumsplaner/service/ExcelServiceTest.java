@@ -15,7 +15,6 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@ExtendWith(MockitoExtension.class)
 public class ExcelServiceTest {
 
     private final ExcelService service = new ExcelService();
