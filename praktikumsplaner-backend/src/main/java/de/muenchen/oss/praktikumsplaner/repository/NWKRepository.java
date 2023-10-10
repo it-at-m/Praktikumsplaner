@@ -1,4 +1,4 @@
-package de.muenchen.oss.praktikumsplaner.rest;
+package de.muenchen.oss.praktikumsplaner.repository;
 
 import de.muenchen.oss.praktikumsplaner.domain.NWK;
 import java.util.UUID;
