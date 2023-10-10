@@ -17,5 +17,5 @@ Issue: #XXX
 ---
 **Definition of Done (DoD):**
 
-- [ ] Unittest gepflegt
+- [ ] Unittests gepflegt
 - [ ] Dokumentation ist gepflegt
