@@ -21,8 +21,8 @@ public class MeldezeitraumController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public MeldezeitraumDTO createMeldezeitraum(final @Valid @RequestBody MeldezeitraumCreateDTO meldezeitraumDto) {
-        final MeldezeitraumDTO meldezeitraum = meldezeitraumService.createMeldezeitraum(meldezeitraumDto);
-        return meldezeitraum;
+    public MeldezeitraumDTO createMeldezeitraum(final @Valid @RequestBody
+    MeldezeitraumCreateDTO meldezeitraumDto) {
+        return meldezeitraumService.createMeldezeitraum(meldezeitraumDto);
     }
 }

@@ -8,5 +8,6 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface MeldezeitraumMapper {
     MeldezeitraumDTO toDto(Meldezeitraum meldezeitraum);
+
     Meldezeitraum toEntity(MeldezeitraumCreateDTO meldezeitraumCreateDTO);
 }

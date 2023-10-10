@@ -14,68 +14,61 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 public class StartDateBeforeEndDateValidatorTest {
-    private static ValidatorFactory validatorFactory;
     private static Validator validator;
 
     @BeforeAll
     public static void createValidator() {
-        validatorFactory = Validation.buildDefaultValidatorFactory();
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
     }
 
     @Test
     void testIsValidWithValidObjects() {
-        final LocalDate startDate = LocalDate.of(2020,10,10);
-        final LocalDate endDate = LocalDate.of(2021,10,10);
+        final LocalDate startDate = LocalDate.of(2020, 10, 10);
+        final LocalDate endDate = LocalDate.of(2021, 10, 10);
 
         final MeldezeitraumDTO meldezeitraumDTO = new MeldezeitraumDTO(
                 UUID.randomUUID(),
                 "Name",
                 startDate,
-                endDate
-        );
+                endDate);
 
         final MeldezeitraumCreateDTO meldezeitraumCreateDTO = new MeldezeitraumCreateDTO(
                 "Name",
                 startDate,
-                endDate
-        );
+                endDate);
 
         final Meldezeitraum meldezeitraum = new Meldezeitraum(
                 "Name",
                 startDate,
-                endDate
-        );
+                endDate);
 
         assertTrue(validator.validate(meldezeitraumDTO).isEmpty());
         assertTrue(validator.validate(meldezeitraumCreateDTO).isEmpty());
         assertTrue(validator.validate(meldezeitraum).isEmpty());
     }
 
-    void testIsValidWithInvalidObjects(){
-        final LocalDate startDate = LocalDate.of(2020,10,10);
-        final LocalDate endDate = LocalDate.of(2019,10,10);
+    @Test
+    void testIsValidWithInvalidObjects() {
+        final LocalDate startDate = LocalDate.of(2020, 10, 10);
+        final LocalDate endDate = LocalDate.of(2019, 10, 10);
 
         final MeldezeitraumDTO meldezeitraumDTO = new MeldezeitraumDTO(
                 UUID.randomUUID(),
                 "Name",
                 startDate,
-                endDate
-        );
+                endDate);
 
         final MeldezeitraumCreateDTO meldezeitraumCreateDTO = new MeldezeitraumCreateDTO(
                 "Name",
                 startDate,
-                endDate
-        );
+                endDate);
 
         final Meldezeitraum meldezeitraum = new Meldezeitraum(
                 "Name",
                 startDate,
-                endDate
-        );
+                endDate);
 
         assertFalse(validator.validate(meldezeitraumDTO).isEmpty());
         assertFalse(validator.validate(meldezeitraumCreateDTO).isEmpty());
