@@ -24,11 +24,11 @@ public class NWKMapperTest {
         NWK nwk = new NWK(nachname, vorname, studiengang, jahrgang, vorlesungstage);
         NwkDTO nwkDTO = mapper.toDTO(nwk);
 
-        assertEquals(nwk.getNachname(), nwkDTO.getNachname());
-        assertEquals(nwk.getVorname(), nwkDTO.getVorname());
-        assertEquals(nwk.getStudiengang(), nwkDTO.getStudiengang());
-        assertEquals(nwk.getJahrgang(), nwkDTO.getJahrgang());
-        assertEquals(nwk.getId(), nwkDTO.getId());
+        assertEquals(nwk.getNachname(), nwkDTO.nachname());
+        assertEquals(nwk.getVorname(), nwkDTO.vorname());
+        assertEquals(nwk.getStudiengang(), nwkDTO.studiengang());
+        assertEquals(nwk.getJahrgang(), nwkDTO.jahrgang());
+        assertEquals(nwk.getId(), nwkDTO.id());
 
     }
 
@@ -41,15 +41,16 @@ public class NWKMapperTest {
         final String vorlesungstage = "Mo + Di";
         final UUID id = UUID.randomUUID();
 
-        NwkDTO nwkDTO = new NwkDTO(id, nachname, vorname, studiengang, jahrgang, vorlesungstage);
+        NwkDTO nwkDTO = NwkDTO.builder().id(id).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang).vorlesungstage(vorlesungstage)
+                .build();
 
         NWK nwk = mapper.toEntity(nwkDTO);
 
-        assertEquals(nwkDTO.getNachname(), nwk.getNachname());
-        assertEquals(nwkDTO.getVorname(), nwk.getVorname());
-        assertEquals(nwkDTO.getStudiengang(), nwk.getStudiengang());
-        assertEquals(nwkDTO.getJahrgang(), nwk.getJahrgang());
-        assertEquals(nwkDTO.getId(), nwk.getId());
+        assertEquals(nwkDTO.nachname(), nwk.getNachname());
+        assertEquals(nwkDTO.vorname(), nwk.getVorname());
+        assertEquals(nwkDTO.studiengang(), nwk.getStudiengang());
+        assertEquals(nwkDTO.jahrgang(), nwk.getJahrgang());
+        assertEquals(nwkDTO.id(), nwk.getId());
     }
 
     @Test

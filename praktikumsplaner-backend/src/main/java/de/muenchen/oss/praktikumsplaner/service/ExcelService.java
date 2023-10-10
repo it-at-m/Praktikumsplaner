@@ -45,26 +45,26 @@ public class ExcelService {
         final DataFormatter dataFormatter = new DataFormatter();
 
         for (Row row : sheet) {
-            NwkDTO nwkDTO = new NwkDTO();
+            NwkDTO.NwkDTOBuilder nwkDTO = NwkDTO.builder();
             if (row.getRowNum() == 0) continue;
             for (Cell cell : row) {
                 final String cellValue = dataFormatter.formatCellValue(cell);
                 switch (cell.getColumnIndex()) {
-                    case NACHNAME_COLUM -> nwkDTO.setNachname(cellValue);
-                    case VORNAME_COLUM -> nwkDTO.setVorname(cellValue);
-                    case STUDIENGANG_COLUM -> nwkDTO.setStudiengang(cellValue);
-                    case JAHRGANG_COLUM -> nwkDTO.setJahrgang(cellValue);
-                    case VORLESUNGSTAGE_COLUM -> nwkDTO.setVorlesungstage(cellValue);
+                case NACHNAME_COLUM -> nwkDTO.nachname(cellValue);
+                case VORNAME_COLUM -> nwkDTO.vorname(cellValue);
+                case STUDIENGANG_COLUM -> nwkDTO.studiengang(cellValue);
+                case JAHRGANG_COLUM -> nwkDTO.jahrgang(cellValue);
+                case VORLESUNGSTAGE_COLUM -> nwkDTO.vorlesungstage(cellValue);
                 default -> {
                 }
                 }
             }
-            if (isNwkTDOEmpty(nwkDTO)) {
+            if (isNwkTDOEmpty(nwkDTO.build())) {
                 continue;
             }
-            Set<ConstraintViolation<NwkDTO>> violations = validator.validate(nwkDTO);
+            Set<ConstraintViolation<NwkDTO>> violations = validator.validate(nwkDTO.build());
             if (violations.isEmpty()) {
-                nwkDTOList.add(nwkDTO);
+                nwkDTOList.add(nwkDTO.build());
             } else {
                 throw new ConstraintViolationException(violations);
             }
@@ -73,7 +73,7 @@ public class ExcelService {
     }
 
     protected boolean isNwkTDOEmpty(NwkDTO nwkDTO) {
-        return nwkDTO.getVorname().isEmpty() && nwkDTO.getNachname().isEmpty()
-                && nwkDTO.getStudiengang().isEmpty() && nwkDTO.getJahrgang().isEmpty();
+        return nwkDTO.vorname().isEmpty() && nwkDTO.nachname().isEmpty()
+                && nwkDTO.studiengang().isEmpty() && nwkDTO.jahrgang().isEmpty();
     }
 }
