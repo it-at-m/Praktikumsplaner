@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
@@ -39,7 +40,7 @@ public class ExcelServiceTest {
     public void excelToNwkDTOListTestValidData() throws IOException {
         final String nachname = "Mustermann";
         final String vorname = "Max";
-        final String studiengang = "BSC";
+        final Studiengang studiengang = Studiengang.BSC;
         final String jahrgang = "21/24";
         final String vorlesungstage = "Mo + Di";
 

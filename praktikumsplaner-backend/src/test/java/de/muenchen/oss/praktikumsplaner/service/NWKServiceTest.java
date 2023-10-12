@@ -1,6 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.NWK;
+import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
@@ -30,7 +31,7 @@ public class NWKServiceTest {
     public void testCreateNWKSuccess() {
         final String nachname = "Mustermann";
         final String vorname = "Max";
-        final String studiengang = "BSC";
+        final Studiengang studiengang = Studiengang.BSC;
         final String jahrgang = "21/24";
         final String vorlesungstage = "Mo + Di";
 
@@ -54,7 +55,7 @@ public class NWKServiceTest {
     public void testCreateNWKFromList() {
         final String nachname = "Mustermann";
         final String vorname = "Max";
-        final String studiengang = "BSC";
+        final Studiengang studiengang = Studiengang.BSC;
         final String jahrgang = "21/24";
         final String vorlesungstage = "Mo + Di";
 
