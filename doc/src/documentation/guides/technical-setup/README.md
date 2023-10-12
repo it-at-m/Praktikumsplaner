@@ -29,13 +29,15 @@ subgraph Praktiumsplaner
     subgraph Dockercontext
         Frontend
         Backend
+        DBBackend[DB-Backend]
         Keycloak
         DB-Keycloak
         Init-Keycloak
     
         Frontend -->|fetch data| Backend
-        Frontend -->|authenticate| Keycloak
         Backend --> |check permission| Keycloak
+        Backend -->|persisting| DBBackend
+        Frontend -->|authenticate| Keycloak
         Keycloak -->|persisting| DB-Keycloak
         Init-Keycloak -->|configures| Keycloak
     end
@@ -64,4 +66,26 @@ Wenn im Browser ein Proxy eingerichtet ist bitte darauf achten dass dieser nicht
 
 ### Backendentwicklung (in Progress)
 
-*TBD*
+#### Anbindung an Postgresql-DB in Docker
+
+```mermaid
+graph LR
+
+subgraph Praktiumsplaner
+
+    subgraph IDE
+        IDEBackend[Backend]
+    end
+
+    subgraph Dockercontext
+        DBBackend[DB Backend]
+    end
+
+    IDEBackend -->|localhost:5432| DBBackend
+    
+ end
+```
+
+In der bereitgestellten Infrastruktur gibt es eine Datenbank für das Backend. Um das Backend bei der Entwicklung damit zu
+verbinden muss das Profil `db-postgres` verwendet werden. Es ist so konfiguriert, dass standardmäßig eine Verbindung
+zur Infrastruktur aufgebaut wird.
