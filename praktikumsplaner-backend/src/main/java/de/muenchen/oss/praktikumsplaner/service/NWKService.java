@@ -21,6 +21,6 @@ public class NWKService {
     }
 
     public void importNWK(String base64String) throws IOException {
-        excelService.excelToNwkDTOList(base64String).stream().map(this::saveNWK);
+        excelService.excelToNwkDTOList(base64String).forEach(this::saveNWK);
     }
 }
