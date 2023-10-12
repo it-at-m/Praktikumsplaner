@@ -1,13 +1,16 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static org.mockito.ArgumentMatchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
 import de.muenchen.oss.praktikumsplaner.domain.NWK;
 import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.io.IOException;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,10 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.xml.validation.Validator;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @ExtendWith(MockitoExtension.class)
 public class NWKServiceTest {
@@ -45,9 +45,9 @@ public class NWKServiceTest {
         CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
-        Mockito.when(mapper.toEntity(createNwkDTO)).thenReturn(nwk);
-        Mockito.when(mapper.toDTO(nwk)).thenReturn(nwkDTO);
-        Mockito.when(repository.save(Mockito.eq(nwk))).thenReturn(nwk);
+        when(mapper.toEntity(createNwkDTO)).thenReturn(nwk);
+        when(mapper.toDTO(nwk)).thenReturn(nwkDTO);
+        when(repository.save(eq(nwk))).thenReturn(nwk);
 
         NwkDTO result = service.saveNWK(createNwkDTO);
 
