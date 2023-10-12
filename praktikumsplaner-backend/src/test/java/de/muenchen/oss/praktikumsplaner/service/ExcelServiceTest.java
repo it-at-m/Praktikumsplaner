@@ -2,28 +2,31 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import jakarta.validation.ConstraintViolationException;
-import org.apache.commons.io.IOUtils;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(MockitoExtension.class)
 public class ExcelServiceTest {
-
-    private final ExcelService service = new ExcelService();
-
+    private final ExcelService service;
     private final String base64EncodedExcel1NWK;
-
     private final String base64EncodedExcel2NWKInvalidData;
 
     public ExcelServiceTest() throws IOException {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        service = new ExcelService(validator);
         base64EncodedExcel1NWK = IOUtils.toString(Objects.requireNonNull(this.getClass()
                 .getResourceAsStream("base64EncodedExcel1NWK.txt")),
                 StandardCharsets.UTF_8);
