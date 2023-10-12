@@ -1,6 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.domain.mappers;
 
 import de.muenchen.oss.praktikumsplaner.domain.NWK;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -56,6 +57,7 @@ public class NWKMapperTest {
     @Test
     public void testNull() {
         assertNull(mapper.toDTO(null));
-        assertNull(mapper.toEntity(null));
+        assertNull(mapper.toEntity((NwkDTO) null));
+        assertNull(mapper.toEntity((CreateNwkDTO) null));
     }
 }
