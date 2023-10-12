@@ -1,6 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
@@ -33,7 +33,7 @@ public class ExcelService {
     private static final int JAHRGANG_COLUM = 3;
     private static final int VORLESUNGSTAGE_COLUM = 4;
 
-    public List<NwkDTO> excelToNwkDTOList(String base64String) throws IOException {
+    public List<CreateNwkDTO> excelToNwkDTOList(String base64String) throws IOException {
         final InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
         final XSSFWorkbook workbook = new XSSFWorkbook(stream);
         final XSSFSheet sheet = workbook.getSheetAt(SHEET);
@@ -41,43 +41,43 @@ public class ExcelService {
         return getAllNwkFromSheet(sheet);
     }
 
-    private List<NwkDTO> getAllNwkFromSheet(XSSFSheet sheet) {
-        List<NwkDTO> nwkDTOList = new ArrayList<>();
+    private List<CreateNwkDTO> getAllNwkFromSheet(XSSFSheet sheet) {
+        List<CreateNwkDTO> createNwkDTOS = new ArrayList<>();
         for (Row row : sheet) {
             if (row.getRowNum() == FIRST_ROW) continue;
-            NwkDTO nwkDTO = getNwkDTOFromRow(row);
-            if (isNwkTDOEmpty(nwkDTO)) {
+            CreateNwkDTO createNwkDTO = getNwkDTOFromRow(row);
+            if (isNwkTDOEmpty(createNwkDTO)) {
                 continue;
             }
-            Set<ConstraintViolation<NwkDTO>> violations = validator.validate(nwkDTO);
+            Set<ConstraintViolation<CreateNwkDTO>> violations = validator.validate(createNwkDTO);
             if (violations.isEmpty()) {
-                nwkDTOList.add(nwkDTO);
+                createNwkDTOS.add(createNwkDTO);
             } else {
                 throw new ConstraintViolationException(violations);
             }
         }
-        return nwkDTOList;
+        return createNwkDTOS;
     }
 
-    protected boolean isNwkTDOEmpty(NwkDTO nwkDTO) {
-        return nwkDTO.vorname().isEmpty() && nwkDTO.nachname().isEmpty()
-                && nwkDTO.studiengang().isEmpty() && nwkDTO.jahrgang().isEmpty();
+    protected boolean isNwkTDOEmpty(CreateNwkDTO createNwkDTO) {
+        return createNwkDTO.vorname().isEmpty() && createNwkDTO.nachname().isEmpty()
+                && createNwkDTO.studiengang().isEmpty() && createNwkDTO.jahrgang().isEmpty();
     }
 
-    private NwkDTO getNwkDTOFromRow(Row row){
-        NwkDTO.NwkDTOBuilder nwkDTO = NwkDTO.builder();
+    private CreateNwkDTO getNwkDTOFromRow(Row row){
+        CreateNwkDTO.CreateNwkDTOBuilder createNwkDTOBuilder  = CreateNwkDTO.builder();
         for (Cell cell : row) {
             final String cellValue = dataFormatter.formatCellValue(cell);
             switch (cell.getColumnIndex()) {
-                case NACHNAME_COLUM -> nwkDTO.nachname(cellValue);
-                case VORNAME_COLUM -> nwkDTO.vorname(cellValue);
-                case STUDIENGANG_COLUM -> nwkDTO.studiengang(cellValue);
-                case JAHRGANG_COLUM -> nwkDTO.jahrgang(cellValue);
-                case VORLESUNGSTAGE_COLUM -> nwkDTO.vorlesungstage(cellValue);
+                case NACHNAME_COLUM -> createNwkDTOBuilder.nachname(cellValue);
+                case VORNAME_COLUM -> createNwkDTOBuilder.vorname(cellValue);
+                case STUDIENGANG_COLUM -> createNwkDTOBuilder.studiengang(cellValue);
+                case JAHRGANG_COLUM -> createNwkDTOBuilder.jahrgang(cellValue);
+                case VORLESUNGSTAGE_COLUM -> createNwkDTOBuilder.vorlesungstage(cellValue);
                 default -> {
                 }
             }
         }
-        return nwkDTO.build();
+        return createNwkDTOBuilder.build();
     }
 }
