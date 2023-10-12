@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.xml.validation.Validator;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,8 @@ public class NWKServiceTest {
     private NWKRepository repository;
     @InjectMocks
     private NWKService service;
+    @Mock
+    private ExcelService excelService;
 
     @Test
     public void testCreateNWKSuccess() {
@@ -52,28 +56,10 @@ public class NWKServiceTest {
     }
 
     @Test
-    public void testCreateNWKFromList() {
-        final String nachname = "Mustermann";
-        final String vorname = "Max";
-        final Studiengang studiengang = Studiengang.BSC;
-        final String jahrgang = "21/24";
-        final String vorlesungstage = "Mo + Di";
+    public void testimportNWK() throws IOException {
+        final String base64 = "WAAAAAAGGHHH=";
 
-        NWK nwk = new NWK(nachname, vorname, studiengang, jahrgang, vorlesungstage);
-        NwkDTO nwkDTO = NwkDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
-                .vorlesungstage(vorlesungstage).build();
-        CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
-                .vorlesungstage(vorlesungstage).build();
-        List<CreateNwkDTO> createNwkDTOS = new ArrayList<>();
-        createNwkDTOS.add(createNwkDTO);
-
-        Mockito.when(mapper.toEntity(createNwkDTO)).thenReturn(nwk);
-        Mockito.when(mapper.toDTO(nwk)).thenReturn(nwkDTO);
-        Mockito.when(repository.save(Mockito.eq(nwk))).thenReturn(nwk);
-
-        List<NwkDTO> result = service.saveNWK(createNwkDTOS);
-
-        assertNotNull(result);
-        assertEquals(result.get(0).nachname(), createNwkDTOS.get(0).nachname());
+        service.importNWK(base64);
+        Mockito.verify(excelService, Mockito.times(1)).excelToNwkDTOList(base64);
     }
 }
