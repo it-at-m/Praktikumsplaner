@@ -1,6 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.domain.mappers;
 
 import de.muenchen.oss.praktikumsplaner.domain.NWK;
+import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ public class NWKMapperTest {
     public void testNWKToDto() {
         final String nachname = "mustermann";
         final String vorname = "max";
-        final String studiengang = "BSC";
+        final Studiengang studiengang = Studiengang.BSC;
         final String jahrgang = "22/26";
         final String vorlesungstage = "Mo + Di";
 
@@ -37,7 +38,7 @@ public class NWKMapperTest {
     public void testNwkDtoToEntity() {
         final String nachname = "mustermann";
         final String vorname = "max";
-        final String studiengang = "BSC";
+        final Studiengang studiengang = Studiengang.BSC;
         final String jahrgang = "22/26";
         final String vorlesungstage = "Mo + Di";
         final UUID id = UUID.randomUUID();
