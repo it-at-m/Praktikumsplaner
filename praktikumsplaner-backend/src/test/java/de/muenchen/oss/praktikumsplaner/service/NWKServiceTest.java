@@ -12,7 +12,6 @@ import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
-import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapperImpl;
 import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
 import java.io.IOException;
 import java.util.ArrayList;
