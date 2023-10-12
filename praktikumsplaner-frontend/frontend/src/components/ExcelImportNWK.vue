@@ -18,7 +18,7 @@
                     <v-list-item>
                         <v-file-input
                             v-model="excelDatei"
-                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                            :accept="excelFormat"
                             :rules="fileRules"
                             label="Fügen Sie eine Excel Datei ein"
                         >
@@ -55,13 +55,12 @@ const visible = ref<boolean>();
 const excelDatei = ref<File>();
 const form = ref<HTMLFormElement>();
 const snackbarStore = useSnackbarStore();
+const excelFormat =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 const fileRules = [
     (value: File) =>
-        !value ||
-        value.type ==
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-        "Nur Excel Dateien sind Erlaubt",
+        !value || value.type == excelFormat || "Nur Excel Dateien sind Erlaubt",
 ];
 
 function cancel() {
