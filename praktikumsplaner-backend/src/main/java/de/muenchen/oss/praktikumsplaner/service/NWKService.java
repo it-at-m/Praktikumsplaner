@@ -4,9 +4,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
-
 import java.io.IOException;
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

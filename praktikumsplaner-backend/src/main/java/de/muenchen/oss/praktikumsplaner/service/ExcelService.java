@@ -66,18 +66,19 @@ public class ExcelService {
                 && createNwkDTO.studiengang() == null && createNwkDTO.jahrgang().isEmpty();
     }
 
-    private CreateNwkDTO getNwkDTOFromRow(Row row){
-        CreateNwkDTO.CreateNwkDTOBuilder createNwkDTOBuilder  = CreateNwkDTO.builder();
+    private CreateNwkDTO getNwkDTOFromRow(Row row) {
+        CreateNwkDTO.CreateNwkDTOBuilder createNwkDTOBuilder = CreateNwkDTO.builder();
         for (Cell cell : row) {
             final String cellValue = dataFormatter.formatCellValue(cell);
             switch (cell.getColumnIndex()) {
-                case NACHNAME_COLUM -> createNwkDTOBuilder.nachname(cellValue);
-                case VORNAME_COLUM -> createNwkDTOBuilder.vorname(cellValue);
-                case STUDIENGANG_COLUM -> createNwkDTOBuilder.studiengang(Objects.equals(cellValue, "") || Objects.equals(cellValue, null) ? null : Studiengang.valueOf(cellValue));
-                case JAHRGANG_COLUM -> createNwkDTOBuilder.jahrgang(cellValue);
-                case VORLESUNGSTAGE_COLUM -> createNwkDTOBuilder.vorlesungstage(cellValue);
-                default -> {
-                }
+            case NACHNAME_COLUM -> createNwkDTOBuilder.nachname(cellValue);
+            case VORNAME_COLUM -> createNwkDTOBuilder.vorname(cellValue);
+            case STUDIENGANG_COLUM -> createNwkDTOBuilder
+                    .studiengang(Objects.equals(cellValue, "") || Objects.equals(cellValue, null) ? null : Studiengang.valueOf(cellValue));
+            case JAHRGANG_COLUM -> createNwkDTOBuilder.jahrgang(cellValue);
+            case VORLESUNGSTAGE_COLUM -> createNwkDTOBuilder.vorlesungstage(cellValue);
+            default -> {
+            }
             }
         }
         return createNwkDTOBuilder.build();
