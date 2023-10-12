@@ -29,7 +29,7 @@ subgraph Praktiumsplaner
     subgraph Dockercontext
         Frontend
         Backend
-        DBBackend[DB Backend]
+        DBBackend[DB-Backend]
         Keycloak
         DB-Keycloak
         Init-Keycloak
@@ -87,5 +87,5 @@ subgraph Praktiumsplaner
 ```
 
 In der bereitgestellten Infrastruktur gibt es eine Datenbank für das Backend. Um das Backend bei der Entwicklung damit zu
-verbinden muss das Profil `db-postgres` verwendet werden. Das ist so konfiguriert, dass es standardmäßig eine Verbindung
-zur Infrastruktur aufbaut.
+verbinden muss das Profil `db-postgres` verwendet werden. Es ist so konfiguriert, dass standardmäßig eine Verbindung
+zur Infrastruktur aufgebaut wird.
