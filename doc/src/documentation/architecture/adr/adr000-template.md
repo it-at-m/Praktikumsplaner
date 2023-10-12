@@ -18,6 +18,10 @@ What is the issue that we're seeing that is motivating this decision or change?
 
 What is the change that we're proposing and/or doing?
 
+### Todo
+
+Optional. List of activities that have do be done
+
 ## Consequences
 
 What becomes easier or more difficult to do because of this change?
