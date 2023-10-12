@@ -28,10 +28,10 @@ public class GlobalExceptionHandler {
     }
 
     // Is thrown when an Excel file that isn't in the correct format is imported
-    @ExceptionHandler(NullPointerException.class)
+    @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public String nullPointerException(NullPointerException ex) {
+    public String IllegalArgumentException(IllegalArgumentException ex) {
         return ex.getMessage();
     }
 }
