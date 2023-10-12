@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -46,7 +48,7 @@ public class ExcelService {
         for (Row row : sheet) {
             if (row.getRowNum() == FIRST_ROW) continue;
             CreateNwkDTO createNwkDTO = getNwkDTOFromRow(row);
-            if (isNwkTDOEmpty(createNwkDTO)) {
+            if (isCreateNwkDTOEmpty(createNwkDTO)) {
                 continue;
             }
             Set<ConstraintViolation<CreateNwkDTO>> violations = validator.validate(createNwkDTO);
@@ -59,9 +61,9 @@ public class ExcelService {
         return createNwkDTOS;
     }
 
-    protected boolean isNwkTDOEmpty(CreateNwkDTO createNwkDTO) {
+    protected boolean isCreateNwkDTOEmpty(CreateNwkDTO createNwkDTO) {
         return createNwkDTO.vorname().isEmpty() && createNwkDTO.nachname().isEmpty()
-                && createNwkDTO.studiengang().isEmpty() && createNwkDTO.jahrgang().isEmpty();
+                && createNwkDTO.studiengang() == null && createNwkDTO.jahrgang().isEmpty();
     }
 
     private CreateNwkDTO getNwkDTOFromRow(Row row){
@@ -71,7 +73,7 @@ public class ExcelService {
             switch (cell.getColumnIndex()) {
                 case NACHNAME_COLUM -> createNwkDTOBuilder.nachname(cellValue);
                 case VORNAME_COLUM -> createNwkDTOBuilder.vorname(cellValue);
-                case STUDIENGANG_COLUM -> createNwkDTOBuilder.studiengang(cellValue);
+                case STUDIENGANG_COLUM -> createNwkDTOBuilder.studiengang(Objects.equals(cellValue, "") || Objects.equals(cellValue, null) ? null : Studiengang.valueOf(cellValue));
                 case JAHRGANG_COLUM -> createNwkDTOBuilder.jahrgang(cellValue);
                 case VORLESUNGSTAGE_COLUM -> createNwkDTOBuilder.vorlesungstage(cellValue);
                 default -> {

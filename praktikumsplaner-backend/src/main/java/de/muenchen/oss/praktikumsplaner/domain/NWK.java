@@ -37,9 +37,8 @@ public class NWK extends BaseEntity {
     public String nachname;
 
     @NotNull(message = "Der Studiengang ist erforderlich")
-    @Pattern(regexp = "BWI|BSC|VI|FISI")
     @Column(name = "studiengang")
-    public String studiengang;
+    public Studiengang studiengang;
 
     @NotNull(message = "Der Jahrgang ist erforderlich")
     @Pattern(regexp = "\\d\\d/\\d\\d")
