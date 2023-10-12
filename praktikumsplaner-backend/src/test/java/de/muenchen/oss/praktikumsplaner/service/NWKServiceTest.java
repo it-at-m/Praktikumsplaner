@@ -1,8 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import de.muenchen.oss.praktikumsplaner.domain.NWK;
 import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
@@ -52,7 +52,7 @@ public class NWKServiceTest {
         NwkDTO result = service.saveNWK(createNwkDTO);
 
         assertNotNull(result);
-        assertEquals(result.nachname(), createNwkDTO.nachname());
+        assertSame(result, nwkDTO);
     }
 
     @Test
