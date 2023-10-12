@@ -3,9 +3,7 @@ package de.muenchen.oss.praktikumsplaner.service;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,17 +11,23 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Set;
+import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ExcelService {
-    private static final int ZERO = 0;
 
+    @Autowired
+    private Validator validator;
+
+    private static final int ZERO = 0;
     private static final int NACHNAME_COLUM = 0;
     private static final int VORNAME_COLUM = 1;
     private static final int STUDIENGANG_COLUM = 2;
@@ -39,8 +43,6 @@ public class ExcelService {
     }
 
     private List<NwkDTO> getAllNwkFromSheet(XSSFSheet sheet) {
-        final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        final Validator validator = factory.getValidator();
         List<NwkDTO> nwkDTOList = new ArrayList<>();
         final DataFormatter dataFormatter = new DataFormatter();
 
