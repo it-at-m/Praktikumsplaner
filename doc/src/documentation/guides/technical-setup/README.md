@@ -86,6 +86,6 @@ subgraph Praktiumsplaner
  end
 ```
 
-In der bereitgestellten Infratruktur gibt es eine Datenbank für das Backend. Um das Backend bei der Entwicklung damit zu
+In der bereitgestellten Infrastruktur gibt es eine Datenbank für das Backend. Um das Backend bei der Entwicklung damit zu
 verbinden muss das Profil `db-postgres` verwendet werden. Das ist so konfiguriert, dass es standardmäßig eine Verbindung
 zur Infrastruktur aufbaut.
