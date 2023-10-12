@@ -17,16 +17,14 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class ExcelService {
 
-    @Autowired
-    private Validator validator;
-
+    private final Validator validator;
+    private final DataFormatter dataFormatter = new DataFormatter();
     private static final int ZERO = 0;
     private static final int NACHNAME_COLUM = 0;
     private static final int VORNAME_COLUM = 1;
@@ -44,8 +42,6 @@ public class ExcelService {
 
     private List<NwkDTO> getAllNwkFromSheet(XSSFSheet sheet) {
         List<NwkDTO> nwkDTOList = new ArrayList<>();
-        final DataFormatter dataFormatter = new DataFormatter();
-
         for (Row row : sheet) {
             NwkDTO.NwkDTOBuilder nwkDTO = NwkDTO.builder();
             if (row.getRowNum() == 0) continue;
