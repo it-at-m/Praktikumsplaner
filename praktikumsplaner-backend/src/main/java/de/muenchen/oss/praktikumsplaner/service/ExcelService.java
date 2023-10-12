@@ -44,26 +44,14 @@ public class ExcelService {
     private List<NwkDTO> getAllNwkFromSheet(XSSFSheet sheet) {
         List<NwkDTO> nwkDTOList = new ArrayList<>();
         for (Row row : sheet) {
-            NwkDTO.NwkDTOBuilder nwkDTO = NwkDTO.builder();
             if (row.getRowNum() == FIRST_ROW) continue;
-            for (Cell cell : row) {
-                final String cellValue = dataFormatter.formatCellValue(cell);
-                switch (cell.getColumnIndex()) {
-                case NACHNAME_COLUM -> nwkDTO.nachname(cellValue);
-                case VORNAME_COLUM -> nwkDTO.vorname(cellValue);
-                case STUDIENGANG_COLUM -> nwkDTO.studiengang(cellValue);
-                case JAHRGANG_COLUM -> nwkDTO.jahrgang(cellValue);
-                case VORLESUNGSTAGE_COLUM -> nwkDTO.vorlesungstage(cellValue);
-                default -> {
-                }
-                }
-            }
-            if (isNwkTDOEmpty(nwkDTO.build())) {
+            NwkDTO nwkDTO = getNwkDTOFromRow(row);
+            if (isNwkTDOEmpty(nwkDTO)) {
                 continue;
             }
-            Set<ConstraintViolation<NwkDTO>> violations = validator.validate(nwkDTO.build());
+            Set<ConstraintViolation<NwkDTO>> violations = validator.validate(nwkDTO);
             if (violations.isEmpty()) {
-                nwkDTOList.add(nwkDTO.build());
+                nwkDTOList.add(nwkDTO);
             } else {
                 throw new ConstraintViolationException(violations);
             }
@@ -74,5 +62,22 @@ public class ExcelService {
     protected boolean isNwkTDOEmpty(NwkDTO nwkDTO) {
         return nwkDTO.vorname().isEmpty() && nwkDTO.nachname().isEmpty()
                 && nwkDTO.studiengang().isEmpty() && nwkDTO.jahrgang().isEmpty();
+    }
+
+    private NwkDTO getNwkDTOFromRow(Row row){
+        NwkDTO.NwkDTOBuilder nwkDTO = NwkDTO.builder();
+        for (Cell cell : row) {
+            final String cellValue = dataFormatter.formatCellValue(cell);
+            switch (cell.getColumnIndex()) {
+                case NACHNAME_COLUM -> nwkDTO.nachname(cellValue);
+                case VORNAME_COLUM -> nwkDTO.vorname(cellValue);
+                case STUDIENGANG_COLUM -> nwkDTO.studiengang(cellValue);
+                case JAHRGANG_COLUM -> nwkDTO.jahrgang(cellValue);
+                case VORLESUNGSTAGE_COLUM -> nwkDTO.vorlesungstage(cellValue);
+                default -> {
+                }
+            }
+        }
+        return nwkDTO.build();
     }
 }
