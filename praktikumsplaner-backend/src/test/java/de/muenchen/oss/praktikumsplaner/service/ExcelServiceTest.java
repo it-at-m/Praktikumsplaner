@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import jakarta.validation.ConstraintViolation;
@@ -13,13 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 @ExtendWith(MockitoExtension.class)
 public class ExcelServiceTest {
