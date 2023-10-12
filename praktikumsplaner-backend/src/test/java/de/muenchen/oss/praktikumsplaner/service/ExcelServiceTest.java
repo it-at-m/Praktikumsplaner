@@ -1,6 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -43,18 +43,18 @@ public class ExcelServiceTest {
         final String jahrgang = "21/24";
         final String vorlesungstage = "Mo + Di";
 
-        NwkDTO max = NwkDTO.builder().id(null).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang).vorlesungstage(vorlesungstage)
-                .build();
+        CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+                .vorlesungstage(vorlesungstage).build();
 
-        List<NwkDTO> maxList = new ArrayList<>();
-        maxList.add(max);
+        List<CreateNwkDTO> createNwkDTOS = new ArrayList<>();
+        createNwkDTOS.add(createNwkDTO);
 
-        List<NwkDTO> resultList = service.excelToNwkDTOList(base64EncodedExcel1NWK);
+        List<CreateNwkDTO> resultList = service.excelToNwkDTOList(base64EncodedExcel1NWK);
 
-        assertEquals(maxList.get(0).nachname(), resultList.get(0).nachname());
-        assertEquals(maxList.get(0).vorname(), resultList.get(0).vorname());
-        assertEquals(maxList.get(0).studiengang(), resultList.get(0).studiengang());
-        assertEquals(maxList.get(0).jahrgang(), resultList.get(0).jahrgang());
+        assertEquals(createNwkDTOS.get(0).nachname(), resultList.get(0).nachname());
+        assertEquals(createNwkDTOS.get(0).vorname(), resultList.get(0).vorname());
+        assertEquals(createNwkDTOS.get(0).studiengang(), resultList.get(0).studiengang());
+        assertEquals(createNwkDTOS.get(0).jahrgang(), resultList.get(0).jahrgang());
     }
 
     @Test

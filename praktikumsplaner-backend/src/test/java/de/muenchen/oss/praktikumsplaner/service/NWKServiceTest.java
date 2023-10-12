@@ -1,6 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.NWK;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
@@ -36,16 +37,17 @@ public class NWKServiceTest {
         NWK nwk = new NWK(nachname, vorname, studiengang, jahrgang, vorlesungstage);
         NwkDTO nwkDTO = NwkDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
+        CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+                .vorlesungstage(vorlesungstage).build();
 
-        Mockito.when(mapper.toEntity(nwkDTO)).thenReturn(nwk);
+        Mockito.when(mapper.toEntity(createNwkDTO)).thenReturn(nwk);
         Mockito.when(mapper.toDTO(nwk)).thenReturn(nwkDTO);
         Mockito.when(repository.save(Mockito.eq(nwk))).thenReturn(nwk);
 
-        NwkDTO result = service.saveNWK(nwkDTO);
+        NwkDTO result = service.saveNWK(createNwkDTO);
 
         assertNotNull(result);
-        assertEquals(result.nachname(), nwkDTO.nachname());
-
+        assertEquals(result.nachname(), createNwkDTO.nachname());
     }
 
     @Test
@@ -59,16 +61,18 @@ public class NWKServiceTest {
         NWK nwk = new NWK(nachname, vorname, studiengang, jahrgang, vorlesungstage);
         NwkDTO nwkDTO = NwkDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
-        List<NwkDTO> nwkDTOS = new ArrayList<>();
-        nwkDTOS.add(nwkDTO);
+        CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+                .vorlesungstage(vorlesungstage).build();
+        List<CreateNwkDTO> createNwkDTOS = new ArrayList<>();
+        createNwkDTOS.add(createNwkDTO);
 
-        Mockito.when(mapper.toEntity(nwkDTO)).thenReturn(nwk);
+        Mockito.when(mapper.toEntity(createNwkDTO)).thenReturn(nwk);
         Mockito.when(mapper.toDTO(nwk)).thenReturn(nwkDTO);
         Mockito.when(repository.save(Mockito.eq(nwk))).thenReturn(nwk);
 
-        List<NwkDTO> result = service.saveNWK(nwkDTOS);
+        List<NwkDTO> result = service.saveNWK(createNwkDTOS);
 
         assertNotNull(result);
-        assertEquals(result.get(0).nachname(), nwkDTOS.get(0).nachname());
+        assertEquals(result.get(0).nachname(), createNwkDTOS.get(0).nachname());
     }
 }
