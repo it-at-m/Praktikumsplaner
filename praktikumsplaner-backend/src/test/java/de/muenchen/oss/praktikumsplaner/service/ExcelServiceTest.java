@@ -24,15 +24,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 public class ExcelServiceTest {
     private final ExcelService service;
-    private final String base64EncodedExcel1NWK;
+    private final String base64EncodedExcelMultipleNWK;
     private final String base64EncodedExcelNWKInvalidData;
 
     public ExcelServiceTest() throws IOException {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         service = new ExcelService(validator);
-        base64EncodedExcel1NWK = IOUtils.toString(Objects.requireNonNull(this.getClass()
-                .getResourceAsStream("base64EncodedExcel1NWK.txt")),
+        base64EncodedExcelMultipleNWK = IOUtils.toString(Objects.requireNonNull(this.getClass()
+                .getResourceAsStream("base64EncodedExcelMultipleNWK.txt")),
                 StandardCharsets.UTF_8);
         base64EncodedExcelNWKInvalidData = IOUtils.toString(Objects.requireNonNull(this.getClass()
                 .getResourceAsStream("base64EncodedExcelNWKInvalidData.txt")),
@@ -53,12 +53,15 @@ public class ExcelServiceTest {
         List<CreateNwkDTO> createNwkDTOS = new ArrayList<>();
         createNwkDTOS.add(createNwkDTO);
 
-        List<CreateNwkDTO> resultList = service.excelToNwkDTOList(base64EncodedExcel1NWK);
+        // Because only the first NWK gets checked the others are Placeholders for the correct size
+        createNwkDTOS.add(CreateNwkDTO.builder().build());
+        createNwkDTOS.add(CreateNwkDTO.builder().build());
+        createNwkDTOS.add(CreateNwkDTO.builder().build());
 
-        assertEquals(createNwkDTOS.get(0).nachname(), resultList.get(0).nachname());
-        assertEquals(createNwkDTOS.get(0).vorname(), resultList.get(0).vorname());
-        assertEquals(createNwkDTOS.get(0).studiengang(), resultList.get(0).studiengang());
-        assertEquals(createNwkDTOS.get(0).jahrgang(), resultList.get(0).jahrgang());
+        List<CreateNwkDTO> resultList = service.excelToNwkDTOList(base64EncodedExcelMultipleNWK);
+
+        assertEquals(createNwkDTOS.size(), resultList.size());
+        assertEquals(createNwkDTOS.get(0), resultList.get(0));
     }
 
     @Test
