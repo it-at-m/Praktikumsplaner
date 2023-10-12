@@ -2,10 +2,12 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import de.muenchen.oss.praktikumsplaner.domain.NWK;
 import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
@@ -13,9 +15,11 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
+import jakarta.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.val;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -81,5 +85,13 @@ public class NWKServiceTest {
         service.importNWK(base64);
         verify(excelService, times(EXCEL_TO_NWK_DTO_LIST_EXECUTIONS)).excelToNwkDTOList(base64);
         verify(repository, times(createNwkDTOS.size())).save(any(NWK.class));
+    }
+
+    @Test
+    public void testImportNWKFailed() throws IOException {
+        val base64 = "WAAAAAAGGHHH=";
+        when(excelService.excelToNwkDTOList(base64)).thenThrow(ConstraintViolationException.class);
+        assertThrows(ConstraintViolationException.class, () -> service.importNWK(base64));
+        verifyNoInteractions(repository);
     }
 }

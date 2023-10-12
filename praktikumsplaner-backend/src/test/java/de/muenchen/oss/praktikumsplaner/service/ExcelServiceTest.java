@@ -69,8 +69,6 @@ public class ExcelServiceTest {
 
         Set<ConstraintViolation<?>> violations = assertThrows(ConstraintViolationException.class, () -> service.excelToNwkDTOList(base64EncodedExcelNWKInvalidData)).getConstraintViolations();
 
-        violations.forEach(System.out::println);
-
         assertEquals(1, violations.stream().filter(e -> e.getPropertyPath().toString().equals("nachname")).count());
         assertEquals(3, violations.stream().filter(e -> e.getPropertyPath().toString().equals("vorname")).count());
         assertEquals(2, violations.stream().filter(e -> e.getPropertyPath().toString().equals("studiengang")).count());
