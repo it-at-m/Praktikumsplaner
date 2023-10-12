@@ -19,7 +19,7 @@
                         <v-file-input
                             v-model="excelDatei"
                             :accept="excelFormat"
-                            :rules="fileRules"
+                            :rules="rules"
                             label="Fügen Sie eine Excel Datei ein"
                         >
                         </v-file-input>
@@ -50,6 +50,7 @@ import { ref } from "vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { Levels } from "@/api/error";
 import ExcelService from "@/api/ExcelService";
+import { useRules } from "@/composables/rules";
 
 const visible = ref<boolean>();
 const excelDatei = ref<File>();
@@ -57,10 +58,12 @@ const form = ref<HTMLFormElement>();
 const snackbarStore = useSnackbarStore();
 const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-const fileRules = [
-    (value: File) =>
-        !value || value.type == excelFormat || "Nur Excel Dateien sind Erlaubt",
+const validationRules = useRules();
+const rules = [
+    validationRules.fileFormatRule(
+        excelFormat,
+        "Es werden nur Excel Dateien akzeptiert"
+    ),
 ];
 
 function cancel() {
