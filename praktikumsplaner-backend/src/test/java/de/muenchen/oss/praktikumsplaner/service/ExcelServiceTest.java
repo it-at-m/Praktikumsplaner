@@ -2,6 +2,7 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -11,6 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ExcelServiceTest {
     private final ExcelService service;
     private final String base64EncodedExcel1NWK;
-    private final String base64EncodedExcel2NWKInvalidData;
+    private final String base64EncodedExcelNWKInvalidData;
 
     public ExcelServiceTest() throws IOException {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -31,8 +34,8 @@ public class ExcelServiceTest {
         base64EncodedExcel1NWK = IOUtils.toString(Objects.requireNonNull(this.getClass()
                 .getResourceAsStream("base64EncodedExcel1NWK.txt")),
                 StandardCharsets.UTF_8);
-        base64EncodedExcel2NWKInvalidData = IOUtils.toString(Objects.requireNonNull(this.getClass()
-                .getResourceAsStream("base64EncodedExcel2NWKInvalidData.txt")),
+        base64EncodedExcelNWKInvalidData = IOUtils.toString(Objects.requireNonNull(this.getClass()
+                .getResourceAsStream("base64EncodedExcelNWKInvalidData.txt")),
                 StandardCharsets.UTF_8);
     }
 
@@ -60,6 +63,15 @@ public class ExcelServiceTest {
 
     @Test
     public void excelToNwkDTOListTestInvalidData() {
-        assertThrows(ConstraintViolationException.class, () -> service.excelToNwkDTOList(base64EncodedExcel2NWKInvalidData));
+
+        Set<ConstraintViolation<?>> violations = assertThrows(ConstraintViolationException.class, () -> service.excelToNwkDTOList(base64EncodedExcelNWKInvalidData)).getConstraintViolations();
+
+        violations.forEach(System.out::println);
+
+        assertEquals(1, violations.stream().filter(e -> e.getPropertyPath().toString().equals("nachname")).count());
+        assertEquals(3, violations.stream().filter(e -> e.getPropertyPath().toString().equals("vorname")).count());
+        assertEquals(2, violations.stream().filter(e -> e.getPropertyPath().toString().equals("studiengang")).count());
+        assertEquals(3, violations.stream().filter(e -> e.getPropertyPath().toString().equals("jahrgang")).count());
+        assertEquals(6, violations.stream().filter(e -> e.getPropertyPath().toString().equals("vorlesungstage")).count());
     }
 }
