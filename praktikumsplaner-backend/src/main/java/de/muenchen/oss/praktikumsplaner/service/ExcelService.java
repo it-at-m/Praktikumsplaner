@@ -2,13 +2,14 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
+import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
 import jakarta.validation.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +26,6 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class ExcelService {
-
     private final Validator validator;
     private final DataFormatter dataFormatter = new DataFormatter();
     private static final int FIRST_SHEET = 0;
@@ -46,18 +46,24 @@ public class ExcelService {
 
     private List<CreateNwkDTO> getAllNwkFromSheet(XSSFSheet sheet) {
         List<CreateNwkDTO> createNwkDTOS = new ArrayList<>();
-        Set<ConstraintViolation<CreateNwkDTO>> violations = new HashSet<>();
+        List<ExcelImportException.ExcelImportExceptionInfo> importExceptionInfoList = new ArrayList<>();
         for (Row row : sheet) {
             if (row.getRowNum() == FIRST_ROW) continue;
-            CreateNwkDTO createNwkDTO = getNwkDTOFromRow(row);
-            if (isCreateNwkDTOEmpty(createNwkDTO)) {
+            CreateNwkDTO createNwkDTO = null;
+            try {
+                createNwkDTO = getNwkDTOFromRow(row);
+            } catch (IllegalArgumentException ex) {
+                importExceptionInfoList.add(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "vorlesungstage", ex.getMessage()));
+            }
+            if (createNwkDTO == null || isCreateNwkDTOEmpty(createNwkDTO)) {
                 continue;
             }
-            violations.addAll(validator.validate(createNwkDTO));
+            validator.validate(createNwkDTO).forEach(violation -> importExceptionInfoList.add(
+                    new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), violation.getPropertyPath().toString(), violation.getMessage())));
             createNwkDTOS.add(createNwkDTO);
         }
-        if (!violations.isEmpty())
-            throw new ConstraintViolationException(violations);
+        if (!importExceptionInfoList.isEmpty())
+            throw new ExcelImportException(importExceptionInfoList);
         return createNwkDTOS;
     }
 
@@ -76,11 +82,45 @@ public class ExcelService {
             case STUDIENGANG_COLUM -> createNwkDTOBuilder
                     .studiengang(Objects.equals(cellValue, "") ? null : Studiengang.valueOf(cellValue));
             case JAHRGANG_COLUM -> createNwkDTOBuilder.jahrgang(cellValue);
-            case VORLESUNGSTAGE_COLUM -> createNwkDTOBuilder.vorlesungstage(cellValue);
+            case VORLESUNGSTAGE_COLUM -> createNwkDTOBuilder.vorlesungstage(extractVorlesungstage(cellValue));
             default -> {
             }
             }
         }
         return createNwkDTOBuilder.build();
+    }
+
+    private Set<DayOfWeek> extractVorlesungstage(String vorlesungstageString) {
+        final Set<DayOfWeek> vorlesungstage = new HashSet<>();
+        Arrays.stream(vorlesungstageString.split("[+]")).forEach(val -> {
+            val = val.trim();
+            if (!val.isEmpty())
+                vorlesungstage.add(mapToDayOfWeek(val));
+        });
+        return vorlesungstage;
+    }
+
+    private DayOfWeek mapToDayOfWeek(String vorlesungstagString) {
+        switch (vorlesungstagString) {
+        case "Mo" -> {
+            return DayOfWeek.MONDAY;
+        }
+        case "Di" -> {
+            return DayOfWeek.TUESDAY;
+        }
+        case "Mi" -> {
+            return DayOfWeek.WEDNESDAY;
+        }
+        case "Do" -> {
+            return DayOfWeek.THURSDAY;
+        }
+        case "Fr" -> {
+            return DayOfWeek.FRIDAY;
+        }
+        case "Sa" -> {
+            return DayOfWeek.SATURDAY;
+        }
+        }
+        throw new IllegalArgumentException(vorlesungstagString);
     }
 }
