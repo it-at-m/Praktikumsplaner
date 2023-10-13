@@ -1,6 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -33,6 +35,7 @@ public class NWK extends BaseEntity {
     @Size(min = 2, max = 255, message = "Der Nachname darf nur zwischen {min} und {max} Zeichen lang sein")
     public String nachname;
 
+    @Enumerated(EnumType.STRING)
     @NotNull(message = "Der Studiengang ist erforderlich")
     public Studiengang studiengang;
 
@@ -40,5 +43,6 @@ public class NWK extends BaseEntity {
     @Pattern(regexp = "\\d\\d/\\d\\d")
     public String jahrgang;
 
+    @Enumerated(EnumType.STRING)
     public Set<DayOfWeek> vorlesungstage;
 }
