@@ -21,27 +21,21 @@ export default class FetchUtils {
     static getPOSTConfig(body: any): RequestInit {
         return {
             method: "POST",
-            body: body ? JSON.stringify(body) : undefined,
+            body: getBody(body),
             headers: FetchUtils.getHeaders(),
             mode: "cors",
             credentials: "same-origin",
             redirect: "manual",
         };
-    }
-
-    /**
-     * Liefert eine default POST-Config für fetch die nur Strings akzeptiert
-     * @param body Optional zu übertragender Body
-     */
-    static getPOSTConfigString(body: string): RequestInit {
-        return {
-            method: "POST",
-            body: body ? body : undefined,
-            headers: FetchUtils.getHeaders(),
-            mode: "cors",
-            credentials: "same-origin",
-            redirect: "manual",
-        };
+        function getBody(body: any): any {
+            if (!body) {
+                return undefined;
+            } else if (typeof body == "string") {
+                return body;
+            } else {
+                return JSON.stringify(body);
+            }
+        }
     }
 
     /**
