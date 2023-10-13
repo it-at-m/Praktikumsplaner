@@ -2,9 +2,11 @@
 
 - Services
   - require Keycloak for single sign on
+  - Frontendservice that serves the UI
+  - Backendservice that serves access to the data
 - DBs:
-  - in memory (jdbc-url is in local-docker-backend.env)
   - Postgres for Keycloak
+  - Postgres for backend-Service
 - Keycloak
 
 ## Docker
@@ -12,8 +14,14 @@
 Use docker compose to start the infrastructure
 
 ```
-# Starts the backendservice
+# Starts the infrastructure services like keycloak and db for backend
 docker compose up -d
+
+# Starts all services
+docker compose --profile full up -d
+
+# Includes the backend service on startup
+docker compose --profile backend up -d
 
 # Includes the frontend service on startup
 docker compose --profile frontend up -d
