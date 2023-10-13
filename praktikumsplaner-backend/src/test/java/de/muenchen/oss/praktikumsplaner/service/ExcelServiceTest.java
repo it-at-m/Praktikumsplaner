@@ -9,14 +9,13 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -31,12 +30,10 @@ public class ExcelServiceTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         service = new ExcelService(validator);
-        base64EncodedExcelMultipleNWK = IOUtils.toString(Objects.requireNonNull(this.getClass()
-                .getResourceAsStream("base64EncodedExcelMultipleNWK.txt")),
-                StandardCharsets.UTF_8);
-        base64EncodedExcelNWKInvalidData = IOUtils.toString(Objects.requireNonNull(this.getClass()
-                .getResourceAsStream("base64EncodedExcelNWKInvalidData.txt")),
-                StandardCharsets.UTF_8);
+        base64EncodedExcelMultipleNWK = Base64.getEncoder().encodeToString(Objects
+                .requireNonNull(this.getClass().getResourceAsStream("ExcelMultipleNWK.xlsx")).readAllBytes());
+        base64EncodedExcelNWKInvalidData = Base64.getEncoder().encodeToString(Objects
+                .requireNonNull(this.getClass().getResourceAsStream("ExcelNWKInvalidData.xlsx")).readAllBytes());
     }
 
     @Test
