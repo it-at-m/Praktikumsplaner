@@ -17,6 +17,8 @@ spring:
       return-body-on-create: true
 
   # Spring JPA
+  datasource:
+    url: jdbc:h2:mem:ppdb
   h2.console.enabled: true
   jpa:
     database: H2
