@@ -60,7 +60,7 @@ const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const validationRules = useRules();
 const rules = [
-    validationRules.fileFormatRule(
+    validationRules.fileTypeRule(
         excelFormat,
         "Es werden nur Excel Dateien akzeptiert"
     ),
