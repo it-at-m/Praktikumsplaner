@@ -4,14 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
+import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -19,7 +20,6 @@ import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 
 @ExtendWith(MockitoExtension.class)
 public class ExcelServiceTest {
@@ -40,12 +40,14 @@ public class ExcelServiceTest {
     }
 
     @Test
-    public void excelToNwkDTOListTestValidData() throws IOException {
+    public void testExcelToNwkDTOListValidData() throws IOException {
         final String nachname = "Mustermann";
         final String vorname = "Max";
         final Studiengang studiengang = Studiengang.BSC;
         final String jahrgang = "21/24";
-        final String vorlesungstage = "Mo + Di";
+        final Set<DayOfWeek> vorlesungstage = new HashSet<>();
+        vorlesungstage.add(DayOfWeek.MONDAY);
+        vorlesungstage.add(DayOfWeek.TUESDAY);
 
         CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
@@ -65,14 +67,14 @@ public class ExcelServiceTest {
     }
 
     @Test
-    public void excelToNwkDTOListTestInvalidData() {
+    public void testExcelToNwkDTOListInvalidData() {
 
-        Set<ConstraintViolation<?>> violations = assertThrows(ConstraintViolationException.class, () -> service.excelToNwkDTOList(base64EncodedExcelNWKInvalidData)).getConstraintViolations();
+        var violations = assertThrows(ExcelImportException.class, () -> service.excelToNwkDTOList(base64EncodedExcelNWKInvalidData)).getExceptionInfos();
 
-        assertEquals(1, violations.stream().filter(e -> e.getPropertyPath().toString().equals("nachname")).count());
-        assertEquals(3, violations.stream().filter(e -> e.getPropertyPath().toString().equals("vorname")).count());
-        assertEquals(2, violations.stream().filter(e -> e.getPropertyPath().toString().equals("studiengang")).count());
-        assertEquals(3, violations.stream().filter(e -> e.getPropertyPath().toString().equals("jahrgang")).count());
-        assertEquals(6, violations.stream().filter(e -> e.getPropertyPath().toString().equals("vorlesungstage")).count());
+        assertEquals(1, violations.stream().filter(e -> e.getColumName().equals("nachname")).count());
+        assertEquals(3, violations.stream().filter(e -> e.getColumName().equals("vorname")).count());
+        assertEquals(2, violations.stream().filter(e -> e.getColumName().equals("studiengang")).count());
+        assertEquals(3, violations.stream().filter(e -> e.getColumName().equals("jahrgang")).count());
+        assertEquals(2, violations.stream().filter(e -> e.getColumName().equals("vorlesungstage")).count());
     }
 }
