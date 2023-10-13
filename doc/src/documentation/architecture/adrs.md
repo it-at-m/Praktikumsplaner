@@ -5,10 +5,10 @@ to architecture. We use the [ADR template of Michael Nygard](https://github.com/
 
 The following adrs exist:
 
-- [Send-Errormessage](./adr/adr001.md)
 - [ADR-001 use final](./adr/adr001-use-final.md)
 - [ADR-002 dont use `@Column`-annotation](adr/adr002-no-hibernate-column-annotation.md)
 - [ADR-003 `test` as prefix for test case methods](./adr/adr003-test-as-prefix-for-tests.md)
 - [ADR-004 Reduce mapstructmapper tests to a minimum](./adr/adr004-testing-of-mapping.md)
 - [ADR-005 dtos as java records](./adr/adr005-dtos-as-records.md)
 - [ADR-006 frontend components without complex logic](./adr/adr006-kiss-frontend-components.md)
+- [ADR-007 send errormessage](./adr/adr007-send-errormessage.md)
