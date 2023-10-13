@@ -1,11 +1,12 @@
 import { useRules } from "@/composables/rules";
+import { describe } from "vitest";
 
 describe("rules test", () => {
     const errorMessage = "Error";
     it("tests fileFormatRules return true", () => {
         const validationRules = useRules();
 
-        const txtRule = validationRules.fileFormatRule(
+        const txtRule = validationRules.fileTypeRule(
             "text/plain",
             errorMessage
         );
@@ -18,24 +19,33 @@ describe("rules test", () => {
     it("tests fileFormatRules returns Error when using wrong fileformat", () => {
         const validationRules = useRules();
 
-        const txtRule = validationRules.fileFormatRule(
-            "audio/aac",
-            errorMessage
-        );
+        const txtRule = validationRules.fileTypeRule("audio/aac", errorMessage);
         const txtFile = new File(["foo"], "foo.txt", {
             type: "text/plain",
         });
 
         expect(txtRule(txtFile)).toBe(errorMessage);
+    });
+    it("tests fileFormatRules with null", () => {
+        const validationRules = useRules();
+
+        const txtRule = validationRules.fileTypeRule("audio/aac", errorMessage);
 
         const nullFile = null;
-        let undefinedFile;
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(txtRule(nullFile)).toBe(errorMessage);
+    });
+    it("tests fileFormatRules with undefined", () => {
+        const validationRules = useRules();
+
+        const txtRule = validationRules.fileTypeRule("audio/aac", errorMessage);
+
+        let undefined: undefined;
+
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        expect(txtRule(undefinedFile)).toBe(errorMessage);
+        expect(txtRule(undefined)).toBe(errorMessage);
     });
 });
