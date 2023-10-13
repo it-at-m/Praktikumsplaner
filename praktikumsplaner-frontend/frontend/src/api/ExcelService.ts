@@ -6,7 +6,7 @@ export default {
         // File Reader encodes as Base64
         return this.readString(excelDatei).then((base64string: string) => {
             return fetch(
-                `${API_BASE}/api/aa-a-backend-service${NWK_BASE}/import`,
+                `${API_BASE}${NWK_BASE}/import`,
                 // Base64 String starts after the comma
                 FetchUtils.getPOSTConfig(base64string.split(",")[1])
             )
