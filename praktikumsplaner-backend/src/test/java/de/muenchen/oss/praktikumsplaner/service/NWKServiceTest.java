@@ -1,10 +1,9 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -17,8 +16,11 @@ import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
 import jakarta.validation.ConstraintViolationException;
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.val;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
@@ -27,8 +29,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-
 
 @ExtendWith(MockitoExtension.class)
 public class NWKServiceTest {
@@ -47,20 +47,22 @@ public class NWKServiceTest {
         final String vorname = "Max";
         final Studiengang studiengang = Studiengang.BSC;
         final String jahrgang = "21/24";
-        final String vorlesungstage = "Mo + Di";
+        final Set<DayOfWeek> vorlesungstage = new HashSet<>();
+        vorlesungstage.add(DayOfWeek.MONDAY);
+        vorlesungstage.add(DayOfWeek.TUESDAY);
 
-        NWK nwk = new NWK(nachname, vorname, studiengang, jahrgang, vorlesungstage);
+        NWK nwk = new NWK(vorname, nachname, studiengang, jahrgang, vorlesungstage);
         NwkDTO nwkDTO = NwkDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
         CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
-        when(repository.save(eq(nwk))).thenReturn(nwk);
+        when(repository.save(any(NWK.class))).thenReturn(nwk);
 
         NwkDTO result = service.saveNWK(createNwkDTO);
 
         assertNotNull(result);
-        assertSame(result, nwkDTO);
+        assertEquals(result, nwkDTO);
     }
 
     @Test
@@ -70,7 +72,9 @@ public class NWKServiceTest {
         final String vorname = "Max";
         final Studiengang studiengang = Studiengang.BSC;
         final String jahrgang = "21/24";
-        final String vorlesungstage = "Mo + Di";
+        final Set<DayOfWeek> vorlesungstage = new HashSet<>();
+        vorlesungstage.add(DayOfWeek.MONDAY);
+        vorlesungstage.add(DayOfWeek.TUESDAY);
         final int EXCEL_TO_NWK_DTO_LIST_EXECUTIONS = 1;
 
         CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
