@@ -1,4 +1,4 @@
-# ADR-001 Benutzung von final
+# ADR-001 use final
 
 ## Status
 
@@ -6,17 +6,16 @@
 
 ## Decision
 
-Parameter und lokale Variablen sollen immer als `final` markiert werden sofern nicht eine Veränderung der Referenz
-erforderlich ist.
+Parameters and local variables should have the `final` modifier unless a change of the reference is required.
 
-Für lokale Variablen soll, soweit möglich, von Lombok `val` verwendet werden.
+For local variables we use `val` of the lombok library.
 
 ### Todo
 
-- die offenen PRs müssen angepasst werden
-- zum Zeitpunkt der Entscheidung gab es noch keine abgeschlossenen PRs so dass kein bestehender Code anzupassen ist
+- the open PRs need to be adapted
+- right now, there is no existing code needs to be adapted
 
 ## Consequences
 
-Es kann dazu führen dass, durch die vermehrte Verwendung von `final`, der Code etwas schlechter Lesbar ist. Man muss sich jetzt
-bewusst dafür entscheiden eine Variable für das Schreiben wieder freizugeben.
+The increased use of `final` can make the code less readable. You have to do it now consciously decide to release a
+variable for writing again.

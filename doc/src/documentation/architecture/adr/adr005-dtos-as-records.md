@@ -1,4 +1,4 @@
-# ADR-005 DTOs werden als Records erstellt
+# ADR-005 dtos as java records
 
 ## Status
 
@@ -6,23 +6,23 @@
 
 ## Context
 
-DTO-Klassen sind Klassen die Daten zwischen Layern oder Services transportieren. Sie enthalten keine fachliche
-Funktionalität. Der Sender erzeugt die Daten und der Empfänger soll diese verarbeiten. Daher ist ein Schreibzugriff
-nach dem Erstellen nicht mehr notwendig.
+DTO classes are classes that transport data between layers or services. They do not contain any business
+functionality. The sender generates the data and the receiver process it. Therefore, a write access after the
+creation is no longer necessary.
 
 ## Decision
 
-Records bieten von sich aus diese Funktionalität. Nach der Erstellung kann nur noch lesend zugegriffen werden. Um nicht
-immer den AllArgsConstructor verwenden zu müssen oder eigenen reduzierte Konstruktoren schreiben zu müssen, soll über
-Lombok das Builder-Pattern implementiert werden.
+Records provide this functionality by themselves. After creation, only read access is possible. By using the builder
+pattern we do not have to use the all arguments constructor all time, neither have to write constructors with
+reduced argument list. We can use lomboks `@Builder` annotation.
 
 ### Todo
 
-- DTOs bestehender PRs sind anzupassen
-- zum Zeitpunkt der Entscheidung gab es noch keine abgeschlossenen PRs so dass kein bestehender Code anzupassen ist
+- dtos of open pull requests have to be adopted
+- at the time of the decision there were no completed PRs so no existing code is to be adapted
 
 ## Consequences
 
-Wir reduzieren auf diese Weise ungewollte Seiteneffekte da die Eigenschaften eines DTOs nicht veränderbar sind. Wenn
-Objectfactories verwendet werden die nur einen Teil des Objektes befüllen und andere Komponenten das Objekt später
-finalisieren muss der Builder verwendet werden.
+We reduce unwanted side effects in this way because the properties of a DTO cannot be changed. If
+objectfactories are used that fill only a part of the object and other components finalize the object later
+finalize the object later, the builder must be used.
