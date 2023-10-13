@@ -29,6 +29,6 @@ Additional column definitions are not done by Hibernate as we use Flyway for ver
 
 Renaming will affect the entire code (entities, dtos). This shows once again how important a well thought-out naming is.
 
-You must be aware that the column name and the property name must be the same. When looking into the database
-it is immediately known which property belongs to it in the code. But this should also increase the comprehensibility
-because there are no different terms for the same things.
+You must be aware that the column name and the property name must be the same. This way while examining the database
+it is immediately apparent which property in the source code corresponds to each part of it. But this should also
+increase the comprehensibility because there are no different terms for the same things.
