@@ -10,7 +10,7 @@ It is possible to upload an Excel file to the field in the middle of the dialog.
 
 It is not possible to upload non-Excel files or old format Excel files (older than 2007).
 
-The Excel file has to be in the [correct format](../assets/Import_Standart.xlsx).
+The Excel file has to be in the <a download="Import_Standart.xlsx" href="assets/Import_Standart.xlsx">correct format</a>.
 
 The First Name (Vorname) has to be between 2 and 255 characters.
 

@@ -1,3 +1,3 @@
 # Features
 
-[ExcelImport](ExcelImport.md)
+[Excel Upload](ExcelImport.md)
