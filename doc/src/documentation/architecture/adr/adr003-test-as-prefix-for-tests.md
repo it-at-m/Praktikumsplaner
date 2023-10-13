@@ -6,7 +6,7 @@
 
 ## Context
 
-The code should have a certain uniformity. This also applies to the tests. Past experiences show that there were
+The code should have a certain uniformity. This also applies to the tests. Experiences show that there were
 different spellings for the method names of the test cases. Some test methods started with `test` others did
 not.
 
