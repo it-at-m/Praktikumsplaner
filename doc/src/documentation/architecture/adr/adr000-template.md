@@ -1,4 +1,4 @@
-# ADR-Number-Title
+# ADR-Number title
 
 Title should be in form &lt;action-verb&gt;-&lt;object&gt;, e.g. configure-service, format-code, select-database.
 
