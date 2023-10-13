@@ -1,4 +1,4 @@
-# ADR-002 Keine `@Column`-Annotation wenn nicht unbedingt erforderlich
+# ADR-002 dont use `@Column`-annotation
 
 ## Status
 
@@ -6,31 +6,29 @@
 
 ## Context
 
-Der Code soll leserlich sein und keine unnötigen Elemente enthalten. Es soll vermieden werden redundante Informationen
-zu haben. Das Standardverhalten von Hibernate in der Anwendung ist, dass der Name der Tabellenspalte und der Name der
-Property gleich sind.
+The code should be readable and contain no unnecessary elements. Consequently, we should avoid redundant information.
+The default behavior of Hibernate in our application is that the name of the table column and the name of the
+property are the equal.
 
 ## Decision
 
-Die `@Column`-Annotation von Hibernate wird nur verwendet wenn sie unbedingt erforderlich ist. Das ist zum Beispiel der 
-Fall, wenn der Name der Property in der Klasse ein Anderer ist als der Name der Spalte in der Tabelle.
+Hibernate's `@Column` annotation is only used when absolutely necessary, for example when name of the table column and
+the name of the property differ.
 
-In der Regel sollten die Namen zusammenpassen.
+Mainly, the name should match.
 
-Zusätzliche Spaltendefinitionen erfolgen nicht mittels Hibernate da wir Flyway verwenden zur Versionierung des
-Datenbankschemas.
+Additional column definitions are not done by Hibernate as we use Flyway for versioning database schemas.
 
 ### Todo
 
-- Entfernung von entsprechenden Annotationen, bei den vorhanden Entitäten, bei den offenen PRs
-- zum Zeitpunkt der Entscheidung gab es noch keine abgeschlossenen PRs, weshalb kein bestehender Code anzupassen ist
-- Die Entität `TheEntity` spielt hierbei keine Rolle da diese zeitnah entfernt wird.
+- Removal of `@Column` annotations from entities of open pull requests
+- right now, there is no existing code needs to be adapted
+- The entity `TheEntity` is not addressed because it will be removed soon
 
 ## Consequences
 
-Umbenennungen ziehen sich durch den ganzen Code (Entitäten, DTOs). Dass zeigt noch einmal wie wichtig eine durchdachte
-Benennung ist.
+Renaming will affect the entire code (entities, dtos). This shows once again how important a well thought-out naming is.
 
-Man muss sich dessen bewusst sein dass Spaltenname und Propertynamen gleich sein müssen. Beim Blick in die Datenbank
-ist sofort bekannt welche Property dazu gehört im Code. Dadurch sollte aber auch die Verständlichkeit steigen weil es
-nicht unterschiedliche Begriffe für gleiche Sachverhalte gibt.
+You must be aware that column name and property name must be the same. When looking into the database
+it is immediately known which property belongs to it in the code. But this should also increase the comprehensibility
+because there are no different terms for the same things.

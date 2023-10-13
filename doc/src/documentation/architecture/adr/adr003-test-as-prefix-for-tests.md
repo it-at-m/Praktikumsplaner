@@ -1,4 +1,4 @@
-# ADR-003- `test` als Präfix bei Tests
+# ADR-003 `test` as prefix for test case methods
 
 ## Status
 
@@ -6,20 +6,20 @@
 
 ## Context
 
-Der Code sollte eine gewisse Einheitlichkeit aufweisen. Dies betrifft auch die Tests. Es der Erfahrung heraus gab es 
-unterschiedliche Schreibweisen für die Methodennamen der Testfälle. Manche Testmethoden begannen mit `test` andere
-nicht.
+The code should have a certain uniformity. This also applies to the tests. From experience there were
+different spellings for the method names of the test cases. Some test methods started with `test` others
+not.
 
 ## Decision
 
-Alle Testmethoden beginnen mit dem Präfix `test`. Ensptrechend lowerCamelCase geht der Methodename danach weiter mit
-einem Großbuchstaben.
+All test methods start with the prefix `test`. Corresponding to lowerCamelCase the method name continues afterwards with
+an uppercase letter.
 
 ### Todo
 
-- der Code zu bestehenden PRs soll angepasst werden
-- zum Zeitpunkt der Entscheidung gab es noch keine abgeschlossenen PRs so dass kein bestehender Code anzupassen ist
+- the code to existing PRs is to be adapted
+- at the time of the decision there were no completed PRs so no existing code is to be adapted
 
 ## Consequences
 
-Abgesehen von der Einheitlichkeit des Codes und ein leicht längerer Methodenname sind keine Implikationen erkennbar.
+Other than code uniformity and a slightly longer method name, no implications are noticeable.

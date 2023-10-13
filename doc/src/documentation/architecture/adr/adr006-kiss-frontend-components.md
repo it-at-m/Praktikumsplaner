@@ -1,4 +1,4 @@
-# ADR-006 Frontendkomponenten ohne komplexe Logik
+# ADR-006 frontend components without complex logic
 
 ## Status
 
@@ -6,20 +6,20 @@
 
 ## Context
 
-Mit Komponenten sind hier vue-Komponenten, in Form von Single-File-Components, gemeint. Diese beinhalten ein Template,
-einen script-Teil und Styling.
+By components are meant here vue components, in the form of single-file components. These contain a template,
+a script part and styling.
 
 ## Decision
 
-In Komponenten soll es keine funktionale Logik geben. Der Code einer Komponente soll sich auf das Databinding
-beschränken. Die Logik abseits des Databindings wird über Composables oder Services erledigt.
+There should be no functional logic in components. The code of a component should be limited to databinding.
+The logic, apart from databinding, is settled accomplished by composables or services.
 
 ### Todo
 
-- bei Komponenten von offenen PRs müssen ggf. Anpassungen vorgenommen werden
-- zum Zeitpunkt der Entscheidung gab es noch keine abgeschlossenen PRs so dass kein bestehender Code anzupassen ist
+- components of open pull requests have to be adopted
+- at the time of the decision there were no completed PRs so no existing code is to be adapted
 
 ## Consequences
 
-Die Logik ist leichter testbar da sie unabhängig von der Komponenten getestet werden kann. Es muss darauf geachtet
-werden die Logik ggf. generischer zu schreiben da sie nicht an die Komponenten gekoppelt ist.
+The logic is easier to test because it can be tested independently of the components. The logic may need to be
+written more generically because it is not coupled to the components.
