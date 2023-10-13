@@ -19,6 +19,14 @@ public class GlobalExceptionHandler {
         return ex.getMessage();
     }
 
+    // Is thrown when there is faulty data in the dataset
+    @ExceptionHandler(ExcelImportException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public String ExcelImportException(ExcelImportException ex) {
+        return ex.getExceptionInfos().toString();
+    }
+
     // Is thrown when a non Excel file is Imported
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -34,4 +42,5 @@ public class GlobalExceptionHandler {
     public String IllegalArgumentException(IllegalArgumentException ex) {
         return ex.getMessage();
     }
+
 }
