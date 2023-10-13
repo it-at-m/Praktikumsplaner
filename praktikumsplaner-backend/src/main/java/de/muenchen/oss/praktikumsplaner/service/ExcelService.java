@@ -15,6 +15,8 @@ import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -36,6 +38,7 @@ public class ExcelService {
     private static final int JAHRGANG_COLUM = 3;
     private static final int VORLESUNGSTAGE_COLUM = 4;
     private static final int FIRST_EXCEPTION_INFO = 0;
+    private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
 
     public List<CreateNwkDTO> excelToNwkDTOList(String base64String) throws IOException {
         final InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
@@ -94,13 +97,11 @@ public class ExcelService {
     }
 
     private Set<DayOfWeek> extractVorlesungstage(String vorlesungstageString) {
-        final Set<DayOfWeek> vorlesungstage = new HashSet<>();
-        Arrays.stream(vorlesungstageString.split("[+]")).forEach(val -> {
-            val = val.trim();
-            if (!val.isEmpty())
-                vorlesungstage.add(mapToDayOfWeek(val));
-        });
-        return vorlesungstage;
+        return Arrays.stream(vorlesungstageString.split(SPLIT_VORLESUNGSTAGE_REGEX))
+                .map(String::trim)
+                .filter(vorlesungstagAsString -> !vorlesungstagAsString.isEmpty())
+                .map(this::mapToDayOfWeek)
+                .collect(Collectors.toSet());
     }
 
     private DayOfWeek mapToDayOfWeek(String vorlesungstagString) {
