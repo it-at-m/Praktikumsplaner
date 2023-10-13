@@ -7,12 +7,12 @@
 ## Context
 
 Testing is all about showing the functionality of our application. We rely on the fact that the
-frameworks and libraries we use during development are sufficiently tested. Therefore, we can focus on checking our
-logic, when writing tests, especially unit tests.
+frameworks and libraries we use during development are sufficiently tested. Therefore, we can focus on testing our
+logic while writing tests, especially unit tests.
 
 ## Decision
 
-In the tests on the mappers we write tests when we define explicit mapping logic.
+Mappers are only tested if we defined explicit mapping logic.
 This explicit mapping logic is present, for example, when we define default implementations in interfaces or map
 fields with different names via the `@mapping` annotation or define an expression for the mapping.
 
