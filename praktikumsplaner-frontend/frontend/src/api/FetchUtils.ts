@@ -21,12 +21,21 @@ export default class FetchUtils {
     static getPOSTConfig(body: any): RequestInit {
         return {
             method: "POST",
-            body: body ? JSON.stringify(body) : undefined,
+            body: getBody(body),
             headers: FetchUtils.getHeaders(),
             mode: "cors",
             credentials: "same-origin",
             redirect: "manual",
         };
+        function getBody(body: any): any {
+            if (!body) {
+                return undefined;
+            } else if (typeof body == "string") {
+                return body;
+            } else {
+                return JSON.stringify(body);
+            }
+        }
     }
 
     /**
