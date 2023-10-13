@@ -73,31 +73,22 @@ function cancel() {
 
 function uploadFile() {
     if (!excelDatei.value || !form.value?.validate()) return;
-
-    // File Reader encodes as Base64
-    const reader = new FileReader();
-    reader.readAsDataURL(excelDatei.value);
-    reader.onloadend = () => {
-        if (typeof reader.result == "string") {
-            // Base64 String starts after the comma
-            ExcelService.uploadExcelFile(reader.result.split(",")[1])
-                .then(() =>
-                    snackbarStore.showMessage({
-                        message: "NWKs erfolgreich Angelegt!",
-                        level: Levels.INFO,
-                    })
-                )
-                .catch((error) => {
-                    snackbarStore.showMessage({
-                        message: error,
-                        level: Levels.ERROR,
-                    });
-                })
-                .finally(() => {
-                    cancel();
-                });
-        }
-    };
+    ExcelService.uploadExcelFile(excelDatei.value)
+        .then(() =>
+            snackbarStore.showMessage({
+                message: "NWKs erfolgreich Angelegt!",
+                level: Levels.INFO,
+            })
+        )
+        .catch((error) => {
+            snackbarStore.showMessage({
+                message: error,
+                level: Levels.ERROR,
+            });
+        })
+        .finally(() => {
+            cancel();
+        });
 }
 </script>
 
