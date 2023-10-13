@@ -33,7 +33,6 @@ export default class FetchUtils {
      * Liefert eine default POST-Config für fetch die nur Strings akzeptiert
      * @param body Optional zu übertragender Body
      */
-    // eslint-disable-next-line
     static getPOSTConfigString(body: string): RequestInit {
         return {
             method: "POST",
