@@ -9,6 +9,7 @@ services:
       - "8080:8082"
     profiles:
       - frontend
+      - full
     pull_policy: always
     env_file:
       - local-docker-frontend.env
@@ -24,6 +25,9 @@ services:
     image: itatm/praktikumsplaner-backend:latest
     ports:
       - "39146:39146"
+    profiles:
+      - backend
+      - full
     pull_policy: always
     env_file:
       - local-docker-backend.env
@@ -33,6 +37,19 @@ services:
     networks:
       - internal
       - keycloak
+
+  postgres-backend:
+    image: postgres:13.2
+    container_name: postgres-backend
+    environment:
+      POSTGRES_DB: praktikumsplaner
+      POSTGRES_USER: db-backend-user
+      POSTGRES_PASSWORD: db-backend-password
+    ports:
+      - "5432:5432"
+    networks:
+      - internal
+      - dbs
 
   # Keycloak (SSO)
   keycloak:
@@ -75,6 +92,19 @@ services:
       POSTGRES_PASSWORD: keycloak-secret
     networks:
       - keycloak
+      - dbs
+
+  ## Tools
+
+  postgres-pg-admin:
+    image: dpage/pgadmin4:7.7
+    container_name: postgres-pg-admin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@a.de
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - 8101:80
+    networks:
       - dbs
 
 networks:
