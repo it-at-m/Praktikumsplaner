@@ -1,4 +1,4 @@
-# ADR-001-Send-Errormessage
+# ADR-001 send errormessage
 
 ## Status
 
