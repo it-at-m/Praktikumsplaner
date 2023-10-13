@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static org.apache.logging.log4j.util.Strings.isBlank;
 import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
@@ -13,7 +14,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -35,6 +35,7 @@ public class ExcelService {
     private static final int STUDIENGANG_COLUM = 2;
     private static final int JAHRGANG_COLUM = 3;
     private static final int VORLESUNGSTAGE_COLUM = 4;
+    private static final int FIRST_EXCEPTION_INFO = 0;
 
     public List<CreateNwkDTO> excelToNwkDTOList(String base64String) throws IOException {
         final InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
@@ -52,8 +53,10 @@ public class ExcelService {
             CreateNwkDTO createNwkDTO = null;
             try {
                 createNwkDTO = getNwkDTOFromRow(row);
-            } catch (IllegalArgumentException ex) {
-                importExceptionInfoList.add(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "vorlesungstage", ex.getMessage()));
+            } catch (ExcelImportException ex) {
+                importExceptionInfoList.add(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(),
+                        ex.getExceptionInfos().get(FIRST_EXCEPTION_INFO).getColumName(),
+                        ex.getExceptionInfos().get(FIRST_EXCEPTION_INFO).getValue()));
             }
             if (createNwkDTO == null || isCreateNwkDTOEmpty(createNwkDTO)) {
                 continue;
@@ -80,7 +83,7 @@ public class ExcelService {
             case NACHNAME_COLUM -> createNwkDTOBuilder.nachname(cellValue);
             case VORNAME_COLUM -> createNwkDTOBuilder.vorname(cellValue);
             case STUDIENGANG_COLUM -> createNwkDTOBuilder
-                    .studiengang(Objects.equals(cellValue, "") ? null : Studiengang.valueOf(cellValue));
+                    .studiengang(isBlank(cellValue) ? null : Studiengang.valueOf(cellValue));
             case JAHRGANG_COLUM -> createNwkDTOBuilder.jahrgang(cellValue);
             case VORLESUNGSTAGE_COLUM -> createNwkDTOBuilder.vorlesungstage(extractVorlesungstage(cellValue));
             default -> {
@@ -121,6 +124,6 @@ public class ExcelService {
             return DayOfWeek.SATURDAY;
         }
         }
-        throw new IllegalArgumentException(vorlesungstagString);
+        throw new ExcelImportException(List.of(new ExcelImportException.ExcelImportExceptionInfo(-1, "vorlesungstage", vorlesungstagString)));
     }
 }
