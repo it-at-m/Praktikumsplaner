@@ -6,8 +6,8 @@
 
 ## Context
 
-The code should have a certain uniformity. This also applies to the tests. From experience there were
-different spellings for the method names of the test cases. Some test methods started with `test` others
+The code should have a certain uniformity. This also applies to the tests. Past experiences show that there were
+different spellings for the method names of the test cases. Some test methods started with `test` others did
 not.
 
 ## Decision
@@ -17,8 +17,8 @@ an uppercase letter.
 
 ### Todo
 
-- the code to existing PRs is to be adapted
-- at the time of the decision there were no completed PRs so no existing code is to be adapted
+- the code to existing PRs has to be adapted
+- at the time of the decision there were no completed PRs so no existing code has to be adapted
 
 ## Consequences
 

@@ -20,7 +20,7 @@ What is the change that we're proposing and/or doing?
 
 ### Todo
 
-Optional. List of activities that have do be done
+Optional. List of tasks that have do be done
 
 ## Consequences
 
