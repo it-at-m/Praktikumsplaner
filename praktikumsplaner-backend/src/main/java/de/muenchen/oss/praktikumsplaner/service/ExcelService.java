@@ -28,7 +28,7 @@ public class ExcelService {
 
     private final Validator validator;
     private final DataFormatter dataFormatter = new DataFormatter();
-    private static final int SHEET = 0;
+    private static final int FIRST_SHEET = 0;
     private static final int FIRST_ROW = 0;
     private static final int NACHNAME_COLUM = 0;
     private static final int VORNAME_COLUM = 1;
@@ -39,7 +39,7 @@ public class ExcelService {
     public List<CreateNwkDTO> excelToNwkDTOList(String base64String) throws IOException {
         final InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
         final XSSFWorkbook workbook = new XSSFWorkbook(stream);
-        final XSSFSheet sheet = workbook.getSheetAt(SHEET);
+        final XSSFSheet sheet = workbook.getSheetAt(FIRST_SHEET);
 
         return getAllNwkFromSheet(sheet);
     }
