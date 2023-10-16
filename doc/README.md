@@ -7,6 +7,11 @@ npm install
 npm run dev
 ```
 
+**Requires node version 16**
+```bash
+npm run build
+```
+
 ## Without local Node
 
 Execute once to get local Node / NPM on your machine and install required modules:
