@@ -6,6 +6,8 @@ A short description about the request.
 
 Issue: #XXX
 
+Notifying additional team members:
+
 @mirrodi @MrSebastian @AnHo314
 
 ---
