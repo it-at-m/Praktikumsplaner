@@ -7,7 +7,7 @@ actionText: Technische Dokumentation →
 actionLink: /documentation/
 features:
 - title: Excel Upload
-  details: Create new NWKs from Excel file #1
+  details: Create new NWKs from Excel file
 - title: feature 2
   details: details for feature #2
 - title: feature 3
