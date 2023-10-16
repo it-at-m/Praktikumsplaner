@@ -5,5 +5,6 @@ Architekturentscheidungen dar. Wir verwenden die [ADR Vorlage von Michael Nygard
 
 Folgende ADRs sind vorhanden:
 
-*noch keine keine*
+- [Send-Errormessage](./adr/adr001.md)
+
 - [Template](./adr/adr000-template.md)

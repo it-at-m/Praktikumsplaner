@@ -1,0 +1,22 @@
+id: add testuser
+author: MrSebastian
+realm: ${SSO_REALM}
+changes:
+  - addUser:
+      name: testuser
+      lastName: Lastname
+      firstName: Firstname
+      enabled: true
+      emailVerified: true
+      email: test.user@example.com
+      groups:
+        - group1
+      attributes:
+        user_name:
+          - test.user
+      clientRoles:
+        - client: ${SSO_CLIENT_ID}
+          role: clientrole_testuser
+  - updateUserPassword:
+      name: testuser
+      password: "test"

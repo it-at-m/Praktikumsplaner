@@ -38,8 +38,11 @@
                         @keyup.enter="search"
                     />
                 </v-col>
+                <v-col>
+                    <ExcelImportNWK></ExcelImportNWK>
+                </v-col>
                 <v-col
-                    cols="3"
+                    cols="1"
                     class="d-flex align-center justify-end"
                 >
                     <v-btn
@@ -82,6 +85,7 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router/composables";
 import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
+import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
 
 const drawer = ref(true);
 const query = ref("");
