@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Main from "./views/MainView.vue";
 import GetStarted from "./views/GetStarted.vue";
 import { ROUTER_BASE } from "@/Constants";
+import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ export default new Router({
             path: "/getstarted",
             name: "getstarted",
             component: GetStarted,
+        },
+        {
+            path: "/meldezeitraeume",
+            name: "meldezeitraeume",
+            component: Meldezeitraeume,
         },
         { path: "*", redirect: "/" }, //Fallback 2
     ],
