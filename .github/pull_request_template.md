@@ -1,11 +1,3 @@
----
-name: Pull Request
-about: Request a branch to be merged
-title: ''
-labels: ''
-assignees: ''
-
----
 **Description:**  
 
 A short description about the request.
@@ -13,6 +5,10 @@ A short description about the request.
 **Reference:**
 
 Issue: #XXX
+
+Notifying additional team members:
+
+@mirrodi @MrSebastian @AnHo314
 
 ---
 **Definition of Done (DoD):**
