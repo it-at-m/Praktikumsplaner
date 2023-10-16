@@ -1,7 +1,7 @@
 name: release services
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       release-version:
         description: 'Services release version'
