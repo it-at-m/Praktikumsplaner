@@ -72,6 +72,11 @@ module.exports = {
         sidebar: {
           "/documentation/": [
             {
+              title: "configuration",
+              collapsable: false,
+              children: ["architecture/configuration"],
+            },
+            {
               title: "Architektur",
               collapsable: false,
               children: ["architecture/overview", "architecture/adrs"],
