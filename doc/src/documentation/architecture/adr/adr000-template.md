@@ -1,4 +1,4 @@
-# ADR-Number-Title
+# ADR-Number title
 
 Title should be in form &lt;action-verb&gt;-&lt;object&gt;, e.g. configure-service, format-code, select-database.
 
@@ -17,6 +17,10 @@ What is the issue that we're seeing that is motivating this decision or change?
 ## Decision
 
 What is the change that we're proposing and/or doing?
+
+### Todo
+
+Optional. List of tasks that have do be done
 
 ## Consequences
 
