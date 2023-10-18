@@ -22,7 +22,7 @@
                     </router-link>
                 </v-col>
                 <v-col
-                    cols="6"
+                    cols="5"
                     class="d-flex align-center justify-center"
                 >
                     <v-text-field
@@ -41,8 +41,11 @@
                 <v-col>
                     <ExcelImportNWK></ExcelImportNWK>
                 </v-col>
+                <v-col>
+                    <MeldungOertlAusbilder></MeldungOertlAusbilder>
+                </v-col>
                 <v-col
-                    cols="1"
+                    cols="0"
                     class="d-flex align-center justify-end"
                 >
                     <v-btn
@@ -86,6 +89,7 @@ import { useRoute } from "vue-router/composables";
 import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
+import MeldungOertlAusbilder from "@/components/MeldungOertlAusbilder.vue";
 
 const drawer = ref(true);
 const query = ref("");
