@@ -3,5 +3,15 @@ export function useRules() {
         return (value: File) => (value && value.type == format) || message;
     }
 
-    return { fileTypeRule };
+    function notEmptyRule(message: string) {
+        return (value: string) => (value && value.trim() != "") || message;
+    }
+
+    function notEmptyRuleAndVisible(visible: boolean, message: string) {
+        return (value: string) => {
+            return (value && value.trim() != "" && visible) || message;
+        };
+    }
+
+    return { fileTypeRule, notEmptyRule, notEmptyRuleAndVisible };
 }
