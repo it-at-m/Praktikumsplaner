@@ -9,7 +9,7 @@ export function useRules() {
 
     function notEmptyRuleAndVisible(visible: boolean, message: string) {
         return (value: string) => {
-            return (value && value.trim() != "" && visible) || message;
+            return !visible || (value && value.trim() != "") || message;
         };
     }
 

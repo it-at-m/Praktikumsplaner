@@ -74,16 +74,19 @@
                         <v-text-field
                             v-model="praktikumsstelle.projektarbeit"
                             label="Projektarbeit"
+                            :rules="ausbildungsRule"
                         >
                         </v-text-field>
                         <v-text-field
                             v-model="praktikumsstelle.ausbildungsjahr"
                             label="Ausbildungsjahr"
+                            :rules="ausbildungsRule"
                         >
                         </v-text-field>
                         <v-text-field
                             v-model="praktikumsstelle.ausbildungsrichtung"
                             label="Ausbildungsrichtung"
+                            :rules="ausbildungsRule"
                         >
                         </v-text-field>
                     </v-list-item>
@@ -94,16 +97,19 @@
                         <v-text-field
                             v-model="praktikumsstelle.programmierkenntnisse"
                             label="Programmierkenntnisse"
+                            :rules="studiumsRule"
                         >
                         </v-text-field>
                         <v-text-field
                             v-model="praktikumsstelle.studiensemester"
                             label="Studiensemester"
+                            :rules="studiumsRule"
                         >
                         </v-text-field>
                         <v-text-field
                             v-model="praktikumsstelle.studienart"
                             label="Studienart"
+                            :rules="studiumsRule"
                         >
                         </v-text-field>
                     </v-list-item>
@@ -129,7 +135,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { Levels } from "@/api/error";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -150,18 +156,23 @@ const validationRules = useRules();
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein!")];
 
-let ausbildungsRule = [
-    validationRules.notEmptyRuleAndVisible(
-        isAusbildung.value,
-        "Darf nicht leer sein!"
-    ),
-];
-let studiumsRule = [
-    validationRules.notEmptyRuleAndVisible(
-        isStudium.value,
-        "Darf nicht leer sein!"
-    ),
-];
+const ausbildungsRule = computed(() => {
+    return [
+        validationRules.notEmptyRuleAndVisible(
+            isAusbildung.value,
+            "Darf nicht leer sein!"
+        ),
+    ];
+});
+
+const studiumsRule = computed(() => {
+    return [
+        validationRules.notEmptyRuleAndVisible(
+            isStudium.value,
+            "Darf nicht leer sein!"
+        ),
+    ];
+});
 
 function cancel() {
     visible.value = false;
@@ -172,22 +183,10 @@ function changeSelectedStuzubi() {
     if (stuzubiSelection.value == stuzubiSelectionItems.value[0]) {
         isStudium.value = false;
         isAusbildung.value = true;
-        ausbildungsRule = [
-            validationRules.notEmptyRuleAndVisible(
-                true,
-                "Darf nicht leer sein!"
-            ),
-        ];
     }
     if (stuzubiSelection.value == stuzubiSelectionItems.value[1]) {
         isAusbildung.value = false;
         isStudium.value = true;
-        studiumsRule = [
-            validationRules.notEmptyRuleAndVisible(
-                true,
-                "Darf nicht leer sein!"
-            ),
-        ];
     }
 }
 
