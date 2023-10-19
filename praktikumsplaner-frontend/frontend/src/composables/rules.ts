@@ -4,21 +4,50 @@ export function useRules() {
     }
 
     function maxLengthRule(length: number, message: string) {
-        return (value: string) => (value && value.length < length) || message;
+        return (value: string) =>
+            (value != null && value.length < length) || message;
     }
 
     function notEmptyRule(message: string) {
         return (value: string) => (value && value.trim() != "") || message;
     }
 
-    function dateBeforeRule(date: string, message: string) {
-        return (value: string) =>
-            (value && new Date(value) < new Date(date)) || message;
+    function notEmptyDateRule(message: string) {
+        return (value: string) => (value && value.trim() != "-") || message;
     }
 
-    function dateAfterRule(date: string, message: string) {
-        return (value: string) =>
-            (value && new Date(value) > new Date(date)) || message;
+    function dateBeforeRule(date?: string, message?: string) {
+        return (value: string) => {
+            if (date == undefined) return true;
+            console.log("DateBeforeRule: Date=" + date + "; Value=" + value);
+            const dateComponents = value.split(".");
+            const dateAsISOString =
+                dateComponents[2] +
+                "-" +
+                dateComponents[1] +
+                "-" +
+                dateComponents[0];
+            return (
+                (value && new Date(dateAsISOString) < new Date(date)) || message
+            );
+        };
+    }
+
+    function dateAfterRule(date?: string, message?: string) {
+        return (value: string) => {
+            if (date == undefined) return true;
+            console.log("DateAfterRule: Date=" + date + "; Value=" + value);
+            const dateComponents = value.split(".");
+            const dateAsISOString =
+                dateComponents[2] +
+                "-" +
+                dateComponents[1] +
+                "-" +
+                dateComponents[0];
+            return (
+                (value && new Date(dateAsISOString) > new Date(date)) || message
+            );
+        };
     }
 
     return {
@@ -27,5 +56,6 @@ export function useRules() {
         dateBeforeRule,
         dateAfterRule,
         notEmptyRule,
+        notEmptyDateRule,
     };
 }
