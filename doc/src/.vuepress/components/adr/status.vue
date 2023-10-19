@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top: 4px">
     <span
       ><svg height="24px" viewBox="0 0 24 24">
         <path :d="svgPath" :fill="svgFillColor"></path></svg

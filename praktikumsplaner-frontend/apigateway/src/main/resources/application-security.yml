@@ -1,0 +1,12 @@
+spring:
+  # security config
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: ${app.gateway.security.keycloak.issuer-uri}
+        registration:
+          keycloak:
+            client-id: ${app.gateway.security.keycloak.client.id}
+            client-secret: ${app.gateway.security.keycloak.client.secret}
