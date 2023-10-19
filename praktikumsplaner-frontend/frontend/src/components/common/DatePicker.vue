@@ -2,9 +2,11 @@
     <v-menu max-width="100%">
         <template #activator="{ on }">
             <v-text-field
+                ref="dateField"
                 :prepend-icon="props.prependIcon"
                 :label="props.label"
                 :value="formatDate(props.value)"
+                :rules="props.rules"
                 v-on="on"
             ></v-text-field>
         </template>
@@ -17,17 +19,20 @@
 
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps<{
     prependIcon: string;
     label: string;
+    rules: any[];
     value?: string;
 }>();
 
 const emits = defineEmits<{
     (e: "input", v: string | undefined): void;
 }>();
+
+const dateField = ref();
 
 const date = computed({
     get() {
@@ -39,8 +44,18 @@ const date = computed({
 });
 
 function formatDate(dateString: string | undefined): string {
-    return dateString == undefined
-        ? "-"
-        : new Date(dateString).toLocaleDateString();
+    if (dateString == undefined) {
+        return "-";
+    }
+    const date = new Date(dateString);
+    return (
+        date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
+    );
 }
+
+function validate() {
+    dateField.value?.validate();
+}
+
+defineExpose({ validate });
 </script>
