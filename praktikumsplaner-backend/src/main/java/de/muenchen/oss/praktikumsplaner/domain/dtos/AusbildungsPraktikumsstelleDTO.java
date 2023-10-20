@@ -1,9 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-
 import java.util.UUID;
+import lombok.Builder;
 
 @Builder
 public record AusbildungsPraktikumsstelleDTO(@NotNull UUID id,
