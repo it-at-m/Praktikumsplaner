@@ -63,6 +63,7 @@
                 <v-card-actions>
                     <v-select
                         v-model="stuzubiSelection"
+                        label="Eine Praktikumsstelle kann nur für eine von beiden Möglichkeiten gemeldet werden"
                         :items="stuzubiSelectionItems"
                         @change="changeSelectedStuzubi()"
                     >
@@ -192,22 +193,44 @@ function changeSelectedStuzubi() {
 
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
-    MeldungService.uploadPraktikumsstelle(praktikumsstelle.value)
-        .then(() =>
-            snackbarStore.showMessage({
-                message: "NWKs erfolgreich Angelegt!",
-                level: Levels.INFO,
+    console.log(praktikumsstelle.value);
+    console.log(isStudium);
+    console.log(isAusbildung);
+    if (isStudium.value) {
+        MeldungService.uploadStudiumsPraktikumsstelle(praktikumsstelle.value)
+            .then(() =>
+                snackbarStore.showMessage({
+                    message: "NWKs erfolgreich Angelegt!",
+                    level: Levels.INFO,
+                })
+            )
+            .catch((error) => {
+                snackbarStore.showMessage({
+                    message: error,
+                    level: Levels.ERROR,
+                });
             })
-        )
-        .catch((error) => {
-            snackbarStore.showMessage({
-                message: error,
-                level: Levels.ERROR,
+            .finally(() => {
+                cancel();
             });
-        })
-        .finally(() => {
-            cancel();
-        });
+    } else if (isAusbildung.value) {
+        MeldungService.uploadAusbildungsPraktikumsstelle(praktikumsstelle.value)
+            .then(() =>
+                snackbarStore.showMessage({
+                    message: "NWKs erfolgreich Angelegt!",
+                    level: Levels.INFO,
+                })
+            )
+            .catch((error) => {
+                snackbarStore.showMessage({
+                    message: error,
+                    level: Levels.ERROR,
+                });
+            })
+            .finally(() => {
+                cancel();
+            });
+    }
 }
 </script>
 
