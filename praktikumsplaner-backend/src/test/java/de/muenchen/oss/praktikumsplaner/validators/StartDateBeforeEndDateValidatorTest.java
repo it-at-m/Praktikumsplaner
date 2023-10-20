@@ -1,7 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.validators;
 
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
-import de.muenchen.oss.praktikumsplaner.dtos.MeldezeitraumCreateDTO;
+import de.muenchen.oss.praktikumsplaner.dtos.CreateMeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.dtos.MeldezeitraumDTO;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -34,7 +34,7 @@ public class StartDateBeforeEndDateValidatorTest {
                 startDate,
                 endDate);
 
-        final MeldezeitraumCreateDTO meldezeitraumCreateDTO = new MeldezeitraumCreateDTO(
+        final CreateMeldezeitraumDTO meldezeitraumCreateDTO = new CreateMeldezeitraumDTO(
                 "Name",
                 startDate,
                 endDate);
@@ -60,7 +60,7 @@ public class StartDateBeforeEndDateValidatorTest {
                 startDate,
                 endDate);
 
-        final MeldezeitraumCreateDTO meldezeitraumCreateDTO = new MeldezeitraumCreateDTO(
+        final CreateMeldezeitraumDTO meldezeitraumCreateDTO = new CreateMeldezeitraumDTO(
                 "Name",
                 startDate,
                 endDate);

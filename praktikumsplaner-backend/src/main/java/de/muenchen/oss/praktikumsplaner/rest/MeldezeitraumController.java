@@ -1,6 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.dtos.MeldezeitraumCreateDTO;
+import de.muenchen.oss.praktikumsplaner.dtos.CreateMeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.service.MeldezeitraumService;
 import jakarta.validation.Valid;
@@ -19,10 +19,10 @@ public class MeldezeitraumController {
 
     private final MeldezeitraumService meldezeitraumService;
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MeldezeitraumDTO createMeldezeitraum(final @Valid @RequestBody
-    MeldezeitraumCreateDTO meldezeitraumDto) {
+    CreateMeldezeitraumDTO meldezeitraumDto) {
         return meldezeitraumService.createMeldezeitraum(meldezeitraumDto);
     }
 }
