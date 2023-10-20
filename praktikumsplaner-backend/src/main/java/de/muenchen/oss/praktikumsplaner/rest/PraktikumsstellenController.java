@@ -1,7 +1,9 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,10 +21,17 @@ public class PraktikumsstellenController {
 
     private final PraktikumsstellenService praktikumsstellenService;
 
-    @PostMapping("/create")
+    @PostMapping("/studium")
     @ResponseStatus(HttpStatus.CREATED)
-    public PraktikumsstelleDTO createPraktikumsstelle(final @Valid @RequestBody
-    CreatePraktikumsstelleDTO createPraktikumsstelleDTO) {
-        return praktikumsstellenService.savePraktikumsstelle(createPraktikumsstelleDTO);
+    public StudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelle(final @Valid @RequestBody
+                                                              CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
+        return praktikumsstellenService.saveStudiumsPraktikumsstelle(createStudiumsPraktikumsstelleDTO);
+    }
+
+    @PostMapping("/ausbildung")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelle(final @Valid @RequestBody
+                                                                            CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
+        return praktikumsstellenService.saveAusbildungsPraktikumsstelle(createAusbildungsPraktikumsstelleDTO);
     }
 }
