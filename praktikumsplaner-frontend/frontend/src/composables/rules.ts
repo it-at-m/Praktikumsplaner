@@ -19,7 +19,6 @@ export function useRules() {
     function dateBeforeRule(date?: string, message?: string) {
         return (value: string) => {
             if (date == undefined) return true;
-            console.log("DateBeforeRule: Date=" + date + "; Value=" + value);
             const dateComponents = value.split(".");
             const dateAsISOString =
                 dateComponents[2] +
@@ -36,7 +35,6 @@ export function useRules() {
     function dateAfterRule(date?: string, message?: string) {
         return (value: string) => {
             if (date == undefined) return true;
-            console.log("DateAfterRule: Date=" + date + "; Value=" + value);
             const dateComponents = value.split(".");
             const dateAsISOString =
                 dateComponents[2] +
