@@ -46,14 +46,14 @@ const range = computed(() => {
 
 watch(
     () => range.value.startZeitpunkt,
-    (startZeitpunkt) => {
+    () => {
         nextTick(endDate.value?.validate);
         emits("input", range.value);
     }
 );
 watch(
     () => range.value.endZeitpunkt,
-    (endZeitpunkt) => {
+    () => {
         nextTick(startDate.value?.validate);
         emits("input", range.value);
     }

@@ -73,7 +73,7 @@
 <script setup lang="ts">
 import { useSnackbarStore } from "@/stores/snackbar";
 import { Levels } from "@/api/error";
-import { computed, ref, watch, nextTick } from "vue";
+import { ref } from "vue";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import { useRules } from "@/composables/rules";
