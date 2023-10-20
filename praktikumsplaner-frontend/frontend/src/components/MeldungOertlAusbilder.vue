@@ -193,9 +193,6 @@ function changeSelectedStuzubi() {
 
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
-    console.log(praktikumsstelle.value);
-    console.log(isStudium);
-    console.log(isAusbildung);
     if (isStudium.value) {
         MeldungService.uploadStudiumsPraktikumsstelle(praktikumsstelle.value)
             .then(() =>
