@@ -24,14 +24,14 @@ public class PraktikumsstellenController {
     @PostMapping("/studium")
     @ResponseStatus(HttpStatus.CREATED)
     public StudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelle(final @Valid @RequestBody
-                                                              CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
+    CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
         return praktikumsstellenService.saveStudiumsPraktikumsstelle(createStudiumsPraktikumsstelleDTO);
     }
 
     @PostMapping("/ausbildung")
     @ResponseStatus(HttpStatus.CREATED)
     public AusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelle(final @Valid @RequestBody
-                                                                            CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
+    CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
         return praktikumsstellenService.saveAusbildungsPraktikumsstelle(createAusbildungsPraktikumsstelleDTO);
     }
 }

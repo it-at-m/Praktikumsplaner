@@ -23,6 +23,7 @@ public class PraktikumsstellenService {
     }
 
     public AusbildungsPraktikumsstelleDTO saveAusbildungsPraktikumsstelle(CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
-        return praktikumsstellenMapper.toDTO(ausbildungsPraktikumsstelleRepository.save(praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO)));
+        return praktikumsstellenMapper
+                .toDTO(ausbildungsPraktikumsstelleRepository.save(praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO)));
     }
 }

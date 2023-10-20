@@ -44,12 +44,9 @@ public class StudiumsPraktikumsstelle extends BaseEntity {
 
     public Referat referat;
 
-
     public YesNo programmierkenntnisse;
 
-
     public Studiensemester studiensemester;
-
 
     public Studienart studienart;
 

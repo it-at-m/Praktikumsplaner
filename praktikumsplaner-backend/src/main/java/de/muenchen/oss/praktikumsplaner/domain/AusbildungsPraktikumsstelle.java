@@ -53,5 +53,4 @@ public class AusbildungsPraktikumsstelle extends BaseEntity {
     @NotNull
     public Ausbildungsrichtung ausbildungsrichtung;
 
-
 }
