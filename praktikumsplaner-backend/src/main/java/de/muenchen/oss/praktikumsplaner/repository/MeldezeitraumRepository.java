@@ -1,4 +1,4 @@
-package de.muenchen.oss.praktikumsplaner.repositories;
+package de.muenchen.oss.praktikumsplaner.repository;
 
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import java.util.UUID;
