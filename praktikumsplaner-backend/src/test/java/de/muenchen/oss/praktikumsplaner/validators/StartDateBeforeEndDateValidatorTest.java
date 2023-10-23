@@ -50,6 +50,32 @@ public class StartDateBeforeEndDateValidatorTest {
     }
 
     @Test
+    void testIsValidWithInvalidObjectThrowingExceptionInValidator() {
+        final LocalDate startDate = LocalDate.of(2020, 10, 10);
+        final LocalDate endDate = null;
+
+        final MeldezeitraumDTO meldezeitraumDTO = new MeldezeitraumDTO(
+                UUID.randomUUID(),
+                "Name",
+                startDate,
+                endDate);
+
+        final CreateMeldezeitraumDTO meldezeitraumCreateDTO = new CreateMeldezeitraumDTO(
+                "Name",
+                startDate,
+                endDate);
+
+        final Meldezeitraum meldezeitraum = new Meldezeitraum(
+                "Name",
+                startDate,
+                endDate);
+
+        assertFalse(validator.validate(meldezeitraumDTO).isEmpty());
+        assertFalse(validator.validate(meldezeitraumCreateDTO).isEmpty());
+        assertFalse(validator.validate(meldezeitraum).isEmpty());
+    }
+
+    @Test
     void testIsValidWithInvalidObjects() {
         final LocalDate startDate = LocalDate.of(2020, 10, 10);
         final LocalDate endDate = LocalDate.of(2019, 10, 10);
