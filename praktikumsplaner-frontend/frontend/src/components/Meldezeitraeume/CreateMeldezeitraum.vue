@@ -102,7 +102,6 @@ const emits = defineEmits<{
 }>();
 
 function zeitraumChange(changedZeitraum: Zeitraum) {
-    console.log(changedZeitraum);
     zeitraum.value = changedZeitraum;
     meldezeitraum.value.startZeitpunkt = changedZeitraum.startZeitpunkt;
     meldezeitraum.value.endZeitpunkt = changedZeitraum.endZeitpunkt;
