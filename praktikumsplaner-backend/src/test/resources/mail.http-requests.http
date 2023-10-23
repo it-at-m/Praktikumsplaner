@@ -1,0 +1,4 @@
+# Test send mail
+POST http://localhost:39146/experimental/mail
+
+Ich bin eine Testmail
