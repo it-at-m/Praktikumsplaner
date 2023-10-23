@@ -13,5 +13,11 @@ export function useRules() {
         };
     }
 
-    return { fileTypeRule, notEmptyRule, notEmptyRuleAndVisible };
+    function emailRule() {
+        return (v: string) =>
+            /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) ||
+            "keine Valide E-Mail!";
+    }
+
+    return { fileTypeRule, notEmptyRule, notEmptyRuleAndVisible, emailRule };
 }
