@@ -48,7 +48,7 @@
                                         <v-text-field
                                             v-model="meldezeitraum.zeitraumName"
                                             prepend-icon="mdi-pencil"
-                                            label="Titel*"
+                                            label="Zeitraumname"
                                             :rules="zeitraumNameRules"
                                         ></v-text-field>
                                     </v-col>
@@ -62,7 +62,6 @@
                                     </v-col>
                                 </v-row>
                             </v-container>
-                            <small>*Pflichtfelder</small>
                         </v-card-text>
                     </v-form>
                 </v-card>
@@ -109,6 +108,7 @@ function zeitraumChange(changedZeitraum: Zeitraum) {
 
 function resetForm() {
     meldezeitraum.value = new Meldezeitraum("");
+    zeitraum.value = new Zeitraum();
     form.value?.resetValidation();
 }
 
@@ -122,7 +122,6 @@ function clickSpeichern() {
                     message: "Meldezeitraum erfolgreich angelegt",
                     level: Levels.INFO,
                 });
-                resetForm();
                 emits("meldezeitraumAdded", meldezeitraum.value);
             })
             .catch((error) => {
@@ -130,6 +129,9 @@ function clickSpeichern() {
                     message: error.message,
                     level: Levels.ERROR,
                 });
+            })
+            .finally(() => {
+                resetForm();
             });
     }
 }
