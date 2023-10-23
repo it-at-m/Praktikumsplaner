@@ -1,6 +1,11 @@
 spring:
   application.name: @project.artifactId@
   banner.location: banner.txt
+  mail:
+    host: localhost
+    port: 8125
+    username: pp-mail-user
+    password: pp-mail-password
 
 server:
   shutdown: "graceful"
