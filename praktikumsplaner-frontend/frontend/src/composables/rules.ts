@@ -3,20 +3,20 @@ export function useRules() {
         return (value: File) => (value && value.type == format) || message;
     }
 
-    function maxLengthRule(length: number, message: string) {
+    function maxLengthRule(length: number, message = "error") {
         return (value: string) =>
             (value != null && value.length < length) || message;
     }
 
-    function notEmptyRule(message: string) {
+    function notEmptyRule(message = "error") {
         return (value: string) => (value && value.trim() != "") || message;
     }
 
-    function notEmptyDateRule(message: string) {
+    function notEmptyDateRule(message = "error") {
         return (value: string) => (value && value.trim() != "-") || message;
     }
 
-    function dateBeforeRule(date?: string, message?: string) {
+    function dateBeforeRule(date?: string, message = "error") {
         return (value: string) => {
             if (date == undefined) return true;
             const dateComponents = value.split(".");
@@ -32,7 +32,7 @@ export function useRules() {
         };
     }
 
-    function dateAfterRule(date?: string, message?: string) {
+    function dateAfterRule(date?: string, message = "error") {
         return (value: string) => {
             if (date == undefined) return true;
             const dateComponents = value.split(".");

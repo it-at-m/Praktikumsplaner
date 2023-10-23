@@ -37,8 +37,8 @@ const emits = defineEmits<{
 }>();
 
 const validationRules = useRules();
-const endDate = ref<DatePicker>();
-const startDate = ref<DatePicker>();
+const endDate = ref<typeof DatePicker>();
+const startDate = ref<typeof DatePicker>();
 
 const range = computed(() => {
     return props.value;

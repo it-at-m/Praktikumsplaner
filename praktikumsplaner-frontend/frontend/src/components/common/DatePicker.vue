@@ -24,7 +24,7 @@ import { computed, ref } from "vue";
 const props = defineProps<{
     prependIcon: string;
     label: string;
-    rules: any[];
+    rules: ((value: string) => string | true | undefined)[];
     value?: string;
 }>();
 
