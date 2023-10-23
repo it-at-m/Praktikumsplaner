@@ -1,5 +1,10 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
+import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
+import de.muenchen.oss.praktikumsplaner.domain.enums.YesNo;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
@@ -12,17 +17,17 @@ public record CreateAusbildungsPraktikumsstelleDTO(@NotNull String dienststelle,
 
                                                    @NotNull String taetigkeiten,
 
-                                                   @NotNull String dringlichkeit,
+                                                   @NotNull Dringlichkeit dringlichkeit,
 
                                                    String namentlicheAnforderung,
 
-                                                   String referat,
+                                                   Referat referat,
 
-                                                   @NotNull String projektarbeit,
+                                                   @NotNull YesNo projektarbeit,
 
-                                                   @NotNull String ausbildungsjahr,
+                                                   @NotNull Ausbildungsjahr ausbildungsjahr,
 
-                                                   @NotNull String ausbildungsrichtung
+                                                   @NotNull Ausbildungsrichtung ausbildungsrichtung
 
                         ){
 }

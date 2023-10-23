@@ -44,10 +44,13 @@ public class StudiumsPraktikumsstelle extends BaseEntity {
 
     public Referat referat;
 
+    @NotNull
     public YesNo programmierkenntnisse;
 
+    @NotNull
     public Studiensemester studiensemester;
 
+    @NotNull
     public Studienart studienart;
 
 }
