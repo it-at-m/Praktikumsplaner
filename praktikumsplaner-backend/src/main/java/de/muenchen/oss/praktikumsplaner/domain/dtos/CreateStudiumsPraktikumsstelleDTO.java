@@ -1,5 +1,11 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
+import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Studienart;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
+import de.muenchen.oss.praktikumsplaner.domain.enums.YesNo;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
@@ -8,20 +14,20 @@ public record CreateStudiumsPraktikumsstelleDTO(@NotNull String dienststelle,
 
                                                 @NotNull String oertlicheAusbiler,
 
-                                                @NotNull String email,
+                                                @Email @NotNull String email,
 
                                                 @NotNull String taetigkeiten,
 
-                                                @NotNull String dringlichkeit,
+                                                @NotNull Dringlichkeit dringlichkeit,
 
                                                 String namentlicheAnforderung,
 
-                                                String referat,
+                                                Referat referat,
 
-                                                @NotNull String programmierkenntnisse,
+                                                @NotNull YesNo programmierkenntnisse,
 
-                                                @NotNull String studiensemester,
+                                                @NotNull Studiensemester studiensemester,
 
-                                                @NotNull String studienart
+                                                @NotNull Studienart studienart
                         ){
 }
