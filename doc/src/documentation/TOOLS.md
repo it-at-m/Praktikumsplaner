@@ -1,7 +1,7 @@
 Tools
 - 
 
-Here you can find the tools used in the project and there usage.
+Here you can find the tools used in the project and their usage.
 
 Github
 - code versioning
