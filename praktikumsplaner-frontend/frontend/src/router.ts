@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Main from "./views/MainView.vue";
 import GetStarted from "./views/GetStarted.vue";
 import { ROUTER_BASE } from "@/Constants";
+import MeldungOertlAusbilder from "@/components/MeldungPraktikumsstelle/MeldungOertlAusbilder.vue";
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ export default new Router({
             path: "/getstarted",
             name: "getstarted",
             component: GetStarted,
+        },
+        {
+            path: "/meldungOertl",
+            name: "meldungOertlAusbilder",
+            component: MeldungOertlAusbilder,
         },
         { path: "*", redirect: "/" }, //Fallback 2
     ],
