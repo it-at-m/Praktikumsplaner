@@ -27,7 +27,7 @@ Long form of [NWK](./glossary.md#nwk)
 
 ### NWK
 At the company this project is developed [NWK](./glossary.md#nwk) is short for [Nachwuchskraft](./glossary.md#nachwuchskraft) 
-and is a term reffering to [Auszubildenden](./glossary.md#auszubildende) and [Studentinnen](./glossary.md#studentin).
+and is a term referring to [Auszubildenden](./glossary.md#auszubildende) and [Studentinnen](./glossary.md#studentin).
 
 ### Örtliche Ausbilderin
 
