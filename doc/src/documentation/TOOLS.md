@@ -12,6 +12,9 @@ Zenhub
 - sprint planning
 - project management
 
+Docker:
+- creating and storing images
+
 Docker Desktop
 - Local deployment and testing
 
