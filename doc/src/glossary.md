@@ -17,30 +17,30 @@ has a contract with.
 
 ### Meldezeitraum
 
-A [Meldezeitraum](./glossary.md#meldezeitraum) is a time range in which [örtliche Ausbilderinnen](./glossary.md#örtliche-ausbilderin) can
-report [Praktikumsstellen](./glossary.md#praktikumsstelle) to the [örtliche Ausbildungsleitung](./glossary.md#örtliche-ausbildungsleitung).
-All [Praktikumsstellen](./glossary.md#praktikumsstelle) reported during a certain[Meldezeitraum](./glossary.md#meldezeitraum) are linked
+A [Meldezeitraum](./glossary.md#meldezeitraum) is a time range in which [örtliche Ausbilderinnen](./glossary.md#ortliche-ausbilderin) can
+report [Praktikumsstellen](./glossary.md#praktikumsstelle) to the [örtliche Ausbildungsleitung](./glossary.md#ortliche-ausbildungsleitung).
+All [Praktikumsstellen](./glossary.md#praktikumsstelle) reported during a certain [Meldezeitraum](./glossary.md#meldezeitraum) are linked
 to this specific [Meldezeitraum](./glossary.md#meldezeitraum)
 
 ### Nachwuchskraft
-See [NWK](./glossary.md#nwk)
+Long form of [NWK](./glossary.md#nwk)
 
 ### NWK
 At the company this project is developed [NWK](./glossary.md#nwk) is short for [Nachwuchskraft](./glossary.md#nachwuchskraft) 
-and is a term reffering to [Auszubildenden](./glossary.md#Auszubildende) and [Studentinnen](./glossary.md#studentin).
+and is a term reffering to [Auszubildenden](./glossary.md#auszubildende) and [Studentinnen](./glossary.md#studentin).
 
 ### Örtliche Ausbilderin
 
-A [örtliche Ausbilderin](./glossary.md#örtliche-ausbilderin) is person who is responsible for the education
+A [örtliche Ausbilderin](./glossary.md#ortliche-ausbilderin) is person who is responsible for the education
 of an [NWK](./glossary.md#nwk) at their team at the company. Their job is to give small work items to them and help them if necessary.
-The [örtliche Ausbilderin](./glossary.md#örtliche-ausbilderin) is the first contact person if an [NWK](./glossary.md#nwk) needs help.
+The [örtliche Ausbilderin](./glossary.md#ortliche-ausbilderin) is the first contact person if an [NWK](./glossary.md#nwk) needs help.
 
 ### Örtliche Ausbildungsleitung
 
-The [örtliche Ausbildungsleitung](./glossary.md#örtliche-ausbildungsleitung) is responsible for the education of
+The [örtliche Ausbildungsleitung](./glossary.md#ortliche-ausbildungsleitung) is responsible for the education of
 [NWK](./glossary.md#nwk) in a larger part of the company. 
 They coordinate which [NWK](./glossary.md#nwk) is assigned to which [Praktikumsstelle](./glossary.md#praktikumsstelle).
-They are also the contact person if a [NWK](./glossary.md#nwk) has any problems with their [örtliche Ausbilderin](./glossary.md#örtliche-ausbilderin).
+They are also the contact person if a [NWK](./glossary.md#nwk) has any problems with their [örtliche Ausbilderin](./glossary.md#ortliche-ausbilderin).
 In the first iterations of development they are the main user of this application.
 
 ### Praktikumsstelle
