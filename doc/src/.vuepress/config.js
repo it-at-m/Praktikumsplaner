@@ -77,6 +77,11 @@ module.exports = {
               children: ["TOOLS.md"],
             },
             {
+              title: "configuration",
+              collapsable: false,
+              children: ["architecture/configuration"],
+            },
+            {
               title: "Architektur",
               collapsable: false,
               children: ["architecture/overview", "architecture/adrs"],
