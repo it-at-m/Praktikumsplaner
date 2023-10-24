@@ -1,0 +1,18 @@
+spring:
+  # spring cloud gateway config
+  cloud:
+    gateway:
+      routes:
+        - id: sso
+          uri: ${app.gateway.routing.sso.uri}
+          predicates:
+            - Path=/api/sso/userinfo
+          filters:
+            - RewritePath=/api/sso/userinfo, /auth/realms/${app.gateway.security.keycloak.realm}/protocol/openid-connect/userinfo
+        - id: backend
+          uri: ${app.gateway.routing.backend.uri}
+          predicates:
+            - Path=/api/backend-service/**
+          filters:
+            - RewritePath=/api/backend-service/(?<urlsegments>.*), /$\{urlsegments}
+            - RemoveResponseHeader=WWW-Authenticate

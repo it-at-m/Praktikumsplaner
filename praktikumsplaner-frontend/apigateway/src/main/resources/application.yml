@@ -1,4 +1,9 @@
 spring:
+  profiles:
+    include:
+      - routing
+      - security
+
   application.name: @project.artifactId@
   banner.location: banner.txt
   main:
@@ -53,3 +58,18 @@ management:
       enabled: true
 
 config.map5xxto400: false
+
+app:
+  gateway:
+    routing:
+      sso:
+        uri: http://kubernetes.docker.internal:8100/
+      backend:
+        uri: http://localhost:39146/
+    security:
+      keycloak:
+        issuer-uri: http://kubernetes.docker.internal:8100/auth/realms/${app.security.keycloak.realm}
+        realm: praktikumsplaner
+        client:
+          id: praktikumsplaner
+          secret: top-secret
