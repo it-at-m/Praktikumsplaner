@@ -18,7 +18,7 @@ Docker:
 Docker Desktop
 - Local deployment and testing
 
-Springboot
+Spring
 - backend and apigateway
 
 Vuetify / Vue.JS
