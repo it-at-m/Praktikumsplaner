@@ -41,9 +41,6 @@
                 <v-col>
                     <ExcelImportNWK></ExcelImportNWK>
                 </v-col>
-                <v-col>
-                    <MeldungOertlAusbilder></MeldungOertlAusbilder>
-                </v-col>
                 <v-col
                     cols="0"
                     class="d-flex align-center justify-end"
@@ -70,6 +67,13 @@
                         <v-list-item-title>Get started</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+                <v-list-item :to="{ path: '/meldungOertl' }">
+                    <v-list-item-content>
+                        <v-list-item-title
+                            >Meldung Praktikumsstelle</v-list-item-title
+                        >
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
         <v-main>
@@ -89,7 +93,6 @@ import { useRoute } from "vue-router/composables";
 import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
-import MeldungOertlAusbilder from "@/components/MeldungOertlAusbilder.vue";
 
 const drawer = ref(true);
 const query = ref("");
