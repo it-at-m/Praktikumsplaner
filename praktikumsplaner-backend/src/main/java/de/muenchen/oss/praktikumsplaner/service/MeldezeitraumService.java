@@ -15,7 +15,6 @@ public class MeldezeitraumService {
     private final MeldezeitraumRepository meldezeitraumRepository;
 
     public MeldezeitraumDTO createMeldezeitraum(final CreateMeldezeitraumDTO meldezeitraumCreateDto) {
-        final Meldezeitraum meldezeitraum = meldezeitraumMapper.toEntity(meldezeitraumCreateDto);
-        return meldezeitraumMapper.toDto(meldezeitraumRepository.save(meldezeitraum));
+        return meldezeitraumMapper.toDto(meldezeitraumRepository.save(meldezeitraumMapper.toEntity(meldezeitraumCreateDto)));
     }
 }
