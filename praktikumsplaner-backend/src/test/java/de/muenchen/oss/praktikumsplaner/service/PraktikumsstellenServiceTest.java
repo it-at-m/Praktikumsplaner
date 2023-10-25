@@ -46,7 +46,7 @@ public class PraktikumsstellenServiceTest {
         studiumsPraktikumsstelle.setOertlicheAusbiler("TestoertlicheAusbiler");
         studiumsPraktikumsstelle.setEmail("test@test.de");
         studiumsPraktikumsstelle.setTaetigkeiten("Testtätigkeiten");
-        studiumsPraktikumsstelle.setDringlichkeit(Dringlichkeit.keine);
+        studiumsPraktikumsstelle.setDringlichkeit(Dringlichkeit.NACHRANGIG);
         studiumsPraktikumsstelle.setNamentlicheAnforderung("TestnamentlicheAnforderung");
         studiumsPraktikumsstelle.setReferat(Referat.ITM);
         studiumsPraktikumsstelle.setProgrammierkenntnisse(YesNo.JA);
@@ -56,14 +56,14 @@ public class PraktikumsstellenServiceTest {
         CreateStudiumsPraktikumsstelleDTO createDTO = CreateStudiumsPraktikumsstelleDTO.builder()
                 .dienststelle("Testdienststelle").oertlicheAusbiler("TestoertlicheAusbiler")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
-                .dringlichkeit(Dringlichkeit.keine).namentlicheAnforderung("TestnamentlicheAnforderung")
+                .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).programmierkenntnisse(YesNo.JA)
                 .studiensemester(Studiensemester.SEMESTER1).studienart(Studienart.BSC).build();
 
         StudiumsPraktikumsstelleDTO dto = StudiumsPraktikumsstelleDTO.builder().id(studiumsPraktikumsstelle.getId())
                 .dienststelle("Testdienststelle").oertlicheAusbiler("TestoertlicheAusbiler")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
-                .dringlichkeit(Dringlichkeit.keine).namentlicheAnforderung("TestnamentlicheAnforderung")
+                .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).programmierkenntnisse(YesNo.JA)
                 .studiensemester(Studiensemester.SEMESTER1).studienart(Studienart.BSC).build();
 
@@ -84,7 +84,7 @@ public class PraktikumsstellenServiceTest {
         ausbildungsPraktikumsstelle.setOertlicheAusbiler("TestoertlicheAusbiler");
         ausbildungsPraktikumsstelle.setEmail("test@test.de");
         ausbildungsPraktikumsstelle.setTaetigkeiten("Testtätigkeiten");
-        ausbildungsPraktikumsstelle.setDringlichkeit(Dringlichkeit.keine);
+        ausbildungsPraktikumsstelle.setDringlichkeit(Dringlichkeit.NACHRANGIG);
         ausbildungsPraktikumsstelle.setNamentlicheAnforderung("TestnamentlicheAnforderung");
         ausbildungsPraktikumsstelle.setReferat(Referat.ITM);
         ausbildungsPraktikumsstelle.setProjektarbeit(YesNo.JA);
@@ -94,14 +94,14 @@ public class PraktikumsstellenServiceTest {
         CreateAusbildungsPraktikumsstelleDTO createDTO = CreateAusbildungsPraktikumsstelleDTO.builder()
                 .dienststelle("Testdienststelle").oertlicheAusbiler("TestoertlicheAusbiler")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
-                .dringlichkeit(Dringlichkeit.keine).namentlicheAnforderung("TestnamentlicheAnforderung")
+                .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).projektarbeit(YesNo.JA)
                 .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Ausbildungsrichtung.FISI).build();
 
         AusbildungsPraktikumsstelleDTO dto = AusbildungsPraktikumsstelleDTO.builder().id(ausbildungsPraktikumsstelle.getId())
                 .dienststelle("Testdienststelle").oertlicheAusbiler("TestoertlicheAusbiler")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
-                .dringlichkeit(Dringlichkeit.keine).namentlicheAnforderung("TestnamentlicheAnforderung")
+                .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).projektarbeit(YesNo.JA)
                 .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Ausbildungsrichtung.FISI).build();
 
