@@ -41,7 +41,7 @@
                     <v-col>
                         <v-text-field
                             v-model="praktikumsstelle.email"
-                            label="Kontakt Email örtliche Ausbilder*in"
+                            label="Kontakt E-mail örtliche Ausbilder*in"
                             :rules="emailRule"
                             prepend-icon="mdi-email-outline"
                             filled
