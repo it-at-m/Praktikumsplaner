@@ -7,8 +7,8 @@ They are automatically applied when the backend starts and there are new, not ye
 For this to work if you have to make changes to the database you have to create a new SQL script in the migration folder.
 The migrations folder is located in the backend `src/main/resources/db/migration`.
 The scripts name has to follow this convention `V<version_number>__<description_split_with_underscores>`.
-The `<version_number>` should be the next available number, so if there is a `V10_desc.sql` then the next script should 
-be named `V11_desc.sql`. The version number has to be unique, so if there are several people developing and need to add
+The `<version_number>` should be the next available number, so if there is a `V10__desc.sql` then the next script should 
+be named `V11__desc.sql`. The version number has to be unique, so if there are several people developing and need to add
 SQL scripts then they have to communicate which version numbers they are using.
 As this is not guaranteed you have to especially careful when reviewing and merging PRs with changes to the migration 
 files. You can see that there is a naming conflict when the file is not `added` but `modified` according to the PR.
