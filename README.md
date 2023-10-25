@@ -15,7 +15,7 @@ See the [open issues](https://github.com/it-at-m/Praktikumsplaner/issues) for a 
 
 ## Set up
 
-Checkout [Technical-Setup](/doc/src/documentation/guides/technical-setup/README.md)
+Checkout [Technical-Setup](https://it-at-m.github.io/Praktikumsplaner/documentation/guides/technical-setup/)
 
 ## Documentation
 
