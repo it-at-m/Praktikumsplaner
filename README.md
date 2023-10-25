@@ -19,7 +19,7 @@ Checkout [Technical-Setup](/doc/src/documentation/guides/technical-setup/README.
 
 ## Documentation
 
-tbd.
+Checkout the [documentation](https://it-at-m.github.io/Praktikumsplaner/)
 
 ## Contributing
 
