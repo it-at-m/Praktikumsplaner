@@ -152,6 +152,12 @@
             <artifactId>hibernate-jpamodelgen</artifactId>
         </dependency>
 
+        <!--Flyway DB Versioning-->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
         <!-- Other -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
