@@ -22,7 +22,7 @@
                     </router-link>
                 </v-col>
                 <v-col
-                    cols="5"
+                    cols="6"
                     class="d-flex align-center justify-center"
                 >
                     <v-text-field
@@ -42,7 +42,7 @@
                     <ExcelImportNWK></ExcelImportNWK>
                 </v-col>
                 <v-col
-                    cols="0"
+                    cols="1"
                     class="d-flex align-center justify-end"
                 >
                     <v-btn
@@ -67,7 +67,7 @@
                         <v-list-item-title>Get started</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item :to="{ path: '/meldungOertl' }">
+                <v-list-item :to="{ path: '/meldungAusbilder' }">
                     <v-list-item-content>
                         <v-list-item-title
                             >Meldung Praktikumsstelle</v-list-item-title

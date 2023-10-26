@@ -43,7 +43,7 @@ export default new Router({
             component: GetStarted,
         },
         {
-            path: "/meldungOertl",
+            path: "/meldungAusbilder",
             name: "meldungOertlAusbilder",
             component: MeldungOertlAusbilder,
         },
