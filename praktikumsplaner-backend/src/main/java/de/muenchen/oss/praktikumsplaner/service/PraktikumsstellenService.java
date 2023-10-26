@@ -18,11 +18,11 @@ public class PraktikumsstellenService {
     private final StudiumsPraktikumsstelleRepository studiumsPraktikumsstelleRepository;
     private final AusbildungsPraktikumsstelleRepository ausbildungsPraktikumsstelleRepository;
 
-    public StudiumsPraktikumsstelleDTO saveStudiumsPraktikumsstelle(CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
+    public StudiumsPraktikumsstelleDTO saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
         return praktikumsstellenMapper.toDTO(studiumsPraktikumsstelleRepository.save(praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO)));
     }
 
-    public AusbildungsPraktikumsstelleDTO saveAusbildungsPraktikumsstelle(CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
+    public AusbildungsPraktikumsstelleDTO saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
         return praktikumsstellenMapper
                 .toDTO(ausbildungsPraktikumsstelleRepository.save(praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO)));
     }
