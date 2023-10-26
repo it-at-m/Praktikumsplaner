@@ -272,7 +272,7 @@ function uploadPraktikumsstelle() {
         MeldungService.uploadStudiumsPraktikumsstelle(praktikumsstelle.value)
             .then(() =>
                 snackbarStore.showMessage({
-                    message: "Praktikumsstelle erfolgreich Angelegt!",
+                    message: "Studiums Praktikumsstelle erfolgreich Angelegt!",
                     level: Levels.INFO,
                 })
             )
@@ -289,7 +289,8 @@ function uploadPraktikumsstelle() {
         MeldungService.uploadAusbildungsPraktikumsstelle(praktikumsstelle.value)
             .then(() =>
                 snackbarStore.showMessage({
-                    message: "NWKs erfolgreich Angelegt!",
+                    message:
+                        "Ausbildungs Praktikumsstelle erfolgreich Angelegt!",
                     level: Levels.INFO,
                 })
             )
