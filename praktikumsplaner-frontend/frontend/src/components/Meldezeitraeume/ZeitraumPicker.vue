@@ -1,31 +1,34 @@
 <template>
     <v-row>
         <v-col cols="6">
-            <DatePicker
-                ref="startDate"
+            <v-text-field
+                ref="endDate"
                 v-model="range.startZeitpunkt"
+                type="date"
+                :rules="startZeitpunktRules"
                 prepend-icon="mdi-calendar-start"
                 label="Startzeitpunkt"
-                :rules="startZeitpunktRules"
+                @change="startZeitpunktChange"
             >
-            </DatePicker>
+            </v-text-field>
         </v-col>
         <v-col cols="6">
-            <DatePicker
-                ref="endDate"
+            <v-text-field
+                ref="startDate"
                 v-model="range.endZeitpunkt"
+                type="date"
                 prepend-icon="mdi-calendar-end"
                 label="Endzeitpunkt"
                 :rules="endZeitpunktRules"
+                @change="endZeitpunktChange"
             >
-            </DatePicker>
+            </v-text-field>
         </v-col>
     </v-row>
 </template>
 
 <script setup lang="ts">
-import DatePicker from "@/components/common/DatePicker.vue";
-import { computed, nextTick, ref, watch } from "vue";
+import { computed } from "vue";
 import { useRules } from "@/composables/rules";
 import Zeitraum from "@/types/Zeitraum";
 
@@ -37,48 +40,63 @@ const emits = defineEmits<{
 }>();
 
 const validationRules = useRules();
-const endDate = ref<typeof DatePicker>();
-const startDate = ref<typeof DatePicker>();
 
 const range = computed(() => {
     return props.value;
 });
 
-watch(
-    () => range.value.startZeitpunkt,
-    () => {
-        nextTick(endDate.value?.validate);
-        emits("input", range.value);
-    }
-);
-watch(
-    () => range.value.endZeitpunkt,
-    () => {
-        nextTick(startDate.value?.validate);
-        emits("input", range.value);
-    }
-);
+const startRef = computed(() => {
+    return props.value.startZeitpunkt;
+});
+const endRef = computed(() => {
+    return props.value.endZeitpunkt;
+});
+
+const isStartBeforeEnd = computed(() => {
+    if (endRef.value == undefined) return true;
+    return (
+        (startRef.value && new Date(startRef.value) < new Date(endRef.value)) ||
+        "Das Startdatum muss vor dem Enddatum liegen."
+    );
+});
+
+const isEndBeforeStart = computed(() => {
+    if (startRef.value == undefined) return true;
+    return (
+        (endRef.value && new Date(startRef.value) < new Date(endRef.value)) ||
+        "Das Enddatum muss nach dem Startdatum liegen."
+    );
+});
 
 const endZeitpunktRules = computed(() => {
     return [
         validationRules.notEmptyDateRule(
             "Es muss ein Endzeitpunkt angegeben werden"
         ),
-        validationRules.dateAfterRule(
-            range.value.startZeitpunkt,
-            "Der Endzeitpunkt muss nach dem Startzeitpunkt liegen"
-        ),
+        isEndBeforeStart.value,
     ];
 });
+
 const startZeitpunktRules = computed(() => {
     return [
         validationRules.notEmptyDateRule(
             "Es muss ein Startzeitpunkt angegeben werden."
         ),
-        validationRules.dateBeforeRule(
-            range.value.endZeitpunkt,
-            "Der Startzeitpunkt muss vor dem Endzeitpunkt liegen"
-        ),
+        isStartBeforeEnd.value,
     ];
 });
+
+function startZeitpunktChange() {
+    emits(
+        "input",
+        new Zeitraum(range.value.startZeitpunkt, range.value.endZeitpunkt)
+    );
+}
+
+function endZeitpunktChange() {
+    emits(
+        "input",
+        new Zeitraum(range.value.startZeitpunkt, range.value.endZeitpunkt)
+    );
+}
 </script>
