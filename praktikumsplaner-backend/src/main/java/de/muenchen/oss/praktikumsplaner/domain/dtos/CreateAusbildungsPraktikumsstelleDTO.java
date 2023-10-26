@@ -5,6 +5,7 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.YesNo;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
@@ -13,7 +14,7 @@ public record CreateAusbildungsPraktikumsstelleDTO(@NotNull String dienststelle,
 
                                                    @NotNull String oertlicheAusbiler,
 
-                                                   @NotNull String email,
+                                                   @Email @NotNull String email,
 
                                                    @NotNull String taetigkeiten,
 

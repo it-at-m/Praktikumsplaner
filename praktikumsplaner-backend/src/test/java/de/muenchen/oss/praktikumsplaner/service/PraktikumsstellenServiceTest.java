@@ -16,8 +16,8 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studienart;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import de.muenchen.oss.praktikumsplaner.domain.enums.YesNo;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
-import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstelleRepository;
-import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstelleRepository;
+import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
+import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,9 +32,9 @@ public class PraktikumsstellenServiceTest {
     @Spy
     private PraktikumsstellenMapper mapper = Mappers.getMapper(PraktikumsstellenMapper.class);
     @Mock
-    private AusbildungsPraktikumsstelleRepository ausbildungsRepository;
+    private AusbildungsPraktikumsstellenRepository ausbildungsRepository;
     @Mock
-    private StudiumsPraktikumsstelleRepository studiumsRepository;
+    private StudiumsPraktikumsstellenRepository studiumsRepository;
     @InjectMocks
     private PraktikumsstellenService service;
 
