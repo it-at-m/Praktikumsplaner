@@ -6,6 +6,8 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.YesNo;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -38,19 +40,24 @@ public class AusbildungsPraktikumsstelle extends BaseEntity {
     public String taetigkeiten;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     public Dringlichkeit dringlichkeit;
 
     public String namentlicheAnforderung;
 
+    @Enumerated(EnumType.STRING)
     public Referat referat;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     public YesNo projektarbeit;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     public Ausbildungsjahr ausbildungsjahr;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     public Ausbildungsrichtung ausbildungsrichtung;
 
 }
