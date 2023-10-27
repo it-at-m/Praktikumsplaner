@@ -1,6 +1,5 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.service.ExcelService;
 import de.muenchen.oss.praktikumsplaner.service.NWKService;
 import java.io.IOException;
 import lombok.AllArgsConstructor;
