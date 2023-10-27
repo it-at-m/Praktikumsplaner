@@ -89,7 +89,7 @@ module.exports = {
             {
               title: "Guides",
               collapsable: false,
-              children: ["guides/technical-setup/"],
+              children: ["guides/technical-setup/", "guides/database-migration/"],
             },
           ],
           "/features/": [],
