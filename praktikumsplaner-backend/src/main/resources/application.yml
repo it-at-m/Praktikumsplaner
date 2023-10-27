@@ -1,6 +1,10 @@
 spring:
   application.name: @project.artifactId@
   banner.location: banner.txt
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 server:
   shutdown: "graceful"
