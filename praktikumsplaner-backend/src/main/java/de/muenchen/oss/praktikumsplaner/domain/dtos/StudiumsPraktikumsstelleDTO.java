@@ -1,8 +1,9 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
+import de.muenchen.oss.praktikumsplaner.annotations.StudiumsAnnotation;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studienart;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import de.muenchen.oss.praktikumsplaner.domain.enums.YesNo;
 import jakarta.validation.constraints.Email;
@@ -11,6 +12,7 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
+@StudiumsAnnotation(studiengang = "studienart", message = "Keine korrekte Studienart")
 public record StudiumsPraktikumsstelleDTO(@NotNull UUID id,
                                           @NotNull String dienststelle,
 
@@ -30,6 +32,6 @@ public record StudiumsPraktikumsstelleDTO(@NotNull UUID id,
 
                                           @NotNull Studiensemester studiensemester,
 
-                                          @NotNull Studienart studienart
+                                          @NotNull Studiengang studienart
                         ){
 }
