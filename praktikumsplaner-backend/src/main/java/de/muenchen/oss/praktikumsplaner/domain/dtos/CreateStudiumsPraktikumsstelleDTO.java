@@ -14,7 +14,7 @@ import lombok.Builder;
 @StudiumsAnnotation(studiengang = "studienart", message = "Keine korrekte Studienart")
 public record CreateStudiumsPraktikumsstelleDTO(@NotNull String dienststelle,
 
-                                                @NotNull String oertlicheAusbiler,
+                                                @NotNull String oertlicheAusbilder,
 
                                                 @Email @NotNull String email,
 
