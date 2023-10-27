@@ -2,7 +2,7 @@ export default class Praktikumsstelle {
     constructor(
         public dienststelle: string,
 
-        public oertlicheAusbiler: string,
+        public oertlicheAusbilder: string,
 
         public email: string,
 
