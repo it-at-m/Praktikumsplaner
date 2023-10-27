@@ -16,7 +16,7 @@ import lombok.Builder;
 public record AusbildungsPraktikumsstelleDTO(@NotNull UUID id,
                                              @NotNull String dienststelle,
 
-                                             @NotNull String oertlicheAusbiler,
+                                             @NotNull String oertlicheAusbilder,
 
                                              @Email @NotNull String email,
 

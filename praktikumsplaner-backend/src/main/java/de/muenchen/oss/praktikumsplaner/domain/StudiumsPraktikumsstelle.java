@@ -32,7 +32,7 @@ public class StudiumsPraktikumsstelle extends BaseEntity {
     public String dienststelle;
 
     @NotNull
-    public String oertlicheAusbiler;
+    public String oertlicheAusbilder;
 
     @NotNull
     @Email
