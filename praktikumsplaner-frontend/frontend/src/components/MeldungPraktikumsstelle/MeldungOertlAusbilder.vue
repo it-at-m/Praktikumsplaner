@@ -31,7 +31,7 @@
                 <v-list-item>
                     <v-col>
                         <v-text-field
-                            v-model="praktikumsstelle.oertlicheAusbiler"
+                            v-model="praktikumsstelle.oertlicheAusbilder"
                             label="Örtliche Ausbilder*in"
                             :rules="requiredRule"
                             prepend-icon="mdi-account-tie-hat-outline"
@@ -120,6 +120,7 @@
                             :rules="ausbildungsRule"
                             prepend-icon="mdi-calendar-month-outline"
                             filled
+                            @change="changeVorrZuweisungsZeitraum()"
                         >
                         </v-select
                     ></v-col>
@@ -133,6 +134,7 @@
                             :rules="ausbildungsRule"
                             prepend-icon="mdi-school-outline"
                             filled
+                            @change="changeVorrZuweisungsZeitraum()"
                         >
                         </v-select
                     ></v-col>
@@ -163,6 +165,7 @@
                             :rules="studiumsRule"
                             prepend-icon="mdi-calendar-range-outline"
                             filled
+                            @change="changeVorrZuweisungsZeitraum()"
                         >
                         </v-select
                     ></v-col>
@@ -174,8 +177,9 @@
                             item-value="name"
                             item-text="value"
                             :rules="studiumsRule"
-                            prepend-icon="mdi-school-outline"
                             filled
+                            prepend-icon="mdi-school-outline"
+                            @change="changeVorrZuweisungsZeitraum()"
                         >
                         </v-select
                     ></v-col>
@@ -196,6 +200,18 @@
                     Hochladen
                 </v-btn>
             </v-card-actions>
+            <v-list>
+                <v-list-item>
+                    <v-col cols="6">
+                        <v-text-field
+                            v-model="zeitraum"
+                            filled
+                            prepend-icon="mdi-calendar-clock-outline"
+                            disabled
+                        ></v-text-field>
+                    </v-col>
+                </v-list-item>
+            </v-list>
         </v-card>
     </v-form>
 </template>
@@ -215,6 +231,7 @@ import { Studiensemester } from "@/types/Studiensemester";
 import { Studienart } from "@/types/Studienart";
 import { Referat } from "@/types/Referat";
 import router from "@/router";
+import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
@@ -224,7 +241,9 @@ const stuzubiSelectionItems = ref<string[]>(["Ausbildung", "Studium"]);
 const isAusbildung = ref<boolean>(false);
 const isStudium = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
+const zeitraum = ref<string>("");
 const snackbarStore = useSnackbarStore();
+const zeitraeueme = useZeitraeume();
 const validationRules = useRules();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein!")];
 const emailRule = [
@@ -264,6 +283,16 @@ function changeSelectedStuzubi() {
         isAusbildung.value = false;
         isStudium.value = true;
     }
+}
+
+function changeVorrZuweisungsZeitraum() {
+    if (isStudium) {
+        zeitraum.value = zeitraeueme.studiumsZeitraum(
+            praktikumsstelle.value.studienart,
+            praktikumsstelle.value.studiensemester
+        );
+    }
+    zeitraum.value = "undefiniert";
 }
 
 function uploadPraktikumsstelle() {
