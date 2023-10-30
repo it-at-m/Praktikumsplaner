@@ -72,6 +72,11 @@ module.exports = {
         sidebar: {
           "/documentation/": [
             {
+              title: "Tools",
+              collapsable: false,
+              children: ["TOOLS.md"],
+            },
+            {
               title: "configuration",
               collapsable: false,
               children: ["architecture/configuration"],
@@ -84,7 +89,7 @@ module.exports = {
             {
               title: "Guides",
               collapsable: false,
-              children: ["guides/technical-setup/"],
+              children: ["guides/technical-setup/", "guides/database-migration/"],
             },
           ],
           "/features/": [],

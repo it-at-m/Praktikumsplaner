@@ -15,11 +15,11 @@ See the [open issues](https://github.com/it-at-m/Praktikumsplaner/issues) for a 
 
 ## Set up
 
-tbd.
+Checkout [Technical-Setup](https://it-at-m.github.io/Praktikumsplaner/documentation/guides/technical-setup/)
 
 ## Documentation
 
-tbd.
+Checkout the [documentation](https://it-at-m.github.io/Praktikumsplaner/)
 
 ## Contributing
 
