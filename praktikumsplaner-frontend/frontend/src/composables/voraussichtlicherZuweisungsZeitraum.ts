@@ -1,5 +1,8 @@
 export function useZeitraeume() {
-    function studiumsZeitraum(studienart: any, semester: any): string {
+    function studiumsZeitraum(
+        studienart: string | undefined,
+        semester: string | undefined
+    ): string {
         if (studienart == "BSC") {
             if (semester == "SEMESTER1" || semester == "SEMESTER3") {
                 return "Februar - Mitte März";
@@ -33,5 +36,31 @@ export function useZeitraeume() {
         }
         return "";
     }
-    return { studiumsZeitraum };
+
+    function ausbildungsZeitraum(
+        ausbildungsrichtung: string | undefined,
+        ausbildungsjahr: string | undefined
+    ): string {
+        if (!ausbildungsrichtung || !ausbildungsjahr) return "";
+        const currentMonth = new Date().getMonth() + 1;
+        if (ausbildungsrichtung == "FISI") {
+            if (
+                !(ausbildungsjahr == "JAHR1") &&
+                2 < currentMonth &&
+                currentMonth < 9
+            ) {
+                return "01.09 - 28.02";
+            } else if (
+                !(ausbildungsjahr == "JAHR1") &&
+                (currentMonth < 3 || 8 < currentMonth)
+            ) {
+                return "01.03 - 31.08";
+            } else {
+                return "Nicht in ausgewähltem Jahr verfügbar (Erstes Jahr bei der SWM)";
+            }
+        }
+        return "";
+    }
+
+    return { studiumsZeitraum, ausbildungsZeitraum };
 }
