@@ -276,18 +276,25 @@ function changeSelectedStuzubi() {
     if (stuzubiSelection.value == stuzubiSelectionItems.value[0]) {
         isStudium.value = false;
         isAusbildung.value = true;
+        zeitraum.value = "";
     }
     if (stuzubiSelection.value == stuzubiSelectionItems.value[1]) {
         isAusbildung.value = false;
         isStudium.value = true;
+        zeitraum.value = "";
     }
 }
 
 function changeVorrZuweisungsZeitraum() {
-    if (isStudium) {
+    if (isStudium.value) {
         zeitraum.value = zeitraeueme.studiumsZeitraum(
             praktikumsstelle.value.studienart,
             praktikumsstelle.value.studiensemester
+        );
+    } else if (isAusbildung.value) {
+        zeitraum.value = zeitraeueme.ausbildungsZeitraum(
+            praktikumsstelle.value.ausbildungsrichtung,
+            praktikumsstelle.value.ausbildungsjahr
         );
     } else {
         zeitraum.value = "";
