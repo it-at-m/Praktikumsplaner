@@ -93,6 +93,16 @@
                         >
                         </v-select>
                     </v-col>
+                    <v-col cols="6">
+                        <v-text-field
+                            v-model="zeitraum"
+                            label="Voraussichtlicher Zuweisungszeitraum"
+                            hint="Wählen Sie Art und Jahrgang des Stuzubis aus"
+                            filled
+                            prepend-icon="mdi-calendar-clock-outline"
+                            disabled
+                        ></v-text-field>
+                    </v-col>
                 </v-list-item>
             </v-list>
             <v-list v-show="isAusbildung">
@@ -200,18 +210,6 @@
                     Hochladen
                 </v-btn>
             </v-card-actions>
-            <v-list>
-                <v-list-item>
-                    <v-col cols="6">
-                        <v-text-field
-                            v-model="zeitraum"
-                            filled
-                            prepend-icon="mdi-calendar-clock-outline"
-                            disabled
-                        ></v-text-field>
-                    </v-col>
-                </v-list-item>
-            </v-list>
         </v-card>
     </v-form>
 </template>
@@ -291,8 +289,9 @@ function changeVorrZuweisungsZeitraum() {
             praktikumsstelle.value.studienart,
             praktikumsstelle.value.studiensemester
         );
+    } else {
+        zeitraum.value = "";
     }
-    zeitraum.value = "undefiniert";
 }
 
 function uploadPraktikumsstelle() {

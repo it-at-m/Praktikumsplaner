@@ -1,26 +1,40 @@
-import { Studienart } from "@/types/Studienart";
-import { Studiensemester } from "@/types/Studiensemester";
-
 export function useZeitraeume() {
     function studiumsZeitraum(studienart: any, semester: any): string {
-        const meldungMonth = new Date().getMonth() + 1;
-        console.log(meldungMonth);
         console.log(studienart);
         console.log(semester);
-        if (studienart == Studienart.find((s) => s.name === "BSC")?.name) {
-            console.log("jo");
-            if (meldungMonth == 1 || 7 < meldungMonth) {
+
+        if (studienart == "BSC") {
+            if (semester == "SEMESTER1" || semester == "SEMESTER3") {
                 return "Februar - Mitte März";
-            } else if (1 < meldungMonth && meldungMonth < 7) {
-                return "Juli - September";
-            } else if (
-                semester ==
-                Studiensemester.find((s) => s.name === "SEMESTER5")?.name
-            ) {
-                return "Juli - März";
+            } else if (semester == "SEMESTER2" || semester == "SEMESTER6") {
+                return "Juli - Ende September";
+            } else if (semester == "SEMESTER4" || semester == "SEMESTER5") {
+                return "Juli - Mitte März";
+            } else {
+                return "Nicht in ausgewähltem Semester verfügbar";
             }
         }
-        return "undefiniert";
+        if (studienart == "BWI") {
+            if (semester == "SEMESTER1" || semester == "SEMESTER3") {
+                return "01.09 - 28.02";
+            } else if (semester == "SEMESTER2" || semester == "SEMESTER4") {
+                return "01.03 - 01.09";
+            } else if (semester == "SEMESTER5" || semester == "SEMESTER6") {
+                return "01.09 - 30.06";
+            } else {
+                return "Nicht in ausgewähltem Semester verfügbar";
+            }
+        }
+        if (studienart == "VI") {
+            if (semester == "SEMESTER1" || semester == "SEMESTER3") {
+                return "Februar - März";
+            } else if (semester == "SEMESTER4" || semester == "SEMESTER5") {
+                return "Oktober - März";
+            } else {
+                return "Nicht in ausgewähltem Semester verfügbar";
+            }
+        }
+        return "";
     }
     return { studiumsZeitraum };
 }
