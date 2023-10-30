@@ -1,8 +1,5 @@
 export function useZeitraeume() {
     function studiumsZeitraum(studienart: any, semester: any): string {
-        console.log(studienart);
-        console.log(semester);
-
         if (studienart == "BSC") {
             if (semester == "SEMESTER1" || semester == "SEMESTER3") {
                 return "Februar - Mitte März";
