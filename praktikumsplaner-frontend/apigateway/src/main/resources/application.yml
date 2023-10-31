@@ -68,7 +68,7 @@ app:
         uri: http://localhost:39146/
     security:
       keycloak:
-        issuer-uri: http://kubernetes.docker.internal:8100/auth/realms/${app.security.keycloak.realm}
+        issuer-uri: http://kubernetes.docker.internal:8100/auth/realms/${app.gateway.security.keycloak.realm}
         realm: praktikumsplaner
         client:
           id: praktikumsplaner
