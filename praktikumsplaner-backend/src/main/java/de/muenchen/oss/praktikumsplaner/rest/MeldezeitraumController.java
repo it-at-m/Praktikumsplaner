@@ -6,6 +6,7 @@ import de.muenchen.oss.praktikumsplaner.service.MeldezeitraumService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class MeldezeitraumController {
 
     private final MeldezeitraumService meldezeitraumService;
 
+    @PreAuthorize("hasRole('ROLE_AUSBILDUNGSLEITUNG')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MeldezeitraumDTO createMeldezeitraum(final @Valid @RequestBody

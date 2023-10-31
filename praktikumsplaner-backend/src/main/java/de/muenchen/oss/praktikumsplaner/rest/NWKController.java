@@ -1,10 +1,10 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.service.ExcelService;
 import de.muenchen.oss.praktikumsplaner.service.NWKService;
 import java.io.IOException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class NWKController {
     private final NWKService nwkService;
 
+    @PreAuthorize("hasRole('ROLE_AUSBILDUNGSLEITUNG')")
     @PostMapping("/import")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveNWKExcel(@RequestBody String base64String) throws IOException {

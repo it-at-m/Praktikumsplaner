@@ -9,6 +9,7 @@ changes:
       redirectUris:
         - http://localhost:${DOCKER_PP_FRONTEND_PORT}/*
         - http://localhost:${LOCAL_STANDALONE_FRONTEND_PORT}/*
+        - http://localhost:${LOCAL_FRONTEND_PORT}/*
 
     # maps user attribute user_name to a claim user_name
   - addClientUserAttributeMapper:
@@ -45,3 +46,15 @@ changes:
       clientRole: true
       name: clientrole_testuser
       description: Role for a testuser
+
+  - addRole:
+      clientId: ${SSO_CLIENT_ID}
+      clientRole: true
+      name: AUSBILDUNGSLEITUNG
+      description: Role for oertl Ausbildungsleitung
+
+  - addRole:
+      clientId: ${SSO_CLIENT_ID}
+      clientRole: true
+      name: NWK
+      description: Role for oertl Ausbilder

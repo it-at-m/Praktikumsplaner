@@ -13,7 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
  * in the annotation e.g. {@link PreAuthorize}.
  */
 public enum AuthoritiesEnum {
-    PRAKTIKUMSPLANER_BACKEND_READ_THEENTITY, PRAKTIKUMSPLANER_BACKEND_WRITE_THEENTITY, PRAKTIKUMSPLANER_BACKEND_DELETE_THEENTITY,
+    AUSBILDUNGSLEITUNG, NWK, clientrole_testuser
     // add your authorities here and also add these new authorities to sso-authorisation.json.
 
 }
