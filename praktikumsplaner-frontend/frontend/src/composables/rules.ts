@@ -3,6 +3,15 @@ export function useRules() {
         return (value: File) => (value && value.type == format) || message;
     }
 
+    function maxLengthRule(length: number, message = "error") {
+        return (value: string) =>
+            (value != null && value.length < length) || message;
+    }
+
+    function notEmptyDateRule(message = "error") {
+        return (value: string) => (value && value.trim() != "-") || message;
+    }
+
     function notEmptyRule(message: string) {
         return (value: string) => (value && value.trim() != "") || message;
     }
@@ -19,5 +28,12 @@ export function useRules() {
             "keine Valide E-Mail!";
     }
 
-    return { fileTypeRule, notEmptyRule, notEmptyRuleAndVisible, emailRule };
+    return {
+        fileTypeRule,
+        maxLengthRule,
+        notEmptyDateRule,
+        notEmptyRule,
+        notEmptyRuleAndVisible,
+        emailRule,
+    };
 }

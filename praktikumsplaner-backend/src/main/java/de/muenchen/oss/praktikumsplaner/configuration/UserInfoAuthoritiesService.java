@@ -37,7 +37,7 @@ public class UserInfoAuthoritiesService {
     private static final String NAME_AUTHENTICATION_CACHE = "authentication_cache";
     private static final int AUTHENTICATION_CACHE_ENTRY_SECONDS_TO_EXPIRE = 60;
 
-    private static final String CLAIM_AUTHORITIES = "authorities";
+    private static final String CLAIM_AUTHORITIES = "user_roles";
 
     private final String userInfoUri;
     private final RestTemplate restTemplate;

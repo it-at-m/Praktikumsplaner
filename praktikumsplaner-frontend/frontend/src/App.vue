@@ -74,6 +74,12 @@
                         >
                     </v-list-item-content>
                 </v-list-item>
+
+                <v-list-item :to="{ path: '/meldezeitraeume' }">
+                    <v-list-item-content>
+                        <v-list-item-title>Meldezeiträume</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
         <v-main>
