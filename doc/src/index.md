@@ -10,6 +10,6 @@ features:
   details: Create new NWKs from Excel file
 - title: Create Meldezeitraum
   details: Create new Meldezeiträume in the application
-- title: feature 3
-  details: details for feature #3
+- title: Report Praktikumsstelle
+  details: Report a Praktikumsstelle to the örtl. Ausbildungsleitung
 ---
