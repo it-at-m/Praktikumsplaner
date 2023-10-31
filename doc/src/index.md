@@ -8,8 +8,8 @@ actionLink: /documentation/
 features:
 - title: Excel Upload
   details: Create new NWKs from Excel file
-- title: feature 2
-  details: details for feature #2
+- title: Create Meldezeitraum
+  details: Create new Meldezeiträume in the application
 - title: feature 3
   details: details for feature #3
 ---
