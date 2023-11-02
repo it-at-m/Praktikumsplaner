@@ -118,17 +118,7 @@ function clickSpeichern() {
         meldezeitraumService
             .create(meldezeitraum.value)
             .then(() => {
-                useSnackbarStore().showMessage({
-                    message: "Meldezeitraum erfolgreich angelegt",
-                    level: Levels.INFO,
-                });
                 emits("meldezeitraumAdded", meldezeitraum.value);
-            })
-            .catch((error) => {
-                useSnackbarStore().showMessage({
-                    message: error.message,
-                    level: Levels.ERROR,
-                });
             })
             .finally(() => {
                 resetForm();
