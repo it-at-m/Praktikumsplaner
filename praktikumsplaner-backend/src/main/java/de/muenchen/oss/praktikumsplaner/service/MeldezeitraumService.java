@@ -1,9 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
-import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
-import de.muenchen.oss.praktikumsplaner.dtos.CreateMeldezeitraumDTO;
-import de.muenchen.oss.praktikumsplaner.dtos.MeldezeitraumDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

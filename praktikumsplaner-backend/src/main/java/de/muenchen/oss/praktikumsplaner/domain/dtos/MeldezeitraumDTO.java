@@ -1,4 +1,4 @@
-package de.muenchen.oss.praktikumsplaner.dtos;
+package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
 import de.muenchen.oss.praktikumsplaner.annotations.StartDateBeforeEndDate;
 import jakarta.validation.constraints.NotBlank;
