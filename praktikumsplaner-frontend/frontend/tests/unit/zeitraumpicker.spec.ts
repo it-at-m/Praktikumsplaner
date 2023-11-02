@@ -1,6 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
 import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
-import Zeitraum from "@/types/Zeitraum";
 import Meldezeitraum from "@/types/Meldezeitraum";
 
 describe("Zeitraumpicker.vue", () => {
