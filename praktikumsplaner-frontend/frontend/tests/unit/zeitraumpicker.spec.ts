@@ -1,6 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
 import Zeitraum from "@/types/Zeitraum";
+import Meldezeitraum from "@/types/Meldezeitraum";
 
 describe("Zeitraumpicker.vue", () => {
 
@@ -8,7 +9,7 @@ describe("Zeitraumpicker.vue", () => {
         const errorMessageStart = "Das Startdatum muss vor dem Enddatum liegen.";
         const errorMessageEnd = "Das Enddatum muss nach dem Startdatum liegen.";
 
-        const zeitraum = new Zeitraum("2020-10-10", "2019-10-10");
+        const zeitraum = new Meldezeitraum("name", "2020-10-10", "2019-10-10");
         const wrapper = shallowMount(ZeitraumPicker, {
             propsData: {
                     value: zeitraum
@@ -23,7 +24,7 @@ describe("Zeitraumpicker.vue", () => {
         const errorMessageStart = "Das Startdatum muss vor dem Enddatum liegen.";
         const errorMessageEnd = "Das Enddatum muss nach dem Startdatum liegen.";
 
-        const zeitraum = new Zeitraum("2019-10-10", "2020-10-10");
+        const zeitraum = new Meldezeitraum("name", "2019-10-10", "2020-10-10");
         const wrapper = shallowMount(ZeitraumPicker, {
             propsData: { value: zeitraum},
         });
