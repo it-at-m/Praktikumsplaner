@@ -1,6 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.validators;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.muenchen.oss.praktikumsplaner.annotations.StartDateBeforeEndDate;
@@ -45,7 +46,7 @@ public class StartDateBeforeEndDateValidatorTest {
                 startDate,
                 endDate);
 
-        assertFalse(validator.validate(meldezeitraumDTO).isEmpty());
+        assertThrows(Exception.class, () -> validator.validate(meldezeitraumDTO));
     }
 
     @Test
