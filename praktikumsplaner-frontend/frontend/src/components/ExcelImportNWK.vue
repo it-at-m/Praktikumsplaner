@@ -98,7 +98,7 @@ function handleFileImport() {
     }
 }
 
-function onFileChanged(e: { target: { files: (File | undefined)[] } }) {
+function onFileChanged(e: any) {
     excelDatei.value = e.target.files[0];
     buttonActionText.value = "Hochladen";
     isInUploadStage4.value = true;
