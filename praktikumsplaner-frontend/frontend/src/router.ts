@@ -5,6 +5,9 @@ import GetStarted from "./views/GetStarted.vue";
 import { ROUTER_BASE } from "@/Constants";
 import MeldungOertlAusbilder from "@/components/MeldungPraktikumsstelle/MeldungOertlAusbilder.vue";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
+import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
+import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
+import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
 
 Vue.use(Router);
 
@@ -51,7 +54,17 @@ export default new Router({
         {
             path: "/meldungAusbilder",
             name: "meldungOertlAusbilder",
-            component: MeldungOertlAusbilder,
+            component: MeldungStart,
+        },
+        {
+            path: "/meldungAusbildung",
+            name: "MeldungAusbildung",
+            component: MeldungAusbildung,
+        },
+        {
+            path: "/meldungStudium",
+            name: "MeldungStudium",
+            component: MeldungStudium,
         },
         { path: "*", redirect: "/" }, //Fallback 2
     ],

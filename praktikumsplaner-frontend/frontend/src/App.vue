@@ -70,7 +70,7 @@
                 <v-list-item :to="{ path: '/meldungAusbilder' }">
                     <v-list-item-content>
                         <v-list-item-title
-                            >Meldung Praktikumsstelle</v-list-item-title
+                            >Praktikumsstellen Meldung</v-list-item-title
                         >
                     </v-list-item-content>
                 </v-list-item>
