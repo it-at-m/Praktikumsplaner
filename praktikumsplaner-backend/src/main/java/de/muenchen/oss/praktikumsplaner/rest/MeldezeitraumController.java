@@ -20,7 +20,7 @@ public class MeldezeitraumController {
 
     private final MeldezeitraumService meldezeitraumService;
 
-    @PreAuthorize("hasRole('ROLE_AUSBILDUNGSLEITUNG')")
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MeldezeitraumDTO createMeldezeitraum(final @Valid @RequestBody
