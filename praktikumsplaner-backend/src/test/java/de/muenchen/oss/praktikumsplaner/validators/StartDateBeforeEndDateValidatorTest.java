@@ -15,7 +15,8 @@ import org.junit.jupiter.api.Test;
 public class StartDateBeforeEndDateValidatorTest {
 
     @StartDateBeforeEndDate(startDate = "startDate", endDate = "endDate")
-    private record TestClass(LocalDate startDate, LocalDate endDate){}
+    private record TestClass(LocalDate startDate, LocalDate endDate) {
+    }
 
     private static Validator validator;
 
