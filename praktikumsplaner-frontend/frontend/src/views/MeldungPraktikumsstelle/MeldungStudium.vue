@@ -9,7 +9,7 @@
                 <v-col>
                     <v-select
                         v-model="praktikumsstelle.studienart"
-                        label="Studienart"
+                        label="Studienart*"
                         :items="Studienart"
                         item-value="name"
                         item-text="value"
@@ -24,7 +24,7 @@
                 <v-col>
                     <v-select
                         v-model="praktikumsstelle.studiensemester"
-                        label="Studiensemester"
+                        label="Studiensemester*"
                         :items="Studiensemester"
                         item-value="name"
                         item-text="value"
@@ -64,7 +64,7 @@
                 <v-col>
                     <v-select
                         v-model="praktikumsstelle.programmierkenntnisse"
-                        label="Programmierkenntnisse"
+                        label="Programmierkenntnisse*"
                         :items="YesNo"
                         :menu-props="customMenuProps"
                         item-value="name"
@@ -77,7 +77,7 @@
                 <v-col>
                     <v-select
                         v-model="praktikumsstelle.projektarbeit"
-                        label="Projektarbeit*"
+                        label="Projektarbeit"
                         :items="YesNo"
                         :menu-props="customMenuProps"
                         item-value="name"

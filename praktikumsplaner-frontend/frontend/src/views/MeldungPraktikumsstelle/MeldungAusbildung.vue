@@ -1,5 +1,8 @@
 <template>
-    <v-form>
+    <v-form
+        ref="form"
+        lazy-validation
+    >
         <h3 style="margin-left: 30px">Praktikumstellen Meldung</h3>
         <v-container
             class="spacing-left"
@@ -160,6 +163,18 @@
                 <v-col cols="1" />
             </v-row>
         </v-container>
+        <v-btn
+            color="primary"
+            outlined
+        >
+            ZURÜCK
+        </v-btn>
+        <v-btn
+            color="primary"
+            @click="uploadPraktikumsstelle"
+        >
+            SPEICHERN
+        </v-btn>
     </v-form>
 </template>
 
@@ -173,6 +188,10 @@ import { Ausbildungsjahr } from "@/types/Ausbildungsjahr";
 import { Referat } from "@/types/Referat";
 import { YesNo } from "@/types/YesNo";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
+import MeldungService from "@/api/MeldungService";
+import { Levels } from "@/api/error";
+import { useSnackbarStore } from "@/stores/snackbar";
+import router from "@/router";
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
@@ -197,12 +216,36 @@ const emailRule = [
 const customMenuProps = {
     offsetY: true,
 };
-
+const snackbarStore = useSnackbarStore();
+const form = ref<HTMLFormElement>();
 function changeVorrZuweisungsZeitraum() {
     zeitraum.value = zeitraeueme.ausbildungsZeitraum(
         praktikumsstelle.value.ausbildungsrichtung,
         praktikumsstelle.value.ausbildungsjahr
     );
+}
+function cancel() {
+    form.value?.reset();
+    router.push("/");
+}
+function uploadPraktikumsstelle() {
+    if (!form.value?.validate()) return;
+    MeldungService.uploadAusbildungsPraktikumsstelle(praktikumsstelle.value)
+        .then(() =>
+            snackbarStore.showMessage({
+                message: "☑ Speichern war erfolgreich",
+                level: Levels.SUCCESS,
+            })
+        )
+        .catch((error) => {
+            snackbarStore.showMessage({
+                message: error,
+                level: Levels.ERROR,
+            });
+        })
+        .finally(() => {
+            cancel();
+        });
 }
 </script>
 <style>
