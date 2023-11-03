@@ -48,8 +48,6 @@
                 Weiter
             </v-btn>
         </v-row>
-        <v-text-field :value="isCheckedAusbildung"></v-text-field>
-        <v-text-field :value="isCheckedStudium"></v-text-field>
     </v-container>
 </template>
 
@@ -61,9 +59,9 @@ const isCheckedAusbildung = ref<boolean>(false);
 const isCheckedStudium = ref<boolean>(false);
 
 function redirect(): void {
-    if (isCheckedAusbildung) {
+    if (isCheckedAusbildung.value) {
         router.push("/meldungAusbildung");
-    } else if (isCheckedStudium) {
+    } else if (isCheckedStudium.value) {
         router.push("/meldungStudium");
     }
 }
