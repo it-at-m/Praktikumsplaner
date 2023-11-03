@@ -38,14 +38,14 @@
                 color="primary"
                 outlined
             >
-                Zurück
+                ZURÜCK
             </v-btn>
             <v-btn
                 v-if="isCheckedAusbildung || isCheckedStudium"
                 color="primary"
                 @click="redirect"
             >
-                Weiter
+                WEITER
             </v-btn>
         </v-row>
     </v-container>

@@ -2,6 +2,7 @@ export const enum Levels {
     INFO = "info",
     WARNING = "warning",
     ERROR = "error",
+    SUCCESS = "success",
 }
 
 export class ApiError extends Error {
