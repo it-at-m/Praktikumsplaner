@@ -8,7 +8,7 @@ In the middle of the site is a form with a blue upload button.
 
 It is possible to upload an Excel file there.
 
-Non-Excel files or old format Excel files (older than 2007) will produce errors.
+Non-Excel files or old format Excel files (older than 2007) will produce errors after uploading.
 
 The Excel file has to be in <a href="../assets/Import_Standart.xlsx" download>this correct format</a>.
 
