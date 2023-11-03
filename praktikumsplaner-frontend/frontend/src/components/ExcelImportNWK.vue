@@ -67,7 +67,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import ExcelService from "@/api/ExcelService";
-import { EventBus } from "@/EventBus";
+import { Store } from "@/Store";
 import router from "@/router";
 
 const excelDatei = ref<File>();
@@ -89,7 +89,7 @@ const uploadedSuccessText = "Ihre Exceldatei wurde erfolgreich Hochgeladen!";
 const uploadedFailureText = "Ihre Exceldatei konnte nicht hochgeladen werden!";
 
 onMounted(() => {
-    EventBus.$emit("changeAppHeader", "Excel Datei hochladen");
+    Store.$emit("changeAppHeader", "Excel Datei hochladen");
 });
 
 function cancel() {
