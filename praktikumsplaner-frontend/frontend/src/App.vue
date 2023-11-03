@@ -14,45 +14,20 @@
                 >
                     <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
                     <router-link to="/">
-                        <v-toolbar-title class="font-weight-bold">
-                            <span class="white--text">RefArch-</span>
-                            <span class="secondary--text">Kick</span>
-                            <span class="white--text">Starter</span>
-                        </v-toolbar-title>
+                        <v-toolbar-title class="white--text">
+                            {{ header }}</v-toolbar-title
+                        >
                     </router-link>
                 </v-col>
                 <v-col
                     cols="6"
                     class="d-flex align-center justify-center"
                 >
-                    <v-text-field
-                        id="suchfeld"
-                        v-model="query"
-                        flat
-                        solo-inverted
-                        hide-details
-                        label="Suche"
-                        clearable
-                        prepend-inner-icon="mdi-magnify"
-                        color="black"
-                        @keyup.enter="search"
-                    />
-                </v-col>
-                <v-col>
-                    <ExcelImportNWK></ExcelImportNWK>
                 </v-col>
                 <v-col
                     cols="1"
                     class="d-flex align-center justify-end"
                 >
-                    <v-btn
-                        text
-                        fab
-                    >
-                        <v-icon class="white--text">
-                            mdi-account-circle
-                        </v-icon>
-                    </v-btn>
                 </v-col>
             </v-row>
         </v-app-bar>
@@ -65,6 +40,13 @@
                 <v-list-item :to="{ path: '/getstarted' }">
                     <v-list-item-content>
                         <v-list-item-title>Get started</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item :to="{ path: '/excelimport' }">
+                    <v-list-item-content>
+                        <v-list-item-title
+                            >Excel Datei hochladen</v-list-item-title
+                        >
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item :to="{ path: '/meldungAusbilder' }">
@@ -98,12 +80,13 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router/composables";
 import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
-import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
+import { EventBus } from "@/EventBus";
 
 const drawer = ref(true);
 const query = ref("");
 const route = useRoute();
 const snackbarStore = useSnackbarStore();
+const header = ref<string>("Praktikumsplaner");
 
 onMounted(() => {
     /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -112,6 +95,7 @@ onMounted(() => {
         snackbarStore.showMessage(error);
     });
     /* eslint-enable  @typescript-eslint/no-explicit-any */
+    changeHeader("Praktikumsplaner");
 });
 
 watch(
@@ -123,18 +107,14 @@ watch(
     }
 );
 
-//Navigiert zur Seite mit den Suchergebnissen und sendet ein Event zum Auslösen weiterer Suchen.
-async function search(): Promise<void> {
-    if (query.value !== "" && query.value !== null) {
-        snackbarStore.showMessage({
-            message: "Sie haben nach " + query.value + " gesucht. ;)",
-        });
-    }
+function changeHeader(text: string) {
+    header.value = text;
 }
+
+EventBus.$on("changeAppHeader", (payLoad: string) => {
+    changeHeader(payLoad);
+});
 </script>
 
 <style>
-.main {
-    background-color: white;
-}
 </style>

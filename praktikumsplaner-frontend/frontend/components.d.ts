@@ -44,6 +44,7 @@ declare module '@vue/runtime-core' {
     VSpacer: typeof import('vuetify/lib')['VSpacer']
     VTextarea: typeof import('vuetify/lib')['VTextarea']
     VTextField: typeof import('vuetify/lib')['VTextField']
+    VToolbar: typeof import('vuetify/lib')['VToolbar']
     VToolbarTitle: typeof import('vuetify/lib')['VToolbarTitle']
     YesNoDialog: typeof import('./src/components/common/YesNoDialog.vue')['default']
     ZeitraumPicker: typeof import('./src/components/Meldezeitraeume/ZeitraumPicker.vue')['default']

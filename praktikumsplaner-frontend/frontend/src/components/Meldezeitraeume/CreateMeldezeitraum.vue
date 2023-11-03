@@ -56,8 +56,7 @@
                                 <v-row>
                                     <v-col cols="12">
                                         <ZeitraumPicker
-                                            :value="zeitraum"
-                                            @input="zeitraumChange"
+                                            :value="meldezeitraum"
                                         ></ZeitraumPicker>
                                     </v-col>
                                 </v-row>
@@ -70,17 +69,13 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/error";
 import { ref } from "vue";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import { useRules } from "@/composables/rules";
 import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
-import Zeitraum from "@/types/Zeitraum";
 
 const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum(""));
-const zeitraum = ref<Zeitraum>(new Zeitraum());
 
 const form = ref<HTMLFormElement>();
 const dialog = ref<boolean>(false);
@@ -100,15 +95,8 @@ const emits = defineEmits<{
     (e: "meldezeitraumAdded", meldezeitraum: Meldezeitraum): void;
 }>();
 
-function zeitraumChange(changedZeitraum: Zeitraum) {
-    zeitraum.value = changedZeitraum;
-    meldezeitraum.value.startZeitpunkt = changedZeitraum.startZeitpunkt;
-    meldezeitraum.value.endZeitpunkt = changedZeitraum.endZeitpunkt;
-}
-
 function resetForm() {
     meldezeitraum.value = new Meldezeitraum("");
-    zeitraum.value = new Zeitraum();
     form.value?.resetValidation();
 }
 
@@ -118,17 +106,7 @@ function clickSpeichern() {
         meldezeitraumService
             .create(meldezeitraum.value)
             .then(() => {
-                useSnackbarStore().showMessage({
-                    message: "Meldezeitraum erfolgreich angelegt",
-                    level: Levels.INFO,
-                });
                 emits("meldezeitraumAdded", meldezeitraum.value);
-            })
-            .catch((error) => {
-                useSnackbarStore().showMessage({
-                    message: error.message,
-                    level: Levels.ERROR,
-                });
             })
             .finally(() => {
                 resetForm();

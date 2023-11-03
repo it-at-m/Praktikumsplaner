@@ -1,7 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.dtos.CreateMeldezeitraumDTO;
-import de.muenchen.oss.praktikumsplaner.dtos.MeldezeitraumDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.service.MeldezeitraumService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
