@@ -1,5 +1,5 @@
 import FetchUtils from "@/api/FetchUtils";
-import {API_BASE, MELDEZEITRAUM_BASE} from "@/Constants";
+import { API_BASE, MELDEZEITRAUM_BASE } from "@/Constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
 
 export default class MeldezeitraumService {
