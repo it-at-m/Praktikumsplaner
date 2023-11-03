@@ -74,10 +74,16 @@ const uploader = ref<HTMLInputElement>();
 const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const buttonActionText = ref<string>("Auswählen");
-const isInUploadStage4 = ref<boolean>(false);
-const isInUploadedStage = ref<boolean>(false);
+const isReadyForUpload = ref<boolean>(false);
+const isUploaded = ref<boolean>(false);
 const iconUpload = ref<string>("mdi-file-alert");
 const textUpload = ref<string>("Wählen Sie die gewünschte Exeldatei aus!");
+const readyForUploadButtonText = "Hochladen";
+const uploadedButtonText = "fortfahren";
+const iconUploadedSuccess = "mdi-paperclip-check";
+const iconUploadedFailure = "mdi-paperclip-remove";
+const uploadedSuccessText = "Ihre Exceldatei wurde erfolgreich Hochgeladen!";
+const uploadedFailureText = "Ihre Exceldatei konnte nicht hochgeladen werden!";
 
 onMounted(() => {
     EventBus.$emit("changeAppHeader", "Excel Datei hochladen");
@@ -88,9 +94,9 @@ function cancel() {
 }
 
 function handleFileImport() {
-    if (isInUploadStage4.value == true) {
+    if (isReadyForUpload.value == true) {
         uploadFile();
-    } else if (isInUploadedStage.value == true) {
+    } else if (isUploaded.value == true) {
         router.push("/");
     } else {
         // Trigger click on the FileInput
@@ -100,20 +106,20 @@ function handleFileImport() {
 
 function onFileChanged(e: any) {
     excelDatei.value = e.target.files[0];
-    buttonActionText.value = "Hochladen";
-    isInUploadStage4.value = true;
+    buttonActionText.value = readyForUploadButtonText;
+    isReadyForUpload.value = true;
 }
 
 function onUploadedSuccess() {
-    iconUpload.value = "mdi-paperclip-check";
-    textUpload.value = "Ihre Exceldatei wurde erfolgreich Hochgeladen!";
-    buttonActionText.value = "fortfahren";
+    iconUpload.value = iconUploadedSuccess;
+    textUpload.value = uploadedSuccessText;
+    buttonActionText.value = uploadedButtonText;
 }
 
 function onUploadedFailed() {
-    iconUpload.value = "mdi-paperclip-remove";
-    textUpload.value = "Ihre Exceldatei konnte nicht hochgeladen werden!";
-    buttonActionText.value = "fortfahren";
+    iconUpload.value = iconUploadedFailure;
+    textUpload.value = uploadedFailureText;
+    buttonActionText.value = uploadedButtonText;
     let name = document.getElementById("card") as HTMLElement;
     name?.style.setProperty("background-color", "rgba(216, 47, 67, 0.50)");
 }
@@ -126,8 +132,8 @@ function uploadFile() {
             onUploadedFailed();
         })
         .finally(() => {
-            isInUploadedStage.value = true;
-            isInUploadStage4.value = false;
+            isUploaded.value = true;
+            isReadyForUpload.value = false;
         });
 }
 </script>
