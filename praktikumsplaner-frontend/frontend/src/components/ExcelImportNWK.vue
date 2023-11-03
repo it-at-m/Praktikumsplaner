@@ -8,6 +8,7 @@
             <v-card
                 id="card"
                 tile
+                :class="{ uploadError: hasError }"
             >
                 <v-toolbar
                     color="primary"
@@ -71,13 +72,15 @@ import router from "@/router";
 
 const excelDatei = ref<File>();
 const uploader = ref<HTMLInputElement>();
-const excelFormat =
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const buttonActionText = ref<string>("Auswählen");
 const isReadyForUpload = ref<boolean>(false);
 const isUploaded = ref<boolean>(false);
 const iconUpload = ref<string>("mdi-file-alert");
 const textUpload = ref<string>("Wählen Sie die gewünschte Exeldatei aus!");
+const hasError = ref<boolean>(false);
+
+const excelFormat =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const readyForUploadButtonText = "Hochladen";
 const uploadedButtonText = "fortfahren";
 const iconUploadedSuccess = "mdi-paperclip-check";
@@ -120,8 +123,7 @@ function onUploadedFailed() {
     iconUpload.value = iconUploadedFailure;
     textUpload.value = uploadedFailureText;
     buttonActionText.value = uploadedButtonText;
-    let name = document.getElementById("card") as HTMLElement;
-    name?.style.setProperty("background-color", "rgba(216, 47, 67, 0.50)");
+    hasError.value = true;
 }
 
 function uploadFile() {
@@ -144,5 +146,8 @@ function uploadFile() {
 }
 .buttonEnd {
     margin-top: 32rem;
+}
+.uploadError {
+    background-color: rgba(216, 47, 67, 0.5);
 }
 </style>
