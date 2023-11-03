@@ -1,10 +1,10 @@
 <template>
-    <v-form>
-        <h3 style="margin-left: 30px">Praktikumstellen Meldung</h3>
-        <v-container
-            class="spacing-left"
-            style="margin-top: 30px"
-        >
+    <v-form
+        ref="form"
+        lazy-validation
+    >
+        <h3 class="spacing-left">Praktikumstellen Meldung</h3>
+        <v-container class="spacing-left, spacing-top-30">
             <v-row>
                 <v-col>
                     <v-select
@@ -13,10 +13,13 @@
                         :items="Studienart"
                         item-value="name"
                         item-text="value"
-                        :rules="studiumsRule"
+                        :rules="requiredRule"
                         :menu-props="customMenuProps"
                         outlined
-                        @change="changeVorrZuweisungsZeitraum()"
+                        @change="
+                            changeVorrZuweisungsZeitraum(),
+                                zustelleradressverwaltung()
+                        "
                     >
                     </v-select>
                 </v-col>
@@ -28,10 +31,13 @@
                         :items="Studiensemester"
                         item-value="name"
                         item-text="value"
-                        :rules="studiumsRule"
+                        :rules="requiredRule"
                         :menu-props="customMenuProps"
                         outlined
-                        @change="changeVorrZuweisungsZeitraum()"
+                        @change="
+                            changeVorrZuweisungsZeitraum(),
+                                zustelleradressverwaltung()
+                        "
                     >
                     </v-select>
                 </v-col>
@@ -44,6 +50,7 @@
                         label="Konkrete Dienststelle*"
                         :rules="requiredRule"
                         outlined
+                        @change="zustelleradressverwaltung()"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="2" />
@@ -56,6 +63,7 @@
                         item-text="value"
                         label="Referat"
                         outlined
+                        @change="zustelleradressverwaltung()"
                     ></v-select>
                 </v-col>
                 <v-col cols="1" />
@@ -67,9 +75,11 @@
                         label="Programmierkenntnisse*"
                         :items="YesNo"
                         :menu-props="customMenuProps"
+                        :rules="requiredRule"
                         item-value="name"
                         item-text="value"
                         outlined
+                        @change="zustelleradressverwaltung()"
                     >
                     </v-select>
                 </v-col>
@@ -83,6 +93,7 @@
                         item-value="name"
                         item-text="value"
                         outlined
+                        @change="zustelleradressverwaltung()"
                     ></v-select>
                 </v-col>
                 <v-col cols="1" />
@@ -94,6 +105,7 @@
                         label="Name örtliche Ausbilder*in*"
                         :rules="requiredRule"
                         outlined
+                        @change="zustelleradressverwaltung()"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="2" />
@@ -103,6 +115,7 @@
                         label="E-mail örtliche Ausbilderin*"
                         :rules="emailRule"
                         outlined
+                        @change="zustelleradressverwaltung()"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="1" />
@@ -113,6 +126,7 @@
                         v-model="praktikumsstelle.namentlicheAnforderung"
                         label="Namentliche Anforderung spez. gewünschter NWK"
                         outlined
+                        @change="zustelleradressverwaltung()"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="2" />
@@ -126,6 +140,7 @@
                         item-text="value"
                         :rules="requiredRule"
                         outlined
+                        @change="zustelleradressverwaltung()"
                     ></v-select>
                 </v-col>
                 <v-col cols="1" />
@@ -154,16 +169,37 @@
                         :rules="requiredRule"
                         outlined
                         height="124px"
+                        @change="zustelleradressverwaltung()"
                     ></v-textarea>
                 </v-col>
                 <v-col cols="1" />
+            </v-row>
+            <v-row justify="space-between">
+                <v-col>
+                    <v-btn
+                        color="primary"
+                        outlined
+                        :to="{ path: '/meldungAusbilder' }"
+                    >
+                        ZURÜCK
+                    </v-btn>
+                </v-col>
+                <v-col cols="8" />
+                <v-col>
+                    <v-btn
+                        color="primary"
+                        @click="uploadPraktikumsstelle"
+                    >
+                        SPEICHERN
+                    </v-btn>
+                </v-col>
             </v-row>
         </v-container>
     </v-form>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { onMounted, ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
 import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
@@ -172,22 +208,18 @@ import { YesNo } from "@/types/YesNo";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { Studienart } from "@/types/Studienart";
 import { Studiensemester } from "@/types/Studiensemester";
+import { EventBus } from "@/EventBus";
+import MeldungService from "@/api/MeldungService";
+import { Levels } from "@/api/error";
+import router from "@/router";
+import { useSnackbarStore } from "@/stores/snackbar";
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
 const zeitraeueme = useZeitraeume();
 const zeitraum = ref<string>("");
-const isStudium = ref<boolean>(false);
 const validationRules = useRules();
-const studiumsRule = computed(() => {
-    return [
-        validationRules.notEmptyRuleAndVisible(
-            isStudium.value,
-            "Darf nicht leer sein!"
-        ),
-    ];
-});
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein!")];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein!"),
@@ -196,6 +228,12 @@ const emailRule = [
 const customMenuProps = {
     offsetY: true,
 };
+const snackbarStore = useSnackbarStore();
+const form = ref<HTMLFormElement>();
+
+onMounted(() => {
+    EventBus.$emit("changeAppHeader", "Praktikumsstellen Meldung");
+});
 
 function changeVorrZuweisungsZeitraum() {
     zeitraum.value = zeitraeueme.studiumsZeitraum(
@@ -203,9 +241,41 @@ function changeVorrZuweisungsZeitraum() {
         praktikumsstelle.value.studiensemester
     );
 }
+
+function cancel() {
+    form.value?.reset();
+    router.push("/");
+}
+
+function uploadPraktikumsstelle() {
+    if (!form.value?.validate()) return;
+    MeldungService.uploadStudiumsPraktikumsstelle(praktikumsstelle.value)
+        .then(() =>
+            snackbarStore.showMessage({
+                message: "☑ Speichern war erfolgreich",
+                level: Levels.SUCCESS,
+            })
+        )
+        .catch((error) => {
+            snackbarStore.showMessage({
+                message: error,
+                level: Levels.ERROR,
+            });
+        })
+        .finally(() => {
+            cancel();
+        });
+}
+
+function zustelleradressverwaltung() {
+    EventBus.$emit("changeAppHeader", "ZAV - Zustelleradressverwaltung");
+}
 </script>
 <style>
 .spacing-left {
     margin-left: 30px;
+}
+.spacing-top-30 {
+    margin-top: 30px;
 }
 </style>

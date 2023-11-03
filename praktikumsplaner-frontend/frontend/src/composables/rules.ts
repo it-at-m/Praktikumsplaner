@@ -16,12 +16,6 @@ export function useRules() {
         return (value: string) => (value && value.trim() != "") || message;
     }
 
-    function notEmptyRuleAndVisible(visible: boolean, message: string) {
-        return (value: string) => {
-            return !visible || (value && value.trim() != "") || message;
-        };
-    }
-
     function emailRule() {
         return (v: string) =>
             /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) ||
@@ -33,7 +27,6 @@ export function useRules() {
         maxLengthRule,
         notEmptyDateRule,
         notEmptyRule,
-        notEmptyRuleAndVisible,
         emailRule,
     };
 }

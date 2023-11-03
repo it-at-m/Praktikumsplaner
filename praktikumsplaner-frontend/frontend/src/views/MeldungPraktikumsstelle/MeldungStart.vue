@@ -1,20 +1,13 @@
 <template>
-    <v-container>
-        <h3 style="margin-left: 30px">Praktikumstellen Meldung</h3>
-        <div
-            style="
-                display: flex;
-                align-items: center;
-                margin-left: 30px;
-                margin-top: 30px;
-            "
-        >
-            <p style="margin-right: 20px; margin-top: 10px">
+    <v-container class="spacing-left">
+        <h3>Praktikumstellen Meldung</h3>
+        <div class="flex-container">
+            <p class="p-spacing">
                 Wollen Sie eine Stelle für einen Auszubildenden melden
             </p>
             <v-checkbox
                 :input-value="isCheckedAusbildung"
-                style="margin-right: 5px"
+                class="checkbox-spacing"
                 @change="isCheckedAusbildung = !isCheckedAusbildung"
             >
                 <template #label>
@@ -30,33 +23,41 @@
                 </template>
             </v-checkbox>
         </div>
-        <v-row
-            justify="space-between"
-            align="end"
-        >
-            <v-btn
-                color="primary"
-                outlined
-            >
-                ZURÜCK
-            </v-btn>
-            <v-btn
-                v-if="isCheckedAusbildung || isCheckedStudium"
-                color="primary"
-                @click="redirect"
-            >
-                WEITER
-            </v-btn>
+        <v-row class="bottom-buttons">
+            <v-col>
+                <v-btn
+                    color="primary"
+                    outlined
+                    :to="{ path: '/' }"
+                >
+                    ZURÜCK
+                </v-btn>
+            </v-col>
+            <v-col cols="8" />
+            <v-col>
+                <v-btn
+                    v-if="isCheckedAusbildung || isCheckedStudium"
+                    color="primary"
+                    @click="redirect"
+                >
+                    WEITER
+                </v-btn>
+            </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import router from "@/router";
+import { EventBus } from "@/EventBus";
 
 const isCheckedAusbildung = ref<boolean>(false);
 const isCheckedStudium = ref<boolean>(false);
+
+onMounted(() => {
+    EventBus.$emit("changeAppHeader", "Praktikumsstellen Meldung");
+});
 
 function redirect(): void {
     if (isCheckedAusbildung.value) {
@@ -70,5 +71,23 @@ function redirect(): void {
 <style>
 .v-label-black {
     color: black;
+}
+.spacing-left {
+    margin-left: 30px;
+}
+.checkbox-spacing {
+    margin-right: 5px;
+}
+.flex-container {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+}
+.p-spacing {
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.bottom-buttons {
+    margin-top: 40%;
 }
 </style>
