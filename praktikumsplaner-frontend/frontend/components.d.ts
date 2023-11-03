@@ -11,7 +11,6 @@ declare module '@vue/runtime-core' {
     DatePicker: typeof import('./src/components/common/DatePicker.vue')['default']
     DatetimeInput: typeof import('./src/components/common/DatetimeInput.vue')['default']
     ExcelImportNWK: typeof import('./src/components/ExcelImportNWK.vue')['default']
-    MeldungOertlAusbilder: typeof import('./src/components/MeldungPraktikumsstelle/MeldungOertlAusbilder.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheSnackbar: typeof import('./src/components/TheSnackbar.vue')['default']
