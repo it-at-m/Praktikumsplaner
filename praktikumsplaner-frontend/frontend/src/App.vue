@@ -72,7 +72,7 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router/composables";
 import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
-import { EventBus } from "@/EventBus";
+import { Store } from "@/Store";
 
 const drawer = ref(true);
 const query = ref("");
@@ -103,7 +103,7 @@ function changeHeader(text: string) {
     header.value = text;
 }
 
-EventBus.$on("changeAppHeader", (payLoad: string) => {
+Store.$on("changeAppHeader", (payLoad: string) => {
     changeHeader(payLoad);
 });
 </script>
