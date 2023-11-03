@@ -70,23 +70,26 @@ import ExcelService from "@/api/ExcelService";
 import { Store } from "@/Store";
 import router from "@/router";
 
-const excelDatei = ref<File>();
-const uploader = ref<HTMLInputElement>();
-const buttonActionText = ref<string>("Auswählen");
-const isReadyForUpload = ref<boolean>(false);
-const isUploaded = ref<boolean>(false);
-const iconUpload = ref<string>("mdi-file-alert");
-const textUpload = ref<string>("Wählen Sie die gewünschte Exeldatei aus!");
-const hasError = ref<boolean>(false);
-
 const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-const readyForUploadButtonText = "Hochladen";
-const uploadedButtonText = "fortfahren";
+const buttonTextInputFile = "Auswählen";
+const buttonTextReadyForUpload = "Hochladen";
+const buttonTextUploaded = "fortfahren";
+const iconBeforeUpload = "mdi-file-alert";
 const iconUploadedSuccess = "mdi-paperclip-check";
 const iconUploadedFailure = "mdi-paperclip-remove";
-const uploadedSuccessText = "Ihre Exceldatei wurde erfolgreich Hochgeladen!";
-const uploadedFailureText = "Ihre Exceldatei konnte nicht hochgeladen werden!";
+const textBeforeUpload = "Wählen Sie die gewünschte Exeldatei aus!";
+const textUploadedSuccess = "Ihre Exceldatei wurde erfolgreich Hochgeladen!";
+const textUploadedFailure = "Ihre Exceldatei konnte nicht hochgeladen werden!";
+
+const excelDatei = ref<File>();
+const uploader = ref<HTMLInputElement>();
+const buttonActionText = ref<string>(buttonTextInputFile);
+const isReadyForUpload = ref<boolean>(false);
+const isUploaded = ref<boolean>(false);
+const iconUpload = ref<string>(iconBeforeUpload);
+const textUpload = ref<string>(textBeforeUpload);
+const hasError = ref<boolean>(false);
 
 onMounted(() => {
     Store.$emit("changeAppHeader", "Excel Datei hochladen");
@@ -109,20 +112,20 @@ function handleFileImport() {
 
 function onFileChanged(e: any) {
     excelDatei.value = e.target.files[0];
-    buttonActionText.value = readyForUploadButtonText;
+    buttonActionText.value = buttonTextReadyForUpload;
     isReadyForUpload.value = true;
 }
 
 function onUploadedSuccess() {
     iconUpload.value = iconUploadedSuccess;
-    textUpload.value = uploadedSuccessText;
-    buttonActionText.value = uploadedButtonText;
+    textUpload.value = textUploadedSuccess;
+    buttonActionText.value = buttonTextUploaded;
 }
 
 function onUploadedFailed() {
     iconUpload.value = iconUploadedFailure;
-    textUpload.value = uploadedFailureText;
-    buttonActionText.value = uploadedButtonText;
+    textUpload.value = textUploadedFailure;
+    buttonActionText.value = buttonTextUploaded;
     hasError.value = true;
 }
 
