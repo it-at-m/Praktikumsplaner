@@ -12,8 +12,8 @@ export default class MeldezeitraumService {
         )
             .then((response) => {
                 useSnackbarStore().showMessage({
-                    message: "Meldezeitraum erfolgreich angelegt",
-                    level: Levels.INFO,
+                    message: "☑ Speichern erfolgreich.",
+                    level: Levels.SUCCESS,
                 });
                 FetchUtils.defaultResponseHandler(response);
                 return response.json();

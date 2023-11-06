@@ -1,26 +1,36 @@
 <template>
     <v-row>
-        <v-col cols="6">
-            <v-text-field
-                ref="endDate"
-                v-model="range.startZeitpunkt"
-                type="date"
-                :rules="startZeitpunktRules"
-                prepend-icon="mdi-calendar-start"
-                label="Startzeitpunkt"
-            >
-            </v-text-field>
-        </v-col>
-        <v-col cols="6">
-            <v-text-field
-                ref="startDate"
-                v-model="range.endZeitpunkt"
-                type="date"
-                prepend-icon="mdi-calendar-end"
-                label="Endzeitpunkt"
-                :rules="endZeitpunktRules"
-            >
-            </v-text-field>
+        <v-col>
+            <v-row>
+                <v-col cols="3">
+                    <v-text-field
+                        ref="endDate"
+                        v-model="range.startZeitpunkt"
+                        dense
+                        outlined
+                        type="date"
+                        :rules="startZeitpunktRules"
+                        :append-icon="calendarIcon"
+                        label="Beginn der Ausbildung"
+                    >
+                    </v-text-field>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="3">
+                    <v-text-field
+                        ref="startDate"
+                        v-model="range.endZeitpunkt"
+                        dense
+                        outlined
+                        type="date"
+                        :append-icon="calendarIcon"
+                        label="Ende der Ausbildung"
+                        :rules="endZeitpunktRules"
+                    >
+                    </v-text-field>
+                </v-col>
+            </v-row>
         </v-col>
     </v-row>
 </template>
@@ -33,11 +43,9 @@ import Meldezeitraum from "@/types/Meldezeitraum";
 const props = defineProps<{
     value: Meldezeitraum;
 }>();
-const emits = defineEmits<{
-    (e: "input", v: Meldezeitraum): void;
-}>();
 
 const validationRules = useRules();
+const calendarIcon = "mdi-calendar";
 
 const range = computed(() => props.value);
 
