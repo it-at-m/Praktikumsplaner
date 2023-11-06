@@ -94,5 +94,6 @@ onMounted(() => {
 <style scoped>
 .buttonEnd {
     margin-top: 42rem;
+    margin-bottom: 20px;
 }
 </style>
