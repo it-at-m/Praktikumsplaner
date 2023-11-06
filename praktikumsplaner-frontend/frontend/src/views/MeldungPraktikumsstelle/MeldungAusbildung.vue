@@ -212,7 +212,7 @@ import MeldungService from "@/api/MeldungService";
 import { Levels } from "@/api/error";
 import { useSnackbarStore } from "@/stores/snackbar";
 import router from "@/router";
-import { EventBus } from "@/EventBus";
+import { useHeaderStore } from "@/stores/header";
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
@@ -230,9 +230,10 @@ const customMenuProps = {
 };
 const snackbarStore = useSnackbarStore();
 const form = ref<HTMLFormElement>();
+const headerStore = useHeaderStore();
 
 onMounted(() => {
-    EventBus.$emit("changeAppHeader", "Praktikumsstellen Meldung");
+    headerStore.setHeader("Praktikumsstellen Meldung");
 });
 
 function changeVorrZuweisungsZeitraum() {
@@ -265,7 +266,7 @@ function uploadPraktikumsstelle() {
         });
 }
 function zustelleradressverwaltung() {
-    EventBus.$emit("changeAppHeader", "ZAV - Zustelleradressverwaltung");
+    headerStore.setHeader("ZAV - Zustelleradressverwaltung");
 }
 </script>
 <style>

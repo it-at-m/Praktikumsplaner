@@ -49,13 +49,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import router from "@/router";
-import { EventBus } from "@/EventBus";
+import { useHeaderStore } from "@/stores/header";
 
 const isCheckedAusbildung = ref<boolean>(false);
 const isCheckedStudium = ref<boolean>(false);
+const headerStore = useHeaderStore();
 
 onMounted(() => {
-    EventBus.$emit("changeAppHeader", "Praktikumsstellen Meldung");
+    headerStore.setHeader("Praktikumsstellen Meldung");
 });
 
 function redirect(): void {
