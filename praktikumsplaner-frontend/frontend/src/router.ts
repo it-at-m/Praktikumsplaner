@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Main from "./views/MainView.vue";
-import GetStarted from "./views/GetStarted.vue";
 import { ROUTER_BASE } from "@/Constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
 import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
@@ -37,11 +36,6 @@ export default new Router({
             name: "home",
             component: Main,
             meta: {},
-        },
-        {
-            path: "/getstarted",
-            name: "getstarted",
-            component: GetStarted,
         },
         {
             path: "/excelimport",

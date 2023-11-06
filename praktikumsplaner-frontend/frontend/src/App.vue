@@ -37,11 +37,6 @@
             clipped
         >
             <v-list>
-                <v-list-item :to="{ path: '/getstarted' }">
-                    <v-list-item-content>
-                        <v-list-item-title>Get started</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
                 <v-list-item :to="{ path: '/excelimport' }">
                     <v-list-item-content>
                         <v-list-item-title
