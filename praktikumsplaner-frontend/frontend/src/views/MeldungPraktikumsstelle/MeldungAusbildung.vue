@@ -17,8 +17,10 @@
                         :menu-props="customMenuProps"
                         outlined
                         @change="
-                            changeVorrZuweisungsZeitraum(),
-                                zustelleradressverwaltung()
+                            () => {
+                                changeVorrZuweisungsZeitraum();
+                                zustelleradressverwaltung();
+                            }
                         "
                     >
                     </v-select>
@@ -35,8 +37,10 @@
                         :menu-props="customMenuProps"
                         outlined
                         @change="
-                            changeVorrZuweisungsZeitraum(),
-                                zustelleradressverwaltung()
+                            () => {
+                                changeVorrZuweisungsZeitraum();
+                                zustelleradressverwaltung();
+                            }
                         "
                     >
                     </v-select>
