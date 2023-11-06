@@ -67,8 +67,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import ExcelService from "@/api/ExcelService";
-import { Store } from "@/Store";
 import router from "@/router";
+import { useHeaderStore } from "@/stores/header";
 
 const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -90,9 +90,10 @@ const isUploaded = ref<boolean>(false);
 const iconUpload = ref<string>(iconBeforeUpload);
 const textUpload = ref<string>(textBeforeUpload);
 const hasError = ref<boolean>(false);
+const headerStore = useHeaderStore();
 
 onMounted(() => {
-    Store.$emit("changeAppHeader", "Excel Datei hochladen");
+    headerStore.setHeader("Excel Datei hochladen");
 });
 
 function cancel() {

@@ -5,7 +5,7 @@ import GetStarted from "./views/GetStarted.vue";
 import { ROUTER_BASE } from "@/Constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
 import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
-import { Store } from "@/Store";
+import { useHeaderStore } from "@/stores/header";
 
 Vue.use(Router);
 
@@ -15,6 +15,7 @@ Vue.use(Router);
  * */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const routerMethods = ["push", "replace"];
+const headerStore = useHeaderStore();
 routerMethods.forEach((method: string) => {
     const originalCall = (Router.prototype as any)[method];
     (Router.prototype as any)[method] = function (
@@ -23,7 +24,7 @@ routerMethods.forEach((method: string) => {
         onReject: any
     ): Promise<any> {
         if (onResolve || onReject) {
-            Store.$emit("changeAppHeader", "Praktikumsplaner");
+            headerStore.setHeader("Praktikumsplaner");
             return originalCall.call(this, location, onResolve, onReject);
         }
         return originalCall.call(this, location).catch((err: any) => err);
