@@ -143,7 +143,7 @@ function uploadFile() {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .form {
     margin-top: 14rem;
 }
@@ -151,6 +151,6 @@ function uploadFile() {
     margin-top: 32rem;
 }
 .uploadError {
-    background-color: rgba(216, 47, 67, 0.5);
+    background-color: var(--v-errorExcel-base);
 }
 </style>
