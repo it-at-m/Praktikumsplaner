@@ -13,7 +13,11 @@ const theme = {
             accent: "#7BA4D9",
             success: "#69BE28",
             error: "#FF0000",
+            errorExcel: "#EB96A0",
         },
+    },
+    options: {
+        customProperties: true,
     },
 };
 
