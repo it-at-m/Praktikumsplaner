@@ -67,29 +67,33 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import ExcelService from "@/api/ExcelService";
-import { EventBus } from "@/EventBus";
 import router from "@/router";
-
-const excelDatei = ref<File>();
-const uploader = ref<HTMLInputElement>();
-const buttonActionText = ref<string>("Auswählen");
-const isReadyForUpload = ref<boolean>(false);
-const isUploaded = ref<boolean>(false);
-const iconUpload = ref<string>("mdi-file-alert");
-const textUpload = ref<string>("Wählen Sie die gewünschte Exeldatei aus!");
-const hasError = ref<boolean>(false);
+import { useHeaderStore } from "@/stores/header";
 
 const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-const readyForUploadButtonText = "Hochladen";
-const uploadedButtonText = "fortfahren";
+const buttonTextInputFile = "Auswählen";
+const buttonTextReadyForUpload = "Hochladen";
+const buttonTextUploaded = "fortfahren";
+const iconBeforeUpload = "mdi-file-alert";
 const iconUploadedSuccess = "mdi-paperclip-check";
 const iconUploadedFailure = "mdi-paperclip-remove";
-const uploadedSuccessText = "Ihre Exceldatei wurde erfolgreich Hochgeladen!";
-const uploadedFailureText = "Ihre Exceldatei konnte nicht hochgeladen werden!";
+const textBeforeUpload = "Wählen Sie die gewünschte Exeldatei aus!";
+const textUploadedSuccess = "Ihre Exceldatei wurde erfolgreich Hochgeladen!";
+const textUploadedFailure = "Ihre Exceldatei konnte nicht hochgeladen werden!";
+
+const excelDatei = ref<File>();
+const uploader = ref<HTMLInputElement>();
+const buttonActionText = ref<string>(buttonTextInputFile);
+const isReadyForUpload = ref<boolean>(false);
+const isUploaded = ref<boolean>(false);
+const iconUpload = ref<string>(iconBeforeUpload);
+const textUpload = ref<string>(textBeforeUpload);
+const hasError = ref<boolean>(false);
+const headerStore = useHeaderStore();
 
 onMounted(() => {
-    EventBus.$emit("changeAppHeader", "Excel Datei hochladen");
+    headerStore.setHeader("Excel Datei hochladen");
 });
 
 function cancel() {
@@ -109,20 +113,20 @@ function handleFileImport() {
 
 function onFileChanged(e: any) {
     excelDatei.value = e.target.files[0];
-    buttonActionText.value = readyForUploadButtonText;
+    buttonActionText.value = buttonTextReadyForUpload;
     isReadyForUpload.value = true;
 }
 
 function onUploadedSuccess() {
     iconUpload.value = iconUploadedSuccess;
-    textUpload.value = uploadedSuccessText;
-    buttonActionText.value = uploadedButtonText;
+    textUpload.value = textUploadedSuccess;
+    buttonActionText.value = buttonTextUploaded;
 }
 
 function onUploadedFailed() {
     iconUpload.value = iconUploadedFailure;
-    textUpload.value = uploadedFailureText;
-    buttonActionText.value = uploadedButtonText;
+    textUpload.value = textUploadedFailure;
+    buttonActionText.value = buttonTextUploaded;
     hasError.value = true;
 }
 
@@ -140,7 +144,7 @@ function uploadFile() {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .form {
     margin-top: 14rem;
 }
@@ -148,6 +152,6 @@ function uploadFile() {
     margin-top: 32rem;
 }
 .uploadError {
-    background-color: rgba(216, 47, 67, 0.5);
+    background-color: var(--v-errorExcel-base);
 }
 </style>
