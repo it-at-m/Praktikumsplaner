@@ -24,7 +24,7 @@ import lombok.ToString;
 public class Meldezeitraum extends BaseEntity {
 
     @Size(max = 255, message = "Name für Zeitraum darf nicht länger als {max} Zeichen sein.")
-    @NotBlank
+    @NotNull
     private String zeitraumName;
 
     @NotNull
