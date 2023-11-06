@@ -1,147 +1,99 @@
 <template>
-    <v-container>
-        <v-row justify="center">
-            <v-dialog
-                v-model="dialog"
-                max-width="1024"
-                persistent
-            >
-                <template #activator="{ on }">
-                    <v-btn
-                        x-large
-                        elevation="24"
-                        color="primary"
-                        v-on="on"
-                        ><v-icon>mdi-plus</v-icon>Meldezeitraum anlegen</v-btn
+    <v-col>
+        <h2>{{ header }}</h2>
+        <v-form
+            ref="form"
+            class="d-flex justify-center align-center form"
+        >
+            <v-container>
+                <v-row>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
                     >
-                </template>
-                <v-card>
-                    <v-form ref="form">
-                        <v-card-title>
-                            <h2>Meldezeitraum anlegen</h2>
-                            <v-spacer></v-spacer>
-                            <v-card-actions>
-                                <v-btn
-                                    color="secondary"
-                                    variant="text"
-                                    @click="clickAbbrechen()"
-                                >
-                                    Schließen
-                                </v-btn>
-                                <v-btn
-                                    color="primary"
-                                    variant="text"
-                                    @click="clickSpeichern()"
-                                >
-                                    Anlegen
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card-title>
-                        <v-card-text>
-                            <v-container>
-                                <v-row>
-                                    <v-col
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                    >
-                                        <v-text-field
-                                            v-model="meldezeitraum.zeitraumName"
-                                            prepend-icon="mdi-pencil"
-                                            label="Zeitraumname"
-                                            :rules="zeitraumNameRules"
-                                        ></v-text-field>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col cols="12">
-                                        <ZeitraumPicker
-                                            :value="zeitraum"
-                                            @input="zeitraumChange"
-                                        ></ZeitraumPicker>
-                                    </v-col>
-                                </v-row>
-                            </v-container>
-                        </v-card-text>
-                    </v-form>
-                </v-card>
-            </v-dialog>
-        </v-row>
-    </v-container>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12">
+                        <ZeitraumPicker :value="meldezeitraum"></ZeitraumPicker>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-form>
+        <v-btn
+            outlined
+            text
+            color="primary"
+            class="buttonEnd float-md-left"
+            @click="clickAbbrechen()"
+        >
+            Zurück
+        </v-btn>
+        <v-btn
+            class="buttonEnd float-md-right"
+            color="primary"
+            variant="text"
+            @click="clickSpeichern()"
+        >
+            Speichern
+        </v-btn>
+    </v-col>
 </template>
+
 <script setup lang="ts">
-import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/error";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
-import { useRules } from "@/composables/rules";
 import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
-import Zeitraum from "@/types/Zeitraum";
+import { Store } from "@/Store";
+import { sleep } from "@antfu/utils";
+import router from "@/router";
 
 const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum(""));
-const zeitraum = ref<Zeitraum>(new Zeitraum());
 
 const form = ref<HTMLFormElement>();
-const dialog = ref<boolean>(false);
 const meldezeitraumService = new MeldezeitraumService();
-const maxLength = 255;
-const validationRules = useRules();
-
-const zeitraumNameRules = [
-    validationRules.maxLengthRule(
-        maxLength,
-        "Der Name darf maximal " + maxLength + " Zeichen lang sein."
-    ),
-    validationRules.notEmptyRule("Der Zeitraumname darf nicht leer sein."),
-];
+const header = "Meldezeitraum";
 
 const emits = defineEmits<{
     (e: "meldezeitraumAdded", meldezeitraum: Meldezeitraum): void;
 }>();
 
-function zeitraumChange(changedZeitraum: Zeitraum) {
-    zeitraum.value = changedZeitraum;
-    meldezeitraum.value.startZeitpunkt = changedZeitraum.startZeitpunkt;
-    meldezeitraum.value.endZeitpunkt = changedZeitraum.endZeitpunkt;
-}
-
 function resetForm() {
     meldezeitraum.value = new Meldezeitraum("");
-    zeitraum.value = new Zeitraum();
     form.value?.resetValidation();
 }
 
 function clickSpeichern() {
     if (form.value?.validate()) {
-        dialog.value = false;
         meldezeitraumService
             .create(meldezeitraum.value)
             .then(() => {
-                useSnackbarStore().showMessage({
-                    message: "Meldezeitraum erfolgreich angelegt",
-                    level: Levels.INFO,
-                });
                 emits("meldezeitraumAdded", meldezeitraum.value);
-            })
-            .catch((error) => {
-                useSnackbarStore().showMessage({
-                    message: error.message,
-                    level: Levels.ERROR,
-                });
             })
             .finally(() => {
                 resetForm();
+                sleep(1000).then(() => {
+                    router.push("/");
+                });
             });
     }
 }
 
 function clickAbbrechen() {
     resetForm();
-    dialog.value = false;
+    router.push("/");
 }
+
+onMounted(() => {
+    Store.$emit("changeAppHeader", header);
+});
 </script>
 
 <style scoped>
-
+.buttonEnd {
+    margin-top: 42rem;
+    margin-bottom: 20px;
+}
 </style>

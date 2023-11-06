@@ -31,7 +31,7 @@ public class StartDateBeforeEndDateValidator implements ConstraintValidator<Star
 
             return startDate.isBefore(endDate);
         } catch (Exception e) {
-            return false;
+            throw new RuntimeException(e);
         }
     }
 }

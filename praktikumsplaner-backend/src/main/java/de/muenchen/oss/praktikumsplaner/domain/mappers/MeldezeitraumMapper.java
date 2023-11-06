@@ -1,8 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.domain.mappers;
 
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
-import de.muenchen.oss.praktikumsplaner.dtos.CreateMeldezeitraumDTO;
-import de.muenchen.oss.praktikumsplaner.dtos.MeldezeitraumDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
