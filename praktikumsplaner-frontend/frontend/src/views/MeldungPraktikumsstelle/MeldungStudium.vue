@@ -208,11 +208,11 @@ import { YesNo } from "@/types/YesNo";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { Studienart } from "@/types/Studienart";
 import { Studiensemester } from "@/types/Studiensemester";
-import { EventBus } from "@/EventBus";
 import MeldungService from "@/api/MeldungService";
 import { Levels } from "@/api/error";
 import router from "@/router";
 import { useSnackbarStore } from "@/stores/snackbar";
+import { useHeaderStore } from "@/stores/header";
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
@@ -230,9 +230,10 @@ const customMenuProps = {
 };
 const snackbarStore = useSnackbarStore();
 const form = ref<HTMLFormElement>();
+const headerStore = useHeaderStore();
 
 onMounted(() => {
-    EventBus.$emit("changeAppHeader", "Praktikumsstellen Meldung");
+    headerStore.setHeader("Praktikumsstellen Meldung");
 });
 
 function changeVorrZuweisungsZeitraum() {
@@ -268,7 +269,7 @@ function uploadPraktikumsstelle() {
 }
 
 function zustelleradressverwaltung() {
-    EventBus.$emit("changeAppHeader", "ZAV - Zustelleradressverwaltung");
+    headerStore.setHeader("ZAV - Zustelleradressverwaltung");
 }
 </script>
 <style>
