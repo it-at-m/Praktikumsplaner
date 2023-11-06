@@ -51,8 +51,8 @@ export default new Router({
             component: ExcelImportNWK,
         },
         {
-            path: "/meldezeitraeume",
-            name: "meldezeitraeume",
+            path: "/meldezeitraum",
+            name: "meldezeitraum",
             component: Meldezeitraeume,
         },
         { path: "*", redirect: "/" }, //Fallback 2
