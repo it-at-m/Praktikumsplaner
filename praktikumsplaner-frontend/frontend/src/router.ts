@@ -9,6 +9,8 @@ import { EventBus } from "@/EventBus";
 import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
 import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
+import MeldungSuperhuman from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
+import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
 
 Vue.use(Router);
 
@@ -72,6 +74,11 @@ export default new Router({
             path: "/meldungStudium",
             name: "MeldungStudium",
             component: MeldungStudium,
+        },
+        {
+            path: "/superNwk",
+            name: "SuperNWK",
+            component: MeldungSuperNwk,
         },
         { path: "*", redirect: "/" }, //Fallback 2
     ],

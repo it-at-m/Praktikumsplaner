@@ -46,7 +46,6 @@
         </v-row>
     </v-container>
 </template>
-
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import router from "@/router";
@@ -60,14 +59,15 @@ onMounted(() => {
 });
 
 function redirect(): void {
-    if (isCheckedAusbildung.value) {
+    if (isCheckedStudium.value && isCheckedAusbildung.value) {
+        router.push("/superNwk");
+    } else if (isCheckedAusbildung.value) {
         router.push("/meldungAusbildung");
     } else if (isCheckedStudium.value) {
         router.push("/meldungStudium");
     }
 }
 </script>
-
 <style>
 .v-label-black {
     color: black;
