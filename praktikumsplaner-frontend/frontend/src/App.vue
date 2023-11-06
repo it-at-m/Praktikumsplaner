@@ -72,12 +72,13 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router/composables";
 import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
-import { EventBus } from "@/EventBus";
+import { useHeaderStore } from "@/stores/header";
 
 const drawer = ref(true);
 const query = ref("");
 const route = useRoute();
 const snackbarStore = useSnackbarStore();
+const headerStore = useHeaderStore();
 const header = ref<string>("Praktikumsplaner");
 
 onMounted(() => {
@@ -87,7 +88,6 @@ onMounted(() => {
         snackbarStore.showMessage(error);
     });
     /* eslint-enable  @typescript-eslint/no-explicit-any */
-    changeHeader("Praktikumsplaner");
 });
 
 watch(
@@ -99,13 +99,10 @@ watch(
     }
 );
 
-function changeHeader(text: string) {
-    header.value = text;
-}
-
-EventBus.$on("changeAppHeader", (payLoad: string) => {
-    changeHeader(payLoad);
-});
+watch(
+    () => headerStore.appHeader,
+    () => (header.value = headerStore.appHeader)
+);
 </script>
 
 <style>

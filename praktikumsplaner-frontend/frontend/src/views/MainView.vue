@@ -28,9 +28,11 @@ import HealthService from "@/api/HealthService";
 import HealthState from "@/types/HealthState";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { onMounted, ref } from "vue";
+import { useHeaderStore } from "@/stores/header";
 
 const snackbarStore = useSnackbarStore();
 const status = ref("DOWN");
+const headerStore = useHeaderStore();
 
 onMounted(() => {
     HealthService.checkHealth()
@@ -38,6 +40,7 @@ onMounted(() => {
         .catch((error) => {
             snackbarStore.showMessage(error);
         });
+    headerStore.setHeader("Praktikumsplaner");
 });
 </script>
 

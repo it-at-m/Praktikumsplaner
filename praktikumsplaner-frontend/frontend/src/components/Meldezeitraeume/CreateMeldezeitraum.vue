@@ -46,12 +46,12 @@ import { ref, onMounted } from "vue";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
-import { EventBus } from "@/EventBus";
 import { sleep } from "@antfu/utils";
 import router from "@/router";
+import { useHeaderStore } from "@/stores/header";
 
 const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum(""));
-
+const headerStore = useHeaderStore();
 const form = ref<HTMLFormElement>();
 const meldezeitraumService = new MeldezeitraumService();
 const header = "Meldezeitraum";
@@ -87,7 +87,7 @@ function clickAbbrechen() {
 }
 
 onMounted(() => {
-    EventBus.$emit("changeAppHeader", header);
+    headerStore.setHeader(header);
 });
 </script>
 
