@@ -79,7 +79,7 @@ const query = ref("");
 const route = useRoute();
 const snackbarStore = useSnackbarStore();
 const headerStore = useHeaderStore();
-const header = ref<string>("Prakitkumsplaner");
+const header = ref<string>("Praktikumsplaner");
 
 onMounted(() => {
     /* eslint-disable  @typescript-eslint/no-explicit-any */
