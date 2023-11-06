@@ -4,7 +4,6 @@ import Main from "./views/MainView.vue";
 import GetStarted from "./views/GetStarted.vue";
 import { ROUTER_BASE } from "@/Constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
-import { EventBus } from "@/EventBus";
 import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
 
 Vue.use(Router);
@@ -23,7 +22,6 @@ routerMethods.forEach((method: string) => {
         onReject: any
     ): Promise<any> {
         if (onResolve || onReject) {
-            EventBus.$emit("changeAppHeader", "Praktikumsplaner");
             return originalCall.call(this, location, onResolve, onReject);
         }
         return originalCall.call(this, location).catch((err: any) => err);
