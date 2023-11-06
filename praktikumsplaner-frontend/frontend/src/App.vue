@@ -49,9 +49,9 @@
                         >
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item :to="{ path: '/meldezeitraeume' }">
+                <v-list-item :to="{ path: '/meldezeitraum' }">
                     <v-list-item-content>
-                        <v-list-item-title>Meldezeiträume</v-list-item-title>
+                        <v-list-item-title>Meldezeitraum</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>

@@ -4,8 +4,8 @@ import Main from "./views/MainView.vue";
 import GetStarted from "./views/GetStarted.vue";
 import { ROUTER_BASE } from "@/Constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
-import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
 import { EventBus } from "@/EventBus";
+import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
 
 Vue.use(Router);
 
@@ -51,8 +51,8 @@ export default new Router({
             component: ExcelImportNWK,
         },
         {
-            path: "/meldezeitraeume",
-            name: "meldezeitraeume",
+            path: "/meldezeitraum",
+            name: "meldezeitraum",
             component: Meldezeitraeume,
         },
         { path: "*", redirect: "/" }, //Fallback 2

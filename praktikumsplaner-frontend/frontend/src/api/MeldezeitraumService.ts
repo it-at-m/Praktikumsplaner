@@ -1,8 +1,8 @@
 import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, MELDEZEITRAUM_BASE } from "@/Constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
-import {useSnackbarStore} from "@/stores/snackbar";
-import {Levels} from "@/api/error";
+import { useSnackbarStore } from "@/stores/snackbar";
+import { Levels } from "@/api/error";
 
 export default class MeldezeitraumService {
     public create(meldezeitraum: Meldezeitraum): Promise<Meldezeitraum> {
@@ -12,8 +12,8 @@ export default class MeldezeitraumService {
         )
             .then((response) => {
                 useSnackbarStore().showMessage({
-                    message: "Meldezeitraum erfolgreich angelegt",
-                    level: Levels.INFO,
+                    message: "☑ Speichern erfolgreich.",
+                    level: Levels.SUCCESS,
                 });
                 FetchUtils.defaultResponseHandler(response);
                 return response.json();
