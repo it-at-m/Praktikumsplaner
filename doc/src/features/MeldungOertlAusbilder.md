@@ -72,3 +72,7 @@ The `ZURÜCK` button redirects to the main page.
 
 When clicking the `SPEICHERN` button, the data is sent.
 A green notification appears if it was successful, if not a red error will appear.
+
+## Mandatory information
+
+The mandatory information is marked with "*"
