@@ -24,7 +24,7 @@ import { computed, ref } from "vue";
 const props = defineProps<{
     prependIcon: string;
     label: string;
-    rules: ((value: string) => string | boolean )[];
+    rules: ((value: string) => string | boolean)[];
     value?: string;
 }>();
 
