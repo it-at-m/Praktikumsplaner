@@ -93,7 +93,7 @@ public class PraktikumsstellenServiceTest {
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
-                .referat(Referat.ITM).projektarbeit(false)
+                .referat(Referat.ITM).projektarbeit(true)
                 .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Studiengang.FISI).build();
 
         AusbildungsPraktikumsstelleDTO dto = AusbildungsPraktikumsstelleDTO.builder().id(ausbildungsPraktikumsstelle.getId())
