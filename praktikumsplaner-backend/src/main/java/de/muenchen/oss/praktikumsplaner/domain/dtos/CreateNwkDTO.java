@@ -1,6 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
-import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

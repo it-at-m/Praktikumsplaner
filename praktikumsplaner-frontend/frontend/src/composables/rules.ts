@@ -8,18 +8,30 @@ export function useRules() {
             (value != null && value.length < length) || message;
     }
 
-    function notEmptyRule(message = "error") {
+    function notEmptyDateRule(message = "error") {
+        return (value: string) => (value && value.trim() != "-") || message;
+    }
+
+    function notEmptyRule(message: string) {
         return (value: string) => (value && value.trim() != "") || message;
     }
 
-    function notEmptyDateRule(message = "error") {
-        return (value: string) => (value && value.trim() != "-") || message;
+    function notEmptyBooleanRule(message: string) {
+        return (value: boolean | undefined) => value !== undefined || message;
+    }
+
+    function emailRule() {
+        return (v: string) =>
+            /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) ||
+            "keine Valide E-Mail!";
     }
 
     return {
         fileTypeRule,
         maxLengthRule,
-        notEmptyRule,
         notEmptyDateRule,
+        notEmptyRule,
+        emailRule,
+        notEmptyBooleanRule,
     };
 }

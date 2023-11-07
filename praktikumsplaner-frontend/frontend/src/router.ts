@@ -5,6 +5,11 @@ import GetStarted from "./views/GetStarted.vue";
 import { ROUTER_BASE } from "@/Constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
 import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
+import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
+import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
+import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
+import MeldungSuperhuman from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
+import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
 
 Vue.use(Router);
 
@@ -52,6 +57,26 @@ export default new Router({
             path: "/meldezeitraum",
             name: "meldezeitraum",
             component: Meldezeitraeume,
+        },
+        {
+            path: "/meldungAusbilder",
+            name: "meldungOertlAusbilder",
+            component: MeldungStart,
+        },
+        {
+            path: "/meldungAusbildung",
+            name: "MeldungAusbildung",
+            component: MeldungAusbildung,
+        },
+        {
+            path: "/meldungStudium",
+            name: "MeldungStudium",
+            component: MeldungStudium,
+        },
+        {
+            path: "/superNwk",
+            name: "SuperNWK",
+            component: MeldungSuperNwk,
         },
         { path: "*", redirect: "/" }, //Fallback 2
     ],

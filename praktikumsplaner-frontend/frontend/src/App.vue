@@ -54,6 +54,13 @@
                         <v-list-item-title>Meldezeitraum</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+                <v-list-item :to="{ path: '/meldungAusbilder' }">
+                    <v-list-item-content>
+                        <v-list-item-title
+                            >Praktikumsstellen Meldung</v-list-item-title
+                        >
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
         <v-main>
