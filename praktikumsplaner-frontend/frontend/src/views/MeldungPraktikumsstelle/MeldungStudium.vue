@@ -77,7 +77,7 @@
                     <v-select
                         v-model="praktikumsstelle.programmierkenntnisse"
                         label="Programmierkenntnisse*"
-                        :items="YesNo"
+                        :items="YesNoBoolean"
                         :menu-props="customMenuProps"
                         :rules="booleanRule"
                         item-value="value"
@@ -92,7 +92,7 @@
                     <v-select
                         v-model="praktikumsstelle.projektarbeit"
                         label="Projektarbeit"
-                        :items="YesNo"
+                        :items="YesNoBoolean"
                         :menu-props="customMenuProps"
                         item-value="value"
                         item-text="name"
@@ -208,7 +208,7 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
 import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
 import { Referat } from "@/types/Referat";
-import { YesNo } from "@/types/YesNo";
+import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { Studienart } from "@/types/Studienart";
 import { Studiensemester } from "@/types/Studiensemester";
