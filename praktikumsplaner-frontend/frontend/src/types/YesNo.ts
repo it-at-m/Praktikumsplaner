@@ -1,4 +1,4 @@
 export const YesNo = [
-    { name: "JA", value: "Ja" },
-    { name: "NEIN", value: "Nein" },
+    { name: "Ja", value: true },
+    { name: "Nein", value: false },
 ] as const;

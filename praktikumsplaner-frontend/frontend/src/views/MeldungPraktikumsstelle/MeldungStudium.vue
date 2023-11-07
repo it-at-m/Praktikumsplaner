@@ -79,9 +79,9 @@
                         label="Programmierkenntnisse*"
                         :items="YesNo"
                         :menu-props="customMenuProps"
-                        :rules="requiredRule"
-                        item-value="name"
-                        item-text="value"
+                        :rules="booleanRule"
+                        item-value="value"
+                        item-text="name"
                         outlined
                         @change="zustelleradressverwaltung()"
                     >
@@ -94,8 +94,8 @@
                         label="Projektarbeit"
                         :items="YesNo"
                         :menu-props="customMenuProps"
-                        item-value="name"
-                        item-text="value"
+                        item-value="value"
+                        item-text="name"
                         outlined
                         @change="zustelleradressverwaltung()"
                     ></v-select>
@@ -228,6 +228,9 @@ const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein!")];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein!"),
     validationRules.emailRule(),
+];
+const booleanRule = [
+    validationRules.notEmptyBooleanRule("Darf nicht leer sein!"),
 ];
 const customMenuProps = {
     offsetY: true,
