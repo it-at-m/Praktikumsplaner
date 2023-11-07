@@ -213,8 +213,6 @@ import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
 import MeldungService from "@/api/MeldungService";
-import { Levels } from "@/api/error";
-import { useSnackbarStore } from "@/stores/snackbar";
 import router from "@/router";
 import { useHeaderStore } from "@/stores/header";
 
@@ -235,7 +233,6 @@ const booleanRule = [
 const customMenuProps = {
     offsetY: true,
 };
-const snackbarStore = useSnackbarStore();
 const form = ref<HTMLFormElement>();
 const headerStore = useHeaderStore();
 
@@ -249,28 +246,17 @@ function changeVorrZuweisungsZeitraum() {
         praktikumsstelle.value.ausbildungsjahr
     );
 }
-function cancel() {
+function resetForm() {
     form.value?.reset();
     router.push("/");
 }
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
-    MeldungService.uploadAusbildungsPraktikumsstelle(praktikumsstelle.value)
-        .then(() =>
-            snackbarStore.showMessage({
-                message: "☑ Speichern war erfolgreich",
-                level: Levels.SUCCESS,
-            })
-        )
-        .catch((error) => {
-            snackbarStore.showMessage({
-                message: error,
-                level: Levels.ERROR,
-            });
-        })
-        .finally(() => {
-            cancel();
-        });
+    MeldungService.uploadAusbildungsPraktikumsstelle(
+        praktikumsstelle.value
+    ).finally(() => {
+        resetForm();
+    });
 }
 function zustelleradressverwaltung() {
     headerStore.setHeader("ZAV - Zustelleradressverwaltung");

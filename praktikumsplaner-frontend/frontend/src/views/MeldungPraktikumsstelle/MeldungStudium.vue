@@ -213,9 +213,7 @@ import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { Studienart } from "@/types/Studienart";
 import { Studiensemester } from "@/types/Studiensemester";
 import MeldungService from "@/api/MeldungService";
-import { Levels } from "@/api/error";
 import router from "@/router";
-import { useSnackbarStore } from "@/stores/snackbar";
 import { useHeaderStore } from "@/stores/header";
 
 const praktikumsstelle = ref<Praktikumsstelle>(
@@ -235,7 +233,6 @@ const booleanRule = [
 const customMenuProps = {
     offsetY: true,
 };
-const snackbarStore = useSnackbarStore();
 const form = ref<HTMLFormElement>();
 const headerStore = useHeaderStore();
 
@@ -250,29 +247,18 @@ function changeVorrZuweisungsZeitraum() {
     );
 }
 
-function cancel() {
+function resetForm() {
     form.value?.reset();
     router.push("/");
 }
 
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
-    MeldungService.uploadStudiumsPraktikumsstelle(praktikumsstelle.value)
-        .then(() =>
-            snackbarStore.showMessage({
-                message: "☑ Speichern war erfolgreich",
-                level: Levels.SUCCESS,
-            })
-        )
-        .catch((error) => {
-            snackbarStore.showMessage({
-                message: error,
-                level: Levels.ERROR,
-            });
-        })
-        .finally(() => {
-            cancel();
-        });
+    MeldungService.uploadStudiumsPraktikumsstelle(
+        praktikumsstelle.value
+    ).finally(() => {
+        resetForm();
+    });
 }
 
 function zustelleradressverwaltung() {
