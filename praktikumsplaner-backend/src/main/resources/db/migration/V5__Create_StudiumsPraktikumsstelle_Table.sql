@@ -8,7 +8,7 @@ create table STUDIUMSPRAKTIKUMSSTELLE
     dringlichkeit           varchar(10) not null,
     namentlicheAnforderung  varchar(255),
     referat                 varchar(3),
-    programmierkenntnisse   varchar(4) not null,
+    programmierkenntnisse   boolean not null,
     studiensemester         varchar(9) not null,
     studienart              varchar(3) not null,
     primary key (id)

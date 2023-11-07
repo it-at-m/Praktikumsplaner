@@ -10,9 +10,9 @@ export default class Praktikumsstelle {
 
         public dringlichkeit: string,
 
-        public projektarbeit?: string,
+        public projektarbeit?: boolean,
 
-        public programmierkenntnisse?: string,
+        public programmierkenntnisse?: boolean,
 
         public ausbildungsjahr?: string,
 

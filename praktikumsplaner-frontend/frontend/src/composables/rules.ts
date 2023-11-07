@@ -16,6 +16,10 @@ export function useRules() {
         return (value: string) => (value && value.trim() != "") || message;
     }
 
+    function notEmptyBooleanRule(message: string) {
+        return (value: boolean | undefined) => value !== undefined || message;
+    }
+
     function emailRule() {
         return (v: string) =>
             /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) ||
@@ -28,5 +32,6 @@ export function useRules() {
         notEmptyDateRule,
         notEmptyRule,
         emailRule,
+        notEmptyBooleanRule,
     };
 }

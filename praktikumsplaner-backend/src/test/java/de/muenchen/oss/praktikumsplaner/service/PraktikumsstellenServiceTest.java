@@ -13,7 +13,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
-import de.muenchen.oss.praktikumsplaner.domain.enums.YesNo;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
@@ -48,7 +47,7 @@ public class PraktikumsstellenServiceTest {
         studiumsPraktikumsstelle.setDringlichkeit(Dringlichkeit.NACHRANGIG);
         studiumsPraktikumsstelle.setNamentlicheAnforderung("TestnamentlicheAnforderung");
         studiumsPraktikumsstelle.setReferat(Referat.ITM);
-        studiumsPraktikumsstelle.setProgrammierkenntnisse(YesNo.JA);
+        studiumsPraktikumsstelle.setProgrammierkenntnisse(true);
         studiumsPraktikumsstelle.setStudiensemester(Studiensemester.SEMESTER1);
         studiumsPraktikumsstelle.setStudienart(Studiengang.BSC);
 
@@ -56,14 +55,14 @@ public class PraktikumsstellenServiceTest {
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
-                .referat(Referat.ITM).programmierkenntnisse(YesNo.JA)
+                .referat(Referat.ITM).programmierkenntnisse(true)
                 .studiensemester(Studiensemester.SEMESTER1).studienart(Studiengang.BSC).build();
 
         StudiumsPraktikumsstelleDTO dto = StudiumsPraktikumsstelleDTO.builder().id(studiumsPraktikumsstelle.getId())
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
-                .referat(Referat.ITM).programmierkenntnisse(YesNo.JA)
+                .referat(Referat.ITM).programmierkenntnisse(true)
                 .studiensemester(Studiensemester.SEMESTER1).studienart(Studiengang.BSC).build();
 
         when(studiumsRepository.save(studiumsPraktikumsstelle)).thenReturn(studiumsPraktikumsstelle);
@@ -86,7 +85,7 @@ public class PraktikumsstellenServiceTest {
         ausbildungsPraktikumsstelle.setDringlichkeit(Dringlichkeit.NACHRANGIG);
         ausbildungsPraktikumsstelle.setNamentlicheAnforderung("TestnamentlicheAnforderung");
         ausbildungsPraktikumsstelle.setReferat(Referat.ITM);
-        ausbildungsPraktikumsstelle.setProjektarbeit(YesNo.JA);
+        ausbildungsPraktikumsstelle.setProjektarbeit(true);
         ausbildungsPraktikumsstelle.setAusbildungsjahr(Ausbildungsjahr.JAHR1);
         ausbildungsPraktikumsstelle.setAusbildungsrichtung(Studiengang.FISI);
 
@@ -94,14 +93,14 @@ public class PraktikumsstellenServiceTest {
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
-                .referat(Referat.ITM).projektarbeit(YesNo.JA)
+                .referat(Referat.ITM).projektarbeit(false)
                 .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Studiengang.FISI).build();
 
         AusbildungsPraktikumsstelleDTO dto = AusbildungsPraktikumsstelleDTO.builder().id(ausbildungsPraktikumsstelle.getId())
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
-                .referat(Referat.ITM).projektarbeit(YesNo.JA)
+                .referat(Referat.ITM).projektarbeit(true)
                 .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Studiengang.FISI).build();
 
         when(ausbildungsRepository.save(ausbildungsPraktikumsstelle)).thenReturn(ausbildungsPraktikumsstelle);
