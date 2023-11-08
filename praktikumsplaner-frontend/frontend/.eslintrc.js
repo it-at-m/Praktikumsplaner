@@ -110,5 +110,4 @@ module.exports = {
             },
         },
     ],
-    ignorePatterns: ["components.d.ts"],
 };
