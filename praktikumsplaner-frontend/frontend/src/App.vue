@@ -36,7 +36,7 @@
             app
             clipped
         >
-            <v-list>
+            <v-list v-security="['ROLE_AUSBILDUNGSLEITUNG']">
                 <v-list-item :to="{ path: '/getstarted' }">
                     <v-list-item-content>
                         <v-list-item-title>Get started</v-list-item-title>
@@ -68,11 +68,14 @@
 
 <script setup lang="ts">
 import InfoService from "@/api/InfoService";
-import { onMounted, ref, watch } from "vue";
+import { onBeforeMount, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router/composables";
 import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { useHeaderStore } from "@/stores/header";
+import { UserService } from "@/api/UserService";
+import { useUserStore } from "@/stores/user";
+import "@/directives/Security";
 
 const drawer = ref(true);
 const query = ref("");
@@ -80,6 +83,17 @@ const route = useRoute();
 const snackbarStore = useSnackbarStore();
 const headerStore = useHeaderStore();
 const header = ref<string>("Praktikumsplaner");
+const userService = new UserService();
+const userStore = useUserStore();
+
+onBeforeMount(() => {
+    userService.getPermissions().then((userinfo) => {
+        userStore.setUsername(userinfo.name);
+        if (userinfo.user_roles) {
+            userStore.setRoles(userinfo.user_roles);
+        }
+    });
+});
 
 onMounted(() => {
     /* eslint-disable  @typescript-eslint/no-explicit-any */
