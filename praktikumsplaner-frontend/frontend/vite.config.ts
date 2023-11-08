@@ -17,6 +17,7 @@ export default defineConfig({
             resolvers: [
                 VuetifyResolver(), // Fängt alle Komponenten ab, die mit `V` beginnen, was zu Problemen mit anderen Dependencies führen kann
             ],
+            dts: false,
         }),
         AutoImport({
             imports: ["vue", "vitest"],
