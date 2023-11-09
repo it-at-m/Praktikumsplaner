@@ -1,23 +1,11 @@
 <template>
     <v-container>
         <v-row class="text-center">
-            <v-col cols="12">
-                <v-img
-                    :src="require('../assets/logo.png')"
-                    class="my-3"
-                    contain
-                    height="200"
-                />
-            </v-col>
-
             <v-col class="mb-4">
+                <br />
                 <h1 class="text-h3 font-weight-bold mb-3">
-                    Willkommen beim RefArch-Kickstarter
+                    Willkommen beim Praktikumsplaner!
                 </h1>
-                <p>
-                    Das API-Gateway ist:
-                    <span :class="status">{{ status }}</span>
-                </p>
             </v-col>
         </v-row>
     </v-container>
@@ -25,31 +13,20 @@
 
 <script setup lang="ts">
 import HealthService from "@/api/HealthService";
-import HealthState from "@/types/HealthState";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { useHeaderStore } from "@/stores/header";
 
 const snackbarStore = useSnackbarStore();
-const status = ref("DOWN");
 const headerStore = useHeaderStore();
 
 onMounted(() => {
-    HealthService.checkHealth()
-        .then((content: HealthState) => (status.value = content.status))
-        .catch((error) => {
-            snackbarStore.showMessage(error);
-        });
+    HealthService.checkHealth().catch((error) => {
+        snackbarStore.showMessage(error);
+    });
     headerStore.setHeader("Praktikumsplaner");
 });
 </script>
 
 <style scoped>
-.UP {
-    color: limegreen;
-}
-
-.DOWN {
-    color: lightcoral;
-}
 </style>

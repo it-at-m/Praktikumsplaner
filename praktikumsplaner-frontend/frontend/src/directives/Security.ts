@@ -1,7 +1,7 @@
 import Vue, { watch } from "vue";
 import Vuetify from "vuetify/lib";
 import { useUserStore } from "@/stores/user";
-import {APP_SECURITY} from "@/Constants";
+import { APP_SECURITY } from "@/Constants";
 
 Vue.use(Vuetify);
 

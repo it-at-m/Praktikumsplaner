@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.domain;
 
+import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
