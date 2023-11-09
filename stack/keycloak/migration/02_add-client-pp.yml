@@ -7,9 +7,7 @@ changes:
       secret: ${SSO_CLIENT_SECRET}
       publicClient: false
       redirectUris:
-        - http://localhost:${DOCKER_PP_FRONTEND_PORT}/*
-        - http://localhost:${LOCAL_STANDALONE_FRONTEND_PORT}/*
-        - http://localhost:${LOCAL_FRONTEND_PORT}/*
+        - http://*
 
     # maps user attribute user_name to a claim user_name
   - addClientUserAttributeMapper:
