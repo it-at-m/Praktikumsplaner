@@ -3,7 +3,7 @@ package de.muenchen.oss.praktikumsplaner.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.muenchen.oss.praktikumsplaner.domain.Studiengang;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
 import jakarta.validation.Validation;
