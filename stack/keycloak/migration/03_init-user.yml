@@ -3,39 +3,56 @@ author: MrSebastian
 realm: ${SSO_REALM}
 changes:
   - addUser:
-      name: testuser
+        name: testleitung
+        lastName: lastName
+        firstName: firstName
+        enabled: true
+        emailVerified: true
+        email: ausbildungsleitung.test@example.com
+        groups:
+          - group1
+        attributes:
+          user_name:
+            - ausbildungsleitung.test
+        clientRoles:
+          - client: ${SSO_CLIENT_ID}
+            role: AUSBILDUNGSLEITUNG
+  - updateUserPassword:
+      name: testleitung
+      password: "test"
+  - addUser:
+      name: testausbilder
       lastName: Lastname
       firstName: Firstname
       enabled: true
       emailVerified: true
-      email: test.user@example.com
+      email: test.ausbilder@example.com
       groups:
         - group1
       attributes:
         user_name:
-          - test.user
+          - test.ausbilder
       clientRoles:
         - client: ${SSO_CLIENT_ID}
-          role: clientrole_testuser
+          role: AUSBILDER
   - updateUserPassword:
-      name: testuser
+      name: testausbilder
       password: "test"
-
   - addUser:
-      name: testleitung
-      lastName: lastName
-      firstName: firstName
+      name: testnwk
+      lastName: Lastname
+      firstName: Firstname
       enabled: true
       emailVerified: true
-      email: ausbildungsleitung.test@example.com
+      email: test.nwk@example.com
       groups:
         - group1
       attributes:
         user_name:
-          - ausbildungsleitung.test
+          - test.nwk
       clientRoles:
         - client: ${SSO_CLIENT_ID}
-          role: AUSBILDUNGSLEITUNG
+          role: NWK
   - updateUserPassword:
-      name: testleitung
+      name: testnwk
       password: "test"
