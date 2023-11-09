@@ -1,5 +1,5 @@
 import { API_BASE } from "@/Constants";
-import UserInfo from "@/types/Userinfo";
+import UserInfo from "@/types/UserInfo";
 import FetchUtils from "@/api/FetchUtils";
 
 export class UserService {
