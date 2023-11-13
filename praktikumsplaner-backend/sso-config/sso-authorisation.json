@@ -5,5 +5,32 @@
     ],
     "policies": [
     ],
-    "scopes": []
+    "scopes": [],
+    "roles": {
+        "client": {
+            "praktikumsplaner": [
+                {
+                    "name": "AUSBILDER",
+                    "description": "Role for örtl. Ausbilder",
+                    "composite": false,
+                    "clientRole": true,
+                    "attributes": {}
+                },
+                {
+                    "name": "AUSBILDUNGSLEITUNG",
+                    "description": "Role for örtl. Ausbildungsleitung",
+                    "composite": false,
+                    "clientRole": true,
+                    "attributes": {}
+                },
+                {
+                    "name": "NWK",
+                    "description": "Role for Nachwuchskräfte",
+                    "composite": false,
+                    "clientRole": true,
+                    "attributes": {}
+                }
+            ]
+        }
+    }
 }
