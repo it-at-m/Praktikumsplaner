@@ -6,4 +6,4 @@ const API_BACKEND_BASE = "/api/backend-service";
 export const NWK_BASE = `${API_BACKEND_BASE}/nachwuchskraft`;
 export const MELDEZEITRAUM_BASE = `${API_BACKEND_BASE}/meldezeitraum`;
 export const PRAKTIKUMSSTELLE_BASE = `${API_BACKEND_BASE}/praktikumsstellen`;
-export const APP_SECURITY = true;
+export const APP_SECURITY = import.meta.env.VITE_APP_SECURITY;
