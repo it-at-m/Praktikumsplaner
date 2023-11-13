@@ -1,0 +1,1 @@
+alter table NWK add column isActive boolean default true not null;

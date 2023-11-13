@@ -46,4 +46,7 @@ public class NWK extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     public Set<DayOfWeek> vorlesungstage;
+
+    @NotNull
+    public boolean isActive;
 }

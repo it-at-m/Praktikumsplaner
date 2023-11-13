@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import de.muenchen.oss.praktikumsplaner.domain.NWK;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
@@ -22,5 +23,9 @@ public class NWKService {
 
     public void importNWK(String base64String) throws IOException {
         excelService.excelToNwkDTOList(base64String).forEach(this::saveNWK);
+    }
+
+    public Iterable<NWK> findAllActiveNWKs() {
+        return nwkRepository.findAllByActiveIsTrue();
     }
 }
