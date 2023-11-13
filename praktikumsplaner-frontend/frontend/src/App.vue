@@ -38,7 +38,7 @@
         >
             <v-list>
                 <v-list-item
-                    v-security-allow="['ROLE_AUSBILDUNGSLEITUNG']"
+                    v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
                     :to="{ path: '/excelimport' }"
                 >
                     <v-list-item-content>
@@ -48,7 +48,7 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
-                    v-security-allow="['ROLE_AUSBILDUNGSLEITUNG']"
+                    v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
                     :to="{ path: '/meldezeitraum' }"
                 >
                     <v-list-item-content>
@@ -56,7 +56,7 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
-                    v-security-restrict="['ROLE_NWK']"
+                    v-security.restrict="['ROLE_NWK']"
                     :to="{ path: '/meldungAusbilder' }"
                 >
                     <v-list-item-content>
