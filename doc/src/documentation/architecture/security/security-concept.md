@@ -13,3 +13,4 @@ The results of this process are listed under [features](#features)
 
 - [Excel-Import](../../../features/ExcelImport.md) (örtliche Ausbildungsleitung)
 - [Meldezeitraum](../../../features/meldezeitraum.md) (örtliche Ausbildungsleitung)
+- [Meldung örtl. Ausbilder](../../../features/MeldungOertlAusbilder.md) (örtliche Ausbilderin)

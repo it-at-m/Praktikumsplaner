@@ -19,6 +19,7 @@ We are using a role based security model in favor of a permission based model.
 ### Todo
 
 - All backend rest controller methods need the `@PreAuthorized`-Annotation for role binding
+- All Frontend Components which should be secured, should have the custom v-security directive
 - Roles for personas have to be defined and implemented in the keycloak
 
 ## Consequences
