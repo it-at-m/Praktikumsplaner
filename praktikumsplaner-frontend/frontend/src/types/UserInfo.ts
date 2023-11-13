@@ -1,6 +1,4 @@
-/* eslint-disable */
 export default interface UserInfo {
-
     email_verified: boolean;
 
     family_name: string;
@@ -16,6 +14,4 @@ export default interface UserInfo {
     name: string;
 
     user_roles?: string[];
-
 }
-
