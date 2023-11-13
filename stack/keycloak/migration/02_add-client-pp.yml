@@ -42,17 +42,5 @@ changes:
   - addRole:
       clientId: ${SSO_CLIENT_ID}
       clientRole: true
-      name: AUSBILDUNGSLEITUNG
-      description: Role for örtl. Ausbildungsleitung
-
-  - addRole:
-      clientId: ${SSO_CLIENT_ID}
-      clientRole: true
-      name: NWK
-      description: Role for Nachwuchskräfte
-
-  - addRole:
-      clientId: ${SSO_CLIENT_ID}
-      clientRole: true
-      name: AUSBILDER
-      description: Role for örtl. Ausbilder
+      name: clientrole_testuser
+      description: Role for a testuser
