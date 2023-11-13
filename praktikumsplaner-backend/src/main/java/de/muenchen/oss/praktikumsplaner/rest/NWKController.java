@@ -4,6 +4,7 @@ import de.muenchen.oss.praktikumsplaner.service.NWKService;
 import java.io.IOException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,5 +21,11 @@ public class NWKController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveNWKExcel(@RequestBody String base64String) throws IOException {
         nwkService.importNWK(base64String);
+    }
+
+    @GetMapping("/getallactivenwks")
+    @ResponseStatus(HttpStatus.OK)
+    public void findAllActiveNWK() {
+        nwkService.findAllActiveNWKs();
     }
 }
