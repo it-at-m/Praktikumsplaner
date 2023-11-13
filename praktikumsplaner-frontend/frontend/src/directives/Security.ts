@@ -20,8 +20,6 @@ Vue.directive("security-allow", {
         watch(
             () => userStore.getRoles,
             (newRoles) => {
-                // eslint-disable-next-line no-console
-                console.log("newRoles >" + newRoles);
                 if (newRoles.some((role) => role == requiredRole)) {
                     const nodeElement = vnode.elm;
                     if (nodeElement) {
@@ -55,13 +53,6 @@ Vue.directive("security-restrict", {
         watch(
             () => userStore.getRoles,
             (newRoles) => {
-                // eslint-disable-next-line no-console
-                console.log("newRoles >" + newRoles);
-                // eslint-disable-next-line no-console
-                console.log(
-                    "newRolesSome >" +
-                        newRoles.some((role) => role == requiredRole)
-                );
                 if (!newRoles.some((role) => role == requiredRole)) {
                     const nodeElement = vnode.elm;
                     if (nodeElement) {
