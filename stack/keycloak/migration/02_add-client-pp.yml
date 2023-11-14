@@ -8,6 +8,7 @@ changes:
       publicClient: false
       redirectUris:
         - http://*
+        - https://*
 
     # maps user attribute user_name to a claim user_name
   - addClientUserAttributeMapper:
