@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import de.muenchen.oss.praktikumsplaner.domain.NWK;
 import de.muenchen.oss.praktikumsplaner.service.NWKService;
 import java.io.IOException;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class NWKController {
 
     @GetMapping("/getallactivenwks")
     @ResponseStatus(HttpStatus.OK)
-    public void findAllActiveNWK() {
-        nwkService.findAllActiveNWKs();
+    public Iterable<NWK> findAllActiveNWK() {
+        return nwkService.findAllActiveNWKs();
     }
 }
