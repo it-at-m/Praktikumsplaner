@@ -7,7 +7,7 @@ Vue.use(Vuetify);
 
 Vue.directive("security", {
     inserted: function (el, binding, vnode) {
-        if (!APP_SECURITY) return;
+        if (APP_SECURITY !== "true") return;
         const userStore = useUserStore();
 
         const requiredRole = binding.value;
