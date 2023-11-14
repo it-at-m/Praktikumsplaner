@@ -16,7 +16,6 @@ public record NwkDTO(UUID id,
                      @NotNull(message = "Der Studiengang ist erforderlich") Studiengang studiengang,
                      @NotNull(message = "Der Jahrgang ist erforderlich") @Pattern(regexp = "\\d\\d/\\d\\d") String jahrgang,
                      Set<DayOfWeek> vorlesungstage,
-
                      @NotNull(message = "Der Status der NWK ist erforderlich") boolean isActive) {
 
 }
