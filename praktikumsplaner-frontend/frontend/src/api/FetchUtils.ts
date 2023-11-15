@@ -8,7 +8,7 @@ export default class FetchUtils {
         return {
             headers: this.getHeaders(),
             mode: "cors",
-            credentials: "same-origin",
+            credentials: this.getCredentials(),
             redirect: "manual",
         };
     }
@@ -24,7 +24,7 @@ export default class FetchUtils {
             body: getBody(body),
             headers: FetchUtils.getHeaders(),
             mode: "cors",
-            credentials: "same-origin",
+            credentials: this.getCredentials(),
             redirect: "manual",
         };
         function getBody(body: any): any {
@@ -55,7 +55,7 @@ export default class FetchUtils {
             body: body ? JSON.stringify(body) : undefined,
             headers,
             mode: "cors",
-            credentials: "same-origin",
+            credentials: this.getCredentials(),
             redirect: "manual",
         };
     }
@@ -77,7 +77,7 @@ export default class FetchUtils {
             body: body ? JSON.stringify(body) : undefined,
             headers,
             mode: "cors",
-            credentials: "same-origin",
+            credentials: this.getCredentials(),
             redirect: "manual",
         };
     }
@@ -151,5 +151,19 @@ export default class FetchUtils {
             "(^|;)\\s*" + "XSRF-TOKEN" + "\\s*=\\s*([^;]+)"
         );
         return (help ? help.pop() : "") as string;
+    }
+
+    /**
+     * Gibt an, wie im derzeit aktiven Modus mit den Credentials umzugehen ist.
+     * Liefert im Development-Modus (npm run serve) den Wert "include" für Request.credentials,
+     * damit die Credentials auch beim Zugriff von localhost:8081 auf localhost:8082 übertragen werden.
+     * Im Production-Modus (npm run build) sollen die Credentials nur dann übertragen werden,
+     * wenn der Zugriff auf den selben Host erfolgt (Request.credentials = "same-origin").
+     * @private Wird nur für die Erstellung der GET/POST/PUT/PATCH/DELETE-Configs benötigt.
+     */
+    private static getCredentials(): RequestCredentials {
+        return import.meta.env.MODE === "development"
+            ? "include"
+            : "same-origin";
     }
 }

@@ -7,7 +7,6 @@ import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
 import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
 import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
-import MeldungSuperhuman from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
 import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
 
 Vue.use(Router);
