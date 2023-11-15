@@ -84,7 +84,7 @@ module.exports = {
             {
               title: "Architektur",
               collapsable: false,
-              children: ["architecture/overview", "architecture/adrs"],
+              children: ["architecture/overview", "architecture/security/", "architecture/adrs"],
             },
             {
               title: "Guides",
