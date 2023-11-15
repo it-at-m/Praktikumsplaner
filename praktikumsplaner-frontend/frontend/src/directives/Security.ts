@@ -19,31 +19,19 @@ Vue.directive("security", {
         watch(
             () => userStore.getRoles,
             (newRoles) => {
-                if (binding.modifiers.allow) {
-                    if (newRoles.some((role) => role == requiredRole)) {
-                        const nodeElement = vnode.elm;
-                        if (nodeElement) {
-                            (nodeElement as HTMLElement).style.display = "";
-                        }
-                    } else {
-                        const nodeElement = vnode.elm;
-                        if (nodeElement) {
-                            (nodeElement as HTMLElement).style.display = "none";
-                        }
-                    }
-                }
-                if (binding.modifiers.restrict) {
-                    if (!newRoles.some((role) => role == requiredRole)) {
-                        const nodeElement = vnode.elm;
-                        if (nodeElement) {
-                            (nodeElement as HTMLElement).style.display = "";
-                        }
-                    } else {
-                        const nodeElement = vnode.elm;
-                        if (nodeElement) {
-                            (nodeElement as HTMLElement).style.display = "none";
-                        }
-                    }
+                const nodeElement = vnode.elm;
+
+                if (!nodeElement) return;
+
+                if (
+                    (binding.modifiers.allow &&
+                        newRoles.some((role) => role == requiredRole)) ||
+                    (binding.modifiers.restrict &&
+                        !newRoles.some((role) => role == requiredRole))
+                ) {
+                    (nodeElement as HTMLElement).style.display = "";
+                } else {
+                    (nodeElement as HTMLElement).style.display = "none";
                 }
             },
             {
