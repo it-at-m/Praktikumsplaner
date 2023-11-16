@@ -12,6 +12,11 @@
                         sm="6"
                         md="4"
                     >
+                        <v-text-field
+                            v-model="meldezeitraum.zeitraumName"
+                            label="Zeitraumname"
+                            :rules="zeitraumNameRules"
+                        ></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -49,12 +54,23 @@ import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
 import { sleep } from "@antfu/utils";
 import router from "@/router";
 import { useHeaderStore } from "@/stores/header";
+import { useRules } from "@/composables/rules";
 
 const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum(""));
 const headerStore = useHeaderStore();
 const form = ref<HTMLFormElement>();
 const meldezeitraumService = new MeldezeitraumService();
 const header = "Meldezeitraum";
+const maxLength = 255;
+const validationRules = useRules();
+
+const zeitraumNameRules = [
+    validationRules.maxLengthRule(
+        maxLength,
+        "Der Name darf maximal " + maxLength + " Zeichen lang sein."
+    ),
+    validationRules.notEmptyRule("Der Zeitraumname darf nicht leer sein."),
+];
 
 const emits = defineEmits<{
     (e: "meldezeitraumAdded", meldezeitraum: Meldezeitraum): void;
