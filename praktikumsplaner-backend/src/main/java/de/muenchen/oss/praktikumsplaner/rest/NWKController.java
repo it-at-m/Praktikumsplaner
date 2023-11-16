@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @AllArgsConstructor
@@ -24,9 +26,13 @@ public class NWKController {
         nwkService.importNWK(base64String);
     }
 
-    @GetMapping("/getallactivenwks")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Iterable<NWK> findAllActiveNWK() {
-        return nwkService.findAllActiveNWKs();
+    public Iterable<NWK> getNWKs(@RequestParam(name = "status", required = false) String status) {
+        if ("aktiv".equals(status)) {
+            return nwkService.findAllActiveNWKs();
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter ist erforderlich.");
+        }
     }
 }
