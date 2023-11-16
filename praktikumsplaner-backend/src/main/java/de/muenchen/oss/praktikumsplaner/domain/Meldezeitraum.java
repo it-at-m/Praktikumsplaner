@@ -2,6 +2,7 @@ package de.muenchen.oss.praktikumsplaner.domain;
 
 import de.muenchen.oss.praktikumsplaner.annotations.StartDateBeforeEndDate;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class Meldezeitraum extends BaseEntity {
 
     @Size(max = 255, message = "Name für Zeitraum darf nicht länger als {max} Zeichen sein.")
     @NotNull
+    @NotBlank
     private String zeitraumName;
 
     @NotNull

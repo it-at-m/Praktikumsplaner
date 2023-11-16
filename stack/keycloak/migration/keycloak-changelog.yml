@@ -5,3 +5,5 @@ includes:
   - path: 01_init-realm.yml
   - path: 02_add-client-pp.yml
   - path: 03_init-user.yml
+  - path: 04_change-client_roles.yml
+  - path: 05_change_client_user.yml

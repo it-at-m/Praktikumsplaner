@@ -1,0 +1,25 @@
+id: change client roles
+author: LuisEinig
+realm: ${SSO_REALM}
+changes:
+  - deleteRole:
+      clientId: ${SSO_CLIENT_ID}
+      name: clientrole_testuser
+
+  - addRole:
+      clientId: ${SSO_CLIENT_ID}
+      clientRole: true
+      name: AUSBILDUNGSLEITUNG
+      description: Role for örtl. Ausbildungsleitung
+
+  - addRole:
+      clientId: ${SSO_CLIENT_ID}
+      clientRole: true
+      name: NWK
+      description: Role for Nachwuchskräfte
+
+  - addRole:
+      clientId: ${SSO_CLIENT_ID}
+      clientRole: true
+      name: AUSBILDER
+      description: Role for örtl. Ausbilder

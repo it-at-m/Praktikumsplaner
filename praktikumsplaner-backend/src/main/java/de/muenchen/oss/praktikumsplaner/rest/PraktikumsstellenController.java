@@ -8,6 +8,7 @@ import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class PraktikumsstellenController {
 
     private final PraktikumsstellenService praktikumsstellenService;
 
+    @PreAuthorize("!hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).NWK.name())")
     @PostMapping("/studium")
     @ResponseStatus(HttpStatus.CREATED)
     public StudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelle(final @Valid @RequestBody
@@ -28,6 +30,7 @@ public class PraktikumsstellenController {
         return praktikumsstellenService.saveStudiumsPraktikumsstelle(createStudiumsPraktikumsstelleDTO);
     }
 
+    @PreAuthorize("!hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).NWK.name())")
     @PostMapping("/ausbildung")
     @ResponseStatus(HttpStatus.CREATED)
     public AusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelle(final @Valid @RequestBody

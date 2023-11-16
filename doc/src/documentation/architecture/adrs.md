@@ -12,3 +12,4 @@ The following adrs exist:
 - [ADR-005 dtos as java records](./adr/adr005-dtos-as-records.md)
 - [ADR-006 frontend components without complex logic](./adr/adr006-kiss-frontend-components.md)
 - [ADR-007 send errormessage](./adr/adr007-send-errormessage.md)
+- [ADR-008 security roles](./adr/adr008-security-roles.md)

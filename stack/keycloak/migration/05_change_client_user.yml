@@ -1,0 +1,60 @@
+id: change test users
+author: LuisEinig
+realm: ${SSO_REALM}
+changes:
+  - deleteUser:
+      name: testuser
+  - addUser:
+      name: testleitung
+      lastName: lastName
+      firstName: firstName
+      enabled: true
+      emailVerified: true
+      email: ausbildungsleitung.test@example.com
+      groups:
+        - group1
+      attributes:
+        user_name:
+          - ausbildungsleitung.test
+      clientRoles:
+        - client: ${SSO_CLIENT_ID}
+          role: AUSBILDUNGSLEITUNG
+  - updateUserPassword:
+      name: testleitung
+      password: "test"
+  - addUser:
+      name: testausbilder
+      lastName: Lastname
+      firstName: Firstname
+      enabled: true
+      emailVerified: true
+      email: test.ausbilder@example.com
+      groups:
+        - group1
+      attributes:
+        user_name:
+          - test.ausbilder
+      clientRoles:
+        - client: ${SSO_CLIENT_ID}
+          role: AUSBILDER
+  - updateUserPassword:
+      name: testausbilder
+      password: "test"
+  - addUser:
+      name: testnwk
+      lastName: Lastname
+      firstName: Firstname
+      enabled: true
+      emailVerified: true
+      email: test.nwk@example.com
+      groups:
+        - group1
+      attributes:
+        user_name:
+          - test.nwk
+      clientRoles:
+        - client: ${SSO_CLIENT_ID}
+          role: NWK
+  - updateUserPassword:
+      name: testnwk
+      password: "test"
