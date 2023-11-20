@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -60,4 +62,6 @@ public class StudiumsPraktikumsstelle extends BaseEntity {
     @Enumerated(EnumType.STRING)
     public Studiengang studienart;
 
+    @NotNull
+    public UUID meldezeitraumID;
 }
