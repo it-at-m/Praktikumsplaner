@@ -34,6 +34,7 @@ public class NWKController {
         nwkService.importNWK(base64String);
     }
 
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Iterable<NwkDTO> getNWKs(@RequestParam(name = "status", required = false) String status) {

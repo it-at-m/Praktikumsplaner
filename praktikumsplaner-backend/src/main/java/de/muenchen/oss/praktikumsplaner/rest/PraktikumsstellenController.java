@@ -49,6 +49,7 @@ public class PraktikumsstellenController {
         return praktikumsstellenService.saveAusbildungsPraktikumsstelle(createAusbildungsPraktikumsstelleDTO);
     }
 
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Iterable<PraktikumsstelleDTO> getAllPraktikumsstellen() {
