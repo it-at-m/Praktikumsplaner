@@ -1,6 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.domain;
 
-import de.muenchen.oss.praktikumsplaner.DayOfWeekSetConverter;
+import de.muenchen.oss.praktikumsplaner.domain.converter.DayOfWeekSetConverter;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
