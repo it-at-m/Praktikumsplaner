@@ -53,6 +53,9 @@ public class StudiumsPraktikumsstelle extends BaseEntity {
     public boolean programmierkenntnisse;
 
     @NotNull
+    public boolean planstelleVorhanden;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     public Studiensemester studiensemester;
 
