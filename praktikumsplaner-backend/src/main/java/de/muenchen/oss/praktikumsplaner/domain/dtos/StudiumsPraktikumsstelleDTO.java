@@ -32,5 +32,5 @@ public record StudiumsPraktikumsstelleDTO(@NotNull UUID id,
                                           @NotNull Studiensemester studiensemester,
 
                                           @NotNull Studiengang studienart
-                        ){
+                        ) implements PraktikumsstelleDTO {
 }
