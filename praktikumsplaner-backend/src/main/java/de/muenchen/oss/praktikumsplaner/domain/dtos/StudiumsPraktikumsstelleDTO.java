@@ -29,6 +29,8 @@ public record StudiumsPraktikumsstelleDTO(@NotNull UUID id,
 
                                           @NotNull boolean programmierkenntnisse,
 
+                                          @NotNull boolean planstelleVorhanden,
+
                                           @NotNull Studiensemester studiensemester,
 
                                           @NotNull Studiengang studienart
