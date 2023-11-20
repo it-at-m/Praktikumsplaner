@@ -8,6 +8,8 @@ export default {
     uploadStudiumsPraktikumsstelle(
         praktikumsstelle: Praktikumsstelle
     ): Promise<Praktikumsstelle> {
+        praktikumsstelle.dienststelle =
+            praktikumsstelle.normalizeDienststelle();
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
@@ -31,6 +33,8 @@ export default {
     uploadAusbildungsPraktikumsstelle(
         praktikumsstelle: Praktikumsstelle
     ): Promise<Praktikumsstelle> {
+        praktikumsstelle.dienststelle =
+            praktikumsstelle.normalizeDienststelle();
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung`,
             FetchUtils.getPOSTConfig(praktikumsstelle)

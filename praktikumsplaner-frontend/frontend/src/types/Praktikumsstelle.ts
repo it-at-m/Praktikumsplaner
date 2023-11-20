@@ -28,4 +28,9 @@ export default class Praktikumsstelle {
 
         public id?: string
     ) {}
+
+    normalizeDienststelle(): string {
+        const newDienststelle = this.dienststelle.toUpperCase();
+        return newDienststelle.replace(/\s|ITM|IT@M|RIT|-/g, "");
+    }
 }
