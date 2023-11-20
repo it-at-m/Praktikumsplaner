@@ -1,8 +1,13 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
 import de.muenchen.oss.praktikumsplaner.domain.NWK;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
+import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
 import de.muenchen.oss.praktikumsplaner.service.NWKService;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping(value = "/nachwuchskraft")
 public class NWKController {
     private final NWKService nwkService;
+    private final NWKMapper nwkMapper;
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping("/import")
@@ -30,9 +36,12 @@ public class NWKController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Iterable<NWK> getNWKs(@RequestParam(name = "status", required = false) String status) {
+    public Iterable<NwkDTO> getNWKs(@RequestParam(name = "status", required = false) String status) {
         if ("aktiv".equals(status)) {
-            return nwkService.findAllActiveNWKs();
+            List<NwkDTO> nwkDTOList = new ArrayList<>();
+            nwkService.findAllActiveNWKs().forEach(nwk -> nwkDTOList.add(nwkMapper.toDTO(nwk)));
+
+            return nwkDTOList;
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter ist erforderlich.");
         }
