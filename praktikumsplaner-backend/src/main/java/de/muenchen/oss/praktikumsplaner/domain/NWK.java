@@ -1,6 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.domain;
 
+import de.muenchen.oss.praktikumsplaner.DayOfWeekSetConverter;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -44,7 +46,7 @@ public class NWK extends BaseEntity {
     @Pattern(regexp = "\\d\\d/\\d\\d")
     public String jahrgang;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = DayOfWeekSetConverter.class)
     public Set<DayOfWeek> vorlesungstage;
 
     @NotNull
