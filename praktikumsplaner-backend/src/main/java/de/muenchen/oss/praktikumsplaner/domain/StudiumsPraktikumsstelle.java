@@ -25,29 +25,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @StudiumsAnnotation(studiengang = "getStudienart", message = "Keine korrekte Studienart")
-public class StudiumsPraktikumsstelle extends BaseEntity {
-
-    @NotNull
-    public String dienststelle;
-
-    @NotNull
-    public String oertlicheAusbilder;
-
-    @NotNull
-    @Email
-    public String email;
-
-    @NotNull
-    public String taetigkeiten;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    public Dringlichkeit dringlichkeit;
-
-    public String namentlicheAnforderung;
-
-    @Enumerated(EnumType.STRING)
-    public Referat referat;
+public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull
     public boolean programmierkenntnisse;
