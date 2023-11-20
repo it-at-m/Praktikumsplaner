@@ -12,7 +12,10 @@ import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenR
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Dictionary;
 import java.util.List;
+import java.util.TreeMap;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +36,7 @@ public class PraktikumsstellenService {
                 .toDTO(ausbildungsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO)));
     }
 
-    public Iterable<BasePraktikumsstelle> getAllPraktiumsstellen() {
+    public TreeMap<String, List<BasePraktikumsstelle>> getAllPraktiumsstellen() {
         Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable = ausbildungsPraktikumsstellenRepository.findAll();
         Iterable<StudiumsPraktikumsstelle> studiumsIterable = studiumsPraktikumsstellenRepository.findAll();
 
@@ -46,11 +49,35 @@ public class PraktikumsstellenService {
         List<BasePraktikumsstelle> combinedList = new ArrayList<>();
         combinedList.addAll(ausbildungsList);
         combinedList.addAll(studiumsList);
-
         combinedList.sort(Comparator.comparing(BasePraktikumsstelle::getDienststelle));
 
         Iterable<BasePraktikumsstelle> sortedIterable = combinedList;
 
-        return sortedIterable;
+        TreeMap<String, List<BasePraktikumsstelle>> groupedPraktikumsstellen = groupDienststellen(sortedIterable);
+
+        return groupedPraktikumsstellen;
+    }
+
+    private TreeMap<String, List<BasePraktikumsstelle>> groupDienststellen(Iterable<BasePraktikumsstelle> allPraktikumsstellen) {
+        TreeMap<String, List<BasePraktikumsstelle>> abteilungsMap = new TreeMap<>();
+
+        for (BasePraktikumsstelle praktikumsstelle : allPraktikumsstellen) {
+            String dienststelle = praktikumsstelle.dienststelle;
+            String hauptabteilung = getHauptabteilung(dienststelle);
+
+            abteilungsMap.computeIfAbsent(hauptabteilung, k -> new ArrayList<>()).add(praktikumsstelle);
+        }
+
+        return abteilungsMap;
+    }
+
+    private String getHauptabteilung(String dienststelle) {
+        if (dienststelle.contains("IBS")) {
+            return dienststelle.substring(0, 4);
+        } else if (dienststelle.contains("KM")) {
+            return dienststelle.substring(0, 3);
+        } else {
+            return "unidentifiable";
+        }
     }
 }
