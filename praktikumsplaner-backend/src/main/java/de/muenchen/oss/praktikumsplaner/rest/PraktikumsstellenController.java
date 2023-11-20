@@ -51,7 +51,7 @@ public class PraktikumsstellenController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Iterable<PraktikumsstelleDTO> getAllPraktikumsstellen(@RequestParam(name = "status", required = false) String status) {
+    public Iterable<PraktikumsstelleDTO> getAllPraktikumsstellen() {
         List<PraktikumsstelleDTO> praktikumsstelleDTOS = new ArrayList<>();
 
         Iterable<BasePraktikumsstelle> praktikumsstellen = praktikumsstellenService.getAllPraktiumsstellen();
