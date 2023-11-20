@@ -13,6 +13,8 @@ import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,20 +52,7 @@ public class PraktikumsstellenController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Iterable<PraktikumsstelleDTO> getAllPraktikumsstellen() {
-        List<PraktikumsstelleDTO> praktikumsstelleDTOS = new ArrayList<>();
-
-        Iterable<BasePraktikumsstelle> praktikumsstellen = praktikumsstellenService.getAllPraktiumsstellen();
-
-        for (BasePraktikumsstelle praktikumsstelle : praktikumsstellen) {
-            if (praktikumsstelle instanceof AusbildungsPraktikumsstelle) {
-                AusbildungsPraktikumsstelle ausbildung = (AusbildungsPraktikumsstelle) praktikumsstelle;
-                praktikumsstelleDTOS.add(praktikumsstellenMapper.toDTO(ausbildung));
-            } else if (praktikumsstelle instanceof StudiumsPraktikumsstelle) {
-                StudiumsPraktikumsstelle studium = (StudiumsPraktikumsstelle) praktikumsstelle;
-                praktikumsstelleDTOS.add(praktikumsstellenMapper.toDTO(studium));
-            }
-        }
-        return praktikumsstelleDTOS;
+    public TreeMap<String, List<BasePraktikumsstelle>> getAllPraktikumsstellen() {
+        return praktikumsstellenService.getAllPraktiumsstellen();
     }
 }
