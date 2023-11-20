@@ -31,7 +31,8 @@ public record AusbildungsPraktikumsstelleDTO(@NotNull UUID id,
 
                                              @NotNull Ausbildungsjahr ausbildungsjahr,
 
-                                             @NotNull Studiengang ausbildungsrichtung
+                                             @NotNull Studiengang ausbildungsrichtung,
 
+                                             @NotNull UUID meldezeitraumID
                         ){
 }
