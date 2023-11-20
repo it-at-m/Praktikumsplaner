@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import ExcelService from "@/api/ExcelService";
+import ExcelService from "@/api/NWKService";
 import router from "@/router";
 import { useHeaderStore } from "@/stores/header";
 
