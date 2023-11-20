@@ -1,5 +1,5 @@
 import FetchUtils from "@/api/FetchUtils";
-import { API_BASE, PRAKTIKUMSSTELLE_BASE } from "@/Constants";
+import { API_BASE, NWK_BASE, PRAKTIKUMSSTELLE_BASE } from "@/Constants";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { Levels } from "@/api/error";
@@ -48,6 +48,19 @@ export default {
                     message: err.message,
                     level: Levels.ERROR,
                 });
+                FetchUtils.defaultResponseHandler(err);
+            });
+    },
+    getAllPraktikumsstellen(): Promise<Praktikumsstelle[]> {
+        return fetch(
+            `${API_BASE}${PRAKTIKUMSSTELLE_BASE}`,
+            FetchUtils.getGETConfig()
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .catch((err) => {
                 FetchUtils.defaultResponseHandler(err);
             });
     },
