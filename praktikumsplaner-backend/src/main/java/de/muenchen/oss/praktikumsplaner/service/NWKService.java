@@ -26,6 +26,6 @@ public class NWKService {
     }
 
     public Iterable<NWK> findAllActiveNWKs() {
-        return nwkRepository.findNWKSByIsActiveIsTrueOrderByNachname();
+        return nwkRepository.findNWKsByIsActiveIsTrueOrderByNachname();
     }
 }
