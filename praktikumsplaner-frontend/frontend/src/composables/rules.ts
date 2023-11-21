@@ -5,7 +5,7 @@ export function useRules() {
 
     function maxLengthRule(length: number, message = "error") {
         return (value: string) =>
-            (value != null && value.length < length) || message;
+            (value != null && value.length <= length) || message;
     }
 
     function notEmptyDateRule(message = "error") {
