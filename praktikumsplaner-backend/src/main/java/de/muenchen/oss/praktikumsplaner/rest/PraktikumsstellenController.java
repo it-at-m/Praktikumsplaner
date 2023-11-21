@@ -52,7 +52,7 @@ public class PraktikumsstellenController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public TreeMap<String, List<BasePraktikumsstelle>> getAllPraktikumsstellen() {
+    public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktikumsstellen() {
         return praktikumsstellenService.getAllPraktiumsstellen();
     }
 }
