@@ -26,12 +26,16 @@ public class PraktikumsstellenService {
     private final AusbildungsPraktikumsstellenRepository ausbildungsPraktikumsstellenRepository;
 
     public StudiumsPraktikumsstelleDTO saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
-        return praktikumsstellenMapper.toDTO(studiumsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO)));
+        StudiumsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO);
+        entityWithNormalDienststelle.setDienststelle(normalizeDienststelle(entityWithNormalDienststelle.getDienststelle()));
+        return praktikumsstellenMapper.toDTO(studiumsPraktikumsstellenRepository.save(entityWithNormalDienststelle));
     }
 
     public AusbildungsPraktikumsstelleDTO saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
+        AusbildungsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO);
+        entityWithNormalDienststelle.setDienststelle(normalizeDienststelle(entityWithNormalDienststelle.getDienststelle()));
         return praktikumsstellenMapper
-                .toDTO(ausbildungsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO)));
+                .toDTO(ausbildungsPraktikumsstellenRepository.save(entityWithNormalDienststelle));
     }
 
     public TreeMap<String, List<BasePraktikumsstelle>> getAllPraktiumsstellen() {
@@ -77,5 +81,9 @@ public class PraktikumsstellenService {
             }
         }
         return index != -1 ? dienststelle.substring(0, index + 1) : dienststelle;
+    }
+
+    private String normalizeDienststelle(String dienststelle) {
+        return dienststelle.toUpperCase().trim().replace("ITM | IT@M | RIT | - |", "");
     }
 }
