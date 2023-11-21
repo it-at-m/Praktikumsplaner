@@ -51,3 +51,8 @@ where a [NWK](./glossary.md#nwk) can work and be educated.
 ### Studentin
 Just the german translation of student, so someone studying at a university or similar institution,
 with the goal of gaining a bachelor or master degree.
+
+### Dienststelle
+
+A [Dienststelle](#dienststelle) is the department from which the [Praktikumsstelle](#praktikumsstelle) is reported 
+in our context and in which the [NWKs](#nachwuchskraft) will then work.
