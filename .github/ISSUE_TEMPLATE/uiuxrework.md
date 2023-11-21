@@ -2,7 +2,7 @@
 name: UI/UX Rework
 about: Create a report of a UI/UX problem
 title: ''
-labels: ''
+labels: UI/UX rework
 assignees: ''
 
 ---
