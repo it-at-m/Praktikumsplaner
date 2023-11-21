@@ -3,6 +3,7 @@ package de.muenchen.oss.praktikumsplaner.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
@@ -15,7 +16,11 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
+import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
+
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,11 +38,17 @@ public class PraktikumsstellenServiceTest {
     private AusbildungsPraktikumsstellenRepository ausbildungsRepository;
     @Mock
     private StudiumsPraktikumsstellenRepository studiumsRepository;
+    @Mock
+    private MeldezeitraumRepository meldezeitraumRepository;
     @InjectMocks
     private PraktikumsstellenService service;
 
     @Test
     public void testCreateStudiumsPraktikumsstelle() {
+        Meldezeitraum meldezeitraum = new Meldezeitraum();
+        meldezeitraum.setZeitraumName("Millennium");
+        meldezeitraum.setStartZeitpunkt(LocalDate.of(2023, 1, 1));
+        meldezeitraum.setEndZeitpunkt(LocalDate.of(3023, 12, 31));
         StudiumsPraktikumsstelle studiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
         studiumsPraktikumsstelle.setId(UUID.randomUUID());
         studiumsPraktikumsstelle.setDienststelle("Testdienststelle");
@@ -50,6 +61,7 @@ public class PraktikumsstellenServiceTest {
         studiumsPraktikumsstelle.setProgrammierkenntnisse(true);
         studiumsPraktikumsstelle.setStudiensemester(Studiensemester.SEMESTER1);
         studiumsPraktikumsstelle.setStudienart(Studiengang.BSC);
+        studiumsPraktikumsstelle.setMeldezeitraumID(meldezeitraum.getId());
 
         CreateStudiumsPraktikumsstelleDTO createDTO = CreateStudiumsPraktikumsstelleDTO.builder()
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
@@ -66,6 +78,7 @@ public class PraktikumsstellenServiceTest {
                 .studiensemester(Studiensemester.SEMESTER1).studienart(Studiengang.BSC).build();
 
         when(studiumsRepository.save(studiumsPraktikumsstelle)).thenReturn(studiumsPraktikumsstelle);
+        when(meldezeitraumRepository.findAll()).thenReturn(List.of(meldezeitraum));
         when(mapper.toEntity(createDTO)).thenReturn(studiumsPraktikumsstelle);
         when(mapper.toDTO(studiumsPraktikumsstelle)).thenReturn(dto);
 
@@ -76,6 +89,10 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testCreateAusbildungsPraktikumsstelle() {
+        Meldezeitraum meldezeitraum = new Meldezeitraum();
+        meldezeitraum.setZeitraumName("Millennium");
+        meldezeitraum.setStartZeitpunkt(LocalDate.of(2023, 1, 1));
+        meldezeitraum.setEndZeitpunkt(LocalDate.of(3023, 12, 31));
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
         ausbildungsPraktikumsstelle.setId(UUID.randomUUID());
         ausbildungsPraktikumsstelle.setDienststelle("Testdienststelle");
@@ -88,6 +105,7 @@ public class PraktikumsstellenServiceTest {
         ausbildungsPraktikumsstelle.setProjektarbeit(true);
         ausbildungsPraktikumsstelle.setAusbildungsjahr(Ausbildungsjahr.JAHR1);
         ausbildungsPraktikumsstelle.setAusbildungsrichtung(Studiengang.FISI);
+        ausbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraum.getId());
 
         CreateAusbildungsPraktikumsstelleDTO createDTO = CreateAusbildungsPraktikumsstelleDTO.builder()
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
@@ -104,6 +122,7 @@ public class PraktikumsstellenServiceTest {
                 .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Studiengang.FISI).build();
 
         when(ausbildungsRepository.save(ausbildungsPraktikumsstelle)).thenReturn(ausbildungsPraktikumsstelle);
+        when(meldezeitraumRepository.findAll()).thenReturn(List.of(meldezeitraum));
         when(mapper.toEntity(createDTO)).thenReturn(ausbildungsPraktikumsstelle);
         when(mapper.toDTO(ausbildungsPraktikumsstelle)).thenReturn(dto);
 
