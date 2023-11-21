@@ -55,7 +55,7 @@ export default {
                 FetchUtils.defaultResponseHandler(err);
             });
     },
-    getAllPraktikumsstellen(): Promise<Praktikumsstelle[]> {
+    getAllPraktikumsstellen(): Promise<Map<string, Praktikumsstelle[]>> {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}`,
             FetchUtils.getGETConfig()

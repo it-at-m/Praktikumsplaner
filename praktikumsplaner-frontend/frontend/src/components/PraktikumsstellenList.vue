@@ -1,23 +1,33 @@
 <template>
-    <v-list>
-        <v-list-item
-            v-for="stellen in praktikumsstellen"
-            :key="stellen.id"
-        >
-            <v-list-item-content>
-                <v-list-item-title>
-                    {{ stellen.dienststelle }}
-                </v-list-item-title>
-            </v-list-item-content>
-        </v-list-item>
-    </v-list>
+    <div>
+        <v-container>
+            <div
+                v-for="(praktikumsstellenliste, abteilung) in praktikumsstellen"
+                :key="abteilung"
+            >
+                <v-subheader>{{ abteilung }}</v-subheader>
+                <v-list>
+                    <v-list-item-group>
+                        <v-list-item
+                            v-for="praktikumsstelle in praktikumsstellenliste"
+                            :key="praktikumsstelle"
+                        >
+                            <v-list-item-content>{{
+                                praktikumsstelle
+                            }}</v-list-item-content>
+                        </v-list-item>
+                    </v-list-item-group>
+                </v-list>
+            </div>
+        </v-container>
+    </div>
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 
-const praktikumsstellen = ref<Praktikumsstelle[]>([]);
+const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>();
 
 onMounted(() => {
     refreshTasks();
@@ -25,7 +35,7 @@ onMounted(() => {
 function refreshTasks() {
     PraktikumsstellenService.getAllPraktikumsstellen().then(
         (fetchedStellen) => {
-            praktikumsstellen.value = [...fetchedStellen];
+            praktikumsstellen.value = fetchedStellen;
         }
     );
 }
