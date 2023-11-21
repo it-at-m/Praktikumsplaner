@@ -49,9 +49,7 @@ public class PraktikumsstellenService {
         combinedList.addAll(studiumsList);
         combinedList.sort(Comparator.comparing(BasePraktikumsstelle::getDienststelle));
 
-        Iterable<BasePraktikumsstelle> sortedIterable = combinedList;
-
-        TreeMap<String, List<BasePraktikumsstelle>> groupedPraktikumsstellen = groupDienststellen(sortedIterable);
+        TreeMap<String, List<BasePraktikumsstelle>> groupedPraktikumsstellen = groupDienststellen(combinedList);
 
         return groupedPraktikumsstellen;
     }
@@ -65,6 +63,7 @@ public class PraktikumsstellenService {
 
             abteilungsMap.computeIfAbsent(hauptabteilung, k -> new ArrayList<>()).add(praktikumsstelle);
         }
+
 
         return abteilungsMap;
     }
