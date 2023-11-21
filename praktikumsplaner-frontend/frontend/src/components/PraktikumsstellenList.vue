@@ -9,11 +9,13 @@
                 <v-list>
                     <v-list-item-group>
                         <v-list-item
-                            v-for="praktikumsstelle in praktikumsstellenliste as Praktikumsstelle[]"
-                            :key="praktikumsstelle"
+                            v-for="praktikumsstelle in asPraktikumsstelleList(
+                                praktikumsstellenliste
+                            )"
+                            :key="praktikumsstelle.id"
                         >
                             <v-list-item-content>{{
-                                praktikumsstelle
+                                praktikumsstelle.email
                             }}</v-list-item-content>
                         </v-list-item>
                     </v-list-item-group>
@@ -38,5 +40,9 @@ function refreshTasks() {
             praktikumsstellen.value = fetchedStellen;
         }
     );
+}
+function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
+    const newList = list as Praktikumsstelle[];
+    return newList;
 }
 </script>
