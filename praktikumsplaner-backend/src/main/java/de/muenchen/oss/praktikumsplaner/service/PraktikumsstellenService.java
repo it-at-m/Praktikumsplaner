@@ -72,12 +72,13 @@ public class PraktikumsstellenService {
     }
 
     private String getHauptabteilung(String dienststelle) {
-        if (dienststelle.contains("IBS")) {
-            return dienststelle.substring(0, 4);
-        } else if (dienststelle.contains("KM")) {
-            return dienststelle.substring(0, 3);
-        } else {
-            return "unidentifiable";
+        int index = -1;
+        for (int i = 0; i < dienststelle.length(); i++) {
+            if (Character.isDigit(dienststelle.charAt(i))) {
+                index = i;
+                break;
+            }
         }
+        return index != -1 ? dienststelle.substring(0, index + 1) : dienststelle;
     }
 }
