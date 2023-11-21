@@ -1,5 +1,5 @@
 import FetchUtils from "@/api/FetchUtils";
-import { API_BASE, NWK_BASE, PRAKTIKUMSSTELLE_BASE } from "@/Constants";
+import { API_BASE, PRAKTIKUMSSTELLE_BASE } from "@/Constants";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { Levels } from "@/api/error";
