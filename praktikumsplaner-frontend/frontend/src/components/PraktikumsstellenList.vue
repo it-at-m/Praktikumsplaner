@@ -9,7 +9,7 @@
                 <v-list>
                     <v-list-item-group>
                         <v-list-item
-                            v-for="praktikumsstelle in praktikumsstellenliste"
+                            v-for="praktikumsstelle in praktikumsstellenliste as Praktikumsstelle[]"
                             :key="praktikumsstelle"
                         >
                             <v-list-item-content>{{
