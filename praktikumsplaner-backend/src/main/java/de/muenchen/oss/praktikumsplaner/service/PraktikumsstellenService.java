@@ -6,6 +6,7 @@ import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
@@ -14,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,36 +42,35 @@ public class PraktikumsstellenService {
                 .toDTO(ausbildungsPraktikumsstellenRepository.save(entityWithNormalDienststelle));
     }
 
-    public TreeMap<String, List<BasePraktikumsstelle>> getAllPraktiumsstellen() {
+    public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktiumsstellen() {
         Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable = ausbildungsPraktikumsstellenRepository.findAll();
         Iterable<StudiumsPraktikumsstelle> studiumsIterable = studiumsPraktikumsstellenRepository.findAll();
 
-        List<BasePraktikumsstelle> ausbildungsList = new ArrayList<>();
-        ausbildungsIterable.forEach(ausbildungsList::add);
+        List<PraktikumsstelleDTO> ausbildungsListDTO = StreamSupport.stream(ausbildungsIterable.spliterator(), false)
+                .map(praktikumsstellenMapper::toDTO).collect(Collectors.toList());
 
-        List<BasePraktikumsstelle> studiumsList = new ArrayList<>();
-        studiumsIterable.forEach(studiumsList::add);
+        List<PraktikumsstelleDTO> studiumsListDTO = StreamSupport.stream(studiumsIterable.spliterator(), false)
+                .map(praktikumsstellenMapper::toDTO).collect(Collectors.toList());
 
-        List<BasePraktikumsstelle> combinedList = new ArrayList<>();
-        combinedList.addAll(ausbildungsList);
-        combinedList.addAll(studiumsList);
-        combinedList.sort(Comparator.comparing(BasePraktikumsstelle::getDienststelle));
+        List<PraktikumsstelleDTO> combinedList = new ArrayList<>();
+        combinedList.addAll(ausbildungsListDTO);
+        combinedList.addAll(studiumsListDTO);
+        combinedList.sort(Comparator.comparing(PraktikumsstelleDTO::dienststelle));
 
-        TreeMap<String, List<BasePraktikumsstelle>> groupedPraktikumsstellen = groupDienststellen(combinedList);
+        TreeMap<String, List<PraktikumsstelleDTO>> groupedPraktikumsstellen = groupDienststellen(combinedList);
 
         return groupedPraktikumsstellen;
     }
 
-    private TreeMap<String, List<BasePraktikumsstelle>> groupDienststellen(Iterable<BasePraktikumsstelle> allPraktikumsstellen) {
-        TreeMap<String, List<BasePraktikumsstelle>> abteilungsMap = new TreeMap<>();
+    private TreeMap<String, List<PraktikumsstelleDTO>> groupDienststellen(Iterable<PraktikumsstelleDTO> allPraktikumsstellen) {
+        TreeMap<String, List<PraktikumsstelleDTO>> abteilungsMap = new TreeMap<>();
 
-        for (BasePraktikumsstelle praktikumsstelle : allPraktikumsstellen) {
-            String dienststelle = praktikumsstelle.dienststelle;
+        for (PraktikumsstelleDTO praktikumsstelle : allPraktikumsstellen) {
+            String dienststelle = praktikumsstelle.dienststelle();
             String hauptabteilung = getHauptabteilung(dienststelle);
 
             abteilungsMap.computeIfAbsent(hauptabteilung, k -> new ArrayList<>()).add(praktikumsstelle);
         }
-
 
         return abteilungsMap;
     }
