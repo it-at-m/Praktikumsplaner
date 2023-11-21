@@ -162,7 +162,8 @@ export default class FetchUtils {
      * @private Wird nur für die Erstellung der GET/POST/PUT/PATCH/DELETE-Configs benötigt.
      */
     private static getCredentials(): RequestCredentials {
-        return import.meta.env.MODE === "developmentSecurity"
+        return import.meta.env.MODE === "developmentSecurity" ||
+            import.meta.env.MODE === "development"
             ? "include"
             : "same-origin";
     }
