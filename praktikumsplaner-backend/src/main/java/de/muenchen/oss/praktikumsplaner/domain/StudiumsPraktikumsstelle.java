@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.domain;
 
+import static java.sql.Types.VARCHAR;
+
 import de.muenchen.oss.praktikumsplaner.annotations.StudiumsAnnotation;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
@@ -10,14 +12,14 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.UUID;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @Getter
@@ -63,5 +65,6 @@ public class StudiumsPraktikumsstelle extends BaseEntity {
     public Studiengang studienart;
 
     @NotNull
+    @JdbcTypeCode(VARCHAR)
     public UUID meldezeitraumID;
 }
