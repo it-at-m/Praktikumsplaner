@@ -37,10 +37,7 @@ public class NWKController {
     @ResponseStatus(HttpStatus.OK)
     public Iterable<NwkDTO> getNWKs(@RequestParam(name = "status", required = false) String status) {
         if ("aktiv".equals(status)) {
-            List<NwkDTO> nwkDTOList = new ArrayList<>();
-            nwkService.findAllActiveNWKs().forEach(nwk -> nwkDTOList.add(nwkMapper.toDTO(nwk)));
-
-            return nwkDTOList;
+            return nwkService.findAllActiveNWKs();
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter ist erforderlich.");
         }
