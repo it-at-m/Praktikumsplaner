@@ -2,6 +2,7 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -11,7 +12,9 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
+import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -52,5 +55,39 @@ public class MeldezeitraumServiceTest {
         MeldezeitraumDTO dto = service.createMeldezeitraum(createMeldezeitraumDTO);
 
         assertNotNull(dto);
+    }
+
+    @Test
+    public void testGetCurrentMeldezeitraum() {
+        LocalDate start = LocalDate.now().minusDays(1);
+        LocalDate end = LocalDate.now().plusDays(1);
+        String name = "gestern bis morgen";
+
+        Meldezeitraum meldezeitraum = new Meldezeitraum();
+        meldezeitraum.setId(UUID.randomUUID());
+        meldezeitraum.setStartZeitpunkt(start);
+        meldezeitraum.setEndZeitpunkt(end);
+        meldezeitraum.setZeitraumName(name);
+
+        MeldezeitraumDTO meldezeitraumDTO = MeldezeitraumDTO.builder()
+                .startZeitpunkt(start)
+                .endZeitpunkt(end)
+                .zeitraumName(name)
+                .build();
+
+        when(repository.findAll()).thenReturn(List.of(meldezeitraum));
+        when(mapper.toDto(any(Meldezeitraum.class))).thenReturn(meldezeitraumDTO);
+
+        assertEquals(service.getCurrentMeldezeitraum(), mapper.toDto(meldezeitraum));
+
+        start = LocalDate.now().minusDays(2);
+        end = LocalDate.now().minusDays(1);
+        name = "vorgestern bis gestern";
+        meldezeitraum.setId(UUID.randomUUID());
+        meldezeitraum.setStartZeitpunkt(start);
+        meldezeitraum.setEndZeitpunkt(end);
+        meldezeitraum.setZeitraumName(name);
+
+        assertThrows(ValidationException.class, () -> service.getCurrentMeldezeitraum());
     }
 }
