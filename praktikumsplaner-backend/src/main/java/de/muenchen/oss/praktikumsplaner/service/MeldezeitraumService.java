@@ -6,6 +6,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import jakarta.validation.ValidationException;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +21,8 @@ public class MeldezeitraumService {
     }
 
     public MeldezeitraumDTO getCurrentMeldezeitraum() {
-        Meldezeitraum currentMeldezeitraum = null;
-        for (Meldezeitraum meldezeitraum : meldezeitraumRepository.findAll()) {
-            if (meldezeitraum.isCurrentMeldezeitraum()) {
-                currentMeldezeitraum = meldezeitraum;
-            }
-        }
+        Meldezeitraum currentMeldezeitraum = meldezeitraumRepository
+                .findMeldezeitraumByDate(LocalDate.now());
         if (currentMeldezeitraum == null) throw new ValidationException("Kein aktiver Meldezeitraum");
         return meldezeitraumMapper.toDto(currentMeldezeitraum);
     }
