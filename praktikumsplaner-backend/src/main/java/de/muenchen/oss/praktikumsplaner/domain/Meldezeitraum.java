@@ -33,9 +33,4 @@ public class Meldezeitraum extends BaseEntity {
 
     @NotNull
     private LocalDate endZeitpunkt;
-
-    public boolean isCurrentMeldezeitraum() {
-        return (LocalDate.now().isEqual(startZeitpunkt) || LocalDate.now().isAfter(startZeitpunkt)) &&
-                (LocalDate.now().isEqual(endZeitpunkt) || LocalDate.now().isBefore(endZeitpunkt));
-    }
 }
