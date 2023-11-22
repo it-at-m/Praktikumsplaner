@@ -6,7 +6,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import jakarta.validation.ValidationException;
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +22,7 @@ public class MeldezeitraumService {
     public MeldezeitraumDTO getCurrentMeldezeitraum() {
         Meldezeitraum currentMeldezeitraum = null;
         for (Meldezeitraum meldezeitraum : meldezeitraumRepository.findAll()) {
-            if ((LocalDate.now().isEqual(meldezeitraum.getStartZeitpunkt()) ||
-                    LocalDate.now().isAfter(meldezeitraum.getStartZeitpunkt())) &&
-                    (LocalDate.now().isEqual(meldezeitraum.getEndZeitpunkt()) ||
-                            LocalDate.now().isBefore(meldezeitraum.getEndZeitpunkt()))) {
+            if(meldezeitraum.isCurrentMeldezeitraum()) {
                 currentMeldezeitraum = meldezeitraum;
             }
         }
