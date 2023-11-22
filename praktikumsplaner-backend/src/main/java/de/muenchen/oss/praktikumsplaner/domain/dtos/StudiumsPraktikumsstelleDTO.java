@@ -31,8 +31,6 @@ public record StudiumsPraktikumsstelleDTO(@NotNull UUID id,
 
                                           @NotNull Studiensemester studiensemester,
 
-                                          @NotNull Studiengang studienart,
-
-                                          @NotNull UUID meldezeitraumID
+                                          @NotNull Studiengang studienart
                         ){
 }

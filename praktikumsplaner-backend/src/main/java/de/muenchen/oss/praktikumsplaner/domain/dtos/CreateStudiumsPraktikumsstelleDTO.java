@@ -7,7 +7,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import java.util.UUID;
 import lombok.Builder;
 
 @Builder
@@ -30,13 +29,6 @@ public record CreateStudiumsPraktikumsstelleDTO(@NotNull String dienststelle,
 
                                                 @NotNull Studiensemester studiensemester,
 
-                                                @NotNull Studiengang studienart,
-
-                                                UUID meldezeitraumID
+                                                @NotNull Studiengang studienart
                         ) {
-    public CreateStudiumsPraktikumsstelleDTO withId(UUID meldezeitraumID) {
-        return new CreateStudiumsPraktikumsstelleDTO(dienststelle(), oertlicheAusbilder(), email(), taetigkeiten(),
-                dringlichkeit(), namentlicheAnforderung(), referat(), programmierkenntnisse(), studiensemester(),
-                studienart(), meldezeitraumID);
-    }
 }
