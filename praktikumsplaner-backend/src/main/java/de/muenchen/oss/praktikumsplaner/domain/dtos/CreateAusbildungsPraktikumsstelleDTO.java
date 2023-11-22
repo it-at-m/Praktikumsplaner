@@ -30,5 +30,6 @@ public record CreateAusbildungsPraktikumsstelleDTO(@NotNull String dienststelle,
                                                    @NotNull Ausbildungsjahr ausbildungsjahr,
 
                                                    @NotNull Studiengang ausbildungsrichtung
-                        ) {
+
+                        ){
 }
