@@ -23,9 +23,10 @@ public class MeldezeitraumService {
     public MeldezeitraumDTO getCurrentMeldezeitraum() {
         Meldezeitraum currentMeldezeitraum = null;
         for (Meldezeitraum meldezeitraum : meldezeitraumRepository.findAll()) {
-            // plus and minus make reports the same day as start or end possible
-            if (LocalDate.now().isAfter(meldezeitraum.getStartZeitpunkt().minusDays(1)) &&
-                    LocalDate.now().isBefore(meldezeitraum.getEndZeitpunkt().plusDays(1))) {
+            if ((LocalDate.now().isEqual(meldezeitraum.getStartZeitpunkt()) ||
+                    LocalDate.now().isAfter(meldezeitraum.getStartZeitpunkt())) &&
+                    (LocalDate.now().isEqual(meldezeitraum.getEndZeitpunkt()) ||
+                            LocalDate.now().isBefore(meldezeitraum.getEndZeitpunkt()))) {
                 currentMeldezeitraum = meldezeitraum;
             }
         }
