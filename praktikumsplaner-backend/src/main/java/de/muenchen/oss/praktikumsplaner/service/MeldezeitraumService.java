@@ -22,7 +22,7 @@ public class MeldezeitraumService {
     public MeldezeitraumDTO getCurrentMeldezeitraum() {
         Meldezeitraum currentMeldezeitraum = null;
         for (Meldezeitraum meldezeitraum : meldezeitraumRepository.findAll()) {
-            if(meldezeitraum.isCurrentMeldezeitraum()) {
+            if (meldezeitraum.isCurrentMeldezeitraum()) {
                 currentMeldezeitraum = meldezeitraum;
             }
         }
