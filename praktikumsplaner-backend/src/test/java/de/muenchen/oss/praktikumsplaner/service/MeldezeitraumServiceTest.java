@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -12,7 +13,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
@@ -89,7 +89,7 @@ public class MeldezeitraumServiceTest {
     }
 
     @Test
-    public void testcheckOverlappingMeldezeitraum() {
+    public void testcheckOverlappingMeldezeitraumExists() {
         LocalDate start = LocalDate.of(2, 2, 2);
         LocalDate end = LocalDate.of(3, 3, 3);
         LocalDate overlapStart = LocalDate.of(1, 1, 1);
@@ -107,9 +107,35 @@ public class MeldezeitraumServiceTest {
                 .zeitraumName(name)
                 .build();
 
-        when(repository.findOverlappingMeldezeitraum(createMeldezeitraumDTO.startZeitpunkt(),
-                createMeldezeitraumDTO.endZeitpunkt())).thenReturn(List.of(meldezeitraum));
+        when(repository.isOverlappingMeldezeitraum(createMeldezeitraumDTO.startZeitpunkt(),
+                createMeldezeitraumDTO.endZeitpunkt())).thenReturn(true);
 
         assertThrows(ValidationException.class, () -> service.checkOverlappingMeldezeitraum(createMeldezeitraumDTO));
+    }
+
+    @Test
+    public void testcheckNoOverlappingMeldezeitraum() {
+        LocalDate start = LocalDate.of(2, 2, 2);
+        LocalDate end = LocalDate.of(3, 3, 3);
+        LocalDate newStart = LocalDate.of(5, 5, 5);
+        LocalDate newEnd = LocalDate.of(6, 6, 6);
+        String name = "2-6";
+
+        Meldezeitraum meldezeitraum = new Meldezeitraum();
+        meldezeitraum.setId(UUID.randomUUID());
+        meldezeitraum.setStartZeitpunkt(start);
+        meldezeitraum.setEndZeitpunkt(end);
+        meldezeitraum.setZeitraumName(name);
+
+        CreateMeldezeitraumDTO createMeldezeitraumDTO = CreateMeldezeitraumDTO.builder()
+                .startZeitpunkt(newStart)
+                .endZeitpunkt(newEnd)
+                .zeitraumName(name)
+                .build();
+
+        when(repository.isOverlappingMeldezeitraum(createMeldezeitraumDTO.startZeitpunkt(),
+                createMeldezeitraumDTO.endZeitpunkt())).thenReturn(false);
+
+        assertDoesNotThrow(() -> service.checkOverlappingMeldezeitraum(createMeldezeitraumDTO));
     }
 }
