@@ -9,7 +9,6 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +37,8 @@ public class MeldezeitraumService {
         }
     }
 
-   public MeldezeitraumDTO getMostRecentPassedMeldezeitraum() {
-        List<Meldezeitraum> passedZeitraueme =
-                meldezeitraumRepository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now());
+    public MeldezeitraumDTO getMostRecentPassedMeldezeitraum() {
+        List<Meldezeitraum> passedZeitraueme = meldezeitraumRepository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now());
         if (passedZeitraueme.isEmpty()) {
             throw new EntityNotFoundException("Kein vergangener Meldezeitraum gefunden!");
         }
