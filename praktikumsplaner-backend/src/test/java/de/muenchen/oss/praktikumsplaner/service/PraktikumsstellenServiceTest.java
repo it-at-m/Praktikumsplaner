@@ -20,7 +20,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
-
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -50,15 +49,8 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testCreateStudiumsPraktikumsstelle() {
-        LocalDate start = LocalDate.now().minusDays(1);
-        LocalDate end = LocalDate.now().plusDays(1);
-        String name = "gestern bis morgen";
-        MeldezeitraumDTO meldezeitraumDTO = MeldezeitraumDTO.builder()
-                .id(UUID.randomUUID())
-                .startZeitpunkt(start)
-                .endZeitpunkt(end)
-                .zeitraumName(name)
-                .build();
+        MeldezeitraumDTO meldezeitraumDTO =
+                createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
         studiumsPraktikumsstelle.setId(UUID.randomUUID());
@@ -100,15 +92,8 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testCreateAusbildungsPraktikumsstelle() {
-        LocalDate start = LocalDate.now().minusDays(1);
-        LocalDate end = LocalDate.now().plusDays(1);
-        String name = "gestern bis morgen";
-        MeldezeitraumDTO meldezeitraumDTO = MeldezeitraumDTO.builder()
-                .id(UUID.randomUUID())
-                .startZeitpunkt(start)
-                .endZeitpunkt(end)
-                .zeitraumName(name)
-                .build();
+        MeldezeitraumDTO meldezeitraumDTO =
+                createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
 
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
         ausbildungsPraktikumsstelle.setId(UUID.randomUUID());
@@ -150,23 +135,25 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testGetAllPraktikumsstellen() {
+        MeldezeitraumDTO meldezeitraumNowDTO =
+                createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelle("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
-                false, Ausbildungsjahr.JAHR2, Studiengang.FISI);
+                false, Ausbildungsjahr.JAHR2, Studiengang.FISI, meldezeitraumNowDTO.id());
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 = createAusbildungsPraktikumsstelle("KM22", "Erika Mustermann", "erika@mustermann.de",
                 "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.RIT,
-                true, Ausbildungsjahr.JAHR3, Studiengang.FISI);
+                true, Ausbildungsjahr.JAHR3, Studiengang.FISI, meldezeitraumNowDTO.id());
         Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable = Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelle("KM83", "Test Tester", "test@tester.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, true,
-                Studiensemester.SEMESTER5, Studiengang.BSC);
+                Studiensemester.SEMESTER5, Studiengang.BSC, meldezeitraumNowDTO.id());
         StudiumsPraktikumsstelle studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelle("InnoLab", "Test Testerin", "test@testerin.de",
                 "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, false,
-                Studiensemester.SEMESTER5, Studiengang.BWI);
+                Studiensemester.SEMESTER5, Studiengang.BWI, meldezeitraumNowDTO.id());
         StudiumsPraktikumsstelle studiumsPraktikumsstelle3 = createStudiumsPraktikumsstelle("GL13", "John Smith", "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT, true,
-                Studiensemester.SEMESTER3, Studiengang.BWI);
+                Studiensemester.SEMESTER3, Studiengang.BWI, meldezeitraumNowDTO.id());
         Iterable<StudiumsPraktikumsstelle> studiumsIterable = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3);
 
         when(ausbildungsRepository.findAll()).thenReturn(ausbildungsIterable);
@@ -194,7 +181,7 @@ public class PraktikumsstellenServiceTest {
 
     private AusbildungsPraktikumsstelle createAusbildungsPraktikumsstelle(
             String dienststelle, String ausbilder, String email, String taetigkeiten, Dringlichkeit dringlichkeit,
-            Referat referat, boolean projektarbeit, Ausbildungsjahr ausbildungsjahr, Studiengang studiengang) {
+            Referat referat, boolean projektarbeit, Ausbildungsjahr ausbildungsjahr, Studiengang studiengang, UUID meldezeitraumId) {
         AusbildungsPraktikumsstelle stelle = new AusbildungsPraktikumsstelle();
         stelle.setId(UUID.randomUUID());
         stelle.setDienststelle(dienststelle);
@@ -206,12 +193,13 @@ public class PraktikumsstellenServiceTest {
         stelle.setProjektarbeit(projektarbeit);
         stelle.setAusbildungsjahr(ausbildungsjahr);
         stelle.setAusbildungsrichtung(studiengang);
+        stelle.setMeldezeitraumID(meldezeitraumId);
         return stelle;
     }
 
     private StudiumsPraktikumsstelle createStudiumsPraktikumsstelle(
             String dienststelle, String ausbilder, String email, String taetigkeiten, Dringlichkeit dringlichkeit,
-            Referat referat, boolean programmierkenntnisse, Studiensemester semester, Studiengang studiengang) {
+            Referat referat, boolean programmierkenntnisse, Studiensemester semester, Studiengang studiengang, UUID meldezeitraumId) {
         StudiumsPraktikumsstelle stelle = new StudiumsPraktikumsstelle();
         stelle.setId(UUID.randomUUID());
         stelle.setDienststelle(dienststelle);
@@ -223,6 +211,7 @@ public class PraktikumsstellenServiceTest {
         stelle.setProgrammierkenntnisse(programmierkenntnisse);
         stelle.setStudiensemester(semester);
         stelle.setStudienart(studiengang);
+        stelle.setMeldezeitraumID(meldezeitraumId);
         return stelle;
     }
 
@@ -243,5 +232,14 @@ public class PraktikumsstellenServiceTest {
                 .dringlichkeit(stelle.getDringlichkeit()).namentlicheAnforderung(stelle.getNamentlicheAnforderung())
                 .referat(stelle.getReferat()).programmierkenntnisse(stelle.isProgrammierkenntnisse())
                 .studiensemester(stelle.getStudiensemester()).studienart(stelle.getStudienart()).build();
+    }
+
+    private MeldezeitraumDTO createMeldezeitraumDTO(LocalDate start, LocalDate end, String name) {
+        return MeldezeitraumDTO.builder()
+                .id(UUID.randomUUID())
+                .startZeitpunkt(start)
+                .endZeitpunkt(end)
+                .zeitraumName(name)
+                .build();
     }
 }
