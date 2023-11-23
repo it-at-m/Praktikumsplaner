@@ -3,7 +3,7 @@
 For Local Development you have two options. You can either start all the services with or without security features.
 For the Spring Applications (Backend & ApiGateway) this is realized via profiles.
 For the Vue Application (frontend) this is realized via "modes".
-Usually the Frontend is packaged within the ApiGateway and the APiGateway serves it to the user.
+Usually the Frontend is packaged within the ApiGateway and the ApiGateway serves it to the user.
 This process would be very time-consuming, so we implemented a way to test all the features with the vite dev server.
 In the `package.json` in the scripts section we defined `security` and `serve`, where `security` starts with the 
 `.env.developmentSecurity` file and `serve` starts with the `.env.development` file.
