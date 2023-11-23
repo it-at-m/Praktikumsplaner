@@ -123,9 +123,9 @@ public class PraktikumsstellenServiceTest {
     public void testGetAllPraktikumsstellen() {
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelle("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
-                true, Ausbildungsjahr.JAHR2, Studiengang.FISI);
+                false, Ausbildungsjahr.JAHR2, Studiengang.FISI);
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 = createAusbildungsPraktikumsstelle("KM22", "Erika Mustermann", "erika@mustermann.de",
-                "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.ITM,
+                "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.RIT,
                 true, Ausbildungsjahr.JAHR3, Studiengang.FISI);
         Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable = Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
 
@@ -133,27 +133,23 @@ public class PraktikumsstellenServiceTest {
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, true,
                 Studiensemester.SEMESTER5, Studiengang.BSC);
         StudiumsPraktikumsstelle studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelle("InnoLab", "Test Testerin", "test@testerin.de",
-                "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, true,
+                "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, false,
                 Studiensemester.SEMESTER5, Studiengang.BWI);
         StudiumsPraktikumsstelle studiumsPraktikumsstelle3 = createStudiumsPraktikumsstelle("GL13", "John Smith", "John@smith.com",
-                "Planung von Events", Dringlichkeit.ZWINGEND, Referat.ITM, true,
+                "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT, true,
                 Studiensemester.SEMESTER3, Studiengang.BWI);
         Iterable<StudiumsPraktikumsstelle> studiumsIterable = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3);
 
-        // Mocken der findAll()-Methoden der Repositories
         when(ausbildungsRepository.findAll()).thenReturn(ausbildungsIterable);
         when(studiumsRepository.findAll()).thenReturn(studiumsIterable);
 
-        // Mocken der Mapper-Methoden
         when(mapper.toDTO(any(AusbildungsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> createPraktikumsstelleDTO((AusbildungsPraktikumsstelle) invocation.getArguments()[0]));
         when(mapper.toDTO(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> createPraktikumsstelleDTO((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        // Aufruf der zu testenden Methode
         TreeMap<String, List<PraktikumsstelleDTO>> result = service.getAllPraktiumsstellen();
 
-        //Überprüfen der Ergebnisse
         assertNotNull(result);
         assertEquals(4, result.size());
         assertEquals("GL1", result.firstKey());
@@ -161,7 +157,6 @@ public class PraktikumsstellenServiceTest {
         assertTrue(result.containsKey("InnoLab"));
         assertEquals("KM8", result.lastKey());
 
-        //Überprüfen der Anzahl an Praktikumsstellen in jeder Gruppe
         assertEquals(2, result.get("KM8").size());
         assertEquals(1, result.get("KM2").size());
         assertEquals(1, result.get("InnoLab").size());
