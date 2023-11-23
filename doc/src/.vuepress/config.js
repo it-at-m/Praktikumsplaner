@@ -1,7 +1,6 @@
 const { description } = require("../../package.json");
 
 const title = "Praktikumsplaner";
-const title_de = title;
 
 module.exports = {
   base: "/Praktikumsplaner/",
@@ -37,8 +36,8 @@ module.exports = {
   ],
   locales: {
     "/": {
-      lang: "de-DE", // this will be set as the lang attribute on <html>
-      title: title_de,
+      lang: "en-US", // this will be set as the lang attribute on <html>
+      title: title,
       description: "",
     },
   },
@@ -56,16 +55,16 @@ module.exports = {
     lastUpdated: false,
     locales: {
       "/": {
-        selectText: "Sprachen",
-        label: "Deutsch",
-        ariaLabel: "Sprachen",
+        selectText: "Language",
+        label: "English",
+        ariaLabel: "Language",
         nav: [
           {
             text: "Features",
             link: "/features/",
           },
           {
-            text: "Technische Dokumentation",
+            text: "Technical Documentation",
             link: "/documentation/",
           },
         ],
@@ -77,14 +76,14 @@ module.exports = {
               children: ["TOOLS.md"],
             },
             {
-              title: "configuration",
+              title: "Configuration",
               collapsable: false,
               children: ["architecture/configuration"],
             },
             {
-              title: "Architektur",
+              title: "Architecture",
               collapsable: false,
-              children: ["architecture/overview", "architecture/security/", "architecture/adrs"],
+              children: ["architecture/adrs", "architecture/security/", ],
             },
             {
               title: "Guides",
