@@ -42,5 +42,4 @@ public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
     @Enumerated(EnumType.STRING)
     public Studiengang studienart;
 
-
 }

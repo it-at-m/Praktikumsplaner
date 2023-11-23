@@ -49,8 +49,7 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testCreateStudiumsPraktikumsstelle() {
-        MeldezeitraumDTO meldezeitraumDTO =
-                createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
+        MeldezeitraumDTO meldezeitraumDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
         studiumsPraktikumsstelle.setId(UUID.randomUUID());
@@ -92,8 +91,7 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testCreateAusbildungsPraktikumsstelle() {
-        MeldezeitraumDTO meldezeitraumDTO =
-                createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
+        MeldezeitraumDTO meldezeitraumDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
 
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
         ausbildungsPraktikumsstelle.setId(UUID.randomUUID());
@@ -135,10 +133,8 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testGetAllPraktikumsstellen() {
-        MeldezeitraumDTO meldezeitraumDTO =
-                createMeldezeitraumDTO(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        MeldezeitraumDTO meldezeitraumNowDTO =
-                createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis heute");
+        MeldezeitraumDTO meldezeitraumDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
+        MeldezeitraumDTO meldezeitraumNowDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis heute");
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelle("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
                 false, Ausbildungsjahr.JAHR2, Studiengang.FISI, meldezeitraumDTO.id());

@@ -31,14 +31,16 @@ public class PraktikumsstellenService {
     private final MeldezeitraumService meldezeitraumService;
 
     public StudiumsPraktikumsstelleDTO saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
-        StudiumsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO, meldezeitraumService.getCurrentMeldezeitraum());
+        StudiumsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO,
+                meldezeitraumService.getCurrentMeldezeitraum());
         entityWithNormalDienststelle.setDienststelle(normalizeDienststelle(entityWithNormalDienststelle.getDienststelle()));
         return praktikumsstellenMapper.toDTO(studiumsPraktikumsstellenRepository
                 .save(entityWithNormalDienststelle));
     }
 
     public AusbildungsPraktikumsstelleDTO saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
-        AusbildungsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO, meldezeitraumService.getCurrentMeldezeitraum());
+        AusbildungsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO,
+                meldezeitraumService.getCurrentMeldezeitraum());
         entityWithNormalDienststelle.setDienststelle(normalizeDienststelle(entityWithNormalDienststelle.getDienststelle()));
         return praktikumsstellenMapper
                 .toDTO(ausbildungsPraktikumsstellenRepository
@@ -48,10 +50,8 @@ public class PraktikumsstellenService {
     public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktiumsstellen() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
 
-        Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable =
-                ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID);
-        Iterable<StudiumsPraktikumsstelle> studiumsIterable =
-                studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID);
+        Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID);
+        Iterable<StudiumsPraktikumsstelle> studiumsIterable = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID);
 
         List<PraktikumsstelleDTO> ausbildungsListDTO = StreamSupport.stream(ausbildungsIterable.spliterator(), false)
                 .map(praktikumsstellenMapper::toDTO).collect(Collectors.toList());
