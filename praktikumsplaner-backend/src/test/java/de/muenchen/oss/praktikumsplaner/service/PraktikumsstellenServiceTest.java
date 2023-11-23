@@ -135,29 +135,36 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testGetAllPraktikumsstellen() {
+        MeldezeitraumDTO meldezeitraumDTO =
+                createMeldezeitraumDTO(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         MeldezeitraumDTO meldezeitraumNowDTO =
-                createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
+                createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis heute");
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelle("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
-                false, Ausbildungsjahr.JAHR2, Studiengang.FISI, meldezeitraumNowDTO.id());
+                false, Ausbildungsjahr.JAHR2, Studiengang.FISI, meldezeitraumDTO.id());
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 = createAusbildungsPraktikumsstelle("KM22", "Erika Mustermann", "erika@mustermann.de",
                 "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.RIT,
-                true, Ausbildungsjahr.JAHR3, Studiengang.FISI, meldezeitraumNowDTO.id());
+                true, Ausbildungsjahr.JAHR3, Studiengang.FISI, meldezeitraumDTO.id());
         Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable = Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelle("KM83", "Test Tester", "test@tester.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, true,
-                Studiensemester.SEMESTER5, Studiengang.BSC, meldezeitraumNowDTO.id());
+                Studiensemester.SEMESTER5, Studiengang.BSC, meldezeitraumDTO.id());
         StudiumsPraktikumsstelle studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelle("InnoLab", "Test Testerin", "test@testerin.de",
                 "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, false,
-                Studiensemester.SEMESTER5, Studiengang.BWI, meldezeitraumNowDTO.id());
+                Studiensemester.SEMESTER5, Studiengang.BWI, meldezeitraumDTO.id());
         StudiumsPraktikumsstelle studiumsPraktikumsstelle3 = createStudiumsPraktikumsstelle("GL13", "John Smith", "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT, true,
-                Studiensemester.SEMESTER3, Studiengang.BWI, meldezeitraumNowDTO.id());
+                Studiensemester.SEMESTER3, Studiengang.BWI, meldezeitraumDTO.id());
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle4 = createStudiumsPraktikumsstelle("KM23", "Jen Test", "Jen@test.com",
+                "Heute da sein.", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Studiensemester.SEMESTER2, Studiengang.BWI, meldezeitraumNowDTO.id());
         Iterable<StudiumsPraktikumsstelle> studiumsIterable = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3);
 
-        when(ausbildungsRepository.findAll()).thenReturn(ausbildungsIterable);
-        when(studiumsRepository.findAll()).thenReturn(studiumsIterable);
+        when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDTO);
+
+        when(ausbildungsRepository.findAllByMeldezeitraumID(meldezeitraumDTO.id())).thenReturn(ausbildungsIterable);
+        when(studiumsRepository.findAllByMeldezeitraumID(meldezeitraumDTO.id())).thenReturn(studiumsIterable);
 
         when(mapper.toDTO(any(AusbildungsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> createPraktikumsstelleDTO((AusbildungsPraktikumsstelle) invocation.getArguments()[0]));
