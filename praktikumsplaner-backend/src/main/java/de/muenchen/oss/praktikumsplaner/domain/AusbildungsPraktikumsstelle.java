@@ -41,8 +41,4 @@ public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
     @NotNull
     @Enumerated(EnumType.STRING)
     public Studiengang ausbildungsrichtung;
-
-    @NotNull
-    @JdbcTypeCode(VARCHAR)
-    public UUID meldezeitraumID;
 }
