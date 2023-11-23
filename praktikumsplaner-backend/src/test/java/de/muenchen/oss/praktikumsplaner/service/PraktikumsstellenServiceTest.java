@@ -121,31 +121,24 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testGetAllPraktikumsstellen() {
-        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 =
-                createAusbildungsPraktikumsstelle("KM81", "Max Musterfrau", "max@musterfrau.de",
-                        "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
-                        true, Ausbildungsjahr.JAHR2, Studiengang.FISI);
-        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 =
-                createAusbildungsPraktikumsstelle("KM22", "Erika Mustermann", "erika@mustermann.de",
-                        "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.ITM,
-                        true, Ausbildungsjahr.JAHR3, Studiengang.FISI);
-        Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable =
-                Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelle("KM81", "Max Musterfrau", "max@musterfrau.de",
+                "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
+                true, Ausbildungsjahr.JAHR2, Studiengang.FISI);
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 = createAusbildungsPraktikumsstelle("KM22", "Erika Mustermann", "erika@mustermann.de",
+                "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.ITM,
+                true, Ausbildungsjahr.JAHR3, Studiengang.FISI);
+        Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable = Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
 
-        StudiumsPraktikumsstelle studiumsPraktikumsstelle1 =
-                createStudiumsPraktikumsstelle("KM83", "Test Tester", "test@tester.de",
-                        "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, true,
-                        Studiensemester.SEMESTER5, Studiengang.BSC);
-        StudiumsPraktikumsstelle studiumsPraktikumsstelle2 =
-                createStudiumsPraktikumsstelle("InnoLab", "Test Testerin", "test@testerin.de",
-                        "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, true,
-                        Studiensemester.SEMESTER5, Studiengang.BWI);
-        StudiumsPraktikumsstelle studiumsPraktikumsstelle3 =
-                createStudiumsPraktikumsstelle("GL13", "John Smith", "John@smith.com",
-                        "Planung von Events", Dringlichkeit.ZWINGEND, Referat.ITM, true,
-                        Studiensemester.SEMESTER3, Studiengang.BWI);
-        Iterable<StudiumsPraktikumsstelle> studiumsIterable =
-                Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3);
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelle("KM83", "Test Tester", "test@tester.de",
+                "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, true,
+                Studiensemester.SEMESTER5, Studiengang.BSC);
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelle("InnoLab", "Test Testerin", "test@testerin.de",
+                "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, true,
+                Studiensemester.SEMESTER5, Studiengang.BWI);
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle3 = createStudiumsPraktikumsstelle("GL13", "John Smith", "John@smith.com",
+                "Planung von Events", Dringlichkeit.ZWINGEND, Referat.ITM, true,
+                Studiensemester.SEMESTER3, Studiengang.BWI);
+        Iterable<StudiumsPraktikumsstelle> studiumsIterable = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3);
 
         // Mocken der findAll()-Methoden der Repositories
         when(ausbildungsRepository.findAll()).thenReturn(ausbildungsIterable);
@@ -177,8 +170,7 @@ public class PraktikumsstellenServiceTest {
 
     private AusbildungsPraktikumsstelle createAusbildungsPraktikumsstelle(
             String dienststelle, String ausbilder, String email, String taetigkeiten, Dringlichkeit dringlichkeit,
-            Referat referat, boolean projektarbeit, Ausbildungsjahr ausbildungsjahr, Studiengang studiengang
-    ) {
+            Referat referat, boolean projektarbeit, Ausbildungsjahr ausbildungsjahr, Studiengang studiengang) {
         AusbildungsPraktikumsstelle stelle = new AusbildungsPraktikumsstelle();
         stelle.setId(UUID.randomUUID());
         stelle.setDienststelle(dienststelle);
@@ -195,8 +187,7 @@ public class PraktikumsstellenServiceTest {
 
     private StudiumsPraktikumsstelle createStudiumsPraktikumsstelle(
             String dienststelle, String ausbilder, String email, String taetigkeiten, Dringlichkeit dringlichkeit,
-            Referat referat, boolean programmierkenntnisse, Studiensemester semester, Studiengang studiengang
-    ) {
+            Referat referat, boolean programmierkenntnisse, Studiensemester semester, Studiengang studiengang) {
         StudiumsPraktikumsstelle stelle = new StudiumsPraktikumsstelle();
         stelle.setId(UUID.randomUUID());
         stelle.setDienststelle(dienststelle);
