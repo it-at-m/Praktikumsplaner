@@ -29,6 +29,9 @@ export default {
     NavLink
   },
   computed: {
+      privacy() {
+          return { id: 'contact', text: 'Contact', link: '/contact/', }
+      },
     imprint() {
       return { id: 'imprint', text: 'Imprint', link: '/imprint/', }
     }
