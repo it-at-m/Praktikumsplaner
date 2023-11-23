@@ -17,13 +17,16 @@ public class PraktikumsstellenService {
     private final PraktikumsstellenMapper praktikumsstellenMapper;
     private final StudiumsPraktikumsstellenRepository studiumsPraktikumsstellenRepository;
     private final AusbildungsPraktikumsstellenRepository ausbildungsPraktikumsstellenRepository;
+    private final MeldezeitraumService meldezeitraumService;
 
     public StudiumsPraktikumsstelleDTO saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
-        return praktikumsstellenMapper.toDTO(studiumsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO)));
+        return praktikumsstellenMapper.toDTO(studiumsPraktikumsstellenRepository
+                .save(praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO, meldezeitraumService.getCurrentMeldezeitraum())));
     }
 
     public AusbildungsPraktikumsstelleDTO saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
         return praktikumsstellenMapper
-                .toDTO(ausbildungsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO)));
+                .toDTO(ausbildungsPraktikumsstellenRepository
+                        .save(praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO, meldezeitraumService.getCurrentMeldezeitraum())));
     }
 }
