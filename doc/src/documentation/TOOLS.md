@@ -3,26 +3,26 @@
 Here you can find the tools used in the project and their usage.
 
 Github
-- code versioning
-- continuous integration
+- Code versioning
+- Continuous integration
 
 Zenhub
-- product backlog
-- sprint planning
-- project management
+- Product backlog
+- Sprint planning
+- Project management
 
 Docker:
-- creating and storing images
+- Creating and storing images
 
 Docker Desktop
 - Local deployment and testing
 
 Spring
-- backend and apigateway
+- Backend and api gateway
 
 Vuetify / Vue.JS
-- frontend
+- Frontend
 
 Vuepress
-- automatic documentation generation
+- Automatic documentation generation
 

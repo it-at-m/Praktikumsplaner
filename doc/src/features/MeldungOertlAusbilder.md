@@ -1,10 +1,9 @@
 # Meldung örtl. Ausbilder
 
-On the main page there is an option `Praktikumsstellen Meldung` in the navigation bar. 
+On the main page, there is an option `Praktikumsstellen Meldung` in the navigation bar.
 This takes you to a new page.
 On this page, you can choose whether you want to report a [trainee](./../glossary.md#auszubildende) or not.
-Choosing yes will take you to a form for [trainee](./../glossary.md#auszubildende). While choosing no will take
-you to a form for [student](./../glossary.md#studentin)
+Choosing yes will take you to a form for [trainee](./../glossary.md#auszubildende). While choosing no, I will take you to a form for [student](./../glossary.md#studentin)
 These forms are made for [örtliche Ausbilder](./../glossary.md#ortliche-ausbilderin) to report [Praktikumsstellen](./../glossary.md#praktikumsstelle).
 
 ## Using the Forms
@@ -27,11 +26,11 @@ Text field for the contact email
 
 ### Tätigkeiten
 
-Text field for noting the operations performed by the team, and what the [NWK](./../glossary.md#nwk) will most likely be doing
+Text field for noting the operations performed by the team and what the [NWK](./../glossary.md#nwk) will most likely be doing
 
 ### Dringlichkeit
 
-Selection between `Zwingend`, `Dringend` and `Nachrangig`
+Selection between `Zwingend`, `Dringend`, and `Nachrangig`
 
 ### Namentliche Anforderung
 
@@ -46,21 +45,21 @@ able to do their final year project there
 
 A classic `yes/no` selector for requesting an [NWK](./../glossary.md#nwk) who can code
 
-### Studium - Studiensemester
+### Studium- Studiensemester
 
-Selection between `1. Semester` - `6. Semester`
+Selection between `1. ` to `6.`  Semester
 
-### Studium - Studienart
+### Studium- Studienart
 
 Selection between the different study majors e.g. `Informatik (B.Sc.)`
 
-### Ausbildung - Ausbildungsjahr
+### Ausbildung- Ausbildungsjahr
 
-Selection between `1. - 3.` Year of training
+Selection between `1.` to `3.` Year of training
 
-### Ausbildung - Ausbildungsrichtung
+### Ausbildung- Ausbildungsrichtung
 
-Selection between different training programms e.g `FISI`
+Selection between different training programs, e.g. `FISI`
 
 ## Zeitraum NWK
 

@@ -1,12 +1,12 @@
-# configuration
+# Configuration
 
-Besides the spring configuration properties we created some for our own.
+Besides the spring configuration properties, we created some of our own.
 
 All our properties are located in `application.yml` and start with `app`.
 
-## frontend
+## Frontend
 
-The configuration is splitted into separate files:
+The configuration is split into separate files:
 - `application-routing.yml` ... contains the route definitions for the gateway
 - `application-security.yml` ... contains the configuration for security
 

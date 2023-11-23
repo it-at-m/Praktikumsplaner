@@ -3,7 +3,7 @@ home: true
 heroImage: itm_logo.png
 heroText: null
 tagline: Praktikumsplaner
-actionText: Technische Dokumentation →
+actionText: Technical Documentation →
 actionLink: /documentation/
 features:
 - title: Excel Upload
