@@ -20,9 +20,9 @@ public class MeldezeitraumService {
         return meldezeitraumMapper.toDto(meldezeitraumRepository.save(meldezeitraumMapper.toEntity(meldezeitraumCreateDto)));
     }
 
-    public MeldezeitraumDTO getCurrentMeldezeitraum() {
+    public MeldezeitraumDTO getCurrentMeldezeitraum() throws ValidationException {
         Meldezeitraum currentMeldezeitraum = meldezeitraumRepository
-                .findMeldezeitraumByDate(LocalDate.now());
+                .findMeldezeitraumByDateInRange(LocalDate.now());
         if (currentMeldezeitraum == null) throw new ValidationException("Kein aktiver Meldezeitraum");
         return meldezeitraumMapper.toDto(currentMeldezeitraum);
     }

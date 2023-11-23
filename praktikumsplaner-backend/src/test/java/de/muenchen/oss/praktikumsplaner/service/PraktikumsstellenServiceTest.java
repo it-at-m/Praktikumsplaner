@@ -3,7 +3,6 @@ package de.muenchen.oss.praktikumsplaner.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
-import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
@@ -47,12 +46,8 @@ public class PraktikumsstellenServiceTest {
         LocalDate start = LocalDate.now().minusDays(1);
         LocalDate end = LocalDate.now().plusDays(1);
         String name = "gestern bis morgen";
-        Meldezeitraum meldezeitraum = new Meldezeitraum();
-        meldezeitraum.setId(UUID.randomUUID());
-        meldezeitraum.setStartZeitpunkt(start);
-        meldezeitraum.setEndZeitpunkt(end);
-        meldezeitraum.setZeitraumName(name);
         MeldezeitraumDTO meldezeitraumDTO = MeldezeitraumDTO.builder()
+                .id(UUID.randomUUID())
                 .startZeitpunkt(start)
                 .endZeitpunkt(end)
                 .zeitraumName(name)
@@ -70,7 +65,7 @@ public class PraktikumsstellenServiceTest {
         studiumsPraktikumsstelle.setProgrammierkenntnisse(true);
         studiumsPraktikumsstelle.setStudiensemester(Studiensemester.SEMESTER1);
         studiumsPraktikumsstelle.setStudienart(Studiengang.BSC);
-        studiumsPraktikumsstelle.setMeldezeitraumID(meldezeitraum.getId());
+        studiumsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDTO.id());
 
         CreateStudiumsPraktikumsstelleDTO createDTO = CreateStudiumsPraktikumsstelleDTO.builder()
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
@@ -101,12 +96,8 @@ public class PraktikumsstellenServiceTest {
         LocalDate start = LocalDate.now().minusDays(1);
         LocalDate end = LocalDate.now().plusDays(1);
         String name = "gestern bis morgen";
-        Meldezeitraum meldezeitraum = new Meldezeitraum();
-        meldezeitraum.setId(UUID.randomUUID());
-        meldezeitraum.setStartZeitpunkt(start);
-        meldezeitraum.setEndZeitpunkt(end);
-        meldezeitraum.setZeitraumName(name);
         MeldezeitraumDTO meldezeitraumDTO = MeldezeitraumDTO.builder()
+                .id(UUID.randomUUID())
                 .startZeitpunkt(start)
                 .endZeitpunkt(end)
                 .zeitraumName(name)
@@ -124,7 +115,7 @@ public class PraktikumsstellenServiceTest {
         ausbildungsPraktikumsstelle.setProjektarbeit(true);
         ausbildungsPraktikumsstelle.setAusbildungsjahr(Ausbildungsjahr.JAHR1);
         ausbildungsPraktikumsstelle.setAusbildungsrichtung(Studiengang.FISI);
-        ausbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraum.getId());
+        ausbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDTO.id());
 
         CreateAusbildungsPraktikumsstelleDTO createDTO = CreateAusbildungsPraktikumsstelleDTO.builder()
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")

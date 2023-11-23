@@ -9,5 +9,5 @@ import org.springframework.data.repository.query.Param;
 
 public interface MeldezeitraumRepository extends CrudRepository<Meldezeitraum, UUID> {
     @Query("SELECT e FROM Meldezeitraum e WHERE :date >= e.startZeitpunkt AND :date <= e.endZeitpunkt")
-    Meldezeitraum findMeldezeitraumByDate(@Param("date") LocalDate date);
+    Meldezeitraum findMeldezeitraumByDateInRange(@Param("date") LocalDate date);
 }
