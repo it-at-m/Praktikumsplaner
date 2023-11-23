@@ -65,4 +65,13 @@ describe("rules maxLength test", () => {
 
         expect(txtRule(txt11)).toBe(errorMessage);
     });
+    it("tests maxLengthRule return error", () => {
+        const validationRules = useRules();
+
+        const txtRule = validationRules.maxLengthRule(10, errorMessage);
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(txtRule(null)).toBe(errorMessage);
+    });
 });
