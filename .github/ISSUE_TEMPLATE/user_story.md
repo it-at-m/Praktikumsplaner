@@ -6,6 +6,7 @@ labels: ''
 assignees: ''
 
 ---
+
 **User Story:**  
 Als [Rolle] möchte ich [Funktionalität], damit ich [Grund].  
 

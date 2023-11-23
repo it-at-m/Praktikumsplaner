@@ -26,18 +26,21 @@ public class PraktikumsstellenService {
     private final PraktikumsstellenMapper praktikumsstellenMapper;
     private final StudiumsPraktikumsstellenRepository studiumsPraktikumsstellenRepository;
     private final AusbildungsPraktikumsstellenRepository ausbildungsPraktikumsstellenRepository;
+    private final MeldezeitraumService meldezeitraumService;
 
     public StudiumsPraktikumsstelleDTO saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
-        StudiumsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO);
+        StudiumsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO, meldezeitraumService.getCurrentMeldezeitraum());
         entityWithNormalDienststelle.setDienststelle(normalizeDienststelle(entityWithNormalDienststelle.getDienststelle()));
-        return praktikumsstellenMapper.toDTO(studiumsPraktikumsstellenRepository.save(entityWithNormalDienststelle));
+        return praktikumsstellenMapper.toDTO(studiumsPraktikumsstellenRepository
+                .save(entityWithNormalDienststelle));
     }
 
     public AusbildungsPraktikumsstelleDTO saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
-        AusbildungsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO);
+        AusbildungsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO, meldezeitraumService.getCurrentMeldezeitraum());
         entityWithNormalDienststelle.setDienststelle(normalizeDienststelle(entityWithNormalDienststelle.getDienststelle()));
         return praktikumsstellenMapper
-                .toDTO(ausbildungsPraktikumsstellenRepository.save(entityWithNormalDienststelle));
+                .toDTO(ausbildungsPraktikumsstellenRepository
+                        .save(entityWithNormalDienststelle));
     }
 
     public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktiumsstellen() {
