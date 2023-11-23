@@ -57,7 +57,7 @@ public class MeldezeitraumServiceTest {
     }
 
     @Test
-    public void testGetCurrentMeldezeitraum() {
+    public void testGetCurrentMeldezeitraumSuccess() {
         LocalDate start = LocalDate.now().minusDays(1);
         LocalDate end = LocalDate.now().plusDays(1);
         String name = "gestern bis morgen";
@@ -74,12 +74,15 @@ public class MeldezeitraumServiceTest {
                 .zeitraumName(name)
                 .build();
 
-        when(repository.findMeldezeitraumByDate(LocalDate.now())).thenReturn(meldezeitraum);
+        when(repository.findMeldezeitraumByDateInRange(LocalDate.now())).thenReturn(meldezeitraum);
         when(mapper.toDto(any(Meldezeitraum.class))).thenReturn(meldezeitraumDTO);
 
         assertEquals(service.getCurrentMeldezeitraum(), mapper.toDto(meldezeitraum));
+    }
 
-        when(repository.findMeldezeitraumByDate(LocalDate.now())).thenReturn(null);
+    @Test
+    public void testGetCurrentMeldezeitraumFailure() {
+        when(repository.findMeldezeitraumByDateInRange(LocalDate.now())).thenReturn(null);
 
         assertThrows(ValidationException.class, () -> service.getCurrentMeldezeitraum());
     }
