@@ -12,6 +12,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
@@ -85,5 +86,30 @@ public class MeldezeitraumServiceTest {
         when(repository.findMeldezeitraumByDateInRange(LocalDate.now())).thenReturn(null);
 
         assertThrows(ValidationException.class, () -> service.getCurrentMeldezeitraum());
+    }
+
+    @Test
+    public void testcheckOverlappingMeldezeitraum() {
+        LocalDate start = LocalDate.of(2, 2, 2);
+        LocalDate end = LocalDate.of(3, 3, 3);
+        LocalDate overlapStart = LocalDate.of(1, 1, 1);
+        String name = "Dawn of Time";
+
+        Meldezeitraum meldezeitraum = new Meldezeitraum();
+        meldezeitraum.setId(UUID.randomUUID());
+        meldezeitraum.setStartZeitpunkt(start);
+        meldezeitraum.setEndZeitpunkt(end);
+        meldezeitraum.setZeitraumName(name);
+
+        CreateMeldezeitraumDTO createMeldezeitraumDTO = CreateMeldezeitraumDTO.builder()
+                .startZeitpunkt(overlapStart)
+                .endZeitpunkt(start)
+                .zeitraumName(name)
+                .build();
+
+        when(repository.findOverlappingMeldezeitraum(createMeldezeitraumDTO.startZeitpunkt(),
+                createMeldezeitraumDTO.endZeitpunkt())).thenReturn(List.of(meldezeitraum));
+
+        assertThrows(ValidationException.class, () -> service.checkOverlappingMeldezeitraum(createMeldezeitraumDTO));
     }
 }

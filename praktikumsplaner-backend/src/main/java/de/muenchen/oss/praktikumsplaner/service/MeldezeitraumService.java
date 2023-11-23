@@ -17,6 +17,7 @@ public class MeldezeitraumService {
     private final MeldezeitraumRepository meldezeitraumRepository;
 
     public MeldezeitraumDTO createMeldezeitraum(final CreateMeldezeitraumDTO meldezeitraumCreateDto) {
+        checkOverlappingMeldezeitraum(meldezeitraumCreateDto);
         return meldezeitraumMapper.toDto(meldezeitraumRepository.save(meldezeitraumMapper.toEntity(meldezeitraumCreateDto)));
     }
 
@@ -25,5 +26,12 @@ public class MeldezeitraumService {
                 .findMeldezeitraumByDateInRange(LocalDate.now());
         if (currentMeldezeitraum == null) throw new ValidationException("Kein aktiver Meldezeitraum");
         return meldezeitraumMapper.toDto(currentMeldezeitraum);
+    }
+
+    public void checkOverlappingMeldezeitraum(final CreateMeldezeitraumDTO meldezeitraumCreateDto) {
+        if (!(meldezeitraumRepository.findOverlappingMeldezeitraum(meldezeitraumCreateDto.startZeitpunkt(),
+                meldezeitraumCreateDto.endZeitpunkt()).isEmpty())) {
+            throw new ValidationException("Überlappt mit einem existierendem Meldezeitraum");
+        }
     }
 }
