@@ -4,7 +4,7 @@ export function useRules() {
     }
 
     function maxLengthRule(length: number, message = "error") {
-        return (value: string) =>
+        return (value: string | null) =>
             (value != null && value.length <= length) || message;
     }
 

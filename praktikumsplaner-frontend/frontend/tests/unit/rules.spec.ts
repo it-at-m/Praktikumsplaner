@@ -69,10 +69,7 @@ describe("rules maxLength test", () => {
         const validationRules = useRules();
 
         const txtRule = validationRules.maxLengthRule(10, errorMessage);
-        const nullText = null;
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(txtRule(nullText)).toBe(errorMessage);
+        expect(txtRule(null)).toBe(errorMessage);
     });
 });
