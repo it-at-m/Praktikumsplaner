@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "security": "vite --mode developmentSecurity",
     "serve": "vite",
     "build": "eslint src --fix && vite build --out-dir dist && vue-tsc --noEmit",
     "test:watch": "vitest watch",
