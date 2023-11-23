@@ -12,6 +12,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.JdbcTypeCode;
+
+import java.util.UUID;
+
+import static java.sql.Types.VARCHAR;
 
 @MappedSuperclass
 @NoArgsConstructor
@@ -42,4 +47,8 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     public Referat referat;
+
+    @NotNull
+    @JdbcTypeCode(VARCHAR)
+    public UUID meldezeitraumID;
 }

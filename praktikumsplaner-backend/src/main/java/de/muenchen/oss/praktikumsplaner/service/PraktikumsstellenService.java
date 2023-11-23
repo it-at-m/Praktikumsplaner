@@ -1,6 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
@@ -44,8 +46,12 @@ public class PraktikumsstellenService {
     }
 
     public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktiumsstellen() {
-        Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable = ausbildungsPraktikumsstellenRepository.findAll();
-        Iterable<StudiumsPraktikumsstelle> studiumsIterable = studiumsPraktikumsstellenRepository.findAll();
+        UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
+
+        Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable =
+                ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID);
+        Iterable<StudiumsPraktikumsstelle> studiumsIterable =
+                studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID);
 
         List<PraktikumsstelleDTO> ausbildungsListDTO = StreamSupport.stream(ausbildungsIterable.spliterator(), false)
                 .map(praktikumsstellenMapper::toDTO).collect(Collectors.toList());

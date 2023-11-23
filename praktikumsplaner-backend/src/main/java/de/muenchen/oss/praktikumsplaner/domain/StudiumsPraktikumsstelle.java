@@ -42,7 +42,5 @@ public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
     @Enumerated(EnumType.STRING)
     public Studiengang studienart;
 
-    @NotNull
-    @JdbcTypeCode(VARCHAR)
-    public UUID meldezeitraumID;
+
 }
