@@ -14,7 +14,7 @@ describe("rules fileFormat test", () => {
 
         expect(txtRule(txtFile)).toBe(true);
     });
-    const txtRule = validationRules.fileTypeRule("audio/aac", errorMessage);
+    const aacRule = validationRules.fileTypeRule("audio/aac", errorMessage);
     it("tests fileFormatRules returns Error when using wrong fileformat", () => {
         const txtFile = new File(["foo"], "foo.txt", {
             type: "text/plain",
@@ -30,7 +30,7 @@ describe("rules fileFormat test", () => {
     });
 });
 describe("rules maxLength test", () => {
-    const txtRule = validationRules.maxLengthRule(10, errorMessage);
+    const maxLength10Rule = validationRules.maxLengthRule(10, errorMessage);
     it("tests maxLengthRule return true", () => {
         const txt10 = "Lorem ipsu";
 
@@ -87,7 +87,7 @@ describe("rules notEmpty test", () => {
     it("tests notEmptyRule return error when null", () => {
         expect(rule(null)).toBe(errorMessage);
     });
-    it("tests notEmptyRule return error when null", () => {
+    it("tests notEmptyRule return error when undefined", () => {
         expect(rule(undefined)).toBe(errorMessage);
     });
 });
