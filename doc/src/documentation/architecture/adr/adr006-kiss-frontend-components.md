@@ -11,15 +11,15 @@ a script part and styling.
 
 ## Decision
 
-There should be no functional logic in components. The code of a component should be limited to databinding.
-The logic, apart from databinding, is implemented in composables or services.
+There should be no functional logic in components. The code of a component should be limited to data binding.
+The logic, apart from data binding, is implemented in composables or services.
 
 ### Todo
 
-- components of open pull requests have to be adapted
-- at the time of the decision there were no completed PRs so no existing code has to be adapted
+- Components of open pull requests have to be adapted
+- At the time of the decision, there were no completed PRs, so no existing code had to be adapted
 
 ## Consequences
 
-The logic is easier to test because it can be tested independently from the components. The logic may need to be
+The logic is easier to test because it can be tested independently of the components. The logic may need to be
 written more generically because it is not coupled to the components.

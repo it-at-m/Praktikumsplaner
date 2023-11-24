@@ -30,14 +30,23 @@ const statusToColorMap = new Map([
 
 const statusToI18NText = new Map([
   [
-    "de-DE",
+    "en-US",
     new Map([
-      [ACCEPTED, "angenommen"],
-      [REJECTED, "abgelehnt"],
-      [PROPOSED, "vorgeschlagen"],
-      [DEPRECATED, "veraltet"],
+      [ACCEPTED, "accepted"],
+      [REJECTED, "rejected"],
+      [PROPOSED, "proposed"],
+      [DEPRECATED, "deprecated"],
     ]),
   ],
+    [
+        "de-DE",
+        new Map([
+            [ACCEPTED, "angenommen"],
+            [REJECTED, "abgelehnt"],
+            [PROPOSED, "vorgeschlagen"],
+            [DEPRECATED, "veraltet"],
+        ]),
+    ],
 ]);
 
 const statusToIconPath = new Map([
