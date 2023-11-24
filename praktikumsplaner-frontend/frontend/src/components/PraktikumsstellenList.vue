@@ -19,6 +19,9 @@
                                         praktikumsstellenliste
                                     )"
                                     :key="praktikumsstelle.id"
+                                    @drop="drop(praktikumsstelle)"
+                                    @dragover.prevent
+                                    @dragenter.prevent
                                 >
                                     <v-list-item-content>
                                         <v-list-item-title>
@@ -83,6 +86,10 @@ import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 
 const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>();
 
+const props = defineProps<{
+    assignedNWKId: string;
+}>();
+
 onMounted(() => {
     getAllPraktikumsstellen();
 });
@@ -96,5 +103,14 @@ function getAllPraktikumsstellen() {
 function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
     const newList = list as Praktikumsstelle[];
     return newList;
+}
+
+function drop(stelle: Praktikumsstelle) {
+    if (!stelle.assignedNWKId) {
+        console.log(
+            `NWK ${props.assignedNWKId} wurde Stelle ${stelle.id} zugewiesen.`
+        );
+        stelle.assignedNWKId = props.assignedNWKId;
+    }
 }
 </script>

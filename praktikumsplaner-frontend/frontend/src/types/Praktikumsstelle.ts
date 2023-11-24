@@ -26,6 +26,8 @@ export default class Praktikumsstelle {
 
         public namentlicheAnforderung?: string,
 
-        public id?: string
+        public id?: string,
+
+        public assignedNWKId?: string
     ) {}
 }

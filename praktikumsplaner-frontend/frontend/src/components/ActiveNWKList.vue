@@ -3,6 +3,8 @@
         <v-list-item
             v-for="nwk in nwks"
             :key="nwk.id"
+            draggable
+            @dragstart="dragStart(nwk)"
         >
             <v-list-item-content>
                 <v-list-item-title>
@@ -29,5 +31,13 @@ function getAllActiveNWKs() {
     NWKService.getAllActiveNWKs().then((fetchedNWKs) => {
         nwks.value = [...fetchedNWKs];
     });
+}
+
+const emit = defineEmits<{
+    (e: "sendNWKId", nwkId: string): void;
+}>();
+
+function dragStart(nwk: NWK) {
+    emit("sendNWKId", nwk.id);
 }
 </script>
