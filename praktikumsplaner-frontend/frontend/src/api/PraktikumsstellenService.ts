@@ -51,4 +51,17 @@ export default {
                 FetchUtils.defaultResponseHandler(err);
             });
     },
+    getAllPraktikumsstellen(): Promise<Map<string, Praktikumsstelle[]>> {
+        return fetch(
+            `${API_BASE}${PRAKTIKUMSSTELLE_BASE}`,
+            FetchUtils.getGETConfig()
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .catch((err) => {
+                FetchUtils.defaultResponseHandler(err);
+            });
+    },
 };

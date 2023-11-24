@@ -49,12 +49,13 @@ public class NWKServiceTest {
         final Studiengang studiengang = Studiengang.BSC;
         final String jahrgang = "21/24";
         final Set<DayOfWeek> vorlesungstage = new HashSet<>();
+        final boolean isActive = true;
         vorlesungstage.add(DayOfWeek.MONDAY);
         vorlesungstage.add(DayOfWeek.TUESDAY);
 
-        NWK nwk = new NWK(vorname, nachname, studiengang, jahrgang, vorlesungstage);
+        NWK nwk = new NWK(vorname, nachname, studiengang, jahrgang, vorlesungstage, isActive);
         NwkDTO nwkDTO = NwkDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
-                .vorlesungstage(vorlesungstage).build();
+                .vorlesungstage(vorlesungstage).active(isActive).build();
         CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 

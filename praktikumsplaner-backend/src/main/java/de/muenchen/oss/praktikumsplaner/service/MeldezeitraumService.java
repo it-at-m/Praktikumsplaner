@@ -5,8 +5,10 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +35,13 @@ public class MeldezeitraumService {
                 meldezeitraumCreateDto.endZeitpunkt())) {
             throw new ValidationException("Überlappt mit einem existierendem Meldezeitraum");
         }
+    }
+
+    public MeldezeitraumDTO getMostRecentPassedMeldezeitraum() {
+        List<Meldezeitraum> passedZeitraueme = meldezeitraumRepository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now());
+        if (passedZeitraueme.isEmpty()) {
+            throw new EntityNotFoundException("Kein vergangener Meldezeitraum gefunden!");
+        }
+        return meldezeitraumMapper.toDto(passedZeitraueme.get(0));
     }
 }
