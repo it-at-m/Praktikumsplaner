@@ -20,6 +20,4 @@ public interface PraktikumsstelleDTO {
     String namentlicheAnforderung();
 
     Referat referat();
-    // Beachten Sie, dass die Methode getDienststelle() in der Schnittstelle jetzt dienststelle() heißt,
-    // was der Namenskonvention für die von einem Record generierte Methode entspricht.
 }

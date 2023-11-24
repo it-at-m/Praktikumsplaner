@@ -84,9 +84,9 @@ import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>();
 
 onMounted(() => {
-    refreshTasks();
+    getAllPraktikumsstellen();
 });
-function refreshTasks() {
+function getAllPraktikumsstellen() {
     PraktikumsstellenService.getAllPraktikumsstellen().then(
         (fetchedStellen) => {
             praktikumsstellen.value = fetchedStellen;

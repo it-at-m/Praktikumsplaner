@@ -1,7 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
-import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
@@ -64,6 +63,7 @@ public class PraktikumsstellenService {
         combinedList.addAll(studiumsListDTO);
         combinedList.sort(Comparator.comparing(PraktikumsstelleDTO::dienststelle));
 
+
         TreeMap<String, List<PraktikumsstelleDTO>> groupedPraktikumsstellen = groupDienststellen(combinedList);
 
         return groupedPraktikumsstellen;
@@ -87,10 +87,10 @@ public class PraktikumsstellenService {
         for (int i = 0; i < dienststelle.length(); i++) {
             if (Character.isDigit(dienststelle.charAt(i))) {
                 index = i;
-                break;
+                return dienststelle.substring(0, index + 1);
             }
         }
-        return index != -1 ? dienststelle.substring(0, index + 1) : dienststelle;
+        return dienststelle;
     }
 
     private String normalizeDienststelle(String dienststelle) {

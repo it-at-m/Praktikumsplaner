@@ -23,7 +23,8 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping(value = "/nachwuchskraft")
 public class NWKController {
     private final NWKService nwkService;
-    private final NWKMapper nwkMapper;
+
+    private final String ACTIVE_STATUS = "aktiv";
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping("/import")
@@ -35,8 +36,8 @@ public class NWKController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Iterable<NwkDTO> getNWKs(@RequestParam(name = "status", required = false) String status) {
-        if ("aktiv".equals(status)) {
+    public Iterable<NwkDTO> getNWKs(@RequestParam(name = "status") String status) {
+        if (ACTIVE_STATUS.equals(status)) {
             return nwkService.findAllActiveNWKs();
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter ist erforderlich.");
