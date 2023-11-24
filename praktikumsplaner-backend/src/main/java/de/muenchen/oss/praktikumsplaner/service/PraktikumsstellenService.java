@@ -68,7 +68,7 @@ public class PraktikumsstellenService {
         return groupedPraktikumsstellen;
     }
 
-    private TreeMap<String, List<PraktikumsstelleDTO>> groupDienststellen(Iterable<PraktikumsstelleDTO> allPraktikumsstellen) {
+    private TreeMap<String, List<PraktikumsstelleDTO>> groupDienststellen(final Iterable<PraktikumsstelleDTO> allPraktikumsstellen) {
         TreeMap<String, List<PraktikumsstelleDTO>> abteilungsMap = new TreeMap<>();
 
         for (PraktikumsstelleDTO praktikumsstelle : allPraktikumsstellen) {
@@ -81,7 +81,7 @@ public class PraktikumsstellenService {
         return abteilungsMap;
     }
 
-    private String getHauptabteilung(String dienststelle) {
+    private String getHauptabteilung(final String dienststelle) {
         int index = -1;
         for (int i = 0; i < dienststelle.length(); i++) {
             if (Character.isDigit(dienststelle.charAt(i))) {
@@ -92,7 +92,7 @@ public class PraktikumsstellenService {
         return dienststelle;
     }
 
-    private String normalizeDienststelle(String dienststelle) {
+    private String normalizeDienststelle(final String dienststelle) {
         return dienststelle.toUpperCase().trim().replace("ITM | IT@M | RIT | - |", "");
     }
 }

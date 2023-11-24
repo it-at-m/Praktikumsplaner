@@ -11,6 +11,6 @@ public interface NWKMapper {
     NwkDTO toDTO(NWK nwk);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "isActive", target = "isActive", defaultValue = "true")
-    NWK toEntity(CreateNwkDTO createNwkDTO);
+    @Mapping(source = "isActive", target = "active")
+    NWK toEntity(CreateNwkDTO createNwkDTO, boolean isActive);
 }

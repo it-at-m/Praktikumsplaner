@@ -19,7 +19,7 @@ public class NWKService {
     private final ExcelService excelService;
 
     public NwkDTO saveNWK(CreateNwkDTO createNwkDTO) {
-        return nwkMapper.toDTO(nwkRepository.save(nwkMapper.toEntity(createNwkDTO)));
+        return nwkMapper.toDTO(nwkRepository.save(nwkMapper.toEntity(createNwkDTO, true)));
     }
 
     public void importNWK(String base64String) throws IOException {
