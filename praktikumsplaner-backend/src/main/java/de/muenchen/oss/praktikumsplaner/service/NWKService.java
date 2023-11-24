@@ -5,8 +5,8 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +26,7 @@ public class NWKService {
         excelService.excelToNwkDTOList(base64String).forEach(this::saveNWK);
     }
 
-    public Iterable<NwkDTO> findAllActiveNWKs() {
-        return StreamSupport.stream(nwkRepository.findNWKsByIsActiveIsTrueOrderByNachname().spliterator(), false)
-                .map(nwkMapper::toDTO).collect(Collectors.toList());
+    public List<NwkDTO> findAllActiveNWKs() {
+        return nwkRepository.findNWKsByIsActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDTO).collect(Collectors.toList());
     }
 }
