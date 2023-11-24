@@ -152,11 +152,7 @@ public class PraktikumsstellenServiceTest {
         StudiumsPraktikumsstelle studiumsPraktikumsstelle3 = createStudiumsPraktikumsstelle("GL13", "John Smith", "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT, true,
                 Studiensemester.SEMESTER3, Studiengang.BWI, meldezeitraumDTO.id());
-        StudiumsPraktikumsstelle studiumsPraktikumsstelle4 = createStudiumsPraktikumsstelle("KM23", "Jen Test", "Jen@test.com",
-                "Heute da sein.", Dringlichkeit.ZWINGEND, Referat.ITM, false,
-                Studiensemester.SEMESTER2, Studiengang.BWI, meldezeitraumNowDTO.id());
-        List<StudiumsPraktikumsstelle> studiumsList = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3,
-                studiumsPraktikumsstelle4);
+        List<StudiumsPraktikumsstelle> studiumsList = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3);
 
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDTO);
 
