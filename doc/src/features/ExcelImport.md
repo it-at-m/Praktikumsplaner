@@ -28,5 +28,5 @@ If the upload is successful, a success message will appear. If it's not, a red e
 ### English days to German short notation
 | English | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday |
 |---------|--------|---------|-----------|----------|--------|----------|
-| German | Mo | Di | Mi | Do | Fr | Sa |
+| German  | Mo     | Di      | Mi        | Do       | Fr     | Sa       |
 
