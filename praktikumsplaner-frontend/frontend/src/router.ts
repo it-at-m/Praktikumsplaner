@@ -8,7 +8,7 @@ import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
 import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
 import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
-import gegenUeberstellung from "@/views/gegenUeberstellung.vue";
+import gegenUeberstellung from "@/views/gegenueberstellungView.vue";
 
 Vue.use(Router);
 

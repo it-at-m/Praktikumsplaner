@@ -51,10 +51,10 @@ public class NWK extends BaseEntity {
     public Set<DayOfWeek> vorlesungstage;
 
     @NotNull
-    public boolean isActive;
+    public boolean active;
 
     @PrePersist
     public void prePersist() {
-        this.isActive = true;
+        this.active = true;
     }
 }

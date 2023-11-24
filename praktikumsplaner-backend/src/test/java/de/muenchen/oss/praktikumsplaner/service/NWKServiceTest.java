@@ -55,7 +55,7 @@ public class NWKServiceTest {
 
         NWK nwk = new NWK(vorname, nachname, studiengang, jahrgang, vorlesungstage, isActive);
         NwkDTO nwkDTO = NwkDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
-                .vorlesungstage(vorlesungstage).isActive(isActive).build();
+                .vorlesungstage(vorlesungstage).active(isActive).build();
         CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
