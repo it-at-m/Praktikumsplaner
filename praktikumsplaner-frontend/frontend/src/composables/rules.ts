@@ -1,29 +1,32 @@
 export function useRules() {
-    function fileTypeRule(format: string, message: string) {
-        return (value: File) => (value && value.type == format) || message;
+    function fileTypeRule(format: string, message = "error") {
+        return (value: File | null | undefined) =>
+            (value && value.type == format) || message;
     }
 
     function maxLengthRule(length: number, message = "error") {
-        return (value: string | null) =>
-            (value != null && value.length <= length) || message;
+        return (value: string | null | undefined) =>
+            (value && value.length <= length) || message;
     }
 
     function notEmptyDateRule(message = "error") {
-        return (value: string) => (value && value.trim() != "-") || message;
+        return (value: string | null | undefined) =>
+            (value && value.trim() != "-") || message;
     }
 
-    function notEmptyRule(message: string) {
-        return (value: string) => (value && value.trim() != "") || message;
+    function notEmptyRule(message = "error") {
+        return (value: string | null | undefined) =>
+            (value && value.trim() != "") || message;
     }
 
-    function notEmptyBooleanRule(message: string) {
-        return (value: boolean | undefined) => value !== undefined || message;
+    function notEmptyBooleanRule(message = "error") {
+        return (value: boolean | null | undefined) => value || message;
     }
 
-    function emailRule() {
-        return (v: string) =>
-            /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v) ||
-            "keine Valide E-Mail!";
+    function emailRule(message = "error") {
+        return (value: string | null | undefined) =>
+            (value && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) ||
+            message;
     }
 
     return {
