@@ -1,10 +1,10 @@
 # ADR-Number title
 
-Title should be in form &lt;action-verb&gt;-&lt;object&gt;, e.g. configure-service, format-code, select-database.
+The title should be in the form &lt;action-verb&gt;-&lt;object&gt;, e.g., configure-service, format-code, select-database.
 
 ## Status
 
-What is the status, such as proposed, accepted, rejected, deprecated?
+What is the status, such as proposed, accepted, rejected, or deprecated?
 <adr-status status='proposed' />
 <adr-status status='accepted' />
 <adr-status status='rejected' />
@@ -20,7 +20,7 @@ What is the change that we're proposing and/or doing?
 
 ### Todo
 
-Optional. List of tasks that have do be done
+Optional. List of tasks that have to be done
 
 ## Consequences
 

@@ -12,19 +12,21 @@ logic while writing tests, especially unit tests.
 
 ## Decision
 
-Mappers are only tested if we defined explicit mapping logic.
-This explicit mapping logic is present, for example, when we define default implementations in interfaces or map
-fields with different names via the `@mapping` annotation or define an expression for the mapping.
+Mappers are only tested if we define explicit mapping logic.
+This explicit mapping logic is present, for example,
+when we define default implementations in interfaces or map fields with different names via the `@mapping` annotation or define an expression for the mapping.
 
-Via configuration of the mapstructprocessor for the `maven-compile-plugin` it is defined that all fields in the target
-object are considered for mapping. If a field is not part of the mapping declaration, an error should occur.
+Via the configuration of the mapstructprocessor for the `maven-compile-plugin`,
+it is defined that all fields in the target object are considered for mapping.
+
+If a field is not part of the mapping declaration, an error should occur.
 
 ### Todo
-- add compiler argument at `maven-compile-plugin`: `-Amapstruct.unmappedTargetPolicy=ERROR`
-- ignore target properties when mapping if they are not fillable by the source object:
-`@Mapping(target="ignorableProp", ignore=true)`  
+- Add compiler argument at `maven-compile-plugin`: `-Amapstruct.unmappedTargetPolicy=ERROR`
+- Ignore target properties when mapping if they are not fillable by the source object:
+  `@Mapping(target="ignorableProp", ignore=true)`
 
 ## Consequences
 
-There are fewer tests to write, but we rely more on Mapstruct to work correctly. More knowledge about Mapstruct is
-required, since assumptions are less checked.
+There are fewer tests to write, but we rely more on Mapstruct to work correctly.
+More knowledge about Mapstruct is required, since assumptions are less checked.

@@ -12,8 +12,7 @@ They just get notified that an error occurred.
 
 ## Decision
 
-Every time an error occurs in the backend, we send the errormessage as a 
-string to the frontend with an appropriate HTTP Statuscode.
+Every time an error occurs in the backend, we send the error message as a string to the frontend with an appropriate HTTP status code.
 
 ## Consequences
 

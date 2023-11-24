@@ -29,11 +29,11 @@ export default {
     NavLink
   },
   computed: {
-    privacy() {
-      return { id: 'contact', text: 'Kontakt', link: '/contact/', }
-    },
+      privacy() {
+          return { id: 'contact', text: 'Contact', link: '/contact/', }
+      },
     imprint() {
-      return { id: 'imprint', text: 'Impressum', link: '/imprint/', }
+      return { id: 'imprint', text: 'Imprint', link: '/imprint/', }
     }
   },
 }
