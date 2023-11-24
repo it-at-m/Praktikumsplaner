@@ -141,7 +141,7 @@ public class PraktikumsstellenServiceTest {
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 = createAusbildungsPraktikumsstelle("KM22", "Erika Mustermann", "erika@mustermann.de",
                 "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.RIT,
                 true, Ausbildungsjahr.JAHR3, Studiengang.FISI, meldezeitraumDTO.id());
-        Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable = Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
+        List<AusbildungsPraktikumsstelle> ausbildungsList = Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelle("KM83", "Test Tester", "test@tester.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM, true,
@@ -155,12 +155,13 @@ public class PraktikumsstellenServiceTest {
         StudiumsPraktikumsstelle studiumsPraktikumsstelle4 = createStudiumsPraktikumsstelle("KM23", "Jen Test", "Jen@test.com",
                 "Heute da sein.", Dringlichkeit.ZWINGEND, Referat.ITM, false,
                 Studiensemester.SEMESTER2, Studiengang.BWI, meldezeitraumNowDTO.id());
-        Iterable<StudiumsPraktikumsstelle> studiumsIterable = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3);
+        List<StudiumsPraktikumsstelle> studiumsList = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3,
+                studiumsPraktikumsstelle4);
 
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDTO);
 
-        when(ausbildungsRepository.findAllByMeldezeitraumID(meldezeitraumDTO.id())).thenReturn(ausbildungsIterable);
-        when(studiumsRepository.findAllByMeldezeitraumID(meldezeitraumDTO.id())).thenReturn(studiumsIterable);
+        when(ausbildungsRepository.findAllByMeldezeitraumID(meldezeitraumDTO.id())).thenReturn(ausbildungsList);
+        when(studiumsRepository.findAllByMeldezeitraumID(meldezeitraumDTO.id())).thenReturn(studiumsList);
 
         when(mapper.toDTO(any(AusbildungsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> createPraktikumsstelleDTO((AusbildungsPraktikumsstelle) invocation.getArguments()[0]));

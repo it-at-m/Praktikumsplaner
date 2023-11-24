@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -49,13 +48,10 @@ public class PraktikumsstellenService {
     public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktiumsstellen() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
 
-        Iterable<AusbildungsPraktikumsstelle> ausbildungsIterable = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID);
-        Iterable<StudiumsPraktikumsstelle> studiumsIterable = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID);
-
-        List<PraktikumsstelleDTO> ausbildungsListDTO = StreamSupport.stream(ausbildungsIterable.spliterator(), false)
+        List<PraktikumsstelleDTO> ausbildungsListDTO = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
                 .map(praktikumsstellenMapper::toDTO).collect(Collectors.toList());
 
-        List<PraktikumsstelleDTO> studiumsListDTO = StreamSupport.stream(studiumsIterable.spliterator(), false)
+        List<PraktikumsstelleDTO> studiumsListDTO = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
                 .map(praktikumsstellenMapper::toDTO).collect(Collectors.toList());
 
         List<PraktikumsstelleDTO> combinedList = new ArrayList<>();
