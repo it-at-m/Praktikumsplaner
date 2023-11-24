@@ -27,6 +27,6 @@ public class NWKService {
     }
 
     public List<NwkDTO> findAllActiveNWKs() {
-        return nwkRepository.findNWKsByIsActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDTO).collect(Collectors.toList());
+        return nwkRepository.findNWKsByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDTO).collect(Collectors.toList());
     }
 }
