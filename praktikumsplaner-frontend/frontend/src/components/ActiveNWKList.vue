@@ -23,9 +23,9 @@ import NWKService from "@/api/NWKService";
 const nwks = ref<NWK[]>([]);
 
 onMounted(() => {
-    refreshTasks();
+    getAllActiveNWKs();
 });
-function refreshTasks() {
+function getAllActiveNWKs() {
     NWKService.getAllActiveNWKs().then((fetchedNWKs) => {
         nwks.value = [...fetchedNWKs];
     });
