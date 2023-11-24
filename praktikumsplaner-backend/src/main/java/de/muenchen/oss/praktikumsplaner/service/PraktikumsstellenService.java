@@ -63,7 +63,6 @@ public class PraktikumsstellenService {
         combinedList.addAll(studiumsListDTO);
         combinedList.sort(Comparator.comparing(PraktikumsstelleDTO::dienststelle));
 
-
         TreeMap<String, List<PraktikumsstelleDTO>> groupedPraktikumsstellen = groupDienststellen(combinedList);
 
         return groupedPraktikumsstellen;
