@@ -4,7 +4,7 @@ A short description about the request.
 
 **Reference:**
 
-Issue: #XXX
+Closes #XXX
 
 Notifying additional team members:
 
