@@ -52,9 +52,4 @@ public class NWK extends BaseEntity {
 
     @NotNull
     public boolean active;
-
-    @PrePersist
-    public void prePersist() {
-        this.active = true;
-    }
 }
