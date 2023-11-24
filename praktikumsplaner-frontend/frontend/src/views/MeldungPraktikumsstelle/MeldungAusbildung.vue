@@ -225,7 +225,7 @@ const validationRules = useRules();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein!")];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein!"),
-    validationRules.emailRule(),
+    validationRules.emailRule("Keine gültige Email"),
 ];
 const booleanRule = [
     validationRules.notEmptyBooleanRule("Darf nicht leer sein!"),
