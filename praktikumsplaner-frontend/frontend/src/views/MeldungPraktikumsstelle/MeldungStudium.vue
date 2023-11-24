@@ -212,7 +212,7 @@ import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { Studienart } from "@/types/Studienart";
 import { Studiensemester } from "@/types/Studiensemester";
-import MeldungService from "@/api/MeldungService";
+import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import { useHeaderStore } from "@/stores/header";
 

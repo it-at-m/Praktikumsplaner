@@ -29,29 +29,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 @AllArgsConstructor
 @NoArgsConstructor
 @AusbildungsAnnotation(studiengang = "getAusbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
-public class AusbildungsPraktikumsstelle extends BaseEntity {
-
-    @NotNull
-    public String dienststelle;
-
-    @NotNull
-    public String oertlicheAusbilder;
-
-    @NotNull
-    @Email
-    public String email;
-
-    @NotNull
-    public String taetigkeiten;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    public Dringlichkeit dringlichkeit;
-
-    public String namentlicheAnforderung;
-
-    @Enumerated(EnumType.STRING)
-    public Referat referat;
+public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull
     public boolean projektarbeit;
@@ -63,8 +41,4 @@ public class AusbildungsPraktikumsstelle extends BaseEntity {
     @NotNull
     @Enumerated(EnumType.STRING)
     public Studiengang ausbildungsrichtung;
-
-    @NotNull
-    @JdbcTypeCode(VARCHAR)
-    public UUID meldezeitraumID;
 }
