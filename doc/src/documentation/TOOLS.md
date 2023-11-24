@@ -18,7 +18,7 @@ Docker Desktop
 - Local deployment and testing
 
 Spring
-- Backend and api gateway
+- Backend and ApiGateway
 
 Vuetify / Vue.JS
 - Frontend
