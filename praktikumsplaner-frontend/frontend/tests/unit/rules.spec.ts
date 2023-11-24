@@ -20,13 +20,13 @@ describe("rules fileFormat test", () => {
             type: "text/plain",
         });
 
-        expect(txtRule(txtFile)).toBe(errorMessage);
+        expect(aacRule(txtFile)).toBe(errorMessage);
     });
     it("tests fileFormatRules with null", () => {
-        expect(txtRule(null)).toBe(errorMessage);
+        expect(aacRule(null)).toBe(errorMessage);
     });
     it("tests fileFormatRules with undefined", () => {
-        expect(txtRule(undefined)).toBe(errorMessage);
+        expect(aacRule(undefined)).toBe(errorMessage);
     });
 });
 describe("rules maxLength test", () => {
@@ -34,18 +34,18 @@ describe("rules maxLength test", () => {
     it("tests maxLengthRule return true", () => {
         const txt10 = "Lorem ipsu";
 
-        expect(txtRule(txt10)).toBe(true);
+        expect(maxLength10Rule(txt10)).toBe(true);
     });
     it("tests maxLengthRule return error when over max length", () => {
         const txt11 = "Lorem ipsum";
 
-        expect(txtRule(txt11)).toBe(errorMessage);
+        expect(maxLength10Rule(txt11)).toBe(errorMessage);
     });
     it("tests maxLengthRule return error when null", () => {
-        expect(txtRule(null)).toBe(errorMessage);
+        expect(maxLength10Rule(null)).toBe(errorMessage);
     });
     it("tests maxLengthRule return error when undefined", () => {
-        expect(txtRule(undefined)).toBe(errorMessage);
+        expect(maxLength10Rule(undefined)).toBe(errorMessage);
     });
 });
 describe("rules notEmptyDate test", () => {
