@@ -1,9 +1,9 @@
 # Architecture Decision Records (ADRs)
 
 Architecture decision records present one method to document functional and non-functional decisions relating
-to architecture. We use the [ADR template of Michael Nygard](https://github.com/joelparkerhenderson/architecture-decision-record/blob/main/templates/decision-record-template-by-michael-nygard/index.md)
+to architecture. We use the [ADR template of Michael Nygard](https://github.com/joelparkerhenderson/architecture-decision-record/blob/main/templates/decision-record-template-by-michael-nygard/index.md).
 
-The following adrs exist:
+The following ADRs exist:
 
 - [ADR-001 use final](./adr/adr001-use-final.md)
 - [ADR-002 dont use `@Column`-annotation](adr/adr002-no-hibernate-column-annotation.md)

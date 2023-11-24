@@ -1,4 +1,4 @@
-# Impressum
+# Imprint
 
 **IT@M <br>**
 Agnes Pockels Bogen 21 <br>

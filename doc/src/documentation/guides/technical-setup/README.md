@@ -1,25 +1,25 @@
-# Technisches Setup
+# Technical Setup
 
-Im Folgenden wird das technische Setup beschrieben.
+The technical setup is described below.
 
-**Inhaltsverzeichnis**
+**Table of Contents**
 
 [[TOC]]
 
-## lokale Infrastruktur
+## Local infrastructure
 
-Für die Entwicklung wird eine lokale Infrastruktur im stack Ordner bereitgestellt.
+A local infrastructure for development is provided in the folder `stack`.
 
-### Voraussetzungen
+### Prerequisites
 
-Folgende Programme / Tools müssen installiert sein:
+The following programs / tools must be installed:
 
-- Docker (zur Nutzung der bereitgestellten Images)
+- Docker (to use the provided images)
 
-### Verwendung der Anwendung mittels Docker
+### Using the application with Docker
 
-Im Ordner `stack` gibt es ein `docker compose`-File über dass alle notwendigen Container aufgebaut werden.
-Dazu den Befehl `docker compose --profile full up -d` verwenden.
+There is a `docker compose` file in the `stack` folder that is used to create all the necessary containers.
+To use, execute the command `docker compose --profile full up -d`.
 
 ```mermaid
 graph LR;
@@ -47,26 +47,27 @@ subgraph Praktiumsplaner
  Browser -->|localhost:8080| Frontend
 ```
 
-**⚠ Hinweis**
+**⚠ Note**
 
-Beim ersten Start wird das Frontend nicht erfolgreich mit starten. Das liegt daran dass der Keycloak noch beim Start
-from Frontend noch nicht vollständig eingerichtet ist. Die Einrichtung vom Keycloak ist abgeschlossen wenn der Container
-`init-keycloak``wieder gestoppt ist. Danach kann das Frontend gestartet werden.
+The frontend will not start successfully at the first start.
+This is because the keycloak is not yet fully set up when the frontend is started.
+The setup of the keycloak is complete when the container `init-keycloak` is stopped again.
+The frontend can then be started afterward.
 
-Sobald alle Services, ausgenommen vom `init-*` gestartet sind kann auf die Anwendung via http://localhost:8080
-zugegriffen werden. Zur Authentifizierung den Benutzer `testuser` mit dem Passwort `test` verwenden.
+As soon as all services except `init-*` have been started, the application can be accessed via http://localhost:8080.
+For authentication, use the user `testleitung` with the password `test`.
 
-**⚠ Proxyhinweis**
+**⚠ Proxy note**
 
-Wenn im Browser ein Proxy eingerichtet ist bitte darauf achten dass dieser nicht `kubernetes.docker.internal` auflöst.
+If a proxy is set up in the browser, please make sure that it does not resolve `kubernetes.docker.internal`.
 
-### Frontendentwicklung (in Progress)
+### Frontend development (in progress)
 
 *TBD*
 
-### Backendentwicklung (in Progress)
+### Backend development (in progress)
 
-#### Anbindung an Postgresql-DB in Docker
+#### Connection to Postgresql-DB in Docker
 
 ```mermaid
 graph LR
@@ -86,8 +87,8 @@ subgraph Praktiumsplaner
  end
 ```
 
-In der bereitgestellten Infrastruktur gibt es eine Datenbank für das Backend. Um das Backend bei der Entwicklung damit zu
-verbinden muss das Profil `db-postgres` verwendet werden. Es ist so konfiguriert, dass standardmäßig eine Verbindung
-zur Infrastruktur aufgebaut wird.
+There is a database for the backend in the infrastructure provided.
+The `db-postgres` profile must be used to connect the backend to it during development.
+It is configured so that a connection to the infrastructure is established by default.
 
-Mittels `docker compose up -d` werden nur die zentralen Services in Docker gestartet, u.a. die erforderliche Datenbank.
+Using `docker compose up -d`, only the central services are started in Docker, including the required database.
