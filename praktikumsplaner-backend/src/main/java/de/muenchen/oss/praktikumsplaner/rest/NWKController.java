@@ -40,7 +40,7 @@ public class NWKController {
         if (ACTIVE_STATUS.equals(status)) {
             return nwkService.findAllActiveNWKs();
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter ist erforderlich.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter nicht unterstützt.");
         }
     }
 }
