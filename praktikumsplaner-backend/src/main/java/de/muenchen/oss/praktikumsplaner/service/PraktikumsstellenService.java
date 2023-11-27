@@ -9,6 +9,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstel
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
+import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
@@ -18,8 +19,8 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -72,15 +73,19 @@ public class PraktikumsstellenService {
         NWK assignedNWK = nwkRepository.findById(nwkID).orElseThrow();
         if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
             AusbildungsPraktikumsstelle praktikumsstelle = ausbildungsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
-            praktikumsstelle.setAssignedNWK(assignedNWK);
-            ausbildungsPraktikumsstellenRepository.save(praktikumsstelle);
-            return praktikumsstellenMapper.toDTO(praktikumsstelle);
+            if (praktikumsstelle.getAssignedNWK().equals(null)) {
+                praktikumsstelle.setAssignedNWK(assignedNWK);
+                ausbildungsPraktikumsstellenRepository.save(praktikumsstelle);
+                return praktikumsstellenMapper.toDTO(praktikumsstelle);
+            } else throw new ResourceConflictException("Praktikumsstelle already has an assigned NWK!");
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
             StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
-            praktikumsstelle.setAssignedNWK(assignedNWK);
-            studiumsPraktikumsstellenRepository.save(praktikumsstelle);
-            return praktikumsstellenMapper.toDTO(praktikumsstelle);
-        } else throw new EntityNotFoundException();
+            if (praktikumsstelle.getAssignedNWK().equals(null)) {
+                praktikumsstelle.setAssignedNWK(assignedNWK);
+                studiumsPraktikumsstellenRepository.save(praktikumsstelle);
+                return praktikumsstellenMapper.toDTO(praktikumsstelle);
+            } else throw new ResourceConflictException("Praktikumsstelle already has an assigned NWK!");
+        } else throw new ResourceNotFoundException("Praktikumsstelle not found!");
     }
 
     private TreeMap<String, List<PraktikumsstelleDTO>> groupDienststellen(final Iterable<PraktikumsstelleDTO> allPraktikumsstellen) {
