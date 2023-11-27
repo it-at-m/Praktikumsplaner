@@ -21,8 +21,10 @@
 import { ref, onMounted } from "vue";
 import NWK from "@/types/NWK";
 import NWKService from "@/api/NWKService";
+import { useNwkStore } from "@/stores/nwkStore";
 
 const nwks = ref<NWK[]>([]);
+const nwkStore = useNwkStore();
 
 onMounted(() => {
     getAllActiveNWKs();
@@ -33,11 +35,8 @@ function getAllActiveNWKs() {
     });
 }
 
-const emit = defineEmits<{
-    (e: "sendNWKId", nwkId: string): void;
-}>();
-
 function dragStart(nwk: NWK) {
-    emit("sendNWKId", nwk.id);
+    console.log(nwk.id);
+    nwkStore.updateNwkId(nwk.id);
 }
 </script>

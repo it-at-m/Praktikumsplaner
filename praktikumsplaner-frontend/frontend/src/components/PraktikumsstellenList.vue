@@ -80,15 +80,21 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import { useNwkStore } from "@/stores/nwkStore";
 
 const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>();
+const nwkStore = useNwkStore();
+const assignedNwkID = ref(nwkStore.nwkId);
 
-const props = defineProps<{
-    assignedNWKId: string;
-}>();
+watch(
+    () => nwkStore.nwkId,
+    () => {
+        assignedNwkID.value = nwkStore.nwkId ?? "";
+    }
+);
 
 onMounted(() => {
     getAllPraktikumsstellen();
@@ -108,9 +114,10 @@ function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
 function drop(stelle: Praktikumsstelle) {
     if (!stelle.assignedNWKId) {
         console.log(
-            `NWK ${props.assignedNWKId} wurde Stelle ${stelle.id} zugewiesen.`
+            `NWK ${assignedNwkID.value} wurde Stelle ${stelle.id} zugewiesen.`
         );
-        stelle.assignedNWKId = props.assignedNWKId;
+        stelle.assignedNWKId = assignedNwkID.value;
+        console.log(stelle.assignedNWKId);
     }
 }
 </script>
