@@ -1,0 +1,1 @@
+alter table NWK rename column IsActive to active;
