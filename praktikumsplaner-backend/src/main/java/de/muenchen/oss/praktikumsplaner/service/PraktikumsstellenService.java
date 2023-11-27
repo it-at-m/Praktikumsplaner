@@ -1,6 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.BasePraktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.NWK;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
@@ -9,6 +11,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
+import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,6 +30,7 @@ public class PraktikumsstellenService {
     private final StudiumsPraktikumsstellenRepository studiumsPraktikumsstellenRepository;
     private final AusbildungsPraktikumsstellenRepository ausbildungsPraktikumsstellenRepository;
     private final MeldezeitraumService meldezeitraumService;
+    private final NWKRepository nwkRepository;
 
     public StudiumsPraktikumsstelleDTO saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
         StudiumsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO,
@@ -62,6 +66,19 @@ public class PraktikumsstellenService {
         TreeMap<String, List<PraktikumsstelleDTO>> groupedPraktikumsstellen = groupDienststellen(combinedList);
 
         return groupedPraktikumsstellen;
+    }
+
+    public void assignNWK(UUID praktikumsstellenID, UUID nwkID) {
+        NWK assignedNWK = nwkRepository.findById(nwkID).orElseThrow();
+        if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
+            AusbildungsPraktikumsstelle praktikumsstelle = ausbildungsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
+            praktikumsstelle.setAssignedNWK(assignedNWK);
+            ausbildungsPraktikumsstellenRepository.save(praktikumsstelle);
+        } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
+            StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
+            praktikumsstelle.setAssignedNWK(assignedNWK);
+            studiumsPraktikumsstellenRepository.save(praktikumsstelle);
+        }
     }
 
     private TreeMap<String, List<PraktikumsstelleDTO>> groupDienststellen(final Iterable<PraktikumsstelleDTO> allPraktikumsstellen) {

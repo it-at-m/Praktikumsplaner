@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import com.electronwill.nightconfig.core.conversion.Path;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDTO;
@@ -9,13 +10,18 @@ import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,5 +53,11 @@ public class PraktikumsstellenController {
     @ResponseStatus(HttpStatus.OK)
     public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktikumsstellen() {
         return praktikumsstellenService.getAllPraktiumsstellen();
+    }
+
+    @PutMapping("/{praktikumsstellenId}/nwk")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void assignNWK(@PathVariable UUID praktikumsstellenId, @RequestParam UUID nwkId){
+        praktikumsstellenService.assignNWK(praktikumsstellenId, nwkId);
     }
 }
