@@ -1,6 +1,5 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import com.electronwill.nightconfig.core.conversion.Path;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDTO;
@@ -11,7 +10,6 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,7 +55,7 @@ public class PraktikumsstellenController {
 
     @PutMapping("/{praktikumsstellenId}/nwk")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void assignNWK(@PathVariable UUID praktikumsstellenId, @RequestParam UUID nwkId){
+    public void assignNWK(@PathVariable UUID praktikumsstellenId, @RequestParam UUID nwkId) {
         praktikumsstellenService.assignNWK(praktikumsstellenId, nwkId);
     }
 }
