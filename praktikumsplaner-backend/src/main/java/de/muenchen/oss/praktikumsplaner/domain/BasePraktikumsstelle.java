@@ -50,4 +50,7 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
     @NotNull
     @JdbcTypeCode(VARCHAR)
     public UUID meldezeitraumID;
+
+    @NotNull
+    public boolean planstelleVorhanden;
 }

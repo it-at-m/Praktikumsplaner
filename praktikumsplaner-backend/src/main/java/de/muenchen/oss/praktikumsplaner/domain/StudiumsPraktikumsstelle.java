@@ -35,9 +35,6 @@ public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
     public boolean programmierkenntnisse;
 
     @NotNull
-    public boolean planstelleVorhanden;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
     public Studiensemester studiensemester;
 

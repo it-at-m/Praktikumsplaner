@@ -35,9 +35,6 @@ public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
     public boolean projektarbeit;
 
     @NotNull
-    public boolean planstelleVorhanden;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
     public Ausbildungsjahr ausbildungsjahr;
 
