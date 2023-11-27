@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NWKRepository extends CrudRepository<NWK, UUID> {
 
-    List<NWK> findNWKsByIsActiveIsTrueOrderByNachname();
+    List<NWK> findNWKsByActiveIsTrueOrderByNachname();
 }
