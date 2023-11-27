@@ -26,6 +26,8 @@ export default class Praktikumsstelle {
 
         public referat?: string,
 
-        public namentlicheAnforderung?: string
+        public namentlicheAnforderung?: string,
+
+        public id?: string
     ) {}
 }

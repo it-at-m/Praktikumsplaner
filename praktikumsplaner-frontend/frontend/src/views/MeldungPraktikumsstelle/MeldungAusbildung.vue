@@ -185,7 +185,6 @@
                         label="Aufgaben am Praktikumsplatz*"
                         :rules="requiredRule"
                         outlined
-                        height="124px"
                         @change="zustelleradressverwaltung()"
                     ></v-textarea>
                 </v-col>
@@ -225,7 +224,7 @@ import { Ausbildungsjahr } from "@/types/Ausbildungsjahr";
 import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
-import MeldungService from "@/api/MeldungService";
+import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import { useHeaderStore } from "@/stores/header";
 
@@ -238,7 +237,7 @@ const validationRules = useRules();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein!")];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein!"),
-    validationRules.emailRule(),
+    validationRules.emailRule("Keine gültige Email"),
 ];
 const booleanRule = [
     validationRules.notEmptyBooleanRule("Darf nicht leer sein!"),

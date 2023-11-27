@@ -1,10 +1,10 @@
-# Einführung
+# Introduction
 
-*TBD über den Praktikumsplaner* 
+*TBD* 
 
 ## Tooling
 
-Diagramme die nicht als Bild vorliegen wurden mit [Mermaid](https://mermaid.live/edit) erstellt.
+Diagrams that are not available as images were created with [Mermaid](https://mermaid.live/edit).
 
-⚠ Bei Diagrammen die als Bild eingefügt werden sollten mit `draw.io` erstellt werden. Dabei soll auch das Modell
-mit abgespeichert werden damit jeder das Modell bearbeiten kann.
+⚠ Diagrams that are inserted as images should be created with `draw.io`.
+The model should also be saved so that anyone can edit the model.

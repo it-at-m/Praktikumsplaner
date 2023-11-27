@@ -1,5 +1,6 @@
 import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, NWK_BASE } from "@/Constants";
+import NWK from "@/types/NWK";
 
 export default {
     uploadExcelFile(excelDatei: File): Promise<void> {
@@ -30,5 +31,18 @@ export default {
             reader.onerror = reject;
             reader.readAsDataURL(excelDatei);
         });
+    },
+    getAllActiveNWKs(): Promise<NWK[]> {
+        return fetch(
+            `${API_BASE}${NWK_BASE}?status=aktiv`,
+            FetchUtils.getGETConfig()
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .catch((err) => {
+                FetchUtils.defaultResponseHandler(err);
+            });
     },
 };
