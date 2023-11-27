@@ -172,7 +172,6 @@
                         label="Aufgaben am Praktikumsplatz*"
                         :rules="requiredRule"
                         outlined
-                        height="124px"
                         @change="zustelleradressverwaltung()"
                     ></v-textarea>
                 </v-col>
