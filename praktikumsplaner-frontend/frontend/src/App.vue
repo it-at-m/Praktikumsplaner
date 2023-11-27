@@ -67,12 +67,10 @@
                 </v-list-item>
                 <v-list-item
                     v-security.restrict="['ROLE_NWK']"
-                    :to="{ path: '/gegenueberstellung' }"
+                    :to="{ path: '/zuweisung' }"
                 >
                     <v-list-item-content>
-                        <v-list-item-title
-                            >Gegenueberstellung</v-list-item-title
-                        >
+                        <v-list-item-title>Zuweisung</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
