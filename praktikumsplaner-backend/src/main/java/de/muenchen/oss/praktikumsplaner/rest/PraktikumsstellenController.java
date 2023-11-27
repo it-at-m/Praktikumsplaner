@@ -14,9 +14,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,9 +53,10 @@ public class PraktikumsstellenController {
         return praktikumsstellenService.getAllPraktiumsstellen();
     }
 
-    @PutMapping("/{praktikumsstellenId}/nwk")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void assignNWK(@PathVariable UUID praktikumsstellenId, @RequestParam UUID nwkId) {
-        praktikumsstellenService.assignNWK(praktikumsstellenId, nwkId);
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PatchMapping("/{praktikumsstellenId}")
+    @ResponseStatus(HttpStatus.OK)
+    public PraktikumsstelleDTO assignNWK(@PathVariable UUID praktikumsstellenId, @RequestParam UUID nwkId) {
+        return praktikumsstellenService.assignNWK(praktikumsstellenId, nwkId);
     }
 }

@@ -18,7 +18,10 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -67,17 +70,19 @@ public class PraktikumsstellenService {
         return groupedPraktikumsstellen;
     }
 
-    public void assignNWK(UUID praktikumsstellenID, UUID nwkID) {
+    public PraktikumsstelleDTO assignNWK(UUID praktikumsstellenID, UUID nwkID) {
         NWK assignedNWK = nwkRepository.findById(nwkID).orElseThrow();
         if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
             AusbildungsPraktikumsstelle praktikumsstelle = ausbildungsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
             praktikumsstelle.setAssignedNWK(assignedNWK);
             ausbildungsPraktikumsstellenRepository.save(praktikumsstelle);
+            return praktikumsstellenMapper.toDTO(praktikumsstelle);
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
             StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
             praktikumsstelle.setAssignedNWK(assignedNWK);
             studiumsPraktikumsstellenRepository.save(praktikumsstelle);
-        }
+            return praktikumsstellenMapper.toDTO(praktikumsstelle);
+        } else throw new EntityNotFoundException();
     }
 
     private TreeMap<String, List<PraktikumsstelleDTO>> groupDienststellen(final Iterable<PraktikumsstelleDTO> allPraktikumsstellen) {

@@ -112,12 +112,12 @@ function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
 }
 
 function drop(stelle: Praktikumsstelle) {
-    if (!stelle.assignedNWKId) {
-        console.log(
-            `NWK ${assignedNwkID.value} wurde Stelle ${stelle.id} zugewiesen.`
-        );
+    if (stelle.id && !stelle.assignedNWKId) {
         stelle.assignedNWKId = assignedNwkID.value;
-        console.log(stelle.assignedNWKId);
+        console.log(
+            "StellenId " + stelle.id + "AssignedNWKId " + stelle.assignedNWKId
+        );
+        PraktikumsstellenService.assignNWK(stelle.id, stelle.assignedNWKId);
     }
 }
 </script>
