@@ -16,6 +16,7 @@
         <property name="fileNamePattern" value="target[/\\]generated-sources[/\\].*"/>
     </module>
     <module name="TreeWalker">
+        <module name="UnusedImports"/>
         <module name="OuterTypeFilename"/>
         <module name="NoLineWrap">
             <property name="tokens" value="PACKAGE_DEF, IMPORT, STATIC_IMPORT"/>
