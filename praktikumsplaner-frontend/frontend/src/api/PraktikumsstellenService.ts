@@ -73,6 +73,31 @@ export default {
             FetchUtils.getPATCHConfig({})
         )
             .then((response) => {
+                useSnackbarStore().showMessage({
+                    message: "☑ Zuweisung erfolgreich.",
+                    level: Levels.SUCCESS,
+                });
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .catch((err) => {
+                useSnackbarStore().showMessage({
+                    message: err.message,
+                    level: Levels.ERROR,
+                });
+                FetchUtils.defaultResponseHandler(err);
+            });
+    },
+    unassignNWK(stellenId: string): Promise<Praktikumsstelle> {
+        return fetch(
+            `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}`,
+            FetchUtils.getPATCHConfig({})
+        )
+            .then((response) => {
+                useSnackbarStore().showMessage({
+                    message: "☑ Zuweisung erfolgreich aufgehoben.",
+                    level: Levels.SUCCESS,
+                });
                 FetchUtils.defaultResponseHandler(response);
                 return response.json();
             })

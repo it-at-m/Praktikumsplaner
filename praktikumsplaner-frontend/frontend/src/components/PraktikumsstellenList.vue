@@ -69,6 +69,24 @@
                                                 praktikumsstelle.namentlicheAnforderung
                                             }}
                                         </v-list-item-subtitle>
+                                        <v-list-item-icon>
+                                            <v-chip
+                                                v-if="
+                                                    praktikumsstelle.assignedNWK
+                                                "
+                                                color="primary"
+                                                close
+                                                close-icon="mdi-close"
+                                                @click:close="
+                                                    unassignNWK(
+                                                        praktikumsstelle
+                                                    )
+                                                "
+                                                >{{
+                                                    `${praktikumsstelle.assignedNWK.vorname} ${praktikumsstelle.assignedNWK.nachname}`
+                                                }}</v-chip
+                                            >
+                                        </v-list-item-icon>
                                     </v-list-item-content>
                                 </v-list-item>
                             </v-list-item-group>
@@ -84,15 +102,18 @@ import { ref, onMounted, watch } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import { useNwkStore } from "@/stores/nwkStore";
+import NWK from "@/types/NWK";
+import { EventBus } from "@/stores/event-bus";
 
 const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>();
 const nwkStore = useNwkStore();
-const assignedNwkID = ref(nwkStore.nwkId);
+const assignedNwkID = ref(nwkStore.nwk);
 
 watch(
-    () => nwkStore.nwkId,
+    () => nwkStore.nwk,
     () => {
-        assignedNwkID.value = nwkStore.nwkId ?? "";
+        assignedNwkID.value =
+            nwkStore.nwk ?? new NWK("", "", "", "", "", "", false);
     }
 );
 
@@ -112,12 +133,18 @@ function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
 }
 
 function drop(stelle: Praktikumsstelle) {
-    if (stelle.id && !stelle.assignedNWKId) {
-        stelle.assignedNWKId = assignedNwkID.value;
-        console.log(
-            "StellenId " + stelle.id + "AssignedNWKId " + stelle.assignedNWKId
-        );
-        PraktikumsstellenService.assignNWK(stelle.id, stelle.assignedNWKId);
+    if (stelle.id && !stelle.assignedNWK) {
+        stelle.assignedNWK = assignedNwkID.value;
+        PraktikumsstellenService.assignNWK(stelle.id, stelle.assignedNWK.id);
+        EventBus.$emit("assignedNWK", stelle.assignedNWK);
+    }
+}
+
+function unassignNWK(stelle: Praktikumsstelle) {
+    if (stelle.id) {
+        PraktikumsstellenService.unassignNWK(stelle.id);
+        EventBus.$emit("unassignedNWK", stelle.assignedNWK);
+        stelle.assignedNWK = undefined;
     }
 }
 </script>

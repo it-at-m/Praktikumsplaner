@@ -4,6 +4,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.service.NWKService;
 import java.io.IOException;
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,12 +35,18 @@ public class NWKController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<NwkDTO> getNWKs(@RequestParam(name = "status") String status) {
-        if (ACTIVE_STATUS.equals(status)) {
-            return nwkService.findAllActiveNWKs();
-        } else {
+    public List<NwkDTO> getNWKs(@RequestParam(name = "status", required = false) String status, @RequestParam(name = "unassigned", required = false) String unassigned) {
+        if(status != null) {
+            if (ACTIVE_STATUS.equals(status)) {
+                return nwkService.findAllActiveNWKs();
+            }
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter nicht unterstützt.");
         }
+        if(unassigned != null) {
+            if(Boolean.TRUE.toString().equals(unassigned)) {
+                return nwkService.findAllUnassignedNWKs();
+            }
+        }
+        return nwkService.findAllNWKs();
     }
-
 }
