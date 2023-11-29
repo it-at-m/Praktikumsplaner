@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudiumsPraktikumsstellenRepository extends PraktikumsstellenRepository<StudiumsPraktikumsstelle> {
-    List<StudiumsPraktikumsstelle> findAllByMeldezeitraumID(UUID id);
+    List<StudiumsPraktikumsstelle> findAllByMeldezeitraumID(final UUID id);
 }

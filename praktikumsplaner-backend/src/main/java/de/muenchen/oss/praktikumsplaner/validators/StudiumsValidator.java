@@ -11,12 +11,12 @@ public class StudiumsValidator implements ConstraintValidator<StudiumsAnnotation
     private String studiengangField;
 
     @Override
-    public void initialize(StudiumsAnnotation constraintAnnotation) {
+    public void initialize(final StudiumsAnnotation constraintAnnotation) {
         this.studiengangField = constraintAnnotation.studiengang();
     }
 
     @Override
-    public boolean isValid(Object object, ConstraintValidatorContext constraintContext) {
+    public boolean isValid(final Object object, final ConstraintValidatorContext constraintContext) {
         try {
             if (object == null) {
                 return true;

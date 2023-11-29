@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Converter
 public class DayOfWeekSetConverter implements AttributeConverter<Set<DayOfWeek>, String> {
     @Override
-    public String convertToDatabaseColumn(Set<DayOfWeek> attribute) {
+    public String convertToDatabaseColumn(final Set<DayOfWeek> attribute) {
         if (attribute == null || attribute.isEmpty()) {
             return "";
         }
@@ -21,7 +21,7 @@ public class DayOfWeekSetConverter implements AttributeConverter<Set<DayOfWeek>,
     }
 
     @Override
-    public Set<DayOfWeek> convertToEntityAttribute(String dbData) {
+    public Set<DayOfWeek> convertToEntityAttribute(final String dbData) {
         if (dbData == null || dbData.trim().isEmpty()) {
             return new HashSet<>();
         }

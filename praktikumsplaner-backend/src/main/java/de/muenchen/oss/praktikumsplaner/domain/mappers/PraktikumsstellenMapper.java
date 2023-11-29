@@ -12,15 +12,15 @@ import org.mapstruct.Mapping;
 
 @Mapper
 public interface PraktikumsstellenMapper {
-    StudiumsPraktikumsstelleDTO toDTO(StudiumsPraktikumsstelle studiumsPraktikumsstelle);
+    StudiumsPraktikumsstelleDTO toDTO(final StudiumsPraktikumsstelle studiumsPraktikumsstelle);
 
-    AusbildungsPraktikumsstelleDTO toDTO(AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle);
-
-    @Mapping(target = "id", ignore = true)
-    @Mapping(source = "meldezeitraumDTO.id", target = "meldezeitraumID")
-    StudiumsPraktikumsstelle toEntity(CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO, MeldezeitraumDTO meldezeitraumDTO);
+    AusbildungsPraktikumsstelleDTO toDTO(final AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "meldezeitraumDTO.id", target = "meldezeitraumID")
-    AusbildungsPraktikumsstelle toEntity(CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO, MeldezeitraumDTO meldezeitraumDTO);
+    StudiumsPraktikumsstelle toEntity(final CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO, final MeldezeitraumDTO meldezeitraumDTO);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "meldezeitraumDTO.id", target = "meldezeitraumID")
+    AusbildungsPraktikumsstelle toEntity(final CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO, final MeldezeitraumDTO meldezeitraumDTO);
 }
