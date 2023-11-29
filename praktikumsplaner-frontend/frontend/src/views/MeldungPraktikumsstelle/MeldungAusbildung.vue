@@ -4,7 +4,15 @@
         lazy-validation
     >
         <h3 class="spacing-left">Praktikumstellen Meldung</h3>
-        <v-container class="spacing-left, spacing-top-30">
+        <div v-if="!activeMeldezeitraum">
+            Die Ausbildungsleitung hat die Meldung von Stellen noch nicht
+            freigegeben, daher können leider aktuell keine Stellen gemeldet
+            werden.
+        </div>
+        <v-container
+            v-else
+            class="spacing-left, spacing-top-30"
+        >
             <v-row>
                 <v-col>
                     <v-select
@@ -227,6 +235,10 @@ import { Dringlichkeit } from "@/types/Dringlichkeit";
 import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import { useHeaderStore } from "@/stores/header";
+import MeldezeitraumService from "@/api/MeldezeitraumService";
+
+const meldezeitraumService = new MeldezeitraumService();
+let activeMeldezeitraum = ref<boolean>(false);
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
@@ -250,8 +262,10 @@ const headerStore = useHeaderStore();
 
 onMounted(() => {
     headerStore.setHeader("Praktikumsstellen Meldung");
+    meldezeitraumService.getCurrentMeldezeitraum().then((zeitraueme) => {
+        activeMeldezeitraum.value = zeitraueme.length > 0;
+    });
 });
-
 function changeVorrZuweisungsZeitraum() {
     zeitraum.value = zeitraeueme.ausbildungsZeitraum(
         praktikumsstelle.value.ausbildungsrichtung,
