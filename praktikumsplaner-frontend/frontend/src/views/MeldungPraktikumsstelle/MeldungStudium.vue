@@ -163,6 +163,19 @@
                 </v-col>
                 <v-col cols="2" />
                 <v-col />
+                <v-col>
+                    <v-select
+                        v-model="praktikumsstelle.planstelleVorhanden"
+                        label="Planstelle"
+                        :items="YesNoBoolean"
+                        :menu-props="customMenuProps"
+                        item-value="value"
+                        item-text="name"
+                        outlined
+                        @change="zustelleradressverwaltung()"
+                    >
+                    </v-select>
+                </v-col>
                 <v-col cols="1" />
             </v-row>
             <v-row>
