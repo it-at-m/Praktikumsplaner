@@ -2,7 +2,6 @@ package de.muenchen.oss.praktikumsplaner.exception;
 
 import jakarta.validation.ValidationException;
 import java.io.IOException;
-import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,11 +43,4 @@ public class GlobalExceptionHandler {
         return ex.getMessage();
     }
 
-    // Is thrown when the Database encounters an error
-    @ExceptionHandler(PSQLException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public String PsqlException(PSQLException ex) {
-        return ex.getMessage();
-    }
 }
