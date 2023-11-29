@@ -5,6 +5,7 @@ import static org.apache.logging.log4j.util.Strings.isBlank;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNWKDTO;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
+import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -70,8 +71,10 @@ public class ExcelService {
     }
 
     protected boolean isCreateNwkDTOEmpty(CreateNWKDTO createNwkDTO) {
-        return (createNwkDTO.vorname() == null || createNwkDTO.vorname().isEmpty()) && (createNwkDTO.nachname() == null || createNwkDTO.nachname().isEmpty())
-                && createNwkDTO.studiengang() == null && (createNwkDTO.jahrgang() == null || createNwkDTO.jahrgang().isEmpty());
+        return StringUtils.isEmpty(createNwkDTO.vorname())
+                && StringUtils.isEmpty(createNwkDTO.nachname())
+                && createNwkDTO.studiengang() == null
+                && StringUtils.isEmpty(createNwkDTO.jahrgang());
     }
 
     private CreateNWKDTO getNwkDTOFromRow(Row row) {
