@@ -32,23 +32,23 @@ public class NWK extends BaseEntity {
 
     @NotNull(message = "Der Vorname ist erforderlich")
     @Size(min = 2, max = 255, message = "Der Vorname darf nur zwischen {min} und {max} Zeichen lang sein")
-    public String vorname;
+    private String vorname;
 
     @NotNull(message = "Der Nachname ist erforderlich")
     @Size(min = 2, max = 255, message = "Der Nachname darf nur zwischen {min} und {max} Zeichen lang sein")
-    public String nachname;
+    private String nachname;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Der Studiengang ist erforderlich")
-    public Studiengang studiengang;
+    private Studiengang studiengang;
 
     @NotNull(message = "Der Jahrgang ist erforderlich")
     @Pattern(regexp = "\\d\\d/\\d\\d")
-    public String jahrgang;
+    private String jahrgang;
 
     @Convert(converter = DayOfWeekSetConverter.class)
-    public Set<DayOfWeek> vorlesungstage;
+    private Set<DayOfWeek> vorlesungstage;
 
     @NotNull
-    public boolean active;
+    private boolean active;
 }

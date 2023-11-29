@@ -26,31 +26,31 @@ import org.hibernate.annotations.JdbcTypeCode;
 public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @NotNull
-    public String dienststelle;
+    private String dienststelle;
 
     @NotNull
-    public String oertlicheAusbilder;
+    private String oertlicheAusbilder;
 
     @NotNull
     @Email
-    public String email;
+    private String email;
 
     @NotNull
-    public String taetigkeiten;
+    private String taetigkeiten;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    public Dringlichkeit dringlichkeit;
+    private Dringlichkeit dringlichkeit;
 
-    public String namentlicheAnforderung;
+    private String namentlicheAnforderung;
 
     @Enumerated(EnumType.STRING)
-    public Referat referat;
+    private Referat referat;
 
     @NotNull
     @JdbcTypeCode(VARCHAR)
-    public UUID meldezeitraumID;
+    private UUID meldezeitraumID;
 
     @NotNull
-    public boolean planstelleVorhanden;
+    private boolean planstelleVorhanden;
 }

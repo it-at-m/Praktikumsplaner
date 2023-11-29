@@ -25,13 +25,13 @@ import lombok.ToString;
 public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull
-    public boolean projektarbeit;
+    private boolean projektarbeit;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    public Ausbildungsjahr ausbildungsjahr;
+    private Ausbildungsjahr ausbildungsjahr;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    public Studiengang ausbildungsrichtung;
+    private Studiengang ausbildungsrichtung;
 }
