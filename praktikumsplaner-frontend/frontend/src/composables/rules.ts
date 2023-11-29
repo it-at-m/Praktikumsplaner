@@ -21,7 +21,8 @@ export function useRules() {
     }
 
     function notEmptyBooleanRule(message = "error") {
-        return (value: boolean | null | undefined) => value || message;
+        return (value: boolean | null | undefined) =>
+            value != null || value != undefined || message;
     }
 
     function emailRule(message = "error") {
