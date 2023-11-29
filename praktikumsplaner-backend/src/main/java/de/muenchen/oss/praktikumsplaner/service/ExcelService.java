@@ -41,8 +41,8 @@ public class ExcelService {
 
     public List<CreateNWKDTO> excelToNwkDTOList(final String base64String) throws IOException {
         try (InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
-             final XSSFWorkbook workbook = new XSSFWorkbook(stream)) {
-             final XSSFSheet sheet = workbook.getSheetAt(FIRST_SHEET);
+                final XSSFWorkbook workbook = new XSSFWorkbook(stream)) {
+            final XSSFSheet sheet = workbook.getSheetAt(FIRST_SHEET);
             return getAllNwkFromSheet(sheet);
         }
     }
