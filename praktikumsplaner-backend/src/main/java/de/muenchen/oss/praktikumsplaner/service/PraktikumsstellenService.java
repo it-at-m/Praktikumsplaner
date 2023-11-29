@@ -1,6 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.BasePraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
@@ -9,6 +10,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
+import de.muenchen.oss.praktikumsplaner.repository.PraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,20 +31,23 @@ public class PraktikumsstellenService {
     private final MeldezeitraumService meldezeitraumService;
 
     public StudiumsPraktikumsstelleDTO saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
-        StudiumsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO,
+        StudiumsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO,
                 meldezeitraumService.getCurrentMeldezeitraum());
-        entityWithNormalDienststelle.setDienststelle(normalizeDienststelle(entityWithNormalDienststelle.getDienststelle()));
-        return praktikumsstellenMapper.toDTO(studiumsPraktikumsstellenRepository
-                .save(entityWithNormalDienststelle));
+        StudiumsPraktikumsstelle savedPraktikumsstelle = savePraktikumsstelle(entityPraktikumsstelle, studiumsPraktikumsstellenRepository);
+        return praktikumsstellenMapper.toDTO(savedPraktikumsstelle);
     }
 
     public AusbildungsPraktikumsstelleDTO saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
-        AusbildungsPraktikumsstelle entityWithNormalDienststelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO,
+        AusbildungsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO,
                 meldezeitraumService.getCurrentMeldezeitraum());
-        entityWithNormalDienststelle.setDienststelle(normalizeDienststelle(entityWithNormalDienststelle.getDienststelle()));
+        AusbildungsPraktikumsstelle savedEntity = savePraktikumsstelle(entityPraktikumsstelle, ausbildungsPraktikumsstellenRepository);
         return praktikumsstellenMapper
-                .toDTO(ausbildungsPraktikumsstellenRepository
-                        .save(entityWithNormalDienststelle));
+                .toDTO(savedEntity);
+    }
+
+    private  <T extends BasePraktikumsstelle> T savePraktikumsstelle (final T entity, PraktikumsstellenRepository<T> repository) {
+        entity.setDienststelle(entity.getDienststelle());
+        return repository.save(entity);
     }
 
     public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktiumsstellen() {
