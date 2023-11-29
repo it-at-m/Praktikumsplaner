@@ -70,7 +70,7 @@ public class ExcelService {
         return createNWKDTOS;
     }
 
-    protected boolean isCreateNwkDTOEmpty(CreateNWKDTO createNwkDTO) {
+    private boolean isCreateNwkDTOEmpty(CreateNWKDTO createNwkDTO) {
         return StringUtils.isEmpty(createNwkDTO.vorname())
                 && StringUtils.isEmpty(createNwkDTO.nachname())
                 && createNwkDTO.studiengang() == null
