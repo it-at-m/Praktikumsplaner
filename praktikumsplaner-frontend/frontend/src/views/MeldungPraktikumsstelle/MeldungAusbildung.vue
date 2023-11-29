@@ -52,7 +52,7 @@
                     <v-text-field
                         v-model="praktikumsstelle.dienststelle"
                         label="Konkrete Dienststelle*"
-                        :rules="requiredRule"
+                        :rules="dienststelleRule"
                         outlined
                         @change="zustelleradressverwaltung()"
                     ></v-text-field>
@@ -107,7 +107,7 @@
                     <v-text-field
                         v-model="praktikumsstelle.oertlicheAusbilder"
                         label="Name örtliche Ausbilder*in*"
-                        :rules="requiredRule"
+                        :rules="oertlAusbidlerRule"
                         outlined
                         @change="zustelleradressverwaltung()"
                     ></v-text-field>
@@ -129,6 +129,7 @@
                     <v-text-field
                         v-model="praktikumsstelle.namentlicheAnforderung"
                         label="Namentliche Anforderung spez. gewünschter Nwk"
+                        :rules="namentlicheAnforderungRule"
                         outlined
                         @change="zustelleradressverwaltung()"
                     ></v-text-field>
@@ -183,7 +184,7 @@
                     <v-textarea
                         v-model="praktikumsstelle.taetigkeiten"
                         label="Aufgaben am Praktikumsplatz*"
-                        :rules="requiredRule"
+                        :rules="taetigkeitenRule"
                         outlined
                         @change="zustelleradressverwaltung()"
                     ></v-textarea>
@@ -238,10 +239,42 @@ const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein!")];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein!"),
     validationRules.emailRule("Keine gültige Email"),
+    validationRules.maxLengthRule(
+        255,
+        "Die Email darf nicht länger als 255 Zeichen sein"
+    ),
 ];
 const booleanRule = [
     validationRules.notEmptyBooleanRule("Darf nicht leer sein!"),
 ];
+const dienststelleRule = [
+    validationRules.notEmptyRule("Darf nicht leer sein"),
+    validationRules.maxLengthRule(
+        10,
+        "Die Dienststelle darf nicht länger als 10 Zeichen sein"
+    ),
+];
+const oertlAusbidlerRule = [
+    validationRules.notEmptyRule("Darf nicht leer sein"),
+    validationRules.maxLengthRule(
+        255,
+        "Örtliche Ausbilder*in darf nicht länger als 255 Zeichen sein"
+    ),
+];
+const namentlicheAnforderungRule = [
+    validationRules.maxLengthRule(
+        255,
+        "Der Name der angeforderte NWK darf nicht länger als 255 Zeichen sein"
+    ),
+];
+const taetigkeitenRule = [
+    validationRules.notEmptyRule("Darf nicht leer sein"),
+    validationRules.maxLengthRule(
+        5000,
+        "Tätigkeiten dürfen nicht länger als 5000 Zeichen sein"
+    ),
+];
+
 const customMenuProps = {
     offsetY: true,
 };

@@ -9,6 +9,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,22 +27,27 @@ import org.hibernate.annotations.JdbcTypeCode;
 public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @NotNull
+    @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein")
     private String dienststelle;
 
     @NotNull
+    @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein")
     private String oertlicheAusbilder;
 
     @NotNull
     @Email
+    @Size(max = 255, message = "Die Email darf nur {max} Zeichen lang sein")
     private String email;
 
     @NotNull
+    @Size(max = 5000, message = "Die Tätigkeiten dürfen nur {max} Zeichen lang sein")
     private String taetigkeiten;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private Dringlichkeit dringlichkeit;
 
+    @Size(max = 255, message = "Die angeforderte NWK darf nur {max} Zeichen lang sein")
     private String namentlicheAnforderung;
 
     @Enumerated(EnumType.STRING)
