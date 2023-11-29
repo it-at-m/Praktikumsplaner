@@ -183,7 +183,7 @@
                     <v-textarea
                         v-model="praktikumsstelle.taetigkeiten"
                         label="Aufgaben am Praktikumsplatz*"
-                        :rules="booleanRule"
+                        :rules="requiredRule"
                         outlined
                         @change="zustelleradressverwaltung()"
                     ></v-textarea>
