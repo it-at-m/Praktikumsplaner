@@ -13,7 +13,6 @@ import lombok.Builder;
 public record MeldezeitraumDTO(
         @NotNull UUID id,
         @Size(max = 255, message = "Name für Zeitraum darf nicht länger als {max} Zeichen sein.")
-        @NotNull
         @NotBlank
         String zeitraumName,
         @NotNull LocalDate startZeitpunkt,
