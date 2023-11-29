@@ -17,6 +17,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -83,15 +85,13 @@ public class PraktikumsstellenService {
     }
 
     private String getHauptabteilung(final String dienststelle) {
-        int index = -1;
-        for (int i = 0; i < dienststelle.length(); i++) {
-            if (Character.isDigit(dienststelle.charAt(i))) {
-                index = i;
-                return dienststelle.substring(0, index + 1);
-            }
+        Matcher matcher = Pattern.compile("\\d").matcher(dienststelle);
+        if (matcher.find()) {
+            return dienststelle.substring(0, matcher.start() + 1);
         }
         return dienststelle;
     }
+
 
     private String normalizeDienststelle(final String dienststelle) {
         return dienststelle.toUpperCase().trim().replaceAll("ITM|IT@M|RIT|-", "");
