@@ -89,6 +89,6 @@ public class PraktikumsstellenService {
     }
 
     private String normalizeDienststelle(final String dienststelle) {
-        return dienststelle.toUpperCase().trim().replace("ITM | IT@M | RIT | - |", "");
+        return dienststelle.toUpperCase().trim().replaceAll("ITM|IT@M|RIT|-", "");
     }
 }
