@@ -66,8 +66,8 @@ public class PraktikumsstellenService {
         return groupedPraktikumsstellen;
     }
 
-    private  <T extends BasePraktikumsstelle> T savePraktikumsstelle (final T entity, PraktikumsstellenRepository<T> repository) {
-        entity.setDienststelle(entity.getDienststelle());
+    private  <T extends BasePraktikumsstelle> T savePraktikumsstelle (final T entity, final PraktikumsstellenRepository<T> repository) {
+        entity.setDienststelle(normalizeDienststelle(entity.getDienststelle()));
         return repository.save(entity);
     }
 
