@@ -76,9 +76,9 @@ public class MeldezeitraumServiceTest {
                 .build();
 
         when(repository.findMeldezeitraumByDateInRange(LocalDate.now())).thenReturn(meldezeitraum);
-        when(mapper.toDto(any(Meldezeitraum.class))).thenReturn(meldezeitraumDTO);
+        when(mapper.toDTO(any(Meldezeitraum.class))).thenReturn(meldezeitraumDTO);
 
-        assertEquals(service.getCurrentMeldezeitraum(), mapper.toDto(meldezeitraum));
+        assertEquals(service.getCurrentMeldezeitraum(), mapper.toDTO(meldezeitraum));
     }
 
     @Test
