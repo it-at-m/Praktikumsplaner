@@ -66,7 +66,7 @@ public class PraktikumsstellenService {
         return groupedPraktikumsstellen;
     }
 
-    private  <T extends BasePraktikumsstelle> T savePraktikumsstelle (final T entity, final PraktikumsstellenRepository<T> repository) {
+    private <T extends BasePraktikumsstelle> T savePraktikumsstelle(final T entity, final PraktikumsstellenRepository<T> repository) {
         entity.setDienststelle(normalizeDienststelle(entity.getDienststelle()));
         return repository.save(entity);
     }
@@ -91,7 +91,6 @@ public class PraktikumsstellenService {
         }
         return dienststelle;
     }
-
 
     private String normalizeDienststelle(final String dienststelle) {
         return dienststelle.toUpperCase().trim().replaceAll("ITM|IT@M|RIT|-", "");
