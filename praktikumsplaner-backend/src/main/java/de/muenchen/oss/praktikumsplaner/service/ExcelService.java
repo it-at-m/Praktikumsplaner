@@ -40,11 +40,11 @@ public class ExcelService {
     private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
 
     public List<CreateNWKDTO> excelToNwkDTOList(String base64String) throws IOException {
-        final InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
-        final XSSFWorkbook workbook = new XSSFWorkbook(stream);
-        final XSSFSheet sheet = workbook.getSheetAt(FIRST_SHEET);
-
-        return getAllNwkFromSheet(sheet);
+        try (InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
+             final XSSFWorkbook workbook = new XSSFWorkbook(stream)) {
+             final XSSFSheet sheet = workbook.getSheetAt(FIRST_SHEET);
+            return getAllNwkFromSheet(sheet);
+        }
     }
 
     private List<CreateNWKDTO> getAllNwkFromSheet(XSSFSheet sheet) {
