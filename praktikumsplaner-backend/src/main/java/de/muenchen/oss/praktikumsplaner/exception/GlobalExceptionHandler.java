@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public String validationException(ValidationException ex) {
+    public String validationException(final ValidationException ex) {
         return ex.getMessage();
     }
 
@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ExcelImportException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public String ExcelImportException(ExcelImportException ex) {
+    public String ExcelImportException(final ExcelImportException ex) {
         return ex.getExceptionInfos().toString();
     }
 
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public String ioException(IOException ex) {
+    public String ioException(final IOException ex) {
         return ex.getMessage();
     }
 
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public String IllegalArgumentException(IllegalArgumentException ex) {
+    public String IllegalArgumentException(final IllegalArgumentException ex) {
         return ex.getMessage();
     }
 
