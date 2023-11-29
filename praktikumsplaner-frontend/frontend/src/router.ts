@@ -7,8 +7,8 @@ import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
 import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
 import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
-import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
 import gegenueberstellungView from "@/views/gegenueberstellungView.vue";
+import MeldungSuperNWK from "@/views/MeldungPraktikumsstelle/MeldungSuperNWK.vue";
 
 Vue.use(Router);
 
@@ -68,9 +68,9 @@ export default new Router({
             component: MeldungStudium,
         },
         {
-            path: "/superNwk",
+            path: "/superNWK",
             name: "SuperNWK",
-            component: MeldungSuperNwk,
+            component: MeldungSuperNWK,
         },
         {
             path: "/gegenueberstellung",

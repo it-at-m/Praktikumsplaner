@@ -1,7 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNWKDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.NWKDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class NWKService {
     private final NWKRepository nwkRepository;
     private final ExcelService excelService;
 
-    public NwkDTO saveNWK(CreateNwkDTO createNwkDTO) {
+    public NWKDTO saveNWK(CreateNWKDTO createNwkDTO) {
         return nwkMapper.toDTO(nwkRepository.save(nwkMapper.toEntity(createNwkDTO, true)));
     }
 
@@ -26,7 +26,7 @@ public class NWKService {
         excelService.excelToNwkDTOList(base64String).forEach(this::saveNWK);
     }
 
-    public List<NwkDTO> findAllActiveNWKs() {
+    public List<NWKDTO> findAllActiveNWKs() {
         return nwkRepository.findNWKsByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDTO).collect(Collectors.toList());
     }
 }

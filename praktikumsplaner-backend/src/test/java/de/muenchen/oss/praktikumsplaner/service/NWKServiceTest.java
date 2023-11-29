@@ -10,9 +10,9 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.domain.NWK;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNWKDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.NWKDTO;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
 import jakarta.validation.ConstraintViolationException;
@@ -54,14 +54,14 @@ public class NWKServiceTest {
         vorlesungstage.add(DayOfWeek.TUESDAY);
 
         NWK nwk = new NWK(vorname, nachname, studiengang, jahrgang, vorlesungstage, isActive);
-        NwkDTO nwkDTO = NwkDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        NWKDTO nwkDTO = NWKDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).active(isActive).build();
-        CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        CreateNWKDTO createNwkDTO = CreateNWKDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
         when(repository.save(any(NWK.class))).thenReturn(nwk);
 
-        NwkDTO result = service.saveNWK(createNwkDTO);
+        NWKDTO result = service.saveNWK(createNwkDTO);
 
         assertNotNull(result);
         assertEquals(result, nwkDTO);
@@ -79,18 +79,18 @@ public class NWKServiceTest {
         vorlesungstage.add(DayOfWeek.TUESDAY);
         final int EXCEL_TO_NWK_DTO_LIST_EXECUTIONS = 1;
 
-        CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        CreateNWKDTO createNwkDTO = CreateNWKDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
-        List<CreateNwkDTO> createNwkDTOS = new ArrayList<>();
-        createNwkDTOS.add(createNwkDTO);
-        createNwkDTOS.add(createNwkDTO);
-        createNwkDTOS.add(createNwkDTO);
+        List<CreateNWKDTO> createNWKDTOS = new ArrayList<>();
+        createNWKDTOS.add(createNwkDTO);
+        createNWKDTOS.add(createNwkDTO);
+        createNWKDTOS.add(createNwkDTO);
 
-        when(excelService.excelToNwkDTOList(base64)).thenReturn(createNwkDTOS);
+        when(excelService.excelToNwkDTOList(base64)).thenReturn(createNWKDTOS);
         service.importNWK(base64);
         verify(excelService, times(EXCEL_TO_NWK_DTO_LIST_EXECUTIONS)).excelToNwkDTOList(base64);
-        verify(repository, times(createNwkDTOS.size())).save(any(NWK.class));
+        verify(repository, times(createNWKDTOS.size())).save(any(NWK.class));
     }
 
     @Test

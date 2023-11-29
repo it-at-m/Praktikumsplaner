@@ -1,6 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.NWKDTO;
 import de.muenchen.oss.praktikumsplaner.service.NWKService;
 import java.io.IOException;
 import java.util.List;
@@ -34,7 +34,7 @@ public class NWKController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<NwkDTO> getNWKs(@RequestParam(name = "status") String status) {
+    public List<NWKDTO> getNWKs(@RequestParam(name = "status") String status) {
         if (ACTIVE_STATUS.equals(status)) {
             return nwkService.findAllActiveNWKs();
         } else {
