@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNWKDTO;
 import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -47,21 +47,21 @@ public class ExcelServiceTest {
         vorlesungstage.add(DayOfWeek.MONDAY);
         vorlesungstage.add(DayOfWeek.TUESDAY);
 
-        CreateNwkDTO createNwkDTO = CreateNwkDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        CreateNWKDTO createNwkDTO = CreateNWKDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
-        List<CreateNwkDTO> createNwkDTOS = new ArrayList<>();
-        createNwkDTOS.add(createNwkDTO);
+        List<CreateNWKDTO> createNWKDTOS = new ArrayList<>();
+        createNWKDTOS.add(createNwkDTO);
 
         // Because only the first NWK gets checked the others are Placeholders for the correct size
-        createNwkDTOS.add(CreateNwkDTO.builder().build());
-        createNwkDTOS.add(CreateNwkDTO.builder().build());
-        createNwkDTOS.add(CreateNwkDTO.builder().build());
+        createNWKDTOS.add(CreateNWKDTO.builder().build());
+        createNWKDTOS.add(CreateNWKDTO.builder().build());
+        createNWKDTOS.add(CreateNWKDTO.builder().build());
 
-        List<CreateNwkDTO> resultList = service.excelToNwkDTOList(base64EncodedExcelMultipleNWK);
+        List<CreateNWKDTO> resultList = service.excelToNwkDTOList(base64EncodedExcelMultipleNWK);
 
-        assertEquals(createNwkDTOS.size(), resultList.size());
-        assertEquals(createNwkDTOS.get(0), resultList.get(0));
+        assertEquals(createNWKDTOS.size(), resultList.size());
+        assertEquals(createNWKDTOS.get(0), resultList.get(0));
     }
 
     @Test
