@@ -18,11 +18,11 @@ public class NWKService {
     private final NWKRepository nwkRepository;
     private final ExcelService excelService;
 
-    public NWKDTO saveNWK(CreateNWKDTO createNwkDTO) {
+    public NWKDTO saveNWK(final CreateNWKDTO createNwkDTO) {
         return nwkMapper.toDTO(nwkRepository.save(nwkMapper.toEntity(createNwkDTO, true)));
     }
 
-    public void importNWK(String base64String) throws IOException {
+    public void importNWK(final String base64String) throws IOException {
         excelService.excelToNwkDTOList(base64String).forEach(this::saveNWK);
     }
 

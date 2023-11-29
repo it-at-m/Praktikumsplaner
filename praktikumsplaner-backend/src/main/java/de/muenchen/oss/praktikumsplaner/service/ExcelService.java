@@ -39,7 +39,7 @@ public class ExcelService {
     private static final int VORLESUNGSTAGE_COLUM = 4;
     private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
 
-    public List<CreateNWKDTO> excelToNwkDTOList(String base64String) throws IOException {
+    public List<CreateNWKDTO> excelToNwkDTOList(final String base64String) throws IOException {
         try (InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
              final XSSFWorkbook workbook = new XSSFWorkbook(stream)) {
              final XSSFSheet sheet = workbook.getSheetAt(FIRST_SHEET);
@@ -47,7 +47,7 @@ public class ExcelService {
         }
     }
 
-    private List<CreateNWKDTO> getAllNwkFromSheet(XSSFSheet sheet) {
+    private List<CreateNWKDTO> getAllNwkFromSheet(final XSSFSheet sheet) {
         List<CreateNWKDTO> createNWKDTOS = new ArrayList<>();
         List<ExcelImportException.ExcelImportExceptionInfo> importExceptionInfoList = new ArrayList<>();
         for (Row row : sheet) {
@@ -70,14 +70,14 @@ public class ExcelService {
         return createNWKDTOS;
     }
 
-    private boolean isCreateNwkDTOEmpty(CreateNWKDTO createNwkDTO) {
+    private boolean isCreateNwkDTOEmpty(final CreateNWKDTO createNwkDTO) {
         return StringUtils.isEmpty(createNwkDTO.vorname())
                 && StringUtils.isEmpty(createNwkDTO.nachname())
                 && createNwkDTO.studiengang() == null
                 && StringUtils.isEmpty(createNwkDTO.jahrgang());
     }
 
-    private CreateNWKDTO getNwkDTOFromRow(Row row) {
+    private CreateNWKDTO getNwkDTOFromRow(final Row row) {
         CreateNWKDTO.CreateNWKDTOBuilder createNwkDTOBuilder = CreateNWKDTO.builder();
         for (Cell cell : row) {
             final String cellValue = dataFormatter.formatCellValue(cell);
@@ -108,7 +108,7 @@ public class ExcelService {
         return createNwkDTOBuilder.build();
     }
 
-    private Set<DayOfWeek> extractVorlesungstage(String vorlesungstageString) {
+    private Set<DayOfWeek> extractVorlesungstage(final String vorlesungstageString) {
         return Arrays.stream(vorlesungstageString.split(SPLIT_VORLESUNGSTAGE_REGEX))
                 .map(String::trim)
                 .filter(vorlesungstagAsString -> !vorlesungstagAsString.isEmpty())
@@ -116,7 +116,7 @@ public class ExcelService {
                 .collect(Collectors.toSet());
     }
 
-    private DayOfWeek mapToDayOfWeek(String vorlesungstagString) {
+    private DayOfWeek mapToDayOfWeek(final String vorlesungstagString) {
         switch (vorlesungstagString) {
         case "Mo" -> {
             return DayOfWeek.MONDAY;
