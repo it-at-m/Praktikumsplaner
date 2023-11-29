@@ -1,4 +1,4 @@
-export default class NWK {
+export default class Nwk {
     constructor(
         public id: string,
         public vorname: string,

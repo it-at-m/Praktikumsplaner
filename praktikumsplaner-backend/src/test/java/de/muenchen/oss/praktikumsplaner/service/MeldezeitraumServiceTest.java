@@ -8,9 +8,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -38,7 +38,7 @@ public class MeldezeitraumServiceTest {
         LocalDate end = LocalDate.of(2020, 11, 11);
         String name = "Der Name";
 
-        CreateMeldezeitraumDTO createMeldezeitraumDTO = CreateMeldezeitraumDTO.builder()
+        CreateMeldezeitraumDto createMeldezeitraumDTO = CreateMeldezeitraumDto.builder()
                 .startZeitpunkt(start)
                 .endZeitpunkt(end)
                 .zeitraumName(name)
@@ -52,7 +52,7 @@ public class MeldezeitraumServiceTest {
 
         when(repository.save(any(Meldezeitraum.class))).thenReturn(meldezeitraum);
 
-        MeldezeitraumDTO dto = service.createMeldezeitraum(createMeldezeitraumDTO);
+        MeldezeitraumDto dto = service.createMeldezeitraum(createMeldezeitraumDTO);
 
         assertNotNull(dto);
     }
@@ -69,7 +69,7 @@ public class MeldezeitraumServiceTest {
         meldezeitraum.setEndZeitpunkt(end);
         meldezeitraum.setZeitraumName(name);
 
-        MeldezeitraumDTO meldezeitraumDTO = MeldezeitraumDTO.builder()
+        MeldezeitraumDto meldezeitraumDTO = MeldezeitraumDto.builder()
                 .startZeitpunkt(start)
                 .endZeitpunkt(end)
                 .zeitraumName(name)
@@ -101,7 +101,7 @@ public class MeldezeitraumServiceTest {
         meldezeitraum.setEndZeitpunkt(end);
         meldezeitraum.setZeitraumName(name);
 
-        CreateMeldezeitraumDTO createMeldezeitraumDTO = CreateMeldezeitraumDTO.builder()
+        CreateMeldezeitraumDto createMeldezeitraumDTO = CreateMeldezeitraumDto.builder()
                 .startZeitpunkt(overlapStart)
                 .endZeitpunkt(start)
                 .zeitraumName(name)
@@ -127,7 +127,7 @@ public class MeldezeitraumServiceTest {
         meldezeitraum.setEndZeitpunkt(end);
         meldezeitraum.setZeitraumName(name);
 
-        CreateMeldezeitraumDTO createMeldezeitraumDTO = CreateMeldezeitraumDTO.builder()
+        CreateMeldezeitraumDto createMeldezeitraumDTO = CreateMeldezeitraumDto.builder()
                 .startZeitpunkt(newStart)
                 .endZeitpunkt(newEnd)
                 .zeitraumName(name)

@@ -10,7 +10,7 @@ import lombok.Builder;
 
 @Builder
 @StartDateBeforeEndDate(startDate = "startZeitpunkt", endDate = "endZeitpunkt", message = "Startdatum muss vor dem Enddatum liegen.")
-public record MeldezeitraumDTO(
+public record MeldezeitraumDto(
         @NotNull UUID id,
         @Size(max = 255, message = "Name für Zeitraum darf nicht länger als {max} Zeichen sein.")
         @NotBlank

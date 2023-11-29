@@ -1,7 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.NWKDTO;
-import de.muenchen.oss.praktikumsplaner.service.NWKService;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
+import de.muenchen.oss.praktikumsplaner.service.NwkService;
 import java.io.IOException;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -19,8 +19,8 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/nachwuchskraft")
-public class NWKController {
-    private final NWKService nwkService;
+public class NwkController {
+    private final NwkService nwkService;
 
     private final String ACTIVE_STATUS = "aktiv";
 
@@ -34,7 +34,7 @@ public class NWKController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<NWKDTO> getNWKs(@RequestParam(name = "status") String status) {
+    public List<NwkDto> getNWKs(@RequestParam(name = "status") String status) {
         if (ACTIVE_STATUS.equals(status)) {
             return nwkService.findAllActiveNWKs();
         } else {

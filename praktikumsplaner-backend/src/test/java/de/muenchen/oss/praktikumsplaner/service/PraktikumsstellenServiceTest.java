@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
@@ -49,7 +49,7 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testCreateStudiumsPraktikumsstelle() {
-        MeldezeitraumDTO meldezeitraumDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
+        MeldezeitraumDto meldezeitraumDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
         studiumsPraktikumsstelle.setId(UUID.randomUUID());
@@ -65,14 +65,14 @@ public class PraktikumsstellenServiceTest {
         studiumsPraktikumsstelle.setStudienart(Studiengang.BSC);
         studiumsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDTO.id());
 
-        CreateStudiumsPraktikumsstelleDTO createDTO = CreateStudiumsPraktikumsstelleDTO.builder()
+        CreateStudiumsPraktikumsstelleDto createDTO = CreateStudiumsPraktikumsstelleDto.builder()
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).programmierkenntnisse(true)
                 .studiensemester(Studiensemester.SEMESTER1).studienart(Studiengang.BSC).build();
 
-        StudiumsPraktikumsstelleDTO dto = StudiumsPraktikumsstelleDTO.builder().id(studiumsPraktikumsstelle.getId())
+        StudiumsPraktikumsstelleDto dto = StudiumsPraktikumsstelleDto.builder().id(studiumsPraktikumsstelle.getId())
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
@@ -84,14 +84,14 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toEntity(createDTO, meldezeitraumDTO)).thenReturn(studiumsPraktikumsstelle);
         when(meldezeitraumService.getCurrentMeldezeitraum()).thenReturn(meldezeitraumDTO);
 
-        StudiumsPraktikumsstelleDTO result = service.saveStudiumsPraktikumsstelle(createDTO);
+        StudiumsPraktikumsstelleDto result = service.saveStudiumsPraktikumsstelle(createDTO);
 
         assertEquals(dto, result);
     }
 
     @Test
     public void testCreateAusbildungsPraktikumsstelle() {
-        MeldezeitraumDTO meldezeitraumDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
+        MeldezeitraumDto meldezeitraumDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis morgen");
 
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
         ausbildungsPraktikumsstelle.setId(UUID.randomUUID());
@@ -107,14 +107,14 @@ public class PraktikumsstellenServiceTest {
         ausbildungsPraktikumsstelle.setAusbildungsrichtung(Studiengang.FISI);
         ausbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDTO.id());
 
-        CreateAusbildungsPraktikumsstelleDTO createDTO = CreateAusbildungsPraktikumsstelleDTO.builder()
+        CreateAusbildungsPraktikumsstelleDto createDTO = CreateAusbildungsPraktikumsstelleDto.builder()
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).projektarbeit(true)
                 .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Studiengang.FISI).build();
 
-        AusbildungsPraktikumsstelleDTO dto = AusbildungsPraktikumsstelleDTO.builder().id(ausbildungsPraktikumsstelle.getId())
+        AusbildungsPraktikumsstelleDto dto = AusbildungsPraktikumsstelleDto.builder().id(ausbildungsPraktikumsstelle.getId())
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
@@ -126,15 +126,15 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDTO(ausbildungsPraktikumsstelle)).thenReturn(dto);
         when(meldezeitraumService.getCurrentMeldezeitraum()).thenReturn(meldezeitraumDTO);
 
-        AusbildungsPraktikumsstelleDTO result = service.saveAusbildungsPraktikumsstelle(createDTO);
+        AusbildungsPraktikumsstelleDto result = service.saveAusbildungsPraktikumsstelle(createDTO);
 
         assertEquals(dto, result);
     }
 
     @Test
     public void testGetAllPraktikumsstellen() {
-        MeldezeitraumDTO meldezeitraumDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        MeldezeitraumDTO meldezeitraumNowDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis heute");
+        MeldezeitraumDto meldezeitraumDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
+        MeldezeitraumDto meldezeitraumNowDTO = createMeldezeitraumDTO(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1), "gestern bis heute");
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelle("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
                 false, Ausbildungsjahr.JAHR2, Studiengang.FISI, meldezeitraumDTO.id());
@@ -164,7 +164,7 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDTO(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> createPraktikumsstelleDTO((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        TreeMap<String, List<PraktikumsstelleDTO>> result = service.getAllPraktiumsstellen();
+        TreeMap<String, List<PraktikumsstelleDto>> result = service.getAllPraktiumsstellen();
 
         assertNotNull(result);
         assertEquals(4, result.size());
@@ -215,8 +215,8 @@ public class PraktikumsstellenServiceTest {
         return stelle;
     }
 
-    private AusbildungsPraktikumsstelleDTO createPraktikumsstelleDTO(AusbildungsPraktikumsstelle stelle) {
-        return AusbildungsPraktikumsstelleDTO.builder()
+    private AusbildungsPraktikumsstelleDto createPraktikumsstelleDTO(AusbildungsPraktikumsstelle stelle) {
+        return AusbildungsPraktikumsstelleDto.builder()
                 .dienststelle(stelle.getDienststelle()).oertlicheAusbilder(stelle.getOertlicheAusbilder())
                 .email(stelle.getEmail()).taetigkeiten(stelle.getTaetigkeiten())
                 .dringlichkeit(stelle.getDringlichkeit()).namentlicheAnforderung(stelle.getNamentlicheAnforderung())
@@ -225,8 +225,8 @@ public class PraktikumsstellenServiceTest {
                 .ausbildungsrichtung(stelle.getAusbildungsrichtung()).build();
     }
 
-    private StudiumsPraktikumsstelleDTO createPraktikumsstelleDTO(StudiumsPraktikumsstelle stelle) {
-        return StudiumsPraktikumsstelleDTO.builder()
+    private StudiumsPraktikumsstelleDto createPraktikumsstelleDTO(StudiumsPraktikumsstelle stelle) {
+        return StudiumsPraktikumsstelleDto.builder()
                 .dienststelle(stelle.getDienststelle()).oertlicheAusbilder(stelle.getOertlicheAusbilder())
                 .email(stelle.getEmail()).taetigkeiten(stelle.getTaetigkeiten())
                 .dringlichkeit(stelle.getDringlichkeit()).namentlicheAnforderung(stelle.getNamentlicheAnforderung())
@@ -234,8 +234,8 @@ public class PraktikumsstellenServiceTest {
                 .studiensemester(stelle.getStudiensemester()).studienart(stelle.getStudienart()).build();
     }
 
-    private MeldezeitraumDTO createMeldezeitraumDTO(LocalDate start, LocalDate end, String name) {
-        return MeldezeitraumDTO.builder()
+    private MeldezeitraumDto createMeldezeitraumDTO(LocalDate start, LocalDate end, String name) {
+        return MeldezeitraumDto.builder()
                 .id(UUID.randomUUID())
                 .startZeitpunkt(start)
                 .endZeitpunkt(end)

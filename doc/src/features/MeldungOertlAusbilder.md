@@ -18,7 +18,7 @@ Text field for the team name. e.g. `KM83`
 
 ### Örtliche Ausbilder*in
 
-Text field for the name of the person ([örtlicher Ausbilderin](./../glossary.md#ortliche-ausbilderin)) in the team responsible for the [NWK](./../glossary.md#nwk)
+Text field for the name of the person ([örtlicher Ausbilderin](./../glossary.md#ortliche-ausbilderin)) in the team responsible for the [Nwk](./../glossary.md#nwk)
 
 ### Kontakt E-Mail örtliche Ausbilder*in
 
@@ -26,7 +26,7 @@ Text field for the contact email
 
 ### Tätigkeiten
 
-Text field for noting the operations performed by the team and what the [NWK](./../glossary.md#nwk) will most likely be doing
+Text field for noting the operations performed by the team and what the [Nwk](./../glossary.md#nwk) will most likely be doing
 
 ### Dringlichkeit
 
@@ -34,16 +34,16 @@ Selection between `Zwingend`, `Dringend`, and `Nachrangig`
 
 ### Namentliche Anforderung
 
-Text field for requesting a specific [NWK](./../glossary.md#nwk)
+Text field for requesting a specific [Nwk](./../glossary.md#nwk)
 
 ### Projektarbeit
 
-A classic `yes/no` selector for letting management know that the [NWK](./../glossary.md#nwk) is
+A classic `yes/no` selector for letting management know that the [Nwk](./../glossary.md#nwk) is
 able to do their final year project there
 
 ### Programmierkenntnisse
 
-A classic `yes/no` selector for requesting an [NWK](./../glossary.md#nwk) who can code
+A classic `yes/no` selector for requesting an [Nwk](./../glossary.md#nwk) who can code
 
 ### Studium- Studiensemester
 
@@ -61,9 +61,9 @@ Selection between `1.` to `3.` Year of training
 
 Selection between different training programs, e.g. `FISI`
 
-## Zeitraum NWK
+## Zeitraum Nwk
 
-This field shows you the estimated time when the [NWK](./../glossary.md#nwk) will be there.
+This field shows you the estimated time when the [Nwk](./../glossary.md#nwk) will be there.
 
 ## Sending
 

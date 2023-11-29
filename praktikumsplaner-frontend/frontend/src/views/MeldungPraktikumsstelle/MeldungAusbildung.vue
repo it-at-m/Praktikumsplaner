@@ -128,7 +128,7 @@
                 <v-col>
                     <v-text-field
                         v-model="praktikumsstelle.namentlicheAnforderung"
-                        label="Namentliche Anforderung spez. gewünschter NWK"
+                        label="Namentliche Anforderung spez. gewünschter Nwk"
                         outlined
                         @change="zustelleradressverwaltung()"
                     ></v-text-field>
@@ -153,7 +153,7 @@
                 <v-col>
                     <v-text-field
                         v-model="zeitraum"
-                        label="Zeitraum NWK"
+                        label="Zeitraum Nwk"
                         hint="Wählen Sie Art und Jahrgang des Stuzubis aus"
                         outlined
                         disabled

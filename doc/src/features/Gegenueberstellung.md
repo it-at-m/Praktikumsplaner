@@ -3,7 +3,7 @@
 On the main page there is an option `Gegenüberstellung` in the navigation bar.
 This takes you to a new page.
 On this page, you can see on the left side all active [NWKs](./../glossary.md#nwk). With regard to [NWKs](./../glossary.md#nwk),
-active means that they are currently still employed as [NWK](./../glossary.md#nwk).  
+active means that they are currently still employed as [Nwk](./../glossary.md#nwk).  
 All [Praktikumsstellen](./../glossary.md#praktikumsstelle) from the recently passed [Meldezeitraum](../glossary.md#meldezeitraum) are displayed on the right-hand side. 
 The [Praktikumsstellen](./../glossary.md#praktikumsstelle) are grouped according to their [Dienststelle](../glossary.md#dienststelle).
 Each main-[Dienststelle](../glossary.md#dienststelle) can be folded out and then displays a list of all associated [Praktikumsstellen](./../glossary.md#praktikumsstelle). 

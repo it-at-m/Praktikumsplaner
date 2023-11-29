@@ -17,10 +17,10 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import NWK from "@/types/NWK";
-import NWKService from "@/api/NWKService";
+import Nwk from "@/types/Nwk";
+import NWKService from "@/api/NwkService";
 
-const nwks = ref<NWK[]>([]);
+const nwks = ref<Nwk[]>([]);
 
 onMounted(() => {
     getAllActiveNWKs();

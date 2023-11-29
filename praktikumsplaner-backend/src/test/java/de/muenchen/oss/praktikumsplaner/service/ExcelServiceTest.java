@@ -3,8 +3,8 @@ package de.muenchen.oss.praktikumsplaner.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNWKDTO;
 import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -47,21 +47,21 @@ public class ExcelServiceTest {
         vorlesungstage.add(DayOfWeek.MONDAY);
         vorlesungstage.add(DayOfWeek.TUESDAY);
 
-        CreateNWKDTO createNwkDTO = CreateNWKDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        CreateNwkDto createNwkDTO = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
-        List<CreateNWKDTO> createNWKDTOS = new ArrayList<>();
-        createNWKDTOS.add(createNwkDTO);
+        List<CreateNwkDto> createNwkDtos = new ArrayList<>();
+        createNwkDtos.add(createNwkDTO);
 
         // Because only the first NWK gets checked the others are Placeholders for the correct size
-        createNWKDTOS.add(CreateNWKDTO.builder().build());
-        createNWKDTOS.add(CreateNWKDTO.builder().build());
-        createNWKDTOS.add(CreateNWKDTO.builder().build());
+        createNwkDtos.add(CreateNwkDto.builder().build());
+        createNwkDtos.add(CreateNwkDto.builder().build());
+        createNwkDtos.add(CreateNwkDto.builder().build());
 
-        List<CreateNWKDTO> resultList = service.excelToNwkDTOList(base64EncodedExcelMultipleNWK);
+        List<CreateNwkDto> resultList = service.excelToNwkDTOList(base64EncodedExcelMultipleNWK);
 
-        assertEquals(createNWKDTOS.size(), resultList.size());
-        assertEquals(createNWKDTOS.get(0), resultList.get(0));
+        assertEquals(createNwkDtos.size(), resultList.size());
+        assertEquals(createNwkDtos.get(0), resultList.get(0));
     }
 
     @Test
