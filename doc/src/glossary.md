@@ -39,6 +39,10 @@ They coordinate which [NWK](./glossary.md#nwk) is assigned to which [Praktikumss
 They are also the contact person if a [NWK](./glossary.md#nwk) has any problems with their [örtliche Ausbilderin](./glossary.md#ortliche-ausbilderin).
 In the first iterations of development, they were the main users of this application.
 
+### Planstelle
+A [Planstelle](./glossary.md#planstelle) is the abstract concept of a position in a team,
+a current [NWK](./glossary.md#nwk) could work at in the future after finishing their training. 
+
 ### Praktikumsstelle
 
 A [Praktikumsstelle](./glossary.md#praktikumsstelle) is an abstract concept that describes a position in a team where a [NWK] (./glossary.md#nwk) can work and be educated.

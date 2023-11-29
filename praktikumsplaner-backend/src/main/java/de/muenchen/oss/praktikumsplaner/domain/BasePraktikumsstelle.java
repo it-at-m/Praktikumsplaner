@@ -22,7 +22,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @NotNull
@@ -50,4 +50,7 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
     @NotNull
     @JdbcTypeCode(VARCHAR)
     public UUID meldezeitraumID;
+
+    @NotNull
+    public boolean planstelleVorhanden;
 }
