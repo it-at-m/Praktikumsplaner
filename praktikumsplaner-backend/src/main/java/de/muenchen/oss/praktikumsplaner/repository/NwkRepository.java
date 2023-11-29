@@ -1,13 +1,13 @@
 package de.muenchen.oss.praktikumsplaner.repository;
 
-import de.muenchen.oss.praktikumsplaner.domain.NWK;
+import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface NWKRepository extends CrudRepository<NWK, UUID> {
+public interface NwkRepository extends CrudRepository<Nwk, UUID> {
 
-    List<NWK> findNWKsByActiveIsTrueOrderByNachname();
+    List<Nwk> findNWKsByActiveIsTrueOrderByNachname();
 }

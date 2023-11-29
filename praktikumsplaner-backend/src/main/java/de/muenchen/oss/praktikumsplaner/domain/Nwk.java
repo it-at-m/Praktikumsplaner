@@ -28,7 +28,7 @@ import lombok.ToString;
 /*
  * NWK is short for Nachwuchskraft (young talent)
  */
-public class NWK extends BaseEntity {
+public class Nwk extends BaseEntity {
 
     @NotNull(message = "Der Vorname ist erforderlich")
     @Size(min = 2, max = 255, message = "Der Vorname darf nur zwischen {min} und {max} Zeichen lang sein")

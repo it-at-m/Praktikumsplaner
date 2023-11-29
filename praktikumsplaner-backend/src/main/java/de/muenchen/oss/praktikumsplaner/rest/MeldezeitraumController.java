@@ -1,7 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.service.MeldezeitraumService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -23,8 +23,8 @@ public class MeldezeitraumController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MeldezeitraumDTO createMeldezeitraum(final @Valid @RequestBody
-    CreateMeldezeitraumDTO meldezeitraumDto) {
+    public MeldezeitraumDto createMeldezeitraum(final @Valid @RequestBody
+    CreateMeldezeitraumDto meldezeitraumDto) {
         return meldezeitraumService.createMeldezeitraum(meldezeitraumDto);
     }
 }

@@ -9,12 +9,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-import de.muenchen.oss.praktikumsplaner.domain.NWK;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNWKDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.NWKDTO;
+import de.muenchen.oss.praktikumsplaner.domain.Nwk;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
-import de.muenchen.oss.praktikumsplaner.domain.mappers.NWKMapper;
-import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
+import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
+import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import jakarta.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.time.DayOfWeek;
@@ -32,13 +32,13 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class NWKServiceTest {
+public class NwkServiceTest {
     @Spy
-    private NWKMapper mapper = Mappers.getMapper(NWKMapper.class);
+    private NwkMapper mapper = Mappers.getMapper(NwkMapper.class);
     @Mock
-    private NWKRepository repository;
+    private NwkRepository repository;
     @InjectMocks
-    private NWKService service;
+    private NwkService service;
     @Mock
     private ExcelService excelService;
 
@@ -53,15 +53,15 @@ public class NWKServiceTest {
         vorlesungstage.add(DayOfWeek.MONDAY);
         vorlesungstage.add(DayOfWeek.TUESDAY);
 
-        NWK nwk = new NWK(vorname, nachname, studiengang, jahrgang, vorlesungstage, isActive);
-        NWKDTO nwkDTO = NWKDTO.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        Nwk nwk = new Nwk(vorname, nachname, studiengang, jahrgang, vorlesungstage, isActive);
+        NwkDto nwkDTO = NwkDto.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).active(isActive).build();
-        CreateNWKDTO createNwkDTO = CreateNWKDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        CreateNwkDto createNwkDTO = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
-        when(repository.save(any(NWK.class))).thenReturn(nwk);
+        when(repository.save(any(Nwk.class))).thenReturn(nwk);
 
-        NWKDTO result = service.saveNWK(createNwkDTO);
+        NwkDto result = service.saveNWK(createNwkDTO);
 
         assertNotNull(result);
         assertEquals(result, nwkDTO);
@@ -79,18 +79,18 @@ public class NWKServiceTest {
         vorlesungstage.add(DayOfWeek.TUESDAY);
         final int EXCEL_TO_NWK_DTO_LIST_EXECUTIONS = 1;
 
-        CreateNWKDTO createNwkDTO = CreateNWKDTO.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        CreateNwkDto createNwkDTO = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
-        List<CreateNWKDTO> createNWKDTOS = new ArrayList<>();
-        createNWKDTOS.add(createNwkDTO);
-        createNWKDTOS.add(createNwkDTO);
-        createNWKDTOS.add(createNwkDTO);
+        List<CreateNwkDto> createNwkDtos = new ArrayList<>();
+        createNwkDtos.add(createNwkDTO);
+        createNwkDtos.add(createNwkDTO);
+        createNwkDtos.add(createNwkDTO);
 
-        when(excelService.excelToNwkDTOList(base64)).thenReturn(createNWKDTOS);
+        when(excelService.excelToNwkDTOList(base64)).thenReturn(createNwkDtos);
         service.importNWK(base64);
         verify(excelService, times(EXCEL_TO_NWK_DTO_LIST_EXECUTIONS)).excelToNwkDTOList(base64);
-        verify(repository, times(createNWKDTOS.size())).save(any(NWK.class));
+        verify(repository, times(createNwkDtos.size())).save(any(Nwk.class));
     }
 
     @Test

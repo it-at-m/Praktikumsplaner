@@ -3,11 +3,11 @@ package de.muenchen.oss.praktikumsplaner.service;
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.BasePraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.PraktikumsstellenRepository;
@@ -32,14 +32,14 @@ public class PraktikumsstellenService {
     private final AusbildungsPraktikumsstellenRepository ausbildungsPraktikumsstellenRepository;
     private final MeldezeitraumService meldezeitraumService;
 
-    public StudiumsPraktikumsstelleDTO saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
+    public StudiumsPraktikumsstelleDto saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDTO) {
         StudiumsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO,
                 meldezeitraumService.getCurrentMeldezeitraum());
         StudiumsPraktikumsstelle savedPraktikumsstelle = savePraktikumsstelle(entityPraktikumsstelle, studiumsPraktikumsstellenRepository);
         return praktikumsstellenMapper.toDTO(savedPraktikumsstelle);
     }
 
-    public AusbildungsPraktikumsstelleDTO saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
+    public AusbildungsPraktikumsstelleDto saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDTO) {
         AusbildungsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO,
                 meldezeitraumService.getCurrentMeldezeitraum());
         AusbildungsPraktikumsstelle savedEntity = savePraktikumsstelle(entityPraktikumsstelle, ausbildungsPraktikumsstellenRepository);
@@ -47,21 +47,21 @@ public class PraktikumsstellenService {
                 .toDTO(savedEntity);
     }
 
-    public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktiumsstellen() {
+    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellen() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
 
-        List<PraktikumsstelleDTO> ausbildungsListDTO = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
+        List<PraktikumsstelleDto> ausbildungsListDTO = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
                 .map(praktikumsstellenMapper::toDTO).collect(Collectors.toList());
 
-        List<PraktikumsstelleDTO> studiumsListDTO = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
+        List<PraktikumsstelleDto> studiumsListDTO = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
                 .map(praktikumsstellenMapper::toDTO).collect(Collectors.toList());
 
-        List<PraktikumsstelleDTO> combinedList = new ArrayList<>();
+        List<PraktikumsstelleDto> combinedList = new ArrayList<>();
         combinedList.addAll(ausbildungsListDTO);
         combinedList.addAll(studiumsListDTO);
-        combinedList.sort(Comparator.comparing(PraktikumsstelleDTO::dienststelle));
+        combinedList.sort(Comparator.comparing(PraktikumsstelleDto::dienststelle));
 
-        TreeMap<String, List<PraktikumsstelleDTO>> groupedPraktikumsstellen = groupDienststellen(combinedList);
+        TreeMap<String, List<PraktikumsstelleDto>> groupedPraktikumsstellen = groupDienststellen(combinedList);
 
         return groupedPraktikumsstellen;
     }
@@ -71,10 +71,10 @@ public class PraktikumsstellenService {
         return repository.save(entity);
     }
 
-    private TreeMap<String, List<PraktikumsstelleDTO>> groupDienststellen(final Iterable<PraktikumsstelleDTO> allPraktikumsstellen) {
-        TreeMap<String, List<PraktikumsstelleDTO>> abteilungsMap = new TreeMap<>();
+    private TreeMap<String, List<PraktikumsstelleDto>> groupDienststellen(final Iterable<PraktikumsstelleDto> allPraktikumsstellen) {
+        TreeMap<String, List<PraktikumsstelleDto>> abteilungsMap = new TreeMap<>();
 
-        for (PraktikumsstelleDTO praktikumsstelle : allPraktikumsstellen) {
+        for (PraktikumsstelleDto praktikumsstelle : allPraktikumsstellen) {
             String dienststelle = praktikumsstelle.dienststelle();
             String hauptabteilung = getHauptabteilung(dienststelle);
 

@@ -2,7 +2,7 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import static org.apache.logging.log4j.util.Strings.isBlank;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNWKDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
 import io.micrometer.common.util.StringUtils;
@@ -39,7 +39,7 @@ public class ExcelService {
     private static final int VORLESUNGSTAGE_COLUM = 4;
     private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
 
-    public List<CreateNWKDTO> excelToNwkDTOList(final String base64String) throws IOException {
+    public List<CreateNwkDto> excelToNwkDTOList(final String base64String) throws IOException {
         try (InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
                 final XSSFWorkbook workbook = new XSSFWorkbook(stream)) {
             final XSSFSheet sheet = workbook.getSheetAt(FIRST_SHEET);
@@ -47,12 +47,12 @@ public class ExcelService {
         }
     }
 
-    private List<CreateNWKDTO> getAllNwkFromSheet(final XSSFSheet sheet) {
-        List<CreateNWKDTO> createNWKDTOS = new ArrayList<>();
+    private List<CreateNwkDto> getAllNwkFromSheet(final XSSFSheet sheet) {
+        List<CreateNwkDto> createNwkDtos = new ArrayList<>();
         List<ExcelImportException.ExcelImportExceptionInfo> importExceptionInfoList = new ArrayList<>();
         for (Row row : sheet) {
             if (row.getRowNum() == FIRST_ROW) continue;
-            CreateNWKDTO createNwkDTO = null;
+            CreateNwkDto createNwkDTO = null;
             try {
                 createNwkDTO = getNwkDTOFromRow(row);
             } catch (ExcelImportException ex) {
@@ -63,22 +63,22 @@ public class ExcelService {
             }
             validator.validate(createNwkDTO).forEach(violation -> importExceptionInfoList.add(
                     new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), violation.getPropertyPath().toString(), violation.getMessage())));
-            createNWKDTOS.add(createNwkDTO);
+            createNwkDtos.add(createNwkDTO);
         }
         if (!importExceptionInfoList.isEmpty())
             throw new ExcelImportException(importExceptionInfoList);
-        return createNWKDTOS;
+        return createNwkDtos;
     }
 
-    private boolean isCreateNwkDTOEmpty(final CreateNWKDTO createNwkDTO) {
+    private boolean isCreateNwkDTOEmpty(final CreateNwkDto createNwkDTO) {
         return StringUtils.isEmpty(createNwkDTO.vorname())
                 && StringUtils.isEmpty(createNwkDTO.nachname())
                 && createNwkDTO.studiengang() == null
                 && StringUtils.isEmpty(createNwkDTO.jahrgang());
     }
 
-    private CreateNWKDTO getNwkDTOFromRow(final Row row) {
-        CreateNWKDTO.CreateNWKDTOBuilder createNwkDTOBuilder = CreateNWKDTO.builder();
+    private CreateNwkDto getNwkDTOFromRow(final Row row) {
+        CreateNwkDto.CreateNwkDtoBuilder createNwkDTOBuilder = CreateNwkDto.builder();
         for (Cell cell : row) {
             final String cellValue = dataFormatter.formatCellValue(cell);
             switch (cell.getColumnIndex()) {

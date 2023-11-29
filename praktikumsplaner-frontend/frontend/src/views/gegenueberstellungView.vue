@@ -14,6 +14,6 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import ActiveNWKList from "@/components/ActiveNWKList.vue";
+import ActiveNWKList from "@/components/ActiveNwkList.vue";
 import PraktikumsstellenList from "@/components/PraktikumsstellenList.vue";
 </script>
