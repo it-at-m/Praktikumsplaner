@@ -47,11 +47,6 @@ public class PraktikumsstellenService {
                 .toDTO(savedEntity);
     }
 
-    private  <T extends BasePraktikumsstelle> T savePraktikumsstelle (final T entity, PraktikumsstellenRepository<T> repository) {
-        entity.setDienststelle(entity.getDienststelle());
-        return repository.save(entity);
-    }
-
     public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktiumsstellen() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
 
@@ -69,6 +64,11 @@ public class PraktikumsstellenService {
         TreeMap<String, List<PraktikumsstelleDTO>> groupedPraktikumsstellen = groupDienststellen(combinedList);
 
         return groupedPraktikumsstellen;
+    }
+
+    private  <T extends BasePraktikumsstelle> T savePraktikumsstelle (final T entity, PraktikumsstellenRepository<T> repository) {
+        entity.setDienststelle(entity.getDienststelle());
+        return repository.save(entity);
     }
 
     private TreeMap<String, List<PraktikumsstelleDTO>> groupDienststellen(final Iterable<PraktikumsstelleDTO> allPraktikumsstellen) {
