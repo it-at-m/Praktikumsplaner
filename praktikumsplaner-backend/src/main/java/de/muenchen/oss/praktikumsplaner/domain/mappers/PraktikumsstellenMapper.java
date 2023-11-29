@@ -22,5 +22,6 @@ public interface PraktikumsstellenMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "meldezeitraumDTO.id", target = "meldezeitraumID")
-    AusbildungsPraktikumsstelle toEntity(final CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO, final MeldezeitraumDTO meldezeitraumDTO);
+    AusbildungsPraktikumsstelle toEntity(final CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO,
+            final MeldezeitraumDTO meldezeitraumDTO);
 }
