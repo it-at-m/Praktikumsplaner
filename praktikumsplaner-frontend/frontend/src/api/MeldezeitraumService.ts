@@ -26,4 +26,21 @@ export default class MeldezeitraumService {
                 FetchUtils.defaultResponseHandler(err);
             });
     }
+    public getCurrentMeldezeitraum(): Promise<Meldezeitraum[]> {
+        return fetch(
+            `${API_BASE}${MELDEZEITRAUM_BASE}?current=true`,
+            FetchUtils.getGETConfig()
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .catch((err) => {
+                useSnackbarStore().showMessage({
+                    message: err.message,
+                    level: Levels.ERROR,
+                });
+                FetchUtils.defaultResponseHandler(err);
+            });
+    }
 }
