@@ -98,6 +98,11 @@ describe("rules notEmptyBoolean test", () => {
 
         expect(rule(bool)).toBe(true);
     });
+    it("tests notEmptyBooleanRule return true", () => {
+        const bool = false;
+
+        expect(rule(bool)).toBe(true);
+    });
     it("tests notEmptyBooleanRule return error when null", () => {
         expect(rule(null)).toBe(errorMessage);
     });
