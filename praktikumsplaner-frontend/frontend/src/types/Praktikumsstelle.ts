@@ -14,6 +14,8 @@ export default class Praktikumsstelle {
 
         public programmierkenntnisse?: boolean,
 
+        public planstelleVorhanden?: boolean,
+
         public ausbildungsjahr?: string,
 
         public studiensemester?: string,
