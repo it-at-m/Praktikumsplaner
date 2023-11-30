@@ -29,6 +29,8 @@ public record AusbildungsPraktikumsstelleDTO(@NotNull UUID id,
 
                                              @NotNull boolean projektarbeit,
 
+                                             @NotNull boolean planstelleVorhanden,
+
                                              @NotNull Ausbildungsjahr ausbildungsjahr,
 
                                              @NotNull Studiengang ausbildungsrichtung,
