@@ -84,3 +84,6 @@ When there is an active [Meldezeitraum](../glossary.md#meldezeitraum), it will b
 When there is no active [Meldezeitraum](../glossary.md#meldezeitraum), the [Praktikumsstelle](../glossary.md#praktikumsstelle) will not be reported and an error is shown.
 
 This makes sure that [Praktikumsstellen](../glossary.md#praktikumsstelle) are only reported in certain time frames that the [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung) wants.
+
+When there is no active [Meldezeitraum](../glossary.md#meldezeitraum) a message will appear telling the user it is currently not
+possible to submit new [Praktikumsstellen](../glossary.md#praktikumsstelle).
