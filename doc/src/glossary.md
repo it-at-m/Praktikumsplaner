@@ -15,6 +15,14 @@ concepts at a "Berufsschule", which is an educational institute comparable to vo
 The practical concepts are taught at a specific company that the [Auszubildende](./glossary.md#auszubildende)
 has a contract with
 
+### Dienststelle
+
+A [Dienststelle](#dienststelle) is the department from which the [Praktikumsstelle](#praktikumsstelle) is reported in our context and in which the [NWKs](#nachwuchskraft) will then work.
+
+### Lehrjahr
+
+Training year, only for [Auszubildende](./glossary.md#auszubildende)
+
 ### Meldezeitraum
 
 A [Meldezeitraum](./glossary.md#meldezeitraum) is a time range in which [örtliche Ausbilderinnen](./glossary.md#ortliche-ausbilderin) can
@@ -50,7 +58,3 @@ A [Praktikumsstelle](./glossary.md#praktikumsstelle) is an abstract concept that
 ### Studentin
 Just the German translation of student, so someone studying at a university or similar institution,
 with the goal of gaining a bachelor's or master's degree.
-
-### Dienststelle
-
-A [Dienststelle](#dienststelle) is the department from which the [Praktikumsstelle](#praktikumsstelle) is reported in our context and in which the [NWKs](#nachwuchskraft) will then work.
