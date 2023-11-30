@@ -66,7 +66,7 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
-                    v-security.restrict="['ROLE_NWK']"
+                    v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
                     :to="{ path: '/zuweisung' }"
                 >
                     <v-list-item-content>

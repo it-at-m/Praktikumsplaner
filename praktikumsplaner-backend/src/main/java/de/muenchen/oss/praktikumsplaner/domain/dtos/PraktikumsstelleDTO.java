@@ -26,8 +26,12 @@ public interface PraktikumsstelleDTO {
     @NotNull
     Dringlichkeit dringlichkeit();
 
+    @NotNull
+    boolean planstelleVorhanden();
+
     String namentlicheAnforderung();
 
     Referat referat();
+
     NwkDTO assignedNWK();
 }
