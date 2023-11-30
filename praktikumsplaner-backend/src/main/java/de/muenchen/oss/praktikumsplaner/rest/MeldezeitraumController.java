@@ -34,7 +34,7 @@ public class MeldezeitraumController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public List<MeldezeitraumDTO> getMeldezeitraum(@RequestParam(required = false) String current) {
         if (current != null && current.equals(Boolean.TRUE.toString())) {
             try {
