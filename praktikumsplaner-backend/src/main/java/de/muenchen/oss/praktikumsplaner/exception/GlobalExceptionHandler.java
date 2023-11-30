@@ -3,7 +3,6 @@ package de.muenchen.oss.praktikumsplaner.exception;
 import jakarta.validation.ValidationException;
 import java.io.IOException;
 import java.util.NoSuchElementException;
-
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
