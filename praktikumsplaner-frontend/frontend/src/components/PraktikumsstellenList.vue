@@ -167,7 +167,7 @@ function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
 }
 
 function drop(stelle: Praktikumsstelle) {
-    if (!stelle || !stelle.id || !stelle.assignedNWK) return;
+    if (!stelle || !stelle.id || stelle.assignedNWK) return;
 
     // Check if Studiums or Ausbildungspraktikumsstelle
     if (
