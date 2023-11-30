@@ -237,8 +237,7 @@ import router from "@/router";
 import { useHeaderStore } from "@/stores/header";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 
-const meldezeitraumService = new MeldezeitraumService();
-let activeMeldezeitraum = ref<boolean>(false);
+const activeMeldezeitraum = ref<boolean>(false);
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
@@ -262,7 +261,7 @@ const headerStore = useHeaderStore();
 
 onMounted(() => {
     headerStore.setHeader("Praktikumsstellen Meldung");
-    meldezeitraumService.getCurrentMeldezeitraum().then((zeitraueme) => {
+    MeldezeitraumService.getCurrentMeldezeitraum().then((zeitraueme) => {
         activeMeldezeitraum.value = zeitraueme.length > 0;
     });
 });

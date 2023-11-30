@@ -4,8 +4,8 @@ import Meldezeitraum from "@/types/Meldezeitraum";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { Levels } from "@/api/error";
 
-export default class MeldezeitraumService {
-    public create(meldezeitraum: Meldezeitraum): Promise<Meldezeitraum> {
+export default {
+    create(meldezeitraum: Meldezeitraum): Promise<Meldezeitraum> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}`,
             FetchUtils.getPOSTConfig(meldezeitraum)
@@ -25,8 +25,8 @@ export default class MeldezeitraumService {
                 });
                 FetchUtils.defaultResponseHandler(err);
             });
-    }
-    public getCurrentMeldezeitraum(): Promise<Meldezeitraum[]> {
+    },
+    getCurrentMeldezeitraum(): Promise<Meldezeitraum[]> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?current=true`,
             FetchUtils.getGETConfig()
@@ -42,5 +42,5 @@ export default class MeldezeitraumService {
                 });
                 FetchUtils.defaultResponseHandler(err);
             });
-    }
-}
+    },
+};

@@ -61,15 +61,14 @@ import router from "@/router";
 import { useHeaderStore } from "@/stores/header";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 
-const meldezeitraumService = new MeldezeitraumService();
 const isCheckedAusbildung = ref<boolean>(false);
 const isCheckedStudium = ref<boolean>(false);
 const headerStore = useHeaderStore();
-let activeMeldezeitraum = ref<boolean>(false);
+const activeMeldezeitraum = ref<boolean>(false);
 
 onMounted(() => {
     headerStore.setHeader("Praktikumsstellen Meldung");
-    meldezeitraumService.getCurrentMeldezeitraum().then((zeitraueme) => {
+    MeldezeitraumService.getCurrentMeldezeitraum().then((zeitraueme) => {
         activeMeldezeitraum.value = zeitraueme.length > 0;
     });
 });
