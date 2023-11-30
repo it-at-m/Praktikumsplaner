@@ -38,7 +38,7 @@ public class ExcelServiceTest {
     }
 
     @Test
-    public void testExcelToNwkDTOListValidData() throws IOException {
+    public void testExcelToNwkDtoListValidData() throws IOException {
         final String nachname = "Mustermann";
         final String vorname = "Max";
         final Studiengang studiengang = Studiengang.BSC;
