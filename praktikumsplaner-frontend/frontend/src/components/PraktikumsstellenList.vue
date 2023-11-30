@@ -167,103 +167,110 @@ function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
 }
 
 function drop(stelle: Praktikumsstelle) {
-    if (!stelle) return;
-    if (!stelle.id) return;
-    if (!stelle.assignedNWK) {
-        if (
-            stelle.ausbildungsrichtung == undefined &&
-            assignedNwkID.value.studiengang == "FISI"
-        ) {
-            warningDialogText.value +=
-                "Wollen sie wirklich " +
-                assignedNwkID.value.vorname +
+    if (!stelle || !stelle.id || !stelle.assignedNWK) return;
+
+    // Check if Studiums or Ausbildungspraktikumsstelle
+    if (
+        stelle.ausbildungsrichtung == undefined &&
+        assignedNwkID.value.studiengang == "FISI"
+    ) {
+        warningDialogText.value +=
+            "Wollen sie wirklich " +
+            assignedNwkID.value.vorname +
+            " " +
+            assignedNwkID.value.nachname +
+            " auf eine Studiumspraktikumsstelle setzen, obwohl er/sie Auszubildende/r ist?\n";
+    }
+    if (
+        stelle.studienart == undefined &&
+        assignedNwkID.value.studiengang != "FISI"
+    ) {
+        warningDialogText.value +=
+            "Wollen sie wirklich " +
+            assignedNwkID.value.vorname +
+            " " +
+            assignedNwkID.value.nachname +
+            " auf eine Ausbildungspraktikumsstelle setzen, obwohl er/sie Student*in ist?\n";
+    }
+
+    // Check if studiengang is the same
+    if (
+        stelle.studienart &&
+        assignedNwkID.value.studiengang != "FISI" &&
+        stelle.studienart != assignedNwkID.value.studiengang
+    ) {
+        warningDialogText.value +=
+            "Wollen sie wirklich eine/n " +
+            assignedNwkID.value.studiengang +
+            " Student*in auf eine " +
+            stelle.studienart +
+            " Stelle setzen?\n";
+    }
+
+    // Check if requested Nwk is the same
+    if (
+        stelle.namentlicheAnforderung != "" &&
+        stelle.namentlicheAnforderung?.toUpperCase() !=
+            assignedNwkID.value.vorname.toUpperCase() +
                 " " +
-                assignedNwkID.value.nachname +
-                " auf eine Studiumspraktikumsstelle setzen, obwohl er/sie Auszubildende/r ist?\n";
-        }
-        if (
-            stelle.studienart == undefined &&
-            assignedNwkID.value.studiengang != "FISI"
-        ) {
+                assignedNwkID.value.nachname.toUpperCase()
+    ) {
+        warningDialogText.value +=
+            "Wollen sie wirklich " +
+            assignedNwkID.value.vorname +
+            " " +
+            assignedNwkID.value.nachname +
+            " auf diese Stelle setzen obwohl explizit " +
+            stelle.namentlicheAnforderung +
+            " angefordert wurde?\n";
+    }
+
+    // Check if Nwk is in the right semester
+    if (
+        stelle.studienart != undefined &&
+        assignedNwkID.value.studiengang != "FISI" &&
+        stelle.studiensemester
+    ) {
+        const expectedSemester: number = +stelle.studiensemester.substring(
+            8,
+            10
+        );
+        const actualSemester = calculateSemester();
+        if (expectedSemester > actualSemester) {
             warningDialogText.value +=
-                "Wollen sie wirklich " +
-                assignedNwkID.value.vorname +
-                " " +
-                assignedNwkID.value.nachname +
-                " auf eine Ausbildungspraktikumsstelle setzen, obwohl er/sie Student*in ist?\n";
+                "Wollen sie wirklich eine/n Student*in im " +
+                actualSemester +
+                " Semester auf diese Stelle setzen, obwohl ein/e Student*in ab dem " +
+                expectedSemester +
+                " Semester gefordert ist?\n";
         }
-        if (
-            stelle.studienart &&
-            assignedNwkID.value.studiengang != "FISI" &&
-            stelle.studienart != assignedNwkID.value.studiengang
-        ) {
+    }
+
+    // Check if Nwk is in the right Lehrjahr
+    if (
+        stelle.ausbildungsrichtung != undefined &&
+        assignedNwkID.value.studiengang == "FISI" &&
+        stelle.ausbildungsjahr
+    ) {
+        const expectedLehrjahr: number = +stelle.ausbildungsjahr.substring(
+            4,
+            6
+        );
+        const actualLehrjahr = calculateLehrjahr();
+        if (expectedLehrjahr > actualLehrjahr) {
             warningDialogText.value +=
-                "Wollen sie wirklich eine/n " +
-                assignedNwkID.value.studiengang +
-                " Student*in auf eine " +
-                stelle.studienart +
-                " Stelle setzen?\n";
+                "Wollen sie wirklich eine/n Auszubildende/n im " +
+                actualLehrjahr +
+                " Lehrjahr auf diese Stelle setzen, obwohl eine/n Auszubildende/n ab dem " +
+                expectedLehrjahr +
+                " Lehrjahr gefordert ist?\n";
         }
-        if (
-            stelle.namentlicheAnforderung != "" &&
-            stelle.namentlicheAnforderung?.toUpperCase() !=
-                assignedNwkID.value.vorname.toUpperCase() +
-                    " " +
-                    assignedNwkID.value.nachname.toUpperCase()
-        ) {
-            warningDialogText.value +=
-                "Wollen sie wirklich " +
-                assignedNwkID.value.vorname +
-                " " +
-                assignedNwkID.value.nachname +
-                " auf diese Stelle setzen obwohl explizit " +
-                stelle.namentlicheAnforderung +
-                " angefordert wurde?\n";
-        }
-        if (
-            stelle.studienart != undefined &&
-            assignedNwkID.value.studiengang != "FISI" &&
-            stelle.studiensemester
-        ) {
-            const expectedSemester: number = +stelle.studiensemester.substring(
-                8,
-                10
-            );
-            const actualSemester = calculateSemester();
-            if (expectedSemester > actualSemester) {
-                warningDialogText.value +=
-                    "Wollen sie wirklich eine/n Student*in im " +
-                    actualSemester +
-                    " Semester auf diese Stelle setzen, obwohl ein/e Student*in ab dem " +
-                    expectedSemester +
-                    " Semester gefordert ist?\n";
-            }
-        }
-        if (
-            stelle.ausbildungsrichtung != undefined &&
-            assignedNwkID.value.studiengang == "FISI" &&
-            stelle.ausbildungsjahr
-        ) {
-            const expectedLehrjahr: number = +stelle.ausbildungsjahr.substring(
-                4,
-                6
-            );
-            const actualLehrjahr = calculateLehrjahr();
-            if (expectedLehrjahr > actualLehrjahr) {
-                warningDialogText.value +=
-                    "Wollen sie wirklich eine/n Auszubildende/n im " +
-                    actualLehrjahr +
-                    " Lehrjahr auf diese Stelle setzen, obwohl eine/n Auszubildende/n ab dem " +
-                    expectedLehrjahr +
-                    " Lehrjahr gefordert ist?\n";
-            }
-        }
-        stelleToAssign.value = stelle;
-        if (warningDialogText.value == "") {
-            assignNWK();
-        } else {
-            warningDialog.value = true;
-        }
+    }
+    stelleToAssign.value = stelle;
+    if (warningDialogText.value == "") {
+        assignNWK();
+    } else {
+        warningDialog.value = true;
     }
 }
 
