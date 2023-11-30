@@ -27,16 +27,16 @@ public class NwkController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping("/import")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveNWKExcel(@RequestBody String base64String) throws IOException {
-        nwkService.importNWK(base64String);
+    public void saveNwkExcel(@RequestBody String base64String) throws IOException {
+        nwkService.importNwk(base64String);
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<NwkDto> getNWKs(@RequestParam(name = "status") String status) {
+    public List<NwkDto> getNwks(@RequestParam(name = "status") String status) {
         if (ACTIVE_STATUS.equals(status)) {
-            return nwkService.findAllActiveNWKs();
+            return nwkService.findAllActiveNwks();
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter nicht unterstützt.");
         }

@@ -30,16 +30,16 @@ public class PraktikumsstellenController {
     @PostMapping("/studium")
     @ResponseStatus(HttpStatus.CREATED)
     public StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelle(final @Valid @RequestBody
-    CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDTO) {
-        return praktikumsstellenService.saveStudiumsPraktikumsstelle(createStudiumsPraktikumsstelleDTO);
+    CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto) {
+        return praktikumsstellenService.saveStudiumsPraktikumsstelle(createStudiumsPraktikumsstelleDto);
     }
 
     @PreAuthorize("!hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).NWK.name())")
     @PostMapping("/ausbildung")
     @ResponseStatus(HttpStatus.CREATED)
     public AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelle(final @Valid @RequestBody
-    CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDTO) {
-        return praktikumsstellenService.saveAusbildungsPraktikumsstelle(createAusbildungsPraktikumsstelleDTO);
+    CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto) {
+        return praktikumsstellenService.saveAusbildungsPraktikumsstelle(createAusbildungsPraktikumsstelleDto);
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")

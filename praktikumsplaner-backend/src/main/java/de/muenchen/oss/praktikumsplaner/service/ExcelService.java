@@ -39,7 +39,7 @@ public class ExcelService {
     private static final int VORLESUNGSTAGE_COLUM = 4;
     private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
 
-    public List<CreateNwkDto> excelToNwkDTOList(final String base64String) throws IOException {
+    public List<CreateNwkDto> excelToNwkDtoList(final String base64String) throws IOException {
         try (InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
                 final XSSFWorkbook workbook = new XSSFWorkbook(stream)) {
             final XSSFSheet sheet = workbook.getSheetAt(FIRST_SHEET);
@@ -52,50 +52,50 @@ public class ExcelService {
         List<ExcelImportException.ExcelImportExceptionInfo> importExceptionInfoList = new ArrayList<>();
         for (Row row : sheet) {
             if (row.getRowNum() == FIRST_ROW) continue;
-            CreateNwkDto createNwkDTO = null;
+            CreateNwkDto createNwkDto = null;
             try {
-                createNwkDTO = getNwkDTOFromRow(row);
+                createNwkDto = getNwkDtoFromRow(row);
             } catch (ExcelImportException ex) {
                 importExceptionInfoList.addAll(ex.getExceptionInfos());
             }
-            if (createNwkDTO == null || isCreateNwkDTOEmpty(createNwkDTO)) {
+            if (createNwkDto == null || isCreateNwkDtoEmpty(createNwkDto)) {
                 continue;
             }
-            validator.validate(createNwkDTO).forEach(violation -> importExceptionInfoList.add(
+            validator.validate(createNwkDto).forEach(violation -> importExceptionInfoList.add(
                     new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), violation.getPropertyPath().toString(), violation.getMessage())));
-            createNwkDtos.add(createNwkDTO);
+            createNwkDtos.add(createNwkDto);
         }
         if (!importExceptionInfoList.isEmpty())
             throw new ExcelImportException(importExceptionInfoList);
         return createNwkDtos;
     }
 
-    private boolean isCreateNwkDTOEmpty(final CreateNwkDto createNwkDTO) {
-        return StringUtils.isEmpty(createNwkDTO.vorname())
-                && StringUtils.isEmpty(createNwkDTO.nachname())
-                && createNwkDTO.studiengang() == null
-                && StringUtils.isEmpty(createNwkDTO.jahrgang());
+    private boolean isCreateNwkDtoEmpty(final CreateNwkDto createNwkDto) {
+        return StringUtils.isEmpty(createNwkDto.vorname())
+                && StringUtils.isEmpty(createNwkDto.nachname())
+                && createNwkDto.studiengang() == null
+                && StringUtils.isEmpty(createNwkDto.jahrgang());
     }
 
-    private CreateNwkDto getNwkDTOFromRow(final Row row) {
-        CreateNwkDto.CreateNwkDtoBuilder createNwkDTOBuilder = CreateNwkDto.builder();
+    private CreateNwkDto getNwkDtoFromRow(final Row row) {
+        CreateNwkDto.CreateNwkDtoBuilder createNwkDtoBuilder = CreateNwkDto.builder();
         for (Cell cell : row) {
             final String cellValue = dataFormatter.formatCellValue(cell);
             switch (cell.getColumnIndex()) {
-            case NACHNAME_COLUM -> createNwkDTOBuilder.nachname(cellValue);
-            case VORNAME_COLUM -> createNwkDTOBuilder.vorname(cellValue);
+            case NACHNAME_COLUM -> createNwkDtoBuilder.nachname(cellValue);
+            case VORNAME_COLUM -> createNwkDtoBuilder.vorname(cellValue);
             case STUDIENGANG_COLUM -> {
                 try {
-                    createNwkDTOBuilder
+                    createNwkDtoBuilder
                             .studiengang(isBlank(cellValue) ? null : Studiengang.valueOf(cellValue));
                 } catch (IllegalArgumentException ex) {
                     throw new ExcelImportException(List.of(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "studiengang", ex.getMessage())));
                 }
             }
-            case JAHRGANG_COLUM -> createNwkDTOBuilder.jahrgang(cellValue);
+            case JAHRGANG_COLUM -> createNwkDtoBuilder.jahrgang(cellValue);
             case VORLESUNGSTAGE_COLUM -> {
                 try {
-                    createNwkDTOBuilder.vorlesungstage(extractVorlesungstage(cellValue));
+                    createNwkDtoBuilder.vorlesungstage(extractVorlesungstage(cellValue));
                 } catch (IllegalArgumentException ex) {
                     throw new ExcelImportException(
                             List.of(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "vorlesungstage", ex.getMessage())));
@@ -105,7 +105,7 @@ public class ExcelService {
             }
             }
         }
-        return createNwkDTOBuilder.build();
+        return createNwkDtoBuilder.build();
     }
 
     private Set<DayOfWeek> extractVorlesungstage(final String vorlesungstageString) {

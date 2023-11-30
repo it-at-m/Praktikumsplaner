@@ -24,17 +24,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class ExcelServiceTest {
     private final ExcelService service;
-    private final String base64EncodedExcelMultipleNWK;
-    private final String base64EncodedExcelNWKInvalidData;
+    private final String base64EncodedExcelMultipleNwk;
+    private final String base64EncodedExcelNwkInvalidData;
 
     public ExcelServiceTest() throws IOException {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         service = new ExcelService(validator);
-        base64EncodedExcelMultipleNWK = Base64.getEncoder().encodeToString(Objects
-                .requireNonNull(this.getClass().getResourceAsStream("ExcelMultipleNWK.xlsx")).readAllBytes());
-        base64EncodedExcelNWKInvalidData = Base64.getEncoder().encodeToString(Objects
-                .requireNonNull(this.getClass().getResourceAsStream("ExcelNWKInvalidData.xlsx")).readAllBytes());
+        base64EncodedExcelMultipleNwk = Base64.getEncoder().encodeToString(Objects
+                .requireNonNull(this.getClass().getResourceAsStream("ExcelMultipleNwk.xlsx")).readAllBytes());
+        base64EncodedExcelNwkInvalidData = Base64.getEncoder().encodeToString(Objects
+                .requireNonNull(this.getClass().getResourceAsStream("ExcelNwkInvalidData.xlsx")).readAllBytes());
     }
 
     @Test
@@ -47,27 +47,27 @@ public class ExcelServiceTest {
         vorlesungstage.add(DayOfWeek.MONDAY);
         vorlesungstage.add(DayOfWeek.TUESDAY);
 
-        CreateNwkDto createNwkDTO = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
         List<CreateNwkDto> createNwkDtos = new ArrayList<>();
-        createNwkDtos.add(createNwkDTO);
+        createNwkDtos.add(createNwkDto);
 
-        // Because only the first NWK gets checked the others are Placeholders for the correct size
+        // Because only the first Nwk gets checked the others are Placeholders for the correct size
         createNwkDtos.add(CreateNwkDto.builder().build());
         createNwkDtos.add(CreateNwkDto.builder().build());
         createNwkDtos.add(CreateNwkDto.builder().build());
 
-        List<CreateNwkDto> resultList = service.excelToNwkDTOList(base64EncodedExcelMultipleNWK);
+        List<CreateNwkDto> resultList = service.excelToNwkDtoList(base64EncodedExcelMultipleNwk);
 
         assertEquals(createNwkDtos.size(), resultList.size());
         assertEquals(createNwkDtos.get(0), resultList.get(0));
     }
 
     @Test
-    public void testExcelToNwkDTOListInvalidData() {
+    public void testExcelToNwkDtoListInvalidData() {
 
-        var violations = assertThrows(ExcelImportException.class, () -> service.excelToNwkDTOList(base64EncodedExcelNWKInvalidData)).getExceptionInfos();
+        var violations = assertThrows(ExcelImportException.class, () -> service.excelToNwkDtoList(base64EncodedExcelNwkInvalidData)).getExceptionInfos();
 
         assertEquals(1, violations.stream().filter(e -> e.getColumName().equals("nachname")).count());
         assertEquals(3, violations.stream().filter(e -> e.getColumName().equals("vorname")).count());

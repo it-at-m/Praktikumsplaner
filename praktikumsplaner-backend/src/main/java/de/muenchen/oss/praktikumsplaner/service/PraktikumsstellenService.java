@@ -32,33 +32,33 @@ public class PraktikumsstellenService {
     private final AusbildungsPraktikumsstellenRepository ausbildungsPraktikumsstellenRepository;
     private final MeldezeitraumService meldezeitraumService;
 
-    public StudiumsPraktikumsstelleDto saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDTO) {
-        StudiumsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDTO,
+    public StudiumsPraktikumsstelleDto saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto) {
+        StudiumsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDto,
                 meldezeitraumService.getCurrentMeldezeitraum());
         StudiumsPraktikumsstelle savedPraktikumsstelle = savePraktikumsstelle(entityPraktikumsstelle, studiumsPraktikumsstellenRepository);
-        return praktikumsstellenMapper.toDTO(savedPraktikumsstelle);
+        return praktikumsstellenMapper.toDto(savedPraktikumsstelle);
     }
 
-    public AusbildungsPraktikumsstelleDto saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDTO) {
-        AusbildungsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDTO,
+    public AusbildungsPraktikumsstelleDto saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto) {
+        AusbildungsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDto,
                 meldezeitraumService.getCurrentMeldezeitraum());
         AusbildungsPraktikumsstelle savedEntity = savePraktikumsstelle(entityPraktikumsstelle, ausbildungsPraktikumsstellenRepository);
         return praktikumsstellenMapper
-                .toDTO(savedEntity);
+                .toDto(savedEntity);
     }
 
     public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellen() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
 
-        List<PraktikumsstelleDto> ausbildungsListDTO = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
-                .map(praktikumsstellenMapper::toDTO).collect(Collectors.toList());
+        List<PraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
+                .map(praktikumsstellenMapper::toDto).collect(Collectors.toList());
 
-        List<PraktikumsstelleDto> studiumsListDTO = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
-                .map(praktikumsstellenMapper::toDTO).collect(Collectors.toList());
+        List<PraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
+                .map(praktikumsstellenMapper::toDto).collect(Collectors.toList());
 
         List<PraktikumsstelleDto> combinedList = new ArrayList<>();
-        combinedList.addAll(ausbildungsListDTO);
-        combinedList.addAll(studiumsListDTO);
+        combinedList.addAll(ausbildungsListDto);
+        combinedList.addAll(studiumsListDto);
         combinedList.sort(Comparator.comparing(PraktikumsstelleDto::dienststelle));
 
         TreeMap<String, List<PraktikumsstelleDto>> groupedPraktikumsstellen = groupDienststellen(combinedList);

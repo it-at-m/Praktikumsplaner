@@ -32,7 +32,7 @@ export default {
             reader.readAsDataURL(excelDatei);
         });
     },
-    getAllActiveNWKs(): Promise<Nwk[]> {
+    getAllActiveNwks(): Promise<Nwk[]> {
         return fetch(
             `${API_BASE}${NWK_BASE}?status=aktiv`,
             FetchUtils.getGETConfig()

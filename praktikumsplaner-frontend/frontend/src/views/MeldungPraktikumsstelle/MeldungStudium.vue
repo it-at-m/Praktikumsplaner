@@ -264,7 +264,7 @@ const oertlAusbidlerRule = [
 const namentlicheAnforderungRule = [
     validationRules.maxLengthRule(
         255,
-        "Der Name der angeforderte NWK darf nicht länger als 255 Zeichen sein"
+        "Der Name der angeforderte Nwk darf nicht länger als 255 Zeichen sein"
     ),
 ];
 const taetigkeitenRule = [
