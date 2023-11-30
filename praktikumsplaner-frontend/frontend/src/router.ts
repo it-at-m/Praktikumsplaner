@@ -8,7 +8,7 @@ import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
 import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
 import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
-import gegenueberstellungView from "@/views/gegenueberstellungView.vue";
+import assignView from "@/views/assignView.vue";
 
 Vue.use(Router);
 
@@ -73,9 +73,9 @@ export default new Router({
             component: MeldungSuperNwk,
         },
         {
-            path: "/gegenueberstellung",
-            name: "Gegenueberstellung",
-            component: gegenueberstellungView,
+            path: "/zuweisung",
+            name: "Zuweisung",
+            component: assignView,
         },
         { path: "*", redirect: "/" }, //Fallback 2
     ],

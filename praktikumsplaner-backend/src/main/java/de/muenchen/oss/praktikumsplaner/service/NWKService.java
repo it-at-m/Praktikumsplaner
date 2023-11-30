@@ -29,4 +29,12 @@ public class NWKService {
     public List<NwkDTO> findAllActiveNWKs() {
         return nwkRepository.findNWKsByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDTO).collect(Collectors.toList());
     }
+
+    public List<NwkDTO> findAllUnassignedNWKs() {
+        return nwkRepository.findAllUnassigned().stream().map(nwkMapper::toDTO).collect(Collectors.toList());
+    }
+
+    public List<NwkDTO> findAllNWKs() {
+        return nwkRepository.findAll().stream().map(nwkMapper::toDTO).collect(Collectors.toList());
+    }
 }

@@ -13,7 +13,10 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
+
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -137,5 +140,36 @@ public class MeldezeitraumServiceTest {
                 createMeldezeitraumDTO.endZeitpunkt())).thenReturn(false);
 
         assertDoesNotThrow(() -> service.checkOverlappingMeldezeitraum(createMeldezeitraumDTO));
+    }
+
+    @Test
+    public void testGetMostRecentMeldezeitraum() {
+        String name = "Name";
+
+        Meldezeitraum mostRecent = new Meldezeitraum();
+        mostRecent.setId(UUID.randomUUID());
+        mostRecent.setStartZeitpunkt(LocalDate.now().minusDays(10));
+        mostRecent.setEndZeitpunkt(LocalDate.now().minusDays(6));
+        mostRecent.setZeitraumName(name);
+
+        Meldezeitraum oldest = new Meldezeitraum();
+        oldest.setId(UUID.randomUUID());
+        oldest.setStartZeitpunkt(LocalDate.now().minusDays(15));
+        oldest.setEndZeitpunkt(LocalDate.now().minusDays(11));
+        oldest.setZeitraumName(name);
+
+        List<Meldezeitraum> meldezeitraume = List.of(mostRecent, oldest, mostRecent);
+
+        when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
+        assertEquals(service.getMostRecentPassedMeldezeitraum(), mapper.toDto(mostRecent));
+    }
+
+    @Test
+    public void testGetMostRecentMeldezeitraumNoMatchingMeldezeitraum() {
+
+        List<Meldezeitraum> meldezeitraume = List.of();
+
+        when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
+        assertThrows(EntityNotFoundException.class, () -> service.getMostRecentPassedMeldezeitraum());
     }
 }

@@ -2,13 +2,14 @@
     <v-container>
         <v-row>
             <v-col cols="6">
-                <active-n-w-k-list></active-n-w-k-list>
+                <active-n-w-k-list />
+                <div class="r"></div>
             </v-col>
             <v-col cols="1">
                 <v-divider vertical />
             </v-col>
             <v-col>
-                <praktikumsstellen-list></praktikumsstellen-list>
+                <praktikumsstellen-list />
             </v-col>
         </v-row>
     </v-container>

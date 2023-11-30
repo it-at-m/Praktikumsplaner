@@ -1,3 +1,5 @@
+import NWK from "@/types/NWK";
+
 export default class Praktikumsstelle {
     constructor(
         public dienststelle: string,
@@ -28,6 +30,8 @@ export default class Praktikumsstelle {
 
         public namentlicheAnforderung?: string,
 
-        public id?: string
+        public id?: string,
+
+        public assignedNWK?: NWK
     ) {}
 }
