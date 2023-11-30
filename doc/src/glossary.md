@@ -21,7 +21,7 @@ A [Dienststelle](#dienststelle) is the department from which the [Praktikumsstel
 
 ### Lehrjahr
 
-Training year, only for [Auszubildende](./glossary.md#auszubildende)
+Training year, only for [Auszubildende](#auszubildende)
 
 ### Meldezeitraum
 
