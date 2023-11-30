@@ -23,11 +23,11 @@ import NWKService from "@/api/NwkService";
 const nwks = ref<Nwk[]>([]);
 
 onMounted(() => {
-    getAllActiveNWKs();
+    getAllActiveNwks();
 });
-function getAllActiveNWKs() {
-    NWKService.getAllActiveNWKs().then((fetchedNWKs) => {
-        nwks.value = [...fetchedNWKs];
+function getAllActiveNwks() {
+    NWKService.getAllActiveNwks().then((fetchedNwks) => {
+        nwks.value = [...fetchedNwks];
     });
 }
 </script>

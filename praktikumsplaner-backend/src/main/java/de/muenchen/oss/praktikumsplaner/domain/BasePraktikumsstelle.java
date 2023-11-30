@@ -47,7 +47,7 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Dringlichkeit dringlichkeit;
 
-    @Size(max = 255, message = "Die angeforderte NWK darf nur {max} Zeichen lang sein")
+    @Size(max = 255, message = "Die angeforderte Nwk darf nur {max} Zeichen lang sein")
     private String namentlicheAnforderung;
 
     @Enumerated(EnumType.STRING)

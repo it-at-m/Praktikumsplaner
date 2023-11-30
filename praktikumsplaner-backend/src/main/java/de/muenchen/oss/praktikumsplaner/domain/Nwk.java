@@ -26,7 +26,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 /*
- * NWK is short for Nachwuchskraft (young talent)
+ * Nwk is short for Nachwuchskraft (young talent)
  */
 public class Nwk extends BaseEntity {
 

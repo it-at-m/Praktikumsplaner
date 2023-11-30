@@ -18,15 +18,15 @@ public class NwkService {
     private final NwkRepository nwkRepository;
     private final ExcelService excelService;
 
-    public NwkDto saveNWK(final CreateNwkDto createNwkDTO) {
-        return nwkMapper.toDTO(nwkRepository.save(nwkMapper.toEntity(createNwkDTO, true)));
+    public NwkDto saveNwk(final CreateNwkDto createNwkDto) {
+        return nwkMapper.toDto(nwkRepository.save(nwkMapper.toEntity(createNwkDto, true)));
     }
 
-    public void importNWK(final String base64String) throws IOException {
-        excelService.excelToNwkDTOList(base64String).forEach(this::saveNWK);
+    public void importNwk(final String base64String) throws IOException {
+        excelService.excelToNwkDtoList(base64String).forEach(this::saveNwk);
     }
 
-    public List<NwkDto> findAllActiveNWKs() {
-        return nwkRepository.findNWKsByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDTO).collect(Collectors.toList());
+    public List<NwkDto> findAllActiveNwks() {
+        return nwkRepository.findNwksByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDto).collect(Collectors.toList());
     }
 }

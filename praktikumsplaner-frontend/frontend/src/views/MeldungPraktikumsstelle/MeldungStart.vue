@@ -61,7 +61,7 @@ onMounted(() => {
 
 function redirect(): void {
     if (isCheckedStudium.value && isCheckedAusbildung.value) {
-        router.push("/superNWK");
+        router.push("/superNwk");
     } else if (isCheckedAusbildung.value) {
         router.push("/meldungAusbildung");
     } else if (isCheckedStudium.value) {

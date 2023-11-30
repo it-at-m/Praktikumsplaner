@@ -43,7 +43,7 @@ public class NwkServiceTest {
     private ExcelService excelService;
 
     @Test
-    public void testCreateNWKSuccess() {
+    public void testCreateNwkSuccess() {
         final String nachname = "Mustermann";
         final String vorname = "Max";
         final Studiengang studiengang = Studiengang.BSC;
@@ -54,21 +54,21 @@ public class NwkServiceTest {
         vorlesungstage.add(DayOfWeek.TUESDAY);
 
         Nwk nwk = new Nwk(vorname, nachname, studiengang, jahrgang, vorlesungstage, isActive);
-        NwkDto nwkDTO = NwkDto.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        NwkDto nwkDto = NwkDto.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).active(isActive).build();
-        CreateNwkDto createNwkDTO = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
         when(repository.save(any(Nwk.class))).thenReturn(nwk);
 
-        NwkDto result = service.saveNWK(createNwkDTO);
+        NwkDto result = service.saveNwk(createNwkDto);
 
         assertNotNull(result);
-        assertEquals(result, nwkDTO);
+        assertEquals(result, nwkDto);
     }
 
     @Test
-    public void testimportNWK() throws IOException {
+    public void testimportNwk() throws IOException {
         final String base64 = "WAAAAAAGGHHH=";
         final String nachname = "Mustermann";
         final String vorname = "Max";
@@ -79,25 +79,25 @@ public class NwkServiceTest {
         vorlesungstage.add(DayOfWeek.TUESDAY);
         final int EXCEL_TO_NWK_DTO_LIST_EXECUTIONS = 1;
 
-        CreateNwkDto createNwkDTO = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
         List<CreateNwkDto> createNwkDtos = new ArrayList<>();
-        createNwkDtos.add(createNwkDTO);
-        createNwkDtos.add(createNwkDTO);
-        createNwkDtos.add(createNwkDTO);
+        createNwkDtos.add(createNwkDto);
+        createNwkDtos.add(createNwkDto);
+        createNwkDtos.add(createNwkDto);
 
-        when(excelService.excelToNwkDTOList(base64)).thenReturn(createNwkDtos);
-        service.importNWK(base64);
-        verify(excelService, times(EXCEL_TO_NWK_DTO_LIST_EXECUTIONS)).excelToNwkDTOList(base64);
+        when(excelService.excelToNwkDtoList(base64)).thenReturn(createNwkDtos);
+        service.importNwk(base64);
+        verify(excelService, times(EXCEL_TO_NWK_DTO_LIST_EXECUTIONS)).excelToNwkDtoList(base64);
         verify(repository, times(createNwkDtos.size())).save(any(Nwk.class));
     }
 
     @Test
-    public void testImportNWKFailed() throws IOException {
+    public void testImportNwkFailed() throws IOException {
         val base64 = "WAAAAAAGGHHH=";
-        when(excelService.excelToNwkDTOList(base64)).thenThrow(ConstraintViolationException.class);
-        assertThrows(ConstraintViolationException.class, () -> service.importNWK(base64));
+        when(excelService.excelToNwkDtoList(base64)).thenThrow(ConstraintViolationException.class);
+        assertThrows(ConstraintViolationException.class, () -> service.importNwk(base64));
         verifyNoInteractions(repository);
     }
 }
