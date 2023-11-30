@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import Nwk from "@/types/Nwk";
-import NWKService from "@/api/NwkService";
+import NwkService from "@/api/NwkService";
 
 const nwks = ref<Nwk[]>([]);
 
@@ -26,7 +26,7 @@ onMounted(() => {
     getAllActiveNwks();
 });
 function getAllActiveNwks() {
-    NWKService.getAllActiveNwks().then((fetchedNwks) => {
+    NwkService.getAllActiveNwks().then((fetchedNwks) => {
         nwks.value = [...fetchedNwks];
     });
 }
