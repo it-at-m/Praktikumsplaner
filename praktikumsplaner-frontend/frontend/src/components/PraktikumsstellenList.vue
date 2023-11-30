@@ -209,7 +209,7 @@ function drop(stelle: Praktikumsstelle) {
 
     // Check if requested Nwk is the same
     if (
-        stelle.namentlicheAnforderung != "" &&
+        stelle.namentlicheAnforderung &&
         stelle.namentlicheAnforderung?.toUpperCase() !=
             assignedNwkID.value.vorname.toUpperCase() +
                 " " +
