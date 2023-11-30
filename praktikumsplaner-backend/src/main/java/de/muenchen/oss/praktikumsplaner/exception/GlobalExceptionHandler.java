@@ -2,7 +2,6 @@ package de.muenchen.oss.praktikumsplaner.exception;
 
 import jakarta.validation.ValidationException;
 import java.io.IOException;
-
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +44,6 @@ public class GlobalExceptionHandler {
     public String IllegalArgumentException(IllegalArgumentException ex) {
         return ex.getMessage();
     }
-
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
