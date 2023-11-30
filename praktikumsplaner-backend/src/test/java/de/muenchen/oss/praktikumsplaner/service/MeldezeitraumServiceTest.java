@@ -164,7 +164,6 @@ public class MeldezeitraumServiceTest {
         assertEquals(service.getMostRecentPassedMeldezeitraum(), mapper.toDto(mostRecent));
     }
 
-
     @Test
     public void testGetMostRecentMeldezeitraumNoMatchingMeldezeitraum() {
 

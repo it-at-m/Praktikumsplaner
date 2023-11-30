@@ -191,11 +191,11 @@ public class PraktikumsstellenServiceTest {
         NWK assigningNwk = new NWK();
         assigningNwk.setId(UUID.randomUUID());
         AusbildungsPraktikumsstelle stelle = createAusbildungsPraktikumsstelle("KM83", "Ausbilder",
-                "asubider@email.de","Alles",Dringlichkeit.ZWINGEND,Referat.ITM,false,
-                Ausbildungsjahr.JAHR2,Studiengang.FISI,UUID.randomUUID());
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Ausbildungsjahr.JAHR2, Studiengang.FISI, UUID.randomUUID());
         AusbildungsPraktikumsstelle withAssigned = createAusbildungsPraktikumsstelle("KM83", "Ausbilder",
-                "asubider@email.de","Alles",Dringlichkeit.ZWINGEND,Referat.ITM,false,
-                Ausbildungsjahr.JAHR2,Studiengang.FISI,UUID.randomUUID());
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Ausbildungsjahr.JAHR2, Studiengang.FISI, UUID.randomUUID());
         withAssigned.setAssignedNWK(assigningNwk);
         withAssigned.setId(stelle.getId());
         withAssigned.setMeldezeitraumID(stelle.getMeldezeitraumID());
@@ -213,11 +213,11 @@ public class PraktikumsstellenServiceTest {
         NWK assigningNwk = new NWK();
         assigningNwk.setId(UUID.randomUUID());
         StudiumsPraktikumsstelle stelle = createStudiumsPraktikumsstelle("KM83", "Ausbilder",
-                "asubider@email.de","Alles",Dringlichkeit.ZWINGEND,Referat.ITM,false,
-                Studiensemester.SEMESTER1,Studiengang.BWI,UUID.randomUUID());
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Studiensemester.SEMESTER1, Studiengang.BWI, UUID.randomUUID());
         StudiumsPraktikumsstelle withAssigned = createStudiumsPraktikumsstelle("KM83", "Ausbilder",
-                "asubider@email.de","Alles",Dringlichkeit.ZWINGEND,Referat.ITM,false,
-                Studiensemester.SEMESTER1,Studiengang.BWI,UUID.randomUUID());
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Studiensemester.SEMESTER1, Studiengang.BWI, UUID.randomUUID());
         withAssigned.setAssignedNWK(assigningNwk);
         withAssigned.setId(stelle.getId());
         withAssigned.setMeldezeitraumID(stelle.getMeldezeitraumID());
@@ -236,8 +236,8 @@ public class PraktikumsstellenServiceTest {
         NWK nwk = new NWK();
         nwk.setId(UUID.randomUUID());
         AusbildungsPraktikumsstelle stelle = createAusbildungsPraktikumsstelle("KM83", "Ausbilder",
-                "asubider@email.de","Alles",Dringlichkeit.ZWINGEND,Referat.ITM,false,
-                Ausbildungsjahr.JAHR2,Studiengang.BWI,UUID.randomUUID());
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Ausbildungsjahr.JAHR2, Studiengang.BWI, UUID.randomUUID());
         stelle.setAssignedNWK(nwk);
 
         when(ausbildungsRepository.existsById(stelle.getId())).thenReturn(true);
@@ -252,8 +252,8 @@ public class PraktikumsstellenServiceTest {
         NWK nwk = new NWK();
         nwk.setId(UUID.randomUUID());
         StudiumsPraktikumsstelle stelle = createStudiumsPraktikumsstelle("KM83", "Ausbilder",
-                "asubider@email.de","Alles",Dringlichkeit.ZWINGEND,Referat.ITM,false,
-                Studiensemester.SEMESTER1,Studiengang.BWI,UUID.randomUUID());
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Studiensemester.SEMESTER1, Studiengang.BWI, UUID.randomUUID());
         stelle.setAssignedNWK(nwk);
 
         when(ausbildungsRepository.existsById(stelle.getId())).thenReturn(false);
@@ -269,7 +269,7 @@ public class PraktikumsstellenServiceTest {
         when(ausbildungsRepository.existsById(any(UUID.class))).thenReturn(false);
         when(studiumsRepository.existsById(any(UUID.class))).thenReturn(false);
         when(nwkRepository.findById(any(UUID.class))).thenReturn(Optional.of(new NWK()));
-        assertThrows(ResourceNotFoundException.class, () -> service.assignNWK(UUID.randomUUID(),UUID.randomUUID()));
+        assertThrows(ResourceNotFoundException.class, () -> service.assignNWK(UUID.randomUUID(), UUID.randomUUID()));
     }
 
     @Test
@@ -277,11 +277,11 @@ public class PraktikumsstellenServiceTest {
         NWK assigningNwk = new NWK();
         assigningNwk.setId(UUID.randomUUID());
         AusbildungsPraktikumsstelle stelle = createAusbildungsPraktikumsstelle("KM83", "Ausbilder",
-                "asubider@email.de","Alles",Dringlichkeit.ZWINGEND,Referat.ITM,false,
-                Ausbildungsjahr.JAHR2,Studiengang.FISI,UUID.randomUUID());
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Ausbildungsjahr.JAHR2, Studiengang.FISI, UUID.randomUUID());
         AusbildungsPraktikumsstelle withAssigned = createAusbildungsPraktikumsstelle("KM83", "Ausbilder",
-                "asubider@email.de","Alles",Dringlichkeit.ZWINGEND,Referat.ITM,false,
-                Ausbildungsjahr.JAHR2,Studiengang.FISI,UUID.randomUUID());
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Ausbildungsjahr.JAHR2, Studiengang.FISI, UUID.randomUUID());
         withAssigned.setAssignedNWK(assigningNwk);
         withAssigned.setId(stelle.getId());
         withAssigned.setMeldezeitraumID(stelle.getMeldezeitraumID());
@@ -298,11 +298,11 @@ public class PraktikumsstellenServiceTest {
         NWK assigningNwk = new NWK();
         assigningNwk.setId(UUID.randomUUID());
         StudiumsPraktikumsstelle stelle = createStudiumsPraktikumsstelle("KM83", "Ausbilder",
-                "asubider@email.de","Alles",Dringlichkeit.ZWINGEND,Referat.ITM,false,
-                Studiensemester.SEMESTER1,Studiengang.BWI,UUID.randomUUID());
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Studiensemester.SEMESTER1, Studiengang.BWI, UUID.randomUUID());
         StudiumsPraktikumsstelle withAssigned = createStudiumsPraktikumsstelle("KM83", "Ausbilder",
-                "asubider@email.de","Alles",Dringlichkeit.ZWINGEND,Referat.ITM,false,
-                Studiensemester.SEMESTER1,Studiengang.BWI,UUID.randomUUID());
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
+                Studiensemester.SEMESTER1, Studiengang.BWI, UUID.randomUUID());
         withAssigned.setAssignedNWK(assigningNwk);
         withAssigned.setId(stelle.getId());
         withAssigned.setMeldezeitraumID(stelle.getMeldezeitraumID());
