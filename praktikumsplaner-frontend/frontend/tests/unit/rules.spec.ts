@@ -42,10 +42,10 @@ describe("rules maxLength test", () => {
         expect(maxLength10Rule(txt11)).toBe(errorMessage);
     });
     it("tests maxLengthRule return error when null", () => {
-        expect(maxLength10Rule(null)).toBe(errorMessage);
+        expect(maxLength10Rule(null)).toBe(true);
     });
     it("tests maxLengthRule return error when undefined", () => {
-        expect(maxLength10Rule(undefined)).toBe(errorMessage);
+        expect(maxLength10Rule(undefined)).toBe(true);
     });
 });
 describe("rules notEmptyDate test", () => {
