@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.NWK;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
@@ -19,10 +20,12 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
+import de.muenchen.oss.praktikumsplaner.repository.NWKRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -46,6 +49,8 @@ public class PraktikumsstellenServiceTest {
     private PraktikumsstellenService service;
     @Mock
     private MeldezeitraumService meldezeitraumService;
+    @Mock
+    private NWKRepository nwkRepository;
 
     @Test
     public void testCreateStudiumsPraktikumsstelle() {
@@ -179,6 +184,27 @@ public class PraktikumsstellenServiceTest {
         assertEquals(1, result.get("GL1").size());
     }
 
+    @Test
+    void testAssignNWK_Success() {
+        // Arrange
+        NWK assignedNWK = new NWK();
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = createAusbildungsPraktikumsstelle("KM81", "Max Musterfrau", "max@musterfrau.de",
+                "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
+                false, Ausbildungsjahr.JAHR2, Studiengang.FISI, UUID.randomUUID());
+        AusbildungsPraktikumsstelleDTO ausbildungsPraktikumsstelleDto = createPraktikumsstelleDTO(ausbildungsPraktikumsstelle);
+
+        when(nwkRepository.findById(assignedNWK.getId())).thenReturn(Optional.of(assignedNWK));
+        when(ausbildungsRepository.existsById(ausbildungsPraktikumsstelleDto.id())).thenReturn(true);
+        when(ausbildungsRepository.findById(ausbildungsPraktikumsstelleDto.id())).thenReturn(Optional.of(ausbildungsPraktikumsstelle));
+        when(mapper.toDTO(ausbildungsPraktikumsstelle)).thenReturn(ausbildungsPraktikumsstelleDto);
+
+        // Act
+        PraktikumsstelleDTO actualDTO = service.assignNWK(ausbildungsPraktikumsstelleDto.id(), assignedNWK.getId());
+
+        // Assert
+        assertEquals(ausbildungsPraktikumsstelleDto, actualDTO);
+    }
+
     private AusbildungsPraktikumsstelle createAusbildungsPraktikumsstelle(
             String dienststelle, String ausbilder, String email, String taetigkeiten, Dringlichkeit dringlichkeit,
             Referat referat, boolean projektarbeit, Ausbildungsjahr ausbildungsjahr, Studiengang studiengang, UUID meldezeitraumId) {
@@ -242,4 +268,5 @@ public class PraktikumsstellenServiceTest {
                 .zeitraumName(name)
                 .build();
     }
+
 }
