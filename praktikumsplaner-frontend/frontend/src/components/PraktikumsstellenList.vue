@@ -26,6 +26,10 @@
                                         praktikumsstellenliste
                                     )"
                                     :key="praktikumsstelle.id"
+                                    :class="{
+                                        'v-list-item--active':
+                                            praktikumsstelle.assignedNWK,
+                                    }"
                                     @drop="drop(praktikumsstelle)"
                                     @dragover.prevent
                                     @dragenter.prevent
