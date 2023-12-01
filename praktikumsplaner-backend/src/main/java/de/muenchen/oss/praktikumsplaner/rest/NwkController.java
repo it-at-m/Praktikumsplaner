@@ -1,7 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
-import de.muenchen.oss.praktikumsplaner.service.NWKService;
+import de.muenchen.oss.praktikumsplaner.service.NwkService;
 import java.io.IOException;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor
 @RequestMapping(value = "/nachwuchskraft")
 public class NwkController {
-    private final NWKService nwkService;
+    private final NwkService nwkService;
 
     private final String ACTIVE_STATUS = "aktiv";
 

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class NWKService {
+public class NwkService {
 
     private final NwkMapper nwkMapper;
     private final NwkRepository nwkRepository;
@@ -28,5 +28,13 @@ public class NWKService {
 
     public List<NwkDto> findAllActiveNwks() {
         return nwkRepository.findNwksByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDto).collect(Collectors.toList());
+    }
+
+    public List<NwkDto> findAllUnassignedNwks() {
+        return nwkRepository.findAllUnassigned().stream().map(nwkMapper::toDto).collect(Collectors.toList());
+    }
+
+    public List<NwkDto> findAllNwks() {
+        return nwkRepository.findAll().stream().map(nwkMapper::toDto).collect(Collectors.toList());
     }
 }
