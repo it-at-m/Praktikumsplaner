@@ -32,6 +32,6 @@ export default class Praktikumsstelle {
 
         public id?: string,
 
-        public assignedNWK?: Nwk
+        public assignedNwk?: Nwk
     ) {}
 }

@@ -34,27 +34,27 @@ const nwkStore = useNwkStore();
 
 onMounted(() => {
     getAllActiveNwks();
-    EventBus.$on("assignedNWK", removeNWKFromList);
-    EventBus.$on("unassignedNWK", addNWKToList);
+    EventBus.$on("assignedNwk", removeNwkFromList);
+    EventBus.$on("unassignedNwk", addNwkToList);
 });
 function getAllActiveNwks() {
-  NwkService.getAllActiveNwks().then((fetchedNwks) => {
-    nwks.value = [...fetchedNwks];
-  });
+    NwkService.getAllActiveNwks().then((fetchedNwks) => {
+        nwks.value = [...fetchedNwks];
+    });
 }
 
-function dragStart(nwk: NWK) {
+function dragStart(nwk: Nwk) {
     nwkStore.updateNwkId(nwk);
 }
 
-function removeNWKFromList(nwk: NWK) {
+function removeNwkFromList(nwk: Nwk) {
     const index = nwks.value.indexOf(nwk, 0);
     if (index > -1) {
         nwks.value.splice(index, 1);
     }
 }
 
-function addNWKToList(nwk: NWK) {
+function addNwkToList(nwk: Nwk) {
     nwks.value.push(nwk);
 }
 </script>

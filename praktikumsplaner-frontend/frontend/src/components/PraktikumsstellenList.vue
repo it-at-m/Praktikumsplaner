@@ -5,7 +5,7 @@
             :dialogtitle="warningDialogTitle"
             :dialogtext="warningDialogText"
             @no="resetWarningDialog"
-            @yes="assignNWK"
+            @yes="assignNwk"
         ></yes-no-dialog-without-activator>
         <v-container>
             <v-expansion-panels multiple>
@@ -28,7 +28,7 @@
                                     :key="praktikumsstelle.id"
                                     :class="{
                                         'v-list-item--active':
-                                            praktikumsstelle.assignedNWK,
+                                            praktikumsstelle.assignedNwk,
                                     }"
                                     @drop="drop(praktikumsstelle)"
                                     @dragover.prevent
@@ -98,18 +98,18 @@
                                             <v-list-item-icon>
                                                 <v-chip
                                                     v-if="
-                                                        praktikumsstelle.assignedNWK
+                                                        praktikumsstelle.assignedNwk
                                                     "
                                                     color="primary"
                                                     close
                                                     close-icon="mdi-close"
                                                     @click:close="
-                                                        unassignNWK(
+                                                        unassignNwk(
                                                             praktikumsstelle
                                                         )
                                                     "
                                                     >{{
-                                                        `${praktikumsstelle.assignedNWK.vorname} ${praktikumsstelle.assignedNWK.nachname}`
+                                                        `${praktikumsstelle.assignedNwk.vorname} ${praktikumsstelle.assignedNwk.nachname}`
                                                     }}</v-chip
                                                 >
                                             </v-list-item-icon>
@@ -129,7 +129,7 @@ import { onMounted, ref, watch } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import { useNwkStore } from "@/stores/nwkStore";
-import NWK from "@/types/NWK";
+import Nwk from "@/types/Nwk";
 import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 
@@ -147,7 +147,7 @@ watch(
     () => nwkStore.nwk,
     () => {
         assignedNwkID.value =
-            nwkStore.nwk ?? new NWK("", "", "", "", "", "", false);
+            nwkStore.nwk ?? new Nwk("", "", "", "", "", "", false);
     }
 );
 
@@ -167,7 +167,7 @@ function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
 }
 
 function drop(stelle: Praktikumsstelle) {
-    if (!stelle || !stelle.id || stelle.assignedNWK) return;
+    if (!stelle || !stelle.id || stelle.assignedNwk) return;
 
     // Check if Studiums or Ausbildungspraktikumsstelle
     if (
@@ -268,27 +268,27 @@ function drop(stelle: Praktikumsstelle) {
     }
     stelleToAssign.value = stelle;
     if (warningDialogText.value == "") {
-        assignNWK();
+        assignNwk();
     } else {
         warningDialog.value = true;
     }
 }
 
-function unassignNWK(stelle: Praktikumsstelle) {
+function unassignNwk(stelle: Praktikumsstelle) {
     if (stelle.id) {
-        PraktikumsstellenService.unassignNWK(stelle.id);
-        EventBus.$emit("unassignedNWK", stelle.assignedNWK);
-        stelle.assignedNWK = undefined;
+        PraktikumsstellenService.unassignNwk(stelle.id);
+        EventBus.$emit("unassignedNWK", stelle.assignedNwk);
+        stelle.assignedNwk = undefined;
     }
 }
-function assignNWK() {
+function assignNwk() {
     if (!stelleToAssign.value || !stelleToAssign.value.id) return;
-    stelleToAssign.value.assignedNWK = assignedNwkID.value;
-    PraktikumsstellenService.assignNWK(
+    stelleToAssign.value.assignedNwk = assignedNwkID.value;
+    PraktikumsstellenService.assignNwk(
         stelleToAssign.value.id,
-        stelleToAssign.value.assignedNWK.id
+        stelleToAssign.value.assignedNwk.id
     );
-    EventBus.$emit("assignedNWK", stelleToAssign.value.assignedNWK);
+    EventBus.$emit("assignedNWK", stelleToAssign.value.assignedNwk);
     resetWarningDialog();
 }
 function resetWarningDialog() {

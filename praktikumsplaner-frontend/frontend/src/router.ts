@@ -6,7 +6,6 @@ import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
 import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
 import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
-import gegenueberstellungView from "@/views/gegenueberstellungView.vue";
 import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
 import ExcelImportNwk from "@/components/ExcelImportNwk.vue";
 import assignView from "@/views/assignView.vue";
