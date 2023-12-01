@@ -1,7 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
-import de.muenchen.oss.praktikumsplaner.service.NwkService;
+import de.muenchen.oss.praktikumsplaner.service.NWKService;
 import java.io.IOException;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor
 @RequestMapping(value = "/nachwuchskraft")
 public class NwkController {
-    private final NwkService nwkService;
+    private final NWKService nwkService;
 
     private final String ACTIVE_STATUS = "aktiv";
 
@@ -34,11 +34,19 @@ public class NwkController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<NwkDto> getNwks(@RequestParam(name = "status") String status) {
-        if (ACTIVE_STATUS.equals(status)) {
-            return nwkService.findAllActiveNwks();
-        } else {
+    public List<NwkDto> getNwks(@RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "unassigned", required = false) String unassigned) {
+        if (status != null) {
+            if (ACTIVE_STATUS.equals(status)) {
+                return nwkService.findAllActiveNwks();
+            }
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter nicht unterstützt.");
         }
+        if (unassigned != null) {
+            if (Boolean.TRUE.toString().equals(unassigned)) {
+                return nwkService.findAllUnassignedNwks();
+            }
+        }
+        return nwkService.findAllNwks();
     }
 }
