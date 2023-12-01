@@ -1,7 +1,16 @@
 <template>
     <v-container class="spacing-left">
         <h3>Praktikumstellen Meldung</h3>
-        <div class="flex-container">
+
+        <div v-if="!activeMeldezeitraum">
+            Die Ausbildungsleitung hat die Meldung von Stellen noch nicht
+            freigegeben, daher können leider aktuell keine Stellen gemeldet
+            werden.
+        </div>
+        <div
+            v-else
+            class="flex-container"
+        >
             <p class="p-spacing">
                 Wollen Sie eine Stelle für einen Auszubildenden melden
             </p>
@@ -50,13 +59,18 @@
 import { onMounted, ref } from "vue";
 import router from "@/router";
 import { useHeaderStore } from "@/stores/header";
+import MeldezeitraumService from "@/api/MeldezeitraumService";
 
 const isCheckedAusbildung = ref<boolean>(false);
 const isCheckedStudium = ref<boolean>(false);
 const headerStore = useHeaderStore();
+const activeMeldezeitraum = ref<boolean>(false);
 
 onMounted(() => {
     headerStore.setHeader("Praktikumsstellen Meldung");
+    MeldezeitraumService.getCurrentMeldezeitraum().then((zeitraueme) => {
+        activeMeldezeitraum.value = zeitraueme.length > 0;
+    });
 });
 
 function redirect(): void {

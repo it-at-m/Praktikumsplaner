@@ -33,7 +33,9 @@ public record AusbildungsPraktikumsstelleDto(@NotNull UUID id,
 
                                              @NotNull Ausbildungsjahr ausbildungsjahr,
 
-                                             @NotNull Studiengang ausbildungsrichtung
+                                             @NotNull Studiengang ausbildungsrichtung,
+
+                                             NwkDto assignedNwk
 
                         ) implements PraktikumsstelleDto {
 }

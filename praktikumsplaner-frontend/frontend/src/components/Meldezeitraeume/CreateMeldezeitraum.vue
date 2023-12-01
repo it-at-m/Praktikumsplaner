@@ -59,7 +59,6 @@ import { useRules } from "@/composables/rules";
 const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum(""));
 const headerStore = useHeaderStore();
 const form = ref<HTMLFormElement>();
-const meldezeitraumService = new MeldezeitraumService();
 const header = "Meldezeitraum";
 const maxLength = 255;
 const validationRules = useRules();
@@ -83,8 +82,7 @@ function resetForm() {
 
 function clickSpeichern() {
     if (form.value?.validate()) {
-        meldezeitraumService
-            .create(meldezeitraum.value)
+        MeldezeitraumService.create(meldezeitraum.value)
             .then(() => {
                 emits("meldezeitraumAdded", meldezeitraum.value);
             })

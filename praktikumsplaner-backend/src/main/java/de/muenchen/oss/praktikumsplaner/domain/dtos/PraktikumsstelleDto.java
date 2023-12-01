@@ -32,4 +32,6 @@ public interface PraktikumsstelleDto {
     String namentlicheAnforderung();
 
     Referat referat();
+
+    NwkDto assignedNwk();
 }

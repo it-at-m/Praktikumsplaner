@@ -6,6 +6,8 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -56,6 +58,10 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
     @NotNull
     @JdbcTypeCode(VARCHAR)
     private UUID meldezeitraumID;
+
+    @ManyToOne
+    @JoinColumn(name = "assignedNwk")
+    public Nwk assignedNwk;
 
     @NotNull
     private boolean planstelleVorhanden;
