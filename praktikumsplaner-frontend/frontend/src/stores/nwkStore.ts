@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
-import NWK from "@/types/NWK";
+import Nwk from "@/types/Nwk";
 
 export const useNwkStore = defineStore("nwk", {
     state: () => ({
-        nwk: new NWK("", "", "", "", "", "", false),
+        nwk: new Nwk("", "", "", "", "", "", false),
     }),
     actions: {
-        updateNwkId(newNWK: NWK) {
-            this.nwk = newNWK;
+        updateNwkId(newNwk: Nwk) {
+            this.nwk = newNwk;
         },
     },
 });

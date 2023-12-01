@@ -45,7 +45,7 @@ export default {
                 FetchUtils.defaultResponseHandler(err);
             });
     },
-    getAllUnassignedNWKs(): Promise<NWK[]> {
+    getAllUnassignedNwks(): Promise<Nwk[]> {
         return fetch(
             `${API_BASE}${NWK_BASE}?unassigned=true`,
             FetchUtils.getGETConfig()
