@@ -17,7 +17,7 @@ has a contract with
 
 ### Dienststelle
 
-A [Dienststelle](#dienststelle) is the department from which the [Praktikumsstelle](#praktikumsstelle) is reported in our context and in which the [NWKs](#nachwuchskraft) will then work.
+A [Dienststelle](#dienststelle) is the department from which the [Praktikumsstelle](#praktikumsstelle) is reported in our context and in which the [Nwks](#nachwuchskraft) will then work.
 
 ### Lehrjahr
 
