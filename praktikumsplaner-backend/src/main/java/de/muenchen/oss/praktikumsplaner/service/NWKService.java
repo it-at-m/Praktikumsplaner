@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class NwkService {
+public class NWKService {
 
     private final NwkMapper nwkMapper;
     private final NwkRepository nwkRepository;
