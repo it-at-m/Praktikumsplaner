@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 @Converter
 public class DayOfWeekSetConverter implements AttributeConverter<Set<DayOfWeek>, String> {
+    private static final String comma = ",";
+
     @Override
     public String convertToDatabaseColumn(final Set<DayOfWeek> attribute) {
         if (attribute == null || attribute.isEmpty()) {
@@ -17,7 +19,7 @@ public class DayOfWeekSetConverter implements AttributeConverter<Set<DayOfWeek>,
         }
         return attribute.stream()
                 .map(DayOfWeek::name)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(comma));
     }
 
     @Override
@@ -25,7 +27,7 @@ public class DayOfWeekSetConverter implements AttributeConverter<Set<DayOfWeek>,
         if (dbData == null || dbData.trim().isEmpty()) {
             return new HashSet<>();
         }
-        return Arrays.stream(dbData.split(","))
+        return Arrays.stream(dbData.split(comma))
                 .map(String::trim)
                 .map(DayOfWeek::valueOf)
                 .collect(Collectors.toSet());
