@@ -38,7 +38,7 @@ public class NwkServiceTest {
     @Mock
     private NwkRepository repository;
     @InjectMocks
-    private NWKService service;
+    private NwkService service;
     @Mock
     private ExcelService excelService;
 
