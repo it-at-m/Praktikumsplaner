@@ -76,14 +76,14 @@ public class PraktikumsstellenService {
                 praktikumsstelle.setAssignedNwk(assignedNwk);
                 ausbildungsPraktikumsstellenRepository.save(praktikumsstelle);
                 return praktikumsstellenMapper.toDto(praktikumsstelle);
-            } else throw new ResourceConflictException("Praktikumsstelle already has an assigned NWK!");
+            } else throw new ResourceConflictException("Praktikumsstelle already has an assigned Nwk!");
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
             StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
             if (praktikumsstelle.getAssignedNwk() == null) {
                 praktikumsstelle.setAssignedNwk(assignedNwk);
                 studiumsPraktikumsstellenRepository.save(praktikumsstelle);
                 return praktikumsstellenMapper.toDto(praktikumsstelle);
-            } else throw new ResourceConflictException("Praktikumsstelle already has an assigned NWK!");
+            } else throw new ResourceConflictException("Praktikumsstelle already has an assigned Nwk!");
         } else throw new ResourceNotFoundException("Praktikumsstelle not found!");
     }
 

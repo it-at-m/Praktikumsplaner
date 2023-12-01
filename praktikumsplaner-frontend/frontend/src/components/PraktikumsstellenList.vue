@@ -277,7 +277,7 @@ function drop(stelle: Praktikumsstelle) {
 function unassignNwk(stelle: Praktikumsstelle) {
     if (stelle.id) {
         PraktikumsstellenService.unassignNwk(stelle.id);
-        EventBus.$emit("unassignedNWK", stelle.assignedNwk);
+        EventBus.$emit("unassignedNwk", stelle.assignedNwk);
         stelle.assignedNwk = undefined;
     }
 }
@@ -288,7 +288,7 @@ function assignNwk() {
         stelleToAssign.value.id,
         stelleToAssign.value.assignedNwk.id
     );
-    EventBus.$emit("assignedNWK", stelleToAssign.value.assignedNwk);
+    EventBus.$emit("assignedNwk", stelleToAssign.value.assignedNwk);
     resetWarningDialog();
 }
 function resetWarningDialog() {
