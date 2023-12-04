@@ -36,3 +36,10 @@ Warnings that can appear:
 - [Nwk](./../glossary.md#nwk) is in a lower [Lehrjahr](./../glossary.md#lehrjahr) than the minimum requested.
 
 **⚠** All warnings *can* be ignored, but it is advised to reevaluate an assignment if a warning appears
+
+### Unassinging [Nwks](./../glossary.md#nwk)
+When a [Nwks](./../glossary.md#nwk) is assigned to a [Praktikumsstelle](./../glossary.md#praktikumsstelle) it little chip with the name of the Nwk shows this assignment.
+Next to the name you can find a little x. By clicking on this x you can unassign the Nwk. When doing so,
+a dialog will appear asking you if you really want to continue. When clicking yes the unassigning will be executed
+and the Nwk will be selectable in the list on the left. When clicking no, the process will be cancelled and
+nothing will be changed.
