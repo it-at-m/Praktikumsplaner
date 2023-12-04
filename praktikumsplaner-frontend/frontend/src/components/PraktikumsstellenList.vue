@@ -293,7 +293,7 @@ function openConfirmationDialog(stelle: Praktikumsstelle) {
 }
 
 function unassignNwk() {
-    if (stelleToAssignUnassign.value.id) {
+    if (stelleToAssignUnassign.value?.id) {
         PraktikumsstellenService.unassignNwk(stelleToAssignUnassign.value.id);
         EventBus.$emit(
             "unassignedNwk",
@@ -348,7 +348,7 @@ function calculateLehrjahr() {
 }
 
 function resetUnassign() {
-    stelleToAssignUnassign.value = new Praktikumsstelle();
+    stelleToAssignUnassign.value = undefined;
     unassignConfirmDialog.value = false;
 }
 </script>
