@@ -61,7 +61,7 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "assignedNwk")
-    public Nwk assignedNwk;
+    private Nwk assignedNwk;
 
     @NotNull
     private boolean planstelleVorhanden;
