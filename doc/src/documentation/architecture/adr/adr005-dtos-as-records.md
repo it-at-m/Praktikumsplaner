@@ -6,7 +6,7 @@
 
 ## Context
 
-DTO classes are classes that transport data between layers or services.
+Dto classes are classes that transport data between layers or services.
 They do not contain any business logic. The sender generates the data, and the receiver processes it.
 Therefore, write access after the creation is no longer necessary.
 
@@ -27,5 +27,5 @@ We can use Lombok's `@Builder` annotation.
 
 ## Consequences
 
-This way, we reduce unwanted side effects because the properties of a DTO cannot be changed. If
+This way, we reduce unwanted side effects because the properties of a Dto cannot be changed. If
 objectfactories are used that fill only a part of the object, and other components finalize the object later, the builder must be used.

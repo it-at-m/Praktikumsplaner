@@ -1,4 +1,4 @@
-import NWK from "@/types/NWK";
+import Nwk from "@/types/Nwk";
 
 export default class Praktikumsstelle {
     constructor(
@@ -32,6 +32,6 @@ export default class Praktikumsstelle {
 
         public id?: string,
 
-        public assignedNWK?: NWK
+        public assignedNwk?: Nwk
     ) {}
 }

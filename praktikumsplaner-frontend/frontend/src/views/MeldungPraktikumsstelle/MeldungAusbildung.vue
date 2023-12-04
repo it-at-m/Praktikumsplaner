@@ -136,7 +136,7 @@
                 <v-col>
                     <v-text-field
                         v-model="praktikumsstelle.namentlicheAnforderung"
-                        label="Namentliche Anforderung spez. gewünschter NWK"
+                        label="Namentliche Anforderung spez. gewünschter Nwk"
                         :rules="namentlicheAnforderungRule"
                         outlined
                         @change="zustelleradressverwaltung()"
@@ -162,7 +162,7 @@
                 <v-col>
                     <v-text-field
                         v-model="zeitraum"
-                        label="Zeitraum NWK"
+                        label="Zeitraum Nwk"
                         hint="Wählen Sie Art und Jahrgang des Stuzubis aus"
                         outlined
                         disabled
@@ -275,7 +275,7 @@ const oertlAusbidlerRule = [
 const namentlicheAnforderungRule = [
     validationRules.maxLengthRule(
         255,
-        "Der Name der angeforderte NWK darf nicht länger als 255 Zeichen sein"
+        "Der Name der angeforderte Nwk darf nicht länger als 255 Zeichen sein"
     ),
 ];
 const taetigkeitenRule = [

@@ -13,5 +13,5 @@ import org.springframework.security.access.prepost.PreAuthorize;
  * in the annotation e.g. {@link PreAuthorize}.
  */
 public enum AuthoritiesEnum {
-    AUSBILDUNGSLEITUNG, NWK, AUSBILDER
+    AUSBILDUNGSLEITUNG, NWK
 }

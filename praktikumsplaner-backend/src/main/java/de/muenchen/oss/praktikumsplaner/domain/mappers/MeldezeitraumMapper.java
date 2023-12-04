@@ -1,15 +1,15 @@
 package de.muenchen.oss.praktikumsplaner.domain.mappers;
 
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper
 public interface MeldezeitraumMapper {
-    MeldezeitraumDTO toDto(Meldezeitraum meldezeitraum);
+    MeldezeitraumDto toDto(final Meldezeitraum meldezeitraum);
 
     @Mapping(target = "id", ignore = true)
-    Meldezeitraum toEntity(CreateMeldezeitraumDTO meldezeitraumCreateDTO);
+    Meldezeitraum toEntity(final CreateMeldezeitraumDto meldezeitraumCreateDto);
 }

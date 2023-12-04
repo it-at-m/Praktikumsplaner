@@ -10,15 +10,14 @@ import lombok.ToString;
 @Getter
 @Setter
 public class ExcelImportException extends RuntimeException {
-    private List<ExcelImportExceptionInfo> exceptionInfos;
+    private final List<ExcelImportExceptionInfo> exceptionInfos;
 
     @AllArgsConstructor
     @Getter
-    @Setter
     @ToString
     public static class ExcelImportExceptionInfo {
-        private int row;
-        private String columName;
-        private String value;
+        private final int row;
+        private final String columName;
+        private final String value;
     }
 }

@@ -25,14 +25,14 @@ import lombok.ToString;
 public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull
-    public boolean programmierkenntnisse;
+    private boolean programmierkenntnisse;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    public Studiensemester studiensemester;
+    private Studiensemester studiensemester;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    public Studiengang studienart;
+    private Studiengang studienart;
 
 }
