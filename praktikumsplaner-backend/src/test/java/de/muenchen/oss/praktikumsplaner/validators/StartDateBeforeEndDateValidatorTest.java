@@ -43,11 +43,11 @@ public class StartDateBeforeEndDateValidatorTest {
         final LocalDate startDate = LocalDate.of(2020, 10, 10);
         final LocalDate endDate = null;
 
-        final TestClass meldezeitraumDTO = new TestClass(
+        final TestClass meldezeitraumDto = new TestClass(
                 startDate,
                 endDate);
 
-        assertThrows(Exception.class, () -> validator.validate(meldezeitraumDTO));
+        assertThrows(Exception.class, () -> validator.validate(meldezeitraumDto));
     }
 
     @Test
@@ -55,10 +55,10 @@ public class StartDateBeforeEndDateValidatorTest {
         final LocalDate startDate = LocalDate.of(2020, 10, 10);
         final LocalDate endDate = LocalDate.of(2019, 10, 10);
 
-        final TestClass meldezeitraumDTO = new TestClass(
+        final TestClass meldezeitraumDto = new TestClass(
                 startDate,
                 endDate);
 
-        assertFalse(validator.validate(meldezeitraumDTO).isEmpty());
+        assertFalse(validator.validate(meldezeitraumDto).isEmpty());
     }
 }

@@ -1,8 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,26 +18,26 @@ public class MeldezeitraumService {
     private final MeldezeitraumMapper meldezeitraumMapper;
     private final MeldezeitraumRepository meldezeitraumRepository;
 
-    public MeldezeitraumDTO createMeldezeitraum(final CreateMeldezeitraumDTO meldezeitraumCreateDto) {
+    public MeldezeitraumDto createMeldezeitraum(final CreateMeldezeitraumDto meldezeitraumCreateDto) {
         checkOverlappingMeldezeitraum(meldezeitraumCreateDto);
         return meldezeitraumMapper.toDto(meldezeitraumRepository.save(meldezeitraumMapper.toEntity(meldezeitraumCreateDto)));
     }
 
-    public MeldezeitraumDTO getCurrentMeldezeitraum() throws ValidationException {
+    public MeldezeitraumDto getCurrentMeldezeitraum() throws ValidationException {
         Meldezeitraum currentMeldezeitraum = meldezeitraumRepository
                 .findMeldezeitraumByDateInRange(LocalDate.now());
         if (currentMeldezeitraum == null) throw new ValidationException("Kein aktiver Meldezeitraum");
         return meldezeitraumMapper.toDto(currentMeldezeitraum);
     }
 
-    public void checkOverlappingMeldezeitraum(final CreateMeldezeitraumDTO meldezeitraumCreateDto) {
+    public void checkOverlappingMeldezeitraum(final CreateMeldezeitraumDto meldezeitraumCreateDto) {
         if (meldezeitraumRepository.isOverlappingMeldezeitraum(meldezeitraumCreateDto.startZeitpunkt(),
                 meldezeitraumCreateDto.endZeitpunkt())) {
             throw new ValidationException("Überlappt mit einem existierendem Meldezeitraum");
         }
     }
 
-    public MeldezeitraumDTO getMostRecentPassedMeldezeitraum() {
+    public MeldezeitraumDto getMostRecentPassedMeldezeitraum() {
         List<Meldezeitraum> passedZeitraueme = meldezeitraumRepository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now());
         if (passedZeitraueme.isEmpty()) {
             throw new EntityNotFoundException("Kein vergangener Meldezeitraum gefunden!");

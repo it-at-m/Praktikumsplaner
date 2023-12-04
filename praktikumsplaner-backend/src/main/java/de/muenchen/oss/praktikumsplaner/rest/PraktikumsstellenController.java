@@ -1,10 +1,10 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -33,33 +33,33 @@ public class PraktikumsstellenController {
     @PreAuthorize("!hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).NWK.name())")
     @PostMapping("/studium")
     @ResponseStatus(HttpStatus.CREATED)
-    public StudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelle(final @Valid @RequestBody
-    CreateStudiumsPraktikumsstelleDTO createStudiumsPraktikumsstelleDTO) {
-        return praktikumsstellenService.saveStudiumsPraktikumsstelle(createStudiumsPraktikumsstelleDTO);
+    public StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelle(final @Valid @RequestBody
+    CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto) {
+        return praktikumsstellenService.saveStudiumsPraktikumsstelle(createStudiumsPraktikumsstelleDto);
     }
 
     @PreAuthorize("!hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).NWK.name())")
     @PostMapping("/ausbildung")
     @ResponseStatus(HttpStatus.CREATED)
-    public AusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelle(final @Valid @RequestBody
-    CreateAusbildungsPraktikumsstelleDTO createAusbildungsPraktikumsstelleDTO) {
-        return praktikumsstellenService.saveAusbildungsPraktikumsstelle(createAusbildungsPraktikumsstelleDTO);
+    public AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelle(final @Valid @RequestBody
+    CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto) {
+        return praktikumsstellenService.saveAusbildungsPraktikumsstelle(createAusbildungsPraktikumsstelleDto);
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public TreeMap<String, List<PraktikumsstelleDTO>> getAllPraktikumsstellen() {
+    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktikumsstellen() {
         return praktikumsstellenService.getAllPraktiumsstellen();
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PatchMapping("/{praktikumsstellenId}")
     @ResponseStatus(HttpStatus.OK)
-    public PraktikumsstelleDTO assignNWK(@PathVariable UUID praktikumsstellenId, @RequestParam(required = false) UUID nwkId) {
+    public PraktikumsstelleDto assignNwk(@PathVariable UUID praktikumsstellenId, @RequestParam(required = false) UUID nwkId) {
         if (nwkId == null) {
-            return praktikumsstellenService.unassignNWK(praktikumsstellenId);
+            return praktikumsstellenService.unassignNwk(praktikumsstellenId);
         }
-        return praktikumsstellenService.assignNWK(praktikumsstellenId, nwkId);
+        return praktikumsstellenService.assignNwk(praktikumsstellenId, nwkId);
     }
 }

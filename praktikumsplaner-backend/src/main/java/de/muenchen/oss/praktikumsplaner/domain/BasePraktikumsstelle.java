@@ -30,39 +30,39 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @NotNull
     @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein")
-    public String dienststelle;
+    private String dienststelle;
 
     @NotNull
     @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein")
-    public String oertlicheAusbilder;
+    private String oertlicheAusbilder;
 
     @NotNull
     @Email
     @Size(max = 255, message = "Die Email darf nur {max} Zeichen lang sein")
-    public String email;
+    private String email;
 
     @NotNull
     @Size(max = 5000, message = "Die Tätigkeiten dürfen nur {max} Zeichen lang sein")
-    public String taetigkeiten;
+    private String taetigkeiten;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    public Dringlichkeit dringlichkeit;
+    private Dringlichkeit dringlichkeit;
 
-    @Size(max = 255, message = "Die angeforderte NWK darf nur {max} Zeichen lang sein")
-    public String namentlicheAnforderung;
+    @Size(max = 255, message = "Die angeforderte Nwk darf nur {max} Zeichen lang sein")
+    private String namentlicheAnforderung;
 
     @Enumerated(EnumType.STRING)
-    public Referat referat;
+    private Referat referat;
 
     @NotNull
     @JdbcTypeCode(VARCHAR)
-    public UUID meldezeitraumID;
+    private UUID meldezeitraumID;
 
     @ManyToOne
-    @JoinColumn(name = "assignedNWK")
-    public NWK assignedNWK;
+    @JoinColumn(name = "assignedNwk")
+    private Nwk assignedNwk;
 
     @NotNull
-    public boolean planstelleVorhanden;
+    private boolean planstelleVorhanden;
 }

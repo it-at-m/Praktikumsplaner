@@ -10,12 +10,12 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-public record NwkDTO(UUID id,
+public record NwkDto(UUID id,
                      @NotNull(message = "Der Vorname ist erforderlich") @Size(min = 2, max = 255, message = "Der Vorname darf nur zwischen {min} und {max} Zeichen lang sein") String vorname,
                      @NotNull(message = "Der Nachname ist erforderlich") @Size(min = 2, max = 255, message = "Der Nachname darf nur zwischen {min} und {max} Zeichen lang sein") String nachname,
                      @NotNull(message = "Der Studiengang ist erforderlich") Studiengang studiengang,
                      @NotNull(message = "Der Jahrgang ist erforderlich") @Pattern(regexp = "\\d\\d/\\d\\d") String jahrgang,
                      Set<DayOfWeek> vorlesungstage,
-                     @NotNull(message = "Der Status der NWK ist erforderlich") boolean active) {
+                     @NotNull(message = "Der Status der Nwk ist erforderlich") boolean active) {
 
 }

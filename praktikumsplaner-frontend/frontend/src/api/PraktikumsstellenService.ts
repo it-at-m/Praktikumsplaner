@@ -64,7 +64,7 @@ export default {
                 FetchUtils.defaultResponseHandler(err);
             });
     },
-    assignNWK(
+    assignNwk(
         stellenId: string,
         nwkId: string | undefined
     ): Promise<Praktikumsstelle> {
@@ -88,7 +88,7 @@ export default {
                 FetchUtils.defaultResponseHandler(err);
             });
     },
-    unassignNWK(stellenId: string): Promise<Praktikumsstelle> {
+    unassignNwk(stellenId: string): Promise<Praktikumsstelle> {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}`,
             FetchUtils.getPATCHConfig({})

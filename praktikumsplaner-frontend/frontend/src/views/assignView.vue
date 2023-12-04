@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col cols="6">
-                <active-n-w-k-list />
+                <active-nwk-list />
                 <div class="r"></div>
             </v-col>
             <v-col cols="1">
@@ -15,6 +15,6 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import ActiveNWKList from "@/components/ActiveNWKList.vue";
+import ActiveNwkList from "@/components/ActiveNwkList.vue";
 import PraktikumsstellenList from "@/components/PraktikumsstellenList.vue";
 </script>

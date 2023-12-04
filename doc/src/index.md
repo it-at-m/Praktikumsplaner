@@ -7,7 +7,7 @@ actionText: Technical Documentation →
 actionLink: /documentation/
 features:
 - title: Excel Upload
-  details: Create new NWKs from Excel file
+  details: Create new Nwks from Excel file
 - title: Create Meldezeitraum
   details: Create new Meldezeiträume in the application
 - title: Report Praktikumsstelle

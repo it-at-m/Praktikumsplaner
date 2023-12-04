@@ -1,6 +1,6 @@
-# Import NWKs from Excel
+# Import Nwks from Excel
 
-A navigation tab labeled `Import` makes it possible to import NWKs from an Excel file.
+A navigation tab labeled `Import` makes it possible to import Nwks from an Excel file.
 
 ### Using the button
 

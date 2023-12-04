@@ -11,7 +11,7 @@ import lombok.Builder;
 
 @Builder
 @AusbildungsAnnotation(studiengang = "ausbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
-public record CreateAusbildungsPraktikumsstelleDTO(@NotNull String dienststelle,
+public record CreateAusbildungsPraktikumsstelleDto(@NotNull String dienststelle,
 
                                                    @NotNull String oertlicheAusbilder,
 

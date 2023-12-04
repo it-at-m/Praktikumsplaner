@@ -3,11 +3,11 @@ import Router from "vue-router";
 import Main from "./views/MainView.vue";
 import { ROUTER_BASE } from "@/Constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
-import ExcelImportNWK from "@/components/ExcelImportNWK.vue";
 import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
 import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
 import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
+import ExcelImportNwk from "@/components/ExcelImportNwk.vue";
 import assignView from "@/views/assignView.vue";
 
 Vue.use(Router);
@@ -45,7 +45,7 @@ export default new Router({
         {
             path: "/excelimport",
             name: "excelimport",
-            component: ExcelImportNWK,
+            component: ExcelImportNwk,
         },
         {
             path: "/meldezeitraum",
@@ -69,7 +69,7 @@ export default new Router({
         },
         {
             path: "/superNwk",
-            name: "SuperNWK",
+            name: "SuperNwk",
             component: MeldungSuperNwk,
         },
         {

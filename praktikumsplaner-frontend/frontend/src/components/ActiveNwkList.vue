@@ -24,37 +24,37 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import NWK from "@/types/NWK";
-import NWKService from "@/api/NWKService";
+import Nwk from "@/types/Nwk";
+import NwkService from "@/api/NwkService";
 import { useNwkStore } from "@/stores/nwkStore";
 import { EventBus } from "@/stores/event-bus";
 
-const nwks = ref<NWK[]>([]);
+const nwks = ref<Nwk[]>([]);
 const nwkStore = useNwkStore();
 
 onMounted(() => {
-    getAllActiveNWKs();
-    EventBus.$on("assignedNWK", removeNWKFromList);
-    EventBus.$on("unassignedNWK", addNWKToList);
+    getAllActiveNwks();
+    EventBus.$on("assignedNwk", removeNwkFromList);
+    EventBus.$on("unassignedNwk", addNwkToList);
 });
-function getAllActiveNWKs() {
-    NWKService.getAllUnassignedNWKs().then((fetchedNWKs) => {
-        nwks.value = [...fetchedNWKs];
+function getAllActiveNwks() {
+    NwkService.getAllActiveNwks().then((fetchedNwks) => {
+        nwks.value = [...fetchedNwks];
     });
 }
 
-function dragStart(nwk: NWK) {
+function dragStart(nwk: Nwk) {
     nwkStore.updateNwkId(nwk);
 }
 
-function removeNWKFromList(nwk: NWK) {
+function removeNwkFromList(nwk: Nwk) {
     const index = nwks.value.indexOf(nwk, 0);
     if (index > -1) {
         nwks.value.splice(index, 1);
     }
 }
 
-function addNWKToList(nwk: NWK) {
+function addNwkToList(nwk: Nwk) {
     nwks.value.push(nwk);
 }
 </script>

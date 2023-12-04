@@ -1,7 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDTO;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDTO;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.service.MeldezeitraumService;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
@@ -28,18 +28,18 @@ public class MeldezeitraumController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MeldezeitraumDTO createMeldezeitraum(final @Valid @RequestBody
-    CreateMeldezeitraumDTO meldezeitraumDto) {
+    public MeldezeitraumDto createMeldezeitraum(final @Valid @RequestBody
+    CreateMeldezeitraumDto meldezeitraumDto) {
         return meldezeitraumService.createMeldezeitraum(meldezeitraumDto);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<MeldezeitraumDTO> getMeldezeitraum(@RequestParam(required = false) String current) {
+    public List<MeldezeitraumDto> getMeldezeitraum(@RequestParam(required = false) String current) {
         if (current != null && current.equals(Boolean.TRUE.toString())) {
             try {
-                MeldezeitraumDTO meldezeitraumDTO = meldezeitraumService.getCurrentMeldezeitraum();
-                return List.of(meldezeitraumDTO);
+                MeldezeitraumDto meldezeitraumDto = meldezeitraumService.getCurrentMeldezeitraum();
+                return List.of(meldezeitraumDto);
             } catch (ValidationException ve) {
                 return new ArrayList<>();
             }
