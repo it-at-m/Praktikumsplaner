@@ -1,14 +1,14 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="6">
+            <v-col cols="5">
                 <active-nwk-list />
                 <div class="r"></div>
             </v-col>
-            <v-col cols="1">
+            <v-col>
                 <v-divider vertical />
             </v-col>
-            <v-col>
+            <v-col cols="5">
                 <praktikumsstellen-list />
             </v-col>
         </v-row>

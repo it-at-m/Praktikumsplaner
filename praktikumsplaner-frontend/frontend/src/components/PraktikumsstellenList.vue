@@ -29,65 +29,47 @@
                                     :class="{
                                         'v-list-item--active':
                                             praktikumsstelle.assignedNwk,
+                                        spacer: true,
                                     }"
                                     @drop="drop(praktikumsstelle)"
                                     @dragover.prevent
                                     @dragenter.prevent
                                 >
-                                    <v-card>
-                                        <v-card-title
-                                            >Stelle bei
-                                            {{
-                                                praktikumsstelle.dienststelle
-                                            }}</v-card-title
+                                    <v-card
+                                        class="full-width-card"
+                                        elevation="16"
+                                        outlined
+                                    >
+                                        <v-row>
+                                            <v-col cols="9">
+                                                <v-card-title
+                                                    >Stelle bei
+                                                    {{
+                                                        praktikumsstelle.dienststelle
+                                                    }}</v-card-title
+                                                >
+                                            </v-col>
+                                            <v-col>
+                                                <v-card-text
+                                                    v-if="
+                                                        praktikumsstelle.planstelleVorhanden
+                                                    "
+                                                >
+                                                    <v-icon x-large
+                                                        >mdi-account-star</v-icon
+                                                    >
+                                                </v-card-text>
+                                            </v-col>
+                                        </v-row>
+                                        <v-card-text>
+                                            <p style="white-space: pre-line">
+                                                {{
+                                                    getCardText(
+                                                        praktikumsstelle
+                                                    )
+                                                }}
+                                            </p></v-card-text
                                         >
-                                        <v-card-text
-                                            v-if="praktikumsstelle.studienart"
-                                        >
-                                            Studiengang:
-                                            {{ praktikumsstelle.studienart }}
-                                        </v-card-text>
-                                        <v-card-text v-else>
-                                            Ausbildungsrichtung:
-                                            {{
-                                                praktikumsstelle.ausbildungsrichtung
-                                            }}
-                                        </v-card-text>
-                                        <v-card-text
-                                            v-if="
-                                                praktikumsstelle.studiensemester
-                                            "
-                                        >
-                                            Studiensemester:
-                                            {{
-                                                praktikumsstelle.studiensemester
-                                            }}
-                                        </v-card-text>
-                                        <v-card-text v-else>
-                                            Ausbildungsjahr:
-                                            {{
-                                                praktikumsstelle.ausbildungsjahr
-                                            }}
-                                        </v-card-text>
-                                        <v-card-text
-                                            v-if="
-                                                praktikumsstelle.namentlicheAnforderung
-                                            "
-                                        >
-                                            Namentliche Anforderung:
-                                            {{
-                                                praktikumsstelle.namentlicheAnforderung
-                                            }}
-                                        </v-card-text>
-                                        <v-card-text
-                                            v-if="
-                                                praktikumsstelle.planstelleVorhanden
-                                            "
-                                        >
-                                            <v-icon x-large
-                                                >mdi-account-star</v-icon
-                                            >
-                                        </v-card-text>
                                         <v-chip
                                             v-if="praktikumsstelle.assignedNwk"
                                             color="primary"
@@ -309,4 +291,39 @@ function calculateLehrjahr() {
     }
     return lehrjahr;
 }
+
+function getCardText(stelle: Praktikumsstelle): string {
+    let cardText = "";
+
+    if (stelle.studienart) {
+        cardText +=
+            "Studiengang: " +
+            stelle.studienart +
+            "\n" +
+            "Studiensemester: " +
+            stelle.studiensemester;
+    } else if (stelle.ausbildungsrichtung) {
+        cardText +=
+            "Ausbildungsrichtung: " +
+            stelle.ausbildungsrichtung +
+            "\n" +
+            "Ausbildungsjahr: " +
+            stelle.ausbildungsjahr;
+    }
+
+    if (stelle.namentlicheAnforderung) {
+        cardText +=
+            "\nNamentliche Anforderung: " + stelle.namentlicheAnforderung;
+    }
+
+    return cardText;
+}
 </script>
+<style scoped lang="scss">
+.full-width-card {
+    width: 100%;
+}
+.spacer {
+    padding-bottom: 10px;
+}
+</style>
