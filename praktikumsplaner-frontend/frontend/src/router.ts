@@ -9,6 +9,7 @@ import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
 import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
 import ExcelImportNwk from "@/components/ExcelImportNwk.vue";
 import assignView from "@/views/assignView.vue";
+import NwkUebersicht from "@/views/NwkUebersicht.vue";
 
 Vue.use(Router);
 
@@ -76,6 +77,11 @@ export default new Router({
             path: "/zuweisung",
             name: "Zuweisung",
             component: assignView,
+        },
+        {
+            path: "/nwkUebersicht",
+            name: "NwkUebersicht",
+            component: NwkUebersicht,
         },
         { path: "*", redirect: "/" }, //Fallback 2
     ],
