@@ -67,6 +67,14 @@
                 </v-list-item>
                 <v-list-item
                     v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
+                    :to="{ path: '/nwkUebersicht' }"
+                >
+                    <v-list-item-content>
+                        <v-list-item-title>Nwk Übersicht</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item
+                    v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
                     :to="{ path: '/zuweisung' }"
                 >
                     <v-list-item-content>

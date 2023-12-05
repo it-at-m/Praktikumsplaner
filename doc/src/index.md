@@ -14,4 +14,6 @@ features:
   details: Report a Praktikumsstelle to the örtl. Ausbildungsleitung
 - title: Assignment 
   details: Assign Nwks to Praktikumsstellen
+- title: Nwk Overview
+  details: View all active Nwks
 ---
