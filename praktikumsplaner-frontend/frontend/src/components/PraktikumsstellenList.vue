@@ -34,87 +34,73 @@
                                     @dragover.prevent
                                     @dragenter.prevent
                                 >
-                                    <v-list-item-content>
-                                        <v-row>
-                                            <v-col cols="10">
-                                                <v-list-item-title>
-                                                    Stelle bei
-                                                    {{
-                                                        praktikumsstelle.dienststelle
-                                                    }}</v-list-item-title
-                                                >
-                                                <v-list-item-subtitle
-                                                    v-if="
-                                                        praktikumsstelle.studienart
-                                                    "
-                                                >
-                                                    Studiengang:
-                                                    {{
-                                                        praktikumsstelle.studienart
-                                                    }}</v-list-item-subtitle
-                                                >
-                                                <v-list-item-subtitle v-else>
-                                                    Ausbildungsrichtung:
-                                                    {{
-                                                        praktikumsstelle.ausbildungsrichtung
-                                                    }}</v-list-item-subtitle
-                                                >
-                                                <v-list-item-subtitle
-                                                    v-if="
-                                                        praktikumsstelle.studiensemester
-                                                    "
-                                                    >Studiensemester:
-                                                    {{
-                                                        praktikumsstelle.studiensemester
-                                                    }}</v-list-item-subtitle
-                                                >
-                                                <v-list-item-subtitle v-else>
-                                                    Ausbildungsjahr:
-                                                    {{
-                                                        praktikumsstelle.ausbildungsjahr
-                                                    }}</v-list-item-subtitle
-                                                >
-                                                <v-list-item-subtitle
-                                                    v-if="
-                                                        praktikumsstelle.namentlicheAnforderung
-                                                    "
-                                                >
-                                                    Namentliche Anforderung:
-                                                    {{
-                                                        praktikumsstelle.namentlicheAnforderung
-                                                    }}
-                                                </v-list-item-subtitle>
-                                            </v-col>
-                                            <v-col
-                                                v-if="
-                                                    praktikumsstelle.planstelleVorhanden
-                                                "
-                                                cols="2"
+                                    <v-card>
+                                        <v-card-title
+                                            >Stelle bei
+                                            {{
+                                                praktikumsstelle.dienststelle
+                                            }}</v-card-title
+                                        >
+                                        <v-card-text
+                                            v-if="praktikumsstelle.studienart"
+                                        >
+                                            Studiengang:
+                                            {{ praktikumsstelle.studienart }}
+                                        </v-card-text>
+                                        <v-card-text v-else>
+                                            Ausbildungsrichtung:
+                                            {{
+                                                praktikumsstelle.ausbildungsrichtung
+                                            }}
+                                        </v-card-text>
+                                        <v-card-text
+                                            v-if="
+                                                praktikumsstelle.studiensemester
+                                            "
+                                        >
+                                            Studiensemester:
+                                            {{
+                                                praktikumsstelle.studiensemester
+                                            }}
+                                        </v-card-text>
+                                        <v-card-text v-else>
+                                            Ausbildungsjahr:
+                                            {{
+                                                praktikumsstelle.ausbildungsjahr
+                                            }}
+                                        </v-card-text>
+                                        <v-card-text
+                                            v-if="
+                                                praktikumsstelle.namentlicheAnforderung
+                                            "
+                                        >
+                                            Namentliche Anforderung:
+                                            {{
+                                                praktikumsstelle.namentlicheAnforderung
+                                            }}
+                                        </v-card-text>
+                                        <v-card-text
+                                            v-if="
+                                                praktikumsstelle.planstelleVorhanden
+                                            "
+                                        >
+                                            <v-icon x-large
+                                                >mdi-account-star</v-icon
                                             >
-                                                <v-icon x-large
-                                                    >mdi-account-star</v-icon
-                                                >
-                                            </v-col>
-                                            <v-list-item-icon>
-                                                <v-chip
-                                                    v-if="
-                                                        praktikumsstelle.assignedNwk
-                                                    "
-                                                    color="primary"
-                                                    close
-                                                    close-icon="mdi-close"
-                                                    @click:close="
-                                                        unassignNwk(
-                                                            praktikumsstelle
-                                                        )
-                                                    "
-                                                    >{{
-                                                        `${praktikumsstelle.assignedNwk.vorname} ${praktikumsstelle.assignedNwk.nachname}`
-                                                    }}</v-chip
-                                                >
-                                            </v-list-item-icon>
-                                        </v-row>
-                                    </v-list-item-content>
+                                        </v-card-text>
+                                        <v-chip
+                                            v-if="praktikumsstelle.assignedNwk"
+                                            color="primary"
+                                            close
+                                            close-icon="mdi-close"
+                                            @click:close="
+                                                unassignNwk(praktikumsstelle)
+                                            "
+                                            >{{
+                                                `${praktikumsstelle.assignedNwk.vorname} ${praktikumsstelle.assignedNwk.nachname}`
+                                            }}</v-chip
+                                        >
+                                    </v-card>
                                 </v-list-item>
                             </v-list-item-group>
                         </v-list>
