@@ -14,6 +14,7 @@
                         praktikumsstellenliste, abteilung
                     ) in praktikumsstellen"
                     :key="abteilung"
+                    class="custom-panel"
                 >
                     <v-expansion-panel-header>{{
                         abteilung
@@ -325,5 +326,10 @@ function getCardText(stelle: Praktikumsstelle): string {
 }
 .spacer {
     padding-bottom: 10px;
+}
+.custom-panel {
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    margin: 2px;
 }
 </style>
