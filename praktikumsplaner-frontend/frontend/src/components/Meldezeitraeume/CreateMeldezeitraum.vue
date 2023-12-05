@@ -8,19 +8,22 @@
             <v-container>
                 <v-row>
                     <v-col
-                        cols="12"
-                        sm="6"
+                        sm="8"
                         md="4"
                     >
                         <v-text-field
                             v-model="meldezeitraum.zeitraumName"
                             label="Zeitraumname"
                             :rules="zeitraumNameRules"
+                            outlined
                         ></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col cols="12">
+                    <v-col
+                        sm="8"
+                        md="4"
+                    >
                         <ZeitraumPicker :value="meldezeitraum"></ZeitraumPicker>
                     </v-col>
                 </v-row>
@@ -30,13 +33,13 @@
             outlined
             text
             color="primary"
-            class="buttonEnd float-md-left"
+            class="float-md-left"
             @click="clickAbbrechen()"
         >
             Zurück
         </v-btn>
         <v-btn
-            class="buttonEnd float-md-right"
+            class="float-md-right"
             color="primary"
             variant="text"
             @click="clickSpeichern()"
@@ -104,10 +107,3 @@ onMounted(() => {
     headerStore.setHeader(header);
 });
 </script>
-
-<style scoped>
-.buttonEnd {
-    margin-top: 42rem;
-    margin-bottom: 20px;
-}
-</style>
