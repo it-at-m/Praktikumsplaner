@@ -38,7 +38,7 @@ onMounted(() => {
     EventBus.$on("unassignedNwk", addNwkToList);
 });
 function getAllActiveNwks() {
-    NwkService.getAllActiveNwks().then((fetchedNwks) => {
+    NwkService.getAllUnassignedNwks().then((fetchedNwks) => {
         nwks.value = [...fetchedNwks];
     });
 }
