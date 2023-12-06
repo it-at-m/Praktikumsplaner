@@ -10,8 +10,18 @@
                 {{ props.dialogtitle }}
             </v-card-title>
             <v-card-text>
-                <v-icon :color="iconcolor">{{ props.icontext }}</v-icon>
-                {{ props.dialogtext }}
+                <v-row>
+                    <v-col cols="1">
+                        <v-icon
+                            x-large
+                            :color="iconcolor"
+                            >{{ props.icontext }}</v-icon
+                        >
+                    </v-col>
+                    <v-col cols="11">
+                        {{ props.dialogtext }}
+                    </v-col>
+                </v-row>
             </v-card-text>
             <v-card-actions>
                 <v-spacer />
