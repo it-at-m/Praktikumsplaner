@@ -24,14 +24,6 @@
             <span> Übersicht</span>
             <active-nwk-list></active-nwk-list>
         </v-container>
-        <Error-dialog
-            :dialogtext="errorDialogText"
-            :dialogtitle="errorDialogTitle"
-            icontext="mdi mdi-alert-octagon-outline"
-            iconcolor="red"
-            :value="errorDialog"
-            @close="errorDialog = false"
-        ></Error-dialog>
     </v-container>
 </template>
 
@@ -39,21 +31,6 @@
 import ExcelImportNwk from "@/components/ExcelImportNwk.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import ActiveNwkList from "@/components/ActiveNwkList.vue";
-import ErrorDialog from "@/components/common/ErrorDialog.vue";
-import { ref } from "vue";
-import { EventBus } from "@/stores/event-bus";
-
-const errorDialog = ref<boolean>(false);
-const errorDialogText = ref<string>(
-    "Ihre Exceldatei konnte nicht hochgeladen werde. Bitte überprüfen Sie die Datei und versuchen Sie es erneut."
-);
-const errorDialogTitle = ref<string>("Excel Import fehlgeschlagen");
-
-function showError() {
-    errorDialog.value = true;
-}
-
-EventBus.$on("excelUploadError", showError);
 </script>
 
 <style scoped>
