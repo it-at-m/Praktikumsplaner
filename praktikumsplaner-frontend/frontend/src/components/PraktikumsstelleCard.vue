@@ -33,7 +33,7 @@
                 close-icon="mdi-close"
                 @click:close="unassignNwk(props.praktikumsstelle)"
                 >{{
-                    `${praktikumsstelle.assignedNwk.vorname} ${praktikumsstelle.assignedNwk.nachname}`
+                    `${props.praktikumsstelle.assignedNwk.vorname} ${props.praktikumsstelle.assignedNwk.nachname}`
                 }}</v-chip
             >
             <v-card-actions class="custom-card-actions">
