@@ -7,6 +7,14 @@
             @no="resetWarningDialog"
             @yes="assignNwk"
         ></yes-no-dialog-without-activator>
+
+        <yes-no-dialog-without-activator
+            v-model="unassignConfirmDialog"
+            :dialogtitle="unassignDialogTitle"
+            :dialogtext="unassignDialogContent"
+            @no="resetUnassign"
+            @yes="unassignNwk"
+        ></yes-no-dialog-without-activator>
         <v-container>
             <v-expansion-panels multiple>
                 <v-expansion-panel
@@ -66,7 +74,11 @@ const warningDialogTitle = ref<string>(
     "Warnung. Wollen sie wirklich fortfahren?"
 );
 const warningDialogText = ref<string>("");
-const stelleToAssign = ref<Praktikumsstelle>();
+const stelleToAssignUnassign = ref<Praktikumsstelle>();
+
+const unassignDialogContent = ref<string>("");
+const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
+const unassignConfirmDialog = ref<boolean>(false);
 
 watch(
     () => nwkStore.nwk,
@@ -191,7 +203,7 @@ function drop(stelle: Praktikumsstelle) {
                 " Lehrjahr gefordert ist?\n";
         }
     }
-    stelleToAssign.value = stelle;
+    stelleToAssignUnassign.value = stelle;
     if (warningDialogText.value == "") {
         assignNwk();
     } else {
@@ -199,14 +211,20 @@ function drop(stelle: Praktikumsstelle) {
     }
 }
 
+function openConfirmationDialog(stelle: Praktikumsstelle) {
+    unassignConfirmDialog.value = true;
+    stelleToAssignUnassign.value = stelle;
+    unassignDialogContent.value = `Möchten sie die Zuweisung von ${stelle.assignedNwk?.vorname} ${stelle.assignedNwk?.nachname} wirklich aufheben?`;
+}
 function assignNwk() {
-    if (!stelleToAssign.value || !stelleToAssign.value.id) return;
-    stelleToAssign.value.assignedNwk = assignedNwkID.value;
+    if (!stelleToAssignUnassign.value || !stelleToAssignUnassign.value.id)
+        return;
+    stelleToAssignUnassign.value.assignedNwk = assignedNwkID.value;
     PraktikumsstellenService.assignNwk(
-        stelleToAssign.value.id,
-        stelleToAssign.value.assignedNwk.id
+        stelleToAssignUnassign.value.id,
+        stelleToAssignUnassign.value.assignedNwk.id
     );
-    EventBus.$emit("assignedNwk", stelleToAssign.value.assignedNwk);
+    EventBus.$emit("assignedNwk", stelleToAssignUnassign.value.assignedNwk);
     resetWarningDialog();
 }
 function resetWarningDialog() {
@@ -240,6 +258,11 @@ function calculateLehrjahr() {
         lehrjahr -= 1;
     }
     return lehrjahr;
+}
+
+function resetUnassign() {
+    stelleToAssignUnassign.value = undefined;
+    unassignConfirmDialog.value = false;
 }
 </script>
 <style scoped lang="scss">

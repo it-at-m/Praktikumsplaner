@@ -20,8 +20,6 @@ If everything is all right, then the name of the [Nwk](./../glossary.md#nwk) wil
  the background changes to grey and feedback is given if it was successful.
 If there is already a [Nwk](./../glossary.md#nwk) on the desired [Praktikumsstelle](./../glossary.md#praktikumsstelle),
 then it is not possible to drop another [Nwk](./../glossary.md#nwk) there.
-[Nwks](./../glossary.md#nwk) can be unassigned from [Praktikumsstelle](./../glossary.md#praktikumsstelle) by pressing the `x` next to the name of the assigned [Nwk](./../glossary.md#nwk).
-After unassigning, feedback is given if it was successful.
 
 ### Warnings when assigning [Nwks](./../glossary.md#nwk)
 
@@ -37,3 +35,10 @@ Warnings that can appear:
 - [Nwk](./../glossary.md#nwk) is in a lower [Lehrjahr](./../glossary.md#lehrjahr) than the minimum requested.
 
 **⚠** All warnings *can* be ignored, but it is advised to reevaluate an assignment if a warning appears
+
+### Unassinging [Nwks](./../glossary.md#nwk)
+When a [Nwk](./../glossary.md#nwk) is assigned to a [Praktikumsstelle](./../glossary.md#praktikumsstelle) a little chip with the name of the Nwk shows this assignment.
+Next to the name you can find a little x. By clicking on this x you can unassign the Nwk. When doing so,
+a dialog will appear asking you if you really want to continue. When clicking yes the unassigning will be executed
+and the Nwk will be selectable in the list on the left. When clicking no, the process will be cancelled and
+nothing will be changed.
