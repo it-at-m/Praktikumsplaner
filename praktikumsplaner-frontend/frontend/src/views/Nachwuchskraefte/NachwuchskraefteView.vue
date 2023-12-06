@@ -1,6 +1,9 @@
 <template>
     <v-container>
-        <page-title page-header-text="Nachwuchskräfte"></page-title>
+        <page-title
+            page-header-text="Nachwuchskräfte"
+            back-button-url="/"
+        ></page-title>
         <v-row>
             <v-col cols="7"></v-col>
             <v-col>
