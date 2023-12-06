@@ -1,5 +1,9 @@
 <template>
     <v-container>
+        <PageTitle
+            back-button-url="/"
+            page-header-text="Zuweisung"
+        ></PageTitle>
         <v-row>
             <v-col cols="4">
                 <active-nwk-list />
