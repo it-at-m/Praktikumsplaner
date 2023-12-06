@@ -4,6 +4,7 @@
             class="full-width-card"
             elevation="16"
             outlined
+            :ripple="false"
             @click="show = !show"
         >
             <v-row>
@@ -26,16 +27,19 @@
                     {{ getCardText(props.praktikumsstelle) }}
                 </p></v-card-text
             >
-            <v-chip
-                v-if="props.praktikumsstelle.assignedNwk"
-                color="primary"
-                close
-                close-icon="mdi-close"
-                @click:close="openConfirmationDialog(praktikumsstelle)"
-                >{{
-                    `${props.praktikumsstelle.assignedNwk.vorname} ${props.praktikumsstelle.assignedNwk.nachname}`
-                }}</v-chip
+            <v-col>
+                <v-chip
+                    v-if="props.praktikumsstelle.assignedNwk"
+                    color="primary"
+                    close
+                    close-icon="mdi-close"
+                    @click:close="openConfirmationDialog(praktikumsstelle)"
+                    >{{
+                        `${props.praktikumsstelle.assignedNwk.vorname} ${props.praktikumsstelle.assignedNwk.nachname}`
+                    }}</v-chip
+                ></v-col
             >
+
             <v-card-actions class="custom-card-actions">
                 <v-spacer></v-spacer>
                 <v-btn

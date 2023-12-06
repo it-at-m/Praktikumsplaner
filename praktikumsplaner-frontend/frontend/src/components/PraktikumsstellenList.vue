@@ -33,6 +33,7 @@
                                             praktikumsstelle.assignedNwk,
                                         spacer: true,
                                     }"
+                                    :ripple="false"
                                     @drop="drop(praktikumsstelle)"
                                     @dragover.prevent
                                     @dragenter.prevent
