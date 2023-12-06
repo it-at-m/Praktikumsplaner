@@ -8,13 +8,6 @@
             @yes="assignNwk"
         ></yes-no-dialog-without-activator>
 
-        <yes-no-dialog-without-activator
-            v-model="unassignConfirmDialog"
-            :dialogtitle="unassignDialogTitle"
-            :dialogtext="unassignDialogContent"
-            @no="resetUnassign"
-            @yes="unassignNwk"
-        ></yes-no-dialog-without-activator>
         <v-container>
             <v-expansion-panels multiple>
                 <v-expansion-panel
@@ -22,6 +15,7 @@
                         praktikumsstellenliste, abteilung
                     ) in praktikumsstellen"
                     :key="abteilung"
+                    class="custom-panel"
                 >
                     <v-expansion-panel-header>{{
                         abteilung
@@ -37,92 +31,16 @@
                                     :class="{
                                         'v-list-item--active':
                                             praktikumsstelle.assignedNwk,
+                                        spacer: true,
                                     }"
+                                    :ripple="false"
                                     @drop="drop(praktikumsstelle)"
                                     @dragover.prevent
                                     @dragenter.prevent
                                 >
-                                    <v-list-item-content>
-                                        <v-row>
-                                            <v-col cols="10">
-                                                <v-list-item-title>
-                                                    Stelle bei
-                                                    {{
-                                                        praktikumsstelle.dienststelle
-                                                    }}</v-list-item-title
-                                                >
-                                                <v-list-item-subtitle
-                                                    v-if="
-                                                        praktikumsstelle.studienart
-                                                    "
-                                                >
-                                                    Studiengang:
-                                                    {{
-                                                        praktikumsstelle.studienart
-                                                    }}</v-list-item-subtitle
-                                                >
-                                                <v-list-item-subtitle v-else>
-                                                    Ausbildungsrichtung:
-                                                    {{
-                                                        praktikumsstelle.ausbildungsrichtung
-                                                    }}</v-list-item-subtitle
-                                                >
-                                                <v-list-item-subtitle
-                                                    v-if="
-                                                        praktikumsstelle.studiensemester
-                                                    "
-                                                    >Studiensemester:
-                                                    {{
-                                                        praktikumsstelle.studiensemester
-                                                    }}</v-list-item-subtitle
-                                                >
-                                                <v-list-item-subtitle v-else>
-                                                    Ausbildungsjahr:
-                                                    {{
-                                                        praktikumsstelle.ausbildungsjahr
-                                                    }}</v-list-item-subtitle
-                                                >
-                                                <v-list-item-subtitle
-                                                    v-if="
-                                                        praktikumsstelle.namentlicheAnforderung
-                                                    "
-                                                >
-                                                    Namentliche Anforderung:
-                                                    {{
-                                                        praktikumsstelle.namentlicheAnforderung
-                                                    }}
-                                                </v-list-item-subtitle>
-                                            </v-col>
-                                            <v-col
-                                                v-if="
-                                                    praktikumsstelle.planstelleVorhanden
-                                                "
-                                                cols="2"
-                                            >
-                                                <v-icon x-large
-                                                    >mdi-account-star</v-icon
-                                                >
-                                            </v-col>
-                                            <v-list-item-icon>
-                                                <v-chip
-                                                    v-if="
-                                                        praktikumsstelle.assignedNwk
-                                                    "
-                                                    color="primary"
-                                                    close
-                                                    close-icon="mdi-close"
-                                                    @click:close="
-                                                        openConfirmationDialog(
-                                                            praktikumsstelle
-                                                        )
-                                                    "
-                                                    >{{
-                                                        `${praktikumsstelle.assignedNwk.vorname} ${praktikumsstelle.assignedNwk.nachname}`
-                                                    }}</v-chip
-                                                >
-                                            </v-list-item-icon>
-                                        </v-row>
-                                    </v-list-item-content>
+                                    <PraktikumsstelleCard
+                                        :praktikumsstelle="praktikumsstelle"
+                                    ></PraktikumsstelleCard>
                                 </v-list-item>
                             </v-list-item-group>
                         </v-list>
@@ -140,6 +58,7 @@ import { useNwkStore } from "@/stores/nwkStore";
 import Nwk from "@/types/Nwk";
 import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
+import PraktikumsstelleCard from "@/components/PraktikumsstelleCard.vue";
 
 const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>();
 const nwkStore = useNwkStore();
@@ -150,10 +69,6 @@ const warningDialogTitle = ref<string>(
 );
 const warningDialogText = ref<string>("");
 const stelleToAssignUnassign = ref<Praktikumsstelle>();
-
-const unassignDialogContent = ref<string>("");
-const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
-const unassignConfirmDialog = ref<boolean>(false);
 
 watch(
     () => nwkStore.nwk,
@@ -286,23 +201,6 @@ function drop(stelle: Praktikumsstelle) {
     }
 }
 
-function openConfirmationDialog(stelle: Praktikumsstelle) {
-    unassignConfirmDialog.value = true;
-    stelleToAssignUnassign.value = stelle;
-    unassignDialogContent.value = `Möchten sie die Zuweisung von ${stelle.assignedNwk?.vorname} ${stelle.assignedNwk?.nachname} wirklich aufheben?`;
-}
-
-function unassignNwk() {
-    if (stelleToAssignUnassign.value?.id) {
-        PraktikumsstellenService.unassignNwk(stelleToAssignUnassign.value.id);
-        EventBus.$emit(
-            "unassignedNwk",
-            stelleToAssignUnassign.value.assignedNwk
-        );
-        stelleToAssignUnassign.value.assignedNwk = undefined;
-    }
-    resetUnassign();
-}
 function assignNwk() {
     if (!stelleToAssignUnassign.value || !stelleToAssignUnassign.value.id)
         return;
@@ -346,9 +244,14 @@ function calculateLehrjahr() {
     }
     return lehrjahr;
 }
-
-function resetUnassign() {
-    stelleToAssignUnassign.value = undefined;
-    unassignConfirmDialog.value = false;
-}
 </script>
+<style scoped lang="scss">
+.spacer {
+    padding-bottom: 10px;
+}
+.custom-panel {
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    margin: 2px;
+}
+</style>

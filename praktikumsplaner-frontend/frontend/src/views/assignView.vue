@@ -1,14 +1,15 @@
 <template>
     <v-container>
+        <PageTitle
+            back-button-url="/"
+            page-header-text="Zuweisung"
+        ></PageTitle>
         <v-row>
-            <v-col cols="6">
+            <v-col cols="4">
                 <active-nwk-list-for-zuweisung />
-                <div class="r"></div>
             </v-col>
-            <v-col cols="1">
-                <v-divider vertical />
-            </v-col>
-            <v-col>
+            <v-divider vertical />
+            <v-col cols="8">
                 <praktikumsstellen-list />
             </v-col>
         </v-row>
