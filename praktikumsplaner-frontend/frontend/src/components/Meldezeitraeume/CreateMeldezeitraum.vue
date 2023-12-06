@@ -1,6 +1,5 @@
 <template>
     <v-col>
-        <h2>{{ header }}</h2>
         <v-form
             ref="form"
             class="d-flex justify-center align-center form"
@@ -50,19 +49,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
 import { sleep } from "@antfu/utils";
 import router from "@/router";
-import { useHeaderStore } from "@/stores/header";
 import { useRules } from "@/composables/rules";
 
 const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum(""));
-const headerStore = useHeaderStore();
 const form = ref<HTMLFormElement>();
-const header = "Meldezeitraum";
 const maxLength = 255;
 const validationRules = useRules();
 
@@ -102,8 +98,4 @@ function clickAbbrechen() {
     resetForm();
     router.push("/");
 }
-
-onMounted(() => {
-    headerStore.setHeader(header);
-});
 </script>
