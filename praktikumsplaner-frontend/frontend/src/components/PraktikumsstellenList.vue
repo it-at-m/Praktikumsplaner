@@ -83,6 +83,29 @@
                                                 `${praktikumsstelle.assignedNwk.vorname} ${praktikumsstelle.assignedNwk.nachname}`
                                             }}</v-chip
                                         >
+                                        <v-card-actions
+                                            class="custom-card-actions"
+                                        >
+                                            <v-spacer></v-spacer>
+                                            <v-btn
+                                                icon
+                                                @click="show = !show"
+                                            >
+                                                <v-icon>{{
+                                                    show
+                                                        ? "mdi-chevron-up"
+                                                        : "mdi-chevron-down"
+                                                }}</v-icon>
+                                            </v-btn>
+                                        </v-card-actions>
+                                        <v-expand-transition>
+                                            <div v-show="show">
+                                                <v-divider></v-divider>
+                                                <v-card-text>
+                                                    {{ praktikumsstelle }}
+                                                </v-card-text>
+                                            </div>
+                                        </v-expand-transition>
                                     </v-card>
                                 </v-list-item>
                             </v-list-item-group>
@@ -111,6 +134,8 @@ const warningDialogTitle = ref<string>(
 );
 const warningDialogText = ref<string>("");
 const stelleToAssign = ref<Praktikumsstelle>();
+
+const show = ref<boolean>(false);
 
 watch(
     () => nwkStore.nwk,
@@ -331,5 +356,20 @@ function getCardText(stelle: Praktikumsstelle): string {
     background-color: #f0f0f0;
     border: 2px solid #ccc;
     margin: 2px;
+}
+.custom-card-title {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+.custom-card-text {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    padding-top: 1px;
+}
+
+.custom-card-actions {
+    margin-top: 5px;
+    padding-top: 1px;
 }
 </style>
