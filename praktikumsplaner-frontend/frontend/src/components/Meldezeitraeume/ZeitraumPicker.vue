@@ -2,7 +2,7 @@
     <v-row>
         <v-col>
             <v-row>
-                <v-col cols="3">
+                <v-col cols="12">
                     <v-text-field
                         ref="endDate"
                         v-model="range.startZeitpunkt"
@@ -11,13 +11,13 @@
                         type="date"
                         :rules="startZeitpunktRules"
                         :append-icon="calendarIcon"
-                        label="Beginn der Ausbildung"
+                        label="Beginn des Meldezeitraums"
                     >
                     </v-text-field>
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols="3">
+                <v-col cols="12">
                     <v-text-field
                         ref="startDate"
                         v-model="range.endZeitpunkt"
@@ -25,7 +25,7 @@
                         outlined
                         type="date"
                         :append-icon="calendarIcon"
-                        label="Ende der Ausbildung"
+                        label="Ende des Meldezeitraums"
                         :rules="endZeitpunktRules"
                     >
                     </v-text-field>
@@ -52,14 +52,14 @@ const range = computed(() => props.value);
 const isStartBeforeEnd = computed(() => {
     return (
         range.value.isStartBeforeEnd ||
-        "Das Startdatum muss vor dem Enddatum liegen."
+        "Der Beginn des Meldezeitraums muss vor dem Ende liegen."
     );
 });
 
 const isEndBeforeStart = computed(() => {
     return (
         range.value.isStartBeforeEnd ||
-        "Das Enddatum muss nach dem Startdatum liegen."
+        "Das Ende des Meldezeitraums muss vor dem Beginn liegen."
     );
 });
 
