@@ -4,7 +4,7 @@
             :to="{ path: backButtonUrl }"
             icon
         >
-            <v-icon>mdi-arrow-left</v-icon>
+            <v-icon color="black">mdi-arrow-left</v-icon>
         </v-btn>
         <span class="text-h5">{{ props.pageHeaderText }}</span>
     </v-row>
@@ -19,6 +19,17 @@ const props = defineProps<{
 
 <style scoped>
 .PageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     margin: 1%;
+}
+
+.PageHeader > .v-btn {
+    margin-right: 10px;
+}
+
+.text-h5 {
+    margin: 0;
 }
 </style>
