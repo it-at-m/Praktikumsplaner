@@ -23,10 +23,26 @@ describe("rules fileFormat test", () => {
         expect(aacRule(txtFile)).toBe(errorMessage);
     });
     it("tests fileFormatRules with null", () => {
-        expect(aacRule(null)).toBe(errorMessage);
+        expect(aacRule(null)).toBe(true);
     });
     it("tests fileFormatRules with undefined", () => {
-        expect(aacRule(undefined)).toBe(errorMessage);
+        expect(aacRule(undefined)).toBe(true);
+    });
+});
+describe("rules fileRequired test", () => {
+    const fileRule = validationRules.fileRequiredRule(errorMessage);
+    it("tests fileRequired return true", () => {
+        const txtFile = new File(["foo"], "foo.txt", {
+            type: "text/plain",
+        });
+
+        expect(fileRule(txtFile)).toBe(true);
+    });
+    it("tests fileRequired with null", () => {
+        expect(fileRule(null)).toBe(errorMessage);
+    });
+    it("tests fileRequired with undefined", () => {
+        expect(fileRule(undefined)).toBe(errorMessage);
     });
 });
 describe("rules maxLength test", () => {
