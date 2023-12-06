@@ -36,15 +36,13 @@
             app
             clipped
         >
-            <v-list>
+            <v-list nav>
                 <v-list-item
                     v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
-                    :to="{ path: '/excelimport' }"
+                    :to="{ path: '/nachwuchskraefte' }"
                 >
                     <v-list-item-content>
-                        <v-list-item-title
-                            >Excel Datei hochladen</v-list-item-title
-                        >
+                        <v-list-item-title>Nachwuchskräfte</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
@@ -63,14 +61,6 @@
                         <v-list-item-title
                             >Praktikumsstellen Meldung</v-list-item-title
                         >
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item
-                    v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
-                    :to="{ path: '/nwkUebersicht' }"
-                >
-                    <v-list-item-content>
-                        <v-list-item-title>Nwk Übersicht</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item

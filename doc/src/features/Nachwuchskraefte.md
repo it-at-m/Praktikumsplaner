@@ -1,10 +1,19 @@
-# Import Nwks from Excel
+# Nachwuchskräfte
 
-A navigation tab labeled `Import` makes it possible to import Nwks from an Excel file.
+A navigation tab labeled `Nachwuchskräfte` makes it possible to view all active [Nwks](./../glossary.md#nwk) and import [Nwks](./../glossary.md#nwk) from an Excel file.
 
-### Using the button
+### [Nwk](./../glossary.md#nwk) Overview
 
-In the middle of the site is a form with a blue upload button.
+In the grey Box labeled `Übersicht`, you can see all active [Nwks](./../glossary.md#nwk).
+Active means that they have not yet finished their training.
+Displayed Infos:
+- Name
+- Major/training direction
+- year
+
+### Using the Import button
+
+In the top right of the site is a blue upload button labeled `Datei Hochladen`.
 
 It is possible to upload an Excel file there.
 
@@ -23,10 +32,9 @@ The year (Jahrgang) has to be in this format: XX/XX Example: 20/24 for someone w
 The lecture days (Vorlesungstage) have to be in the standard German short notation of Days ([see Table below](#english-days-to-german-short-notation)).
 The days can be chained together by plus signs, for example: Mo + Di + Mi.
 
-If the upload is successful, a success message will appear. If it's not, a red error will appear.
+If the upload is successful, a green success message will appear. If it's not, a red error will appear.
 
 ### English days to German short notation
 | English | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday |
 |---------|--------|---------|-----------|----------|--------|----------|
 | German  | Mo     | Di      | Mi        | Do       | Fr     | Sa       |
-

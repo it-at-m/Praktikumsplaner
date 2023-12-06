@@ -12,9 +12,10 @@ The results of this process are listed under [features](#features)
 
 ## Features
 
-- [Excel-Import](../../../features/ExcelImport.md) (örtliche Ausbildungsleitung)
+- [Nachwuchskräfte](../../../features/Nachwuchskraefte.md) (örtliche Ausbildungsleitung)
 - [Meldezeitraum](../../../features/meldezeitraum.md) (örtliche Ausbildungsleitung)
 - [Meldung örtl. Ausbilder](../../../features/MeldungOertlAusbilder.md) (örtliche Ausbilderin / anyone except Nwk)
+- [Zuweisung](../../../features/Zuweisung.md) (örtliche Ausbildungsleitung)
 
 ## Technical Implementation
 On the frontend side, the security features are controlled by the `VITE_APP_SECURITY` in the `.env` files.

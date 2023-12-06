@@ -7,9 +7,8 @@ import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
 import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
 import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
-import ExcelImportNwk from "@/components/ExcelImportNwk.vue";
 import assignView from "@/views/assignView.vue";
-import NwkUebersicht from "@/views/NwkUebersicht.vue";
+import NachwuchskraefteView from "@/views/Nachwuchskraefte/NachwuchskraefteView.vue";
 
 Vue.use(Router);
 
@@ -44,9 +43,9 @@ export default new Router({
             meta: {},
         },
         {
-            path: "/excelimport",
-            name: "excelimport",
-            component: ExcelImportNwk,
+            path: "/nachwuchskraefte",
+            name: "nachwuchskraefte",
+            component: NachwuchskraefteView,
         },
         {
             path: "/meldezeitraum",
@@ -77,11 +76,6 @@ export default new Router({
             path: "/zuweisung",
             name: "Zuweisung",
             component: assignView,
-        },
-        {
-            path: "/nwkUebersicht",
-            name: "NwkUebersicht",
-            component: NwkUebersicht,
         },
         { path: "*", redirect: "/" }, //Fallback 2
     ],

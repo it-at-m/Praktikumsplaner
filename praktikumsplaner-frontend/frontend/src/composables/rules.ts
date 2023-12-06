@@ -1,7 +1,12 @@
 export function useRules() {
     function fileTypeRule(format: string, message = "error") {
         return (value: File | null | undefined) =>
-            (value && value.type == format) || message;
+            !value || (value && value.type == format) || message;
+    }
+
+    function fileRequiredRule(message = "error") {
+        return (value: File | null | undefined) =>
+            value != null || value != undefined || message;
     }
 
     function maxLengthRule(length: number, message = "error") {
@@ -42,5 +47,6 @@ export function useRules() {
         notEmptyRule,
         emailRule,
         notEmptyBooleanRule,
+        fileRequiredRule,
     };
 }
