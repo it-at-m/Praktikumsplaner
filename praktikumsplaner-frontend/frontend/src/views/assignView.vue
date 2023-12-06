@@ -5,11 +5,8 @@
             page-header-text="Zuweisung"
         ></PageTitle>
         <v-row>
-            <v-col cols="6">
-                <active-nwk-list-for-zuweisung />
             <v-col cols="4">
-                <active-nwk-list />
-                <div class="r"></div>
+                <active-nwk-list-for-zuweisung />
             </v-col>
             <v-divider vertical />
             <v-col cols="8">

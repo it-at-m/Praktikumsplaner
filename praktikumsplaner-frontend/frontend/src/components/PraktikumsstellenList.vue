@@ -8,13 +8,6 @@
             @yes="assignNwk"
         ></yes-no-dialog-without-activator>
 
-        <yes-no-dialog-without-activator
-            v-model="unassignConfirmDialog"
-            :dialogtitle="unassignDialogTitle"
-            :dialogtext="unassignDialogContent"
-            @no="resetUnassign"
-            @yes="unassignNwk"
-        ></yes-no-dialog-without-activator>
         <v-container>
             <v-expansion-panels multiple>
                 <v-expansion-panel
@@ -75,10 +68,6 @@ const warningDialogTitle = ref<string>(
 );
 const warningDialogText = ref<string>("");
 const stelleToAssignUnassign = ref<Praktikumsstelle>();
-
-const unassignDialogContent = ref<string>("");
-const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
-const unassignConfirmDialog = ref<boolean>(false);
 
 watch(
     () => nwkStore.nwk,
@@ -211,11 +200,6 @@ function drop(stelle: Praktikumsstelle) {
     }
 }
 
-function openConfirmationDialog(stelle: Praktikumsstelle) {
-    unassignConfirmDialog.value = true;
-    stelleToAssignUnassign.value = stelle;
-    unassignDialogContent.value = `Möchten sie die Zuweisung von ${stelle.assignedNwk?.vorname} ${stelle.assignedNwk?.nachname} wirklich aufheben?`;
-}
 function assignNwk() {
     if (!stelleToAssignUnassign.value || !stelleToAssignUnassign.value.id)
         return;
@@ -258,11 +242,6 @@ function calculateLehrjahr() {
         lehrjahr -= 1;
     }
     return lehrjahr;
-}
-
-function resetUnassign() {
-    stelleToAssignUnassign.value = undefined;
-    unassignConfirmDialog.value = false;
 }
 </script>
 <style scoped lang="scss">

@@ -31,7 +31,7 @@
                 color="primary"
                 close
                 close-icon="mdi-close"
-                @click:close="unassignNwk(props.praktikumsstelle)"
+                @click:close="openConfirmationDialog(praktikumsstelle)"
                 >{{
                     `${props.praktikumsstelle.assignedNwk.vorname} ${props.praktikumsstelle.assignedNwk.nachname}`
                 }}</v-chip
@@ -57,6 +57,13 @@
                     </v-card-text>
                 </div>
             </v-expand-transition>
+            <yes-no-dialog-without-activator
+                v-model="unassignConfirmDialog"
+                :dialogtitle="unassignDialogTitle"
+                :dialogtext="unassignDialogContent"
+                @no="resetUnassign"
+                @yes="unassignNwk"
+            ></yes-no-dialog-without-activator>
         </v-card>
     </v-container>
 </template>
@@ -65,12 +72,19 @@ import { ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import { EventBus } from "@/stores/event-bus";
+import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 
 const show = ref<boolean>(false);
 
 const props = defineProps<{
     praktikumsstelle: Praktikumsstelle;
 }>();
+
+const unassignDialogContent = ref<string>("");
+const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
+const unassignConfirmDialog = ref<boolean>(false);
+
+const stelleToAssignUnassign = ref<Praktikumsstelle>();
 
 function getCardText(stelle: Praktikumsstelle): string {
     let cardText = "";
@@ -129,12 +143,25 @@ function getCardDetailText(stelle: Praktikumsstelle): string {
     return cardText;
 }
 
-function unassignNwk(stelle: Praktikumsstelle) {
-    if (stelle.id) {
-        PraktikumsstellenService.unassignNwk(stelle.id);
-        EventBus.$emit("unassignedNwk", stelle.assignedNwk);
-        stelle.assignedNwk = undefined;
+function unassignNwk() {
+    if (stelleToAssignUnassign.value?.id) {
+        PraktikumsstellenService.unassignNwk(stelleToAssignUnassign.value.id);
+        EventBus.$emit(
+            "unassignedNwk",
+            stelleToAssignUnassign.value.assignedNwk
+        );
+        stelleToAssignUnassign.value.assignedNwk = undefined;
     }
+    resetUnassign();
+}
+function openConfirmationDialog(stelle: Praktikumsstelle) {
+    unassignConfirmDialog.value = true;
+    stelleToAssignUnassign.value = stelle;
+    unassignDialogContent.value = `Möchten sie die Zuweisung von ${stelle.assignedNwk?.vorname} ${stelle.assignedNwk?.nachname} wirklich aufheben?`;
+}
+function resetUnassign() {
+    stelleToAssignUnassign.value = undefined;
+    unassignConfirmDialog.value = false;
 }
 </script>
 <style scoped lang="scss">
