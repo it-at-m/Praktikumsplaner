@@ -243,9 +243,6 @@ function calculateLehrjahr() {
 }
 </script>
 <style scoped lang="scss">
-.full-width-card {
-    width: 100%;
-}
 .spacer {
     padding-bottom: 10px;
 }
@@ -253,20 +250,5 @@ function calculateLehrjahr() {
     background-color: #f0f0f0;
     border: 2px solid #ccc;
     margin: 2px;
-}
-.custom-card-title {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-}
-
-.custom-card-text {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    padding-top: 1px;
-}
-
-.custom-card-actions {
-    margin-top: 5px;
-    padding-top: 1px;
 }
 </style>

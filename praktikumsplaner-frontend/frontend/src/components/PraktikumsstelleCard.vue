@@ -6,29 +6,31 @@
             outlined
         >
             <v-row>
-                <v-col cols="9">
+                <v-col cols="10">
                     <v-card-title
                         >Stelle bei
-                        {{ praktikumsstelle.dienststelle }}</v-card-title
+                        {{ props.praktikumsstelle.dienststelle }}</v-card-title
                     >
                 </v-col>
                 <v-col>
-                    <v-card-text v-if="praktikumsstelle.planstelleVorhanden">
+                    <v-card-text
+                        v-if="props.praktikumsstelle.planstelleVorhanden"
+                    >
                         <v-icon x-large>mdi-account-star</v-icon>
                     </v-card-text>
                 </v-col>
             </v-row>
             <v-card-text>
                 <p style="white-space: pre-line">
-                    {{ getCardText(praktikumsstelle) }}
+                    {{ getCardText(props.praktikumsstelle) }}
                 </p></v-card-text
             >
             <v-chip
-                v-if="praktikumsstelle.assignedNwk"
+                v-if="props.praktikumsstelle.assignedNwk"
                 color="primary"
                 close
                 close-icon="mdi-close"
-                @click:close="unassignNwk(praktikumsstelle)"
+                @click:close="unassignNwk(props.praktikumsstelle)"
                 >{{
                     `${praktikumsstelle.assignedNwk.vorname} ${praktikumsstelle.assignedNwk.nachname}`
                 }}</v-chip
@@ -48,7 +50,9 @@
                 <div v-show="show">
                     <v-divider></v-divider>
                     <v-card-text>
-                        {{ praktikumsstelle }}
+                        <p style="white-space: pre-line">
+                            {{ getCardDetailText(props.praktikumsstelle) }}
+                        </p>
                     </v-card-text>
                 </div>
             </v-expand-transition>
@@ -76,14 +80,16 @@ function getCardText(stelle: Praktikumsstelle): string {
             stelle.studienart +
             "\n" +
             "Studiensemester: " +
-            stelle.studiensemester;
+            stelle.studiensemester?.charAt(stelle.studiensemester?.length - 1) +
+            ". Semester";
     } else if (stelle.ausbildungsrichtung) {
         cardText +=
             "Ausbildungsrichtung: " +
             stelle.ausbildungsrichtung +
             "\n" +
             "Ausbildungsjahr: " +
-            stelle.ausbildungsjahr;
+            stelle.ausbildungsjahr?.charAt(stelle.ausbildungsjahr?.length - 1) +
+            ". Ausbildungsjahr";
     }
 
     if (stelle.namentlicheAnforderung) {
@@ -91,6 +97,34 @@ function getCardText(stelle: Praktikumsstelle): string {
             "\nNamentliche Anforderung: " + stelle.namentlicheAnforderung;
     }
 
+    return cardText;
+}
+
+function getCardDetailText(stelle: Praktikumsstelle): string {
+    let cardText = "";
+    let dringlichkeit =
+        stelle.dringlichkeit.charAt(0).toUpperCase() +
+        stelle.dringlichkeit.slice(1).toLowerCase();
+    cardText += "Dringlichkeit: " + dringlichkeit + "\n";
+    if (stelle.programmierkenntnisse !== undefined) {
+        cardText +=
+            "Programmierkenntnisse: " +
+            (stelle.programmierkenntnisse ? "Ja" : "Nein") +
+            "\n";
+    }
+    if (stelle.ausbildungsrichtung) {
+        cardText +=
+            "Projektarbeit: " + (stelle.projektarbeit ? "Ja" : "Nein") + "\n";
+    }
+    cardText +=
+        "Ausbilder*in: " +
+        stelle.oertlicheAusbilder +
+        "\n" +
+        "Mailadresse Ausbilder*in: " +
+        stelle.email +
+        "\n" +
+        "Tätigkeiten: " +
+        stelle.taetigkeiten;
     return cardText;
 }
 
@@ -103,5 +137,34 @@ function unassignNwk(stelle: Praktikumsstelle) {
 }
 </script>
 <style scoped lang="scss">
+.custom-card-title {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
 
+.custom-card-text {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    padding-top: 1px;
+}
+
+.custom-card-actions {
+    margin-top: 5px;
+    padding-top: 1px;
+}
+.custom-card-title {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+.custom-card-text {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    padding-top: 1px;
+}
+
+.custom-card-actions {
+    margin-top: 5px;
+    padding-top: 1px;
+}
 </style>
