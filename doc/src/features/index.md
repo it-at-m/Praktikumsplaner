@@ -1,11 +1,9 @@
 # Features
 
-[Excel Upload](ExcelImport.md)
+[Nachwuchskräfte](Nachwuchskraefte.md)
 
 [Create Meldezeitraum](meldezeitraum.md)
 
 [Report Praktikumsstelle](MeldungOertlAusbilder.md)
 
 [Assignment](Zuweisung.md)
-
-[Nwk Overview](NwkUebersicht.md)
