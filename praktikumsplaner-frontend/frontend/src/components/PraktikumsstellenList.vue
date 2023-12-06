@@ -36,77 +36,9 @@
                                     @dragover.prevent
                                     @dragenter.prevent
                                 >
-                                    <v-card
-                                        class="full-width-card"
-                                        elevation="16"
-                                        outlined
-                                    >
-                                        <v-row>
-                                            <v-col cols="9">
-                                                <v-card-title
-                                                    >Stelle bei
-                                                    {{
-                                                        praktikumsstelle.dienststelle
-                                                    }}</v-card-title
-                                                >
-                                            </v-col>
-                                            <v-col>
-                                                <v-card-text
-                                                    v-if="
-                                                        praktikumsstelle.planstelleVorhanden
-                                                    "
-                                                >
-                                                    <v-icon x-large
-                                                        >mdi-account-star</v-icon
-                                                    >
-                                                </v-card-text>
-                                            </v-col>
-                                        </v-row>
-                                        <v-card-text>
-                                            <p style="white-space: pre-line">
-                                                {{
-                                                    getCardText(
-                                                        praktikumsstelle
-                                                    )
-                                                }}
-                                            </p></v-card-text
-                                        >
-                                        <v-chip
-                                            v-if="praktikumsstelle.assignedNwk"
-                                            color="primary"
-                                            close
-                                            close-icon="mdi-close"
-                                            @click:close="
-                                                unassignNwk(praktikumsstelle)
-                                            "
-                                            >{{
-                                                `${praktikumsstelle.assignedNwk.vorname} ${praktikumsstelle.assignedNwk.nachname}`
-                                            }}</v-chip
-                                        >
-                                        <v-card-actions
-                                            class="custom-card-actions"
-                                        >
-                                            <v-spacer></v-spacer>
-                                            <v-btn
-                                                icon
-                                                @click="show = !show"
-                                            >
-                                                <v-icon>{{
-                                                    show
-                                                        ? "mdi-chevron-up"
-                                                        : "mdi-chevron-down"
-                                                }}</v-icon>
-                                            </v-btn>
-                                        </v-card-actions>
-                                        <v-expand-transition>
-                                            <div v-show="show">
-                                                <v-divider></v-divider>
-                                                <v-card-text>
-                                                    {{ praktikumsstelle }}
-                                                </v-card-text>
-                                            </div>
-                                        </v-expand-transition>
-                                    </v-card>
+                                    <PraktikumsstelleCard
+                                        :praktikumsstelle="praktikumsstelle"
+                                    ></PraktikumsstelleCard>
                                 </v-list-item>
                             </v-list-item-group>
                         </v-list>
@@ -124,6 +56,7 @@ import { useNwkStore } from "@/stores/nwkStore";
 import Nwk from "@/types/Nwk";
 import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
+import PraktikumsstelleCard from "@/components/PraktikumsstelleCard.vue";
 
 const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>();
 const nwkStore = useNwkStore();
@@ -134,8 +67,6 @@ const warningDialogTitle = ref<string>(
 );
 const warningDialogText = ref<string>("");
 const stelleToAssign = ref<Praktikumsstelle>();
-
-const show = ref<boolean>(false);
 
 watch(
     () => nwkStore.nwk,
@@ -268,13 +199,6 @@ function drop(stelle: Praktikumsstelle) {
     }
 }
 
-function unassignNwk(stelle: Praktikumsstelle) {
-    if (stelle.id) {
-        PraktikumsstellenService.unassignNwk(stelle.id);
-        EventBus.$emit("unassignedNwk", stelle.assignedNwk);
-        stelle.assignedNwk = undefined;
-    }
-}
 function assignNwk() {
     if (!stelleToAssign.value || !stelleToAssign.value.id) return;
     stelleToAssign.value.assignedNwk = assignedNwkID.value;
@@ -316,33 +240,6 @@ function calculateLehrjahr() {
         lehrjahr -= 1;
     }
     return lehrjahr;
-}
-
-function getCardText(stelle: Praktikumsstelle): string {
-    let cardText = "";
-
-    if (stelle.studienart) {
-        cardText +=
-            "Studiengang: " +
-            stelle.studienart +
-            "\n" +
-            "Studiensemester: " +
-            stelle.studiensemester;
-    } else if (stelle.ausbildungsrichtung) {
-        cardText +=
-            "Ausbildungsrichtung: " +
-            stelle.ausbildungsrichtung +
-            "\n" +
-            "Ausbildungsjahr: " +
-            stelle.ausbildungsjahr;
-    }
-
-    if (stelle.namentlicheAnforderung) {
-        cardText +=
-            "\nNamentliche Anforderung: " + stelle.namentlicheAnforderung;
-    }
-
-    return cardText;
 }
 </script>
 <style scoped lang="scss">
