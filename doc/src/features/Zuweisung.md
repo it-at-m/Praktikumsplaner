@@ -9,7 +9,8 @@ The [Praktikumsstellen](./../glossary.md#praktikumsstelle) are grouped according
 Each main-[Dienststelle](../glossary.md#dienststelle) can be folded out and then displays a list of all associated [Praktikumsstellen](./../glossary.md#praktikumsstelle). 
 If no [Praktikumsstellen](./../glossary.md#praktikumsstelle) from this [Dienststelle](../glossary.md#dienststelle) has been reported, no fold-out element is displayed.
 If the [Dienststelle](../glossary.md#dienststelle) provided information, that their team has a [Planstelle](../glossary.md#planstelle),
-it will be marked with a special icon (mdi-account-star). 
+it will be marked with a special icon (mdi-account-star).
+Each [Praktikumsstellen](./../glossary.md#praktikumsstelle) can be expanded again by clicking on the arrow or the card itself to display more details with all the information about the position.
 
 ## Assign [Nwks](./../glossary.md#nwk) to [Praktikumsstellen](./../glossary.md#praktikumsstelle)
 
