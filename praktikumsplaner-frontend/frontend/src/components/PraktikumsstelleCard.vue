@@ -4,6 +4,7 @@
             class="full-width-card"
             elevation="16"
             outlined
+            @click="show = !show"
         >
             <v-row>
                 <v-col cols="10">
@@ -39,7 +40,7 @@
                 <v-spacer></v-spacer>
                 <v-btn
                     icon
-                    @click="show = !show"
+                    @click.stop="show = !show"
                 >
                     <v-icon>{{
                         show ? "mdi-chevron-up" : "mdi-chevron-down"
