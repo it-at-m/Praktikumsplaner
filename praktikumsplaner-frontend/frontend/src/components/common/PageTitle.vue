@@ -19,6 +19,17 @@ const props = defineProps<{
 
 <style scoped>
 .PageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     margin: 1%;
+}
+
+.PageHeader > .v-btn {
+    margin-right: 10px;
+}
+
+.text-h5 {
+    margin: 0;
 }
 </style>
