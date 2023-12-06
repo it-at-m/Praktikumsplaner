@@ -1,8 +1,8 @@
 <template>
     <v-row class="PageHeader">
         <v-btn
-            :to="{ path: backButtonUrl }"
             icon
+            @click="back"
         >
             <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
@@ -11,10 +11,16 @@
 </template>
 
 <script setup lang="ts">
+import router from "@/router";
+
 const props = defineProps<{
     pageHeaderText: string;
-    backButtonUrl: string;
 }>();
+
+function back() {
+    // dummy implementation until Vue 3
+    router.go(-1);
+}
 </script>
 
 <style scoped>

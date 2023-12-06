@@ -1,157 +1,100 @@
 <template>
-    <v-col>
-        <p><b>Excel Datei hochladen</b></p>
-        <v-form
-            ref="form"
-            class="d-flex justify-center align-center form"
-        >
-            <v-card
-                id="card"
-                tile
-                :class="{ uploadError: hasError }"
+    <v-dialog
+        v-model="visible"
+        persistent
+        max-width="550"
+    >
+        <template #activator="{ on }">
+            <v-btn
+                color="primary"
+                v-on="on"
             >
-                <v-toolbar
-                    color="primary"
-                    dense
-                    dark
+                <v-icon>mdi-tray-arrow-up</v-icon>
+                Datei Hochladen
+            </v-btn>
+        </template>
+        <v-form ref="form">
+            <v-card>
+                <v-card-title class="text-h5 font-weight-bold"
+                    >Datei hochladen</v-card-title
                 >
-                    <v-toolbar-title>Excel Import</v-toolbar-title></v-toolbar
-                >
-                <v-card-text>
-                    <span class="black--text">
-                        <v-icon
-                            x-large
-                            color="primary"
+                <v-list>
+                    <v-list-item>
+                        <v-file-input
+                            v-model="excelDatei"
+                            :accept="excelFormat"
+                            :rules="rules"
+                            label="Datei auswählen"
+                            prepend-icon="mdi-tray-arrow-up"
                         >
-                            {{ iconUpload }}
-                        </v-icon>
-                        {{ textUpload }}
-                    </span>
-                </v-card-text>
+                        </v-file-input>
+                    </v-list-item>
+                </v-list>
                 <v-card-actions>
                     <v-spacer />
                     <v-btn
-                        text
                         color="primary"
+                        outlined
                         @click="cancel()"
                     >
                         Abbrechen
                     </v-btn>
                     <v-btn
                         color="primary"
-                        @click="handleFileImport()"
-                        >{{ buttonActionText }}
+                        @click="uploadFile()"
+                    >
+                        Hochladen
                     </v-btn>
-                    <input
-                        ref="uploader"
-                        class="d-none"
-                        type="file"
-                        :accept="excelFormat"
-                        @change="onFileChanged"
-                    />
                 </v-card-actions>
             </v-card>
         </v-form>
-        <v-btn
-            outlined
-            text
-            color="primary"
-            class="buttonEnd"
-            @click="cancel()"
-        >
-            Zurück
-        </v-btn>
-    </v-col>
+    </v-dialog>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import ExcelService from "@/api/NwkService";
-import router from "@/router";
-import { useHeaderStore } from "@/stores/header";
-
+import { ref } from "vue";
+import { useSnackbarStore } from "@/stores/snackbar";
+import { Levels } from "@/api/error";
+import NwkService from "@/api/NwkService";
+import { useRules } from "@/composables/rules";
+import { EventBus } from "@/stores/event-bus";
+const visible = ref<boolean>();
+const excelDatei = ref<File>();
+const form = ref<HTMLFormElement>();
+const snackbarStore = useSnackbarStore();
 const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-const buttonTextInputFile = "Auswählen";
-const buttonTextReadyForUpload = "Hochladen";
-const buttonTextUploaded = "fortfahren";
-const iconBeforeUpload = "mdi-file-alert";
-const iconUploadedSuccess = "mdi-paperclip-check";
-const iconUploadedFailure = "mdi-paperclip-remove";
-const textBeforeUpload = "Wählen Sie die gewünschte Exeldatei aus!";
-const textUploadedSuccess = "Ihre Exceldatei wurde erfolgreich Hochgeladen!";
-const textUploadedFailure = "Ihre Exceldatei konnte nicht hochgeladen werden!";
-
-const excelDatei = ref<File>();
-const uploader = ref<HTMLInputElement>();
-const buttonActionText = ref<string>(buttonTextInputFile);
-const isReadyForUpload = ref<boolean>(false);
-const isUploaded = ref<boolean>(false);
-const iconUpload = ref<string>(iconBeforeUpload);
-const textUpload = ref<string>(textBeforeUpload);
-const hasError = ref<boolean>(false);
-const headerStore = useHeaderStore();
-
-onMounted(() => {
-    headerStore.setHeader("Excel Datei hochladen");
-});
-
+const validationRules = useRules();
+const rules = [
+    validationRules.fileRequiredRule(
+        "Eine Excel-Datei hochladen oder abbrechen."
+    ),
+    validationRules.fileTypeRule(
+        excelFormat,
+        "Falsches Dateiformat. Es muss eine Excel-Datei hochgeladen werden."
+    ),
+];
 function cancel() {
-    router.push("/");
+    visible.value = false;
+    form.value?.reset();
 }
-
-function handleFileImport() {
-    if (isReadyForUpload.value == true) {
-        uploadFile();
-    } else if (isUploaded.value == true) {
-        router.push("/");
-    } else {
-        // Trigger click on the FileInput
-        uploader.value?.click();
-    }
-}
-
-function onFileChanged(e: any) {
-    excelDatei.value = e.target.files[0];
-    buttonActionText.value = buttonTextReadyForUpload;
-    isReadyForUpload.value = true;
-}
-
-function onUploadedSuccess() {
-    iconUpload.value = iconUploadedSuccess;
-    textUpload.value = textUploadedSuccess;
-    buttonActionText.value = buttonTextUploaded;
-}
-
-function onUploadedFailed() {
-    iconUpload.value = iconUploadedFailure;
-    textUpload.value = textUploadedFailure;
-    buttonActionText.value = buttonTextUploaded;
-    hasError.value = true;
-}
-
 function uploadFile() {
-    if (!excelDatei.value) return;
-    ExcelService.uploadExcelFile(excelDatei.value)
-        .then(() => onUploadedSuccess())
+    if (!excelDatei.value || !form.value?.validate()) return;
+    NwkService.uploadExcelFile(excelDatei.value)
+        .then(() =>
+            snackbarStore.showMessage({
+                message: "Nachwuchskräfte erfolgreich angelegt.",
+                level: Levels.SUCCESS,
+            })
+        )
         .catch(() => {
-            onUploadedFailed();
+            EventBus.$emit("excelUploadError");
         })
         .finally(() => {
-            isUploaded.value = true;
-            isReadyForUpload.value = false;
+            cancel();
         });
 }
 </script>
 
-<style scoped lang="scss">
-.form {
-    margin-top: 14rem;
-}
-.buttonEnd {
-    margin-top: 32rem;
-}
-.uploadError {
-    background-color: var(--v-errorExcel-base);
-}
+<style scoped>
 </style>
