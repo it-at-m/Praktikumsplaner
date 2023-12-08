@@ -14,7 +14,7 @@
             <v-col>
                 <div>
                     <v-card-title>
-                        {{ props.nwk.vorname }} {{ props.nwk.nachname }}
+                        {{ getFullName(props.nwk) }}
                     </v-card-title>
                     <v-card-subtitle>
                         {{ props.nwk.studiengang }} /
