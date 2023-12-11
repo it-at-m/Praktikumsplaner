@@ -15,6 +15,7 @@ public interface MeldezeitraumRepository extends CrudRepository<Meldezeitraum, U
     @Query("SELECT EXISTS(SELECT e FROM Meldezeitraum e WHERE :end >= e.startZeitpunkt AND :start <= e.endZeitpunkt)")
     Boolean isOverlappingMeldezeitraum(@Param("start") final LocalDate start, @Param("end") final LocalDate end);
 
+    List<Meldezeitraum> findByStartZeitpunktAfterOrderByStartZeitpunktAsc(final LocalDate date);
     /*
      * This method returns a list of all reporting periods that ended before the given date.
      * Sorted in descending order by end date.
