@@ -107,6 +107,24 @@ services:
     networks:
       - dbs
 
+  mail-maildev:
+    image: maildev/maildev
+    ports:
+      - "8180:1080"
+      - "8125:1025"
+    environment:
+      MAILDEV_INCOMING_USER: pp-mail-user
+      MAILDEV_INCOMING_PASS: pp-mail-password
+
+  mail-mailpit:
+    image: axllent/mailpit
+    ports:
+      - "8180:8025"
+      - "8125:1025"
+    environment:
+      MP_SMTP_AUTH: "pp-mail-user:pp-mail-password"
+      MP_SMTP_AUTH_ALLOW_INSECURE: true
+
 networks:
   internal:
   keycloak:
