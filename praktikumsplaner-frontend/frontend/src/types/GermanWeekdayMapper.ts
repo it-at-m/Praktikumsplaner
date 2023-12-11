@@ -20,8 +20,6 @@ export default class GermanWeekdayMapper {
     ];
 
     public getGermanDays(daysString: string[]): string[] {
-        console.log(daysString);
-
         const sortedDays = daysString.sort(
             (a, b) => this.dayOrder.indexOf(a) - this.dayOrder.indexOf(b)
         );
