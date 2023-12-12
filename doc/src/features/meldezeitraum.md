@@ -7,7 +7,7 @@ They are displayed in three different lists.
 The first list only shows the current [Meldezeitraum](../glossary.md#meldezeitraum).
 The second list shows all [Meldezeiträume](../glossary.md#meldezeitraum) that have already ended.
 The third list shows all [Meldezeiträume](../glossary.md#meldezeitraum) that have not yet started.
-If amy of the lists is empty, a message will be displayed instead.
+If any of the lists is empty, a message will be displayed instead.
 
 ## Create a Meldezeitraum
 On the page `[app-url]/#/meldezeitraum` it is possible to create a [Meldezeitraum](../glossary.md#meldezeitraum).
