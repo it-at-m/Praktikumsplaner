@@ -11,7 +11,7 @@ export function useFormatter() {
         return date ? moment(date).format("L") : "";
     }
 
-    function formatDateFromString(date: string): string {
+    function formatDateFromString(date: string | undefined): string {
         return date ? moment(date).format("DD.MM.yyyy") : "";
     }
 
