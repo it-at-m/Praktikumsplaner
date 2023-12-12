@@ -48,7 +48,7 @@ public class MeldezeitraumController {
             return meldezeitraumService.getPassedMeldezeitraeume();
         } else if (restriction != null && restriction.equalsIgnoreCase("future")) {
             return meldezeitraumService.getUpcomingMeldezeitraeume();
-        } else if (restriction != null){
+        } else if (restriction != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Value '" + restriction + "' for parameter restriction not supported.");
         }
 
