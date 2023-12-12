@@ -11,5 +11,9 @@ export function useFormatter() {
         return date ? moment(date).format("L") : "";
     }
 
-    return { startingCharUpperCase, formatDate };
+    function formatDateFromString(date: string | undefined): string {
+        return date ? moment(date).format("DD.MM.yyyy") : "";
+    }
+
+    return { startingCharUpperCase, formatDate, formatDateFromString };
 }
