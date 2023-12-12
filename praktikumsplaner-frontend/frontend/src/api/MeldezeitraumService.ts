@@ -28,7 +28,7 @@ export default {
     },
     getCurrentMeldezeitraum(): Promise<Meldezeitraum[]> {
         return fetch(
-            `${API_BASE}${MELDEZEITRAUM_BASE}?restriction=current`,
+            `${API_BASE}${MELDEZEITRAUM_BASE}?period=current`,
             FetchUtils.getGETConfig()
         )
             .then((response) => {
@@ -45,7 +45,7 @@ export default {
     },
     getUpcomingMeldezeitraueme(): Promise<Meldezeitraum[]> {
         return fetch(
-            `${API_BASE}${MELDEZEITRAUM_BASE}?restriction=future`,
+            `${API_BASE}${MELDEZEITRAUM_BASE}?period=future`,
             FetchUtils.getGETConfig()
         )
             .then((response) => {
@@ -62,7 +62,7 @@ export default {
     },
     getPassedMeldezeitraueme(): Promise<Meldezeitraum[]> {
         return fetch(
-            `${API_BASE}${MELDEZEITRAUM_BASE}?restriction=history`,
+            `${API_BASE}${MELDEZEITRAUM_BASE}?period=past`,
             FetchUtils.getGETConfig()
         )
             .then((response) => {

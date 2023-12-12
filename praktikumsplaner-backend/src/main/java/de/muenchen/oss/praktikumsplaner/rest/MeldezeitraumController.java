@@ -36,20 +36,20 @@ public class MeldezeitraumController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<MeldezeitraumDto> getMeldezeitraum(@RequestParam(required = false) String restriction) {
-        if (restriction != null && restriction.equalsIgnoreCase("current")) {
+    public List<MeldezeitraumDto> getMeldezeitraeume(@RequestParam(required = false) String period) {
+        if (period != null && period.equalsIgnoreCase("current")) {
             try {
                 MeldezeitraumDto meldezeitraumDto = meldezeitraumService.getCurrentMeldezeitraum();
                 return List.of(meldezeitraumDto);
             } catch (ValidationException ve) {
                 return new ArrayList<>();
             }
-        } else if (restriction != null && restriction.equalsIgnoreCase("history")) {
+        } else if (period != null && period.equalsIgnoreCase("past")) {
             return meldezeitraumService.getPassedMeldezeitraeume();
-        } else if (restriction != null && restriction.equalsIgnoreCase("future")) {
+        } else if (period != null && period.equalsIgnoreCase("future")) {
             return meldezeitraumService.getUpcomingMeldezeitraeume();
-        } else if (restriction != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Value '" + restriction + "' for parameter restriction not supported.");
+        } else if (period != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Value '" + period + "' for parameter restriction not supported.");
         }
 
         return new ArrayList<>();
