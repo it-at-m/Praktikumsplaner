@@ -2,7 +2,7 @@
     <v-row>
         <v-col>
             <v-row>
-                <v-col cols="12">
+                <v-col :cols="layout">
                     <v-text-field
                         ref="endDate"
                         v-model="range.startZeitpunkt"
@@ -11,13 +11,11 @@
                         type="date"
                         :rules="startZeitpunktRules"
                         :append-icon="calendarIcon"
-                        label="Beginn des Meldezeitraums"
+                        :label="'Beginn des ' + props.label + 's'"
                     >
                     </v-text-field>
                 </v-col>
-            </v-row>
-            <v-row>
-                <v-col cols="12">
+                <v-col :cols="layout">
                     <v-text-field
                         ref="startDate"
                         v-model="range.endZeitpunkt"
@@ -25,7 +23,7 @@
                         outlined
                         type="date"
                         :append-icon="calendarIcon"
-                        label="Ende des Meldezeitraums"
+                        :label="'Ende des ' + props.label + 's'"
                         :rules="endZeitpunktRules"
                     >
                     </v-text-field>
@@ -42,7 +40,13 @@ import Meldezeitraum from "@/types/Meldezeitraum";
 
 const props = defineProps<{
     value: Meldezeitraum;
+    label: string;
+    horizontal?: boolean;
 }>();
+
+const layout = computed(() => {
+    return props.horizontal ? "6" : "12";
+});
 
 const validationRules = useRules();
 const calendarIcon = "mdi-calendar";
@@ -52,14 +56,14 @@ const range = computed(() => props.value);
 const isStartBeforeEnd = computed(() => {
     return (
         range.value.isStartBeforeEnd ||
-        "Der Beginn des Meldezeitraums muss vor dem Ende liegen."
+        "Der Beginn des " + props.label + "s muss vor dem Ende liegen."
     );
 });
 
 const isEndBeforeStart = computed(() => {
     return (
         range.value.isStartBeforeEnd ||
-        "Das Ende des Meldezeitraums muss vor dem Beginn liegen."
+        "Das Ende des " + props.label + "s darf nicht vor dem Beginn liegen."
     );
 });
 

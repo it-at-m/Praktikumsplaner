@@ -23,7 +23,10 @@
                         sm="8"
                         md="4"
                     >
-                        <ZeitraumPicker :value="meldezeitraum"></ZeitraumPicker>
+                        <ZeitraumPicker
+                            :value="meldezeitraum"
+                            :label="'Meldezeitraum'"
+                        ></ZeitraumPicker>
                     </v-col>
                 </v-row>
             </v-container>
