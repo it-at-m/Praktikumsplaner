@@ -11,5 +11,11 @@ export function useFormatter() {
         return date ? moment(date).format("L") : "";
     }
 
-    return { startingCharUpperCase, formatDate };
+    function formatStringDate(date: string | undefined): string {
+        if (!date) return "";
+        const parts = date.split("-");
+        return parts[2] + "." + parts[1] + "." + parts[0];
+    }
+
+    return { startingCharUpperCase, formatDate, formatStringDate };
 }

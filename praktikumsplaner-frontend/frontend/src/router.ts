@@ -3,12 +3,11 @@ import Router from "vue-router";
 import Main from "./views/MainView.vue";
 import { ROUTER_BASE } from "@/Constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
-import MeldungStart from "@/views/MeldungPraktikumsstelle/MeldungStart.vue";
 import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
-import MeldungSuperNwk from "@/views/MeldungPraktikumsstelle/MeldungSuperNwk.vue";
 import assignView from "@/views/assignView.vue";
 import NachwuchskraefteView from "@/views/Nachwuchskraefte/NachwuchskraefteView.vue";
+import PraktikumsplaetzeView from "@/views/MeldungPraktikumsstelle/PraktikumsplaetzeView.vue";
 
 Vue.use(Router);
 
@@ -53,24 +52,19 @@ export default new Router({
             component: Meldezeitraeume,
         },
         {
-            path: "/meldungAusbilder",
-            name: "meldungOertlAusbilder",
-            component: MeldungStart,
+            path: "/praktikumsplaetze",
+            name: "praktikumsplätze",
+            component: PraktikumsplaetzeView,
         },
         {
-            path: "/meldungAusbildung",
+            path: "/praktikumsplaetze/meldungAusbildung",
             name: "MeldungAusbildung",
             component: MeldungAusbildung,
         },
         {
-            path: "/meldungStudium",
+            path: "/praktikumsplaetze/meldungStudium",
             name: "MeldungStudium",
             component: MeldungStudium,
-        },
-        {
-            path: "/superNwk",
-            name: "SuperNwk",
-            component: MeldungSuperNwk,
         },
         {
             path: "/zuweisung",

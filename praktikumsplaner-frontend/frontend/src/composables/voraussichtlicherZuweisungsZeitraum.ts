@@ -56,7 +56,7 @@ export function useZeitraeume() {
             ) {
                 return "01.03 - 31.08";
             } else {
-                return "Nicht in ausgewähltem Jahr verfügbar (Erstes Jahr bei der SWM)";
+                return "Nicht in ausgewähltem Jahr verfügbar";
             }
         }
         return "";

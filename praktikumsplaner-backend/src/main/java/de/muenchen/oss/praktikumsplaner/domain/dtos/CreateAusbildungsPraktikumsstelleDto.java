@@ -27,6 +27,8 @@ public record CreateAusbildungsPraktikumsstelleDto(@NotNull String dienststelle,
 
                                                    @NotNull boolean projektarbeit,
 
+                                                   String programmierkenntnisse,
+
                                                    @NotNull boolean planstelleVorhanden,
 
                                                    @NotNull Ausbildungsjahr ausbildungsjahr,

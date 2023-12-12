@@ -15,16 +15,13 @@
 import HealthService from "@/api/HealthService";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { onMounted } from "vue";
-import { useHeaderStore } from "@/stores/header";
 
 const snackbarStore = useSnackbarStore();
-const headerStore = useHeaderStore();
 
 onMounted(() => {
     HealthService.checkHealth().catch((error) => {
         snackbarStore.showMessage(error);
     });
-    headerStore.setHeader("Praktikumsplaner");
 });
 </script>
 

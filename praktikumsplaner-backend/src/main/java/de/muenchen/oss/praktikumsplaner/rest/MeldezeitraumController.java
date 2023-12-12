@@ -44,6 +44,6 @@ public class MeldezeitraumController {
                 return new ArrayList<>();
             }
         }
-        return new ArrayList<>();
+        return meldezeitraumService.getAllMeldezeitraeume();
     }
 }
