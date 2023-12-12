@@ -50,7 +50,7 @@ public class PraktikumsstellenService {
                 .toDto(ausbildungsPraktikumsstellenRepository.save(entityPraktikumsstelle));
     }
 
-    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellen() {
+    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInMostRecentPassedMeldezeitraum() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
 
         List<PraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
@@ -99,6 +99,23 @@ public class PraktikumsstellenService {
             studiumsPraktikumsstellenRepository.save(praktikumsstelle);
             return praktikumsstellenMapper.toDto(praktikumsstelle);
         } else throw new ResourceNotFoundException("Praktikumsstelle not found!");
+    }
+
+    public List<PraktikumsstelleDto> getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum() {
+        UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
+
+        List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository
+                .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream().map(praktikumsstellenMapper::toDto).toList();
+
+        List<StudiumsPraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository
+                .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream()
+                .map(praktikumsstellenMapper::toDto).toList();
+
+        List<PraktikumsstelleDto> combinedList = new ArrayList<>();
+        combinedList.addAll(ausbildungsListDto);
+        combinedList.addAll(studiumsListDto);
+
+        return combinedList;
     }
 
     private TreeMap<String, List<PraktikumsstelleDto>> groupDienststellen(final Iterable<PraktikumsstelleDto> allPraktikumsstellen) {
