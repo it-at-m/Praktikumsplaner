@@ -172,4 +172,26 @@ public class MeldezeitraumServiceTest {
         when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
         assertThrows(EntityNotFoundException.class, () -> service.getMostRecentPassedMeldezeitraum());
     }
+
+    @Test
+    public void testGetAllMeldezeitraeume() {
+        String name = "Name";
+
+        Meldezeitraum mostRecent = new Meldezeitraum();
+        mostRecent.setId(UUID.randomUUID());
+        mostRecent.setStartZeitpunkt(LocalDate.now().minusDays(10));
+        mostRecent.setEndZeitpunkt(LocalDate.now().minusDays(6));
+        mostRecent.setZeitraumName(name);
+
+        Meldezeitraum oldest = new Meldezeitraum();
+        oldest.setId(UUID.randomUUID());
+        oldest.setStartZeitpunkt(LocalDate.now().minusDays(15));
+        oldest.setEndZeitpunkt(LocalDate.now().minusDays(11));
+        oldest.setZeitraumName(name);
+
+        List<Meldezeitraum> meldezeitraume = List.of(mostRecent, oldest, mostRecent);
+
+        when(repository.findAll()).thenReturn(meldezeitraume);
+        assertEquals(service.getAllMeldezeitraeume(), meldezeitraume.stream().map(mapper::toDto).toList());
+    }
 }
