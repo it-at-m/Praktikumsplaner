@@ -447,7 +447,7 @@ function uploadPraktikumsstelle() {
     }
 }
 </script>
-<style>
+<style lang="scss">
 .box {
     margin: 3%;
     border: 2px solid #0000001a;
