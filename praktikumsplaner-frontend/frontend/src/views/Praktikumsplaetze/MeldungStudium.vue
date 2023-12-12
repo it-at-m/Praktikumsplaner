@@ -90,8 +90,8 @@
                     <v-col>
                         <v-radio-group
                             v-model="praktikumsstelle.planstelleVorhanden"
-                            class="radios"
                             label="Planstelle*:"
+                            class="radios"
                             row
                             :rules="booleanRule"
                         >
@@ -321,14 +321,14 @@ const booleanRule = [
     validationRules.notEmptyBooleanRule("Darf nicht leer sein."),
 ];
 const dienststelleRule = [
-    validationRules.notEmptyRule("Darf nicht leer sein"),
+    validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.maxLengthRule(
         10,
-        "Die Dienststelle darf nicht länger als 10 Zeichen sein"
+        "Die Dienststelle darf nicht länger als 10 Zeichen sein."
     ),
 ];
 const oertlAusbidlerRule = [
-    validationRules.notEmptyRule("Darf nicht leer sein"),
+    validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.maxLengthRule(
         255,
         "Örtliche Ausbilder*in darf nicht länger als 255 Zeichen sein."
@@ -390,7 +390,7 @@ function changeVorrZuweisungsZeitraum() {
 
 function resetForm() {
     form.value?.reset();
-    router.push("/");
+    router.push("/praktikumsplaetze");
 }
 
 function uploadPraktikumsstelle() {
@@ -413,7 +413,7 @@ function uploadPraktikumsstelle() {
     }
 }
 </script>
-<style>
+<style lang="scss">
 .box {
     margin: 3%;
     border: 2px solid #0000001a;
@@ -422,11 +422,10 @@ function uploadPraktikumsstelle() {
 .v-tooltip-spacing {
     margin-top: 10px;
 }
-.radios label {
-    font-size: 38px;
+.v-label {
+    font-size: 16px !important;
 }
 .radios {
-    margin-left: 2%;
-    font-size: 38px;
+    margin: 2%;
 }
 </style>

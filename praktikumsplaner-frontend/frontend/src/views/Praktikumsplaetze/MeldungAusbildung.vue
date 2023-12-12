@@ -90,8 +90,8 @@
                     <v-col>
                         <v-radio-group
                             v-model="praktikumsstelle.planstelleVorhanden"
-                            class="radios"
                             label="Planstelle*:"
+                            class="radios"
                             row
                             :rules="booleanRule"
                         >
@@ -107,8 +107,8 @@
                     <v-col>
                         <v-radio-group
                             v-model="praktikumsstelle.projektarbeit"
-                            class="spacing-left v-radio"
                             label="Projektarbeit*:"
+                            class="radios"
                             row
                             :rules="booleanRule"
                         >
@@ -425,7 +425,7 @@ function changeVorrZuweisungsZeitraum() {
 }
 function resetForm() {
     form.value?.reset();
-    router.push("/");
+    router.push("/praktikumsplaetze");
 }
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
@@ -456,11 +456,10 @@ function uploadPraktikumsstelle() {
 .v-tooltip-spacing {
     margin-top: 10px;
 }
-.radios label {
-    font-size: 38px;
+.v-label {
+    font-size: 16px !important;
 }
 .radios {
-    margin-left: 2%;
-    font-size: 38px;
+    margin: 2%;
 }
 </style>
