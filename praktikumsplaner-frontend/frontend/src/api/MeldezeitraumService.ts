@@ -28,7 +28,41 @@ export default {
     },
     getCurrentMeldezeitraum(): Promise<Meldezeitraum[]> {
         return fetch(
-            `${API_BASE}${MELDEZEITRAUM_BASE}?current=true`,
+            `${API_BASE}${MELDEZEITRAUM_BASE}?restriction=current`,
+            FetchUtils.getGETConfig()
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .catch((err) => {
+                useSnackbarStore().showMessage({
+                    message: err.message,
+                    level: Levels.ERROR,
+                });
+                FetchUtils.defaultResponseHandler(err);
+            });
+    },
+    getUpcomingMeldezeitraueme(): Promise<Meldezeitraum[]> {
+        return fetch(
+            `${API_BASE}${MELDEZEITRAUM_BASE}?restriction=future`,
+            FetchUtils.getGETConfig()
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .catch((err) => {
+                useSnackbarStore().showMessage({
+                    message: err.message,
+                    level: Levels.ERROR,
+                });
+                FetchUtils.defaultResponseHandler(err);
+            });
+    },
+    getPassedMeldezeitraueme(): Promise<Meldezeitraum[]> {
+        return fetch(
+            `${API_BASE}${MELDEZEITRAUM_BASE}?restriction=history`,
             FetchUtils.getGETConfig()
         )
             .then((response) => {
