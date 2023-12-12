@@ -64,6 +64,8 @@ public class MailService {
         return Map.of(
                 "ausbilder", praktikumsstelleDto.oertlicheAusbilder(),
                 "nachwuchskraftName", praktikumsstelleDto.assignedNwk().vorname() + " " + praktikumsstelleDto.assignedNwk().nachname(),
-                "datum", "01.01.2024");
+                "startDatum", "01.01.2024",
+                "endDatum", "01.01.2025"
+        );
     }
 }
