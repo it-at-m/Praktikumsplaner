@@ -3,11 +3,11 @@ import Router from "vue-router";
 import Main from "./views/MainView.vue";
 import { ROUTER_BASE } from "@/Constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
-import MeldungAusbildung from "@/views/MeldungPraktikumsstelle/MeldungAusbildung.vue";
-import MeldungStudium from "@/views/MeldungPraktikumsstelle/MeldungStudium.vue";
+import MeldungAusbildung from "@/views/Praktikumsplaetze/MeldungAusbildung.vue";
+import MeldungStudium from "@/views/Praktikumsplaetze/MeldungStudium.vue";
 import assignView from "@/views/assignView.vue";
 import NachwuchskraefteView from "@/views/Nachwuchskraefte/NachwuchskraefteView.vue";
-import PraktikumsplaetzeView from "@/views/MeldungPraktikumsstelle/PraktikumsplaetzeView.vue";
+import PraktikumsplaetzeView from "@/views/Praktikumsplaetze/PraktikumsplaetzeView.vue";
 
 Vue.use(Router);
 
