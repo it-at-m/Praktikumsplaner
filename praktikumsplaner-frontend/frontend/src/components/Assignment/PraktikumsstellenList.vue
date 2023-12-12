@@ -58,7 +58,7 @@ import { useNwkStore } from "@/stores/nwkStore";
 import Nwk from "@/types/Nwk";
 import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
-import PraktikumsstelleCard from "@/components/PraktikumsstelleCard.vue";
+import PraktikumsstelleCard from "@/components/Assignment/PraktikumsstelleCard.vue";
 
 const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>();
 const nwkStore = useNwkStore();
