@@ -1,6 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.repository;
 
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
+import io.micrometer.common.lang.NonNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -20,4 +21,7 @@ public interface MeldezeitraumRepository extends CrudRepository<Meldezeitraum, U
      * Sorted in descending order by end date.
      */
     List<Meldezeitraum> findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(final LocalDate date);
+
+    @NonNull
+    List<Meldezeitraum> findAll();
 }
