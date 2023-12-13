@@ -111,16 +111,16 @@
 import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
 import { ref } from "vue";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
-import Meldezeitraum from "@/types/Meldezeitraum";
+import Zeitraum from "@/types/Zeitraum";
 
 const form = ref<HTMLFormElement>();
 
 const confirmSendMailDialog = ref<boolean>(false);
 
-const bsc = ref<Meldezeitraum>(new Meldezeitraum(""));
-const vi = ref<Meldezeitraum>(new Meldezeitraum(""));
-const bwi = ref<Meldezeitraum>(new Meldezeitraum(""));
-const fisi = ref<Meldezeitraum>(new Meldezeitraum(""));
+const bsc = ref<Zeitraum>(new Zeitraum());
+const vi = ref<Zeitraum>(new Zeitraum());
+const bwi = ref<Zeitraum>(new Zeitraum());
+const fisi = ref<Zeitraum>(new Zeitraum());
 
 const props = defineProps<{
     showDialog: boolean;
@@ -148,10 +148,10 @@ function closeSendMailDialog(): void {
 }
 
 function resetForm() {
-    bsc.value = new Meldezeitraum("");
-    vi.value = new Meldezeitraum("");
-    bwi.value = new Meldezeitraum("");
-    fisi.value = new Meldezeitraum("");
+    bsc.value = new Zeitraum();
+    vi.value = new Zeitraum();
+    bwi.value = new Zeitraum();
+    fisi.value = new Zeitraum();
     form.value?.resetValidation();
 }
 </script>

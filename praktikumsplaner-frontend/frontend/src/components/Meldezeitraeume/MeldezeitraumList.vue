@@ -17,14 +17,14 @@
                             <v-icon>mdi-calendar-start</v-icon>
                             {{
                                 useFormatter().formatDateFromString(
-                                    meldezeitraum.startZeitpunkt
+                                    meldezeitraum.zeitraum.startZeitpunkt
                                 )
                             }}
 
                             <v-icon>mdi-calendar-end</v-icon>
                             {{
                                 useFormatter().formatDateFromString(
-                                    meldezeitraum.endZeitpunkt
+                                    meldezeitraum.zeitraum.endZeitpunkt
                                 )
                             }}
                         </v-list-item-subtitle>
@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import Meldezeitraum from "@/types/Meldezeitraum";
-import { useFormatter } from "../../composables/formatter";
+import { useFormatter } from "@/composables/formatter";
 
 const props = defineProps<{
     value: Meldezeitraum[];
