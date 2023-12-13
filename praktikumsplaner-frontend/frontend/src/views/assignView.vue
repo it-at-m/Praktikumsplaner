@@ -4,11 +4,7 @@
             back-button-url="/"
             page-header-text="Zuweisung"
         ></PageTitle>
-        <v-btn
-            color="primary"
-            @click="showSendMailDialog = true"
-            >Mails senden</v-btn
-        >
+
         <v-row>
             <v-col cols="4">
                 <active-nwk-list-for-zuweisung />
@@ -17,6 +13,15 @@
             <v-col cols="8">
                 <praktikumsstellen-list />
             </v-col>
+        </v-row>
+        <v-row>
+            <v-spacer></v-spacer>
+            <v-btn
+                color="primary"
+                class="mr-4"
+                @click="showSendMailDialog = true"
+                >Mails senden</v-btn
+            >
         </v-row>
         <QueryPraktikumsPeriodDialog :show-dialog.sync="showSendMailDialog" />
     </v-container>
