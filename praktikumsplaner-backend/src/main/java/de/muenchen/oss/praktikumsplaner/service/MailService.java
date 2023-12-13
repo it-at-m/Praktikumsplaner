@@ -4,7 +4,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +36,8 @@ public class MailService {
         praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum().forEach(
                 stelle -> {
                     try {
-                        sendSingleMail(stelle.email(), "Praktikumsplatz zugeteilt", buildMailBody("successfulAssignmentMail", buildMailData(stelle, assignmentPeriods)));
+                        sendSingleMail(stelle.email(), "Praktikumsplatz zugeteilt",
+                                buildMailBody("successfulAssignmentMail", buildMailData(stelle, assignmentPeriods)));
                     } catch (MessagingException e) {
                         faultyStellen.add(stelle);
                     }
@@ -51,7 +51,7 @@ public class MailService {
         context.setVariables(Collections.unmodifiableMap(data));
 
         return templateEngine.process(templateName, context);
-    };
+    }
 
     private void sendSingleMail(String to, String subject, String body) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -64,12 +64,11 @@ public class MailService {
         mailSender.send(mimeMessage);
     }
 
-    private Map<String, String> buildMailData(PraktikumsstelleDto praktikumsstelleDto, Map<String , ZeitraumDto> assignmentPeriods) {
+    private Map<String, String> buildMailData(PraktikumsstelleDto praktikumsstelleDto, Map<String, ZeitraumDto> assignmentPeriods) {
         return Map.of(
                 "ausbilder", praktikumsstelleDto.oertlicheAusbilder(),
                 "nachwuchskraftName", praktikumsstelleDto.assignedNwk().vorname() + " " + praktikumsstelleDto.assignedNwk().nachname(),
                 "startDatum", assignmentPeriods.get(praktikumsstelleDto.assignedNwk().studiengang().toString()).startZeitpunkt().format(dateTimeFormatter),
-                "endDatum", assignmentPeriods.get(praktikumsstelleDto.assignedNwk().studiengang().toString()).endZeitpunkt().format(dateTimeFormatter)
-        );
+                "endDatum", assignmentPeriods.get(praktikumsstelleDto.assignedNwk().studiengang().toString()).endZeitpunkt().format(dateTimeFormatter));
     }
 }
