@@ -2,7 +2,7 @@
     <v-row>
         <v-col>
             <v-row>
-                <v-col :cols="layout">
+                <v-col :cols="12">
                     <v-text-field
                         ref="endDate"
                         v-model="range.startZeitpunkt"
@@ -15,7 +15,7 @@
                     >
                     </v-text-field>
                 </v-col>
-                <v-col :cols="layout">
+                <v-col :cols="12">
                     <v-text-field
                         ref="startDate"
                         v-model="range.endZeitpunkt"
@@ -36,10 +36,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRules } from "@/composables/rules";
-import Meldezeitraum from "@/types/Meldezeitraum";
+import Zeitraum from "@/types/Zeitraum";
 
 const props = defineProps<{
-    value: Meldezeitraum;
+    value: Zeitraum;
     label: string;
     horizontal?: boolean;
 }>();
