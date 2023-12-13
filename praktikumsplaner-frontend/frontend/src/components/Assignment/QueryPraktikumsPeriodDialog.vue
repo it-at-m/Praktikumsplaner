@@ -112,7 +112,6 @@ import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
 import { ref } from "vue";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
 import Zeitraum from "@/types/Zeitraum";
-import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import MailService from "@/api/MailService";
 
 const form = ref<HTMLFormElement>();
@@ -146,7 +145,6 @@ function sendMails(): void {
     assignmentPeriods.set("FISI", fisi.value);
 
     const assignmentPeriodsObj = Object.fromEntries(assignmentPeriods);
-    console.log(assignmentPeriodsObj);
 
     MailService.sendSuccessfulAssignedMails(assignmentPeriodsObj);
     confirmSendMailDialog.value = false;
