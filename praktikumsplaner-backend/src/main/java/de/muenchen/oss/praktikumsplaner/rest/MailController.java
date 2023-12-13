@@ -1,9 +1,15 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.service.MailService;
 import java.util.List;
+import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,9 +26,9 @@ public class MailController {
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping("/send")
-    public ResponseEntity<?> sendMailsToAusbilderinnen(@RequestParam(name = "assignmentStatus", required = true) String assignmentStatus) {
+    public ResponseEntity<?> sendMailsToAusbilderinnen(@RequestParam(name = "assignmentStatus", required = true) String assignmentStatus, @RequestBody Map<String, ZeitraumDto> assignmentPeriods) {
         if (assignmentStatus.equals(SUCCESSFUL_ASSIGNMENT)) {
-            List<PraktikumsstelleDto> faultyStellen = mailService.sendMailsToAssignedPraktikumsplaetze();
+            List<PraktikumsstelleDto> faultyStellen = mailService.sendMailsToAssignedPraktikumsplaetze(assignmentPeriods);
 
             if (faultyStellen.isEmpty()) {
                 return ResponseEntity.ok().build();

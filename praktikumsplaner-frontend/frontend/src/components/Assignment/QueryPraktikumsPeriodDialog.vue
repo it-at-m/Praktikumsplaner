@@ -30,7 +30,7 @@
                                         <ZeitraumPicker
                                             :value="bsc"
                                             label="Zuweisungszeitraum"
-                                            horizontal="true"
+                                            :horizontal="true"
                                         ></ZeitraumPicker>
                                     </v-col>
                                 </v-container>
@@ -43,7 +43,7 @@
                                     <ZeitraumPicker
                                         :value="vi"
                                         label="Zuweisungszeitraum"
-                                        horizontal="true"
+                                        :horizontal="true"
                                     ></ZeitraumPicker>
                                 </v-container>
                             </v-col>
@@ -55,7 +55,7 @@
                                     <ZeitraumPicker
                                         :value="bwi"
                                         label="Zuweisungszeitraum"
-                                        horizontal="true"
+                                        :horizontal="true"
                                     ></ZeitraumPicker>
                                 </v-container>
                             </v-col>
@@ -70,7 +70,7 @@
                                     <ZeitraumPicker
                                         :value="fisi"
                                         label="Zuweisungszeitraum"
-                                        horizontal="true"
+                                        :horizontal="true"
                                     ></ZeitraumPicker>
                                 </v-container>
                             </v-col>
@@ -112,6 +112,8 @@ import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
 import { ref } from "vue";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
 import Zeitraum from "@/types/Zeitraum";
+import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import MailService from "@/api/MailService";
 
 const form = ref<HTMLFormElement>();
 
@@ -137,6 +139,16 @@ function openConfirmationDialog(): void {
 }
 
 function sendMails(): void {
+    const assignmentPeriods = new Map<string, Zeitraum>();
+    assignmentPeriods.set("BSC", bsc.value);
+    assignmentPeriods.set("VI", vi.value);
+    assignmentPeriods.set("BWI", bwi.value);
+    assignmentPeriods.set("FISI", fisi.value);
+
+    const assignmentPeriodsObj = Object.fromEntries(assignmentPeriods);
+    console.log(assignmentPeriodsObj);
+
+    MailService.sendSuccessfulAssignedMails(assignmentPeriodsObj);
     confirmSendMailDialog.value = false;
     emit("update:showDialog", false);
     resetForm();
