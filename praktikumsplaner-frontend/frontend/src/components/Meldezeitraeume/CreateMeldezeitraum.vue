@@ -27,6 +27,7 @@
 
                             <ZeitraumPicker
                                 :value="meldezeitraum"
+                                :label="'Meldezeitraum'"
                             ></ZeitraumPicker>
                         </v-form>
                     </v-col>
