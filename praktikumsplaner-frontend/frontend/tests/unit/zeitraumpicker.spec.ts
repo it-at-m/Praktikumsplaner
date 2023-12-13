@@ -8,12 +8,13 @@ describe("Zeitraumpicker.vue", () => {
         const errorMessageStart =
             "Der Beginn des Meldezeitraums muss vor dem Ende liegen.";
         const errorMessageEnd =
-            "Das Ende des Meldezeitraums muss vor dem Beginn liegen.";
+            "Das Ende des Meldezeitraums darf nicht vor dem Beginn liegen.";
 
         const zeitraum = new Meldezeitraum("name", new Zeitraum("2020-10-10", "2019-10-10"));
         const wrapper = shallowMount(ZeitraumPicker, {
             propsData: {
                 value: zeitraum,
+                label: "Meldezeitraum"
             },
         });
 
@@ -25,7 +26,7 @@ describe("Zeitraumpicker.vue", () => {
         const errorMessageStart =
             "Der Beginn des Meldezeitraums muss vor dem Ende liegen.";
         const errorMessageEnd =
-            "Das Ende des Meldezeitraums muss vor dem Beginn liegen.";
+            "Das Ende des Meldezeitraums darf nicht vor dem Beginn liegen.";
 
         const zeitraum = new Meldezeitraum("name", new Zeitraum("2019-10-10", "2020-10-10"));
         const wrapper = shallowMount(ZeitraumPicker, {
