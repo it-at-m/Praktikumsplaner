@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping(path = "/meldezeitraum")
@@ -35,15 +36,22 @@ public class MeldezeitraumController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<MeldezeitraumDto> getMeldezeitraum(@RequestParam(required = false) String current) {
-        if (current != null && current.equals(Boolean.TRUE.toString())) {
+    public List<MeldezeitraumDto> getMeldezeitraeume(@RequestParam(required = false) String period) {
+        if (period != null && period.equalsIgnoreCase("current")) {
             try {
                 MeldezeitraumDto meldezeitraumDto = meldezeitraumService.getCurrentMeldezeitraum();
                 return List.of(meldezeitraumDto);
             } catch (ValidationException ve) {
                 return new ArrayList<>();
             }
+        } else if (period != null && period.equalsIgnoreCase("past")) {
+            return meldezeitraumService.getPassedMeldezeitraeume();
+        } else if (period != null && period.equalsIgnoreCase("future")) {
+            return meldezeitraumService.getUpcomingMeldezeitraeume();
+        } else if (period != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Value '" + period + "' for parameter restriction not supported.");
         }
+
         return new ArrayList<>();
     }
 }

@@ -37,6 +37,16 @@ public class MeldezeitraumService {
         }
     }
 
+    public List<MeldezeitraumDto> getUpcomingMeldezeitraeume() {
+        return meldezeitraumRepository.findByStartZeitpunktAfterOrderByStartZeitpunktAsc(LocalDate.now())
+                .stream().map(meldezeitraumMapper::toDto).toList();
+    }
+
+    public List<MeldezeitraumDto> getPassedMeldezeitraeume() {
+        return meldezeitraumRepository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())
+                .stream().map(meldezeitraumMapper::toDto).toList();
+    }
+
     public MeldezeitraumDto getMostRecentPassedMeldezeitraum() {
         List<Meldezeitraum> passedZeitraueme = meldezeitraumRepository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now());
         if (passedZeitraueme.isEmpty()) {
