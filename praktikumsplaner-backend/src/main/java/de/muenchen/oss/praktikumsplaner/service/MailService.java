@@ -31,7 +31,7 @@ public class MailService {
     /*
      * @return List of all Praktikumsstellen where the mail could not be sent
      */
-    public List<PraktikumsstelleDto> sendMailsToAssignedPraktikumsplaetze(Map<String, ZeitraumDto> assignmentPeriods) {
+    public List<PraktikumsstelleDto> sendMailsToAssignedPraktikumsplaetze(final Map<String, ZeitraumDto> assignmentPeriods) {
         List<PraktikumsstelleDto> faultyStellen = new ArrayList<>();
         praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum().forEach(
                 stelle -> {
@@ -46,14 +46,14 @@ public class MailService {
         return faultyStellen;
     }
 
-    private String buildMailBody(String templateName, Map<String, String> data) {
+    private String buildMailBody(final String templateName, final Map<String, String> data) {
         Context context = new Context();
         context.setVariables(Collections.unmodifiableMap(data));
 
         return templateEngine.process(templateName, context);
     }
 
-    private void sendSingleMail(String to, String subject, String body) throws MessagingException {
+    private void sendSingleMail(final String to, final String subject, final String body) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "utf-8");
 
@@ -64,7 +64,7 @@ public class MailService {
         mailSender.send(mimeMessage);
     }
 
-    private Map<String, String> buildMailData(PraktikumsstelleDto praktikumsstelleDto, Map<String, ZeitraumDto> assignmentPeriods) {
+    private Map<String, String> buildMailData(final PraktikumsstelleDto praktikumsstelleDto, final Map<String, ZeitraumDto> assignmentPeriods) {
         return Map.of(
                 "ausbilder", praktikumsstelleDto.oertlicheAusbilder(),
                 "nachwuchskraftName", praktikumsstelleDto.assignedNwk().vorname() + " " + praktikumsstelleDto.assignedNwk().nachname(),
