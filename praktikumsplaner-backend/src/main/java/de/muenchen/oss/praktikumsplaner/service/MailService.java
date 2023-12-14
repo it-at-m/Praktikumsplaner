@@ -13,14 +13,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
 @AllArgsConstructor
 public class MailService {
 
-    private final TemplateEngine templateEngine;
+    private final ITemplateEngine templateEngine;
 
     private final JavaMailSender mailSender;
 

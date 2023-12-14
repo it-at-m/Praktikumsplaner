@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import java.time.LocalDate;
@@ -30,7 +31,7 @@ public class MailServiceTest {
     private JavaMailSender mailSender;
 
     @Mock
-    private TemplateEngine templateEngine;
+    private ITemplateEngine templateEngine;
 
     @Mock
     private PraktikumsstellenService praktikumsstellenService;
