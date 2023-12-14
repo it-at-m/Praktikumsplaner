@@ -22,8 +22,8 @@ public class MailController {
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping("/send")
-    public ResponseEntity<?> sendMailsToAusbilderinnen(@RequestParam(name = "assignmentStatus") String assignmentStatus,
-            @RequestBody Map<String, ZeitraumDto> assignmentPeriods) {
+    public ResponseEntity<?> sendMailsToAusbilderinnen(@RequestParam(name = "assignmentStatus") final String assignmentStatus,
+            @RequestBody final Map<String, ZeitraumDto> assignmentPeriods) {
         if (assignmentStatus.equals(SUCCESSFUL_ASSIGNMENT)) {
             List<PraktikumsstelleDto> faultyStellen = mailService.sendMailsToAssignedPraktikumsplaetze(assignmentPeriods);
 

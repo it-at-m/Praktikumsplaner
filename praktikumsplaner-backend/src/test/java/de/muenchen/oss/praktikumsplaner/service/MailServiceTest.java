@@ -76,8 +76,8 @@ public class MailServiceTest {
     }
 
     private AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto(
-            String dienststelle, String ausbilder, String email, String taetigkeiten, Dringlichkeit dringlichkeit,
-            Referat referat, Ausbildungsjahr semester, Studiengang studiengang, NwkDto assignedNwk) {
+            final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final Dringlichkeit dringlichkeit,
+            final Referat referat, final Ausbildungsjahr semester, final Studiengang studiengang, final NwkDto assignedNwk) {
         return AusbildungsPraktikumsstelleDto.builder()
                 .dienststelle(dienststelle).oertlicheAusbilder(ausbilder).email(email).taetigkeiten(taetigkeiten)
                 .dringlichkeit(dringlichkeit).referat(referat).ausbildungsjahr(semester)
@@ -85,15 +85,15 @@ public class MailServiceTest {
     }
 
     private StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto(
-            String dienststelle, String ausbilder, String email, String taetigkeiten, Dringlichkeit dringlichkeit,
-            Referat referat, Studiensemester semester, Studiengang studiengang, NwkDto assignedNwk) {
+            final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final Dringlichkeit dringlichkeit,
+            final Referat referat, final Studiensemester semester, final Studiengang studiengang, final NwkDto assignedNwk) {
         return StudiumsPraktikumsstelleDto.builder().dienststelle(dienststelle).oertlicheAusbilder(ausbilder).email(email).taetigkeiten(taetigkeiten)
                 .dringlichkeit(dringlichkeit).referat(referat).studiensemester(semester)
                 .studienart(studiengang).assignedNwk(assignedNwk).build();
     }
 
     private NwkDto createNwkDto(
-            String vorname, String nachname, Studiengang studiengang) {
+            final String vorname, final String nachname, final Studiengang studiengang) {
         return NwkDto.builder().id(UUID.randomUUID()).vorname(vorname).nachname(nachname).studiengang(studiengang).build();
     }
 }
