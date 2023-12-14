@@ -6,21 +6,15 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.*;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.ITemplateEngine;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import java.time.LocalDate;
 import java.util.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class MailServiceTest {
 
@@ -71,17 +65,14 @@ public class MailServiceTest {
         when(praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum()).thenReturn(allPraktikumsstellen);
 
         // Act
-
         List<PraktikumsstelleDto> result = mailService.sendMailsToAssignedPraktikumsplaetze(Map.of(
                 "BSC", ZeitraumDto.builder().startZeitpunkt(LocalDate.now()).endZeitpunkt(LocalDate.now().plusDays(20)).build(),
                 "BWI", ZeitraumDto.builder().startZeitpunkt(LocalDate.now()).endZeitpunkt(LocalDate.now().plusDays(20)).build(),
-                "FISI", ZeitraumDto.builder().startZeitpunkt(LocalDate.now()).endZeitpunkt(LocalDate.now().plusDays(20)).build())
-        );
+                "FISI", ZeitraumDto.builder().startZeitpunkt(LocalDate.now()).endZeitpunkt(LocalDate.now().plusDays(20)).build()));
 
         // Assert
         assertEquals(0, result.size());
-        verify(mailSender, Mockito.times(3)).createMimeMessage();
-
+        verify(mailSender, times(3)).createMimeMessage();
     }
 
     private AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto(
