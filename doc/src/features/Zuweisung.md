@@ -53,5 +53,6 @@ A dialog will appear asking if the [Ausbildungsleitung](./../glossary.md#örtlic
 Now the mails will be sent to the [Örtliche Ausbilderin](./../glossary.md#örtliche-ausbilderin), which got the [Nwks](./../glossary.md#nwk) assigned to them.
 The [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) will be redirected to the assignment page after that.
 If some errors occurred during the sending of the mails, a dialog will appear telling the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung),
-which [Praktikumsstellen](./../glossary.md#praktikumsstelle) could not be informed by mail.
+which [Praktikumsstellen](./../glossary.md#praktikumsstelle) could not be informed by mail. Currently, there is no way to resend the mails. 
+This has to be done manually.
 The other mails still got sent.
