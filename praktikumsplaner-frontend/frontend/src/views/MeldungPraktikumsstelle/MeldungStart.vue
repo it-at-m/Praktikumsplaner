@@ -1,11 +1,30 @@
 <template>
     <v-container class="spacing-left">
-        <h3>Praktikumstellen Meldung</h3>
+        <page-title
+            back-button-url="/"
+            page-header-text="Praktikumsplätze"
+        ></page-title>
 
         <div v-if="!activeMeldezeitraum">
-            Die Ausbildungsleitung hat die Meldung von Stellen noch nicht
-            freigegeben, daher können leider aktuell keine Stellen gemeldet
-            werden.
+            <v-row class="align-center">
+                <v-col
+                    cols="auto"
+                    class="d-flex align-center"
+                >
+                    <v-icon
+                        color="blue"
+                        large
+                        >mdi-information-outline</v-icon
+                    >
+                </v-col>
+                <v-col class="d-flex align-center">
+                    <p class="mt-5">
+                        Ihre örtliche Ausbildungsleitung hat die Meldung von
+                        Stellen noch nicht freigegeben, daher können aktuell
+                        leider noch keine Praktikumsplätze gemeldet werden.
+                    </p>
+                </v-col>
+            </v-row>
         </div>
         <div
             v-else
@@ -60,6 +79,7 @@ import { onMounted, ref } from "vue";
 import router from "@/router";
 import { useHeaderStore } from "@/stores/header";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
+import PageTitle from "@/components/common/PageTitle.vue";
 
 const isCheckedAusbildung = ref<boolean>(false);
 const isCheckedStudium = ref<boolean>(false);
