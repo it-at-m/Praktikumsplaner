@@ -100,4 +100,9 @@ public class NwkServiceTest {
         assertThrows(ConstraintViolationException.class, () -> service.importNwk(base64));
         verifyNoInteractions(repository);
     }
+
+    @Test
+    public void testFindAllActiveNwks() {
+
+    }
 }
