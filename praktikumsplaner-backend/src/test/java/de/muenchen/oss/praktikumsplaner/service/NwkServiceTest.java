@@ -42,6 +42,8 @@ public class NwkServiceTest {
     @Mock
     private ExcelService excelService;
 
+    private final TestHelper helper = new TestHelper();
+
     @Test
     public void testCreateNwkSuccess() {
         final String nachname = "Mustermann";
@@ -103,6 +105,40 @@ public class NwkServiceTest {
 
     @Test
     public void testFindAllActiveNwks() {
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, "21/25", Set.of(DayOfWeek.MONDAY), true);
+        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", Studiengang.FISI, "21/23", Set.of(DayOfWeek.MONDAY,DayOfWeek.FRIDAY), true);
 
+        List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
+
+        when(repository.findNwksByActiveIsTrueOrderByNachname()).thenReturn(nwks);
+        assertEquals(service.findAllActiveNwks(), nwks.stream().map(mapper::toDto).toList());
+    }
+
+    @Test
+    public void testFindAllUnassigned() {
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, "21/25", Set.of(DayOfWeek.MONDAY), true);
+        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", Studiengang.FISI, "21/23", Set.of(DayOfWeek.MONDAY,DayOfWeek.FRIDAY), true);
+
+        List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
+
+        when(repository.findAllUnassigned()).thenReturn(nwks);
+        assertEquals(service.findAllUnassignedNwks(), nwks.stream().map(mapper::toDto).toList());
+    }
+
+    @Test
+    public void testFindAllNwks() {
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, "21/25", Set.of(DayOfWeek.MONDAY), true);
+        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", Studiengang.FISI, "21/23", Set.of(DayOfWeek.MONDAY,DayOfWeek.FRIDAY), true);
+
+        List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
+
+        when(repository.findAll()).thenReturn(nwks);
+        assertEquals(service.findAllNwks(), nwks.stream().map(mapper::toDto).toList());
     }
 }
