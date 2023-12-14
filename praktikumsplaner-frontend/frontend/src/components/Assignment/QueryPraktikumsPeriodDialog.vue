@@ -98,6 +98,12 @@
                                         @no="confirmSendMailDialog = false"
                                         @yes="sendMails"
                                     ></yes-no-dialog>
+                                    <undelivered-mails-dialog
+                                        :faulty-stellen="faultyStellen"
+                                        :show-undelivered-mails-dialog="
+                                            showUndeliveredMailsDialog
+                                        "
+                                    ></undelivered-mails-dialog>
                                 </v-col>
                             </v-row>
                         </v-card-actions>
@@ -113,10 +119,16 @@ import { ref } from "vue";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
 import Zeitraum from "@/types/Zeitraum";
 import MailService from "@/api/MailService";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
+import UndeliveredMailsDialog from "@/components/Assignment/undeliveredMailsDialog.vue";
 
 const form = ref<HTMLFormElement>();
 
 const confirmSendMailDialog = ref<boolean>(false);
+
+const faultyStellen = ref<Praktikumsstelle[]>([]);
+
+const showUndeliveredMailsDialog = ref<boolean>(false);
 
 const bsc = ref<Zeitraum>(new Zeitraum());
 const vi = ref<Zeitraum>(new Zeitraum());
@@ -146,10 +158,13 @@ function sendMails(): void {
 
     const assignmentPeriodsObj = Object.fromEntries(assignmentPeriods);
 
-    MailService.sendSuccessfulAssignedMails(assignmentPeriodsObj);
-    confirmSendMailDialog.value = false;
-    emit("update:showDialog", false);
-    resetForm();
+    MailService.sendSuccessfulAssignedMails(assignmentPeriodsObj).then(
+        (fetchedStellen) => {
+            faultyStellen.value = fetchedStellen;
+        }
+    );
+    checkIfUndeliveredMails();
+    closeSendMailDialog();
 }
 
 function closeSendMailDialog(): void {
@@ -163,6 +178,12 @@ function resetForm() {
     bwi.value = new Zeitraum();
     fisi.value = new Zeitraum();
     form.value?.resetValidation();
+}
+
+function checkIfUndeliveredMails() {
+    if (faultyStellen.value.length > 0) {
+        showUndeliveredMailsDialog.value = true;
+    }
 }
 </script>
 <style scoped>
