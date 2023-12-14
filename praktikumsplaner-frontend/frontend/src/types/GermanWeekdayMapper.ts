@@ -23,6 +23,9 @@ export default class GermanWeekdayMapper {
         const sortedDays = daysString.sort(
             (a, b) => this.dayOrder.indexOf(a) - this.dayOrder.indexOf(b)
         );
+        sortedDays.forEach((day) => {
+            day.trim().toUpperCase();
+        });
 
         return sortedDays.map(
             (day) =>
