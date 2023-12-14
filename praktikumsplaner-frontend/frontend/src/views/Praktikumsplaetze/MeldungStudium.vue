@@ -90,16 +90,21 @@
                     <v-col>
                         <v-radio-group
                             v-model="praktikumsstelle.planstelleVorhanden"
-                            label="Planstelle*:"
-                            class="radios"
+                            class="radios custom-label"
                             row
                             :rules="booleanRule"
                         >
+                            <template #label>
+                                <span class="custom-label"
+                                    >Planstelle vorhanden*:</span
+                                >
+                            </template>
                             <v-radio
                                 v-for="item in YesNoBoolean"
                                 :key="item.value"
                                 :label="item.name"
                                 :value="item.value"
+                                class="ml-5"
                             ></v-radio>
                         </v-radio-group>
                     </v-col>
@@ -421,9 +426,6 @@ function uploadPraktikumsstelle() {
 }
 .v-tooltip-spacing {
     margin-top: 10px;
-}
-.v-label {
-    font-size: 16px !important;
 }
 .radios {
     margin: 2%;
