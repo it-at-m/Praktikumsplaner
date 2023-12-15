@@ -39,16 +39,9 @@ public class ExcelServiceTest {
 
     @Test
     public void testExcelToNwkDtoListValidData() throws IOException {
-        final String nachname = "Mustermann";
-        final String vorname = "Max";
-        final Studiengang studiengang = Studiengang.BSC;
-        final String jahrgang = "21/24";
-        final Set<DayOfWeek> vorlesungstage = new HashSet<>();
-        vorlesungstage.add(DayOfWeek.MONDAY);
-        vorlesungstage.add(DayOfWeek.TUESDAY);
-
-        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
-                .vorlesungstage(vorlesungstage).build();
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname("Max").nachname("Mustermann").
+                studiengang(Studiengang.BSC).jahrgang("21/24").
+                vorlesungstage(Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)).build();
 
         List<CreateNwkDto> createNwkDtos = new ArrayList<>();
         createNwkDtos.add(createNwkDto);
@@ -69,10 +62,10 @@ public class ExcelServiceTest {
 
         var violations = assertThrows(ExcelImportException.class, () -> service.excelToNwkDtoList(base64EncodedExcelNwkInvalidData)).getExceptionInfos();
 
-        assertEquals(1, violations.stream().filter(e -> e.getColumName().equals("nachname")).count());
-        assertEquals(3, violations.stream().filter(e -> e.getColumName().equals("vorname")).count());
-        assertEquals(2, violations.stream().filter(e -> e.getColumName().equals("studiengang")).count());
-        assertEquals(3, violations.stream().filter(e -> e.getColumName().equals("jahrgang")).count());
+        assertEquals(4, violations.stream().filter(e -> e.getColumName().equals("nachname")).count());
+        assertEquals(6, violations.stream().filter(e -> e.getColumName().equals("vorname")).count());
+        assertEquals(6, violations.stream().filter(e -> e.getColumName().equals("studiengang")).count());
+        assertEquals(5, violations.stream().filter(e -> e.getColumName().equals("jahrgang")).count());
         assertEquals(2, violations.stream().filter(e -> e.getColumName().equals("vorlesungstage")).count());
     }
 }
