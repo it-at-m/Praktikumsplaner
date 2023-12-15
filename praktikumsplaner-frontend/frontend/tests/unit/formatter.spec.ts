@@ -37,16 +37,16 @@ describe("formatter formatDate test", () => {
 describe("formatter formatStringDate test", () => {
     it("tests formatStringDate to be true", () => {
         const date = "2021-05-01";
-        expect(formatter.formatStringDate(date)).toBe("01.05.2021");
+        expect(formatter.formatDateFromString(date)).toBe("01.05.2021");
     });
     it("tests formatStringDate to be true when empty", () => {
         const date = "";
-        expect(formatter.formatStringDate(date)).toBe("");
+        expect(formatter.formatDateFromString(date)).toBe("");
     });
     it("tests formatStringDate to be true when null", () => {
-        expect(formatter.formatStringDate(null)).toBe("");
+        expect(formatter.formatDateFromString(null)).toBe("");
     });
     it("tests formatStringDate to be true when undefined", () => {
-        expect(formatter.formatStringDate(undefined)).toBe("");
+        expect(formatter.formatDateFromString(undefined)).toBe("");
     });
 });
