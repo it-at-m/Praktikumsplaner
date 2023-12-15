@@ -26,11 +26,11 @@ public record CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto(@NotNull Str
 
                                                                     Referat referat,
 
-                                                                    @NotNull boolean projektarbeit,
+                                                                    boolean projektarbeit,
 
                                                                     String programmierkenntnisse,
 
-                                                                    @NotNull boolean planstelleVorhanden,
+                                                                    boolean planstelleVorhanden,
 
                                                                     @NotNull Ausbildungsjahr ausbildungsjahr,
 
