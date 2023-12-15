@@ -29,37 +29,6 @@ public class TestHelper {
         return newNwk;
     }
 
-    public NwkDto createNwkDto(final String vorname, final String nachname, final Studiengang studiengang,
-                               final String jahrgang, final Set<DayOfWeek> vorlesungstage, final boolean isActive) {
-        return NwkDto.builder()
-                .id(UUID.randomUUID())
-                .vorname(vorname)
-                .nachname(nachname)
-                .studiengang(studiengang)
-                .jahrgang(jahrgang)
-                .vorlesungstage(vorlesungstage)
-                .active(isActive)
-                .build();
-    }
-
-    public AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto(
-            final String dienststelle, final String ausbilder, final String email, final String taetigkeiten,
-            final Dringlichkeit dringlichkeit, final Referat referat, final Ausbildungsjahr semester,
-            final Studiengang studiengang, final NwkDto assignedNwk) {
-        return AusbildungsPraktikumsstelleDto.builder().dienststelle(dienststelle).oertlicheAusbilder(ausbilder).
-                email(email).taetigkeiten(taetigkeiten).dringlichkeit(dringlichkeit).referat(referat).
-                ausbildungsjahr(semester).ausbildungsrichtung(studiengang).assignedNwk(assignedNwk).build();
-    }
-
-    public StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto(
-            final String dienststelle, final String ausbilder, final String email, final String taetigkeiten,
-            final Dringlichkeit dringlichkeit, final Referat referat, final Studiensemester semester,
-            final Studiengang studiengang, final NwkDto assignedNwk) {
-        return StudiumsPraktikumsstelleDto.builder().dienststelle(dienststelle).oertlicheAusbilder(ausbilder).
-                email(email).taetigkeiten(taetigkeiten).dringlichkeit(dringlichkeit).referat(referat).
-                studiensemester(semester).studienart(studiengang).assignedNwk(assignedNwk).build();
-    }
-
     public MeldezeitraumDto createMeldezeitraumDto(LocalDate start, LocalDate end, String name) {
         return MeldezeitraumDto.builder()
                 .id(UUID.randomUUID())
