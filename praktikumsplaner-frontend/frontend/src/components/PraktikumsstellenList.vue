@@ -74,7 +74,7 @@ watch(
     () => nwkStore.nwk,
     () => {
         assignedNwkID.value =
-            nwkStore.nwk ?? new Nwk("", "", "", "", "", "", false);
+            nwkStore.nwk ?? new Nwk("", "", "", "", "", [], false);
     }
 );
 
