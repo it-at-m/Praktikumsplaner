@@ -1,21 +1,20 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
-public class TestHelper {
+public class ServiceTestHelper {
     public Nwk createNwkEntity(final String vorname, final String nachname, final Studiengang studiengang,
                                final String jahrgang, final Set<DayOfWeek> vorlesungstage, final boolean isActive) {
         Nwk newNwk = new Nwk();
@@ -93,5 +92,14 @@ public class TestHelper {
                 .dringlichkeit(stelle.getDringlichkeit()).namentlicheAnforderung(stelle.getNamentlicheAnforderung())
                 .referat(stelle.getReferat()).programmierkenntnisse(stelle.isProgrammierkenntnisse())
                 .studiensemester(stelle.getStudiensemester()).studienart(stelle.getStudienart()).build();
+    }
+
+    public Meldezeitraum createMeldezeitraum(LocalDate start, LocalDate end, String name) {
+        Meldezeitraum meldezeitraum = new Meldezeitraum();
+        meldezeitraum.setId(UUID.randomUUID());
+        meldezeitraum.setStartZeitpunkt(start);
+        meldezeitraum.setEndZeitpunkt(end);
+        meldezeitraum.setZeitraumName(name);
+        return meldezeitraum;
     }
 }

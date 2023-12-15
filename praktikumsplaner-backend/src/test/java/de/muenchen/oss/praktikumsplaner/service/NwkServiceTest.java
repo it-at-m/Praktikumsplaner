@@ -42,7 +42,7 @@ public class NwkServiceTest {
     @Mock
     private ExcelService excelService;
 
-    private final TestHelper helper = new TestHelper();
+    private final ServiceTestHelper helper = new ServiceTestHelper();
 
     @Test
     public void testCreateNwkSuccess() {

@@ -54,7 +54,7 @@ public class PraktikumsstellenServiceTest {
     private MeldezeitraumService meldezeitraumService;
     @Mock
     private NwkRepository nwkRepository;
-    private final TestHelper helper = new TestHelper();
+    private final ServiceTestHelper helper = new ServiceTestHelper();
 
     @Test
     public void testCreateStudiumsPraktikumsstelle() {
