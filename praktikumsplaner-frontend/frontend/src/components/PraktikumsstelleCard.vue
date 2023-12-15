@@ -8,7 +8,7 @@
             @click="show = !show"
         >
             <v-row>
-                <v-col cols="10">
+                <v-col cols="9">
                     <v-card-title
                         >Stelle bei
                         {{ props.praktikumsstelle.dienststelle }}</v-card-title

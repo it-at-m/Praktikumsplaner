@@ -174,6 +174,50 @@ public class MeldezeitraumServiceTest {
     }
 
     @Test
+    public void testGetUpcomingMeldezeitraeume() {
+        String name = "Name";
+
+        Meldezeitraum first = new Meldezeitraum();
+        first.setId(UUID.randomUUID());
+        first.setStartZeitpunkt(LocalDate.now().plusDays(10));
+        first.setEndZeitpunkt(LocalDate.now().plusDays(6));
+        first.setZeitraumName(name);
+
+        Meldezeitraum second = new Meldezeitraum();
+        second.setId(UUID.randomUUID());
+        second.setStartZeitpunkt(LocalDate.now().plusDays(15));
+        second.setEndZeitpunkt(LocalDate.now().plusDays(11));
+        second.setZeitraumName(name);
+
+        List<Meldezeitraum> meldezeitraume = List.of(first, second);
+
+        when(repository.findByStartZeitpunktAfterOrderByStartZeitpunktAsc(LocalDate.now())).thenReturn(meldezeitraume);
+        assertEquals(service.getUpcomingMeldezeitraeume(), meldezeitraume.stream().map(mapper::toDto).toList());
+    }
+
+    @Test
+    public void testGetPassedMeldezeitraeume() {
+        String name = "Name";
+
+        Meldezeitraum first = new Meldezeitraum();
+        first.setId(UUID.randomUUID());
+        first.setStartZeitpunkt(LocalDate.now().minusDays(10));
+        first.setEndZeitpunkt(LocalDate.now().minusDays(6));
+        first.setZeitraumName(name);
+
+        Meldezeitraum second = new Meldezeitraum();
+        second.setId(UUID.randomUUID());
+        second.setStartZeitpunkt(LocalDate.now().minusDays(15));
+        second.setEndZeitpunkt(LocalDate.now().minusDays(11));
+        second.setZeitraumName(name);
+
+        List<Meldezeitraum> meldezeitraume = List.of(first, second);
+
+        when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
+        assertEquals(service.getPassedMeldezeitraeume(), meldezeitraume.stream().map(mapper::toDto).toList());
+    }
+
+    @Test
     public void testGetAllMeldezeitraeume() {
         String name = "Name";
 

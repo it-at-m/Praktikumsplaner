@@ -11,11 +11,9 @@ export function useFormatter() {
         return date ? moment(date).format("L") : "";
     }
 
-    function formatStringDate(date: string | undefined | null): string {
-        if (!date) return "";
-        const parts = date.split("-");
-        return parts[2] + "." + parts[1] + "." + parts[0];
+    function formatDateFromString(date: string | undefined | null): string {
+        return date ? moment(date).format("DD.MM.yyyy") : "";
     }
 
-    return { startingCharUpperCase, formatDate, formatStringDate };
+    return { startingCharUpperCase, formatDate, formatDateFromString };
 }

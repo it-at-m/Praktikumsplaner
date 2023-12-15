@@ -5,7 +5,7 @@ export default class Nwk {
         public nachname: string,
         public studiengang: string,
         public jahrgang: string,
-        public vorlesungstage: string,
+        public vorlesungstage: string[],
         public isActive: boolean
     ) {}
 }

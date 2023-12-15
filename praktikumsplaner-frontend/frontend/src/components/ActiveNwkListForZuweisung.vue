@@ -1,25 +1,15 @@
 <template>
     <v-list>
-        <v-list-item
-            v-for="nwk in nwks"
-            :key="nwk.id"
-            draggable="true"
-            @dragstart="dragStart(nwk)"
-        >
-            <v-card
-                elevation="0"
-                color="grey"
+        <v-list-item-group>
+            <v-list-item
+                v-for="nwk in nwks"
+                :key="nwk.id"
+                draggable="true"
+                @dragstart="dragStart(nwk)"
             >
-                <v-list-item-content>
-                    <v-list-item-title style="cursor: grab">
-                        {{ nwk.vorname }} {{ nwk.nachname }} ({{
-                            nwk.studiengang
-                        }}
-                        / {{ nwk.jahrgang }})
-                    </v-list-item-title>
-                </v-list-item-content>
-            </v-card>
-        </v-list-item>
+                <nwk-card :nwk="nwk" />
+            </v-list-item>
+        </v-list-item-group>
     </v-list>
 </template>
 <script setup lang="ts">
@@ -58,3 +48,8 @@ function addNwkToList(nwk: Nwk) {
     nwks.value.push(nwk);
 }
 </script>
+<style scoped>
+.v-card {
+    margin: 5px;
+}
+</style>

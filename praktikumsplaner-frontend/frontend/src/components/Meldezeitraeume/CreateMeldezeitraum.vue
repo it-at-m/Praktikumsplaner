@@ -1,51 +1,57 @@
 <template>
-    <v-col>
-        <v-form
-            ref="form"
-            class="d-flex justify-center align-center form"
+    <div>
+        <v-dialog
+            v-model="visible"
+            persistent
+            width="600"
         >
-            <v-container>
-                <v-row>
-                    <v-col
-                        sm="8"
-                        md="4"
-                    >
-                        <v-text-field
-                            v-model="meldezeitraum.zeitraumName"
-                            label="Zeitraumname"
-                            :rules="zeitraumNameRules"
-                            outlined
-                        ></v-text-field>
+            <template #activator="{ on }">
+                <v-btn
+                    color="primary"
+                    v-on="on"
+                    >Meldezeitraum Anlegen</v-btn
+                >
+            </template>
+
+            <v-card>
+                <v-card-title>Meldezeitraum Anlegen</v-card-title>
+                <v-card-text>
+                    <v-col>
+                        <v-form ref="form">
+                            <v-text-field
+                                v-model="meldezeitraum.zeitraumName"
+                                label="Zeitraumname"
+                                :rules="zeitraumNameRules"
+                                outlined
+                            ></v-text-field>
+
+                            <ZeitraumPicker
+                                :value="meldezeitraum"
+                            ></ZeitraumPicker>
+                        </v-form>
                     </v-col>
-                </v-row>
-                <v-row>
-                    <v-col
-                        sm="8"
-                        md="4"
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn
+                        outlined
+                        text
+                        color="primary"
+                        @click="clickAbbrechen()"
                     >
-                        <ZeitraumPicker :value="meldezeitraum"></ZeitraumPicker>
-                    </v-col>
-                </v-row>
-            </v-container>
-        </v-form>
-        <v-btn
-            outlined
-            text
-            color="primary"
-            class="float-md-left"
-            @click="clickAbbrechen()"
-        >
-            Zurück
-        </v-btn>
-        <v-btn
-            class="float-md-right"
-            color="primary"
-            variant="text"
-            @click="clickSpeichern()"
-        >
-            Speichern
-        </v-btn>
-    </v-col>
+                        Zurück
+                    </v-btn>
+                    <VSpacer></VSpacer>
+                    <v-btn
+                        color="primary"
+                        variant="text"
+                        @click="clickSpeichern()"
+                    >
+                        Speichern
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -53,10 +59,9 @@ import { ref } from "vue";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
-import { sleep } from "@antfu/utils";
-import router from "@/router";
 import { useRules } from "@/composables/rules";
 
+const visible = ref(false);
 const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum(""));
 const form = ref<HTMLFormElement>();
 const maxLength = 255;
@@ -86,16 +91,13 @@ function clickSpeichern() {
                 emits("meldezeitraumAdded", meldezeitraum.value);
             })
             .finally(() => {
-                resetForm();
-                sleep(1000).then(() => {
-                    router.push("/");
-                });
+                clickAbbrechen();
             });
     }
 }
 
 function clickAbbrechen() {
     resetForm();
-    router.push("/");
+    visible.value = false;
 }
 </script>
