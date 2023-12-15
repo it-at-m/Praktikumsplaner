@@ -5,11 +5,11 @@
             page-header-text="Zuweisung"
         ></PageTitle>
         <v-row>
-            <v-col cols="4">
+            <v-col cols="5">
                 <active-nwk-list-for-zuweisung />
             </v-col>
             <v-divider vertical />
-            <v-col cols="8">
+            <v-col cols="7">
                 <praktikumsstellen-list />
             </v-col>
         </v-row>
@@ -18,4 +18,5 @@
 <script setup lang="ts">
 import PraktikumsstellenList from "@/components/PraktikumsstellenList.vue";
 import ActiveNwkListForZuweisung from "@/components/ActiveNwkListForZuweisung.vue";
+import PageTitle from "@/components/common/PageTitle.vue";
 </script>

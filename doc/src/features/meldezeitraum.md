@@ -1,5 +1,14 @@
 # Meldezeitraum
 
+## Meldezeitraum Overview
+The navigation drawer lists the page `Meldezeitraum` when clicking on this link the user is directed to a page
+where  you can see all Meldezeiträume that have been created so far.
+They are displayed in three different lists.
+The first list only shows the current [Meldezeitraum](../glossary.md#meldezeitraum).
+The second list shows all [Meldezeiträume](../glossary.md#meldezeitraum) that have already ended.
+The third list shows all [Meldezeiträume](../glossary.md#meldezeitraum) that have not yet started.
+If any of the lists is empty, a message will be displayed instead.
+
 ## Create a Meldezeitraum
 On the page `[app-url]/#/meldezeitraum` it is possible to create a [Meldezeitraum](../glossary.md#meldezeitraum).
 
