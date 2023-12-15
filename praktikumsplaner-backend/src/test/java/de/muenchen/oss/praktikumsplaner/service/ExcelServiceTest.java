@@ -39,9 +39,8 @@ public class ExcelServiceTest {
 
     @Test
     public void testExcelToNwkDtoListValidData() throws IOException {
-        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname("Max").nachname("Mustermann").
-                studiengang(Studiengang.BSC).jahrgang("21/24").
-                vorlesungstage(Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)).build();
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname("Max").nachname("Mustermann").studiengang(Studiengang.BSC).jahrgang("21/24")
+                .vorlesungstage(Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)).build();
 
         List<CreateNwkDto> createNwkDtos = new ArrayList<>();
         createNwkDtos.add(createNwkDto);

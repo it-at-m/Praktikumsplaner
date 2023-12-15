@@ -125,8 +125,7 @@ public class MeldezeitraumServiceTest {
     public void testGetMostRecentMeldezeitraum() {
         String name = "Name";
 
-        Meldezeitraum mostRecent =
-                helper.createMeldezeitraum(LocalDate.now().minusDays(10), LocalDate.now().plusDays(6), name);
+        Meldezeitraum mostRecent = helper.createMeldezeitraum(LocalDate.now().minusDays(10), LocalDate.now().plusDays(6), name);
         Meldezeitraum oldest = helper.createMeldezeitraum(LocalDate.now().minusDays(15), LocalDate.now().minusDays(11), name);
 
         List<Meldezeitraum> meldezeitraume = List.of(mostRecent, oldest, mostRecent);
@@ -147,10 +146,8 @@ public class MeldezeitraumServiceTest {
     public void testGetUpcomingMeldezeitraeume() {
         String name = "Name";
 
-        Meldezeitraum first =
-                helper.createMeldezeitraum(LocalDate.now().plusDays(10), LocalDate.now().plusDays(6), name);
-        Meldezeitraum second =
-                helper.createMeldezeitraum(LocalDate.now().plusDays(15), LocalDate.now().plusDays(11), name);
+        Meldezeitraum first = helper.createMeldezeitraum(LocalDate.now().plusDays(10), LocalDate.now().plusDays(6), name);
+        Meldezeitraum second = helper.createMeldezeitraum(LocalDate.now().plusDays(15), LocalDate.now().plusDays(11), name);
 
         List<Meldezeitraum> meldezeitraume = List.of(first, second);
 
@@ -162,10 +159,8 @@ public class MeldezeitraumServiceTest {
     public void testGetPassedMeldezeitraeume() {
         String name = "Name";
 
-        Meldezeitraum first =
-                helper.createMeldezeitraum(LocalDate.now().minusDays(10), LocalDate.now().minusDays(6), name);
-        Meldezeitraum second =
-                helper.createMeldezeitraum(LocalDate.now().minusDays(15), LocalDate.now().minusDays(11), name);
+        Meldezeitraum first = helper.createMeldezeitraum(LocalDate.now().minusDays(10), LocalDate.now().minusDays(6), name);
+        Meldezeitraum second = helper.createMeldezeitraum(LocalDate.now().minusDays(15), LocalDate.now().minusDays(11), name);
 
         List<Meldezeitraum> meldezeitraume = List.of(first, second);
 

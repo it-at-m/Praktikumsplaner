@@ -27,7 +27,7 @@ public class AusbildungsValidatorTest {
 
     @Test
     public void testIsValidWithValidObjects() {
-        for (Studiengang ausbildung: EnumSet.allOf(Studiengang.class)) {
+        for (Studiengang ausbildung : EnumSet.allOf(Studiengang.class)) {
             final TestClass testObject = new TestClass(ausbildung);
             validator.isValid(testObject, null);
         }

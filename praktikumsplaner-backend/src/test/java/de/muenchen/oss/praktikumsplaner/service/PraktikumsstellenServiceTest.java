@@ -145,10 +145,11 @@ public class PraktikumsstellenServiceTest {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = helper.createAusbildungsPraktikumsstelleEntity("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
-         Ausbildungsjahr.JAHR2, Studiengang.FISI, false, meldezeitraumDto.id(), null);
-        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 = helper.createAusbildungsPraktikumsstelleEntity("KM22", "Erika Mustermann", "erika@mustermann.de",
+                Ausbildungsjahr.JAHR2, Studiengang.FISI, false, meldezeitraumDto.id(), null);
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 = helper.createAusbildungsPraktikumsstelleEntity("KM22", "Erika Mustermann",
+                "erika@mustermann.de",
                 "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.RIT,
-                 Ausbildungsjahr.JAHR3, Studiengang.FISI,true, meldezeitraumDto.id(), null);
+                Ausbildungsjahr.JAHR3, Studiengang.FISI, true, meldezeitraumDto.id(), null);
         List<AusbildungsPraktikumsstelle> ausbildungsList = Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle1 = helper.createStudiumsPraktikumsstelleEntity("KM83", "Test Tester", "test@tester.de",
@@ -237,7 +238,7 @@ public class PraktikumsstellenServiceTest {
         Nwk nwk = new Nwk();
         nwk.setId(UUID.randomUUID());
         AusbildungsPraktikumsstelle stelle = helper.createAusbildungsPraktikumsstelleEntity("KM83", "Ausbilder",
-                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM,Ausbildungsjahr.JAHR2,
+                "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, Ausbildungsjahr.JAHR2,
                 Studiengang.BWI, false, UUID.randomUUID(), nwk);
 
         when(ausbildungsRepository.existsById(stelle.getId())).thenReturn(true);
@@ -322,6 +323,5 @@ public class PraktikumsstellenServiceTest {
 
         assertThrows(ResourceNotFoundException.class, () -> service.unassignNwk(UUID.randomUUID()));
     }
-
 
 }

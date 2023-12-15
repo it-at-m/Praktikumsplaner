@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class ServiceTestHelper {
     public Nwk createNwkEntity(final String vorname, final String nachname, final Studiengang studiengang,
-                               final String jahrgang, final Set<DayOfWeek> vorlesungstage, final boolean isActive) {
+            final String jahrgang, final Set<DayOfWeek> vorlesungstage, final boolean isActive) {
         Nwk newNwk = new Nwk();
         newNwk.setId(UUID.randomUUID());
         newNwk.setVorname(vorname);

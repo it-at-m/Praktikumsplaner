@@ -27,7 +27,7 @@ public class StudiumsValidatorTest {
 
     @Test
     public void testIsValidWithValidObjects() {
-        for (Studiengang studiengang: EnumSet.allOf(Studiengang.class)) {
+        for (Studiengang studiengang : EnumSet.allOf(Studiengang.class)) {
             final TestClass testObject = new TestClass(studiengang);
             validator.isValid(testObject, null);
         }
@@ -43,6 +43,5 @@ public class StudiumsValidatorTest {
         Object testObject = new Object();
         assertFalse(validator.isValid(testObject, null));
     }
-
 
 }
