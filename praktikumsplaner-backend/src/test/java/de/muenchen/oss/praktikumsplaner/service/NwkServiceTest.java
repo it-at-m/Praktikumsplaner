@@ -72,17 +72,11 @@ public class NwkServiceTest {
     @Test
     public void testimportNwk() throws IOException {
         final String base64 = "WAAAAAAGGHHH=";
-        final String nachname = "Mustermann";
-        final String vorname = "Max";
-        final Studiengang studiengang = Studiengang.BSC;
-        final String jahrgang = "21/24";
-        final Set<DayOfWeek> vorlesungstage = new HashSet<>();
-        vorlesungstage.add(DayOfWeek.MONDAY);
-        vorlesungstage.add(DayOfWeek.TUESDAY);
         final int EXCEL_TO_NWK_DTO_LIST_EXECUTIONS = 1;
 
-        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
-                .vorlesungstage(vorlesungstage).build();
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname("Max").nachname("Mustermann").
+                studiengang(Studiengang.BSC).jahrgang("21/24").
+                vorlesungstage(Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)).build();
 
         List<CreateNwkDto> createNwkDtos = new ArrayList<>();
         createNwkDtos.add(createNwkDto);
