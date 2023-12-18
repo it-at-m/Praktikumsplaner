@@ -30,7 +30,6 @@
                                         <ZeitraumPicker
                                             :value="bsc"
                                             label="Zuweisungszeitraum"
-                                            :horizontal="true"
                                         ></ZeitraumPicker>
                                     </v-col>
                                 </v-container>
@@ -43,7 +42,6 @@
                                     <ZeitraumPicker
                                         :value="vi"
                                         label="Zuweisungszeitraum"
-                                        :horizontal="true"
                                     ></ZeitraumPicker>
                                 </v-container>
                             </v-col>
@@ -55,7 +53,6 @@
                                     <ZeitraumPicker
                                         :value="bwi"
                                         label="Zuweisungszeitraum"
-                                        :horizontal="true"
                                     ></ZeitraumPicker>
                                 </v-container>
                             </v-col>
@@ -70,7 +67,6 @@
                                     <ZeitraumPicker
                                         :value="fisi"
                                         label="Zuweisungszeitraum"
-                                        :horizontal="true"
                                     ></ZeitraumPicker>
                                 </v-container>
                             </v-col>
