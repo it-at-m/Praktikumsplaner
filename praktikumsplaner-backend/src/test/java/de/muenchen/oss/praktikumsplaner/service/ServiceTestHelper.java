@@ -59,7 +59,7 @@ public class ServiceTestHelper {
     public StudiumsPraktikumsstelle createStudiumsPraktikumsstelleEntity(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten,
             final Dringlichkeit dringlichkeit, final Referat referat, final Studiensemester semester,
-            final Studiengang studiengang, final boolean programmierkenntnisse, final UUID meldezeitraumId, final Nwk assignedNwk) {
+            final Studiengang studiengang, final String programmierkenntnisse, final UUID meldezeitraumId, final Nwk assignedNwk) {
         StudiumsPraktikumsstelle newStudiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
         newStudiumsPraktikumsstelle.setId(UUID.randomUUID());
         newStudiumsPraktikumsstelle.setDienststelle(dienststelle);
@@ -90,7 +90,7 @@ public class ServiceTestHelper {
                 .dienststelle(stelle.getDienststelle()).oertlicheAusbilder(stelle.getOertlicheAusbilder())
                 .email(stelle.getEmail()).taetigkeiten(stelle.getTaetigkeiten())
                 .dringlichkeit(stelle.getDringlichkeit()).namentlicheAnforderung(stelle.getNamentlicheAnforderung())
-                .referat(stelle.getReferat()).programmierkenntnisse(stelle.isProgrammierkenntnisse())
+                .referat(stelle.getReferat()).programmierkenntnisse(stelle.getProgrammierkenntnisse())
                 .studiensemester(stelle.getStudiensemester()).studienart(stelle.getStudienart()).build();
     }
 
