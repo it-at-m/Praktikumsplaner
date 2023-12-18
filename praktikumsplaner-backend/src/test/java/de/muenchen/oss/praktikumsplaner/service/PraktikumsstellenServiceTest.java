@@ -321,21 +321,18 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testSaveStudiumsPraktikumsstelleWithMeldezeitraum() {
-        MeldezeitraumDto meldezeitraumDto =
-                new MeldezeitraumDto(UUID.randomUUID(), "Test", LocalDate.now(), LocalDate.now().plusDays(1));
+        MeldezeitraumDto meldezeitraumDto = new MeldezeitraumDto(UUID.randomUUID(), "Test", LocalDate.now(), LocalDate.now().plusDays(1));
 
-        StudiumsPraktikumsstelle studiumsPraktikumsstelle =
-                helper.createStudiumsPraktikumsstelleEntity("KM83", "Ausbilder","tester@test.de",
-                        "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, Studiensemester.SEMESTER1, Studiengang.BSC,
-                        "true", meldezeitraumDto.id(), null);
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle = helper.createStudiumsPraktikumsstelleEntity("KM83", "Ausbilder", "tester@test.de",
+                "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, Studiensemester.SEMESTER1, Studiengang.BSC,
+                "true", meldezeitraumDto.id(), null);
 
-        CreateStudiumsPraktikumsstelleWithMeldezeitraumDto createStudiumsPraktikumsstelleDto =
-                    CreateStudiumsPraktikumsstelleWithMeldezeitraumDto.builder().dienststelle(studiumsPraktikumsstelle.getDienststelle()).
-                        oertlicheAusbilder(studiumsPraktikumsstelle.getOertlicheAusbilder()).email(studiumsPraktikumsstelle.getEmail()).
-                        taetigkeiten(studiumsPraktikumsstelle.getTaetigkeiten()).dringlichkeit(studiumsPraktikumsstelle.getDringlichkeit()).
-                        namentlicheAnforderung(studiumsPraktikumsstelle.getNamentlicheAnforderung()).referat(studiumsPraktikumsstelle.getReferat()).
-                        programmierkenntnisse(studiumsPraktikumsstelle.getProgrammierkenntnisse()).studiensemester(studiumsPraktikumsstelle.getStudiensemester()).
-                        studienart(studiumsPraktikumsstelle.getStudienart()).build();
+        CreateStudiumsPraktikumsstelleWithMeldezeitraumDto createStudiumsPraktikumsstelleDto = CreateStudiumsPraktikumsstelleWithMeldezeitraumDto.builder()
+                .dienststelle(studiumsPraktikumsstelle.getDienststelle()).oertlicheAusbilder(studiumsPraktikumsstelle.getOertlicheAusbilder())
+                .email(studiumsPraktikumsstelle.getEmail()).taetigkeiten(studiumsPraktikumsstelle.getTaetigkeiten())
+                .dringlichkeit(studiumsPraktikumsstelle.getDringlichkeit()).namentlicheAnforderung(studiumsPraktikumsstelle.getNamentlicheAnforderung())
+                .referat(studiumsPraktikumsstelle.getReferat()).programmierkenntnisse(studiumsPraktikumsstelle.getProgrammierkenntnisse())
+                .studiensemester(studiumsPraktikumsstelle.getStudiensemester()).studienart(studiumsPraktikumsstelle.getStudienart()).build();
 
         StudiumsPraktikumsstelleDto studiumsPraktikumsstelleDto = helper.createPraktikumsstelleDto(studiumsPraktikumsstelle);
 
@@ -350,21 +347,19 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testSaveAusbildungsPraktikumsstelleWithMeldezeitraum() {
-        MeldezeitraumDto meldezeitraumDto =
-                new MeldezeitraumDto(UUID.randomUUID(), "Test", LocalDate.now(), LocalDate.now().plusDays(1));
+        MeldezeitraumDto meldezeitraumDto = new MeldezeitraumDto(UUID.randomUUID(), "Test", LocalDate.now(), LocalDate.now().plusDays(1));
 
-        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle =
-                helper.createAusbildungsPraktikumsstelleEntity("KM83", "Ausbilder","tester@test.de",
-                        "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, Ausbildungsjahr.JAHR2, Studiengang.BSC,
-                        true, meldezeitraumDto.id(), null);
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = helper.createAusbildungsPraktikumsstelleEntity("KM83", "Ausbilder", "tester@test.de",
+                "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, Ausbildungsjahr.JAHR2, Studiengang.BSC,
+                true, meldezeitraumDto.id(), null);
 
-        CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto createAusbildungsPraktikumsstelleDto =
-                CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto.builder().dienststelle(ausbildungsPraktikumsstelle.getDienststelle()).
-                        oertlicheAusbilder(ausbildungsPraktikumsstelle.getOertlicheAusbilder()).email(ausbildungsPraktikumsstelle.getEmail()).
-                        taetigkeiten(ausbildungsPraktikumsstelle.getTaetigkeiten()).dringlichkeit(ausbildungsPraktikumsstelle.getDringlichkeit()).
-                        namentlicheAnforderung(ausbildungsPraktikumsstelle.getNamentlicheAnforderung()).referat(ausbildungsPraktikumsstelle.getReferat()).
-                        programmierkenntnisse(ausbildungsPraktikumsstelle.getProgrammierkenntnisse()).ausbildungsjahr(ausbildungsPraktikumsstelle.getAusbildungsjahr()).
-                        ausbildungsrichtung(ausbildungsPraktikumsstelle.getAusbildungsrichtung()).build();
+        CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto createAusbildungsPraktikumsstelleDto = CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto
+                .builder().dienststelle(ausbildungsPraktikumsstelle.getDienststelle()).oertlicheAusbilder(ausbildungsPraktikumsstelle.getOertlicheAusbilder())
+                .email(ausbildungsPraktikumsstelle.getEmail()).taetigkeiten(ausbildungsPraktikumsstelle.getTaetigkeiten())
+                .dringlichkeit(ausbildungsPraktikumsstelle.getDringlichkeit()).namentlicheAnforderung(ausbildungsPraktikumsstelle.getNamentlicheAnforderung())
+                .referat(ausbildungsPraktikumsstelle.getReferat()).programmierkenntnisse(ausbildungsPraktikumsstelle.getProgrammierkenntnisse())
+                .ausbildungsjahr(ausbildungsPraktikumsstelle.getAusbildungsjahr()).ausbildungsrichtung(ausbildungsPraktikumsstelle.getAusbildungsrichtung())
+                .build();
 
         AusbildungsPraktikumsstelleDto ausbildungsPraktikumsstelleDto = helper.createPraktikumsstelleDto(ausbildungsPraktikumsstelle);
 
