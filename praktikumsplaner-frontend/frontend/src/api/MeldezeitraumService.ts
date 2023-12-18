@@ -77,4 +77,21 @@ export default {
                 FetchUtils.defaultResponseHandler(err);
             });
     },
+    getAllMeldezeitraeume(): Promise<Meldezeitraum[]> {
+        return fetch(
+            `${API_BASE}${MELDEZEITRAUM_BASE}`,
+            FetchUtils.getGETConfig()
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .catch((err) => {
+                useSnackbarStore().showMessage({
+                    message: err.message,
+                    level: Levels.ERROR,
+                });
+                FetchUtils.defaultResponseHandler(err);
+            });
+    },
 };
