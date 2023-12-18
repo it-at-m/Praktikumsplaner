@@ -41,7 +41,6 @@ import Zeitraum from "@/types/Zeitraum";
 const props = defineProps<{
     value: Zeitraum;
     label: string;
-    horizontal?: boolean;
 }>();
 
 const layout = computed(() => {
