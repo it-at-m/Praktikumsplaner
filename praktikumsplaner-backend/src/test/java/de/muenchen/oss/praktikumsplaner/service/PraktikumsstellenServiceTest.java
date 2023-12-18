@@ -78,14 +78,14 @@ public class PraktikumsstellenServiceTest {
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).programmierkenntnisse("true")
-                .studiensemester(Studiensemester.SEMESTER1).studienart(Studiengang.BSC).build();
+                .studiensemester(Studiensemester.SEMESTER1).studiengang(Studiengang.BSC).build();
 
         StudiumsPraktikumsstelleDto dto = StudiumsPraktikumsstelleDto.builder().id(studiumsPraktikumsstelle.getId())
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).programmierkenntnisse("true")
-                .studiensemester(Studiensemester.SEMESTER1).studienart(Studiengang.BSC).build();
+                .studiensemester(Studiensemester.SEMESTER1).studiengang(Studiengang.BSC).build();
 
         when(studiumsRepository.save(studiumsPraktikumsstelle)).thenReturn(studiumsPraktikumsstelle);
         when(mapper.toDto(studiumsPraktikumsstelle)).thenReturn(dto);
@@ -375,7 +375,7 @@ public class PraktikumsstellenServiceTest {
                 .email(stelle.getEmail()).taetigkeiten(stelle.getTaetigkeiten())
                 .dringlichkeit(stelle.getDringlichkeit()).namentlicheAnforderung(stelle.getNamentlicheAnforderung())
                 .referat(stelle.getReferat()).programmierkenntnisse(stelle.getProgrammierkenntnisse())
-                .studiensemester(stelle.getStudiensemester()).studienart(stelle.getStudiengang()).build();
+                .studiensemester(stelle.getStudiensemester()).studiengang(stelle.getStudiengang()).build();
     }
 
     private MeldezeitraumDto createMeldezeitraumDto(LocalDate start, LocalDate end, String name) {
