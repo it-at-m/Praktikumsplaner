@@ -54,4 +54,8 @@ public class MeldezeitraumService {
         }
         return meldezeitraumMapper.toDto(passedZeitraueme.get(0));
     }
+
+    public List<MeldezeitraumDto> getAllMeldezeitraeume() {
+        return meldezeitraumRepository.findAll().stream().map(meldezeitraumMapper::toDto).toList();
+    }
 }

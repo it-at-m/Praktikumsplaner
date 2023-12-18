@@ -15,7 +15,7 @@
                     <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
                     <router-link to="/">
                         <v-toolbar-title class="white--text">
-                            {{ header }}</v-toolbar-title
+                            Praktikumsplaner</v-toolbar-title
                         >
                     </router-link>
                 </v-col>
@@ -55,12 +55,10 @@
                 </v-list-item>
                 <v-list-item
                     v-security.restrict="['ROLE_NWK']"
-                    :to="{ path: '/meldungAusbilder' }"
+                    :to="{ path: '/praktikumsplaetze' }"
                 >
                     <v-list-item-content>
-                        <v-list-item-title
-                            >Praktikumsstellen Meldung</v-list-item-title
-                        >
+                        <v-list-item-title>Praktikumsplätze</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
@@ -89,7 +87,6 @@ import { onBeforeMount, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router/composables";
 import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
-import { useHeaderStore } from "@/stores/header";
 import { UserService } from "@/api/UserService";
 import { useUserStore } from "@/stores/user";
 import "@/directives/Security";
@@ -98,8 +95,6 @@ const drawer = ref(true);
 const query = ref("");
 const route = useRoute();
 const snackbarStore = useSnackbarStore();
-const headerStore = useHeaderStore();
-const header = ref<string>("Praktikumsplaner");
 const userService = new UserService();
 const userStore = useUserStore();
 
@@ -128,11 +123,6 @@ watch(
             query.value = q;
         }
     }
-);
-
-watch(
-    () => headerStore.appHeader,
-    () => (header.value = headerStore.appHeader)
 );
 </script>
 

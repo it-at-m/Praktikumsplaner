@@ -28,6 +28,7 @@ public record AusbildungsPraktikumsstelleDto(@NotNull UUID id,
                                              Referat referat,
 
                                              @NotNull boolean projektarbeit,
+                                             String programmierkenntnisse,
 
                                              @NotNull boolean planstelleVorhanden,
 
