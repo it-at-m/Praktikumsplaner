@@ -4,6 +4,6 @@
 
 [Create Meldezeitraum](meldezeitraum.md)
 
-[Report Praktikumsstelle](MeldungOertlAusbilder.md)
+[Praktikumsplätze](Praktikumsplaetze.md)
 
 [Assignment](Zuweisung.md)

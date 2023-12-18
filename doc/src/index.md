@@ -10,8 +10,8 @@ features:
   details: View all Nwks and add new ones
 - title: Create Meldezeitraum
   details: Create new Meldezeiträume in the application
-- title: Report Praktikumsstelle
-  details: Report a Praktikumsstelle to the örtl. Ausbildungsleitung
+- title: Praktikumsplätze
+  details: Report Praktikumsstellen
 - title: Assignment 
   details: Assign Nwks to Praktikumsstellen
 ---

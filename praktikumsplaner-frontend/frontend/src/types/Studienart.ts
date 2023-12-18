@@ -1,5 +1,5 @@
 export const Studienart = [
-    { name: "BWI", value: "Wirtschaftsinformatik (BWI)" },
-    { name: "BSC", value: "Informatik (B.Sc.)" },
-    { name: "VI", value: "Verwaltungsinformatik (VI)" },
+    { name: "Wirtschaftsinformatik (BWI)", value: "BWI" },
+    { name: "Informatik (B.Sc.)", value: "BSC" },
+    { name: "Verwaltungsinformatik (VI)", value: "VI" },
 ] as const;
