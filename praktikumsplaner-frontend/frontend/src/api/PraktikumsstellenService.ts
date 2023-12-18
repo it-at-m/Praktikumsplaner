@@ -28,11 +28,57 @@ export default {
                 FetchUtils.defaultResponseHandler(err);
             });
     },
+    uploadStudiumsPraktikumsstelleWithMeldezeitraum(
+        praktikumsstelle: Praktikumsstelle
+    ): Promise<Praktikumsstelle> {
+        return fetch(
+            `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/ausbildungsleitung`,
+            FetchUtils.getPOSTConfig(praktikumsstelle)
+        )
+            .then((response) => {
+                useSnackbarStore().showMessage({
+                    message: "☑ Speichern erfolgreich.",
+                    level: Levels.SUCCESS,
+                });
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .catch((err) => {
+                useSnackbarStore().showMessage({
+                    message: err.message,
+                    level: Levels.ERROR,
+                });
+                FetchUtils.defaultResponseHandler(err);
+            });
+    },
     uploadAusbildungsPraktikumsstelle(
         praktikumsstelle: Praktikumsstelle
     ): Promise<Praktikumsstelle> {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung`,
+            FetchUtils.getPOSTConfig(praktikumsstelle)
+        )
+            .then((response) => {
+                useSnackbarStore().showMessage({
+                    message: "☑ Speichern erfolgreich.",
+                    level: Levels.SUCCESS,
+                });
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .catch((err) => {
+                useSnackbarStore().showMessage({
+                    message: err.message,
+                    level: Levels.ERROR,
+                });
+                FetchUtils.defaultResponseHandler(err);
+            });
+    },
+    uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
+        praktikumsstelle: Praktikumsstelle
+    ): Promise<Praktikumsstelle> {
+        return fetch(
+            `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/ausbildungsleitung`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
         )
             .then((response) => {

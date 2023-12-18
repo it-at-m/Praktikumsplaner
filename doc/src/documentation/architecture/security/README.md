@@ -14,7 +14,8 @@ The results of this process are listed under [features](#features)
 
 - [Nachwuchskräfte](../../../features/Nachwuchskraefte.md) (örtliche Ausbildungsleitung)
 - [Meldezeitraum](../../../features/meldezeitraum.md) (örtliche Ausbildungsleitung)
-- [Meldung örtl. Ausbilder](../../../features/MeldungOertlAusbilder.md) (örtliche Ausbilderin / anyone except Nwk)
+- [Meldung örtl. Ausbilder](../../../features/Praktikumsplaetze.md) (örtliche Ausbilderin / anyone except Nwk)
+- [Meldung örtl. Ausbildungsleitung](../../../features/Praktikumsplaetze.md) (örtliche Ausbildungsleitung)
 - [Zuweisung](../../../features/Zuweisung.md) (örtliche Ausbildungsleitung)
 
 ## Technical Implementation
