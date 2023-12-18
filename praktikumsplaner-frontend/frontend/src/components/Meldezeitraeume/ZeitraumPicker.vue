@@ -43,10 +43,6 @@ const props = defineProps<{
     label: string;
 }>();
 
-const layout = computed(() => {
-    return props.horizontal ? "6" : "12";
-});
-
 const validationRules = useRules();
 const calendarIcon = "mdi-calendar";
 
