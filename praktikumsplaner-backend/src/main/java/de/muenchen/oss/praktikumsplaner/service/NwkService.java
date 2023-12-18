@@ -27,14 +27,14 @@ public class NwkService {
     }
 
     public List<NwkDto> findAllActiveNwks() {
-        return nwkRepository.findNwksByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDto).collect(Collectors.toList());
+        return nwkRepository.findNwksByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDto).toList();
     }
 
     public List<NwkDto> findAllUnassignedNwks() {
-        return nwkRepository.findAllUnassigned().stream().map(nwkMapper::toDto).collect(Collectors.toList());
+        return nwkRepository.findAllUnassigned().stream().map(nwkMapper::toDto).toList();
     }
 
     public List<NwkDto> findAllNwks() {
-        return nwkRepository.findAll().stream().map(nwkMapper::toDto).collect(Collectors.toList());
+        return nwkRepository.findAll().stream().map(nwkMapper::toDto).toList();
     }
 }
