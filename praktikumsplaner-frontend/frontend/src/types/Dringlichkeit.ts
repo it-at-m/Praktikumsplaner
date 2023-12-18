@@ -1,5 +1,5 @@
 export const Dringlichkeit = [
-    { name: "ZWINGEND", value: "Zwingend" },
-    { name: "DRINGEND", value: "Dringend" },
-    { name: "NACHRANGIG", value: "Nachrangig" },
+    { name: "Zwingend", value: "ZWINGEND" },
+    { name: "Dringend", value: "DRINGEND" },
+    { name: "Nachrangig", value: "NACHRANGIG" },
 ] as const;
