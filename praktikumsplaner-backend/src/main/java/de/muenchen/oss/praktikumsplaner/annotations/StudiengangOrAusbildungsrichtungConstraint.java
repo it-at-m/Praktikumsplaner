@@ -25,7 +25,7 @@ public @interface StudiengangOrAusbildungsrichtungConstraint {
 
     Class<? extends Payload>[] payload() default {};
 
-    String ausbildungsrichtung();
+    String ausbildungsrichtungGetMethod();
 
-    String studiengang();
+    String studiengangGetMethod();
 }
