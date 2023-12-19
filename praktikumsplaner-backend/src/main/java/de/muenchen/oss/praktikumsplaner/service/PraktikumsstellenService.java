@@ -23,7 +23,6 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -86,8 +85,7 @@ public class PraktikumsstellenService {
                 .collect(Collectors.groupingBy(
                         praktikumsstelle -> getHauptabteilung(praktikumsstelle.dienststelle()),
                         TreeMap::new,
-                        Collectors.toList()
-                ));
+                        Collectors.toList()));
     }
 
     public PraktikumsstelleDto assignNwk(UUID praktikumsstellenID, UUID nwkID) {
