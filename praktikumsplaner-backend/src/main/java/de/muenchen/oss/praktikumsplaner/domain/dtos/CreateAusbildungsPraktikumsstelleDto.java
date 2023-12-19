@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-@AusbildungsAnnotation(ausbildungsrichtung = "ausbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
+@AusbildungsAnnotation(ausbildungsrichtungGetMethod = "ausbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
 public record CreateAusbildungsPraktikumsstelleDto(@NotNull String dienststelle,
 
                                                    @NotNull String oertlicheAusbilder,
