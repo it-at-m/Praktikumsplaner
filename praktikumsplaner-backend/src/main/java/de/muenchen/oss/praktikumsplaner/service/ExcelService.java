@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static org.apache.logging.log4j.util.Strings.isBlank;
+
 import de.muenchen.oss.praktikumsplaner.annotations.StudiengangOrAusbildungsrichtungConstraint;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
@@ -18,7 +20,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import static org.apache.logging.log4j.util.Strings.isBlank;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -81,9 +82,7 @@ public class ExcelService {
                         new ExcelImportException.ExcelImportExceptionInfo(
                                 row.getRowNum(),
                                 propertyPath,
-                                violation.getMessage()
-                        )
-                );
+                                violation.getMessage()));
             });
 
             createNwkDtos.add(createNwkDto);
