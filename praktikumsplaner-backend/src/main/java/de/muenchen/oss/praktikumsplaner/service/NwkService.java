@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
@@ -7,6 +8,8 @@ import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import java.io.IOException;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -17,7 +20,12 @@ public class NwkService {
     private final NwkRepository nwkRepository;
     private final ExcelService excelService;
 
+    private static final Logger logger = LoggerFactory.getLogger(NwkService.class);
+
     public NwkDto saveNwk(final CreateNwkDto createNwkDto) {
+        logger.error("saveNwk: " + createNwkDto);
+        Nwk nwk = nwkMapper.toEntity(createNwkDto, true);
+        logger.error("saveNwkEnitity: " + nwk);
         return nwkMapper.toDto(nwkRepository.save(nwkMapper.toEntity(createNwkDto, true)));
     }
 

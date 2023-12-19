@@ -1,6 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.domain;
 
+import de.muenchen.oss.praktikumsplaner.annotations.StudiengangOrAusbildungsrichtungConstraint;
 import de.muenchen.oss.praktikumsplaner.domain.converter.DayOfWeekSetConverter;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -25,6 +27,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@StudiengangOrAusbildungsrichtungConstraint(studiengang = "getStudiengang", ausbildungsrichtung = "getAusbildungsrichtung")
 /*
  * Nwk is short for Nachwuchskraft (young talent)
  */
@@ -39,8 +42,10 @@ public class Nwk extends BaseEntity {
     private String nachname;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Der Studiengang ist erforderlich")
     private Studiengang studiengang;
+
+    @Enumerated(EnumType.STRING)
+    private Ausbildungsrichtung ausbildungsrichtung;
 
     @NotNull(message = "Der Jahrgang ist erforderlich")
     @Pattern(regexp = "\\d\\d/\\d\\d")
