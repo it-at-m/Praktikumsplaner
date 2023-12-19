@@ -1,18 +1,18 @@
 package de.muenchen.oss.praktikumsplaner.validators;
 
 import de.muenchen.oss.praktikumsplaner.annotations.AusbildungsAnnotation;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.lang.reflect.Method;
 
 public class AusbildungsValidator implements ConstraintValidator<AusbildungsAnnotation, Object> {
 
-    private String studiengangField;
+    private String ausbildungsrichtungField;
 
     @Override
     public void initialize(final AusbildungsAnnotation constraintAnnotation) {
-        this.studiengangField = constraintAnnotation.studiengang();
+        this.ausbildungsrichtungField = constraintAnnotation.ausbildungsrichtung();
     }
 
     @Override
@@ -22,10 +22,10 @@ public class AusbildungsValidator implements ConstraintValidator<AusbildungsAnno
                 return true;
             }
 
-            final Method studiengangGetter = object.getClass().getMethod(studiengangField);
-            final Studiengang studiengang = (Studiengang) studiengangGetter.invoke(object);
+            final Method ausbildungsrichtungGetter = object.getClass().getMethod(ausbildungsrichtungField);
+            final Ausbildungsrichtung ausbildungsrichtung = (Ausbildungsrichtung) ausbildungsrichtungGetter.invoke(object);
 
-            return studiengang == Studiengang.FISI;
+            return ausbildungsrichtung == Ausbildungsrichtung.FISI;
 
         } catch (Exception e) {
             return false;

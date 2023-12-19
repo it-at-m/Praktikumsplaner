@@ -65,10 +65,14 @@ public class MailService {
     }
 
     private Map<String, String> buildMailData(final PraktikumsstelleDto praktikumsstelleDto, final Map<String, ZeitraumDto> assignmentPeriods) {
+        String studiengangOderAusbildungsrichtungKey = praktikumsstelleDto.assignedNwk().studiengang() != null
+                ? praktikumsstelleDto.assignedNwk().studiengang().toString()
+                : praktikumsstelleDto.assignedNwk().ausbildungsrichtung().toString();
+
         return Map.of(
                 "ausbilder", praktikumsstelleDto.oertlicheAusbilder(),
                 "nachwuchskraftName", praktikumsstelleDto.assignedNwk().vorname() + " " + praktikumsstelleDto.assignedNwk().nachname(),
-                "startDatum", assignmentPeriods.get(praktikumsstelleDto.assignedNwk().studiengang().toString()).startZeitpunkt().format(dateTimeFormatter),
-                "endDatum", assignmentPeriods.get(praktikumsstelleDto.assignedNwk().studiengang().toString()).endZeitpunkt().format(dateTimeFormatter));
+                "startDatum", assignmentPeriods.get(studiengangOderAusbildungsrichtungKey).startZeitpunkt().format(dateTimeFormatter),
+                "endDatum", assignmentPeriods.get(studiengangOderAusbildungsrichtungKey).endZeitpunkt().format(dateTimeFormatter));
     }
 }

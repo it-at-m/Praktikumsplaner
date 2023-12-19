@@ -1,8 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
-import static org.apache.logging.log4j.util.Strings.isBlank;
-
+import de.muenchen.oss.praktikumsplaner.annotations.StudiengangOrAusbildungsrichtungConstraint;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
 import io.micrometer.common.util.StringUtils;
@@ -18,11 +18,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import static org.apache.logging.log4j.util.Strings.isBlank;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,6 +41,8 @@ public class ExcelService {
     private static final int JAHRGANG_COLUM = 3;
     private static final int VORLESUNGSTAGE_COLUM = 4;
     private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
+
+    private static final Logger logger = LoggerFactory.getLogger(ExcelService.class);
 
     public List<CreateNwkDto> excelToNwkDtoList(final String base64String) throws IOException {
         try (InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
@@ -59,21 +64,42 @@ public class ExcelService {
                 importExceptionInfoList.addAll(ex.getExceptionInfos());
             }
             if (createNwkDto == null || isCreateNwkDtoEmpty(createNwkDto)) {
+                logger.error("NWK ist leer.");
                 continue;
             }
-            validator.validate(createNwkDto).forEach(violation -> importExceptionInfoList.add(
-                    new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), violation.getPropertyPath().toString(), violation.getMessage())));
+            validator.validate(createNwkDto).forEach(violation -> {
+                Class<?> annotationType = violation.getConstraintDescriptor().getAnnotation().annotationType();
+                String propertyPath;
+                // Checks which annotation triggered the violation and sets the propertyPath accordingly
+                if (annotationType.equals(StudiengangOrAusbildungsrichtungConstraint.class)) {
+                    propertyPath = "studiengang";
+                } else {
+                    propertyPath = violation.getPropertyPath().toString();
+                }
+
+                importExceptionInfoList.add(
+                        new ExcelImportException.ExcelImportExceptionInfo(
+                                row.getRowNum(),
+                                propertyPath,
+                                violation.getMessage()
+                        )
+                );
+            });
+
             createNwkDtos.add(createNwkDto);
+            logger.error("NWK wurde geaddet.");
         }
+        logger.error(importExceptionInfoList.toString());
         if (!importExceptionInfoList.isEmpty())
             throw new ExcelImportException(importExceptionInfoList);
+        logger.error("NWKS: " + createNwkDtos.toString());
         return createNwkDtos;
     }
 
     private boolean isCreateNwkDtoEmpty(final CreateNwkDto createNwkDto) {
         return StringUtils.isEmpty(createNwkDto.vorname())
                 && StringUtils.isEmpty(createNwkDto.nachname())
-                && createNwkDto.studiengang() == null
+                && (createNwkDto.studiengang() == null && createNwkDto.ausbildungsrichtung() == null)
                 && StringUtils.isEmpty(createNwkDto.jahrgang());
     }
 
@@ -86,10 +112,26 @@ public class ExcelService {
             case VORNAME_COLUM -> createNwkDtoBuilder.vorname(cellValue);
             case STUDIENGANG_COLUM -> {
                 try {
-                    createNwkDtoBuilder
-                            .studiengang(isBlank(cellValue) ? null : Studiengang.valueOf(cellValue));
+                    logger.error("Column Value: " + cellValue);
+                    if (isBlank(cellValue)) {
+                        logger.error("leere Zelle");
+                        createNwkDtoBuilder.studiengang(null);
+                        createNwkDtoBuilder.ausbildungsrichtung(null);
+                    } else {
+                        createNwkDtoBuilder.studiengang(Studiengang.valueOf(cellValue));
+                        createNwkDtoBuilder.ausbildungsrichtung(null);
+                        logger.error("Studiengang: " + cellValue);
+                    }
                 } catch (IllegalArgumentException ex) {
-                    throw new ExcelImportException(List.of(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "studiengang", ex.getMessage())));
+                    try {
+                        createNwkDtoBuilder.ausbildungsrichtung(Ausbildungsrichtung.valueOf(cellValue));
+                        createNwkDtoBuilder.studiengang(null);
+                        logger.error("Ausbildungsrichtung: " + cellValue);
+                    } catch (IllegalArgumentException ex2) {
+                        throw new ExcelImportException(
+                                List.of(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "studiengang", ex.getMessage()),
+                                        new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "ausbildungsrichtung", ex2.getMessage())));
+                    }
                 }
             }
             case JAHRGANG_COLUM -> createNwkDtoBuilder.jahrgang(cellValue);
@@ -105,6 +147,7 @@ public class ExcelService {
             }
             }
         }
+        logger.error("NWK wird gebuildet.");
         return createNwkDtoBuilder.build();
     }
 
