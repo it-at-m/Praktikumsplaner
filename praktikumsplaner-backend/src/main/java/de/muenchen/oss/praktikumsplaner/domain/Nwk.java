@@ -49,6 +49,5 @@ public class Nwk extends BaseEntity {
     @Convert(converter = DayOfWeekSetConverter.class)
     private Set<DayOfWeek> vorlesungstage;
 
-    @NotNull
     private boolean active;
 }
