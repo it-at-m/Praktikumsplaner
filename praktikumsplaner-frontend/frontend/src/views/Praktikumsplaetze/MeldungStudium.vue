@@ -175,9 +175,9 @@
                 <v-row>
                     <v-col>
                         <v-select
-                            v-model="praktikumsstelle.studiengang"
+                            v-model="praktikumsstelle.studienart"
                             label="Studienrichtung*"
-                            :items="Studiengang"
+                            :items="Studienart"
                             item-value="value"
                             item-text="name"
                             :rules="requiredRule"
@@ -308,7 +308,7 @@ import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum
 import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
-import { Studiengang } from "@/types/Studiengang";
+import { Studienart } from "@/types/Studienart";
 import { Studiensemester } from "@/types/Studiensemester";
 import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
@@ -406,7 +406,7 @@ onMounted(() => {
 
 function changeVorrZuweisungsZeitraum() {
     zuweisungsZeitraum.value = zeitraeueme.studiumsZeitraum(
-        praktikumsstelle.value.studiengang,
+        praktikumsstelle.value.studienart,
         praktikumsstelle.value.studiensemester
     );
 }

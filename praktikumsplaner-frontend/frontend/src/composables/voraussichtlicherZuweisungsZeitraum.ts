@@ -1,9 +1,9 @@
 export function useZeitraeume() {
     function studiumsZeitraum(
-        studiengang: string | undefined,
+        studienart: string | undefined,
         semester: string | undefined
     ): string {
-        if (studiengang == "BSC") {
+        if (studienart == "BSC") {
             if (semester == "SEMESTER1" || semester == "SEMESTER3") {
                 return "Februar - Mitte März";
             } else if (semester == "SEMESTER2" || semester == "SEMESTER6") {
@@ -14,7 +14,7 @@ export function useZeitraeume() {
                 return "Nicht in ausgewähltem Semester verfügbar";
             }
         }
-        if (studiengang == "BWI") {
+        if (studienart == "BWI") {
             if (semester == "SEMESTER1" || semester == "SEMESTER3") {
                 return "01.09 - 28.02";
             } else if (semester == "SEMESTER2" || semester == "SEMESTER4") {
@@ -25,7 +25,7 @@ export function useZeitraeume() {
                 return "Nicht in ausgewähltem Semester verfügbar";
             }
         }
-        if (studiengang == "VI") {
+        if (studienart == "VI") {
             if (semester == "SEMESTER1" || semester == "SEMESTER3") {
                 return "Februar - März";
             } else if (semester == "SEMESTER4" || semester == "SEMESTER5") {

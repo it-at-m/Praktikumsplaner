@@ -30,7 +30,7 @@ Meaning `Urgent`, `Important`, and `Not important`.
 #### Zeitraum Nwk
 
 This field shows you the estimated time when the [Nwk](./../glossary.md#nwk) will be there.
-This is calculated by the application based on the chosen Studiengang/Ausbildungsrichtung, Semester/Ausbildungsjahr, and the current date.
+This is calculated by the application based on the chosen Studienart/Ausbildungsrichtung, Semester/Ausbildungsjahr, and the current date.
 Beware that this is only an estimate and can be changed by the [örtliche Ausbildungsleitung](./../glossary.md#ortliche-ausbildungsleitung).
 
 #### Planstelle
@@ -51,7 +51,7 @@ Text field for noting the operations performed by the team and what the [Nwk](./
 
 ### Nachwuchskraft
 
-#### Studium: Studiengang
+#### Studium: Studienart
 
 Selection between the different study majors e.g. `Informatik (B.Sc.)`
 

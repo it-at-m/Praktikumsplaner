@@ -53,7 +53,7 @@ public class NwkServiceTest {
         vorlesungstage.add(DayOfWeek.MONDAY);
         vorlesungstage.add(DayOfWeek.TUESDAY);
 
-        Nwk nwk = new Nwk(vorname, nachname, studiengang, null, jahrgang, vorlesungstage, isActive);
+        Nwk nwk = new Nwk(vorname, nachname, studiengang, jahrgang, vorlesungstage, isActive);
         NwkDto nwkDto = NwkDto.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).active(isActive).build();
         CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
@@ -79,8 +79,8 @@ public class NwkServiceTest {
         vorlesungstage.add(DayOfWeek.TUESDAY);
         final int EXCEL_TO_NWK_DTO_LIST_EXECUTIONS = 1;
 
-        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang)
-                .ausbildungsrichtung(null).jahrgang(jahrgang).vorlesungstage(vorlesungstage).build();
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+                .vorlesungstage(vorlesungstage).build();
 
         List<CreateNwkDto> createNwkDtos = new ArrayList<>();
         createNwkDtos.add(createNwkDto);

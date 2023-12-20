@@ -26,6 +26,6 @@ public @interface AusbildungsAnnotation {
 
     Class<? extends Payload>[] payload() default {};
 
-    String ausbildungsrichtung();
+    String studiengang();
 
 }

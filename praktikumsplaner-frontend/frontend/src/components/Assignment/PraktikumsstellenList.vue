@@ -74,7 +74,7 @@ watch(
     () => nwkStore.nwk,
     () => {
         assignedNwkID.value =
-            nwkStore.nwk ?? new Nwk("", "", "", "", [], false, "", "");
+            nwkStore.nwk ?? new Nwk("", "", "", "", "", [], false);
     }
 );
 
@@ -99,7 +99,7 @@ function drop(stelle: Praktikumsstelle) {
     // Check if Studiums or Ausbildungspraktikumsstelle
     if (
         stelle.ausbildungsrichtung == undefined &&
-        assignedNwkID.value.studiengang == undefined
+        assignedNwkID.value.studiengang == "FISI"
     ) {
         warningDialogText.value +=
             "Wollen sie wirklich " +
@@ -109,8 +109,8 @@ function drop(stelle: Praktikumsstelle) {
             " auf eine Studiumspraktikumsstelle setzen, obwohl er/sie Auszubildende/r ist?\n";
     }
     if (
-        stelle.studiengang == undefined &&
-        assignedNwkID.value.ausbildungsrichtung == undefined
+        stelle.studienart == undefined &&
+        assignedNwkID.value.studiengang != "FISI"
     ) {
         warningDialogText.value +=
             "Wollen sie wirklich " +
@@ -122,15 +122,15 @@ function drop(stelle: Praktikumsstelle) {
 
     // Check if studiengang is the same
     if (
-        stelle.studiengang &&
+        stelle.studienart &&
         assignedNwkID.value.studiengang != "FISI" &&
-        stelle.studiengang != assignedNwkID.value.studiengang
+        stelle.studienart != assignedNwkID.value.studiengang
     ) {
         warningDialogText.value +=
             "Wollen sie wirklich eine/n " +
             assignedNwkID.value.studiengang +
             " Student*in auf eine " +
-            stelle.studiengang +
+            stelle.studienart +
             " Stelle setzen?\n";
     }
 
@@ -154,7 +154,7 @@ function drop(stelle: Praktikumsstelle) {
 
     // Check if Nwk is in the right semester
     if (
-        stelle.studiengang != undefined &&
+        stelle.studienart != undefined &&
         assignedNwkID.value.studiengang != "FISI" &&
         stelle.studiensemester
     ) {

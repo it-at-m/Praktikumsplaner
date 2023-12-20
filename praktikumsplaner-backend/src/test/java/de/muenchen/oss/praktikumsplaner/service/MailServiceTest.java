@@ -42,15 +42,15 @@ public class MailServiceTest {
         when(mailSender.createMimeMessage()).thenReturn(mockMimeMessage);
         when(templateEngine.process(anyString(), any(Context.class))).thenReturn("Mock-Mail-Body");
 
-        NwkDto assignedNwk1 = createNwkDto("Max", "Mustermann", Studiengang.BSC, null);
-        NwkDto assignedNwk2 = createNwkDto("Erika", "Musterfrau", Studiengang.BWI, null);
-        NwkDto assignedNwk3 = createNwkDto("John", "Smith", null, Ausbildungsrichtung.FISI);
+        NwkDto assignedNwk1 = createNwkDto("Max", "Mustermann", Studiengang.BSC);
+        NwkDto assignedNwk2 = createNwkDto("Erika", "Musterfrau", Studiengang.BWI);
+        NwkDto assignedNwk3 = createNwkDto("John", "Smith", Studiengang.FISI);
 
         List<PraktikumsstelleDto> allPraktikumsstellen = new ArrayList<>();
 
         AusbildungsPraktikumsstelleDto ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelleDto("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
-                Ausbildungsjahr.JAHR2, Ausbildungsrichtung.FISI, assignedNwk3);
+                Ausbildungsjahr.JAHR2, Studiengang.FISI, assignedNwk3);
         allPraktikumsstellen.add(ausbildungsPraktikumsstelle1);
 
         StudiumsPraktikumsstelleDto studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelleDto("KM83", "Test Tester", "test@tester.de",
@@ -77,11 +77,11 @@ public class MailServiceTest {
 
     private AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final Dringlichkeit dringlichkeit,
-            final Referat referat, final Ausbildungsjahr semester, final Ausbildungsrichtung ausbildungsrichtung, final NwkDto assignedNwk) {
+            final Referat referat, final Ausbildungsjahr semester, final Studiengang studiengang, final NwkDto assignedNwk) {
         return AusbildungsPraktikumsstelleDto.builder()
                 .dienststelle(dienststelle).oertlicheAusbilder(ausbilder).email(email).taetigkeiten(taetigkeiten)
                 .dringlichkeit(dringlichkeit).referat(referat).ausbildungsjahr(semester)
-                .ausbildungsrichtung(ausbildungsrichtung).assignedNwk(assignedNwk).build();
+                .ausbildungsrichtung(studiengang).assignedNwk(assignedNwk).build();
     }
 
     private StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto(
@@ -89,12 +89,11 @@ public class MailServiceTest {
             final Referat referat, final Studiensemester semester, final Studiengang studiengang, final NwkDto assignedNwk) {
         return StudiumsPraktikumsstelleDto.builder().dienststelle(dienststelle).oertlicheAusbilder(ausbilder).email(email).taetigkeiten(taetigkeiten)
                 .dringlichkeit(dringlichkeit).referat(referat).studiensemester(semester)
-                .studiengang(studiengang).assignedNwk(assignedNwk).build();
+                .studienart(studiengang).assignedNwk(assignedNwk).build();
     }
 
     private NwkDto createNwkDto(
-            final String vorname, final String nachname, final Studiengang studiengang, final Ausbildungsrichtung ausbildungsrichtung) {
-        return NwkDto.builder().id(UUID.randomUUID()).vorname(vorname).nachname(nachname).studiengang(studiengang)
-                .ausbildungsrichtung(ausbildungsrichtung).build();
+            final String vorname, final String nachname, final Studiengang studiengang) {
+        return NwkDto.builder().id(UUID.randomUUID()).vorname(vorname).nachname(nachname).studiengang(studiengang).build();
     }
 }
