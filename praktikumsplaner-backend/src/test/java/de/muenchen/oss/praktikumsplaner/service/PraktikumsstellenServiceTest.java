@@ -174,7 +174,7 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        TreeMap<String, List<PraktikumsstelleDto>> result = service.getRecentPraktikumsstellenGroupedByDienststelle();
+        TreeMap<String, List<PraktikumsstelleDto>> result = service.getAllPraktikumsstellenInMostRecentPassedMeldezeitraum();
 
         assertNotNull(result);
         assertEquals(4, result.size());
