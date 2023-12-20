@@ -24,7 +24,7 @@ export default class Praktikumsstelle {
 
         public ausbildungsrichtung?: string,
 
-        public studienart?: string,
+        public studiengang?: string,
 
         public referat?: string,
 

@@ -114,7 +114,7 @@ public class PraktikumsstellenServiceTest {
         ausbildungsPraktikumsstelle.setReferat(Referat.ITM);
         ausbildungsPraktikumsstelle.setProjektarbeit(true);
         ausbildungsPraktikumsstelle.setAusbildungsjahr(Ausbildungsjahr.JAHR1);
-        ausbildungsPraktikumsstelle.setAusbildungsrichtung(Studiengang.FISI);
+        ausbildungsPraktikumsstelle.setAusbildungsrichtung(Ausbildungsrichtung.FISI);
         ausbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDto.id());
 
         CreateAusbildungsPraktikumsstelleDto createDto = CreateAusbildungsPraktikumsstelleDto.builder()
@@ -122,14 +122,14 @@ public class PraktikumsstellenServiceTest {
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).projektarbeit(true)
-                .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Studiengang.FISI).build();
+                .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Ausbildungsrichtung.FISI).build();
 
         AusbildungsPraktikumsstelleDto dto = AusbildungsPraktikumsstelleDto.builder().id(ausbildungsPraktikumsstelle.getId())
                 .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).projektarbeit(true)
-                .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Studiengang.FISI).build();
+                .ausbildungsjahr(Ausbildungsjahr.JAHR1).ausbildungsrichtung(Ausbildungsrichtung.FISI).build();
 
         when(ausbildungsRepository.save(ausbildungsPraktikumsstelle)).thenReturn(ausbildungsPraktikumsstelle);
         when(mapper.toEntity(createDto, meldezeitraumDto)).thenReturn(ausbildungsPraktikumsstelle);
@@ -146,10 +146,10 @@ public class PraktikumsstellenServiceTest {
         MeldezeitraumDto meldezeitraumDto = createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelle("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
-                false, Ausbildungsjahr.JAHR2, Studiengang.FISI, meldezeitraumDto.id());
+                false, Ausbildungsjahr.JAHR2, Ausbildungsrichtung.FISI, meldezeitraumDto.id());
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 = createAusbildungsPraktikumsstelle("KM22", "Erika Mustermann", "erika@mustermann.de",
                 "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.RIT,
-                true, Ausbildungsjahr.JAHR3, Studiengang.FISI, meldezeitraumDto.id());
+                true, Ausbildungsjahr.JAHR3, Ausbildungsrichtung.FISI, meldezeitraumDto.id());
         List<AusbildungsPraktikumsstelle> ausbildungsList = Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelle("KM83", "Test Tester", "test@tester.de",
@@ -194,10 +194,10 @@ public class PraktikumsstellenServiceTest {
         assigningNwk.setId(UUID.randomUUID());
         AusbildungsPraktikumsstelle stelle = createAusbildungsPraktikumsstelle("KM83", "Ausbilder",
                 "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
-                Ausbildungsjahr.JAHR2, Studiengang.FISI, UUID.randomUUID());
+                Ausbildungsjahr.JAHR2, Ausbildungsrichtung.FISI, UUID.randomUUID());
         AusbildungsPraktikumsstelle withAssigned = createAusbildungsPraktikumsstelle("KM83", "Ausbilder",
                 "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
-                Ausbildungsjahr.JAHR2, Studiengang.FISI, UUID.randomUUID());
+                Ausbildungsjahr.JAHR2, Ausbildungsrichtung.FISI, UUID.randomUUID());
         withAssigned.setAssignedNwk(assigningNwk);
         withAssigned.setId(stelle.getId());
         withAssigned.setMeldezeitraumID(stelle.getMeldezeitraumID());
@@ -239,7 +239,7 @@ public class PraktikumsstellenServiceTest {
         nwk.setId(UUID.randomUUID());
         AusbildungsPraktikumsstelle stelle = createAusbildungsPraktikumsstelle("KM83", "Ausbilder",
                 "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
-                Ausbildungsjahr.JAHR2, Studiengang.BWI, UUID.randomUUID());
+                Ausbildungsjahr.JAHR2, Ausbildungsrichtung.FISI, UUID.randomUUID());
         stelle.setAssignedNwk(nwk);
 
         when(ausbildungsRepository.existsById(stelle.getId())).thenReturn(true);
@@ -280,10 +280,10 @@ public class PraktikumsstellenServiceTest {
         assigningNwk.setId(UUID.randomUUID());
         AusbildungsPraktikumsstelle stelle = createAusbildungsPraktikumsstelle("KM83", "Ausbilder",
                 "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
-                Ausbildungsjahr.JAHR2, Studiengang.FISI, UUID.randomUUID());
+                Ausbildungsjahr.JAHR2, Ausbildungsrichtung.FISI, UUID.randomUUID());
         AusbildungsPraktikumsstelle withAssigned = createAusbildungsPraktikumsstelle("KM83", "Ausbilder",
                 "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, false,
-                Ausbildungsjahr.JAHR2, Studiengang.FISI, UUID.randomUUID());
+                Ausbildungsjahr.JAHR2, Ausbildungsrichtung.FISI, UUID.randomUUID());
         withAssigned.setAssignedNwk(assigningNwk);
         withAssigned.setId(stelle.getId());
         withAssigned.setMeldezeitraumID(stelle.getMeldezeitraumID());
@@ -327,7 +327,8 @@ public class PraktikumsstellenServiceTest {
 
     private AusbildungsPraktikumsstelle createAusbildungsPraktikumsstelle(
             String dienststelle, String ausbilder, String email, String taetigkeiten, Dringlichkeit dringlichkeit,
-            Referat referat, boolean projektarbeit, Ausbildungsjahr ausbildungsjahr, Studiengang studiengang, UUID meldezeitraumId) {
+            Referat referat, boolean projektarbeit, Ausbildungsjahr ausbildungsjahr,
+            Ausbildungsrichtung ausbildungsrichtung, UUID meldezeitraumId) {
         AusbildungsPraktikumsstelle stelle = new AusbildungsPraktikumsstelle();
         stelle.setId(UUID.randomUUID());
         stelle.setDienststelle(dienststelle);
@@ -338,7 +339,7 @@ public class PraktikumsstellenServiceTest {
         stelle.setReferat(referat);
         stelle.setProjektarbeit(projektarbeit);
         stelle.setAusbildungsjahr(ausbildungsjahr);
-        stelle.setAusbildungsrichtung(studiengang);
+        stelle.setAusbildungsrichtung(ausbildungsrichtung);
         stelle.setMeldezeitraumID(meldezeitraumId);
         return stelle;
     }
