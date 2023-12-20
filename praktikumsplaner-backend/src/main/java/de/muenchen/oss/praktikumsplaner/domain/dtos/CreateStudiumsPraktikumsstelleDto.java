@@ -27,7 +27,7 @@ public record CreateStudiumsPraktikumsstelleDto(@NotNull String dienststelle,
 
                                                 @NotNull String programmierkenntnisse,
 
-                                                boolean planstelleVorhanden,
+                                                @NotNull boolean planstelleVorhanden,
 
                                                 @NotNull Studiensemester studiensemester,
 

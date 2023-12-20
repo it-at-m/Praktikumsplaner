@@ -29,7 +29,7 @@ public record StudiumsPraktikumsstelleDto(@NotNull UUID id,
 
                                           @NotNull String programmierkenntnisse,
 
-                                          boolean planstelleVorhanden,
+                                          @NotNull boolean planstelleVorhanden,
 
                                           @NotNull Studiensemester studiensemester,
 
