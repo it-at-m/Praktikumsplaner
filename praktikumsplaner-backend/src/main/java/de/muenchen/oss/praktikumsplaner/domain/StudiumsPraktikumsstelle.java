@@ -33,6 +33,6 @@ public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Studiengang studienart;
+    private Studiengang studiengang;
 
 }

@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-@StudiumsAnnotation(studiengang = "studienart", message = "Keine korrekte Studienart")
+@StudiumsAnnotation(studiengang = "studiengang", message = "Keine korrekte Studienart")
 public record CreateStudiumsPraktikumsstelleDto(@NotNull String dienststelle,
 
                                                 @NotNull String oertlicheAusbilder,

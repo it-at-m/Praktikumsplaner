@@ -72,7 +72,7 @@ public class PraktikumsstellenServiceTest {
         studiumsPraktikumsstelle.setReferat(Referat.ITM);
         studiumsPraktikumsstelle.setProgrammierkenntnisse("true");
         studiumsPraktikumsstelle.setStudiensemester(Studiensemester.SEMESTER1);
-        studiumsPraktikumsstelle.setStudienart(Studiengang.BSC);
+        studiumsPraktikumsstelle.setStudiengang(Studiengang.BSC);
         studiumsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDto.id());
 
         CreateStudiumsPraktikumsstelleDto createDto = CreateStudiumsPraktikumsstelleDto.builder()
@@ -356,7 +356,7 @@ public class PraktikumsstellenServiceTest {
         stelle.setReferat(referat);
         stelle.setProgrammierkenntnisse(programmierkenntnisse);
         stelle.setStudiensemester(semester);
-        stelle.setStudienart(studiengang);
+        stelle.setStudiengang(studiengang);
         stelle.setMeldezeitraumID(meldezeitraumId);
         return stelle;
     }
@@ -377,7 +377,7 @@ public class PraktikumsstellenServiceTest {
                 .email(stelle.getEmail()).taetigkeiten(stelle.getTaetigkeiten())
                 .dringlichkeit(stelle.getDringlichkeit()).namentlicheAnforderung(stelle.getNamentlicheAnforderung())
                 .referat(stelle.getReferat()).programmierkenntnisse(stelle.getProgrammierkenntnisse())
-                .studiensemester(stelle.getStudiensemester()).studienart(stelle.getStudienart()).build();
+                .studiensemester(stelle.getStudiensemester()).studienart(stelle.getStudiengang()).build();
     }
 
     private MeldezeitraumDto createMeldezeitraumDto(LocalDate start, LocalDate end, String name) {
