@@ -22,6 +22,7 @@ import java.util.TreeMap;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -69,11 +70,11 @@ public class PraktikumsstellenService {
     public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInMostRecentPassedMeldezeitraum() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
 
-        List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
-                .map(praktikumsstellenMapper::toDto).toList();
+        List<PraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
+                .map(praktikumsstellenMapper::toDto).collect(Collectors.toList());
 
-        List<StudiumsPraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
-                .map(praktikumsstellenMapper::toDto).toList();
+        List<PraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
+                .map(praktikumsstellenMapper::toDto).collect(Collectors.toList());
 
         List<PraktikumsstelleDto> combinedList = new ArrayList<>();
         combinedList.addAll(ausbildungsListDto);
