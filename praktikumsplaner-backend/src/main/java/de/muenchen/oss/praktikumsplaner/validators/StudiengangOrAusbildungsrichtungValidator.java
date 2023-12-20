@@ -14,8 +14,8 @@ public class StudiengangOrAusbildungsrichtungValidator implements ConstraintVali
 
     @Override
     public void initialize(StudiengangOrAusbildungsrichtungConstraint constraintAnnotation) {
-        this.ausbildungsrichtungField = constraintAnnotation.ausbildungsrichtungGetMethod();
-        this.studiengangField = constraintAnnotation.studiengangGetMethod();
+        this.ausbildungsrichtungField = constraintAnnotation.ausbildungsrichtung();
+        this.studiengangField = constraintAnnotation.studiengang();
     }
 
     @Override

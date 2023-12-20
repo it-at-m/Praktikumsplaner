@@ -12,7 +12,7 @@ public class StudiumsValidator implements ConstraintValidator<StudiumsAnnotation
 
     @Override
     public void initialize(final StudiumsAnnotation constraintAnnotation) {
-        this.studiengangField = constraintAnnotation.studiengangGetMethod();
+        this.studiengangField = constraintAnnotation.studiengang();
     }
 
     @Override

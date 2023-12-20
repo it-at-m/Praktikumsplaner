@@ -27,7 +27,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@StudiengangOrAusbildungsrichtungConstraint(studiengangGetMethod = "getStudiengang", ausbildungsrichtungGetMethod = "getAusbildungsrichtung")
+@StudiengangOrAusbildungsrichtungConstraint(studiengang = "getStudiengang", ausbildungsrichtung = "getAusbildungsrichtung")
 /*
  * Nwk is short for Nachwuchskraft (young talent)
  */
