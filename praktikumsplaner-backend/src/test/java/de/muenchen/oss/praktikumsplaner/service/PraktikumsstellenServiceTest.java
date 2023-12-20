@@ -404,7 +404,7 @@ public class PraktikumsstellenServiceTest {
                 Studiensemester.SEMESTER3, Studiengang.BWI, "true", meldezeitraumDto.id(), null);
         List<StudiumsPraktikumsstelle> studiumsList = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3);
 
-        List<PraktikumsstelleDto> dtos= new ArrayList<>();
+        List<PraktikumsstelleDto> dtos = new ArrayList<>();
         dtos.addAll(ausbildungsList.stream().map(helper::createPraktikumsstelleDto).toList());
         dtos.addAll(studiumsList.stream().map(helper::createPraktikumsstelleDto).toList());
 
