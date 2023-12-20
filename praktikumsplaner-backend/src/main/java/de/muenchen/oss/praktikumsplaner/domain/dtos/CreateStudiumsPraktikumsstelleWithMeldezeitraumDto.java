@@ -11,7 +11,7 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-@StudiumsAnnotation(studiengang = "studiengang", message = "Keine korrekte Studienart")
+@StudiumsAnnotation(studiengang = "studienart", message = "Keine korrekte Studienart")
 public record CreateStudiumsPraktikumsstelleWithMeldezeitraumDto(@NotNull String dienststelle,
 
                                                                  @NotNull String oertlicheAusbilder,
@@ -32,7 +32,7 @@ public record CreateStudiumsPraktikumsstelleWithMeldezeitraumDto(@NotNull String
 
                                                                  @NotNull Studiensemester studiensemester,
 
-                                                                 @NotNull Studiengang studiengang,
+                                                                 @NotNull Studiengang studienart,
 
                                                                  @NotNull UUID meldezeitraumID
                         ){
