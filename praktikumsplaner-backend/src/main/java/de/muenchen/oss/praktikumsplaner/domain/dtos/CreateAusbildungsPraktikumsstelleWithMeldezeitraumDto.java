@@ -11,7 +11,7 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-@AusbildungsAnnotation(ausbildungsrichtung = "ausbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
+@AusbildungsAnnotation(ausbildungsrichtungGetMethod = "ausbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
 public record CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto(@NotNull String dienststelle,
 
                                                                     @NotNull String oertlicheAusbilder,

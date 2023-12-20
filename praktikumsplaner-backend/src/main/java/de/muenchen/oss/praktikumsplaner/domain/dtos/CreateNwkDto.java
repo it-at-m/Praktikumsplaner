@@ -11,7 +11,7 @@ import java.util.Set;
 import lombok.Builder;
 
 @Builder
-@StudiengangOrAusbildungsrichtungConstraint(studiengang = "studiengang", ausbildungsrichtung = "ausbildungsrichtung")
+@StudiengangOrAusbildungsrichtungConstraint(studiengangGetMethod = "studiengang", ausbildungsrichtungGetMethod = "ausbildungsrichtung")
 public record CreateNwkDto(
         @NotNull(message = "Der Vorname ist erforderlich") @Size(min = 2, max = 255, message = "Der Vorname darf nur zwischen {min} und {max} Zeichen lang sein") String vorname,
         @NotNull(message = "Der Nachname ist erforderlich") @Size(min = 2, max = 255, message = "Der Nachname darf nur zwischen {min} und {max} Zeichen lang sein") String nachname,

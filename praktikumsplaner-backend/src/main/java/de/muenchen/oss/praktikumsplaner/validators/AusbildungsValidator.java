@@ -12,7 +12,7 @@ public class AusbildungsValidator implements ConstraintValidator<AusbildungsAnno
 
     @Override
     public void initialize(final AusbildungsAnnotation constraintAnnotation) {
-        this.ausbildungsrichtungField = constraintAnnotation.ausbildungsrichtung();
+        this.ausbildungsrichtungField = constraintAnnotation.ausbildungsrichtungGetMethod();
     }
 
     @Override
