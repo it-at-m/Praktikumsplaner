@@ -18,7 +18,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
