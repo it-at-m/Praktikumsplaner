@@ -68,7 +68,7 @@ public class PraktikumsstellenService {
                 .toDto(ausbildungsPraktikumsstellenRepository.save(entityPraktikumsstelle));
     }
 
-    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktikumsstellenInMostRecentPassedMeldezeitraum() {
+    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInMostRecentPassedMeldezeitraum() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
 
         List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
