@@ -31,6 +31,6 @@ public record CreateStudiumsPraktikumsstelleDto(@NotNull String dienststelle,
 
                                                 @NotNull Studiensemester studiensemester,
 
-                                                @NotNull Studiengang studiengang
+                                                @NotNull Studiengang studienart
                         ){
 }
