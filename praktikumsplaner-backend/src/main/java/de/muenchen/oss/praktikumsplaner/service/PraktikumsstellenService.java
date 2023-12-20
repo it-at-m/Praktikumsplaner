@@ -22,8 +22,6 @@ import java.util.TreeMap;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -82,12 +80,7 @@ public class PraktikumsstellenService {
         combinedList.addAll(studiumsListDto);
         combinedList.sort(Comparator.comparing(PraktikumsstelleDto::dienststelle));
 
-        return combinedList.stream()
-                .collect(Collectors.groupingBy(
-                        praktikumsstelle -> getHauptabteilung(praktikumsstelle.dienststelle()),
-                        TreeMap::new,
-                        Collectors.toList()
-                ));
+        return groupDienststellen(combinedList);
     }
 
     public PraktikumsstelleDto assignNwk(UUID praktikumsstellenID, UUID nwkID) {
@@ -139,6 +132,19 @@ public class PraktikumsstellenService {
         combinedList.addAll(studiumsListDto);
 
         return combinedList;
+    }
+
+    private TreeMap<String, List<PraktikumsstelleDto>> groupDienststellen(final Iterable<PraktikumsstelleDto> allPraktikumsstellen) {
+        TreeMap<String, List<PraktikumsstelleDto>> abteilungsMap = new TreeMap<>();
+
+        for (PraktikumsstelleDto praktikumsstelle : allPraktikumsstellen) {
+            String dienststelle = praktikumsstelle.dienststelle();
+            String hauptabteilung = getHauptabteilung(dienststelle);
+
+            abteilungsMap.computeIfAbsent(hauptabteilung, k -> new ArrayList<>()).add(praktikumsstelle);
+        }
+
+        return abteilungsMap;
     }
 
     private String getHauptabteilung(final String dienststelle) {
