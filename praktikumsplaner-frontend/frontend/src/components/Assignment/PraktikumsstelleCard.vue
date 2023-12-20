@@ -93,10 +93,10 @@ const stelleToAssignUnassign = ref<Praktikumsstelle>();
 function getCardText(stelle: Praktikumsstelle): string {
     let cardText = "";
 
-    if (stelle.studiengang) {
+    if (stelle.studienart) {
         cardText +=
             "Studiengang: " +
-            stelle.studiengang +
+            stelle.studienart +
             "\n" +
             "Studiensemester: " +
             stelle.studiensemester?.charAt(stelle.studiensemester?.length - 1) +

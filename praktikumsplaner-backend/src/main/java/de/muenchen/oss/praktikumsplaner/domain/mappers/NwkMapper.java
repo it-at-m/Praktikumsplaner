@@ -12,6 +12,5 @@ public interface NwkMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "isActive", target = "active")
-    @Mapping(source = "createNwkDto.ausbildungsrichtung", target = "ausbildungsrichtung")
     Nwk toEntity(final CreateNwkDto createNwkDto, final boolean isActive);
 }
