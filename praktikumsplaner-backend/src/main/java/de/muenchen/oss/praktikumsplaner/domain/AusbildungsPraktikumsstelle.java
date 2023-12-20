@@ -24,6 +24,7 @@ import lombok.ToString;
 @AusbildungsAnnotation(studiengang = "getAusbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
 public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
+    @NotNull
     private boolean projektarbeit;
 
     private String programmierkenntnisse;
