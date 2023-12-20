@@ -26,7 +26,8 @@
                             ></v-text-field>
 
                             <ZeitraumPicker
-                                :value="meldezeitraum"
+                                :value="meldezeitraum.zeitraum"
+                                :label="'Meldezeitraum'"
                             ></ZeitraumPicker>
                         </v-form>
                     </v-col>
@@ -60,9 +61,10 @@ import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
 import { useRules } from "@/composables/rules";
+import Zeitraum from "@/types/Zeitraum";
 
 const visible = ref(false);
-const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum(""));
+const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum("", new Zeitraum()));
 const form = ref<HTMLFormElement>();
 const maxLength = 255;
 const validationRules = useRules();
@@ -80,7 +82,7 @@ const emits = defineEmits<{
 }>();
 
 function resetForm() {
-    meldezeitraum.value = new Meldezeitraum("");
+    meldezeitraum.value = new Meldezeitraum("", new Zeitraum());
     form.value?.resetValidation();
 }
 
