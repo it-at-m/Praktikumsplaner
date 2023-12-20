@@ -26,6 +26,6 @@ public @interface StudiumsAnnotation {
 
     Class<? extends Payload>[] payload() default {};
 
-    String studiengangGetMethod();
+    String studiengang();
 
 }

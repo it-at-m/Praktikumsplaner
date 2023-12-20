@@ -21,7 +21,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@AusbildungsAnnotation(ausbildungsrichtungGetMethod = "getAusbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
+@AusbildungsAnnotation(ausbildungsrichtung = "getAusbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
 public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
     private boolean projektarbeit;
