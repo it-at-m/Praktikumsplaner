@@ -6,6 +6,7 @@ import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
