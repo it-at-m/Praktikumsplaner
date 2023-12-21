@@ -53,7 +53,7 @@
     </v-card>
 </template>
 <script setup lang="ts">
-import InitialsAvatar from "@/components/InitialsAvatar.vue";
+import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
 import Nwk from "@/types/Nwk";
 import { ref, computed } from "vue";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
