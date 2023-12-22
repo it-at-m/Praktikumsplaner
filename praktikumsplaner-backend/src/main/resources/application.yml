@@ -5,6 +5,11 @@ spring:
     hibernate:
       ddl-auto: validate
       naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  mail:
+    host: localhost
+    port: 8125
+    username: pp-mail-user
+    password: pp-mail-password
 
 server:
   shutdown: "graceful"

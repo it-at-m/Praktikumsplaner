@@ -1,16 +1,9 @@
+import Zeitraum from "@/types/Zeitraum";
+
 export default class Meldezeitraum {
     constructor(
         public zeitraumName: string,
-        public startZeitpunkt?: string,
-        public endZeitpunkt?: string,
+        public zeitraum: Zeitraum,
         public id?: string
     ) {}
-
-    get isStartBeforeEnd(): boolean {
-        return (
-            !this.startZeitpunkt ||
-            !this.endZeitpunkt ||
-            new Date(this.startZeitpunkt) < new Date(this.endZeitpunkt)
-        );
-    }
 }
