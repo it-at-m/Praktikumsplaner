@@ -58,4 +58,4 @@ The [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) will be 
 If some errors occurred during the sending of the mails, a dialog will appear telling the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung),
 which [Praktikumsstellen](./../glossary.md#praktikumsstelle) could not be informed by mail. Currently, there is no way to resend the mails. 
 This has to be done manually.
-The other mails still got sent.
+The other mails will still be sent.
