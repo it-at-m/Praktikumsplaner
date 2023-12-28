@@ -331,7 +331,7 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testSaveStudiumsPraktikumsstelleWithMeldezeitraum() {
-        MeldezeitraumDto meldezeitraumDto = new MeldezeitraumDto(UUID.randomUUID(), "Test", LocalDate.now(), LocalDate.now().plusDays(1));
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now(), LocalDate.now().plusDays(1),"Test");
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle = helper.createStudiumsPraktikumsstelleEntity("KM83", "Ausbilder", "tester@test.de",
                 "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, Studiensemester.SEMESTER1, Studiengang.BSC,
@@ -355,19 +355,9 @@ public class PraktikumsstellenServiceTest {
         assertEquals(studiumsPraktikumsstelleDto, result);
     }
 
-    private MeldezeitraumDto createMeldezeitraumDto(LocalDate start, LocalDate end, String name) {
-        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build();
-
-        return MeldezeitraumDto.builder()
-                .id(UUID.randomUUID())
-                .zeitraum(zeitraum)
-                .zeitraumName(name)
-                .build();
-    }
-
     @Test
     public void testSaveAusbildungsPraktikumsstelleWithMeldezeitraum() {
-        MeldezeitraumDto meldezeitraumDto = new MeldezeitraumDto(UUID.randomUUID(), "Test", LocalDate.now(), LocalDate.now().plusDays(1));
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now(), LocalDate.now().plusDays(1), "Test" );
 
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = helper.createAusbildungsPraktikumsstelleEntity("KM83", "Ausbilder", "tester@test.de",
                 "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, Ausbildungsjahr.JAHR2, Studiengang.BSC,

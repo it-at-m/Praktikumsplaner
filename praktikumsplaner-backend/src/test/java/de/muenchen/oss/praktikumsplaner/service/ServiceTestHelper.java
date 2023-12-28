@@ -7,6 +7,7 @@ import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.*;
 
 import java.time.DayOfWeek;
@@ -31,10 +32,8 @@ public class ServiceTestHelper {
     public MeldezeitraumDto createMeldezeitraumDto(LocalDate start, LocalDate end, String name) {
         return MeldezeitraumDto.builder()
                 .id(UUID.randomUUID())
-                .startZeitpunkt(start)
-                .endZeitpunkt(end)
                 .zeitraumName(name)
-                .build();
+                .zeitraum(ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build()).build();
     }
 
     public AusbildungsPraktikumsstelle createAusbildungsPraktikumsstelleEntity(

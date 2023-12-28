@@ -113,7 +113,7 @@ public class MeldezeitraumServiceTest {
         LocalDate newEnd = LocalDate.of(6, 6, 6);
         String name = "2-6";
 
-        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(overlapStart).endZeitpunkt(start).build();
+        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(newStart).endZeitpunkt(newEnd).build();
 
         CreateMeldezeitraumDto createMeldezeitraumDto = CreateMeldezeitraumDto.builder()
                 .zeitraum(zeitraum)
