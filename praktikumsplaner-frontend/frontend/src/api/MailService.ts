@@ -15,6 +15,7 @@ export default {
         )
             .then((response) => {
                 if (response.ok) {
+                    // Prüfen, ob der Statuscode OK (200) ist
                     useSnackbarStore().showMessage({
                         message: "☑ Alle Mails wurden erfolgreich versendet.",
                         level: Levels.SUCCESS,
@@ -26,7 +27,7 @@ export default {
                             message: "Fehler beim Versenden einiger Mails.",
                             level: Levels.ERROR,
                         });
-                        return praktikumsplaetze;
+                        return praktikumsplaetze; // Liste der betroffenen Praktikumsplätze zurückgeben
                     });
                 }
             })
@@ -35,7 +36,7 @@ export default {
                     message: err.message,
                     level: Levels.ERROR,
                 });
-                return Promise.reject(err);
+                return Promise.reject(err); // Fehler zurückgeben
             });
     },
 };

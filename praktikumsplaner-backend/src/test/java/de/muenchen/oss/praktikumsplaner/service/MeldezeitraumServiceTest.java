@@ -35,6 +35,7 @@ public class MeldezeitraumServiceTest {
     private MeldezeitraumRepository repository;
     @InjectMocks
     private MeldezeitraumService service;
+    private final ServiceTestHelper helper = new ServiceTestHelper();
 
     @Test
     public void testCreateMeldezeitraum() {
@@ -49,11 +50,7 @@ public class MeldezeitraumServiceTest {
                 .zeitraumName(name)
                 .build();
 
-        Meldezeitraum meldezeitraum = new Meldezeitraum();
-        meldezeitraum.setId(UUID.randomUUID());
-        meldezeitraum.setStartZeitpunkt(start);
-        meldezeitraum.setEndZeitpunkt(end);
-        meldezeitraum.setZeitraumName(name);
+        Meldezeitraum meldezeitraum = helper.createMeldezeitraum(start, end, name);
 
         when(repository.save(any(Meldezeitraum.class))).thenReturn(meldezeitraum);
 
@@ -68,11 +65,7 @@ public class MeldezeitraumServiceTest {
         LocalDate end = LocalDate.now().plusDays(1);
         String name = "gestern bis morgen";
 
-        Meldezeitraum meldezeitraum = new Meldezeitraum();
-        meldezeitraum.setId(UUID.randomUUID());
-        meldezeitraum.setStartZeitpunkt(start);
-        meldezeitraum.setEndZeitpunkt(end);
-        meldezeitraum.setZeitraumName(name);
+        Meldezeitraum meldezeitraum = helper.createMeldezeitraum(start, end, name);
 
         ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build();
 
@@ -101,12 +94,6 @@ public class MeldezeitraumServiceTest {
         LocalDate overlapStart = LocalDate.of(1, 1, 1);
         String name = "Dawn of Time";
 
-        Meldezeitraum meldezeitraum = new Meldezeitraum();
-        meldezeitraum.setId(UUID.randomUUID());
-        meldezeitraum.setStartZeitpunkt(start);
-        meldezeitraum.setEndZeitpunkt(end);
-        meldezeitraum.setZeitraumName(name);
-
         ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(overlapStart).endZeitpunkt(start).build();
 
         CreateMeldezeitraumDto createMeldezeitraumDto = CreateMeldezeitraumDto.builder()
@@ -122,17 +109,9 @@ public class MeldezeitraumServiceTest {
 
     @Test
     public void testcheckNoOverlappingMeldezeitraum() {
-        LocalDate start = LocalDate.of(2, 2, 2);
-        LocalDate end = LocalDate.of(3, 3, 3);
         LocalDate newStart = LocalDate.of(5, 5, 5);
         LocalDate newEnd = LocalDate.of(6, 6, 6);
         String name = "2-6";
-
-        Meldezeitraum meldezeitraum = new Meldezeitraum();
-        meldezeitraum.setId(UUID.randomUUID());
-        meldezeitraum.setStartZeitpunkt(start);
-        meldezeitraum.setEndZeitpunkt(end);
-        meldezeitraum.setZeitraumName(name);
 
         ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(newStart).endZeitpunkt(newEnd).build();
 
@@ -151,17 +130,8 @@ public class MeldezeitraumServiceTest {
     public void testGetMostRecentMeldezeitraum() {
         String name = "Name";
 
-        Meldezeitraum mostRecent = new Meldezeitraum();
-        mostRecent.setId(UUID.randomUUID());
-        mostRecent.setStartZeitpunkt(LocalDate.now().minusDays(10));
-        mostRecent.setEndZeitpunkt(LocalDate.now().minusDays(6));
-        mostRecent.setZeitraumName(name);
-
-        Meldezeitraum oldest = new Meldezeitraum();
-        oldest.setId(UUID.randomUUID());
-        oldest.setStartZeitpunkt(LocalDate.now().minusDays(15));
-        oldest.setEndZeitpunkt(LocalDate.now().minusDays(11));
-        oldest.setZeitraumName(name);
+        Meldezeitraum mostRecent = helper.createMeldezeitraum(LocalDate.now().minusDays(10), LocalDate.now().plusDays(6), name);
+        Meldezeitraum oldest = helper.createMeldezeitraum(LocalDate.now().minusDays(15), LocalDate.now().minusDays(11), name);
 
         List<Meldezeitraum> meldezeitraume = List.of(mostRecent, oldest, mostRecent);
 
@@ -171,7 +141,6 @@ public class MeldezeitraumServiceTest {
 
     @Test
     public void testGetMostRecentMeldezeitraumNoMatchingMeldezeitraum() {
-
         List<Meldezeitraum> meldezeitraume = List.of();
 
         when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
@@ -182,17 +151,8 @@ public class MeldezeitraumServiceTest {
     public void testGetUpcomingMeldezeitraeume() {
         String name = "Name";
 
-        Meldezeitraum first = new Meldezeitraum();
-        first.setId(UUID.randomUUID());
-        first.setStartZeitpunkt(LocalDate.now().plusDays(10));
-        first.setEndZeitpunkt(LocalDate.now().plusDays(6));
-        first.setZeitraumName(name);
-
-        Meldezeitraum second = new Meldezeitraum();
-        second.setId(UUID.randomUUID());
-        second.setStartZeitpunkt(LocalDate.now().plusDays(15));
-        second.setEndZeitpunkt(LocalDate.now().plusDays(11));
-        second.setZeitraumName(name);
+        Meldezeitraum first = helper.createMeldezeitraum(LocalDate.now().plusDays(10), LocalDate.now().plusDays(6), name);
+        Meldezeitraum second = helper.createMeldezeitraum(LocalDate.now().plusDays(15), LocalDate.now().plusDays(11), name);
 
         List<Meldezeitraum> meldezeitraume = List.of(first, second);
 
@@ -204,17 +164,8 @@ public class MeldezeitraumServiceTest {
     public void testGetPassedMeldezeitraeume() {
         String name = "Name";
 
-        Meldezeitraum first = new Meldezeitraum();
-        first.setId(UUID.randomUUID());
-        first.setStartZeitpunkt(LocalDate.now().minusDays(10));
-        first.setEndZeitpunkt(LocalDate.now().minusDays(6));
-        first.setZeitraumName(name);
-
-        Meldezeitraum second = new Meldezeitraum();
-        second.setId(UUID.randomUUID());
-        second.setStartZeitpunkt(LocalDate.now().minusDays(15));
-        second.setEndZeitpunkt(LocalDate.now().minusDays(11));
-        second.setZeitraumName(name);
+        Meldezeitraum first = helper.createMeldezeitraum(LocalDate.now().minusDays(10), LocalDate.now().minusDays(6), name);
+        Meldezeitraum second = helper.createMeldezeitraum(LocalDate.now().minusDays(15), LocalDate.now().minusDays(11), name);
 
         List<Meldezeitraum> meldezeitraume = List.of(first, second);
 
