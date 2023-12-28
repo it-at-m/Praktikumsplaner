@@ -45,3 +45,17 @@ Next to the name you can find a little x. By clicking on this x you can unassign
 a dialog will appear asking you if you really want to continue. When clicking yes the unassigning will be executed
 and the Nwk will be selectable in the list on the left. When clicking no, the process will be cancelled and
 nothing will be changed.
+
+### Send successful assignment mails
+If the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) is satisfied with the assignment of the [Nwks](./../glossary.md#nwk) to the [Praktikumsstellen](./../glossary.md#praktikumsstelle),
+then the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) can send the assignment mails to the [Örtliche Ausbilderin](./../glossary.md#örtliche-ausbilderin).
+To do this, the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) must click on the `Mails Senden` button.
+A dialog will appear requesting the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) to fill in the [Zuweisungszeiträume](./../glossary.md#zuweisungszeitraum).
+After that they can click on the `Weiter` button.
+A dialog will appear asking if the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) is sure to send the mails.
+Now the mails will be sent to the [Örtliche Ausbilderin](./../glossary.md#örtliche-ausbilderin), which got the [Nwks](./../glossary.md#nwk) assigned to them.
+The [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) will be redirected to the assignment page after that.
+If some errors occurred during the sending of the mails, a dialog will appear telling the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung),
+which [Praktikumsstellen](./../glossary.md#praktikumsstelle) could not be informed by mail. Currently, there is no way to resend the mails. 
+This has to be done manually.
+The other mails will still be sent.

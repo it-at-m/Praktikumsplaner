@@ -13,10 +13,24 @@
                 <praktikumsstellen-list />
             </v-col>
         </v-row>
+        <v-row>
+            <v-spacer></v-spacer>
+            <v-btn
+                color="primary"
+                class="mr-4"
+                @click="showSendMailDialog = true"
+                >Mails senden</v-btn
+            >
+        </v-row>
+        <QueryPraktikumsPeriodDialog :show-dialog.sync="showSendMailDialog" />
     </v-container>
 </template>
 <script setup lang="ts">
-import PraktikumsstellenList from "@/components/PraktikumsstellenList.vue";
-import ActiveNwkListForZuweisung from "@/components/ActiveNwkListForZuweisung.vue";
+import PraktikumsstellenList from "@/components/Assignment/PraktikumsstellenList.vue";
+import ActiveNwkListForZuweisung from "@/components/Assignment/ActiveNwkListForZuweisung.vue";
+import QueryPraktikumsPeriodDialog from "@/components/Assignment/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
+import { ref } from "vue";
+
+const showSendMailDialog = ref(false);
 </script>

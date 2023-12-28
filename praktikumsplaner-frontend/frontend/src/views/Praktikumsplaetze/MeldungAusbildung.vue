@@ -436,9 +436,9 @@ onMounted(() => {
                     zeitraumName: `${
                         zeitraum.zeitraumName
                     }: ${formatter.formatDateFromString(
-                        zeitraum.startZeitpunkt
+                        zeitraum.zeitraum.startZeitpunkt
                     )} - ${formatter.formatDateFromString(
-                        zeitraum.endZeitpunkt
+                        zeitraum.zeitraum.endZeitpunkt
                     )}`,
                 };
             });
