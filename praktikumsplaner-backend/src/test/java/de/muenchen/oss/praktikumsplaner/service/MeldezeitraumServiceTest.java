@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import java.time.LocalDate;
@@ -42,9 +43,10 @@ public class MeldezeitraumServiceTest {
         LocalDate end = LocalDate.of(2020, 11, 11);
         String name = "Der Name";
 
+        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build();
+
         CreateMeldezeitraumDto createMeldezeitraumDto = CreateMeldezeitraumDto.builder()
-                .startZeitpunkt(start)
-                .endZeitpunkt(end)
+                .zeitraum(zeitraum)
                 .zeitraumName(name)
                 .build();
 
@@ -65,9 +67,10 @@ public class MeldezeitraumServiceTest {
 
         Meldezeitraum meldezeitraum = helper.createMeldezeitraum(start, end, name);
 
+        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build();
+
         MeldezeitraumDto meldezeitraumDto = MeldezeitraumDto.builder()
-                .startZeitpunkt(start)
-                .endZeitpunkt(end)
+                .zeitraum(zeitraum)
                 .zeitraumName(name)
                 .build();
 
@@ -91,14 +94,15 @@ public class MeldezeitraumServiceTest {
         LocalDate overlapStart = LocalDate.of(1, 1, 1);
         String name = "Dawn of Time";
 
+        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(overlapStart).endZeitpunkt(start).build();
+
         CreateMeldezeitraumDto createMeldezeitraumDto = CreateMeldezeitraumDto.builder()
-                .startZeitpunkt(overlapStart)
-                .endZeitpunkt(start)
+                .zeitraum(zeitraum)
                 .zeitraumName(name)
                 .build();
 
-        when(repository.isOverlappingMeldezeitraum(createMeldezeitraumDto.startZeitpunkt(),
-                createMeldezeitraumDto.endZeitpunkt())).thenReturn(true);
+        when(repository.isOverlappingMeldezeitraum(createMeldezeitraumDto.zeitraum().startZeitpunkt(),
+                createMeldezeitraumDto.zeitraum().endZeitpunkt())).thenReturn(true);
 
         assertThrows(ValidationException.class, () -> service.checkOverlappingMeldezeitraum(createMeldezeitraumDto));
     }
@@ -109,14 +113,15 @@ public class MeldezeitraumServiceTest {
         LocalDate newEnd = LocalDate.of(6, 6, 6);
         String name = "2-6";
 
+        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(overlapStart).endZeitpunkt(start).build();
+
         CreateMeldezeitraumDto createMeldezeitraumDto = CreateMeldezeitraumDto.builder()
-                .startZeitpunkt(newStart)
-                .endZeitpunkt(newEnd)
+                .zeitraum(zeitraum)
                 .zeitraumName(name)
                 .build();
 
-        when(repository.isOverlappingMeldezeitraum(createMeldezeitraumDto.startZeitpunkt(),
-                createMeldezeitraumDto.endZeitpunkt())).thenReturn(false);
+        when(repository.isOverlappingMeldezeitraum(createMeldezeitraumDto.zeitraum().startZeitpunkt(),
+                createMeldezeitraumDto.zeitraum().endZeitpunkt())).thenReturn(false);
 
         assertDoesNotThrow(() -> service.checkOverlappingMeldezeitraum(createMeldezeitraumDto));
     }

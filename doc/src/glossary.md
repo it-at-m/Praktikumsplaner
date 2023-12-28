@@ -60,4 +60,4 @@ Just the German translation of student, so someone studying at a university or s
 with the goal of gaining a bachelor's or master's degree.
 
 ### Zuweisungszeitraum
-A [Zuweisungszeitraum](./glossary.md#zuweisungszeitraum) is a time range in which [Nwks](./glossary.md#nwk) is working in the [Praktikumsstellen](./glossary.md#praktikumsstelle) they were assigned to.
+A [Zuweisungszeitraum](./glossary.md#zuweisungszeitraum) is a time range, in which [Nwks](./glossary.md#nwk) are working at the [Praktikumsstellen](./glossary.md#praktikumsstelle) they were assigned to.

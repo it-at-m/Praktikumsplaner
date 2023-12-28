@@ -18,6 +18,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstel
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
@@ -145,7 +146,7 @@ public class PraktikumsstellenServiceTest {
     }
 
     @Test
-    public void testGetAllPraktikumsstellen() {
+    public void testGetAllPraktiumsstellenInMostRecentPassedMeldezeitraum() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = helper.createAusbildungsPraktikumsstelleEntity("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
@@ -352,6 +353,16 @@ public class PraktikumsstellenServiceTest {
         StudiumsPraktikumsstelleDto result = service.saveStudiumsPraktikumsstelleWithMeldezeitraum(createStudiumsPraktikumsstelleDto);
 
         assertEquals(studiumsPraktikumsstelleDto, result);
+    }
+
+    private MeldezeitraumDto createMeldezeitraumDto(LocalDate start, LocalDate end, String name) {
+        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build();
+
+        return MeldezeitraumDto.builder()
+                .id(UUID.randomUUID())
+                .zeitraum(zeitraum)
+                .zeitraumName(name)
+                .build();
     }
 
     @Test

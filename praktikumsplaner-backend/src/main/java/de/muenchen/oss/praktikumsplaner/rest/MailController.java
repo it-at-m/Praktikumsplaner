@@ -25,7 +25,7 @@ public class MailController {
     public ResponseEntity<?> sendMailsToAusbilderinnen(@RequestParam(name = "assignmentStatus") final String assignmentStatus,
             @RequestBody final Map<String, ZeitraumDto> assignmentPeriods) {
         if (assignmentStatus.equals(SUCCESSFUL_ASSIGNMENT)) {
-            List<PraktikumsstelleDto> faultyStellen = mailService.sendMailsToAssignedPraktikumsplaetze(assignmentPeriods);
+            final List<PraktikumsstelleDto> faultyStellen = mailService.sendMailsToAssignedPraktikumsplaetze(assignmentPeriods);
 
             if (faultyStellen.isEmpty()) {
                 return ResponseEntity.ok().build();

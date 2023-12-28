@@ -31,8 +31,8 @@ public class MeldezeitraumService {
     }
 
     public void checkOverlappingMeldezeitraum(final CreateMeldezeitraumDto meldezeitraumCreateDto) {
-        if (meldezeitraumRepository.isOverlappingMeldezeitraum(meldezeitraumCreateDto.startZeitpunkt(),
-                meldezeitraumCreateDto.endZeitpunkt())) {
+        if (meldezeitraumRepository.isOverlappingMeldezeitraum(meldezeitraumCreateDto.zeitraum().startZeitpunkt(),
+                meldezeitraumCreateDto.zeitraum().endZeitpunkt())) {
             throw new ValidationException("Überlappt mit einem existierendem Meldezeitraum");
         }
     }
