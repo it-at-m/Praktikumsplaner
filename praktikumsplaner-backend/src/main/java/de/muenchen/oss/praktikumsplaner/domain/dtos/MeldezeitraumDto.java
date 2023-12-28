@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
 import lombok.Builder;
-import lombok.Getter;
 
 @Builder
 public record MeldezeitraumDto(
