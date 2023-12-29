@@ -69,8 +69,6 @@ public class MeldezeitraumServiceTest {
 
         ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build();
 
-        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build();
-
         MeldezeitraumDto meldezeitraumDto = MeldezeitraumDto.builder()
                 .zeitraum(zeitraum)
                 .zeitraumName(name)
@@ -98,8 +96,6 @@ public class MeldezeitraumServiceTest {
 
         ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(overlapStart).endZeitpunkt(start).build();
 
-        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(overlapStart).endZeitpunkt(start).build();
-
         CreateMeldezeitraumDto createMeldezeitraumDto = CreateMeldezeitraumDto.builder()
                 .zeitraum(zeitraum)
                 .zeitraumName(name)
@@ -116,8 +112,6 @@ public class MeldezeitraumServiceTest {
         LocalDate newStart = LocalDate.of(5, 5, 5);
         LocalDate newEnd = LocalDate.of(6, 6, 6);
         String name = "2-6";
-
-        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(newStart).endZeitpunkt(newEnd).build();
 
         ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(newStart).endZeitpunkt(newEnd).build();
 

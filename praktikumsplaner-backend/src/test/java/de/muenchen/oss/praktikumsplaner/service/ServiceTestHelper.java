@@ -16,13 +16,14 @@ import java.util.Set;
 import java.util.UUID;
 
 public class ServiceTestHelper {
-    public Nwk createNwkEntity(final String vorname, final String nachname, final Studiengang studiengang,
+    public Nwk createNwkEntity(final String vorname, final String nachname, final Studiengang studiengang, final Ausbildungsrichtung ausbildungsrichtung,
             final String jahrgang, final Set<DayOfWeek> vorlesungstage, final boolean isActive) {
         Nwk newNwk = new Nwk();
         newNwk.setId(UUID.randomUUID());
         newNwk.setVorname(vorname);
         newNwk.setNachname(nachname);
         newNwk.setStudiengang(studiengang);
+        newNwk.setAusbildungsrichtung(ausbildungsrichtung);
         newNwk.setJahrgang(jahrgang);
         newNwk.setVorlesungstage(vorlesungstage);
         newNwk.setActive(isActive);
@@ -39,7 +40,7 @@ public class ServiceTestHelper {
     public AusbildungsPraktikumsstelle createAusbildungsPraktikumsstelleEntity(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten,
             final Dringlichkeit dringlichkeit, final Referat referat, final Ausbildungsjahr semester,
-            final Studiengang studiengang, final boolean projektarbeit, final UUID meldezeitraumId, final Nwk assignedNwk) {
+            final Ausbildungsrichtung ausbildungsrichtung, final boolean projektarbeit, final UUID meldezeitraumId, final Nwk assignedNwk) {
         AusbildungsPraktikumsstelle newAusbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
         newAusbildungsPraktikumsstelle.setId(UUID.randomUUID());
         newAusbildungsPraktikumsstelle.setDienststelle(dienststelle);
@@ -49,7 +50,7 @@ public class ServiceTestHelper {
         newAusbildungsPraktikumsstelle.setDringlichkeit(dringlichkeit);
         newAusbildungsPraktikumsstelle.setReferat(referat);
         newAusbildungsPraktikumsstelle.setAusbildungsjahr(semester);
-        newAusbildungsPraktikumsstelle.setAusbildungsrichtung(studiengang);
+        newAusbildungsPraktikumsstelle.setAusbildungsrichtung(ausbildungsrichtung);
         newAusbildungsPraktikumsstelle.setProjektarbeit(projektarbeit);
         newAusbildungsPraktikumsstelle.setAssignedNwk(assignedNwk);
         return newAusbildungsPraktikumsstelle;
@@ -69,7 +70,7 @@ public class ServiceTestHelper {
         newStudiumsPraktikumsstelle.setReferat(referat);
         newStudiumsPraktikumsstelle.setStudiensemester(semester);
         newStudiumsPraktikumsstelle.setProgrammierkenntnisse(programmierkenntnisse);
-        newStudiumsPraktikumsstelle.setStudienart(studiengang);
+        newStudiumsPraktikumsstelle.setStudiengang(studiengang);
         newStudiumsPraktikumsstelle.setAssignedNwk(assignedNwk);
         return newStudiumsPraktikumsstelle;
     }
@@ -90,7 +91,7 @@ public class ServiceTestHelper {
                 .email(stelle.getEmail()).taetigkeiten(stelle.getTaetigkeiten())
                 .dringlichkeit(stelle.getDringlichkeit()).namentlicheAnforderung(stelle.getNamentlicheAnforderung())
                 .referat(stelle.getReferat()).programmierkenntnisse(stelle.getProgrammierkenntnisse())
-                .studiensemester(stelle.getStudiensemester()).studienart(stelle.getStudienart()).build();
+                .studiensemester(stelle.getStudiensemester()).studiengang(stelle.getStudiengang()).build();
     }
 
     public Meldezeitraum createMeldezeitraum(LocalDate start, LocalDate end, String name) {

@@ -14,7 +14,7 @@ public class AusbildungsValidatorTest {
 
     private AusbildungsValidator validator;
 
-    @AusbildungsAnnotation(studiengang = "ausbildung")
+    @AusbildungsAnnotation(ausbildungsrichtungGetMethod = "ausbildung")
     public record TestClass(Studiengang ausbildung) {
     }
 
