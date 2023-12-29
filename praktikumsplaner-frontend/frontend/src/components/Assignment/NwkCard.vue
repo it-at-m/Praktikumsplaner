@@ -17,8 +17,7 @@
                         {{ getFullName(props.nwk) }}
                     </v-card-title>
                     <v-card-subtitle>
-                        {{ props.nwk.studiengang }} /
-                        {{ props.nwk.jahrgang }}
+                        {{ getSubtitle(props.nwk) }}
                     </v-card-subtitle>
                 </div>
             </v-col>
@@ -70,6 +69,16 @@ const show = ref<boolean>(false);
 
 function getFullName(nwk: Nwk): string {
     return nwk.vorname + " " + nwk.nachname;
+}
+
+function getSubtitle(nwk: Nwk): string {
+    let subtitle = "Daten konnten nicht geladen werden.";
+    if (nwk.studiengang) {
+        subtitle = nwk.studiengang + " / " + nwk.jahrgang;
+    } else if (nwk.ausbildungsrichtung) {
+        subtitle = nwk.ausbildungsrichtung + " / " + nwk.jahrgang;
+    }
+    return subtitle;
 }
 </script>
 <style scoped>

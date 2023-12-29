@@ -1,0 +1,1 @@
+ALTER table studiumspraktikumsstelle rename column studienart to studiengang;

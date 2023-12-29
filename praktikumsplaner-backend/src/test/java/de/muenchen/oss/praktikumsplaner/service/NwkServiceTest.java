@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
@@ -55,7 +56,7 @@ public class NwkServiceTest {
         vorlesungstage.add(DayOfWeek.MONDAY);
         vorlesungstage.add(DayOfWeek.TUESDAY);
 
-        Nwk nwk = new Nwk(vorname, nachname, studiengang, jahrgang, vorlesungstage, isActive);
+        Nwk nwk = new Nwk(vorname, nachname, studiengang, null, jahrgang, vorlesungstage, isActive);
         NwkDto nwkDto = NwkDto.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).active(isActive).build();
         CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
@@ -74,7 +75,8 @@ public class NwkServiceTest {
         final String base64 = "WAAAAAAGGHHH=";
         final int EXCEL_TO_NWK_DTO_LIST_EXECUTIONS = 1;
 
-        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname("Max").nachname("Mustermann").studiengang(Studiengang.BSC).jahrgang("21/24")
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname("Max").nachname("Mustermann").studiengang(Studiengang.BSC).ausbildungsrichtung(null)
+                .jahrgang("21/24")
                 .vorlesungstage(Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)).build();
 
         List<CreateNwkDto> createNwkDtos = new ArrayList<>();
@@ -98,10 +100,10 @@ public class NwkServiceTest {
 
     @Test
     public void testFindAllActiveNwks() {
-        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, "21/25", Set.of(DayOfWeek.MONDAY), true);
-        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", Studiengang.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, null, "21/25", Set.of(DayOfWeek.MONDAY), true);
+        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", null, Ausbildungsrichtung.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
 
         List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
 
@@ -111,10 +113,10 @@ public class NwkServiceTest {
 
     @Test
     public void testFindAllUnassigned() {
-        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, "21/25", Set.of(DayOfWeek.MONDAY), true);
-        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", Studiengang.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, null, "21/25", Set.of(DayOfWeek.MONDAY), true);
+        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", null, Ausbildungsrichtung.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
 
         List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
 
@@ -124,10 +126,10 @@ public class NwkServiceTest {
 
     @Test
     public void testFindAllNwks() {
-        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, "21/25", Set.of(DayOfWeek.MONDAY), true);
-        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", Studiengang.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, null, "21/25", Set.of(DayOfWeek.MONDAY), true);
+        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", null, Ausbildungsrichtung.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
 
         List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
 

@@ -14,7 +14,7 @@ public class StudiumsValidatorTest {
 
     private StudiumsValidator validator;
 
-    @StudiumsAnnotation(studiengang = "studiengang")
+    @StudiumsAnnotation(studiengangGetMethod = "studiengang")
     public record TestClass(Studiengang studiengang) {
     }
 

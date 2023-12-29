@@ -1,13 +1,15 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -18,7 +20,12 @@ public class NwkService {
     private final NwkRepository nwkRepository;
     private final ExcelService excelService;
 
+    private static final Logger logger = LoggerFactory.getLogger(NwkService.class);
+
     public NwkDto saveNwk(final CreateNwkDto createNwkDto) {
+        logger.error("saveNwk: " + createNwkDto);
+        Nwk nwk = nwkMapper.toEntity(createNwkDto, true);
+        logger.error("saveNwkEnitity: " + nwk);
         return nwkMapper.toDto(nwkRepository.save(nwkMapper.toEntity(createNwkDto, true)));
     }
 
@@ -27,14 +34,14 @@ public class NwkService {
     }
 
     public List<NwkDto> findAllActiveNwks() {
-        return nwkRepository.findNwksByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDto).collect(Collectors.toList());
+        return nwkRepository.findNwksByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDto).toList();
     }
 
     public List<NwkDto> findAllUnassignedNwks() {
-        return nwkRepository.findAllUnassigned().stream().map(nwkMapper::toDto).collect(Collectors.toList());
+        return nwkRepository.findAllUnassigned().stream().map(nwkMapper::toDto).toList();
     }
 
     public List<NwkDto> findAllNwks() {
-        return nwkRepository.findAll().stream().map(nwkMapper::toDto).collect(Collectors.toList());
+        return nwkRepository.findAll().stream().map(nwkMapper::toDto).toList();
     }
 }

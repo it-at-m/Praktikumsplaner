@@ -67,21 +67,25 @@ public class PraktikumsstellenService {
                 .toDto(ausbildungsPraktikumsstellenRepository.save(entityPraktikumsstelle));
     }
 
-    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInMostRecentPassedMeldezeitraum() {
+    public TreeMap<String, List<PraktikumsstelleDto>> getRecentPraktikumsstellenGroupedByDienststelle() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
 
-        List<PraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
-                .map(praktikumsstellenMapper::toDto).collect(Collectors.toList());
+        List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
+                .map(praktikumsstellenMapper::toDto).toList();
 
-        List<PraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
-                .map(praktikumsstellenMapper::toDto).collect(Collectors.toList());
+        List<StudiumsPraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
+                .map(praktikumsstellenMapper::toDto).toList();
 
         List<PraktikumsstelleDto> combinedList = new ArrayList<>();
         combinedList.addAll(ausbildungsListDto);
         combinedList.addAll(studiumsListDto);
         combinedList.sort(Comparator.comparing(PraktikumsstelleDto::dienststelle));
 
-        return groupDienststellen(combinedList);
+        return combinedList.stream()
+                .collect(Collectors.groupingBy(
+                        praktikumsstelle -> getHauptabteilung(praktikumsstelle.dienststelle()),
+                        TreeMap::new,
+                        Collectors.toList()));
     }
 
     public PraktikumsstelleDto assignNwk(UUID praktikumsstellenID, UUID nwkID) {
@@ -133,19 +137,6 @@ public class PraktikumsstellenService {
         combinedList.addAll(studiumsListDto);
 
         return combinedList;
-    }
-
-    private TreeMap<String, List<PraktikumsstelleDto>> groupDienststellen(final Iterable<PraktikumsstelleDto> allPraktikumsstellen) {
-        TreeMap<String, List<PraktikumsstelleDto>> abteilungsMap = new TreeMap<>();
-
-        for (PraktikumsstelleDto praktikumsstelle : allPraktikumsstellen) {
-            String dienststelle = praktikumsstelle.dienststelle();
-            String hauptabteilung = getHauptabteilung(dienststelle);
-
-            abteilungsMap.computeIfAbsent(hauptabteilung, k -> new ArrayList<>()).add(praktikumsstelle);
-        }
-
-        return abteilungsMap;
     }
 
     private String getHauptabteilung(final String dienststelle) {

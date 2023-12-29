@@ -7,25 +7,25 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import de.muenchen.oss.praktikumsplaner.validators.StudiumsValidator;
+import de.muenchen.oss.praktikumsplaner.validators.StudiengangOrAusbildungsrichtungValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+@Documented
+@Constraint(validatedBy = StudiengangOrAusbildungsrichtungValidator.class)
 @Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE, TYPE_USE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = StudiumsValidator.class)
-@Documented
-public @interface StudiumsAnnotation {
-
-    String message() default "{}";
+public @interface StudiengangOrAusbildungsrichtungConstraint {
+    String message() default "Entweder Studiengang oder Ausbildungsrichtung muss gesetzt sein, aber nicht beide";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    String studiengangGetMethod();
+    String ausbildungsrichtungGetMethod();
 
+    String studiengangGetMethod();
 }

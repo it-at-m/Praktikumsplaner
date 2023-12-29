@@ -21,7 +21,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@StudiumsAnnotation(studiengang = "getStudienart", message = "Keine korrekte Studienart")
+@StudiumsAnnotation(studiengangGetMethod = "getStudiengang", message = "Keine korrekte Studiengang")
 public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull
@@ -33,6 +33,6 @@ public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Studiengang studienart;
+    private Studiengang studiengang;
 
 }
