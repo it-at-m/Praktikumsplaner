@@ -175,9 +175,6 @@ public class ExcelService {
         case "Fr" -> {
             return DayOfWeek.FRIDAY;
         }
-        case "Sa" -> {
-            return DayOfWeek.SATURDAY;
-        }
         }
         throw new IllegalArgumentException(vorlesungstagString);
     }

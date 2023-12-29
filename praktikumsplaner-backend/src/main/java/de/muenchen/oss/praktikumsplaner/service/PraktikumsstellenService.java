@@ -123,12 +123,12 @@ public class PraktikumsstellenService {
     }
 
     public List<PraktikumsstelleDto> getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum() {
-        UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
+        final UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
 
-        List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository
+        final List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository
                 .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream().map(praktikumsstellenMapper::toDto).toList();
 
-        List<StudiumsPraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository
+        final List<StudiumsPraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository
                 .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream()
                 .map(praktikumsstellenMapper::toDto).toList();
 

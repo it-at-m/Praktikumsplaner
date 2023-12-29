@@ -67,8 +67,8 @@ public class PraktikumsstellenController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public TreeMap<String, List<PraktikumsstelleDto>> getRecentPraktikumsstellenGroupedByDienststelle() {
-        return praktikumsstellenService.getRecentPraktikumsstellenGroupedByDienststelle();
+    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInMostRecentPassedMeldezeitraum() {
+        return praktikumsstellenService.getAllPraktiumsstellenInMostRecentPassedMeldezeitraum();
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
