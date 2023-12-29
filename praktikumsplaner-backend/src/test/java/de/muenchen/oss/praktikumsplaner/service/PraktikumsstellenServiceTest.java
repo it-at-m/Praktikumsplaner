@@ -225,7 +225,7 @@ public class PraktikumsstellenServiceTest {
                 Studiensemester.SEMESTER1, Studiengang.BWI, "false", UUID.randomUUID(), null);
         StudiumsPraktikumsstelle withAssigned = helper.createStudiumsPraktikumsstelleEntity("KM83", "Ausbilder",
                 "asubider@email.de", "Alles", Dringlichkeit.ZWINGEND, Referat.ITM, Studiensemester.SEMESTER1,
-                 Studiengang.BWI, "false", UUID.randomUUID(), null);
+                Studiengang.BWI, "false", UUID.randomUUID(), null);
         withAssigned.setAssignedNwk(assigningNwk);
         withAssigned.setId(stelle.getId());
         withAssigned.setMeldezeitraumID(stelle.getMeldezeitraumID());
