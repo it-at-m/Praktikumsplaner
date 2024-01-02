@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import java.time.LocalDate;
@@ -34,6 +35,7 @@ public class MeldezeitraumServiceTest {
     private MeldezeitraumRepository repository;
     @InjectMocks
     private MeldezeitraumService service;
+    private final ServiceTestHelper helper = new ServiceTestHelper();
 
     @Test
     public void testCreateMeldezeitraum() {
@@ -41,17 +43,14 @@ public class MeldezeitraumServiceTest {
         LocalDate end = LocalDate.of(2020, 11, 11);
         String name = "Der Name";
 
+        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build();
+
         CreateMeldezeitraumDto createMeldezeitraumDto = CreateMeldezeitraumDto.builder()
-                .startZeitpunkt(start)
-                .endZeitpunkt(end)
+                .zeitraum(zeitraum)
                 .zeitraumName(name)
                 .build();
 
-        Meldezeitraum meldezeitraum = new Meldezeitraum();
-        meldezeitraum.setId(UUID.randomUUID());
-        meldezeitraum.setStartZeitpunkt(start);
-        meldezeitraum.setEndZeitpunkt(end);
-        meldezeitraum.setZeitraumName(name);
+        Meldezeitraum meldezeitraum = helper.createMeldezeitraum(start, end, name);
 
         when(repository.save(any(Meldezeitraum.class))).thenReturn(meldezeitraum);
 
@@ -66,15 +65,12 @@ public class MeldezeitraumServiceTest {
         LocalDate end = LocalDate.now().plusDays(1);
         String name = "gestern bis morgen";
 
-        Meldezeitraum meldezeitraum = new Meldezeitraum();
-        meldezeitraum.setId(UUID.randomUUID());
-        meldezeitraum.setStartZeitpunkt(start);
-        meldezeitraum.setEndZeitpunkt(end);
-        meldezeitraum.setZeitraumName(name);
+        Meldezeitraum meldezeitraum = helper.createMeldezeitraum(start, end, name);
+
+        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build();
 
         MeldezeitraumDto meldezeitraumDto = MeldezeitraumDto.builder()
-                .startZeitpunkt(start)
-                .endZeitpunkt(end)
+                .zeitraum(zeitraum)
                 .zeitraumName(name)
                 .build();
 
@@ -98,52 +94,87 @@ public class MeldezeitraumServiceTest {
         LocalDate overlapStart = LocalDate.of(1, 1, 1);
         String name = "Dawn of Time";
 
-        Meldezeitraum meldezeitraum = new Meldezeitraum();
-        meldezeitraum.setId(UUID.randomUUID());
-        meldezeitraum.setStartZeitpunkt(start);
-        meldezeitraum.setEndZeitpunkt(end);
-        meldezeitraum.setZeitraumName(name);
+        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(overlapStart).endZeitpunkt(start).build();
 
         CreateMeldezeitraumDto createMeldezeitraumDto = CreateMeldezeitraumDto.builder()
-                .startZeitpunkt(overlapStart)
-                .endZeitpunkt(start)
+                .zeitraum(zeitraum)
                 .zeitraumName(name)
                 .build();
 
-        when(repository.isOverlappingMeldezeitraum(createMeldezeitraumDto.startZeitpunkt(),
-                createMeldezeitraumDto.endZeitpunkt())).thenReturn(true);
+        when(repository.isOverlappingMeldezeitraum(createMeldezeitraumDto.zeitraum().startZeitpunkt(),
+                createMeldezeitraumDto.zeitraum().endZeitpunkt())).thenReturn(true);
 
         assertThrows(ValidationException.class, () -> service.checkOverlappingMeldezeitraum(createMeldezeitraumDto));
     }
 
     @Test
     public void testcheckNoOverlappingMeldezeitraum() {
-        LocalDate start = LocalDate.of(2, 2, 2);
-        LocalDate end = LocalDate.of(3, 3, 3);
         LocalDate newStart = LocalDate.of(5, 5, 5);
         LocalDate newEnd = LocalDate.of(6, 6, 6);
         String name = "2-6";
 
-        Meldezeitraum meldezeitraum = new Meldezeitraum();
-        meldezeitraum.setId(UUID.randomUUID());
-        meldezeitraum.setStartZeitpunkt(start);
-        meldezeitraum.setEndZeitpunkt(end);
-        meldezeitraum.setZeitraumName(name);
+        ZeitraumDto zeitraum = ZeitraumDto.builder().startZeitpunkt(newStart).endZeitpunkt(newEnd).build();
 
         CreateMeldezeitraumDto createMeldezeitraumDto = CreateMeldezeitraumDto.builder()
-                .startZeitpunkt(newStart)
-                .endZeitpunkt(newEnd)
+                .zeitraum(zeitraum)
                 .zeitraumName(name)
                 .build();
 
-        when(repository.isOverlappingMeldezeitraum(createMeldezeitraumDto.startZeitpunkt(),
-                createMeldezeitraumDto.endZeitpunkt())).thenReturn(false);
+        when(repository.isOverlappingMeldezeitraum(createMeldezeitraumDto.zeitraum().startZeitpunkt(),
+                createMeldezeitraumDto.zeitraum().endZeitpunkt())).thenReturn(false);
 
         assertDoesNotThrow(() -> service.checkOverlappingMeldezeitraum(createMeldezeitraumDto));
     }
 
     @Test
     public void testGetMostRecentMeldezeitraum() {
+        String name = "Name";
+
+        Meldezeitraum mostRecent = helper.createMeldezeitraum(LocalDate.now().minusDays(10), LocalDate.now().plusDays(6), name);
+        Meldezeitraum oldest = helper.createMeldezeitraum(LocalDate.now().minusDays(15), LocalDate.now().minusDays(11), name);
+
+        List<Meldezeitraum> meldezeitraume = List.of(mostRecent, oldest, mostRecent);
+
+        when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
+        assertEquals(service.getMostRecentPassedMeldezeitraum(), mapper.toDto(mostRecent));
+    }
+
+    @Test
+    public void testGetMostRecentMeldezeitraumNoMatchingMeldezeitraum() {
+        List<Meldezeitraum> meldezeitraume = List.of();
+
+        when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
+        assertThrows(EntityNotFoundException.class, () -> service.getMostRecentPassedMeldezeitraum());
+    }
+
+    @Test
+    public void testGetUpcomingMeldezeitraeume() {
+        String name = "Name";
+
+        Meldezeitraum first = helper.createMeldezeitraum(LocalDate.now().plusDays(10), LocalDate.now().plusDays(6), name);
+        Meldezeitraum second = helper.createMeldezeitraum(LocalDate.now().plusDays(15), LocalDate.now().plusDays(11), name);
+
+        List<Meldezeitraum> meldezeitraume = List.of(first, second);
+
+        when(repository.findByStartZeitpunktAfterOrderByStartZeitpunktAsc(LocalDate.now())).thenReturn(meldezeitraume);
+        assertEquals(service.getUpcomingMeldezeitraeume(), meldezeitraume.stream().map(mapper::toDto).toList());
+    }
+
+    @Test
+    public void testGetPassedMeldezeitraeume() {
+        String name = "Name";
+
+        Meldezeitraum first = helper.createMeldezeitraum(LocalDate.now().minusDays(10), LocalDate.now().minusDays(6), name);
+        Meldezeitraum second = helper.createMeldezeitraum(LocalDate.now().minusDays(15), LocalDate.now().minusDays(11), name);
+
+        List<Meldezeitraum> meldezeitraume = List.of(first, second);
+
+        when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
+        assertEquals(service.getPassedMeldezeitraeume(), meldezeitraume.stream().map(mapper::toDto).toList());
+    }
+
+    @Test
+    public void testGetAllMeldezeitraeume() {
         String name = "Name";
 
         Meldezeitraum mostRecent = new Meldezeitraum();
@@ -160,60 +191,7 @@ public class MeldezeitraumServiceTest {
 
         List<Meldezeitraum> meldezeitraume = List.of(mostRecent, oldest, mostRecent);
 
-        when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
-        assertEquals(service.getMostRecentPassedMeldezeitraum(), mapper.toDto(mostRecent));
-    }
-
-    @Test
-    public void testGetMostRecentMeldezeitraumNoMatchingMeldezeitraum() {
-
-        List<Meldezeitraum> meldezeitraume = List.of();
-
-        when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
-        assertThrows(EntityNotFoundException.class, () -> service.getMostRecentPassedMeldezeitraum());
-    }
-
-    @Test
-    public void testGetUpcomingMeldezeitraeume() {
-        String name = "Name";
-
-        Meldezeitraum first = new Meldezeitraum();
-        first.setId(UUID.randomUUID());
-        first.setStartZeitpunkt(LocalDate.now().plusDays(10));
-        first.setEndZeitpunkt(LocalDate.now().plusDays(6));
-        first.setZeitraumName(name);
-
-        Meldezeitraum second = new Meldezeitraum();
-        second.setId(UUID.randomUUID());
-        second.setStartZeitpunkt(LocalDate.now().plusDays(15));
-        second.setEndZeitpunkt(LocalDate.now().plusDays(11));
-        second.setZeitraumName(name);
-
-        List<Meldezeitraum> meldezeitraume = List.of(first, second);
-
-        when(repository.findByStartZeitpunktAfterOrderByStartZeitpunktAsc(LocalDate.now())).thenReturn(meldezeitraume);
-        assertEquals(service.getUpcomingMeldezeitraeume(), meldezeitraume.stream().map(mapper::toDto).toList());
-    }
-
-    @Test
-    public void testGetPassedMeldezeitraeume() {
-        String name = "Name";
-
-        Meldezeitraum first = new Meldezeitraum();
-        first.setId(UUID.randomUUID());
-        first.setStartZeitpunkt(LocalDate.now().minusDays(10));
-        first.setEndZeitpunkt(LocalDate.now().minusDays(6));
-        first.setZeitraumName(name);
-
-        Meldezeitraum second = new Meldezeitraum();
-        second.setId(UUID.randomUUID());
-        second.setStartZeitpunkt(LocalDate.now().minusDays(15));
-        second.setEndZeitpunkt(LocalDate.now().minusDays(11));
-        second.setZeitraumName(name);
-
-        List<Meldezeitraum> meldezeitraume = List.of(first, second);
-
-        when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
-        assertEquals(service.getPassedMeldezeitraeume(), meldezeitraume.stream().map(mapper::toDto).toList());
+        when(repository.findAll()).thenReturn(meldezeitraume);
+        assertEquals(service.getAllMeldezeitraeume(), meldezeitraume.stream().map(mapper::toDto).toList());
     }
 }

@@ -31,8 +31,8 @@ public class MeldezeitraumService {
     }
 
     public void checkOverlappingMeldezeitraum(final CreateMeldezeitraumDto meldezeitraumCreateDto) {
-        if (meldezeitraumRepository.isOverlappingMeldezeitraum(meldezeitraumCreateDto.startZeitpunkt(),
-                meldezeitraumCreateDto.endZeitpunkt())) {
+        if (meldezeitraumRepository.isOverlappingMeldezeitraum(meldezeitraumCreateDto.zeitraum().startZeitpunkt(),
+                meldezeitraumCreateDto.zeitraum().endZeitpunkt())) {
             throw new ValidationException("Überlappt mit einem existierendem Meldezeitraum");
         }
     }
@@ -53,5 +53,9 @@ public class MeldezeitraumService {
             throw new EntityNotFoundException("Kein vergangener Meldezeitraum gefunden!");
         }
         return meldezeitraumMapper.toDto(passedZeitraueme.get(0));
+    }
+
+    public List<MeldezeitraumDto> getAllMeldezeitraeume() {
+        return meldezeitraumRepository.findAll().stream().map(meldezeitraumMapper::toDto).toList();
     }
 }

@@ -1,9 +1,9 @@
 export function useZeitraeume() {
     function studiumsZeitraum(
-        studienart: string | undefined,
+        studiengang: string | undefined,
         semester: string | undefined
     ): string {
-        if (studienart == "BSC") {
+        if (studiengang == "BSC") {
             if (semester == "SEMESTER1" || semester == "SEMESTER3") {
                 return "Februar - Mitte März";
             } else if (semester == "SEMESTER2" || semester == "SEMESTER6") {
@@ -14,7 +14,7 @@ export function useZeitraeume() {
                 return "Nicht in ausgewähltem Semester verfügbar";
             }
         }
-        if (studienart == "BWI") {
+        if (studiengang == "BWI") {
             if (semester == "SEMESTER1" || semester == "SEMESTER3") {
                 return "01.09 - 28.02";
             } else if (semester == "SEMESTER2" || semester == "SEMESTER4") {
@@ -25,7 +25,7 @@ export function useZeitraeume() {
                 return "Nicht in ausgewähltem Semester verfügbar";
             }
         }
-        if (studienart == "VI") {
+        if (studiengang == "VI") {
             if (semester == "SEMESTER1" || semester == "SEMESTER3") {
                 return "Februar - März";
             } else if (semester == "SEMESTER4" || semester == "SEMESTER5") {
@@ -56,7 +56,7 @@ export function useZeitraeume() {
             ) {
                 return "01.03 - 31.08";
             } else {
-                return "Nicht in ausgewähltem Jahr verfügbar (Erstes Jahr bei der SWM)";
+                return "Nicht in ausgewähltem Jahr verfügbar";
             }
         }
         return "";

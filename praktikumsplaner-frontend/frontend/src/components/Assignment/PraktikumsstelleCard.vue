@@ -93,10 +93,10 @@ const stelleToAssignUnassign = ref<Praktikumsstelle>();
 function getCardText(stelle: Praktikumsstelle): string {
     let cardText = "";
 
-    if (stelle.studienart) {
+    if (stelle.studiengang) {
         cardText +=
             "Studiengang: " +
-            stelle.studienart +
+            stelle.studiengang +
             "\n" +
             "Studiensemester: " +
             stelle.studiensemester?.charAt(stelle.studiensemester?.length - 1) +
@@ -126,10 +126,18 @@ function getCardDetailText(stelle: Praktikumsstelle): string {
         stelle.dringlichkeit.slice(1).toLowerCase();
     cardText += "Dringlichkeit: " + dringlichkeit + "\n";
     if (stelle.programmierkenntnisse !== undefined) {
-        cardText +=
-            "Programmierkenntnisse: " +
-            (stelle.programmierkenntnisse ? "Ja" : "Nein") +
-            "\n";
+        cardText += "Programmierkenntnisse: ";
+        switch (stelle.programmierkenntnisse) {
+            case "true":
+                cardText += "Ja" + "\n";
+                break;
+            case "false":
+                cardText += "Nein" + "\n";
+                break;
+            case "EGAL":
+                cardText += "egal" + "\n";
+                break;
+        }
     }
     if (stelle.ausbildungsrichtung) {
         cardText +=

@@ -1,5 +1,4 @@
 export const Ausbildungsjahr = [
-    { name: "JAHR1", value: "1. Lehrjahr" },
-    { name: "JAHR2", value: "2. Lehrjahr" },
-    { name: "JAHR3", value: "3. Lehrjahr" },
+    { name: "ab 2. Lehrjahr", value: "JAHR2" },
+    { name: "3. Lehrjahr", value: "JAHR3" },
 ] as const;

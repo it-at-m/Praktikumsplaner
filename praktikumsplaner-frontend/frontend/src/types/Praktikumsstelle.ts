@@ -14,7 +14,7 @@ export default class Praktikumsstelle {
 
         public projektarbeit?: boolean,
 
-        public programmierkenntnisse?: boolean,
+        public programmierkenntnisse?: string,
 
         public planstelleVorhanden?: boolean,
 
@@ -24,7 +24,7 @@ export default class Praktikumsstelle {
 
         public ausbildungsrichtung?: string,
 
-        public studienart?: string,
+        public studiengang?: string,
 
         public referat?: string,
 
@@ -32,6 +32,8 @@ export default class Praktikumsstelle {
 
         public id?: string,
 
-        public assignedNwk?: Nwk
+        public assignedNwk?: Nwk,
+
+        public meldezeitraumID?: string
     ) {}
 }

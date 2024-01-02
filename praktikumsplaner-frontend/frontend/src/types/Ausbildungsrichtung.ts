@@ -1,3 +1,3 @@
 export const Ausbildungsrichtung = [
-    { name: "FISI", value: "Fachinformatiker Systemintegration (FISI)" },
+    { name: "Fachinformatiker Systemintegration (FISI)", value: "FISI" },
 ] as const;

@@ -2,7 +2,7 @@ package de.muenchen.oss.praktikumsplaner.domain;
 
 import de.muenchen.oss.praktikumsplaner.annotations.AusbildungsAnnotation;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,11 +21,12 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@AusbildungsAnnotation(studiengang = "getAusbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
+@AusbildungsAnnotation(ausbildungsrichtungGetMethod = "getAusbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
 public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
-    @NotNull
     private boolean projektarbeit;
+
+    private String programmierkenntnisse;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -33,5 +34,5 @@ public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Studiengang ausbildungsrichtung;
+    private Ausbildungsrichtung ausbildungsrichtung;
 }

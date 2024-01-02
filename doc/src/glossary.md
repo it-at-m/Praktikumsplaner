@@ -42,7 +42,7 @@ The [örtliche Ausbilderin](./glossary.md#ortliche-ausbilderin) is the first con
 
 ### Örtliche Ausbildungsleitung
 
-The [örtliche Ausbildungsleitung](./glossary.md#ortliche-ausbildungsleitung) is responsible for the education of [Nwk](./glossary.md#nwk) in a larger part of the company.
+The [örtliche Ausbildungsleitung](./glossary.md#örtliche-ausbildungsleitung) is responsible for the education of [Nwk](./glossary.md#nwk) in a larger part of the company.
 They coordinate which [Nwk](./glossary.md#nwk) is assigned to which [Praktikumsstelle](./glossary.md#praktikumsstelle).
 They are also the contact person if a [Nwk](./glossary.md#nwk) has any problems with their [örtliche Ausbilderin](./glossary.md#ortliche-ausbilderin).
 In the first iterations of development, they were the main users of this application.
@@ -58,3 +58,6 @@ A [Praktikumsstelle](./glossary.md#praktikumsstelle) is an abstract concept that
 ### Studentin
 Just the German translation of student, so someone studying at a university or similar institution,
 with the goal of gaining a bachelor's or master's degree.
+
+### Zuweisungszeitraum
+A [Zuweisungszeitraum](./glossary.md#zuweisungszeitraum) is a time range, in which [Nwks](./glossary.md#nwk) are working at the [Praktikumsstellen](./glossary.md#praktikumsstelle) they were assigned to.

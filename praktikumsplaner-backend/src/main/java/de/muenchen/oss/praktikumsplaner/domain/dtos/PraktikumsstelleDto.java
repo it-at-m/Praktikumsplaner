@@ -26,7 +26,6 @@ public interface PraktikumsstelleDto {
     @NotNull
     Dringlichkeit dringlichkeit();
 
-    @NotNull
     boolean planstelleVorhanden();
 
     String namentlicheAnforderung();

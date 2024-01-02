@@ -18,6 +18,7 @@ import Nwk from "@/types/Nwk";
 import NwkService from "@/api/NwkService";
 import { useNwkStore } from "@/stores/nwkStore";
 import { EventBus } from "@/stores/event-bus";
+import NwkCard from "@/components/Assignment/NwkCard.vue";
 
 const nwks = ref<Nwk[]>([]);
 const nwkStore = useNwkStore();

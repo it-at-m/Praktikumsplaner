@@ -51,7 +51,6 @@ public class MeldezeitraumController {
         } else if (period != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Value '" + period + "' for parameter restriction not supported.");
         }
-
-        return new ArrayList<>();
+        return meldezeitraumService.getAllMeldezeitraeume();
     }
 }
