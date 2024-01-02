@@ -125,7 +125,7 @@ function getCardDetailText(stelle: Praktikumsstelle): string {
         stelle.dringlichkeit.charAt(0).toUpperCase() +
         stelle.dringlichkeit.slice(1).toLowerCase();
     cardText += "Dringlichkeit: " + dringlichkeit + "\n";
-    if (stelle.programmierkenntnisse !== undefined) {
+    if (stelle.programmierkenntnisse) {
         cardText += "Programmierkenntnisse: ";
         switch (stelle.programmierkenntnisse) {
             case "true":
