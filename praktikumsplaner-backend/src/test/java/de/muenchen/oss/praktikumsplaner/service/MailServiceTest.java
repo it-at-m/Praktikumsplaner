@@ -37,7 +37,6 @@ public class MailServiceTest {
         ReflectionTestUtils.setField(mailService, "from", "testSender");
     }
 
-
     @Test
     public void testSendMailsToAssignedPraktikumsplaetze() {
         // Arrange
