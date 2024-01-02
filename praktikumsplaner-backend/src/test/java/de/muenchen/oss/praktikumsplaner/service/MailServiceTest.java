@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 import java.time.LocalDate;
@@ -33,6 +34,7 @@ public class MailServiceTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        ReflectionTestUtils.setField(mailService, "from", "testSender");
     }
 
     @Test

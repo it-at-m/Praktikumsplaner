@@ -10,6 +10,15 @@ spring:
     port: 8125
     username: pp-mail-user
     password: pp-mail-password
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 
 server:
   shutdown: "graceful"
