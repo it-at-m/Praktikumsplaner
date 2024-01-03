@@ -4,9 +4,9 @@
         max-width="500px"
     >
         <v-card>
-            <v-card-title> {{ currentWarning.title }} </v-card-title>
+            <v-card-title> {{ currentWarning?.title }} </v-card-title>
             <v-card-text>
-                {{ currentWarning.message }}
+                {{ currentWarning?.message }}
             </v-card-text>
             <v-card-actions>
                 <v-btn
@@ -40,10 +40,14 @@ const props = defineProps<{
 
 const currentIndex = ref(0);
 
-const currentWarning = computed(() => props.warnings[currentIndex.value]);
+const currentWarning = computed(() => {
+    if (currentIndex.value < props.warnings.length) {
+        return props.warnings[currentIndex.value];
+    }
+    return null;
+});
 
 const accept = () => {
-    console.log(props.warnings);
     currentIndex.value++;
     if (currentIndex.value >= props.warnings.length) {
         currentIndex.value = 0;
@@ -57,7 +61,7 @@ const reject = () => {
 };
 
 onMounted(() => {
-    if (props.warnings.length <= 0) {
+    if (props.visible && props.warnings.length <= 0) {
         currentIndex.value = 0;
         emits("accepted");
     }

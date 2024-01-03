@@ -11,9 +11,7 @@
         <v-container>
             <v-expansion-panels multiple>
                 <v-expansion-panel
-                    v-for="(
-                        praktikumsstellenliste, abteilung
-                    ) in praktikumsstellen"
+                    v-for="abteilung in praktikumsstellen.keys()"
                     :key="abteilung"
                     class="custom-panel"
                 >
@@ -24,8 +22,8 @@
                         <v-list>
                             <v-list-item-group>
                                 <v-list-item
-                                    v-for="praktikumsstelle in asPraktikumsstelleList(
-                                        praktikumsstellenliste
+                                    v-for="praktikumsstelle in praktikumsstellen.get(
+                                        abteilung
                                     )"
                                     :key="praktikumsstelle.id"
                                     :class="{
@@ -60,7 +58,6 @@ import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 import PraktikumsstelleCard from "@/components/Assignment/PraktikumsstelleCard.vue";
 
-const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>();
 const nwkStore = useNwkStore();
 const assignedNwkID = ref(nwkStore.nwk);
 const warningDialog = ref<boolean>(false);
@@ -70,6 +67,10 @@ const warningDialogTitle = ref<string>(
 const warningDialogText = ref<string>("");
 const stelleToAssignUnassign = ref<Praktikumsstelle>();
 
+const props = defineProps<{
+    praktikumsstellen: Map<string, Praktikumsstelle[]>;
+}>();
+
 watch(
     () => nwkStore.nwk,
     () => {
@@ -77,17 +78,6 @@ watch(
             nwkStore.nwk ?? new Nwk("", "", "", "", [], false, "", "");
     }
 );
-
-onMounted(() => {
-    getAllPraktikumsstellen();
-});
-function getAllPraktikumsstellen() {
-    PraktikumsstellenService.getAllPraktikumsstellen().then(
-        (fetchedStellen) => {
-            praktikumsstellen.value = fetchedStellen;
-        }
-    );
-}
 
 function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
     return list as Praktikumsstelle[];
