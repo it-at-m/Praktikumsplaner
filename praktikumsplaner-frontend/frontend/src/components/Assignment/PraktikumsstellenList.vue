@@ -11,7 +11,7 @@
         <v-container>
             <v-expansion-panels multiple>
                 <v-expansion-panel
-                    v-for="abteilung in praktikumsstellen.keys()"
+                    v-for="abteilung in props.praktikumsstellen.keys()"
                     :key="abteilung"
                     class="custom-panel"
                 >
@@ -22,7 +22,7 @@
                         <v-list>
                             <v-list-item-group>
                                 <v-list-item
-                                    v-for="praktikumsstelle in praktikumsstellen.get(
+                                    v-for="praktikumsstelle in props.praktikumsstellen.get(
                                         abteilung
                                     )"
                                     :key="praktikumsstelle.id"
@@ -49,7 +49,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import { useNwkStore } from "@/stores/nwkStore";
@@ -78,10 +78,6 @@ watch(
             nwkStore.nwk ?? new Nwk("", "", "", "", [], false, "", "");
     }
 );
-
-function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
-    return list as Praktikumsstelle[];
-}
 
 function drop(stelle: Praktikumsstelle) {
     if (!stelle || !stelle.id || stelle.assignedNwk) return;
