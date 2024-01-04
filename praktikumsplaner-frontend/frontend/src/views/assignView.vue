@@ -55,10 +55,57 @@ const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>(
 );
 
 function collectWarnings() {
-    warnings.value.push(new Warning("test", "test"));
-    warnings.value.push(new Warning("test2", "test2"));
-    warnings.value.push(new Warning("test3", "test3"));
-    warnings.value.push(new Warning("test4", "test4"));
+    warnings.value = [];
+    for (const nwk of nwks.value) {
+        const warning = new Warning(
+            "NWK",
+            "Die NWK " +
+                nwk.vorname +
+                " " +
+                nwk.nachname +
+                " ist nicht verplant."
+        );
+
+        warnings.value.push(warning);
+    }
+    for (const value of praktikumsstellen.value.values()) {
+        for (const stelle of value) {
+            if (
+                (stelle.dringlichkeit.toLocaleLowerCase() == "dringend" ||
+                    stelle.dringlichkeit.toLocaleLowerCase() == "zwingend") &&
+                stelle.assignedNwk == undefined
+            ) {
+                const warning = new Warning(
+                    "Dringlichkeit",
+                    "Der Praktikumsstelle " +
+                        stelle.dienststelle +
+                        " bei " +
+                        stelle.oertlicheAusbilder +
+                        " ist keine NWK zugewiesen, die Dringlichkeit ist jedoch mit " +
+                        stelle.dringlichkeit +
+                        " angegeben."
+                );
+                warnings.value.push(warning);
+            }
+
+            if (
+                stelle.namentlicheAnforderung != null &&
+                stelle.assignedNwk == undefined
+            ) {
+                const warning = new Warning(
+                    "Namentliche Anforderung",
+                    "Der Praktikumsstelle " +
+                        stelle.dienststelle +
+                        " bei " +
+                        stelle.oertlicheAusbilder +
+                        " ist keine NWK zugewiesen, es liegt jedoch eine namentliche Anforderung für " +
+                        stelle.namentlicheAnforderung +
+                        " vor."
+                );
+                warnings.value.push(warning);
+            }
+        }
+    }
 }
 
 function openWarningDialog() {
