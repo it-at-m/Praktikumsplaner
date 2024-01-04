@@ -134,17 +134,17 @@ onMounted(() => {
 function getAllActiveNwks() {
     NwkService.getAllUnassignedNwks().then((fetchedNwks) => {
         nwks.value = [...fetchedNwks];
-        console.log(fetchedNwks);
     });
 }
 
 function getAllPraktikumsstellen() {
+    const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellen().then(
         (fetchedStellen) => {
             for (const [key, value] of Object.entries(fetchedStellen)) {
-                console.log("key:" + key + "; " + "value:" + value);
-                praktikumsstellen.value.set(key, value);
+                helperMap.set(key, value);
             }
+            praktikumsstellen.value = helperMap;
         }
     );
 }
