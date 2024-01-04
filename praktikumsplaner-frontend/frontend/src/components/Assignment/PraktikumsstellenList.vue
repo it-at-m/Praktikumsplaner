@@ -37,6 +37,7 @@
                                     @dragenter.prevent
                                 >
                                     <PraktikumsstelleCard
+                                        :key="praktikumsstelle.assignedNwk?.id"
                                         :praktikumsstelle="praktikumsstelle"
                                     ></PraktikumsstelleCard>
                                 </v-list-item>
