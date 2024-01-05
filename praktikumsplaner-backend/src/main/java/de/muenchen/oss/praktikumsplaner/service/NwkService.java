@@ -18,7 +18,7 @@ public class NwkService {
 
     private final NwkMapper nwkMapper;
     private final NwkRepository nwkRepository;
-    private final ExcelService excelService;
+    private final ExcelImportService excelImportService;
 
     private static final Logger logger = LoggerFactory.getLogger(NwkService.class);
 
@@ -30,7 +30,7 @@ public class NwkService {
     }
 
     public void importNwk(final String base64String) throws IOException {
-        excelService.excelToNwkDtoList(base64String).forEach(this::saveNwk);
+        excelImportService.excelToNwkDtoList(base64String).forEach(this::saveNwk);
     }
 
     public List<NwkDto> findAllActiveNwks() {

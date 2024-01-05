@@ -41,7 +41,7 @@ public class NwkServiceTest {
     @InjectMocks
     private NwkService service;
     @Mock
-    private ExcelService excelService;
+    private ExcelImportService excelImportService;
 
     private final ServiceTestHelper helper = new ServiceTestHelper();
 
@@ -84,16 +84,16 @@ public class NwkServiceTest {
         createNwkDtos.add(createNwkDto);
         createNwkDtos.add(createNwkDto);
 
-        when(excelService.excelToNwkDtoList(base64)).thenReturn(createNwkDtos);
+        when(excelImportService.excelToNwkDtoList(base64)).thenReturn(createNwkDtos);
         service.importNwk(base64);
-        verify(excelService, times(EXCEL_TO_NWK_DTO_LIST_EXECUTIONS)).excelToNwkDtoList(base64);
+        verify(excelImportService, times(EXCEL_TO_NWK_DTO_LIST_EXECUTIONS)).excelToNwkDtoList(base64);
         verify(repository, times(createNwkDtos.size())).save(any(Nwk.class));
     }
 
     @Test
     public void testImportNwkFailed() throws IOException {
         val base64 = "WAAAAAAGGHHH=";
-        when(excelService.excelToNwkDtoList(base64)).thenThrow(ConstraintViolationException.class);
+        when(excelImportService.excelToNwkDtoList(base64)).thenThrow(ConstraintViolationException.class);
         assertThrows(ConstraintViolationException.class, () -> service.importNwk(base64));
         verifyNoInteractions(repository);
     }

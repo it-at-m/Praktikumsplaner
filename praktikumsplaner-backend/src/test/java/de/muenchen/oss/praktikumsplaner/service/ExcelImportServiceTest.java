@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -22,15 +21,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class ExcelServiceTest {
-    private final ExcelService service;
+public class ExcelImportServiceTest {
+    private final ExcelImportService service;
     private final String base64EncodedExcelMultipleNwk;
     private final String base64EncodedExcelNwkInvalidData;
 
-    public ExcelServiceTest() throws IOException {
+    public ExcelImportServiceTest() throws IOException {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        service = new ExcelService(validator);
+        service = new ExcelImportService(validator);
         base64EncodedExcelMultipleNwk = Base64.getEncoder().encodeToString(Objects
                 .requireNonNull(this.getClass().getResourceAsStream("ExcelMultipleNwk.xlsx")).readAllBytes());
         base64EncodedExcelNwkInvalidData = Base64.getEncoder().encodeToString(Objects
