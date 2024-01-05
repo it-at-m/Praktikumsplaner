@@ -20,10 +20,14 @@
             <v-btn
                 color="primary"
                 class="mr-4"
-                @click="openWarningDialog"
+                @click="openMailWarningDialog"
                 >Mails senden</v-btn
             >
-            <ExcelExport></ExcelExport>
+            <ExcelExport
+                :start-download="startDownload"
+                @click="openExcelWarnings"
+                @exported="exported"
+            ></ExcelExport>
         </v-row>
         <WarningDialog
             :visible="showWarningDialog"
@@ -39,9 +43,14 @@ import PraktikumsstellenList from "@/components/Assignment/PraktikumsstellenList
 import ActiveNwkListForZuweisung from "@/components/Assignment/ActiveNwkListForZuweisung.vue";
 import QueryPraktikumsPeriodDialog from "@/components/Assignment/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import WarningDialog from "@/components/common/WarningDialog.vue";
 import ExcelExport from "@/components/Assignment/ExcelExport.vue";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
+import Nwk from "@/types/Nwk";
+import Warning from "@/types/Warning";
+import NwkService from "@/api/NwkService";
+import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 
 const showSendMailDialog = ref(false);
 const showWarningDialog = ref(false);
@@ -50,6 +59,8 @@ const nwks = ref<Nwk[]>([]);
 const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>(
     new Map<string, Praktikumsstelle[]>()
 );
+const startDownload = ref(false);
+const isExcelWarningDialog = ref(false);
 
 function collectWarnings() {
     warnings.value = [];
@@ -105,9 +116,20 @@ function collectWarnings() {
     }
 }
 
-function openWarningDialog() {
+function exported() {
+    startDownload.value = false;
+}
+
+function openMailWarningDialog() {
     collectWarnings();
     showWarningDialog.value = true;
+    isExcelWarningDialog.value = false;
+}
+
+function openExcelWarnings() {
+    collectWarnings();
+    showWarningDialog.value = true;
+    isExcelWarningDialog.value = true;
 }
 
 function openQueryPraktikumsPeriodDialog() {
@@ -115,8 +137,12 @@ function openQueryPraktikumsPeriodDialog() {
 }
 
 function acceptedWarningDialog() {
+    if (isExcelWarningDialog.value) {
+        startDownload.value = true;
+    } else {
+        openQueryPraktikumsPeriodDialog();
+    }
     showWarningDialog.value = false;
-    openQueryPraktikumsPeriodDialog();
 }
 
 function rejectedWarningDialog() {
