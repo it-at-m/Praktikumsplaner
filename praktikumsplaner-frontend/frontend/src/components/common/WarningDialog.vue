@@ -12,12 +12,12 @@
                 <v-btn
                     color="primary"
                     @click="accept"
-                    >Accept</v-btn
+                    >Akzeptieren</v-btn
                 >
                 <v-btn
                     color="error"
                     @click="reject"
-                    >Reject</v-btn
+                    >Ablehnen</v-btn
                 >
             </v-card-actions>
         </v-card>
