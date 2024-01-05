@@ -65,15 +65,12 @@ const activeMeldezeitraum = ref<boolean>(false);
 const twoChoiceDialogVisible = ref<boolean>(false);
 
 onMounted(() => {
-    MeldezeitraumService.getCurrentMeldezeitraum()
-        .then((zeitraueme) => {
-            activeMeldezeitraum.value = zeitraueme.length > 0;
-        })
-        .then(() => {
-            if (userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG")) {
-                activeMeldezeitraum.value = true;
-            }
-        });
+    MeldezeitraumService.getCurrentMeldezeitraum().then((zeitraueme) => {
+        activeMeldezeitraum.value = zeitraueme.length > 0;
+    });
+    if (userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG")) {
+        activeMeldezeitraum.value = true;
+    }
 });
 
 function toAusbildung(): void {
