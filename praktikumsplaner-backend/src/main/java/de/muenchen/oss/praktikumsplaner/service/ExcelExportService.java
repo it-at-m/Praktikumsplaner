@@ -89,9 +89,9 @@ public class ExcelExportService {
     }
 
     /*
-        * This method prepares the praktikumsstellen by making all praktikumsstellen with students assigned
-        * to them studiumspraktikumsstellen, regardless if they were ausbildungspraktikumsstellen before,
-        * and all praktikumsstellen with apprentices assigned to them ausbildungspraktikumsstellen.
+     * This method prepares the praktikumsstellen by making all praktikumsstellen with students assigned
+     * to them studiumspraktikumsstellen, regardless if they were ausbildungspraktikumsstellen before,
+     * and all praktikumsstellen with apprentices assigned to them ausbildungspraktikumsstellen.
      */
     private Pair<List<AusbildungsPraktikumsstelleDto>, List<StudiumsPraktikumsstelleDto>> preparePraktikumsstellen() {
         List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen = new ArrayList<>(praktikumsstellenService
@@ -101,16 +101,18 @@ public class ExcelExportService {
         List<AusbildungsPraktikumsstelleDto> toDeleteAusbildungspraktikumsstellen = new ArrayList<>();
         List<StudiumsPraktikumsstelleDto> toDeleteStudiumspraktikumsstellen = new ArrayList<>();
 
-        assignedAusbildungspraktikumsstellen.stream().filter(praktikumsstelle -> praktikumsstelle.assignedNwk().ausbildungsrichtung() == null).forEach(praktikumsstelle ->{
-            assignedStudiumspraktikumsstellen.add(turnAusbildungsIntoStudiumspraktikumsstelle(praktikumsstelle));
-            toDeleteAusbildungspraktikumsstellen.add(praktikumsstelle);
-        });
+        assignedAusbildungspraktikumsstellen.stream().filter(praktikumsstelle -> praktikumsstelle.assignedNwk().ausbildungsrichtung() == null)
+                .forEach(praktikumsstelle -> {
+                    assignedStudiumspraktikumsstellen.add(turnAusbildungsIntoStudiumspraktikumsstelle(praktikumsstelle));
+                    toDeleteAusbildungspraktikumsstellen.add(praktikumsstelle);
+                });
         assignedAusbildungspraktikumsstellen.removeAll(toDeleteAusbildungspraktikumsstellen);
 
-        assignedStudiumspraktikumsstellen.stream().filter(praktikumsstelle -> praktikumsstelle.assignedNwk().studiengang() == null).forEach(praktikumsstelle ->{
-            assignedAusbildungspraktikumsstellen.add(turnStudiumsIntoAusbildungspraktikumsstelle(praktikumsstelle));
-            toDeleteStudiumspraktikumsstellen.add(praktikumsstelle);
-        });
+        assignedStudiumspraktikumsstellen.stream().filter(praktikumsstelle -> praktikumsstelle.assignedNwk().studiengang() == null)
+                .forEach(praktikumsstelle -> {
+                    assignedAusbildungspraktikumsstellen.add(turnStudiumsIntoAusbildungspraktikumsstelle(praktikumsstelle));
+                    toDeleteStudiumspraktikumsstellen.add(praktikumsstelle);
+                });
         assignedStudiumspraktikumsstellen.removeAll(toDeleteStudiumspraktikumsstellen);
 
         return Pair.of(assignedAusbildungspraktikumsstellen, assignedStudiumspraktikumsstellen);

@@ -40,7 +40,7 @@ public class ExcelExportServiceTest {
                 .thenReturn(getTestListOfAusbildungsPraktikumsstelleDto());
         when(praktikumsstellenService.getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum())
                 .thenReturn(getTestListOfStudiumsPraktikumsstelleDto());
-        try(XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
                 Base64.getDecoder().decode(service.getBase64EncodedExcelFile())))) {
 
             XSSFSheet ausbildungsSheet = workbook.getSheetAt(0);
@@ -54,14 +54,17 @@ public class ExcelExportServiceTest {
             assertEquals(ausbildungsPraktikumsstellen.get(0).dienststelle(), ausbildungsSheet.getRow(3).getCell(1).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.get(0).oertlicheAusbilder(), ausbildungsSheet.getRow(3).getCell(2).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.get(0).taetigkeiten(), ausbildungsSheet.getRow(3).getCell(3).getStringCellValue());
-            assertEquals(ausbildungsPraktikumsstellen.get(0).namentlicheAnforderung() == null ? "" : ausbildungsPraktikumsstellen.get(0).namentlicheAnforderung(),
+            assertEquals(
+                    ausbildungsPraktikumsstellen.get(0).namentlicheAnforderung() == null ? "" : ausbildungsPraktikumsstellen.get(0).namentlicheAnforderung(),
                     ausbildungsSheet.getRow(3).getCell(4).getStringCellValue());
             assertEquals(
                     ausbildungsPraktikumsstellen.get(0).programmierkenntnisse() == null ? ""
                             : decodeProgrammierkenntnisse(ausbildungsPraktikumsstellen.get(0).programmierkenntnisse()),
                     ausbildungsSheet.getRow(3).getCell(5).getStringCellValue());
-            assertEquals(ausbildungsPraktikumsstellen.get(0).projektarbeit(), convertJaNeinToBoolean(ausbildungsSheet.getRow(3).getCell(6).getStringCellValue()));
-            assertEquals(ausbildungsPraktikumsstellen.get(0).ausbildungsjahr(), decodeAusbildungsjahr(ausbildungsSheet.getRow(3).getCell(7).getStringCellValue()));
+            assertEquals(ausbildungsPraktikumsstellen.get(0).projektarbeit(),
+                    convertJaNeinToBoolean(ausbildungsSheet.getRow(3).getCell(6).getStringCellValue()));
+            assertEquals(ausbildungsPraktikumsstellen.get(0).ausbildungsjahr(),
+                    decodeAusbildungsjahr(ausbildungsSheet.getRow(3).getCell(7).getStringCellValue()));
             assertEquals(ausbildungsPraktikumsstellen.get(0).dringlichkeit().name(), ausbildungsSheet.getRow(3).getCell(8).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.get(0).ausbildungsrichtung().name(), ausbildungsSheet.getRow(3).getCell(9).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.get(0).planstelleVorhanden(),
@@ -83,7 +86,8 @@ public class ExcelExportServiceTest {
             assertEquals(studiumsPraktikumsstellen.get(0).dringlichkeit().name(), studiumsSheet.getRow(3).getCell(6).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.get(0).studiensemester(), decodeStudiensemester(studiumsSheet.getRow(3).getCell(7).getStringCellValue()));
             assertEquals(studiumsPraktikumsstellen.get(0).studiengang().name(), studiumsSheet.getRow(3).getCell(8).getStringCellValue());
-            assertEquals(studiumsPraktikumsstellen.get(0).planstelleVorhanden(), convertJaNeinToBoolean(studiumsSheet.getRow(3).getCell(9).getStringCellValue()));
+            assertEquals(studiumsPraktikumsstellen.get(0).planstelleVorhanden(),
+                    convertJaNeinToBoolean(studiumsSheet.getRow(3).getCell(9).getStringCellValue()));
             assertEquals(studiumsPraktikumsstellen.get(0).assignedNwk().nachname(), studiumsSheet.getRow(3).getCell(10).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.get(0).assignedNwk().vorname(), studiumsSheet.getRow(3).getCell(11).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.get(0).assignedNwk().jahrgang(), studiumsSheet.getRow(3).getCell(12).getStringCellValue());
@@ -107,7 +111,7 @@ public class ExcelExportServiceTest {
         when(praktikumsstellenService.getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum())
                 .thenReturn(studiumsPraktikumsstellenWithAuszubildende);
 
-        try(XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
                 Base64.getDecoder().decode(service.getBase64EncodedExcelFile())))) {
             XSSFSheet ausbildungsSheet = workbook.getSheetAt(0);
             XSSFSheet studiumsSheet = workbook.getSheetAt(1);
