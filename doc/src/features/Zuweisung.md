@@ -68,3 +68,9 @@ If some errors occurred during the sending of the mails, a dialog will appear te
 which [Praktikumsstellen](./../glossary.md#praktikumsstelle) could not be informed by mail. Currently, there is no way to resend the mails. 
 This has to be done manually.
 The other mails will still be sent.
+
+### Export assignments as Excel file
+The [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) can export the assignments as an Excel file.
+To do this, the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) must click on the `Exportieren` button.
+After clicking on the button, the file will be downloaded automatically.
+Everything about the [Praktikumsstellen](./../glossary.md#praktikumsstelle) and the assigned [Nwks](./../glossary.md#nwk) will be exported.

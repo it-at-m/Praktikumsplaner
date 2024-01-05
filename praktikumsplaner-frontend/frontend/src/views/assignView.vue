@@ -23,6 +23,7 @@
                 @click="openWarningDialog"
                 >Mails senden</v-btn
             >
+            <ExcelExport></ExcelExport>
         </v-row>
         <WarningDialog
             :visible="showWarningDialog"
@@ -38,13 +39,9 @@ import PraktikumsstellenList from "@/components/Assignment/PraktikumsstellenList
 import ActiveNwkListForZuweisung from "@/components/Assignment/ActiveNwkListForZuweisung.vue";
 import QueryPraktikumsPeriodDialog from "@/components/Assignment/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import WarningDialog from "@/components/common/WarningDialog.vue";
-import Warning from "@/types/Warning";
-import PraktikumsstellenService from "@/api/PraktikumsstellenService";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
-import NwkService from "@/api/NwkService";
-import Nwk from "@/types/Nwk";
+import ExcelExport from "@/components/Assignment/ExcelExport.vue";
 
 const showSendMailDialog = ref(false);
 const showWarningDialog = ref(false);
