@@ -71,7 +71,7 @@ const upcoming = ref<Meldezeitraum[]>([]);
 const passed = ref<Meldezeitraum[]>([]);
 
 onMounted(() => {
-    reload();
+    reloadMeldezeitraeume();
 });
 onBeforeMount(() => {
     userService.getPermissions().then((userinfo) => {
@@ -82,7 +82,7 @@ onBeforeMount(() => {
     });
 });
 
-function reload() {
+function reloadMeldezeitraeume() {
     MeldezeitraumService.getCurrentMeldezeitraum().then((response) => {
         current.value = response;
     });
@@ -97,7 +97,7 @@ function reload() {
 }
 
 EventBus.$on("meldezeitraumAdded", () => {
-    reload();
+    reloadMeldezeitraeume();
 });
 </script>
 
