@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ExcelService {
+public class ExcelImportService {
     private final Validator validator;
     private final DataFormatter dataFormatter = new DataFormatter();
     private static final int FIRST_SHEET = 0;
@@ -43,7 +43,7 @@ public class ExcelService {
     private static final int VORLESUNGSTAGE_COLUM = 4;
     private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
 
-    private static final Logger logger = LoggerFactory.getLogger(ExcelService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExcelImportService.class);
 
     public List<CreateNwkDto> excelToNwkDtoList(final String base64String) throws IOException {
         try (InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));

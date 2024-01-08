@@ -24,6 +24,7 @@
                 @click="showSendMailDialog = true"
                 >Mails senden</v-btn
             >
+            <ExcelExport></ExcelExport>
         </v-row>
         <QueryPraktikumsPeriodDialog :show-dialog.sync="showSendMailDialog" />
     </v-container>
@@ -36,6 +37,7 @@ import PageTitle from "@/components/common/PageTitle.vue";
 import { onMounted, ref } from "vue";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import ExcelExport from "@/components/Assignment/ExcelExport.vue";
 
 const showSendMailDialog = ref(false);
 const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(new Map());

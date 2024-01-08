@@ -102,20 +102,25 @@ public class PraktikumsstellenService {
     }
 
     public List<PraktikumsstelleDto> getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum() {
-        final UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
-
-        final List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository
-                .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream().map(praktikumsstellenMapper::toDto).toList();
-
-        final List<StudiumsPraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository
-                .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream()
-                .map(praktikumsstellenMapper::toDto).toList();
-
         List<PraktikumsstelleDto> combinedList = new ArrayList<>();
-        combinedList.addAll(ausbildungsListDto);
-        combinedList.addAll(studiumsListDto);
+        combinedList.addAll(getAllAssignedAusbildungspraktikumsstellenInMostRecentPassedMeldezeitraum());
+        combinedList.addAll(getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum());
 
         return combinedList;
+    }
+
+    public List<AusbildungsPraktikumsstelleDto> getAllAssignedAusbildungspraktikumsstellenInMostRecentPassedMeldezeitraum() {
+        final UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
+
+        return ausbildungsPraktikumsstellenRepository
+                .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream().map(praktikumsstellenMapper::toDto).toList();
+    }
+
+    public List<StudiumsPraktikumsstelleDto> getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum() {
+        final UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
+
+        return studiumsPraktikumsstellenRepository
+                .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream().map(praktikumsstellenMapper::toDto).toList();
     }
 
     public TreeMap<String, List<PraktikumsstelleDto>> getAllInCurrentMeldezeitraumGroupedByDienststelle() {

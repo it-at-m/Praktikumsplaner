@@ -107,13 +107,16 @@ const mapIsEmpty = computed(() => {
 });
 
 onMounted(() => {
-    MeldezeitraumService.getCurrentMeldezeitraum().then((zeitraueme) => {
-        activeMeldezeitraum.value = zeitraueme.length > 0;
-    });
-    if (userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG")) {
-        activeMeldezeitraum.value = true;
-    }
-    getAllPraktikumsstellenInCurrentMeldezeitraum();
+    MeldezeitraumService.getCurrentMeldezeitraum()
+        .then((zeitraueme) => {
+            activeMeldezeitraum.value = zeitraueme.length > 0;
+        })
+        .then(() => {
+            if (userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG")) {
+                activeMeldezeitraum.value = true;
+            }
+        });
+  getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
 
 function toAusbildung(): void {
