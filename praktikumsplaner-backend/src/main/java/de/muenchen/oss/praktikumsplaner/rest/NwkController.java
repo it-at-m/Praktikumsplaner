@@ -22,7 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class NwkController {
     private final NwkService nwkService;
 
-    private final String ACTIVE_STATUS = "aktiv";
+    private static final String ACTIVE_STATUS = "aktiv";
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping("/import")
@@ -48,5 +48,12 @@ public class NwkController {
             }
         }
         return nwkService.findAllNwks();
+    }
+
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public NwkDto modifyNwk(@RequestBody NwkDto nwkDto) {
+        return nwkService.saveNwk(nwkDto);
     }
 }
