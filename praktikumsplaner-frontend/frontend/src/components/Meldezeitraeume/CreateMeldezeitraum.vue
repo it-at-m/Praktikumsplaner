@@ -62,6 +62,7 @@ import MeldezeitraumService from "@/api/MeldezeitraumService";
 import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
 import { useRules } from "@/composables/rules";
 import Zeitraum from "@/types/Zeitraum";
+import { EventBus } from "@/stores/event-bus";
 
 const visible = ref(false);
 const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum("", new Zeitraum()));
@@ -91,6 +92,7 @@ function clickSpeichern() {
         MeldezeitraumService.create(meldezeitraum.value)
             .then(() => {
                 emits("meldezeitraumAdded", meldezeitraum.value);
+                EventBus.$emit("meldezeitraumAdded");
             })
             .finally(() => {
                 clickAbbrechen();

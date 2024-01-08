@@ -60,6 +60,7 @@ import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumList from "@/components/Meldezeitraeume/MeldezeitraumList.vue";
 import { useUserStore } from "@/stores/user";
 import { UserService } from "@/api/UserService";
+import { EventBus } from "@/stores/event-bus";
 
 const userService = new UserService();
 const userStore = useUserStore();
@@ -70,6 +71,18 @@ const upcoming = ref<Meldezeitraum[]>([]);
 const passed = ref<Meldezeitraum[]>([]);
 
 onMounted(() => {
+    reload();
+});
+onBeforeMount(() => {
+    userService.getPermissions().then((userinfo) => {
+        userStore.setUsername(userinfo.name);
+        if (userinfo.user_roles) {
+            userStore.setRoles(userinfo.user_roles);
+        }
+    });
+});
+
+function reload() {
     MeldezeitraumService.getCurrentMeldezeitraum().then((response) => {
         current.value = response;
     });
@@ -81,14 +94,10 @@ onMounted(() => {
     MeldezeitraumService.getUpcomingMeldezeitraueme().then((response) => {
         upcoming.value = response;
     });
-});
-onBeforeMount(() => {
-    userService.getPermissions().then((userinfo) => {
-        userStore.setUsername(userinfo.name);
-        if (userinfo.user_roles) {
-            userStore.setRoles(userinfo.user_roles);
-        }
-    });
+}
+
+EventBus.$on("meldezeitraumAdded", () => {
+    reload();
 });
 </script>
 
