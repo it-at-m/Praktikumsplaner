@@ -10,7 +10,10 @@
             </v-col>
             <v-divider vertical />
             <v-col cols="7">
-                <praktikumsstellen-list />
+                <praktikumsstellen-list
+                    :assignment="true"
+                    :praktikumsstellen-map="praktikumsstellenMap"
+                />
             </v-col>
         </v-row>
         <v-row>
@@ -26,11 +29,25 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import PraktikumsstellenList from "@/components/Assignment/PraktikumsstellenList.vue";
+import PraktikumsstellenList from "@/components/Praktikumsstellen/PraktikumsstellenList.vue";
 import ActiveNwkListForZuweisung from "@/components/Assignment/ActiveNwkListForZuweisung.vue";
 import QueryPraktikumsPeriodDialog from "@/components/Assignment/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const showSendMailDialog = ref(false);
+const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(new Map());
+
+onMounted(() => {
+    getAllPraktikumsstellenInMostRecentMeldezeitraum();
+});
+function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
+    PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
+        "most_recent"
+    ).then((fetchedStellen) => {
+        praktikumsstellenMap.value = fetchedStellen;
+    });
+}
 </script>

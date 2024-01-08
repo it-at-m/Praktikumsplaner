@@ -1,35 +1,37 @@
 <template>
     <v-container>
         <v-card
-            class="full-width-card"
+            class="full-width-card card"
             elevation="16"
             outlined
             :ripple="false"
             @click="show = !show"
         >
-            <v-row>
-                <v-col cols="9">
-                    <v-card-title
-                        >Stelle bei
-                        {{ props.praktikumsstelle.dienststelle }}</v-card-title
-                    >
-                </v-col>
-                <v-col>
-                    <v-card-text
-                        v-if="props.praktikumsstelle.planstelleVorhanden"
-                    >
-                        <v-icon x-large>mdi-account-star</v-icon>
-                    </v-card-text>
-                </v-col>
-            </v-row>
-            <v-card-text>
+            <v-card-title
+                >Stelle bei
+                {{ props.praktikumsstelle.dienststelle }}</v-card-title
+            >
+            <v-card-subtitle
+                v-if="props.praktikumsstelle.namentlicheAnforderung"
+            >
+                Namentliche Anforderung:
+                {{ props.praktikumsstelle.namentlicheAnforderung }}
+            </v-card-subtitle>
+            <v-icon
+                v-if="props.praktikumsstelle.planstelleVorhanden"
+                x-large
+                class="icon-top-right-position"
+                >mdi-account-star</v-icon
+            >
+            <v-card-text class="pt-0 mt-0 mb-0 pb-0">
                 <p style="white-space: pre-line">
                     {{ getCardText(props.praktikumsstelle) }}
                 </p></v-card-text
             >
-            <v-col>
+            <v-col
+                v-if="props.praktikumsstelle.assignedNwk && props.assignment"
+            >
                 <v-chip
-                    v-if="props.praktikumsstelle.assignedNwk"
                     color="primary"
                     close
                     close-icon="mdi-close"
@@ -39,18 +41,15 @@
                     }}</v-chip
                 ></v-col
             >
-
-            <v-card-actions class="custom-card-actions">
-                <v-spacer></v-spacer>
-                <v-btn
-                    icon
-                    @click.stop="show = !show"
-                >
-                    <v-icon>{{
-                        show ? "mdi-chevron-up" : "mdi-chevron-down"
-                    }}</v-icon>
-                </v-btn>
-            </v-card-actions>
+            <v-btn
+                icon
+                class="icon-bottom-right-position"
+                @click.stop="show = !show"
+            >
+                <v-icon>{{
+                    show ? "mdi-chevron-up" : "mdi-chevron-down"
+                }}</v-icon>
+            </v-btn>
             <v-expand-transition>
                 <div v-show="show">
                     <v-divider></v-divider>
@@ -82,6 +81,7 @@ const show = ref<boolean>(false);
 
 const props = defineProps<{
     praktikumsstelle: Praktikumsstelle;
+    assignment: boolean;
 }>();
 
 const unassignDialogContent = ref<string>("");
@@ -98,7 +98,7 @@ function getCardText(stelle: Praktikumsstelle): string {
             "Studiengang: " +
             stelle.studiengang +
             "\n" +
-            "Studiensemester: " +
+            "Studiensemester: ab " +
             stelle.studiensemester?.charAt(stelle.studiensemester?.length - 1) +
             ". Semester";
     } else if (stelle.ausbildungsrichtung) {
@@ -109,11 +109,6 @@ function getCardText(stelle: Praktikumsstelle): string {
             "Ausbildungsjahr: " +
             stelle.ausbildungsjahr?.charAt(stelle.ausbildungsjahr?.length - 1) +
             ". Ausbildungsjahr";
-    }
-
-    if (stelle.namentlicheAnforderung) {
-        cardText +=
-            "\nNamentliche Anforderung: " + stelle.namentlicheAnforderung;
     }
 
     return cardText;
@@ -177,20 +172,8 @@ function resetUnassign() {
 }
 </script>
 <style scoped lang="scss">
-.custom-card-title {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-}
-
-.custom-card-text {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    padding-top: 1px;
-}
-
-.custom-card-actions {
-    margin-top: 5px;
-    padding-top: 1px;
+.card {
+    padding-right: 45px;
 }
 .custom-card-title {
     margin-bottom: 5px;
@@ -206,5 +189,25 @@ function resetUnassign() {
 .custom-card-actions {
     margin-top: 5px;
     padding-top: 1px;
+}
+.custom-card-title {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+.custom-card-text {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    padding-top: 1px;
+}
+.icon-top-right-position {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.icon-bottom-right-position {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 </style>

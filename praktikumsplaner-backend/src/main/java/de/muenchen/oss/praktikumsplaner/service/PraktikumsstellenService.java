@@ -139,6 +139,26 @@ public class PraktikumsstellenService {
         return combinedList;
     }
 
+    public TreeMap<String, List<PraktikumsstelleDto>> getAllInCurrentMeldezeitraumGroupedByDienststelle() {
+        final UUID currentMeldezeitraumID = meldezeitraumService.getCurrentMeldezeitraum().id();
+
+        final List<AusbildungsPraktikumsstelleDto> ausbildungsPraktikumsstelleDtos = ausbildungsPraktikumsstellenRepository
+                .findAllByMeldezeitraumID(currentMeldezeitraumID).stream().map(praktikumsstellenMapper::toDto).toList();
+        final List<StudiumsPraktikumsstelleDto> studiumsPraktikumsstelleDtos = studiumsPraktikumsstellenRepository
+                .findAllByMeldezeitraumID(currentMeldezeitraumID).stream().map(praktikumsstellenMapper::toDto).toList();
+
+        List<PraktikumsstelleDto> combinedList = new ArrayList<>();
+        combinedList.addAll(ausbildungsPraktikumsstelleDtos);
+        combinedList.addAll(studiumsPraktikumsstelleDtos);
+        combinedList.sort(Comparator.comparing(PraktikumsstelleDto::dienststelle));
+
+        return combinedList.stream()
+                .collect(Collectors.groupingBy(
+                        praktikumsstelle -> getHauptabteilung(praktikumsstelle.dienststelle()),
+                        TreeMap::new,
+                        Collectors.toList()));
+    }
+
     private String getHauptabteilung(final String dienststelle) {
         Matcher matcher = Pattern.compile("\\d").matcher(dienststelle);
         if (matcher.find()) {

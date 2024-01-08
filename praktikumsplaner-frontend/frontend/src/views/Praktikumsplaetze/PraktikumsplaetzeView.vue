@@ -26,10 +26,7 @@
                 </v-col>
             </v-row>
         </div>
-        <div
-            v-else
-            class="flex-container"
-        >
+        <div v-else>
             <v-row>
                 <v-col cols="10"></v-col>
                 <v-col cols="2">
@@ -49,20 +46,49 @@
                     ></two-choice-dialog-cards>
                 </v-col>
             </v-row>
+            <v-row>
+                <v-container
+                    v-if="!mapIsEmpty"
+                    class="box"
+                >
+                    <span> Übersicht aus dem aktuellen Meldezeitraum </span>
+                    <PraktikumsstellenList
+                        :assignment="false"
+                        :praktikumsstellen-map="praktikumsstellenMap"
+                    ></PraktikumsstellenList>
+                </v-container>
+                <v-container
+                    v-else
+                    class="box"
+                >
+                    <span>
+                        Es wurden für den aktuellen Zeitraum noch keine
+                        Praktikumsstellen gemeldet.
+                    </span>
+                </v-container>
+            </v-row>
         </div>
     </v-container>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import router from "@/router";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import { useUserStore } from "@/stores/user";
+import PraktikumsstellenList from "@/components/Praktikumsstellen/PraktikumsstellenList.vue";
+import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
 const twoChoiceDialogVisible = ref<boolean>(false);
+const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(new Map());
+
+const mapIsEmpty = computed(() => {
+    return praktikumsstellenMap.value.size <= 0;
+});
 
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum().then((zeitraueme) => {
@@ -71,6 +97,7 @@ onMounted(() => {
     if (userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG")) {
         activeMeldezeitraum.value = true;
     }
+    getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
 
 function toAusbildung(): void {
@@ -82,11 +109,17 @@ function toStudium(): void {
 function closeDialog(): void {
     twoChoiceDialogVisible.value = false;
 }
+function getAllPraktikumsstellenInCurrentMeldezeitraum() {
+    PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
+        "current"
+    ).then((fetchedStellen) => {
+        praktikumsstellenMap.value = fetchedStellen;
+    });
+}
 </script>
 <style>
-.flex-container {
-    display: flex;
-    align-items: center;
-    margin-top: 30px;
+.box {
+    margin: 1%;
+    border: 2px solid #0000001a;
 }
 </style>
