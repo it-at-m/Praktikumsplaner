@@ -43,6 +43,8 @@ import PraktikumsstellenList from "@/components/Assignment/PraktikumsstellenList
 import ActiveNwkListForZuweisung from "@/components/Assignment/ActiveNwkListForZuweisung.vue";
 import QueryPraktikumsPeriodDialog from "@/components/Assignment/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
+import { ref } from "vue";
+import ExcelExport from "@/components/Assignment/ExcelExport.vue";
 import { onMounted, ref } from "vue";
 import WarningDialog from "@/components/common/WarningDialog.vue";
 import ExcelExport from "@/components/Assignment/ExcelExport.vue";

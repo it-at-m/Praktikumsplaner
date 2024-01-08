@@ -378,30 +378,35 @@ const meldezeitraeume = ref<object[]>([]);
 const isAusbidungsleitung = ref<boolean>(false);
 
 onMounted(() => {
-    MeldezeitraumService.getCurrentMeldezeitraum().then((zeitraueme) => {
-        activeMeldezeitraum.value = zeitraueme.length > 0;
-    });
-    if (
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true"
-    ) {
-        isAusbidungsleitung.value = true;
-        activeMeldezeitraum.value = true;
-        MeldezeitraumService.getAllMeldezeitraeume().then((zeitraeume) => {
-            meldezeitraeume.value = zeitraeume.map((zeitraum) => {
-                return {
-                    id: zeitraum.id,
-                    zeitraumName: `${
-                        zeitraum.zeitraumName
-                    }: ${formatter.formatDateFromString(
-                        zeitraum.zeitraum.startZeitpunkt
-                    )} - ${formatter.formatDateFromString(
-                        zeitraum.zeitraum.endZeitpunkt
-                    )}`,
-                };
-            });
+    MeldezeitraumService.getCurrentMeldezeitraum()
+        .then((zeitraueme) => {
+            activeMeldezeitraum.value = zeitraueme.length > 0;
+        })
+        .then(() => {
+            if (
+                userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
+                APP_SECURITY !== "true"
+            ) {
+                isAusbidungsleitung.value = true;
+                activeMeldezeitraum.value = true;
+                MeldezeitraumService.getAllMeldezeitraeume().then(
+                    (zeitraeume) => {
+                        meldezeitraeume.value = zeitraeume.map((zeitraum) => {
+                            return {
+                                id: zeitraum.id,
+                                zeitraumName: `${
+                                    zeitraum.zeitraumName
+                                }: ${formatter.formatDateFromString(
+                                    zeitraum.zeitraum.startZeitpunkt
+                                )} - ${formatter.formatDateFromString(
+                                    zeitraum.zeitraum.endZeitpunkt
+                                )}`,
+                            };
+                        });
+                    }
+                );
+            }
         });
-    }
 });
 
 function changeVorrZuweisungsZeitraum() {

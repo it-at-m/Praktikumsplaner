@@ -12,7 +12,9 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -21,7 +23,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 
 @ExtendWith(MockitoExtension.class)
 public class ExcelExportServiceTest {
@@ -34,55 +35,63 @@ public class ExcelExportServiceTest {
     private final ServiceTestHelper helper = new ServiceTestHelper();
 
     @Test
-    public void testGetTemplateExcelFile() throws IOException {
-        assertNotNull(service.getTemplateExcelFile());
-    }
-
-    @Test
     public void testFillTemplatePraktikumsstellen() throws IOException {
         when(praktikumsstellenService.getAllAssignedAusbildungspraktikumsstellenInMostRecentPassedMeldezeitraum())
                 .thenReturn(getTestListOfAusbildungsPraktikumsstelleDto());
         when(praktikumsstellenService.getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum())
                 .thenReturn(getTestListOfStudiumsPraktikumsstelleDto());
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
+                Base64.getDecoder().decode(service.getBase64EncodedExcelFile())))) {
 
-        XSSFWorkbook workbook = service.fillTemplatePraktikumsstellen();
-        XSSFSheet ausbildungsSheet = workbook.getSheetAt(0);
-        XSSFSheet studiumsSheet = workbook.getSheetAt(1);
+            XSSFSheet ausbildungsSheet = workbook.getSheetAt(0);
+            XSSFSheet studiumsSheet = workbook.getSheetAt(1);
 
-        List<AusbildungsPraktikumsstelleDto> ausbildungsPraktikumsstellen = getTestListOfAusbildungsPraktikumsstelleDto();
+            List<AusbildungsPraktikumsstelleDto> ausbildungsPraktikumsstellen = getTestListOfAusbildungsPraktikumsstelleDto();
 
-        assertNotNull(workbook);
-        assertEquals(2, workbook.getNumberOfSheets());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).referat().name(), ausbildungsSheet.getRow(3).getCell(0).getStringCellValue());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).dienststelle(), ausbildungsSheet.getRow(3).getCell(1).getStringCellValue());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).oertlicheAusbilder(), ausbildungsSheet.getRow(3).getCell(2).getStringCellValue());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).taetigkeiten(), ausbildungsSheet.getRow(3).getCell(3).getStringCellValue());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).namentlicheAnforderung() == null ? "" : ausbildungsPraktikumsstellen.get(0).namentlicheAnforderung(), ausbildungsSheet.getRow(3).getCell(4).getStringCellValue());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).programmierkenntnisse() == null ? "" : decodeProgrammierkenntnisse(ausbildungsPraktikumsstellen.get(0).programmierkenntnisse()), ausbildungsSheet.getRow(3).getCell(5).getStringCellValue());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).projektarbeit(), convertJaNeinToBoolean(ausbildungsSheet.getRow(3).getCell(6).getStringCellValue()));
-        assertEquals(ausbildungsPraktikumsstellen.get(0).ausbildungsjahr(), decodeAusbildungsjahr(ausbildungsSheet.getRow(3).getCell(7).getStringCellValue()));
-        assertEquals(ausbildungsPraktikumsstellen.get(0).dringlichkeit().name(), ausbildungsSheet.getRow(3).getCell(8).getStringCellValue());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).ausbildungsrichtung().name(), ausbildungsSheet.getRow(3).getCell(9).getStringCellValue());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).planstelleVorhanden(), convertJaNeinToBoolean(ausbildungsSheet.getRow(3).getCell(10).getStringCellValue()));
-        assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().nachname(), ausbildungsSheet.getRow(3).getCell(11).getStringCellValue());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().vorname(), ausbildungsSheet.getRow(3).getCell(12).getStringCellValue());
-        assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().jahrgang(), ausbildungsSheet.getRow(3).getCell(13).getStringCellValue());
+            assertNotNull(workbook);
+            assertEquals(2, workbook.getNumberOfSheets());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).referat().name(), ausbildungsSheet.getRow(3).getCell(0).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).dienststelle(), ausbildungsSheet.getRow(3).getCell(1).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).oertlicheAusbilder(), ausbildungsSheet.getRow(3).getCell(2).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).taetigkeiten(), ausbildungsSheet.getRow(3).getCell(3).getStringCellValue());
+            assertEquals(
+                    ausbildungsPraktikumsstellen.get(0).namentlicheAnforderung() == null ? "" : ausbildungsPraktikumsstellen.get(0).namentlicheAnforderung(),
+                    ausbildungsSheet.getRow(3).getCell(4).getStringCellValue());
+            assertEquals(
+                    ausbildungsPraktikumsstellen.get(0).programmierkenntnisse() == null ? ""
+                            : decodeProgrammierkenntnisse(ausbildungsPraktikumsstellen.get(0).programmierkenntnisse()),
+                    ausbildungsSheet.getRow(3).getCell(5).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).projektarbeit(),
+                    convertJaNeinToBoolean(ausbildungsSheet.getRow(3).getCell(6).getStringCellValue()));
+            assertEquals(ausbildungsPraktikumsstellen.get(0).ausbildungsjahr(),
+                    decodeAusbildungsjahr(ausbildungsSheet.getRow(3).getCell(7).getStringCellValue()));
+            assertEquals(ausbildungsPraktikumsstellen.get(0).dringlichkeit().name(), ausbildungsSheet.getRow(3).getCell(8).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).ausbildungsrichtung().name(), ausbildungsSheet.getRow(3).getCell(9).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).planstelleVorhanden(),
+                    convertJaNeinToBoolean(ausbildungsSheet.getRow(3).getCell(10).getStringCellValue()));
+            assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().nachname(), ausbildungsSheet.getRow(3).getCell(11).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().vorname(), ausbildungsSheet.getRow(3).getCell(12).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().jahrgang(), ausbildungsSheet.getRow(3).getCell(13).getStringCellValue());
 
-        List<StudiumsPraktikumsstelleDto> studiumsPraktikumsstellen = getTestListOfStudiumsPraktikumsstelleDto();
+            List<StudiumsPraktikumsstelleDto> studiumsPraktikumsstellen = getTestListOfStudiumsPraktikumsstelleDto();
 
-        assertEquals(studiumsPraktikumsstellen.get(0).referat().name(), studiumsSheet.getRow(3).getCell(0).getStringCellValue());
-        assertEquals(studiumsPraktikumsstellen.get(0).dienststelle(), studiumsSheet.getRow(3).getCell(1).getStringCellValue());
-        assertEquals(studiumsPraktikumsstellen.get(0).oertlicheAusbilder(), studiumsSheet.getRow(3).getCell(2).getStringCellValue());
-        assertEquals(studiumsPraktikumsstellen.get(0).taetigkeiten(), studiumsSheet.getRow(3).getCell(3).getStringCellValue());
-        assertEquals(studiumsPraktikumsstellen.get(0).namentlicheAnforderung() == null ? "" : studiumsPraktikumsstellen.get(0).namentlicheAnforderung(), studiumsSheet.getRow(3).getCell(4).getStringCellValue());
-        assertEquals(studiumsPraktikumsstellen.get(0).programmierkenntnisse(), decodeProgrammierkenntnisse(studiumsSheet.getRow(3).getCell(5).getStringCellValue()));
-        assertEquals(studiumsPraktikumsstellen.get(0).dringlichkeit().name(), studiumsSheet.getRow(3).getCell(6).getStringCellValue());
-        assertEquals(studiumsPraktikumsstellen.get(0).studiensemester(), decodeStudiensemester(studiumsSheet.getRow(3).getCell(7).getStringCellValue()));
-        assertEquals(studiumsPraktikumsstellen.get(0).studiengang().name(), studiumsSheet.getRow(3).getCell(8).getStringCellValue());
-        assertEquals(studiumsPraktikumsstellen.get(0).planstelleVorhanden(), convertJaNeinToBoolean(studiumsSheet.getRow(3).getCell(9).getStringCellValue()));
-        assertEquals(studiumsPraktikumsstellen.get(0).assignedNwk().nachname(), studiumsSheet.getRow(3).getCell(10).getStringCellValue());
-        assertEquals(studiumsPraktikumsstellen.get(0).assignedNwk().vorname(), studiumsSheet.getRow(3).getCell(11).getStringCellValue());
-        assertEquals(studiumsPraktikumsstellen.get(0).assignedNwk().jahrgang(), studiumsSheet.getRow(3).getCell(12).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.get(0).referat().name(), studiumsSheet.getRow(3).getCell(0).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.get(0).dienststelle(), studiumsSheet.getRow(3).getCell(1).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.get(0).oertlicheAusbilder(), studiumsSheet.getRow(3).getCell(2).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.get(0).taetigkeiten(), studiumsSheet.getRow(3).getCell(3).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.get(0).namentlicheAnforderung() == null ? "" : studiumsPraktikumsstellen.get(0).namentlicheAnforderung(),
+                    studiumsSheet.getRow(3).getCell(4).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.get(0).programmierkenntnisse(),
+                    decodeProgrammierkenntnisse(studiumsSheet.getRow(3).getCell(5).getStringCellValue()));
+            assertEquals(studiumsPraktikumsstellen.get(0).dringlichkeit().name(), studiumsSheet.getRow(3).getCell(6).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.get(0).studiensemester(), decodeStudiensemester(studiumsSheet.getRow(3).getCell(7).getStringCellValue()));
+            assertEquals(studiumsPraktikumsstellen.get(0).studiengang().name(), studiumsSheet.getRow(3).getCell(8).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.get(0).planstelleVorhanden(),
+                    convertJaNeinToBoolean(studiumsSheet.getRow(3).getCell(9).getStringCellValue()));
+            assertEquals(studiumsPraktikumsstellen.get(0).assignedNwk().nachname(), studiumsSheet.getRow(3).getCell(10).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.get(0).assignedNwk().vorname(), studiumsSheet.getRow(3).getCell(11).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.get(0).assignedNwk().jahrgang(), studiumsSheet.getRow(3).getCell(12).getStringCellValue());
+        }
     }
 
     @Test
@@ -102,18 +111,19 @@ public class ExcelExportServiceTest {
         when(praktikumsstellenService.getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum())
                 .thenReturn(studiumsPraktikumsstellenWithAuszubildende);
 
-        XSSFWorkbook workbook = service.fillTemplatePraktikumsstellen();
-        XSSFSheet ausbildungsSheet = workbook.getSheetAt(0);
-        XSSFSheet studiumsSheet = workbook.getSheetAt(1);
+        try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
+                Base64.getDecoder().decode(service.getBase64EncodedExcelFile())))) {
+            XSSFSheet ausbildungsSheet = workbook.getSheetAt(0);
+            XSSFSheet studiumsSheet = workbook.getSheetAt(1);
+            assertEquals(ausbildungsPraktikumsstellenWithStudent.get(0).dienststelle(), studiumsSheet.getRow(3).getCell(1).getStringCellValue());
 
-        assertEquals(ausbildungsPraktikumsstellenWithStudent.get(0).dienststelle(), studiumsSheet.getRow(3).getCell(1).getStringCellValue());
-
-        assertEquals(studiumsPraktikumsstellenWithAuszubildende.get(0).dienststelle(), ausbildungsSheet.getRow(3).getCell(1).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellenWithAuszubildende.get(0).dienststelle(), ausbildungsSheet.getRow(3).getCell(1).getStringCellValue());
+        }
     }
 
     @Test
     public void testGetBase64EncodedExcelFile() throws IOException {
-       assertNotNull(service.getBase64EncodedExcelFile());
+        assertNotNull(service.getBase64EncodedExcelFile());
     }
 
     private boolean convertJaNeinToBoolean(String jaNein) {
@@ -122,31 +132,31 @@ public class ExcelExportServiceTest {
 
     private Ausbildungsjahr decodeAusbildungsjahr(String ausbildungsjahr) {
         return switch (ausbildungsjahr) {
-            case "ab 1. Jahr" -> Ausbildungsjahr.JAHR1;
-            case "ab 2. Jahr" -> Ausbildungsjahr.JAHR2;
-            case "ab 3. Jahr" -> Ausbildungsjahr.JAHR3;
-            default -> null;
+        case "ab 1. Jahr" -> Ausbildungsjahr.JAHR1;
+        case "ab 2. Jahr" -> Ausbildungsjahr.JAHR2;
+        case "ab 3. Jahr" -> Ausbildungsjahr.JAHR3;
+        default -> null;
         };
     }
 
     private Studiensemester decodeStudiensemester(String studiensemester) {
         return switch (studiensemester) {
-            case "ab 1. Semester" -> Studiensemester.SEMESTER1;
-            case "ab 2. Semester" -> Studiensemester.SEMESTER2;
-            case "ab 3. Semester" -> Studiensemester.SEMESTER3;
-            case "ab 4. Semester" -> Studiensemester.SEMESTER4;
-            case "ab 5. Semester" -> Studiensemester.SEMESTER5;
-            case "ab 6. Semester" -> Studiensemester.SEMESTER6;
-            default -> null;
+        case "ab 1. Semester" -> Studiensemester.SEMESTER1;
+        case "ab 2. Semester" -> Studiensemester.SEMESTER2;
+        case "ab 3. Semester" -> Studiensemester.SEMESTER3;
+        case "ab 4. Semester" -> Studiensemester.SEMESTER4;
+        case "ab 5. Semester" -> Studiensemester.SEMESTER5;
+        case "ab 6. Semester" -> Studiensemester.SEMESTER6;
+        default -> null;
         };
     }
 
     private String decodeProgrammierkenntnisse(String programmierkenntnisse) {
         return switch (programmierkenntnisse) {
-            case "Ja" -> "true";
-            case "Nein" -> "false";
-            case "egal" -> "egal";
-            default -> null;
+        case "Ja" -> "true";
+        case "Nein" -> "false";
+        case "egal" -> "egal";
+        default -> null;
         };
     }
 
