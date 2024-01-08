@@ -11,9 +11,7 @@
         <v-container>
             <v-expansion-panels multiple>
                 <v-expansion-panel
-                    v-for="(
-                        praktikumsstellenliste, abteilung
-                    ) in props.praktikumsstellenMap"
+                    v-for="abteilung in props.praktikumsstellenMap.keys()"
                     :key="abteilung"
                     class="custom-panel"
                 >
@@ -24,8 +22,8 @@
                         <v-list>
                             <v-list-item-group>
                                 <v-list-item
-                                    v-for="praktikumsstelle in asPraktikumsstelleList(
-                                        praktikumsstellenliste
+                                    v-for="praktikumsstelle in praktikumsstellenMap.get(
+                                        abteilung
                                     )"
                                     :key="praktikumsstelle.id"
                                     :class="{
@@ -68,7 +66,7 @@ import { useSnackbarStore } from "@/stores/snackbar";
 import { Levels } from "@/api/error";
 
 const props = defineProps<{
-    praktikumsstellenMap: Map<string, Praktikumsstelle[]> | undefined;
+    praktikumsstellenMap: Map<string, Praktikumsstelle[]>;
     assignment: boolean;
 }>();
 
@@ -88,10 +86,6 @@ watch(
             nwkStore.nwk ?? new Nwk("", "", "", "", [], false, "", "");
     }
 );
-
-function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
-    return list as Praktikumsstelle[];
-}
 
 function drop(stelle: Praktikumsstelle) {
     if (!stelle || !stelle.id || stelle.assignedNwk) return;

@@ -47,7 +47,9 @@
                 </v-col>
             </v-row>
             <v-row
-                v-if="userStore.getRoles.includes('ROLE_AUSBILDUNGSLEITUNG')"
+                v-security.allow="
+                    userStore.getRoles.includes('ROLE_AUSBILDUNGSLEITUNG')
+                "
             >
                 <v-container
                     v-if="!mapIsEmpty"
@@ -100,7 +102,9 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
 const twoChoiceDialogVisible = ref<boolean>(false);
-const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(new Map());
+const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
+    new Map<string, Praktikumsstelle[]>()
+);
 
 const mapIsEmpty = computed(() => {
     return praktikumsstellenMap.value.size <= 0 || false;
@@ -116,7 +120,7 @@ onMounted(() => {
                 activeMeldezeitraum.value = true;
             }
         });
-  getAllPraktikumsstellenInCurrentMeldezeitraum();
+    getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
 
 function toAusbildung(): void {
@@ -133,7 +137,10 @@ function getAllPraktikumsstellenInCurrentMeldezeitraum() {
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
         "current"
     ).then((fetchedStellen) => {
+        console.log(fetchedStellen);
         for (const [key, value] of Object.entries(fetchedStellen)) {
+            console.log(key);
+            console.log(value);
             helperMap.set(key, value);
         }
         praktikumsstellenMap.value = helperMap;
