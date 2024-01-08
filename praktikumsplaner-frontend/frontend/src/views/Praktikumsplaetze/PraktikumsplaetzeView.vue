@@ -46,7 +46,9 @@
                     ></two-choice-dialog-cards>
                 </v-col>
             </v-row>
-            <v-row>
+            <v-row
+                v-if="userStore.getRoles.includes('ROLE_AUSBILDUNGSLEITUNG')"
+            >
                 <v-container
                     v-if="!mapIsEmpty"
                     class="box"
@@ -61,10 +63,24 @@
                     v-else
                     class="box"
                 >
-                    <span>
-                        Es wurden für den aktuellen Zeitraum noch keine
-                        Praktikumsstellen gemeldet.
-                    </span>
+                    <v-row class="align-center">
+                        <v-col
+                            cols="auto"
+                            class="d-flex align-center"
+                        >
+                            <v-icon
+                                color="blue"
+                                large
+                                >mdi-information-outline</v-icon
+                            >
+                        </v-col>
+                        <v-col class="d-flex align-center">
+                            <p class="mt-5">
+                                Es wurden für den aktuellen Zeitraum noch keine
+                                Praktikumsstellen gemeldet.
+                            </p>
+                        </v-col>
+                    </v-row>
                 </v-container>
             </v-row>
         </div>
@@ -87,7 +103,7 @@ const twoChoiceDialogVisible = ref<boolean>(false);
 const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(new Map());
 
 const mapIsEmpty = computed(() => {
-    return praktikumsstellenMap.value.size <= 0;
+    return praktikumsstellenMap.value.size <= 0 || false;
 });
 
 onMounted(() => {
@@ -110,10 +126,14 @@ function closeDialog(): void {
     twoChoiceDialogVisible.value = false;
 }
 function getAllPraktikumsstellenInCurrentMeldezeitraum() {
+    const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
         "current"
     ).then((fetchedStellen) => {
-        praktikumsstellenMap.value = fetchedStellen;
+        for (const [key, value] of Object.entries(fetchedStellen)) {
+            helperMap.set(key, value);
+        }
+        praktikumsstellenMap.value = helperMap;
     });
 }
 </script>
