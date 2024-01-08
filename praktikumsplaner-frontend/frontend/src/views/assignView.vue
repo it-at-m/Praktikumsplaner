@@ -21,6 +21,7 @@
                 @click="showSendMailDialog = true"
                 >Mails senden</v-btn
             >
+            <ExcelExport></ExcelExport>
         </v-row>
         <QueryPraktikumsPeriodDialog :show-dialog.sync="showSendMailDialog" />
     </v-container>
@@ -31,6 +32,7 @@ import ActiveNwkListForZuweisung from "@/components/Assignment/ActiveNwkListForZ
 import QueryPraktikumsPeriodDialog from "@/components/Assignment/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { ref } from "vue";
+import ExcelExport from "@/components/Assignment/ExcelExport.vue";
 
 const showSendMailDialog = ref(false);
 </script>
