@@ -68,6 +68,7 @@ import { Levels } from "@/api/error";
 import NwkService from "@/api/NwkService";
 import { useRules } from "@/composables/rules";
 import ErrorDialog from "@/components/common/ErrorDialog.vue";
+import { EventBus } from "@/stores/event-bus";
 
 const visible = ref<boolean>();
 const excelDatei = ref<File>();
@@ -98,12 +99,13 @@ function cancel() {
 function uploadFile() {
     if (!excelDatei.value || !form.value?.validate()) return;
     NwkService.uploadExcelFile(excelDatei.value)
-        .then(() =>
+        .then(() => {
             snackbarStore.showMessage({
                 message: "Nachwuchskräfte erfolgreich angelegt.",
                 level: Levels.SUCCESS,
-            })
-        )
+            });
+            EventBus.$emit("nwkCreated");
+        })
         .catch(() => {
             showError();
         })

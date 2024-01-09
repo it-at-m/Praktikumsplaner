@@ -7,7 +7,10 @@
             back-button-url="/"
             page-header-text="Meldezeiträume"
         ></PageTitle>
-        <CreateMeldezeitraum v-model="model"></CreateMeldezeitraum>
+        <CreateMeldezeitraum
+            v-model="model"
+            @meldezeitraumAdded="reloadMeldezeitraeume"
+        ></CreateMeldezeitraum>
         <v-container>
             <v-row>
                 <v-col>
@@ -70,6 +73,18 @@ const upcoming = ref<Meldezeitraum[]>([]);
 const passed = ref<Meldezeitraum[]>([]);
 
 onMounted(() => {
+    reloadMeldezeitraeume();
+});
+onBeforeMount(() => {
+    userService.getPermissions().then((userinfo) => {
+        userStore.setUsername(userinfo.name);
+        if (userinfo.user_roles) {
+            userStore.setRoles(userinfo.user_roles);
+        }
+    });
+});
+
+function reloadMeldezeitraeume() {
     MeldezeitraumService.getCurrentMeldezeitraum().then((response) => {
         current.value = response;
     });
@@ -81,14 +96,6 @@ onMounted(() => {
     MeldezeitraumService.getUpcomingMeldezeitraueme().then((response) => {
         upcoming.value = response;
     });
-});
-onBeforeMount(() => {
-    userService.getPermissions().then((userinfo) => {
-        userStore.setUsername(userinfo.name);
-        if (userinfo.user_roles) {
-            userStore.setRoles(userinfo.user_roles);
-        }
-    });
-});
+}
 </script>
 
