@@ -4,7 +4,14 @@
 
 On the main page, there is an option `Praktikumsplätze` in the navigation bar.
 This takes you to a new page.
-On this page there is a button labeled `Hinzufügen`.
+This page displays the [Praktikumsstellen](../glossary.md#praktikumsstelle) that have already been registered for the current [Meldezeitraum](../glossary.md#meldezeitraum). 
+If no [Praktikumsstellen](../glossary.md#praktikumsstelle) have been registered yet, the user is also informed of this.
+The [Praktikumsstellen](../glossary.md#praktikumsstelle) are grouped according to the [Dienststelle](../glossary.md#dienststelle). 
+Individual [Dienststellengruppen](../glossary.md#dienststelle) can be expanded and all reported [Praktikumsstellen](../glossary.md#praktikumsstelle) from the [Dienststelle](../glossary.md#dienststelle) are displayed.
+The individual [Praktikumsstelle](../glossary.md#praktikumsstelle) can also be expanded again. 
+This means that all possible information on a [Praktikumsstelle](../glossary.md#praktikumsstelle) is displayed.
+
+Also on this page there is a button labeled `Hinzufügen`.
 Clicking this button will open a dialog.
 
 In this dialog, you can choose whether you want to report a [student](./../glossary.md#studentin) (`Studium`) or a [trainee](./../glossary.md#auszubildende) (`Ausbildung`).

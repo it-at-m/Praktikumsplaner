@@ -67,27 +67,6 @@ public class PraktikumsstellenService {
                 .toDto(ausbildungsPraktikumsstellenRepository.save(entityPraktikumsstelle));
     }
 
-    public TreeMap<String, List<PraktikumsstelleDto>> getRecentPraktikumsstellenGroupedByDienststelle() {
-        UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
-
-        List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
-                .map(praktikumsstellenMapper::toDto).toList();
-
-        List<StudiumsPraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(lastMeldezeitraumID).stream()
-                .map(praktikumsstellenMapper::toDto).toList();
-
-        List<PraktikumsstelleDto> combinedList = new ArrayList<>();
-        combinedList.addAll(ausbildungsListDto);
-        combinedList.addAll(studiumsListDto);
-        combinedList.sort(Comparator.comparing(PraktikumsstelleDto::dienststelle));
-
-        return combinedList.stream()
-                .collect(Collectors.groupingBy(
-                        praktikumsstelle -> getHauptabteilung(praktikumsstelle.dienststelle()),
-                        TreeMap::new,
-                        Collectors.toList()));
-    }
-
     public PraktikumsstelleDto assignNwk(UUID praktikumsstellenID, UUID nwkID) {
         Nwk assignedNwk = nwkRepository.findById(nwkID).orElseThrow();
 
@@ -142,6 +121,35 @@ public class PraktikumsstellenService {
 
         return studiumsPraktikumsstellenRepository
                 .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream().map(praktikumsstellenMapper::toDto).toList();
+    }
+
+    public TreeMap<String, List<PraktikumsstelleDto>> getAllInCurrentMeldezeitraumGroupedByDienststelle() {
+        final UUID currentMeldezeitraumID = meldezeitraumService.getCurrentMeldezeitraum().id();
+        return getPraktikumsstellenGroupedByDienststelle(currentMeldezeitraumID);
+    }
+
+    public TreeMap<String, List<PraktikumsstelleDto>> getRecentPraktikumsstellenGroupedByDienststelle() {
+        UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
+        return getPraktikumsstellenGroupedByDienststelle(lastMeldezeitraumID);
+    }
+
+    private TreeMap<String, List<PraktikumsstelleDto>> getPraktikumsstellenGroupedByDienststelle(UUID meldezeitraumID) {
+        List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID).stream()
+                .map(praktikumsstellenMapper::toDto).toList();
+
+        List<StudiumsPraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID).stream()
+                .map(praktikumsstellenMapper::toDto).toList();
+
+        List<PraktikumsstelleDto> combinedList = new ArrayList<>();
+        combinedList.addAll(ausbildungsListDto);
+        combinedList.addAll(studiumsListDto);
+        combinedList.sort(Comparator.comparing(PraktikumsstelleDto::dienststelle));
+
+        return combinedList.stream()
+                .collect(Collectors.groupingBy(
+                        praktikumsstelle -> getHauptabteilung(praktikumsstelle.dienststelle()),
+                        TreeMap::new,
+                        Collectors.toList()));
     }
 
     private String getHauptabteilung(final String dienststelle) {

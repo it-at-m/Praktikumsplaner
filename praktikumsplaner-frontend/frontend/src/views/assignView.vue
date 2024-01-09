@@ -11,7 +11,8 @@
             <v-divider vertical />
             <v-col cols="7">
                 <praktikumsstellen-list
-                    :praktikumsstellen="praktikumsstellen"
+                    :assignment="true"
+                    :praktikumsstellen-map="praktikumsstellenMap"
                 />
             </v-col>
         </v-row>
@@ -39,14 +40,14 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import PraktikumsstellenList from "@/components/Assignment/PraktikumsstellenList.vue";
+import PraktikumsstellenList from "@/components/Praktikumsstellen/PraktikumsstellenList.vue";
 import ActiveNwkListForZuweisung from "@/components/Assignment/ActiveNwkListForZuweisung.vue";
 import QueryPraktikumsPeriodDialog from "@/components/Assignment/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { onMounted, ref } from "vue";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 import WarningDialog from "@/components/common/WarningDialog.vue";
 import ExcelExport from "@/components/Assignment/ExcelExport.vue";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Nwk from "@/types/Nwk";
 import Warning from "@/types/Warning";
 import NwkService from "@/api/NwkService";
@@ -56,7 +57,7 @@ const showSendMailDialog = ref(false);
 const showWarningDialog = ref(false);
 const warnings = ref<Warning[]>([]);
 const nwks = ref<Nwk[]>([]);
-const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>(
+const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
     new Map<string, Praktikumsstelle[]>()
 );
 const startDownload = ref(false);
@@ -76,7 +77,7 @@ function collectWarnings() {
 
         warnings.value.push(warning);
     }
-    for (const value of praktikumsstellen.value.values()) {
+    for (const value of praktikumsstellenMap.value.values()) {
         for (const stelle of value) {
             if (
                 (stelle.dringlichkeit.toLocaleLowerCase() == "dringend" ||
@@ -151,7 +152,7 @@ function rejectedWarningDialog() {
 
 onMounted(() => {
     getAllActiveNwks();
-    getAllPraktikumsstellen();
+    getAllPraktikumsstellenInMostRecentMeldezeitraum();
 });
 
 function getAllActiveNwks() {
@@ -160,15 +161,15 @@ function getAllActiveNwks() {
     });
 }
 
-function getAllPraktikumsstellen() {
+function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
-    PraktikumsstellenService.getAllPraktikumsstellen().then(
-        (fetchedStellen) => {
-            for (const [key, value] of Object.entries(fetchedStellen)) {
-                helperMap.set(key, value);
-            }
-            praktikumsstellen.value = helperMap;
+    PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
+        "most_recent"
+    ).then((fetchedStellen) => {
+        for (const [key, value] of Object.entries(fetchedStellen)) {
+            helperMap.set(key, value);
         }
-    );
+        praktikumsstellenMap.value = helperMap;
+    });
 }
 </script>
