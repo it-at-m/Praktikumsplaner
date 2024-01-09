@@ -77,7 +77,7 @@ function collectWarnings() {
 
         warnings.value.push(warning);
     }
-    for (const value of praktikumsstellen.value.values()) {
+    for (const value of praktikumsstellenMap.value.values()) {
         for (const stelle of value) {
             if (
                 (stelle.dringlichkeit.toLocaleLowerCase() == "dringend" ||
@@ -163,12 +163,12 @@ function getAllActiveNwks() {
 
 function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
-    PraktikumsstellenService.getAllPraktikumsstellen("most_recent").then(
+    PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum("most_recent").then(
         (fetchedStellen) => {
             for (const [key, value] of Object.entries(fetchedStellen)) {
                 helperMap.set(key, value);
             }
-            praktikumsstellen.value = helperMap;
+            praktikumsstellenMap.value = helperMap;
         }
     );
 }
