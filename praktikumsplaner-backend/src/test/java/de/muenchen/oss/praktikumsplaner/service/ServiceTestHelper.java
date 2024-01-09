@@ -6,6 +6,7 @@ import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.*;
@@ -28,6 +29,19 @@ public class ServiceTestHelper {
         newNwk.setVorlesungstage(vorlesungstage);
         newNwk.setActive(isActive);
         return newNwk;
+    }
+
+    public NwkDto createNwkDto(final Nwk nwk) {
+        return NwkDto.builder()
+                .id(nwk.getId())
+                .vorname(nwk.getVorname())
+                .nachname(nwk.getNachname())
+                .studiengang(nwk.getStudiengang())
+                .ausbildungsrichtung(nwk.getAusbildungsrichtung())
+                .jahrgang(nwk.getJahrgang())
+                .vorlesungstage(nwk.getVorlesungstage())
+                .active(nwk.isActive())
+                .build();
     }
 
     public MeldezeitraumDto createMeldezeitraumDto(LocalDate start, LocalDate end, String name) {
@@ -77,21 +91,36 @@ public class ServiceTestHelper {
 
     public AusbildungsPraktikumsstelleDto createPraktikumsstelleDto(AusbildungsPraktikumsstelle stelle) {
         return AusbildungsPraktikumsstelleDto.builder()
-                .dienststelle(stelle.getDienststelle()).oertlicheAusbilder(stelle.getOertlicheAusbilder())
-                .email(stelle.getEmail()).taetigkeiten(stelle.getTaetigkeiten())
-                .dringlichkeit(stelle.getDringlichkeit()).namentlicheAnforderung(stelle.getNamentlicheAnforderung())
-                .referat(stelle.getReferat()).projektarbeit(stelle.isProjektarbeit())
+                .dienststelle(stelle.getDienststelle())
+                .oertlicheAusbilder(stelle.getOertlicheAusbilder())
+                .email(stelle.getEmail())
+                .taetigkeiten(stelle.getTaetigkeiten())
+                .dringlichkeit(stelle.getDringlichkeit())
+                .namentlicheAnforderung(stelle.getNamentlicheAnforderung())
+                .referat(stelle.getReferat())
+                .projektarbeit(stelle.isProjektarbeit())
                 .ausbildungsjahr(stelle.getAusbildungsjahr())
-                .ausbildungsrichtung(stelle.getAusbildungsrichtung()).build();
+                .ausbildungsrichtung(stelle.getAusbildungsrichtung())
+                .assignedNwk(createNwkDto(stelle.getAssignedNwk()))
+                .planstelleVorhanden(stelle.isPlanstelleVorhanden())
+                .build();
     }
 
     public StudiumsPraktikumsstelleDto createPraktikumsstelleDto(StudiumsPraktikumsstelle stelle) {
         return StudiumsPraktikumsstelleDto.builder()
-                .dienststelle(stelle.getDienststelle()).oertlicheAusbilder(stelle.getOertlicheAusbilder())
-                .email(stelle.getEmail()).taetigkeiten(stelle.getTaetigkeiten())
-                .dringlichkeit(stelle.getDringlichkeit()).namentlicheAnforderung(stelle.getNamentlicheAnforderung())
-                .referat(stelle.getReferat()).programmierkenntnisse(stelle.getProgrammierkenntnisse())
-                .studiensemester(stelle.getStudiensemester()).studiengang(stelle.getStudiengang()).build();
+                .dienststelle(stelle.getDienststelle())
+                .oertlicheAusbilder(stelle.getOertlicheAusbilder())
+                .email(stelle.getEmail())
+                .taetigkeiten(stelle.getTaetigkeiten())
+                .dringlichkeit(stelle.getDringlichkeit())
+                .namentlicheAnforderung(stelle.getNamentlicheAnforderung())
+                .referat(stelle.getReferat())
+                .programmierkenntnisse(stelle.getProgrammierkenntnisse())
+                .studiensemester(stelle.getStudiensemester())
+                .studiengang(stelle.getStudiengang())
+                .assignedNwk(createNwkDto(stelle.getAssignedNwk()))
+                .planstelleVorhanden(stelle.isPlanstelleVorhanden())
+                .build();
     }
 
     public Meldezeitraum createMeldezeitraum(LocalDate start, LocalDate end, String name) {
