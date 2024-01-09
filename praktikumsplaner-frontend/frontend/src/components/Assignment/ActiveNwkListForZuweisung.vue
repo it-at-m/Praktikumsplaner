@@ -2,7 +2,7 @@
     <v-list>
         <v-list-item-group>
             <v-list-item
-                v-for="nwk in nwks"
+                v-for="nwk in props.value"
                 :key="nwk.id"
                 draggable="true"
                 @dragstart="dragStart(nwk)"
@@ -13,40 +13,44 @@
     </v-list>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import Nwk from "@/types/Nwk";
-import NwkService from "@/api/NwkService";
 import { useNwkStore } from "@/stores/nwkStore";
 import { EventBus } from "@/stores/event-bus";
 import NwkCard from "@/components/Assignment/NwkCard.vue";
 
-const nwks = ref<Nwk[]>([]);
 const nwkStore = useNwkStore();
 
+const props = defineProps<{
+    value: Nwk[];
+}>();
+
+const emits = defineEmits<{
+    (e: "input", nwks: Nwk[]): void;
+}>();
+
 onMounted(() => {
-    getAllActiveNwks();
     EventBus.$on("assignedNwk", removeNwkFromList);
     EventBus.$on("unassignedNwk", addNwkToList);
 });
-function getAllActiveNwks() {
-    NwkService.getAllUnassignedNwks().then((fetchedNwks) => {
-        nwks.value = [...fetchedNwks];
-    });
-}
 
 function dragStart(nwk: Nwk) {
     nwkStore.updateNwkId(nwk);
 }
 
 function removeNwkFromList(nwk: Nwk) {
-    const index = nwks.value.indexOf(nwk, 0);
+    let nwksInternal = props.value;
+    const index = nwksInternal.indexOf(nwk, 0);
     if (index > -1) {
-        nwks.value.splice(index, 1);
+        nwksInternal.splice(index, 1);
+        emits("input", nwksInternal);
     }
 }
 
 function addNwkToList(nwk: Nwk) {
-    nwks.value.push(nwk);
+    let nwksInternal = props.value;
+    nwksInternal.push(nwk);
+    emits("input", nwksInternal);
 }
 </script>
 <style scoped>
