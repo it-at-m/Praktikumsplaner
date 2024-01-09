@@ -137,10 +137,7 @@ function getAllPraktikumsstellenInCurrentMeldezeitraum() {
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
         "current"
     ).then((fetchedStellen) => {
-        console.log(fetchedStellen);
         for (const [key, value] of Object.entries(fetchedStellen)) {
-            console.log(key);
-            console.log(value);
             helperMap.set(key, value);
         }
         praktikumsstellenMap.value = helperMap;
