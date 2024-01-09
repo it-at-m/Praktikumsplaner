@@ -50,8 +50,17 @@ nothing will be changed.
 If the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) is satisfied with the assignment of the [Nwks](./../glossary.md#nwk) to the [Praktikumsstellen](./../glossary.md#praktikumsstelle),
 then the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) can send the assignment mails to the [Örtliche Ausbilderin](./../glossary.md#örtliche-ausbilderin).
 To do this, the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) must click on the `Mails Senden` button.
-A dialog will appear requesting the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) to fill in the [Zuweisungszeiträume](./../glossary.md#zuweisungszeitraum).
-After that they can click on the `Weiter` button.
+
+A Dialog will appear warning about inconsistencies that have been found in the assignments, 
+such as a [Praktikumsstelle](./../glossary.md#praktikumsstelle) with a "namentliche Anforderung" but without an assigned [Nwk](./../glossary.md#nwk),
+a [Praktikumsstelle](./../glossary.md#praktikumsstelle) with priority "DRINGEND" or "ZWINGEND" but without an assigned [Nwk](./../glossary.md#nwk) or 
+a [Nwk](./../glossary.md#nwk) that is currently not assigned to any [Praktikumsstelle](./../glossary.md#praktikumsstelle).
+All warnings have to be declared to be okay by clicking `accept` before the user can continue with sending mails.
+If just one of the warnings is declined, the whole process will be canceled and the user can correct the assignments. 
+After correcting all the warnings that were not solved will show up again and the user has to accept them. 
+
+After the acceptance of all warnings a dialog will appear requesting the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) 
+to fill in the [Zuweisungszeiträume](./../glossary.md#zuweisungszeitraum). After that they can click on the `Weiter` button.
 A dialog will appear asking if the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) is sure to send the mails.
 Now the mails will be sent to the [Örtliche Ausbilderin](./../glossary.md#örtliche-ausbilderin), which got the [Nwks](./../glossary.md#nwk) assigned to them.
 The [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) will be redirected to the assignment page after that.

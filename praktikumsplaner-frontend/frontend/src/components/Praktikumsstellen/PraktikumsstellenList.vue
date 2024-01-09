@@ -41,6 +41,7 @@
                                     @dragenter.prevent
                                 >
                                     <PraktikumsstelleCard
+                                        :key="praktikumsstelle.assignedNwk?.id"
                                         :praktikumsstelle="praktikumsstelle"
                                         :assignment="props.assignment"
                                     ></PraktikumsstelleCard>
