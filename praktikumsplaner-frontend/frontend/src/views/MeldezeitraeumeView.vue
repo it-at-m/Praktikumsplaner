@@ -7,7 +7,10 @@
             back-button-url="/"
             page-header-text="Meldezeiträume"
         ></PageTitle>
-        <CreateMeldezeitraum v-model="model"></CreateMeldezeitraum>
+        <CreateMeldezeitraum
+            v-model="model"
+            @meldezeitraumAdded="reloadMeldezeitraeume"
+        ></CreateMeldezeitraum>
         <v-container>
             <v-row>
                 <v-col>
@@ -60,7 +63,6 @@ import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumList from "@/components/Meldezeitraeume/MeldezeitraumList.vue";
 import { useUserStore } from "@/stores/user";
 import { UserService } from "@/api/UserService";
-import { EventBus } from "@/stores/event-bus";
 
 const userService = new UserService();
 const userStore = useUserStore();
@@ -95,9 +97,5 @@ function reloadMeldezeitraeume() {
         upcoming.value = response;
     });
 }
-
-EventBus.$on("meldezeitraumAdded", () => {
-    reloadMeldezeitraeume();
-});
 </script>
 

@@ -92,7 +92,6 @@ function clickSpeichern() {
         MeldezeitraumService.create(meldezeitraum.value)
             .then(() => {
                 emits("meldezeitraumAdded", meldezeitraum.value);
-                EventBus.$emit("meldezeitraumAdded");
             })
             .finally(() => {
                 clickAbbrechen();
