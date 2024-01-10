@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,9 +52,14 @@ public class NwkController {
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
-    @PostMapping
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public NwkDto modifyNwk(@RequestBody NwkDto nwkDto) {
-        return nwkService.saveNwk(nwkDto);
+    public void updateNwk(@RequestBody NwkDto nwkDto) {
+        if (!nwkService.NwkExistsById(nwkDto.id())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Nachwuchskraft mit der ID " + nwkDto.id() + " existiert nicht.");
+        } else {
+            nwkService.saveNwk(nwkDto);
+        }
     }
 }

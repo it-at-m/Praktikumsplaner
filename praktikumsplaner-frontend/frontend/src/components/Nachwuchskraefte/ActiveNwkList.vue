@@ -11,6 +11,12 @@
                 <v-card-subtitle class="text-center">{{
                     getSubtitle(nwk)
                 }}</v-card-subtitle>
+                <v-card-actions>
+                    <NwkUpdateDialog
+                        :nwk="nwk"
+                        @updated="getAllActiveNwks"
+                    />
+                </v-card-actions>
             </v-card>
         </v-col>
     </v-container>
@@ -20,6 +26,7 @@
 import { ref, onMounted } from "vue";
 import Nwk from "@/types/Nwk";
 import NwkService from "@/api/NwkService";
+import NwkUpdateDialog from "@/components/Nachwuchskraefte/NwkUpdateDialog.vue";
 const nwks = ref<Nwk[]>([]);
 
 onMounted(() => {

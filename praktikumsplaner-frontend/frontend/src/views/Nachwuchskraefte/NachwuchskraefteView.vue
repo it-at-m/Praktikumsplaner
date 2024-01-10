@@ -28,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import ExcelImportNwk from "@/components/ExcelImportNwk.vue";
+import ExcelImportNwk from "@/components/Nachwuchskraefte/ExcelImportNwk.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
-import ActiveNwkList from "@/components/ActiveNwkList.vue";
+import ActiveNwkList from "@/components/Nachwuchskraefte/ActiveNwkList.vue";
 </script>
 
 <style scoped>
