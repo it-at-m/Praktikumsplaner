@@ -110,7 +110,7 @@ function drop(stelle: Praktikumsstelle) {
     // Check if studiengang is the same
     if (
         stelle.studiengang &&
-        assignedNwkID.value.studiengang != "FISI" &&
+        assignedNwkID.value.ausbildungsrichtung == undefined &&
         stelle.studiengang != assignedNwkID.value.studiengang
     ) {
         warningDialogText.value +=
@@ -142,7 +142,7 @@ function drop(stelle: Praktikumsstelle) {
     // Check if Nwk is in the right semester
     if (
         stelle.studiengang != undefined &&
-        assignedNwkID.value.studiengang != "FISI" &&
+        assignedNwkID.value.ausbildungsrichtung == undefined &&
         stelle.studiensemester
     ) {
         const expectedSemester: number = +stelle.studiensemester.substring(
@@ -163,7 +163,7 @@ function drop(stelle: Praktikumsstelle) {
     // Check if Nwk is in the right Lehrjahr
     if (
         stelle.ausbildungsrichtung != undefined &&
-        assignedNwkID.value.studiengang == "FISI" &&
+        assignedNwkID.value.studiengang == undefined &&
         stelle.ausbildungsjahr
     ) {
         const expectedLehrjahr: number = +stelle.ausbildungsjahr.substring(
@@ -205,7 +205,7 @@ function resetWarningDialog() {
 }
 
 function calculateSemester() {
-    if (assignedNwkID.value.studiengang == "FISI") return 0;
+    if (assignedNwkID.value.ausbildungsrichtung) return 0;
     let semester: number;
     const startYear: number =
         +assignedNwkID.value.jahrgang.substring(0, 2) + 2000;
@@ -218,7 +218,7 @@ function calculateSemester() {
 }
 
 function calculateLehrjahr() {
-    if (assignedNwkID.value.studiengang != "FISI") return 0;
+    if (assignedNwkID.value.ausbildungsrichtung == undefined) return 0;
     let lehrjahr: number;
     const startYear: number =
         +assignedNwkID.value.jahrgang.substring(0, 2) + 2000;
