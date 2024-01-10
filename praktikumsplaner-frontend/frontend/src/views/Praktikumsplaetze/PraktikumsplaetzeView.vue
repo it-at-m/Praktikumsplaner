@@ -26,10 +26,7 @@
                 </v-col>
             </v-row>
         </div>
-        <div
-            v-else
-            class="flex-container"
-        >
+        <div v-else>
             <v-row>
                 <v-col cols="10"></v-col>
                 <v-col cols="2">
@@ -49,20 +46,69 @@
                     ></two-choice-dialog-cards>
                 </v-col>
             </v-row>
+            <v-row
+                v-security.allow="
+                    userStore.getRoles.includes('ROLE_AUSBILDUNGSLEITUNG')
+                "
+            >
+                <v-container
+                    v-if="!mapIsEmpty"
+                    class="box"
+                >
+                    <span> Übersicht aus dem aktuellen Meldezeitraum </span>
+                    <PraktikumsstellenList
+                        :assignment="false"
+                        :praktikumsstellen-map="praktikumsstellenMap"
+                    ></PraktikumsstellenList>
+                </v-container>
+                <v-container
+                    v-else
+                    class="box"
+                >
+                    <v-row class="align-center">
+                        <v-col
+                            cols="auto"
+                            class="d-flex align-center"
+                        >
+                            <v-icon
+                                color="blue"
+                                large
+                                >mdi-information-outline</v-icon
+                            >
+                        </v-col>
+                        <v-col class="d-flex align-center">
+                            <p class="mt-5">
+                                Es wurden für den aktuellen Zeitraum noch keine
+                                Praktikumsstellen gemeldet.
+                            </p>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-row>
         </div>
     </v-container>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import router from "@/router";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import { useUserStore } from "@/stores/user";
+import PraktikumsstellenList from "@/components/Praktikumsstellen/PraktikumsstellenList.vue";
+import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
 const twoChoiceDialogVisible = ref<boolean>(false);
+const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
+    new Map<string, Praktikumsstelle[]>()
+);
+
+const mapIsEmpty = computed(() => {
+    return praktikumsstellenMap.value.size <= 0 || false;
+});
 
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
@@ -74,6 +120,7 @@ onMounted(() => {
                 activeMeldezeitraum.value = true;
             }
         });
+    getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
 
 function toAusbildung(): void {
@@ -85,11 +132,21 @@ function toStudium(): void {
 function closeDialog(): void {
     twoChoiceDialogVisible.value = false;
 }
+function getAllPraktikumsstellenInCurrentMeldezeitraum() {
+    const helperMap = new Map<string, Praktikumsstelle[]>();
+    PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
+        "current"
+    ).then((fetchedStellen) => {
+        for (const [key, value] of Object.entries(fetchedStellen)) {
+            helperMap.set(key, value);
+        }
+        praktikumsstellenMap.value = helperMap;
+    });
+}
 </script>
 <style>
-.flex-container {
-    display: flex;
-    align-items: center;
-    margin-top: 30px;
+.box {
+    margin: 1%;
+    border: 2px solid #0000001a;
 }
 </style>

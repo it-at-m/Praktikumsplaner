@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @AllArgsConstructor
@@ -67,8 +68,14 @@ public class PraktikumsstellenController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInMostRecentPassedMeldezeitraum() {
-        return praktikumsstellenService.getRecentPraktikumsstellenGroupedByDienststelle();
+    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInSpecificMeldezeitraum(
+            @RequestParam(required = false) String meldezeitraum) {
+        if (meldezeitraum.equals("current")) {
+            return praktikumsstellenService.getAllInCurrentMeldezeitraumGroupedByDienststelle();
+        } else if (meldezeitraum.equals("most_recent")) {
+            return praktikumsstellenService.getRecentPraktikumsstellenGroupedByDienststelle();
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Value '" + meldezeitraum + "' for parameter Meldezeitraum not supported.");
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")

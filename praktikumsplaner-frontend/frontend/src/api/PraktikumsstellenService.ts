@@ -97,9 +97,11 @@ export default {
                 FetchUtils.defaultResponseHandler(err);
             });
     },
-    getAllPraktikumsstellen(): Promise<Map<string, Praktikumsstelle[]>> {
+    getAllPraktikumsstellenInSpecificMeldezeitraum(
+        meldezeitraum: string
+    ): Promise<Map<string, Praktikumsstelle[]>> {
         return fetch(
-            `${API_BASE}${PRAKTIKUMSSTELLE_BASE}`,
+            `${API_BASE}${PRAKTIKUMSSTELLE_BASE}?meldezeitraum=${meldezeitraum}`,
             FetchUtils.getGETConfig()
         )
             .then((response) => {

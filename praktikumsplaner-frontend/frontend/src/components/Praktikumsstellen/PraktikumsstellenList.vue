@@ -11,7 +11,7 @@
         <v-container>
             <v-expansion-panels multiple>
                 <v-expansion-panel
-                    v-for="abteilung in props.praktikumsstellen.keys()"
+                    v-for="abteilung in props.praktikumsstellenMap.keys()"
                     :key="abteilung"
                     class="custom-panel"
                 >
@@ -22,7 +22,7 @@
                         <v-list>
                             <v-list-item-group>
                                 <v-list-item
-                                    v-for="praktikumsstelle in props.praktikumsstellen.get(
+                                    v-for="praktikumsstelle in praktikumsstellenMap.get(
                                         abteilung
                                     )"
                                     :key="praktikumsstelle.id"
@@ -32,13 +32,18 @@
                                         spacer: true,
                                     }"
                                     :ripple="false"
-                                    @drop="drop(praktikumsstelle)"
+                                    @drop="
+                                        props.assignment
+                                            ? drop(praktikumsstelle)
+                                            : noDropAllowed()
+                                    "
                                     @dragover.prevent
                                     @dragenter.prevent
                                 >
                                     <PraktikumsstelleCard
                                         :key="praktikumsstelle.assignedNwk?.id"
                                         :praktikumsstelle="praktikumsstelle"
+                                        :assignment="props.assignment"
                                     ></PraktikumsstelleCard>
                                 </v-list-item>
                             </v-list-item-group>
@@ -57,7 +62,14 @@ import { useNwkStore } from "@/stores/nwkStore";
 import Nwk from "@/types/Nwk";
 import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
-import PraktikumsstelleCard from "@/components/Assignment/PraktikumsstelleCard.vue";
+import PraktikumsstelleCard from "@/components/Praktikumsstellen/PraktikumsstelleCard.vue";
+import { useSnackbarStore } from "@/stores/snackbar";
+import { Levels } from "@/api/error";
+
+const props = defineProps<{
+    praktikumsstellenMap: Map<string, Praktikumsstelle[]>;
+    assignment: boolean;
+}>();
 
 const nwkStore = useNwkStore();
 const assignedNwkID = ref(nwkStore.nwk);
@@ -67,10 +79,6 @@ const warningDialogTitle = ref<string>(
 );
 const warningDialogText = ref<string>("");
 const stelleToAssignUnassign = ref<Praktikumsstelle>();
-
-const props = defineProps<{
-    praktikumsstellen: Map<string, Praktikumsstelle[]>;
-}>();
 
 watch(
     () => nwkStore.nwk,
@@ -230,6 +238,13 @@ function calculateLehrjahr() {
         lehrjahr -= 1;
     }
     return lehrjahr;
+}
+
+function noDropAllowed() {
+    useSnackbarStore().showMessage({
+        message: "Die Zuweisung ist hier nicht erlaubt.",
+        level: Levels.ERROR,
+    });
 }
 </script>
 <style scoped lang="scss">
