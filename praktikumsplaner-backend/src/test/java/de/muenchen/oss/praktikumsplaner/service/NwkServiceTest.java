@@ -3,6 +3,7 @@ package de.muenchen.oss.praktikumsplaner.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -135,5 +136,20 @@ public class NwkServiceTest {
 
         when(repository.findAll()).thenReturn(nwks);
         assertEquals(service.findAllNwks(), nwks.stream().map(mapper::toDto).toList());
+    }
+
+    @Test
+    public void testSaveNwk() {
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        NwkDto nwkDto = mapper.toDto(nwk1);
+        service.saveNwk(nwkDto);
+        verify(repository, times(1)).save(any(Nwk.class));
+    }
+
+    @Test
+    public void testNwkExistsById() {
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        when(repository.existsById(nwk1.getId())).thenReturn(true);
+        assertTrue(service.NwkExistsById(nwk1.getId()));
     }
 }
