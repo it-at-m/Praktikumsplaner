@@ -32,7 +32,7 @@
                 v-if="props.praktikumsstelle.assignedNwk && props.assignment"
             >
                 <v-chip
-                    color="primary"
+                    :color="getNwkColor(props.praktikumsstelle.assignedNwk)"
                     close
                     close-icon="mdi-close"
                     @click:close="openConfirmationDialog(praktikumsstelle)"
@@ -76,6 +76,9 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
+import Nwk from "@/types/Nwk";
+import { findStudiengangColorByValue } from "@/types/Studiengang";
+import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
 
 const show = ref<boolean>(false);
 
@@ -169,6 +172,16 @@ function openConfirmationDialog(stelle: Praktikumsstelle) {
 function resetUnassign() {
     stelleToAssignUnassign.value = undefined;
     unassignConfirmDialog.value = false;
+}
+
+function getNwkColor(nwk: Nwk): string {
+    let color = "primary";
+    if (nwk.studiengang && nwk.ausbildungsrichtung == undefined) {
+        color = findStudiengangColorByValue(nwk.studiengang);
+    } else if (nwk.ausbildungsrichtung && nwk.studiengang == undefined) {
+        color = findAusbildungsrichtungColorByValue(nwk.ausbildungsrichtung);
+    }
+    return color;
 }
 </script>
 <style scoped lang="scss">

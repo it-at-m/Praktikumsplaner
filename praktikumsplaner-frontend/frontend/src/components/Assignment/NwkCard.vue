@@ -87,7 +87,7 @@ function getSubtitle(nwk: Nwk): string {
 }
 
 function getNwkColor(nwk: Nwk): string {
-    let color = "#FFFFFF";
+    let color = "white";
     if (nwk.studiengang && nwk.ausbildungsrichtung == undefined) {
         color = findStudiengangColorByValue(nwk.studiengang);
     } else if (nwk.ausbildungsrichtung && nwk.studiengang == undefined) {
