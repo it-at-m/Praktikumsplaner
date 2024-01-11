@@ -33,6 +33,7 @@ import { ref, onMounted } from "vue";
 import Nwk from "@/types/Nwk";
 import NwkService from "@/api/NwkService";
 import NwkUpdateDialog from "@/components/Nachwuchskraefte/NwkUpdateDialog.vue";
+import { EventBus } from "@/stores/event-bus";
 const nwks = ref<Nwk[]>([]);
 
 onMounted(() => {
@@ -53,6 +54,10 @@ function getSubtitle(nwk: Nwk): string {
     }
     return subtitle;
 }
+
+EventBus.$on("nwkCreated", () => {
+    getAllActiveNwks();
+});
 </script>
 <style scoped lang="scss">
 .cards {

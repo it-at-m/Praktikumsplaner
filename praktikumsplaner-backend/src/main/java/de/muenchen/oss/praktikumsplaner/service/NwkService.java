@@ -20,6 +20,7 @@ public class NwkService {
     private final NwkMapper nwkMapper;
     private final NwkRepository nwkRepository;
     private final ExcelImportService excelImportService;
+    private final MeldezeitraumService meldezeitraumService;
 
     private static final Logger logger = LoggerFactory.getLogger(NwkService.class);
 
@@ -38,8 +39,9 @@ public class NwkService {
         return nwkRepository.findNwksByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDto).toList();
     }
 
-    public List<NwkDto> findAllUnassignedNwks() {
-        return nwkRepository.findAllUnassigned().stream().map(nwkMapper::toDto).toList();
+    public List<NwkDto> findAllUnassignedNwksInCurrentMeldezeitraum() {
+        final UUID meldezeitraumId = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
+        return nwkRepository.findAllUnassignedInSpecificMeldzeitraum(meldezeitraumId).stream().map(nwkMapper::toDto).toList();
     }
 
     public List<NwkDto> findAllNwks() {

@@ -11,9 +11,7 @@
         <v-container>
             <v-expansion-panels multiple>
                 <v-expansion-panel
-                    v-for="(
-                        praktikumsstellenliste, abteilung
-                    ) in praktikumsstellen"
+                    v-for="abteilung in props.praktikumsstellenMap.keys()"
                     :key="abteilung"
                     class="custom-panel"
                 >
@@ -24,8 +22,8 @@
                         <v-list>
                             <v-list-item-group>
                                 <v-list-item
-                                    v-for="praktikumsstelle in asPraktikumsstelleList(
-                                        praktikumsstellenliste
+                                    v-for="praktikumsstelle in praktikumsstellenMap.get(
+                                        abteilung
                                     )"
                                     :key="praktikumsstelle.id"
                                     :class="{
@@ -34,12 +32,18 @@
                                         spacer: true,
                                     }"
                                     :ripple="false"
-                                    @drop="drop(praktikumsstelle)"
+                                    @drop="
+                                        props.assignment
+                                            ? drop(praktikumsstelle)
+                                            : noDropAllowed()
+                                    "
                                     @dragover.prevent
                                     @dragenter.prevent
                                 >
                                     <PraktikumsstelleCard
+                                        :key="praktikumsstelle.assignedNwk?.id"
                                         :praktikumsstelle="praktikumsstelle"
+                                        :assignment="props.assignment"
                                     ></PraktikumsstelleCard>
                                 </v-list-item>
                             </v-list-item-group>
@@ -51,16 +55,22 @@
     </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import { useNwkStore } from "@/stores/nwkStore";
 import Nwk from "@/types/Nwk";
 import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
-import PraktikumsstelleCard from "@/components/Assignment/PraktikumsstelleCard.vue";
+import PraktikumsstelleCard from "@/components/Praktikumsstellen/PraktikumsstelleCard.vue";
+import { useSnackbarStore } from "@/stores/snackbar";
+import { Levels } from "@/api/error";
 
-const praktikumsstellen = ref<Map<string, Praktikumsstelle[]>>();
+const props = defineProps<{
+    praktikumsstellenMap: Map<string, Praktikumsstelle[]>;
+    assignment: boolean;
+}>();
+
 const nwkStore = useNwkStore();
 const assignedNwkID = ref(nwkStore.nwk);
 const warningDialog = ref<boolean>(false);
@@ -77,21 +87,6 @@ watch(
             nwkStore.nwk ?? new Nwk("", "", "", "", [], false, "", "");
     }
 );
-
-onMounted(() => {
-    getAllPraktikumsstellen();
-});
-function getAllPraktikumsstellen() {
-    PraktikumsstellenService.getAllPraktikumsstellen().then(
-        (fetchedStellen) => {
-            praktikumsstellen.value = fetchedStellen;
-        }
-    );
-}
-
-function asPraktikumsstelleList(list: unknown): Praktikumsstelle[] {
-    return list as Praktikumsstelle[];
-}
 
 function drop(stelle: Praktikumsstelle) {
     if (!stelle || !stelle.id || stelle.assignedNwk) return;
@@ -123,7 +118,7 @@ function drop(stelle: Praktikumsstelle) {
     // Check if studiengang is the same
     if (
         stelle.studiengang &&
-        assignedNwkID.value.studiengang != "FISI" &&
+        assignedNwkID.value.ausbildungsrichtung == undefined &&
         stelle.studiengang != assignedNwkID.value.studiengang
     ) {
         warningDialogText.value +=
@@ -155,7 +150,7 @@ function drop(stelle: Praktikumsstelle) {
     // Check if Nwk is in the right semester
     if (
         stelle.studiengang != undefined &&
-        assignedNwkID.value.studiengang != "FISI" &&
+        assignedNwkID.value.ausbildungsrichtung == undefined &&
         stelle.studiensemester
     ) {
         const expectedSemester: number = +stelle.studiensemester.substring(
@@ -176,7 +171,7 @@ function drop(stelle: Praktikumsstelle) {
     // Check if Nwk is in the right Lehrjahr
     if (
         stelle.ausbildungsrichtung != undefined &&
-        assignedNwkID.value.studiengang == "FISI" &&
+        assignedNwkID.value.studiengang == undefined &&
         stelle.ausbildungsjahr
     ) {
         const expectedLehrjahr: number = +stelle.ausbildungsjahr.substring(
@@ -218,7 +213,7 @@ function resetWarningDialog() {
 }
 
 function calculateSemester() {
-    if (assignedNwkID.value.studiengang == "FISI") return 0;
+    if (assignedNwkID.value.ausbildungsrichtung) return 0;
     let semester: number;
     const startYear: number =
         +assignedNwkID.value.jahrgang.substring(0, 2) + 2000;
@@ -231,7 +226,7 @@ function calculateSemester() {
 }
 
 function calculateLehrjahr() {
-    if (assignedNwkID.value.studiengang != "FISI") return 0;
+    if (assignedNwkID.value.ausbildungsrichtung == undefined) return 0;
     let lehrjahr: number;
     const startYear: number =
         +assignedNwkID.value.jahrgang.substring(0, 2) + 2000;
@@ -243,6 +238,13 @@ function calculateLehrjahr() {
         lehrjahr -= 1;
     }
     return lehrjahr;
+}
+
+function noDropAllowed() {
+    useSnackbarStore().showMessage({
+        message: "Die Zuweisung ist hier nicht erlaubt.",
+        level: Levels.ERROR,
+    });
 }
 </script>
 <style scoped lang="scss">

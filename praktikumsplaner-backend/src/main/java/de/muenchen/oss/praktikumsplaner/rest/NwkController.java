@@ -44,7 +44,7 @@ public class NwkController {
         }
         if (unassigned != null) {
             if (Boolean.TRUE.toString().equals(unassigned)) {
-                return nwkService.findAllUnassignedNwks();
+                return nwkService.findAllUnassignedNwksInCurrentMeldezeitraum();
             }
         }
         return nwkService.findAllNwks();

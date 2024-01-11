@@ -12,7 +12,9 @@ import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
@@ -20,10 +22,13 @@ import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import jakarta.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+
 import lombok.val;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
@@ -39,6 +44,8 @@ public class NwkServiceTest {
     private NwkMapper mapper = Mappers.getMapper(NwkMapper.class);
     @Mock
     private NwkRepository repository;
+    @Mock
+    private MeldezeitraumService meldezeitraumService;
     @InjectMocks
     private NwkService service;
     @Mock
@@ -120,9 +127,10 @@ public class NwkServiceTest {
         Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", null, Ausbildungsrichtung.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
 
         List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
-
-        when(repository.findAllUnassigned()).thenReturn(nwks);
-        assertEquals(service.findAllUnassignedNwks(), nwks.stream().map(mapper::toDto).toList());
+        when(meldezeitraumService.getMostRecentPassedMeldezeitraum())
+                .thenReturn(new MeldezeitraumDto(UUID.randomUUID(), "", new ZeitraumDto(LocalDate.now(), LocalDate.now())));
+        when(repository.findAllUnassignedInSpecificMeldzeitraum(any(UUID.class))).thenReturn(nwks);
+        assertEquals(service.findAllUnassignedNwksInCurrentMeldezeitraum(), nwks.stream().map(mapper::toDto).toList());
     }
 
     @Test
