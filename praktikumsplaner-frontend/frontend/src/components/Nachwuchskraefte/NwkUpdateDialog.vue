@@ -10,7 +10,7 @@
                     color="primary"
                     v-on="on"
                 >
-                    <v-icon>mdi-pencil-circle-outline</v-icon>
+                    <v-icon>mdi-pencil-outline</v-icon>
                     Bearbeiten
                 </v-btn>
             </template>
@@ -50,7 +50,7 @@
                                 item-text="name"
                                 outlined
                                 clearable
-                                :rules="rules"
+                                :rules="isStudiumOrAusbildungRule"
                                 @click:clear="
                                     nwkToUpdate.studiengang = undefined
                                 "
@@ -65,7 +65,7 @@
                                 item-text="name"
                                 outlined
                                 clearable
-                                :rules="rules"
+                                :rules="isStudiumOrAusbildungRule"
                                 @click:clear="
                                     nwkToUpdate.ausbildungsrichtung = undefined
                                 "
@@ -110,18 +110,14 @@ const props = defineProps<{
 
 const nwkToUpdate = ref<Nwk>(props.nwk);
 
-const rules = computed(() => {
-    return [isStudiumOrAusbildung.value];
-});
-
-const isStudiumOrAusbildung = computed(() => {
-    return (
+const isStudiumOrAusbildungRule = computed(() => {
+    return [
         (nwkToUpdate.value.studiengang != undefined &&
             nwkToUpdate.value.ausbildungsrichtung == undefined) ||
-        (nwkToUpdate.value.studiengang == undefined &&
-            nwkToUpdate.value.ausbildungsrichtung != undefined) ||
-        "Es muss eine Studienrichtung oder eine Ausbildungsrichtung angegeben werden."
-    );
+            (nwkToUpdate.value.studiengang == undefined &&
+                nwkToUpdate.value.ausbildungsrichtung != undefined) ||
+            "Es muss eine Studienrichtung oder eine Ausbildungsrichtung angegeben werden.",
+    ];
 });
 
 const emits = defineEmits<{

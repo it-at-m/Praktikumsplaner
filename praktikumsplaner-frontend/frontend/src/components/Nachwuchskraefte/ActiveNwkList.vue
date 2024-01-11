@@ -12,10 +12,16 @@
                     getSubtitle(nwk)
                 }}</v-card-subtitle>
                 <v-card-actions>
-                    <NwkUpdateDialog
-                        :nwk="nwk"
-                        @updated="getAllActiveNwks"
-                    />
+                    <v-col cols="4"> </v-col>
+                    <v-col cols="1"> </v-col>
+                    <v-col cols="2">
+                        <NwkUpdateDialog
+                            class="d-flex justify-center align-center"
+                            :nwk="nwk"
+                            @updated="getAllActiveNwks"
+                        />
+                    </v-col>
+                    <v-col> </v-col>
                 </v-card-actions>
             </v-card>
         </v-col>
