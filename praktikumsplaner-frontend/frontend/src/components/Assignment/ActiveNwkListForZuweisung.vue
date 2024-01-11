@@ -15,11 +15,8 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import Nwk from "@/types/Nwk";
-import { useNwkStore } from "@/stores/nwkStore";
 import { EventBus } from "@/stores/event-bus";
 import NwkCard from "@/components/Assignment/NwkCard.vue";
-
-const nwkStore = useNwkStore();
 
 const props = defineProps<{
     value: Nwk[];
@@ -60,8 +57,3 @@ function addNwkToList(nwk: Nwk) {
     emits("input", nwksInternal);
 }
 </script>
-<style scoped>
-.v-card {
-    margin: 5px;
-}
-</style>
