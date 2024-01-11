@@ -5,7 +5,7 @@
                 v-for="nwk in props.value"
                 :key="nwk.id"
                 draggable="true"
-                @dragstart="dragStart(nwk)"
+                @dragstart="dragStart($event, nwk)"
             >
                 <nwk-card :nwk="nwk" />
             </v-list-item>
@@ -34,13 +34,20 @@ onMounted(() => {
     EventBus.$on("unassignedNwk", addNwkToList);
 });
 
-function dragStart(nwk: Nwk) {
-    nwkStore.updateNwkId(nwk);
+function dragStart(event: DragEvent, nwk: Nwk) {
+    event.dataTransfer?.setData("application/json", JSON.stringify(nwk));
 }
 
 function removeNwkFromList(nwk: Nwk) {
     let nwksInternal = props.value;
-    const index = nwksInternal.indexOf(nwk, 0);
+    let index = -1;
+
+    const nwkToRemove: Nwk | undefined = nwksInternal.find(
+        (n) => n.id === nwk.id
+    );
+
+    if (nwkToRemove !== undefined) index = nwksInternal.indexOf(nwkToRemove, 0);
+
     if (index > -1) {
         nwksInternal.splice(index, 1);
         emits("input", nwksInternal);
