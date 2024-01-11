@@ -34,7 +34,6 @@ public class NwkController {
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<NwkDto> getNwks(@RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "unassigned", required = false) String unassigned) {
         if (status != null) {
@@ -53,7 +52,6 @@ public class NwkController {
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PutMapping
-    @ResponseStatus(HttpStatus.OK)
     public void updateNwk(@RequestBody NwkDto nwkDto) {
         if (!nwkService.NwkExistsById(nwkDto.id())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
