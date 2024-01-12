@@ -1,6 +1,6 @@
 <template>
     <v-container
-        @drop="drop($event, value)"
+        @drop="props.assignment ? drop($event, value) : noDropAllowed()"
         @dragover.prevent
         @dragenter.prevent
     >
@@ -21,9 +21,8 @@
         ></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
-            class="full-width-card"
             :class="{
-                'custom-card-active': props.value.assignedNwk,
+                'custom-card-active': assignedNwk,
                 spacer: true,
             }"
             elevation="16"
@@ -32,50 +31,31 @@
             @click="show = !show"
         >
             <v-card-title
-                >Stelle bei
-                {{ props.praktikumsstelle.dienststelle }}</v-card-title
+                >Stelle bei {{ props.value.dienststelle }}</v-card-title
             >
-            <v-card-subtitle
-                v-if="props.praktikumsstelle.namentlicheAnforderung"
-            >
+            <v-card-subtitle v-if="props.value.namentlicheAnforderung">
                 Namentliche Anforderung:
-                {{ props.praktikumsstelle.namentlicheAnforderung }}
+                {{ props.value.namentlicheAnforderung }}
             </v-card-subtitle>
             <v-icon
-                v-if="props.praktikumsstelle.planstelleVorhanden"
+                v-if="props.value.planstelleVorhanden"
                 x-large
                 class="icon-top-right-position"
                 >mdi-account-star</v-icon
             >
             <v-card-text class="pt-0 mt-0 mb-0 pb-0">
-            <v-row>
-                <v-col cols="9">
-                    <v-card-title
-                        >Stelle bei {{ props.value.dienststelle }}</v-card-title
-                    >
-                </v-col>
-                <v-col>
-                    <v-card-text v-if="props.value.planstelleVorhanden">
-                        <v-icon x-large>mdi-account-star</v-icon>
-                    </v-card-text>
-                </v-col>
-            </v-row>
-            <v-card-text>
                 <p style="white-space: pre-line">
                     {{ getCardText(props.value) }}
                 </p></v-card-text
             >
-            <v-col
-                v-if="props.praktikumsstelle.assignedNwk && props.assignment"
-            >
+            <v-col v-if="assignedNwk && props.assignment">
                 <v-chip
-                    v-if="assignedNwk"
                     color="primary"
                     close
                     close-icon="mdi-close"
                     @click:close="openConfirmationDialog(value)"
                     >{{
-                        `${props.value.assignedNwk.vorname} ${props.value.assignedNwk.nachname}`
+                        `${assignedNwk.vorname} ${assignedNwk.nachname}`
                     }}</v-chip
                 ></v-col
             >
@@ -108,10 +88,11 @@ import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 import Nwk from "@/types/Nwk";
+import { useSnackbarStore } from "@/stores/snackbar";
+import { Levels } from "@/api/error";
 
 const props = defineProps<{
     value: Praktikumsstelle;
-    praktikumsstelle: Praktikumsstelle;
     assignment: boolean;
 }>();
 
@@ -193,7 +174,6 @@ function getCardDetailText(stelle: Praktikumsstelle): string {
 }
 function drop(event: DragEvent, stelle: Praktikumsstelle) {
     try {
-        console.log("Drop registriert.");
         const draggedNwk: Nwk = JSON.parse(
             event.dataTransfer?.getData("application/json") as string
         );
@@ -398,6 +378,12 @@ function openConfirmationDialog(stelle: Praktikumsstelle) {
 function resetUnassign() {
     stelleToAssignUnassign.value = undefined;
     unassignConfirmDialog.value = false;
+}
+function noDropAllowed() {
+    useSnackbarStore().showMessage({
+        message: "Die Zuweisung ist hier nicht erlaubt.",
+        level: Levels.ERROR,
+    });
 }
 </script>
 <style scoped lang="scss">
