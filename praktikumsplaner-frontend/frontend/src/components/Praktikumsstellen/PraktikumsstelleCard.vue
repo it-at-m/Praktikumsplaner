@@ -50,7 +50,7 @@
             >
             <v-col v-if="assignedNwk && props.assignment">
                 <v-chip
-                    color="primary"
+                    :color="getNwkColor(props.praktikumsstelle.assignedNwk)"
                     close
                     close-icon="mdi-close"
                     @click:close="openConfirmationDialog(value)"
@@ -90,6 +90,11 @@ import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutA
 import Nwk from "@/types/Nwk";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { Levels } from "@/api/error";
+import Nwk from "@/types/Nwk";
+import { findStudiengangColorByValue } from "@/types/Studiengang";
+import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
+
+const show = ref<boolean>(false);
 
 const props = defineProps<{
     value: Praktikumsstelle;
@@ -384,6 +389,16 @@ function noDropAllowed() {
         message: "Die Zuweisung ist hier nicht erlaubt.",
         level: Levels.ERROR,
     });
+}
+
+function getNwkColor(nwk: Nwk): string {
+    let color = "primary";
+    if (nwk.studiengang && nwk.ausbildungsrichtung == undefined) {
+        color = findStudiengangColorByValue(nwk.studiengang);
+    } else if (nwk.ausbildungsrichtung && nwk.studiengang == undefined) {
+        color = findAusbildungsrichtungColorByValue(nwk.ausbildungsrichtung);
+    }
+    return color;
 }
 </script>
 <style scoped lang="scss">
