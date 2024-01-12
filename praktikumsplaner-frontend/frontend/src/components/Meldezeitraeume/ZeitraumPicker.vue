@@ -2,27 +2,23 @@
     <v-row>
         <v-col>
             <v-row>
-                <v-col :cols="12">
+                <v-col cols="12">
                     <v-text-field
-                        ref="endDate"
                         v-model="range.startZeitpunkt"
                         dense
                         outlined
                         type="date"
                         :rules="startZeitpunktRules"
-                        :append-icon="calendarIcon"
                         :label="'Beginn des ' + props.label + 's'"
                     >
                     </v-text-field>
                 </v-col>
-                <v-col :cols="12">
+                <v-col cols="12">
                     <v-text-field
-                        ref="startDate"
                         v-model="range.endZeitpunkt"
                         dense
                         outlined
                         type="date"
-                        :append-icon="calendarIcon"
                         :label="'Ende des ' + props.label + 's'"
                         :rules="endZeitpunktRules"
                     >
@@ -44,7 +40,6 @@ const props = defineProps<{
 }>();
 
 const validationRules = useRules();
-const calendarIcon = "mdi-calendar";
 
 const range = computed(() => props.value);
 
