@@ -9,7 +9,10 @@
             align="center"
         >
             <v-col cols="auto">
-                <initials-avatar :nwk-name="getFullName(props.nwk)" />
+                <initials-avatar
+                    :nwk-name="getFullName(props.nwk)"
+                    :background-color="getNwkColor(props.nwk)"
+                />
             </v-col>
             <v-col>
                 <div>
@@ -56,6 +59,8 @@ import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
 import Nwk from "@/types/Nwk";
 import { ref, computed } from "vue";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
+import { findStudiengangColorByValue } from "@/types/Studiengang";
+import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
 
 const props = defineProps<{
     nwk: Nwk;
@@ -79,6 +84,16 @@ function getSubtitle(nwk: Nwk): string {
         subtitle = nwk.ausbildungsrichtung + " / " + nwk.jahrgang;
     }
     return subtitle;
+}
+
+function getNwkColor(nwk: Nwk): string {
+    let color = "white";
+    if (nwk.studiengang && nwk.ausbildungsrichtung == undefined) {
+        color = findStudiengangColorByValue(nwk.studiengang);
+    } else if (nwk.ausbildungsrichtung && nwk.studiengang == undefined) {
+        color = findAusbildungsrichtungColorByValue(nwk.ausbildungsrichtung);
+    }
+    return color;
 }
 </script>
 <style scoped>
