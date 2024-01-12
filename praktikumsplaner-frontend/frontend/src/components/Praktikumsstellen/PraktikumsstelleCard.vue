@@ -50,7 +50,7 @@
             >
             <v-col v-if="assignedNwk && props.assignment">
                 <v-chip
-                    :color="getNwkColor(props.praktikumsstelle.assignedNwk)"
+                    :color="getNwkColor(assignedNwk)"
                     close
                     close-icon="mdi-close"
                     @click:close="openConfirmationDialog(value)"
@@ -87,14 +87,11 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
-import Nwk from "@/types/Nwk";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { Levels } from "@/api/error";
 import Nwk from "@/types/Nwk";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
 import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
-
-const show = ref<boolean>(false);
 
 const props = defineProps<{
     value: Praktikumsstelle;
@@ -104,7 +101,6 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: "input", praktikumsstelle: Praktikumsstelle): void;
 }>();
-
 const show = ref<boolean>(false);
 const unassignDialogContent = ref<string>("");
 const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
