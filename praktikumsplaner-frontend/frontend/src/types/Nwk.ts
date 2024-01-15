@@ -10,3 +10,8 @@ export default class Nwk {
         public ausbildungsrichtung?: string
     ) {}
 }
+
+// Used in NwkCards to determine if the details button should be shown
+export function hasDetails(nwk: Nwk): boolean {
+    return nwk.vorlesungstage.length > 0;
+}
