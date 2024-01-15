@@ -431,6 +431,8 @@ function getPassedMeldezeitraeume() {
     });
 }
 
+// format Meldezeitraum zeitraumName to: "zeitraumName: startZeitpunkt - endZeitpunkt"
+// this is needed because the v-select component needs a string as item-text
 function formatZeitraum(zeitraum: Meldezeitraum) {
     return `${zeitraum.zeitraumName}: ${formatter.formatDateFromString(
         zeitraum.zeitraum.startZeitpunkt
