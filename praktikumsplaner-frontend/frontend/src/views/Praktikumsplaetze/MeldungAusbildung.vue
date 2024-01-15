@@ -301,7 +301,7 @@
                 </v-row>
             </v-container>
             <v-container
-                v-show="isAusbidungsleitung"
+                v-show="isAusbildungsleitung"
                 class="box"
             >
                 <v-row>
@@ -345,7 +345,7 @@
 
 <script setup lang="ts">
 import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
 import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
@@ -361,6 +361,7 @@ import { Programmierkenntnisse } from "@/types/YesNoEgalBoolean";
 import { useFormatter } from "@/composables/formatter";
 import { APP_SECURITY } from "@/Constants";
 import { useUserStore } from "@/stores/user";
+import Meldezeitraum from "@/types/Meldezeitraum";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -369,6 +370,7 @@ const praktikumsstelle = ref<Praktikumsstelle>(
 );
 const zeitraeueme = useZeitraeume();
 const zuweisungsZeitraum = ref<string>("");
+const isAusbildungsleitung = ref<boolean>(false);
 const userStore = useUserStore();
 const validationRules = useRules();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
@@ -416,40 +418,67 @@ const customMenuProps = {
 };
 const form = ref<HTMLFormElement>();
 const formatter = useFormatter();
-const meldezeitraeume = ref<object[]>([]);
-const isAusbidungsleitung = ref<boolean>(false);
+const meldezeitraeume = computed(() => {
+    return [
+        currentMeldezeitraum.value,
+        ...upcomingMeldezeitraeume.value,
+        ...passedMeldezeitraeume.value,
+    ];
+});
+const currentMeldezeitraum = ref<Meldezeitraum>();
+const upcomingMeldezeitraeume = ref<Meldezeitraum[]>([]);
+const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
 
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
         .then((zeitraueme) => {
             activeMeldezeitraum.value = zeitraueme.length > 0;
+            currentMeldezeitraum.value = zeitraueme[0];
+            currentMeldezeitraum.value.zeitraumName = formatZeitraum(
+                currentMeldezeitraum.value
+            );
         })
         .then(() => {
             if (
                 userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
                 APP_SECURITY !== "true"
             ) {
-                isAusbidungsleitung.value = true;
+                isAusbildungsleitung.value = true;
                 activeMeldezeitraum.value = true;
-                MeldezeitraumService.getAllMeldezeitraeume().then(
-                    (zeitraeume) => {
-                        meldezeitraeume.value = zeitraeume.map((zeitraum) => {
-                            return {
-                                id: zeitraum.id,
-                                zeitraumName: `${
-                                    zeitraum.zeitraumName
-                                }: ${formatter.formatDateFromString(
-                                    zeitraum.zeitraum.startZeitpunkt
-                                )} - ${formatter.formatDateFromString(
-                                    zeitraum.zeitraum.endZeitpunkt
-                                )}`,
-                            };
-                        });
-                    }
-                );
+                getUpcomingMeldezeitraeume();
+                getPassedMeldezeitraeume();
             }
         });
 });
+
+function getUpcomingMeldezeitraeume() {
+    MeldezeitraumService.getUpcomingMeldezeitraueme().then((zeitraeume) => {
+        upcomingMeldezeitraeume.value = zeitraeume.map((zeitraum) => {
+            return {
+                ...zeitraum,
+                zeitraumName: formatZeitraum(zeitraum),
+            };
+        });
+    });
+}
+
+function getPassedMeldezeitraeume() {
+    MeldezeitraumService.getPassedMeldezeitraueme().then((zeitraeume) => {
+        passedMeldezeitraeume.value = zeitraeume.map((zeitraum) => {
+            return {
+                ...zeitraum,
+                zeitraumName: formatZeitraum(zeitraum),
+            };
+        });
+    });
+}
+
+function formatZeitraum(zeitraum: Meldezeitraum) {
+    return `${zeitraum.zeitraumName}: ${formatter.formatDateFromString(
+        zeitraum.zeitraum.startZeitpunkt
+    )} - ${formatter.formatDateFromString(zeitraum.zeitraum.endZeitpunkt)}`;
+}
+
 function changeVorrZuweisungsZeitraum() {
     zuweisungsZeitraum.value = zeitraeueme.ausbildungsZeitraum(
         praktikumsstelle.value.ausbildungsrichtung,
