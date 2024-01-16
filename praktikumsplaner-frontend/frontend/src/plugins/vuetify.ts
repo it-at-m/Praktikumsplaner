@@ -14,6 +14,7 @@ const theme = {
             success: "#69BE28",
             error: "#FF0000",
             errorExcel: "#EB96A0",
+            text: "#000000",
         },
     },
     options: {
