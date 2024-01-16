@@ -276,7 +276,22 @@
                             item-value="id"
                             item-text="zeitraumName"
                             outlined
-                        ></v-select>
+                        >
+                            <template #item="data">
+                                {{ data.item.zeitraumName }}:
+                                {{
+                                    formatter.formatDateFromString(
+                                        data.item.zeitraum.startZeitpunkt
+                                    )
+                                }}
+                                -
+                                {{
+                                    formatter.formatDateFromString(
+                                        data.item.zeitraum.endZeitpunkt
+                                    )
+                                }}
+                            </template>
+                        </v-select>
                     </v-col>
                     <v-col cols="2" />
                     <v-col> </v-col>
@@ -331,6 +346,7 @@ const zuweisungsZeitraum = ref<string>("");
 const isAusbildungsleitung = ref<boolean>(false);
 const userStore = useUserStore();
 const validationRules = useRules();
+const formatter = useFormatter();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
@@ -375,7 +391,6 @@ const customMenuProps = {
     offsetY: true,
 };
 const form = ref<HTMLFormElement>();
-const formatter = useFormatter();
 const meldezeitraeume = computed(() => {
     return [
         currentMeldezeitraum.value,
@@ -392,9 +407,6 @@ onMounted(() => {
         .then((zeitraueme) => {
             activeMeldezeitraum.value = zeitraueme.length > 0;
             currentMeldezeitraum.value = zeitraueme[0];
-            currentMeldezeitraum.value.zeitraumName = formatZeitraum(
-                currentMeldezeitraum.value
-            );
         })
         .then(() => {
             if (
@@ -411,32 +423,14 @@ onMounted(() => {
 
 function getUpcomingMeldezeitraeume() {
     MeldezeitraumService.getUpcomingMeldezeitraueme().then((zeitraeume) => {
-        upcomingMeldezeitraeume.value = zeitraeume.map((zeitraum) => {
-            return {
-                ...zeitraum,
-                zeitraumName: formatZeitraum(zeitraum),
-            };
-        });
+        upcomingMeldezeitraeume.value = zeitraeume;
     });
 }
 
 function getPassedMeldezeitraeume() {
     MeldezeitraumService.getPassedMeldezeitraueme().then((zeitraeume) => {
-        passedMeldezeitraeume.value = zeitraeume.map((zeitraum) => {
-            return {
-                ...zeitraum,
-                zeitraumName: formatZeitraum(zeitraum),
-            };
-        });
+        passedMeldezeitraeume.value = zeitraeume;
     });
-}
-
-// format Meldezeitraum zeitraumName to: "zeitraumName: startZeitpunkt - endZeitpunkt"
-// this is needed because the v-select component needs a string as item-text
-function formatZeitraum(zeitraum: Meldezeitraum) {
-    return `${zeitraum.zeitraumName}: ${formatter.formatDateFromString(
-        zeitraum.zeitraum.startZeitpunkt
-    )} - ${formatter.formatDateFromString(zeitraum.zeitraum.endZeitpunkt)}`;
 }
 
 function changeVorrZuweisungsZeitraum() {
