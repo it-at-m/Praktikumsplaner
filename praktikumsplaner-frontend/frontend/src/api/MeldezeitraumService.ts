@@ -19,10 +19,6 @@ export default {
                 return response.json();
             })
             .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
                 FetchUtils.defaultResponseHandler(err);
             });
     },
@@ -36,10 +32,6 @@ export default {
                 return response.json();
             })
             .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
                 FetchUtils.defaultResponseHandler(err);
             });
     },
@@ -53,10 +45,6 @@ export default {
                 return response.json();
             })
             .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
                 FetchUtils.defaultResponseHandler(err);
             });
     },
@@ -70,10 +58,6 @@ export default {
                 return response.json();
             })
             .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
                 FetchUtils.defaultResponseHandler(err);
             });
     },
@@ -87,10 +71,6 @@ export default {
                 return response.json();
             })
             .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
                 FetchUtils.defaultResponseHandler(err);
             });
     },
