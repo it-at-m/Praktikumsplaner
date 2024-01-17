@@ -36,7 +36,7 @@ public class MeldezeitraumController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<MeldezeitraumDto> getMeldezeitraeume(@RequestParam(required = false) String period) {
+    public List<MeldezeitraumDto> getMeldezeitraeume(@RequestParam(name = "period", required = false) String period) {
         if (period != null && period.equalsIgnoreCase("current")) {
             try {
                 MeldezeitraumDto meldezeitraumDto = meldezeitraumService.getCurrentMeldezeitraum();

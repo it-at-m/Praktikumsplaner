@@ -69,7 +69,7 @@ public class PraktikumsstellenController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInSpecificMeldezeitraum(
-            @RequestParam(required = false) String meldezeitraum) {
+            @RequestParam(name = "meldezeitraum", required = false) String meldezeitraum) {
         if (meldezeitraum.equals("current")) {
             return praktikumsstellenService.getAllInCurrentMeldezeitraumGroupedByDienststelle();
         } else if (meldezeitraum.equals("most_recent")) {
