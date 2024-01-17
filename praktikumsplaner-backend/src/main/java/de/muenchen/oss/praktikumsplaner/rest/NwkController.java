@@ -28,14 +28,14 @@ public class NwkController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping("/import")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveNwkExcel(@RequestBody String base64String) throws IOException {
+    public void saveNwkExcel(@RequestBody final String base64String) throws IOException {
         nwkService.importNwk(base64String);
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
-    public List<NwkDto> getNwks(@RequestParam(name = "status", required = false) String status,
-            @RequestParam(name = "unassigned", required = false) String unassigned) {
+    public List<NwkDto> getNwks(@RequestParam(name = "status", required = false) final String status,
+            @RequestParam(name = "unassigned", required = false) final String unassigned) {
         if (status != null) {
             if (ACTIVE_STATUS.equals(status)) {
                 return nwkService.findAllActiveNwks();
@@ -52,9 +52,9 @@ public class NwkController {
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PutMapping
-    public void updateNwk(@RequestBody NwkDto nwkDto) {
-        if (!nwkService.NwkExistsById(nwkDto.id())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+    public void updateNwk(@RequestBody final NwkDto nwkDto) {
+        if (!nwkService.nwkExistsById(nwkDto.id())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Nachwuchskraft mit der ID " + nwkDto.id() + " existiert nicht.");
         } else {
             nwkService.saveNwk(nwkDto);

@@ -52,7 +52,7 @@ public class NwkService {
         nwkRepository.save(nwkMapper.toEntity(nwkDto));
     }
 
-    public boolean NwkExistsById(final UUID id) {
+    public boolean nwkExistsById(final UUID id) {
         return nwkRepository.existsById(id);
     }
 }

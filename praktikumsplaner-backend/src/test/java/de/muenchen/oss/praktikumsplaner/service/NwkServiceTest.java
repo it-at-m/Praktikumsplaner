@@ -158,6 +158,6 @@ public class NwkServiceTest {
     public void testNwkExistsById() {
         Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
         when(repository.existsById(nwk1.getId())).thenReturn(true);
-        assertTrue(service.NwkExistsById(nwk1.getId()));
+        assertTrue(service.nwkExistsById(nwk1.getId()));
     }
 }
