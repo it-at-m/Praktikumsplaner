@@ -16,6 +16,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Set;
+
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class ExcelExportServiceTest {
 
+    public static final String comma = ",";
     @InjectMocks
     private ExcelExportService service;
     @Mock
@@ -98,12 +101,12 @@ public class ExcelExportServiceTest {
     public void testSortPraktikumsstellen() throws IOException {
         List<AusbildungsPraktikumsstelleDto> ausbildungsPraktikumsstellenWithStudent = List.of(
                 helper.createPraktikumsstelleDto(helper.createAusbildungsPraktikumsstelleEntity("Dienststelle 1", "Ausbilder 1", "a@b.c", "Taetigkeiten 1",
-                        Dringlichkeit.DRINGEND, Referat.ITM, Ausbildungsjahr.JAHR1, Ausbildungsrichtung.FISI, false, null,
+                        Dringlichkeit.DRINGEND, Referat.ITM, Set.of(Ausbildungsjahr.JAHR1), Ausbildungsrichtung.FISI, false, null,
                         helper.createNwkEntity("Vorname 1", "Nachname 1", Studiengang.BSC, null, "22/23", null, true))));
 
         List<StudiumsPraktikumsstelleDto> studiumsPraktikumsstellenWithAuszubildende = List.of(
                 helper.createPraktikumsstelleDto(helper.createStudiumsPraktikumsstelleEntity("Dienststelle 3", "Ausbilder 3", "a@b.c", "Taetigkeiten 3",
-                        Dringlichkeit.DRINGEND, Referat.ITM, Studiensemester.SEMESTER1, Studiengang.BSC, "false", null,
+                        Dringlichkeit.DRINGEND, Referat.ITM, Set.of(Studiensemester.SEMESTER1), Studiengang.BSC, "false", null,
                         helper.createNwkEntity("Vorname 3", "Nachname 3", null, Ausbildungsrichtung.FISI, "22/23", null, true))));
 
         when(praktikumsstellenService.getAllAssignedAusbildungspraktikumsstellenInMostRecentPassedMeldezeitraum())
@@ -130,25 +133,33 @@ public class ExcelExportServiceTest {
         return jaNein.equals("Ja");
     }
 
-    private Ausbildungsjahr decodeAusbildungsjahr(String ausbildungsjahr) {
-        return switch (ausbildungsjahr) {
-        case "ab 1. Jahr" -> Ausbildungsjahr.JAHR1;
-        case "ab 2. Jahr" -> Ausbildungsjahr.JAHR2;
-        case "ab 3. Jahr" -> Ausbildungsjahr.JAHR3;
-        default -> null;
-        };
+    private Set<Ausbildungsjahr> decodeAusbildungsjahr(String ausbildungsjahr) {
+        String[] ausbildungsjahre = ausbildungsjahr.split(comma);
+        Set<Ausbildungsjahr> ausbildungsjahrSet = new java.util.HashSet<>(Set.of());
+        for (String jahr : ausbildungsjahre) {
+            switch (jahr.trim()) {
+            case "1. Ausbildungsjahr" -> ausbildungsjahrSet.add(Ausbildungsjahr.JAHR1);
+            case "2. Ausbildungsjahr" -> ausbildungsjahrSet.add(Ausbildungsjahr.JAHR2);
+            case "3. Ausbildungsjahr" -> ausbildungsjahrSet.add(Ausbildungsjahr.JAHR3);
+            }
+        }
+        return ausbildungsjahrSet.isEmpty() ? null : ausbildungsjahrSet;
     }
 
-    private Studiensemester decodeStudiensemester(String studiensemester) {
-        return switch (studiensemester) {
-        case "ab 1. Semester" -> Studiensemester.SEMESTER1;
-        case "ab 2. Semester" -> Studiensemester.SEMESTER2;
-        case "ab 3. Semester" -> Studiensemester.SEMESTER3;
-        case "ab 4. Semester" -> Studiensemester.SEMESTER4;
-        case "ab 5. Semester" -> Studiensemester.SEMESTER5;
-        case "ab 6. Semester" -> Studiensemester.SEMESTER6;
-        default -> null;
-        };
+    private Set<Studiensemester> decodeStudiensemester(String studiensemester) {
+        String[] studiensemesterArray = studiensemester.split(comma);
+        Set<Studiensemester> studiensemesterSet = new java.util.HashSet<>(Set.of());
+        for (String semester : studiensemesterArray) {
+            switch (semester.trim()) {
+            case "1. Semester" -> studiensemesterSet.add(Studiensemester.SEMESTER1);
+            case "2. Semester" -> studiensemesterSet.add(Studiensemester.SEMESTER2);
+            case "3. Semester" -> studiensemesterSet.add(Studiensemester.SEMESTER3);
+            case "4. Semester" -> studiensemesterSet.add(Studiensemester.SEMESTER4);
+            case "5. Semester" -> studiensemesterSet.add(Studiensemester.SEMESTER5);
+            case "6. Semester" -> studiensemesterSet.add(Studiensemester.SEMESTER6);
+            }
+        }
+        return studiensemesterSet.isEmpty() ? null : studiensemesterSet;
     }
 
     private String decodeProgrammierkenntnisse(String programmierkenntnisse) {
@@ -163,23 +174,23 @@ public class ExcelExportServiceTest {
     private List<AusbildungsPraktikumsstelleDto> getTestListOfAusbildungsPraktikumsstelleDto() {
         return List.of(
                 helper.createPraktikumsstelleDto(helper.createAusbildungsPraktikumsstelleEntity("Dienststelle 1", "Ausbilder 1", "a@b.c", "Taetigkeiten 1",
-                        Dringlichkeit.DRINGEND, Referat.ITM, Ausbildungsjahr.JAHR1, Ausbildungsrichtung.FISI, false, null,
+                        Dringlichkeit.DRINGEND, Referat.ITM, Set.of(Ausbildungsjahr.JAHR1), Ausbildungsrichtung.FISI, false, null,
                         helper.createNwkEntity("Vorname 1", "Nachname 1", null, Ausbildungsrichtung.FISI, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createAusbildungsPraktikumsstelleEntity("Dienststelle 2", "Ausbilder 2", "a@b.c", "Taetigkeiten 2",
-                        Dringlichkeit.DRINGEND, Referat.ITM, Ausbildungsjahr.JAHR2, Ausbildungsrichtung.FISI, true, null,
+                        Dringlichkeit.DRINGEND, Referat.ITM, Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, true, null,
                         helper.createNwkEntity("Vorname 2", "Nachname 2", null, Ausbildungsrichtung.FISI, "22/23", null, true))));
     }
 
     private List<StudiumsPraktikumsstelleDto> getTestListOfStudiumsPraktikumsstelleDto() {
         return List.of(
                 helper.createPraktikumsstelleDto(helper.createStudiumsPraktikumsstelleEntity("Dienststelle 3", "Ausbilder 3", "a@b.c", "Taetigkeiten 3",
-                        Dringlichkeit.DRINGEND, Referat.RIT, Studiensemester.SEMESTER1, Studiengang.BWI, "false", null,
+                        Dringlichkeit.DRINGEND, Referat.RIT, Set.of(Studiensemester.SEMESTER1), Studiengang.BWI, "false", null,
                         helper.createNwkEntity("Vorname 3", "Nachname 3", Studiengang.BSC, null, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createStudiumsPraktikumsstelleEntity("Dienststelle 4", "Ausbilder 4", "a@b.c", "Taetigkeiten 4",
-                        Dringlichkeit.ZWINGEND, Referat.ITM, Studiensemester.SEMESTER2, Studiengang.VI, "false", null,
+                        Dringlichkeit.ZWINGEND, Referat.ITM, Set.of(Studiensemester.SEMESTER2), Studiengang.VI, "false", null,
                         helper.createNwkEntity("Vorname 4", "Nachname 4", Studiengang.BSC, null, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createStudiumsPraktikumsstelleEntity("Dienststelle 5", "Ausbilder 5", "a@b.c", "Taetigkeiten 5",
-                        Dringlichkeit.NACHRANGIG, Referat.ITM, Studiensemester.SEMESTER3, Studiengang.BSC, "false", null,
+                        Dringlichkeit.NACHRANGIG, Referat.ITM, Set.of(Studiensemester.SEMESTER3), Studiengang.BSC, "false", null,
                         helper.createNwkEntity("Vorname 5", "Nachname 5", null, Ausbildungsrichtung.FISI, "22/23", null, true))));
     }
 }

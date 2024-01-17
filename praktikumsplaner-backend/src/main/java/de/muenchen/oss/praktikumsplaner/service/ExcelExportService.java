@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -59,7 +60,7 @@ public class ExcelExportService {
             ausbildungsSheet.getRow(i + 3).getCell(4).setCellValue(praktikumsstelle.namentlicheAnforderung());
             ausbildungsSheet.getRow(i + 3).getCell(5).setCellValue(programmierkenntnisseSwitch(praktikumsstelle.programmierkenntnisse()));
             ausbildungsSheet.getRow(i + 3).getCell(6).setCellValue(praktikumsstelle.projektarbeit() ? "Ja" : "Nein");
-            ausbildungsSheet.getRow(i + 3).getCell(7).setCellValue(ausbildungsjahrSwitch(praktikumsstelle.ausbildungsjahr()));
+            ausbildungsSheet.getRow(i + 3).getCell(7).setCellValue(ausbildungsjahrToStringConverter(praktikumsstelle.ausbildungsjahr()));
             ausbildungsSheet.getRow(i + 3).getCell(8).setCellValue(praktikumsstelle.dringlichkeit().name());
             ausbildungsSheet.getRow(i + 3).getCell(9).setCellValue(praktikumsstelle.ausbildungsrichtung().name());
             ausbildungsSheet.getRow(i + 3).getCell(10).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Ja" : "Nein");
@@ -79,7 +80,7 @@ public class ExcelExportService {
             studiumsSheet.getRow(i + 3).getCell(4).setCellValue(praktikumsstelle.namentlicheAnforderung());
             studiumsSheet.getRow(i + 3).getCell(5).setCellValue(programmierkenntnisseSwitch(praktikumsstelle.programmierkenntnisse()));
             studiumsSheet.getRow(i + 3).getCell(6).setCellValue(praktikumsstelle.dringlichkeit().name());
-            studiumsSheet.getRow(i + 3).getCell(7).setCellValue(studiensemesterSwitch(praktikumsstelle.studiensemester()));
+            studiumsSheet.getRow(i + 3).getCell(7).setCellValue(studiensemesterToStringConverter(praktikumsstelle.studiensemester()));
             studiumsSheet.getRow(i + 3).getCell(8).setCellValue(praktikumsstelle.studiengang().name());
             studiumsSheet.getRow(i + 3).getCell(9).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Ja" : "Nein");
             studiumsSheet.getRow(i + 3).getCell(10).setCellValue(praktikumsstelle.assignedNwk().nachname());
@@ -127,7 +128,7 @@ public class ExcelExportService {
                 .namentlicheAnforderung(praktikumsstelle.namentlicheAnforderung())
                 .programmierkenntnisse(praktikumsstelle.programmierkenntnisse())
                 .dringlichkeit(praktikumsstelle.dringlichkeit())
-                .ausbildungsjahr(Ausbildungsjahr.JAHR1)
+                .ausbildungsjahr(Set.of(Ausbildungsjahr.JAHR1, Ausbildungsjahr.JAHR2, Ausbildungsjahr.JAHR3))
                 .ausbildungsrichtung(praktikumsstelle.assignedNwk().ausbildungsrichtung())
                 .planstelleVorhanden(praktikumsstelle.planstelleVorhanden())
                 .assignedNwk(praktikumsstelle.assignedNwk())
@@ -143,7 +144,8 @@ public class ExcelExportService {
                 .namentlicheAnforderung(praktikumsstelle.namentlicheAnforderung())
                 .programmierkenntnisse(praktikumsstelle.programmierkenntnisse())
                 .dringlichkeit(praktikumsstelle.dringlichkeit())
-                .studiensemester(Studiensemester.SEMESTER1)
+                .studiensemester(Set.of(Studiensemester.SEMESTER1, Studiensemester.SEMESTER2, Studiensemester.SEMESTER3,
+                        Studiensemester.SEMESTER4, Studiensemester.SEMESTER5, Studiensemester.SEMESTER6))
                 .studiengang(praktikumsstelle.assignedNwk().studiengang())
                 .planstelleVorhanden(praktikumsstelle.planstelleVorhanden())
                 .assignedNwk(praktikumsstelle.assignedNwk())
@@ -168,46 +170,36 @@ public class ExcelExportService {
         }
     }
 
-    private String ausbildungsjahrSwitch(Ausbildungsjahr ausbildungsjahr) {
-        switch (ausbildungsjahr) {
-        case JAHR1 -> {
-            return "ab 1. Jahr";
+    private String ausbildungsjahrToStringConverter(Set<Ausbildungsjahr> ausbildungsjahr) {
+        StringBuilder returnString = new StringBuilder();
+        for (Ausbildungsjahr jahr : ausbildungsjahr) {
+            switch (jahr) {
+            case JAHR1 -> returnString.append("1. Ausbildungsjahr");
+            case JAHR2 -> returnString.append("2. Ausbildungsjahr");
+            case JAHR3 -> returnString.append("3. Ausbildungsjahr");
+            }
+            if (ausbildungsjahr.toArray()[ausbildungsjahr.size() - 1] != jahr) {
+                returnString.append(", ");
+            }
         }
-        case JAHR2 -> {
-            return "ab 2. Jahr";
-        }
-        case JAHR3 -> {
-            return "ab 3. Jahr";
-        }
-        default -> {
-            return "";
-        }
-        }
+        return returnString.toString();
     }
 
-    private String studiensemesterSwitch(Studiensemester studiensemester) {
-        switch (studiensemester) {
-        case SEMESTER1 -> {
-            return "ab 1. Semester";
+    private String studiensemesterToStringConverter(Set<Studiensemester> studiensemester) {
+        StringBuilder returnString = new StringBuilder();
+        for (Studiensemester semester : studiensemester) {
+            switch (semester) {
+            case SEMESTER1 -> returnString.append("1. Semester");
+            case SEMESTER2 -> returnString.append("2. Semester");
+            case SEMESTER3 -> returnString.append("3. Semester");
+            case SEMESTER4 -> returnString.append("4. Semester");
+            case SEMESTER5 -> returnString.append("5. Semester");
+            case SEMESTER6 -> returnString.append("6. Semester");
+            }
+            if (studiensemester.toArray()[studiensemester.size() - 1] != semester) {
+                returnString.append(", ");
+            }
         }
-        case SEMESTER2 -> {
-            return "ab 2. Semester";
-        }
-        case SEMESTER3 -> {
-            return "ab 3. Semester";
-        }
-        case SEMESTER4 -> {
-            return "ab 4. Semester";
-        }
-        case SEMESTER5 -> {
-            return "ab 5. Semester";
-        }
-        case SEMESTER6 -> {
-            return "ab 6. Semester";
-        }
-        default -> {
-            return "";
-        }
-        }
+        return returnString.toString();
     }
 }

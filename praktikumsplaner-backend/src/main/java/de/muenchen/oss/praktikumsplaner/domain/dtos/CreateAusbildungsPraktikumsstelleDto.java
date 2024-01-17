@@ -7,6 +7,7 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import java.util.Set;
 import lombok.Builder;
 
 @Builder
@@ -31,7 +32,7 @@ public record CreateAusbildungsPraktikumsstelleDto(@NotNull String dienststelle,
 
                                                    boolean planstelleVorhanden,
 
-                                                   @NotNull Ausbildungsjahr ausbildungsjahr,
+                                                   @NotNull Set<Ausbildungsjahr> ausbildungsjahr,
 
                                                    @NotNull Ausbildungsrichtung ausbildungsrichtung
 
