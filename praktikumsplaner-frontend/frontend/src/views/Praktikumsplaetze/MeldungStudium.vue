@@ -92,41 +92,6 @@
                     </v-col>
                     <v-col>
                         <v-text-field
-                            v-model="zuweisungsZeitraum"
-                            label="Zeitraum Nwk"
-                            outlined
-                            disabled
-                            filled
-                            background-color="grey"
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="1" />
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-radio-group
-                            v-model="praktikumsstelle.planstelleVorhanden"
-                            class="radios custom-label"
-                            row
-                            :rules="booleanRule"
-                        >
-                            <template #label>
-                                <span class="custom-label"
-                                    >Planstelle vorhanden*:</span
-                                >
-                            </template>
-                            <v-radio
-                                v-for="item in YesNoBoolean"
-                                :key="item.value"
-                                :label="item.name"
-                                :value="item.value"
-                                class="ml-5"
-                            ></v-radio>
-                        </v-radio-group>
-                    </v-col>
-                    <v-col cols="2" />
-                    <v-col>
-                        <v-text-field
                             v-model="praktikumsstelle.namentlicheAnforderung"
                             label="Anforderung bestimmter NWK"
                             :rules="namentlicheAnforderungRule"
@@ -153,6 +118,32 @@
                             >
                         </v-tooltip>
                     </v-col>
+                </v-row>
+                <v-row>
+                    <v-col>
+                        <v-radio-group
+                            v-model="praktikumsstelle.planstelleVorhanden"
+                            class="radios custom-label"
+                            row
+                            :rules="booleanRule"
+                        >
+                            <template #label>
+                                <span class="custom-label"
+                                    >Planstelle vorhanden*:</span
+                                >
+                            </template>
+                            <v-radio
+                                v-for="item in YesNoBoolean"
+                                :key="item.value"
+                                :label="item.name"
+                                :value="item.value"
+                                class="ml-5"
+                            ></v-radio>
+                        </v-radio-group>
+                    </v-col>
+                    <v-col cols="2" />
+                    <v-col />
+                    <v-col cols="1" />
                 </v-row>
                 <v-row>
                     <v-col>
@@ -183,11 +174,6 @@
                             :rules="requiredRule"
                             :menu-props="customMenuProps"
                             outlined
-                            @change="
-                                () => {
-                                    changeVorrZuweisungsZeitraum();
-                                }
-                            "
                         >
                         </v-select>
                     </v-col>
@@ -199,15 +185,86 @@
                             :items="Studiensemester"
                             item-value="value"
                             item-text="name"
-                            :rules="requiredRule"
+                            :rules="requiredArrayRule"
                             :menu-props="customMenuProps"
                             outlined
+                            multiple
                             @change="
                                 () => {
-                                    changeVorrZuweisungsZeitraum();
+                                    sortSemester();
                                 }
                             "
                         >
+                            <template #prepend-item>
+                                <v-list-item
+                                    ripple
+                                    @mousedown.prevent
+                                    @click="selectAllStudiensemester"
+                                >
+                                    <v-list-item-action>
+                                        <v-icon
+                                            :color="
+                                                praktikumsstelle.studiensemester
+                                                    ?.length > 0
+                                                    ? 'primary'
+                                                    : ''
+                                            "
+                                        >
+                                            {{ semesterIcon }}
+                                        </v-icon>
+                                    </v-list-item-action>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            Egal
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-divider class="mt-2"></v-divider>
+                            </template>
+                            <template #item="data">
+                                <v-list-item-action>
+                                    <v-icon
+                                        v-if="
+                                            data.attrs['aria-selected'] ===
+                                            'true'
+                                        "
+                                    >
+                                        mdi-checkbox-marked
+                                    </v-icon>
+                                    <v-icon v-else>
+                                        mdi-checkbox-blank-outline
+                                    </v-icon>
+                                </v-list-item-action>
+                                <v-list-item-content>
+                                    <v-list-item-title>
+                                        {{ data.item.name }}
+                                    </v-list-item-title>
+                                    <v-list-item-subtitle
+                                        v-if="
+                                            praktikumsstelle.studiengang ===
+                                            'BSC'
+                                        "
+                                    >
+                                        {{ data.item.zeitraumBSC }}
+                                    </v-list-item-subtitle>
+                                    <v-list-item-subtitle
+                                        v-else-if="
+                                            praktikumsstelle.studiengang ===
+                                            'BWI'
+                                        "
+                                    >
+                                        {{ data.item.zeitraumBWI }}
+                                    </v-list-item-subtitle>
+                                    <v-list-item-subtitle
+                                        v-else-if="
+                                            praktikumsstelle.studiengang ===
+                                            'VI'
+                                        "
+                                    >
+                                        {{ data.item.zeitraumVI }}
+                                    </v-list-item-subtitle>
+                                </v-list-item-content>
+                            </template>
                         </v-select>
                     </v-col>
                     <v-col cols="1" />
@@ -301,10 +358,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
-import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
 import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
@@ -325,11 +381,12 @@ const activeMeldezeitraum = ref<boolean>(false);
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
-const zeitraeueme = useZeitraeume();
-const zuweisungsZeitraum = ref<string>("");
 const userStore = useUserStore();
 const validationRules = useRules();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
+const requiredArrayRule = [
+    validationRules.notEmptyArrayRule("Darf nicht leer sein."),
+];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.emailRule("Keine gültige Email."),
@@ -377,6 +434,27 @@ const formatter = useFormatter();
 const meldezeitraeume = ref<object[]>([]);
 const isAusbidungsleitung = ref<boolean>(false);
 
+const allSemesterSelected = computed(() => {
+    return (
+        praktikumsstelle.value.studiensemester?.length ===
+        Studiensemester.length
+    );
+});
+
+const someSemesterSelected = computed(() => {
+    return (
+        praktikumsstelle.value.studiensemester?.length !== 0 &&
+        praktikumsstelle.value.studiensemester?.length !== undefined &&
+        !allSemesterSelected.value
+    );
+});
+
+const semesterIcon = computed(() => {
+    if (allSemesterSelected.value) return "mdi-checkbox-marked";
+    if (someSemesterSelected.value) return "mdi-minus-box";
+    return "mdi-checkbox-blank-outline";
+});
+
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
         .then((zeitraueme) => {
@@ -409,13 +487,6 @@ onMounted(() => {
         });
 });
 
-function changeVorrZuweisungsZeitraum() {
-    zuweisungsZeitraum.value = zeitraeueme.studiumsZeitraum(
-        praktikumsstelle.value.studiengang,
-        praktikumsstelle.value.studiensemester
-    );
-}
-
 function resetForm() {
     form.value?.reset();
     router.push("/praktikumsplaetze");
@@ -439,6 +510,21 @@ function uploadPraktikumsstelle() {
             resetForm();
         });
     }
+}
+
+function selectAllStudiensemester() {
+    if (allSemesterSelected.value) {
+        praktikumsstelle.value.studiensemester = [];
+    } else {
+        praktikumsstelle.value.studiensemester = Studiensemester.map(
+            (studiensemester) => studiensemester.value
+        );
+    }
+}
+
+function sortSemester() {
+    // sort Semester in ascending order
+    praktikumsstelle.value.studiensemester?.sort((a, b) => a.localeCompare(b));
 }
 </script>
 <style lang="scss">

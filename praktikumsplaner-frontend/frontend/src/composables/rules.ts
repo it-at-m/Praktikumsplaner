@@ -40,6 +40,11 @@ export function useRules() {
             message;
     }
 
+    function notEmptyArrayRule(message = "error") {
+        return (value: never[] | null | undefined) =>
+            (value && value.length > 0) || message;
+    }
+
     return {
         fileTypeRule,
         maxLengthRule,
@@ -48,5 +53,6 @@ export function useRules() {
         emailRule,
         notEmptyBooleanRule,
         fileRequiredRule,
+        notEmptyArrayRule,
     };
 }

@@ -20,7 +20,7 @@ export default class Praktikumsstelle {
 
         public ausbildungsjahr?: string,
 
-        public studiensemester?: string,
+        public studiensemester?: string[],
 
         public ausbildungsrichtung?: string,
 
