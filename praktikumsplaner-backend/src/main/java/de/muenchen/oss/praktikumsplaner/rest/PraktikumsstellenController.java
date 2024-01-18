@@ -81,7 +81,7 @@ public class PraktikumsstellenController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PatchMapping("/{praktikumsstellenId}")
     @ResponseStatus(HttpStatus.OK)
-    public PraktikumsstelleDto assignNwk(@PathVariable UUID praktikumsstellenId, @RequestParam(required = false) UUID nwkId) {
+    public PraktikumsstelleDto assignNwk(@PathVariable UUID praktikumsstellenId, @RequestParam(name = "nwkId", required = false) UUID nwkId) {
         if (nwkId == null) {
             return praktikumsstellenService.unassignNwk(praktikumsstellenId);
         }
