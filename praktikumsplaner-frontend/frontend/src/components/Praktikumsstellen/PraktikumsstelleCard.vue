@@ -106,7 +106,7 @@ const unassignDialogContent = ref<string>("");
 const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
 const unassignConfirmDialog = ref<boolean>(false);
 const warningDialog = ref<boolean>(false);
-const stelleToAssignUnassign = ref<Praktikumsstelle>();
+let stelleToAssignUnassign: Praktikumsstelle | undefined;
 const nwkToAssignUnassing = ref<Nwk>();
 const warningDialogTitle = ref<string>(
     "Warnung. Wollen sie wirklich fortfahren?"
@@ -118,21 +118,37 @@ function getCardText(stelle: Praktikumsstelle): string {
     let cardText = "";
 
     if (stelle.studiengang) {
-        cardText +=
-            "Studiengang: " +
-            stelle.studiengang +
-            "\n" +
-            "Studiensemester: ab " +
-            stelle.studiensemester?.charAt(stelle.studiensemester?.length - 1) +
-            ". Semester";
+        cardText += "Studiengang: " + stelle.studiengang + "\n";
+        if (stelle.studiensemester) {
+            cardText += "Semester: ";
+            stelle.studiensemester.sort();
+            for (let i = 0; i < stelle.studiensemester.length; i++) {
+                cardText +=
+                    stelle.studiensemester[i].charAt(
+                        stelle.studiensemester[i].length - 1
+                    ) + ". Semester";
+                if (i < stelle.studiensemester.length - 1) {
+                    cardText += ", ";
+                }
+            }
+            cardText += "\n";
+        }
     } else if (stelle.ausbildungsrichtung) {
-        cardText +=
-            "Ausbildungsrichtung: " +
-            stelle.ausbildungsrichtung +
-            "\n" +
-            "Ausbildungsjahr: " +
-            stelle.ausbildungsjahr?.charAt(stelle.ausbildungsjahr?.length - 1) +
-            ". Ausbildungsjahr";
+        cardText += "Ausbildungsrichtung: " + stelle.ausbildungsrichtung + "\n";
+        if (stelle.ausbildungsjahr) {
+            cardText += "Ausbildungsjahr: ";
+            stelle.ausbildungsjahr.sort();
+            for (let i = 0; i < stelle.ausbildungsjahr.length; i++) {
+                cardText +=
+                    stelle.ausbildungsjahr[i].charAt(
+                        stelle.ausbildungsjahr[i].length - 1
+                    ) + ". Ausbildungsjahr";
+                if (i < stelle.ausbildungsjahr.length - 1) {
+                    cardText += ", ";
+                }
+            }
+            cardText += "\n";
+        }
     }
 
     return cardText;
@@ -229,7 +245,7 @@ function drop(event: DragEvent, stelle: Praktikumsstelle) {
     // Check if studiengang is the same
     if (
         stelle.studiengang &&
-        nwkToAssignUnassing.value.studiengang != "FISI" &&
+        nwkToAssignUnassing.value?.studiengang != undefined &&
         stelle.studiengang != nwkToAssignUnassing.value.studiengang
     ) {
         warningDialogText.value +=
@@ -261,46 +277,56 @@ function drop(event: DragEvent, stelle: Praktikumsstelle) {
     // Check if Nwk is in the right semester
     if (
         stelle.studiengang != undefined &&
-        nwkToAssignUnassing.value.studiengang != "FISI" &&
+        nwkToAssignUnassing.value?.studiengang != undefined &&
         stelle.studiensemester
     ) {
-        const expectedSemester: number = +stelle.studiensemester.substring(
-            8,
-            10
-        );
+        const expectedSemesters: number[] = [];
+        for (let i = 0; i < stelle.studiensemester.length; i++) {
+            expectedSemesters.push(+stelle.studiensemester[i].substring(8, 9));
+        }
         const actualSemester = calculateSemester(nwkToAssignUnassing.value);
-        if (expectedSemester > actualSemester) {
+        if (!expectedSemesters.includes(actualSemester)) {
             warningDialogText.value +=
                 "Wollen sie wirklich eine/n Student*in im " +
                 actualSemester +
-                " Semester auf diese Stelle setzen, obwohl ein/e Student*in ab dem " +
-                expectedSemester +
-                " Semester gefordert ist?\n";
+                " Semester auf diese Stelle setzen, obwohl ein/e Student*in im ";
+            for (let i = 0; i < expectedSemesters.length; i++) {
+                warningDialogText.value += expectedSemesters[i] + ". Semester";
+                if (i < expectedSemesters.length - 1) {
+                    warningDialogText.value += ", ";
+                }
+            }
+            warningDialogText.value += " erwartet wird.\n";
         }
     }
 
     // Check if Nwk is in the right Lehrjahr
     if (
         stelle.ausbildungsrichtung != undefined &&
-        nwkToAssignUnassing.value.studiengang == "FISI" &&
+        nwkToAssignUnassing.value?.ausbildungsrichtung != undefined &&
         stelle.ausbildungsjahr
     ) {
-        const expectedLehrjahr: number = +stelle.ausbildungsjahr.substring(
-            4,
-            6
-        );
+        const expectedLehrjahre: number[] = [];
+        for (let i = 0; i < stelle.ausbildungsjahr.length; i++) {
+            expectedLehrjahre.push(+stelle.ausbildungsjahr[i].substring(4, 5));
+        }
         const actualLehrjahr = calculateLehrjahr(nwkToAssignUnassing.value);
-        if (expectedLehrjahr > actualLehrjahr) {
+        if (!expectedLehrjahre.includes(actualLehrjahr)) {
             warningDialogText.value +=
                 "Wollen sie wirklich eine/n Auszubildende/n im " +
                 actualLehrjahr +
-                " Lehrjahr auf diese Stelle setzen, obwohl eine/n Auszubildende/n ab dem " +
-                expectedLehrjahr +
-                " Lehrjahr gefordert ist?\n";
+                ". Lehrjahr auf diese Stelle setzen, obwohl ein/e Auszubildende/r im ";
+            for (let i = 0; i < expectedLehrjahre.length; i++) {
+                warningDialogText.value += expectedLehrjahre[i] + ". Lehrjahr";
+                if (i < expectedLehrjahre.length - 1) {
+                    warningDialogText.value += ", ";
+                }
+            }
+            warningDialogText.value += " erwartet wird.\n";
         }
     }
 
-    stelleToAssignUnassign.value = stelle;
+    stelleToAssignUnassign = stelle;
     if (warningDialogText.value == "") {
         assignNwk();
     } else {
@@ -309,19 +335,19 @@ function drop(event: DragEvent, stelle: Praktikumsstelle) {
 }
 
 function assignNwk() {
-    if (!stelleToAssignUnassign.value || !stelleToAssignUnassign.value.id) {
+    if (!stelleToAssignUnassign || !stelleToAssignUnassign.id) {
         nwkToAssignUnassing.value = undefined;
         return;
     }
 
-    stelleToAssignUnassign.value.assignedNwk = nwkToAssignUnassing.value;
+    stelleToAssignUnassign.assignedNwk = nwkToAssignUnassing.value;
     PraktikumsstellenService.assignNwk(
-        stelleToAssignUnassign.value.id || "",
-        stelleToAssignUnassign.value.assignedNwk?.id
+        stelleToAssignUnassign.id || "",
+        stelleToAssignUnassign.assignedNwk?.id
     );
     assignedNwk.value = nwkToAssignUnassing.value;
-    emits("input", stelleToAssignUnassign.value);
-    EventBus.$emit("assignedNwk", stelleToAssignUnassign.value.assignedNwk);
+    emits("input", stelleToAssignUnassign);
+    EventBus.$emit("assignedNwk", stelleToAssignUnassign.assignedNwk);
     resetWarningDialog();
 }
 
@@ -332,7 +358,7 @@ function resetWarningDialog() {
 
 function calculateSemester(nwk: Nwk) {
     if (!nwk) return -1;
-    if (nwk && nwk.studiengang == "FISI") return 0;
+    if (nwk && nwk.ausbildungsrichtung != undefined) return 0;
     let semester: number;
     const startYear: number = +nwk.jahrgang.substring(0, 2) + 2000;
     const currentYear: number = new Date().getFullYear();
@@ -345,8 +371,7 @@ function calculateSemester(nwk: Nwk) {
 
 function calculateLehrjahr(nwk: Nwk) {
     if (!nwk) return -1;
-    if (nwk.studiengang != "FISI") return 0;
-
+    if (nwk.studiengang != undefined) return 0;
     let lehrjahr: number;
     const startYear: number = +nwk.jahrgang.substring(0, 2) + 2000;
     const currentYear: number = new Date().getFullYear();
@@ -360,24 +385,21 @@ function calculateLehrjahr(nwk: Nwk) {
 }
 
 function unassignNwk() {
-    if (stelleToAssignUnassign.value?.id) {
-        PraktikumsstellenService.unassignNwk(stelleToAssignUnassign.value.id);
-        EventBus.$emit(
-            "unassignedNwk",
-            stelleToAssignUnassign.value.assignedNwk
-        );
-        stelleToAssignUnassign.value.assignedNwk = undefined;
+    if (stelleToAssignUnassign?.id) {
+        PraktikumsstellenService.unassignNwk(stelleToAssignUnassign.id);
+        EventBus.$emit("unassignedNwk", stelleToAssignUnassign.assignedNwk);
+        stelleToAssignUnassign.assignedNwk = undefined;
         assignedNwk.value = undefined;
     }
     resetUnassign();
 }
 function openConfirmationDialog(stelle: Praktikumsstelle) {
     unassignConfirmDialog.value = true;
-    stelleToAssignUnassign.value = stelle;
+    stelleToAssignUnassign = stelle;
     unassignDialogContent.value = `Möchten sie die Zuweisung von ${stelle.assignedNwk?.vorname} ${stelle.assignedNwk?.nachname} wirklich aufheben?`;
 }
 function resetUnassign() {
-    stelleToAssignUnassign.value = undefined;
+    stelleToAssignUnassign = undefined;
     unassignConfirmDialog.value = false;
 }
 function noDropAllowed() {
