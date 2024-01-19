@@ -92,15 +92,32 @@
                     </v-col>
                     <v-col>
                         <v-text-field
-                            v-model="zuweisungsZeitraum"
-                            label="Zeitraum Nwk"
+                            v-model="praktikumsstelle.namentlicheAnforderung"
+                            label="Anforderung bestimmter NWK"
+                            :rules="namentlicheAnforderungRule"
                             outlined
-                            disabled
-                            filled
-                            background-color="grey"
                         ></v-text-field>
                     </v-col>
-                    <v-col cols="1" />
+                    <v-col cols="1">
+                        <v-tooltip right>
+                            <template #activator="{ on, attrs }">
+                                <v-icon
+                                    color="blue"
+                                    class="v-tooltip-spacing"
+                                    v-bind="attrs"
+                                    large
+                                    v-on="on"
+                                >
+                                    mdi-information
+                                </v-icon>
+                            </template>
+                            <span
+                                >Bei Anforderung einer bestimmten NWK für die
+                                Stelle, hier den vollständigen Namen
+                                eintragen.</span
+                            >
+                        </v-tooltip>
+                    </v-col>
                 </v-row>
                 <v-row>
                     <v-col>
@@ -165,38 +182,6 @@
                             >
                         </v-tooltip>
                     </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-text-field
-                            v-model="praktikumsstelle.namentlicheAnforderung"
-                            label="Anforderung bestimmter NWK"
-                            :rules="namentlicheAnforderungRule"
-                            outlined
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="1">
-                        <v-tooltip right>
-                            <template #activator="{ on, attrs }">
-                                <v-icon
-                                    color="blue"
-                                    class="v-tooltip-spacing"
-                                    v-bind="attrs"
-                                    large
-                                    v-on="on"
-                                >
-                                    mdi-information
-                                </v-icon>
-                            </template>
-                            <span
-                                >Bei Anforderung einer bestimmten NWK für die
-                                Stelle, hier den vollständigen Namen
-                                eintragen.</span
-                            >
-                        </v-tooltip>
-                    </v-col>
-                    <v-col cols="2"></v-col>
-                    <v-col></v-col>
                 </v-row>
                 <v-row>
                     <v-col>
