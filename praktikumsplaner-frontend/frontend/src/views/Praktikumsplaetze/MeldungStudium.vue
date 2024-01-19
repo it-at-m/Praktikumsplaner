@@ -202,14 +202,7 @@
                                     @click="selectAllStudiensemester"
                                 >
                                     <v-list-item-action>
-                                        <v-icon
-                                            :color="
-                                                praktikumsstelle.studiensemester
-                                                    ?.length > 0
-                                                    ? 'primary'
-                                                    : ''
-                                            "
-                                        >
+                                        <v-icon :color="semesterIconColor()">
                                             {{ semesterIcon }}
                                         </v-icon>
                                     </v-list-item-action>
@@ -523,8 +516,13 @@ function selectAllStudiensemester() {
 }
 
 function sortSemester() {
-    // sort Semester in ascending order
     praktikumsstelle.value.studiensemester?.sort((a, b) => a.localeCompare(b));
+}
+
+function semesterIconColor() {
+    return allSemesterSelected.value || someSemesterSelected.value
+        ? "primary"
+        : "darkgrey";
 }
 </script>
 <style lang="scss">

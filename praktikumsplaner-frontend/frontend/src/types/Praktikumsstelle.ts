@@ -18,7 +18,7 @@ export default class Praktikumsstelle {
 
         public planstelleVorhanden?: boolean,
 
-        public ausbildungsjahr?: string,
+        public ausbildungsjahr?: string[],
 
         public studiensemester?: string[],
 

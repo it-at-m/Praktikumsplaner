@@ -227,11 +227,6 @@
                             :rules="requiredRule"
                             :menu-props="customMenuProps"
                             outlined
-                            @change="
-                                () => {
-                                    changeVorrZuweisungsZeitraum();
-                                }
-                            "
                         >
                         </v-select>
                     </v-col>
@@ -243,15 +238,65 @@
                             :items="Ausbildungsjahr"
                             item-value="value"
                             item-text="name"
-                            :rules="requiredRule"
+                            :rules="requiredArrayRule"
                             :menu-props="customMenuProps"
                             outlined
+                            multiple
                             @change="
                                 () => {
-                                    changeVorrZuweisungsZeitraum();
+                                    sortAusbildungsjahre();
                                 }
                             "
                         >
+                            <template #prepend-item>
+                                <v-list-item
+                                    ripple
+                                    @mousedown.prevent
+                                    @click="selectAllAusbildungsjahre"
+                                >
+                                    <v-list-item-action>
+                                        <v-icon
+                                            :color="ausbildungsjahrIconColor()"
+                                        >
+                                            {{ AusbildungsjahrIcon }}
+                                        </v-icon>
+                                    </v-list-item-action>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            Egal
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-divider class="mt-2"></v-divider>
+                            </template>
+                            <template #item="data">
+                                <v-list-item-action>
+                                    <v-icon
+                                        v-if="
+                                            data.attrs['aria-selected'] ===
+                                            'true'
+                                        "
+                                    >
+                                        mdi-checkbox-marked
+                                    </v-icon>
+                                    <v-icon v-else>
+                                        mdi-checkbox-blank-outline
+                                    </v-icon>
+                                </v-list-item-action>
+                                <v-list-item-content>
+                                    <v-list-item-title>
+                                        {{ data.item.name }}
+                                    </v-list-item-title>
+                                    <v-list-item-subtitle
+                                        v-if="
+                                            praktikumsstelle.ausbildungsrichtung ===
+                                            'FISI'
+                                        "
+                                    >
+                                        {{ data.item.zeitraumFISI }}
+                                    </v-list-item-subtitle>
+                                </v-list-item-content>
+                            </template>
                         </v-select>
                     </v-col>
                     <v-col cols="1" />
@@ -345,10 +390,9 @@
 
 <script setup lang="ts">
 import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
-import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
 import { Ausbildungsjahr } from "@/types/Ausbildungsjahr";
 import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
@@ -367,11 +411,12 @@ const activeMeldezeitraum = ref<boolean>(false);
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
-const zeitraeueme = useZeitraeume();
-const zuweisungsZeitraum = ref<string>("");
 const userStore = useUserStore();
 const validationRules = useRules();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
+const requiredArrayRule = [
+    validationRules.notEmptyArrayRule("Darf nicht leer sein."),
+];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.emailRule("Keine gültige Email."),
@@ -419,6 +464,27 @@ const formatter = useFormatter();
 const meldezeitraeume = ref<object[]>([]);
 const isAusbidungsleitung = ref<boolean>(false);
 
+const allAusbildungsjahreSelected = computed(() => {
+    return (
+        praktikumsstelle.value.ausbildungsjahr?.length ===
+        Ausbildungsjahr.length
+    );
+});
+
+const someAusbildungsjahreSelected = computed(() => {
+    return (
+        praktikumsstelle.value.ausbildungsjahr?.length !== 0 &&
+        praktikumsstelle.value.ausbildungsjahr?.length !== undefined &&
+        !allAusbildungsjahreSelected.value
+    );
+});
+
+const AusbildungsjahrIcon = computed(() => {
+    if (allAusbildungsjahreSelected.value) return "mdi-checkbox-marked";
+    if (someAusbildungsjahreSelected.value) return "mdi-minus-box";
+    return "mdi-checkbox-blank-outline";
+});
+
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
         .then((zeitraueme) => {
@@ -450,12 +516,6 @@ onMounted(() => {
             }
         });
 });
-function changeVorrZuweisungsZeitraum() {
-    zuweisungsZeitraum.value = zeitraeueme.ausbildungsZeitraum(
-        praktikumsstelle.value.ausbildungsrichtung,
-        praktikumsstelle.value.ausbildungsjahr
-    );
-}
 function resetForm() {
     form.value?.reset();
     router.push("/praktikumsplaetze");
@@ -478,6 +538,27 @@ function uploadPraktikumsstelle() {
             resetForm();
         });
     }
+}
+
+function selectAllAusbildungsjahre() {
+    if (allAusbildungsjahreSelected.value) {
+        praktikumsstelle.value.ausbildungsjahr = [];
+    } else {
+        praktikumsstelle.value.ausbildungsjahr = Ausbildungsjahr.map(
+            (ausbildungsjahr) => ausbildungsjahr.value
+        );
+    }
+}
+
+function sortAusbildungsjahre() {
+    praktikumsstelle.value.ausbildungsjahr?.sort((a, b) => a.localeCompare(b));
+}
+
+function ausbildungsjahrIconColor() {
+    return allAusbildungsjahreSelected.value ||
+        someAusbildungsjahreSelected.value
+        ? "primary"
+        : "darkgrey";
 }
 </script>
 <style lang="scss">
