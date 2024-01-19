@@ -24,6 +24,7 @@
                             <v-text-field
                                 v-model="nwkToUpdate.vorname"
                                 label="Vorname"
+                                :rules="nameRule"
                                 outlined
                             ></v-text-field>
                         </v-list-item>
@@ -31,6 +32,7 @@
                             <v-text-field
                                 v-model="nwkToUpdate.nachname"
                                 label="Nachname"
+                                :rules="nameRule"
                                 outlined
                             ></v-text-field>
                         </v-list-item>
@@ -38,6 +40,7 @@
                             <v-text-field
                                 v-model="nwkToUpdate.jahrgang"
                                 label="Jahrgang"
+                                :rules="jahrgangRule"
                                 outlined
                             ></v-text-field>
                         </v-list-item>
@@ -100,9 +103,29 @@ import NwkService from "@/api/NwkService";
 import Nwk from "@/types/Nwk";
 import { Studiengang } from "@/types/Studiengang";
 import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
+import { useRules } from "@/composables/rules";
 
 const visible = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
+const validationRules = useRules();
+const nameRule = [
+    validationRules.minLengthRule(
+        2,
+        "Der Name muss mindestens 2 Zeichen lang sein."
+    ),
+    validationRules.maxLengthRule(
+        255,
+        "Der Name darf maximal 255 Zeichen lang sein."
+    ),
+    validationRules.notEmptyRule("Der Name darf nicht leer sein."),
+];
+const jahrgangRule = [
+    validationRules.notEmptyRule("Der Jahrgang darf nicht leer sein."),
+    validationRules.regexRule(
+        /^([0-9]{2})\/([0-9]{2})$/,
+        "Der Jahrgang muss im Format XX/XX angegeben werden."
+    ),
+];
 
 const props = defineProps<{
     nwk: Nwk;

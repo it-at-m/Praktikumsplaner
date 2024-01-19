@@ -9,6 +9,13 @@ export function useRules() {
             value != null || value != undefined || message;
     }
 
+    function minLengthRule(length: number, message = "error") {
+        return (value: string | null | undefined) =>
+            !value ||
+            ((value || value?.trim() == "") && value.length >= length) ||
+            message;
+    }
+
     function maxLengthRule(length: number, message = "error") {
         return (value: string | null | undefined) =>
             !value ||
@@ -40,13 +47,20 @@ export function useRules() {
             message;
     }
 
+    function regexRule(regex: RegExp, message = "error") {
+        return (value: string | null | undefined) =>
+            (value && regex.test(value)) || message;
+    }
+
     return {
         fileTypeRule,
+        minLengthRule,
         maxLengthRule,
         notEmptyDateRule,
         notEmptyRule,
         emailRule,
         notEmptyBooleanRule,
         fileRequiredRule,
+        regexRule,
     };
 }
