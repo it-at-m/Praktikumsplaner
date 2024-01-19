@@ -38,15 +38,6 @@ export function useRules() {
             value != null || value != undefined || message;
     }
 
-    function emailRule(message = "error") {
-        return (value: string | null | undefined) =>
-            (value &&
-                /^[A-Z0-9._%+-]{1,64}@[A-Z0-9.-]{1,63}\.[A-Z]{1,63}$/i.test(
-                    value
-                )) ||
-            message;
-    }
-
     function regexRule(regex: RegExp, message = "error") {
         return (value: string | null | undefined) =>
             (value && regex.test(value)) || message;
@@ -58,7 +49,6 @@ export function useRules() {
         maxLengthRule,
         notEmptyDateRule,
         notEmptyRule,
-        emailRule,
         notEmptyBooleanRule,
         fileRequiredRule,
         regexRule,

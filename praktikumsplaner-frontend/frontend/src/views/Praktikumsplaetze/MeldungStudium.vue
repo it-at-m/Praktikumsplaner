@@ -332,7 +332,10 @@ const validationRules = useRules();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
-    validationRules.emailRule("Keine gültige Email."),
+    validationRules.regexRule(
+        /^[A-Z0-9._%+-]{1,64}@[A-Z0-9.-]{1,63}\.[A-Z]{1,63}$/,
+        "Keine gültige Email."
+    ),
     validationRules.maxLengthRule(
         255,
         "Die Email darf nicht länger als 255 Zeichen sein."
