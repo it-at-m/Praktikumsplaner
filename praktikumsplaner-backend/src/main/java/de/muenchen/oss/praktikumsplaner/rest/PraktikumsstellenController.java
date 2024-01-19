@@ -69,7 +69,7 @@ public class PraktikumsstellenController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInSpecificMeldezeitraum(
-            @RequestParam(required = false) String meldezeitraum) {
+            @RequestParam(name = "meldezeitraum", required = false) String meldezeitraum) {
         if (meldezeitraum.equals("current")) {
             return praktikumsstellenService.getAllInCurrentMeldezeitraumGroupedByDienststelle();
         } else if (meldezeitraum.equals("most_recent")) {
@@ -81,7 +81,8 @@ public class PraktikumsstellenController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PatchMapping("/{praktikumsstellenId}")
     @ResponseStatus(HttpStatus.OK)
-    public PraktikumsstelleDto assignNwk(@PathVariable UUID praktikumsstellenId, @RequestParam(required = false) UUID nwkId) {
+    public PraktikumsstelleDto assignNwk(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
+            @RequestParam(name = "nwkId", required = false) UUID nwkId) {
         if (nwkId == null) {
             return praktikumsstellenService.unassignNwk(praktikumsstellenId);
         }
