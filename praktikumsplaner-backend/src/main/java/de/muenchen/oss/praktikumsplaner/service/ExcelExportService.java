@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -172,13 +174,15 @@ public class ExcelExportService {
 
     private String ausbildungsjahrToStringConverter(Set<Ausbildungsjahr> ausbildungsjahr) {
         StringBuilder returnString = new StringBuilder();
-        for (Ausbildungsjahr jahr : ausbildungsjahr) {
+        List<Ausbildungsjahr> ausbildungsjahrSortedList = ausbildungsjahr.stream().sorted(Comparator.comparingInt(Ausbildungsjahr::ordinal))
+                .collect(Collectors.toCollection(ArrayList::new));
+        for (Ausbildungsjahr jahr : ausbildungsjahrSortedList) {
             switch (jahr) {
             case JAHR1 -> returnString.append("1. Ausbildungsjahr");
             case JAHR2 -> returnString.append("2. Ausbildungsjahr");
             case JAHR3 -> returnString.append("3. Ausbildungsjahr");
             }
-            if (ausbildungsjahr.toArray()[ausbildungsjahr.size() - 1] != jahr) {
+            if (ausbildungsjahrSortedList.toArray()[ausbildungsjahrSortedList.size() - 1] != jahr) {
                 returnString.append(", ");
             }
         }
@@ -187,7 +191,9 @@ public class ExcelExportService {
 
     private String studiensemesterToStringConverter(Set<Studiensemester> studiensemester) {
         StringBuilder returnString = new StringBuilder();
-        for (Studiensemester semester : studiensemester) {
+        List<Studiensemester> studiensemesterSortedList = studiensemester.stream().sorted(Comparator.comparingInt(Studiensemester::ordinal))
+                .collect(Collectors.toCollection(ArrayList::new));
+        for (Studiensemester semester : studiensemesterSortedList) {
             switch (semester) {
             case SEMESTER1 -> returnString.append("1. Semester");
             case SEMESTER2 -> returnString.append("2. Semester");
@@ -196,7 +202,7 @@ public class ExcelExportService {
             case SEMESTER5 -> returnString.append("5. Semester");
             case SEMESTER6 -> returnString.append("6. Semester");
             }
-            if (studiensemester.toArray()[studiensemester.size() - 1] != semester) {
+            if (studiensemesterSortedList.toArray()[studiensemesterSortedList.size() - 1] != semester) {
                 returnString.append(", ");
             }
         }
