@@ -47,4 +47,12 @@ public class NwkService {
     public List<NwkDto> findAllNwks() {
         return nwkRepository.findAll().stream().map(nwkMapper::toDto).toList();
     }
+
+    public void saveNwk(final NwkDto nwkDto) {
+        nwkRepository.save(nwkMapper.toEntity(nwkDto));
+    }
+
+    public boolean nwkExistsById(final UUID id) {
+        return nwkRepository.existsById(id);
+    }
 }
