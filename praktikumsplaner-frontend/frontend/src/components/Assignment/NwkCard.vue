@@ -4,60 +4,55 @@
         elevation="4"
         outlined
     >
-        <v-row
-            no-gutters
-            align="center"
-        >
-            <v-col cols="auto">
-                <initials-avatar
-                    :nwk-name="getFullName(props.nwk)"
-                    :background-color="getNwkColor(props.nwk)"
-                />
-            </v-col>
-            <v-col>
-                <div>
-                    <v-card-title>
-                        {{ getFullName(props.nwk) }}
-                    </v-card-title>
-                    <v-card-subtitle>
-                        {{ getSubtitle(props.nwk) }}
-                    </v-card-subtitle>
-                </div>
-            </v-col>
-            <v-col class="text-right mr-2">
-                <v-btn
-                    icon
-                    @click.stop="show = !show"
-                >
-                    <v-icon>{{
-                        show ? "mdi-chevron-up" : "mdi-chevron-down"
-                    }}</v-icon>
-                </v-btn>
-            </v-col>
-        </v-row>
-        <v-expand-transition>
-            <v-chip-group
-                v-if="show"
-                active-class="primary--text"
-                column
-            >
-                <v-chip
-                    v-for="day in germanDays"
-                    :key="day"
-                    color="primary"
-                    outlined
-                    class="ml-4 mr-0"
-                >
-                    {{ day }}
-                </v-chip>
-            </v-chip-group>
-        </v-expand-transition>
+        <v-expansion-panels>
+            <v-expansion-panel :disabled="!hasDetails(props.nwk)">
+                <v-expansion-panel-header>
+                    <v-row
+                        no-gutters
+                        align="center"
+                    >
+                        <v-col cols="auto">
+                            <initials-avatar
+                                :nwk-name="getFullName(props.nwk)"
+                                :background-color="getNwkColor(props.nwk)"
+                            />
+                        </v-col>
+                        <v-col>
+                            <div>
+                                <v-card-title>
+                                    {{ getFullName(props.nwk) }}
+                                </v-card-title>
+                                <v-card-subtitle>
+                                    {{ getSubtitle(props.nwk) }}
+                                </v-card-subtitle>
+                            </div>
+                        </v-col>
+                    </v-row>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                    <v-chip-group
+                        active-class="primary--text"
+                        column
+                    >
+                        <v-chip
+                            v-for="day in germanDays"
+                            :key="day"
+                            color="primary"
+                            outlined
+                            class="ml-4 mr-0"
+                        >
+                            {{ day }}
+                        </v-chip>
+                    </v-chip-group>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+        </v-expansion-panels>
     </v-card>
 </template>
 <script setup lang="ts">
 import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
-import Nwk from "@/types/Nwk";
-import { ref, computed } from "vue";
+import Nwk, { hasDetails } from "@/types/Nwk";
+import { computed } from "vue";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
 import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
@@ -69,8 +64,6 @@ const props = defineProps<{
 const germanDays = computed(() => {
     return new GermanWeekdayMapper().getGermanDays(props.nwk.vorlesungstage);
 });
-
-const show = ref<boolean>(false);
 
 function getFullName(nwk: Nwk): string {
     return nwk.vorname + " " + nwk.nachname;
@@ -96,5 +89,8 @@ function getNwkColor(nwk: Nwk): string {
     return color;
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
+.v-expansion-panel--disabled {
+    color: var(--v-text-base) !important;
+}
 </style>

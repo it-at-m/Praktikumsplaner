@@ -95,6 +95,10 @@ Text field for the contact email of the [örtliche Ausbilderin](./../glossary.md
 ### Meldezeitraums Auswahl
 
 This field lets you choose the [Meldezeitraum](./../glossary.md#meldezeitraum) to assign the [Praktikumsstelle](./../glossary.md#praktikumsstelle) to.
+The current [Meldezeitraum](./../glossary.md#meldezeitraum) is the top option,
+followed by the upcoming [Meldezeitraum](./../glossary.md#meldezeitraum) and
+then all the previous [Meldezeitraum](./../glossary.md#meldezeitraum).
+The upcoming and passed [Meldezeiträume](./../glossary.md#meldezeitraum) are sorted by date closest to the current date.
 
 This feature is only available for [örtliche Ausbildungsleitungen](./../glossary.md#ortliche-ausbildungsleitung).
 

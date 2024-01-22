@@ -331,7 +331,7 @@
                 </v-row>
             </v-container>
             <v-container
-                v-show="isAusbidungsleitung"
+                v-show="isAusbildungsleitung"
                 class="box"
             >
                 <v-row>
@@ -349,7 +349,22 @@
                             item-value="id"
                             item-text="zeitraumName"
                             outlined
-                        ></v-select>
+                        >
+                            <template #item="data">
+                                {{ data.item.zeitraumName }}:
+                                {{
+                                    formatter.formatDateFromString(
+                                        data.item.zeitraum.startZeitpunkt
+                                    )
+                                }}
+                                -
+                                {{
+                                    formatter.formatDateFromString(
+                                        data.item.zeitraum.endZeitpunkt
+                                    )
+                                }}
+                            </template>
+                        </v-select>
                     </v-col>
                     <v-col cols="2" />
                     <v-col> </v-col>
@@ -375,7 +390,7 @@
 
 <script setup lang="ts">
 import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
 import { Ausbildungsjahr } from "@/types/Ausbildungsjahr";
@@ -390,14 +405,17 @@ import { Programmierkenntnisse } from "@/types/YesNoEgalBoolean";
 import { useFormatter } from "@/composables/formatter";
 import { APP_SECURITY } from "@/Constants";
 import { useUserStore } from "@/stores/user";
+import Meldezeitraum from "@/types/Meldezeitraum";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
+const isAusbildungsleitung = ref<boolean>(false);
 const userStore = useUserStore();
 const validationRules = useRules();
+const formatter = useFormatter();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const requiredArrayRule = [
     validationRules.notEmptyArrayRule("Darf nicht leer sein."),
@@ -445,9 +463,16 @@ const customMenuProps = {
     offsetY: true,
 };
 const form = ref<HTMLFormElement>();
-const formatter = useFormatter();
-const meldezeitraeume = ref<object[]>([]);
-const isAusbidungsleitung = ref<boolean>(false);
+const meldezeitraeume = computed(() => {
+    return [
+        currentMeldezeitraum.value,
+        ...upcomingMeldezeitraeume.value,
+        ...passedMeldezeitraeume.value,
+    ];
+});
+const currentMeldezeitraum = ref<Meldezeitraum>();
+const upcomingMeldezeitraeume = ref<Meldezeitraum[]>([]);
+const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
 
 const allAusbildungsjahreSelected = computed(() => {
     return (
@@ -474,33 +499,33 @@ onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
         .then((zeitraueme) => {
             activeMeldezeitraum.value = zeitraueme.length > 0;
+            currentMeldezeitraum.value = zeitraueme[0];
         })
         .then(() => {
             if (
                 userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
                 APP_SECURITY !== "true"
             ) {
-                isAusbidungsleitung.value = true;
+                isAusbildungsleitung.value = true;
                 activeMeldezeitraum.value = true;
-                MeldezeitraumService.getAllMeldezeitraeume().then(
-                    (zeitraeume) => {
-                        meldezeitraeume.value = zeitraeume.map((zeitraum) => {
-                            return {
-                                id: zeitraum.id,
-                                zeitraumName: `${
-                                    zeitraum.zeitraumName
-                                }: ${formatter.formatDateFromString(
-                                    zeitraum.zeitraum.startZeitpunkt
-                                )} - ${formatter.formatDateFromString(
-                                    zeitraum.zeitraum.endZeitpunkt
-                                )}`,
-                            };
-                        });
-                    }
-                );
+                getUpcomingMeldezeitraeume();
+                getPassedMeldezeitraeume();
             }
         });
 });
+
+function getUpcomingMeldezeitraeume() {
+    MeldezeitraumService.getUpcomingMeldezeitraueme().then((zeitraeume) => {
+        upcomingMeldezeitraeume.value = zeitraeume;
+    });
+}
+
+function getPassedMeldezeitraeume() {
+    MeldezeitraumService.getPassedMeldezeitraueme().then((zeitraeume) => {
+        passedMeldezeitraeume.value = zeitraeume;
+    });
+}
+
 function resetForm() {
     form.value?.reset();
     router.push("/praktikumsplaetze");
