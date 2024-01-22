@@ -1,4 +1,4 @@
-import { ApiError, Levels } from "@/api/error";
+import { ApiError, Levels } from "@/api/Error";
 
 export default class FetchUtils {
     /**
@@ -21,21 +21,12 @@ export default class FetchUtils {
     static getPOSTConfig(body: any): RequestInit {
         return {
             method: "POST",
-            body: getBody(body),
+            body: this.getBody(body),
             headers: FetchUtils.getHeaders(),
             mode: "cors",
             credentials: this.getCredentials(),
             redirect: "manual",
         };
-        function getBody(body: any): any {
-            if (!body) {
-                return undefined;
-            } else if (typeof body == "string") {
-                return body;
-            } else {
-                return JSON.stringify(body);
-            }
-        }
     }
 
     /**
@@ -52,7 +43,7 @@ export default class FetchUtils {
         }
         return {
             method: "PUT",
-            body: body ? JSON.stringify(body) : undefined,
+            body: this.getBody(body),
             headers,
             mode: "cors",
             credentials: this.getCredentials(),
@@ -74,7 +65,7 @@ export default class FetchUtils {
         }
         return {
             method: "PATCH",
-            body: body ? JSON.stringify(body) : undefined,
+            body: this.getBody(body),
             headers,
             mode: "cors",
             credentials: this.getCredentials(),
@@ -151,6 +142,19 @@ export default class FetchUtils {
             "(^|;)\\s*" + "XSRF-TOKEN" + "\\s*=\\s*([^;]+)"
         );
         return (help ? help.pop() : "") as string;
+    }
+
+    /**
+     * @returns {any}
+     */
+    static getBody(body: any): any {
+        if (!body) {
+            return undefined;
+        } else if (typeof body == "string") {
+            return body;
+        } else {
+            return JSON.stringify(body);
+        }
     }
 
     /**
