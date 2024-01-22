@@ -38,7 +38,7 @@ export function useWarnings() {
         // Check if studiengang is the same
         if (
             stelle.studiengang &&
-            nwk.studiengang != "FISI" &&
+            nwk.ausbildungsrichtung == undefined &&
             stelle.studiengang != nwk.studiengang
         ) {
             const warningText =
@@ -70,7 +70,7 @@ export function useWarnings() {
         // Check if Nwk is in the right semester
         if (
             stelle.studiengang != undefined &&
-            nwk.studiengang != "FISI" &&
+            nwk.ausbildungsrichtung == undefined &&
             stelle.studiensemester
         ) {
             const expectedSemester: number = +stelle.studiensemester.substring(
@@ -92,7 +92,7 @@ export function useWarnings() {
         // Check if Nwk is in the right Lehrjahr
         if (
             stelle.ausbildungsrichtung != undefined &&
-            nwk.studiengang == "FISI" &&
+            nwk.studiengang == undefined &&
             stelle.ausbildungsjahr
         ) {
             const expectedLehrjahr: number = +stelle.ausbildungsjahr.substring(
@@ -171,7 +171,7 @@ export function useWarnings() {
 
     function calculateSemester(nwk: Nwk) {
         if (!nwk) return -1;
-        if (nwk && nwk.studiengang == "FISI") return 0;
+        if (nwk.studiengang == undefined) return 0;
         let semester: number;
         const startYear: number = +nwk.jahrgang.substring(0, 2) + 2000;
         const currentYear: number = new Date().getFullYear();
@@ -184,7 +184,7 @@ export function useWarnings() {
 
     function calculateLehrjahr(nwk: Nwk) {
         if (!nwk) return -1;
-        if (nwk.studiengang != "FISI") return 0;
+        if (nwk.ausbildungsrichtung == undefined) return 0;
 
         let lehrjahr: number;
         const startYear: number = +nwk.jahrgang.substring(0, 2) + 2000;
