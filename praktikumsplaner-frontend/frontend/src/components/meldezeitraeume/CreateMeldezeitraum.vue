@@ -59,7 +59,7 @@
 import { ref } from "vue";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
-import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
+import ZeitraumPicker from "@/components/meldezeitraeume/ZeitraumPicker.vue";
 import { useRules } from "@/composables/rules";
 import Zeitraum from "@/types/Zeitraum";
 

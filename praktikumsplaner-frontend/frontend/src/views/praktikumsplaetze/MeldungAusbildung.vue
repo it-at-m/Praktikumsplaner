@@ -374,7 +374,7 @@ import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { Programmierkenntnisse } from "@/types/YesNoEgalBoolean";
 import { useFormatter } from "@/composables/formatter";
-import { APP_SECURITY } from "@/Constants";
+import { APP_SECURITY } from "@/constants";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 

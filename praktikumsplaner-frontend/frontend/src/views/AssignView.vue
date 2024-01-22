@@ -40,18 +40,19 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import PraktikumsstellenList from "@/components/Praktikumsstellen/PraktikumsstellenList.vue";
-import ActiveNwkListForZuweisung from "@/components/Assignment/ActiveNwkListForZuweisung.vue";
-import QueryPraktikumsPeriodDialog from "@/components/Assignment/QueryPraktikumsPeriodDialog.vue";
+import PraktikumsstellenList from "@/components/praktikumsstellen/PraktikumsstellenList.vue";
+import ActiveNwkListForZuweisung from "@/components/assignment/ActiveNwkListForZuweisung.vue";
+import QueryPraktikumsPeriodDialog from "@/components/assignment/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { onMounted, ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import WarningDialog from "@/components/common/WarningDialog.vue";
-import ExcelExport from "@/components/Assignment/ExcelExport.vue";
+import ExcelExport from "@/components/assignment/ExcelExport.vue";
 import Nwk from "@/types/Nwk";
 import Warning from "@/types/Warning";
 import NwkService from "@/api/NwkService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import { useWarnings } from "@/composables/warnings";
 
 const showSendMailDialog = ref(false);
 const showWarningDialog = ref(false);
@@ -64,57 +65,17 @@ const startDownload = ref(false);
 const isExcelWarningDialog = ref(false);
 
 function collectWarnings() {
-    warnings.value = [];
-    for (const nwk of nwks.value) {
-        const warning = new Warning(
-            "NWK",
-            "Die NWK " +
-                nwk.vorname +
-                " " +
-                nwk.nachname +
-                " ist nicht verplant."
-        );
-
-        warnings.value.push(warning);
-    }
+    const stellen: Praktikumsstelle[] = [];
     for (const value of praktikumsstellenMap.value.values()) {
         for (const stelle of value) {
-            if (
-                (stelle.dringlichkeit.toLocaleLowerCase() == "dringend" ||
-                    stelle.dringlichkeit.toLocaleLowerCase() == "zwingend") &&
-                stelle.assignedNwk == undefined
-            ) {
-                const warning = new Warning(
-                    "Dringlichkeit",
-                    "Der Praktikumsstelle " +
-                        stelle.dienststelle +
-                        " bei " +
-                        stelle.oertlicheAusbilder +
-                        " ist keine NWK zugewiesen, die Dringlichkeit ist jedoch mit " +
-                        stelle.dringlichkeit +
-                        " angegeben."
-                );
-                warnings.value.push(warning);
-            }
-
-            if (
-                stelle.namentlicheAnforderung != null &&
-                stelle.assignedNwk == undefined
-            ) {
-                const warning = new Warning(
-                    "Namentliche Anforderung",
-                    "Der Praktikumsstelle " +
-                        stelle.dienststelle +
-                        " bei " +
-                        stelle.oertlicheAusbilder +
-                        " ist keine NWK zugewiesen, es liegt jedoch eine namentliche Anforderung für " +
-                        stelle.namentlicheAnforderung +
-                        " vor."
-                );
-                warnings.value.push(warning);
-            }
+            stellen.push(stelle);
         }
     }
+
+    warnings.value = useWarnings().getAfterAssignmentWarnings(
+        stellen,
+        nwks.value
+    );
 }
 
 function exported() {

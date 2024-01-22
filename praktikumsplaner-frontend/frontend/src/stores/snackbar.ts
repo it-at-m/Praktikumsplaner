@@ -1,4 +1,4 @@
-import { Levels } from "@/api/error";
+import { Levels } from "@/api/Error";
 import { defineStore } from "pinia";
 
 export interface SnackbarState {

@@ -330,10 +330,10 @@ import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { Programmierkenntnisse } from "@/types/YesNoEgalBoolean";
-import "@/directives/Security";
+import "@/directives/security";
 import { useFormatter } from "@/composables/formatter";
 import { useUserStore } from "@/stores/user";
-import { APP_SECURITY } from "@/Constants";
+import { APP_SECURITY } from "@/constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
 
 const activeMeldezeitraum = ref<boolean>(false);

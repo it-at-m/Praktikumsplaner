@@ -1,5 +1,5 @@
 import FetchUtils from "@/api/FetchUtils";
-import { API_BASE, NWK_BASE } from "@/Constants";
+import { API_BASE, NWK_BASE } from "@/constants";
 import Nwk from "@/types/Nwk";
 
 export default {

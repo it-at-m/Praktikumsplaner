@@ -1,6 +1,6 @@
 import HealthState from "@/types/HealthState";
 import FetchUtils from "@/api/FetchUtils";
-import { API_BASE } from "@/Constants";
+import { API_BASE } from "@/constants";
 
 export default class HealthService {
     static checkHealth(): Promise<HealthState> {
