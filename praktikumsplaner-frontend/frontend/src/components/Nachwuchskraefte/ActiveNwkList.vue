@@ -11,6 +11,18 @@
                 <v-card-subtitle class="text-center">{{
                     getSubtitle(nwk)
                 }}</v-card-subtitle>
+                <v-card-actions>
+                    <v-col cols="4"> </v-col>
+                    <v-col cols="1"> </v-col>
+                    <v-col cols="2">
+                        <NwkUpdateDialog
+                            class="d-flex justify-center align-center"
+                            :nwk="nwk"
+                            @updated="getAllActiveNwks"
+                        />
+                    </v-col>
+                    <v-col> </v-col>
+                </v-card-actions>
             </v-card>
         </v-col>
     </v-container>
@@ -20,6 +32,7 @@
 import { ref, onMounted } from "vue";
 import Nwk from "@/types/Nwk";
 import NwkService from "@/api/NwkService";
+import NwkUpdateDialog from "@/components/Nachwuchskraefte/NwkUpdateDialog.vue";
 import { EventBus } from "@/stores/event-bus";
 const nwks = ref<Nwk[]>([]);
 

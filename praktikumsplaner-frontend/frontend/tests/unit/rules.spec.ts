@@ -126,26 +126,50 @@ describe("rules notEmptyBoolean test", () => {
         expect(rule(undefined)).toBe(errorMessage);
     });
 });
-describe("rules email test", () => {
-    const rule = validationRules.emailRule(errorMessage);
-    it("tests emailRule return true", () => {
-        const email = "ich_bin@eine.email";
+describe("rules regex test", () => {
+    const rule = validationRules.regexRule(
+        /^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/,
+        errorMessage
+    );
+    it("tests regexRule return true", () => {
+        const date = "10.10.2020";
 
-        expect(rule(email)).toBe(true);
+        expect(rule(date)).toBe(true);
     });
-    it("tests emailRule return error when invalid email", () => {
-        const email1 = "ich_bin_keine.email";
-        const email2 = "@ich_bin_keine.email";
-        const email3 = "ich_bin_keine@.email";
+    it("tests regexRule return error when date is empty", () => {
+        const date = "10.10.20";
 
-        expect(rule(email1)).toBe(errorMessage);
-        expect(rule(email2)).toBe(errorMessage);
-        expect(rule(email3)).toBe(errorMessage);
+        expect(rule(date)).toBe(errorMessage);
     });
-    it("tests emailRule return error when null", () => {
+    it("tests regexRule return error when empty", () => {
+        const date = "";
+
+        expect(rule(date)).toBe(errorMessage);
+    });
+    it("tests regexRule return error when null", () => {
         expect(rule(null)).toBe(errorMessage);
     });
-    it("tests emailRule return error when undefined", () => {
+    it("tests regexRule return error when undefined", () => {
         expect(rule(undefined)).toBe(errorMessage);
+    });
+});
+
+describe("rules minLength test", () => {
+    const minLength10Rule = validationRules.minLengthRule(10, errorMessage);
+    it("tests minLengthRule return true", () => {
+        const txt10 = "Lorem ipsu";
+
+        expect(minLength10Rule(txt10)).toBe(true);
+    });
+    it("tests minLengthRule return error when under min length", () => {
+        const txt9 = "Lorem ips";
+
+        expect(minLength10Rule(txt9)).toBe(errorMessage);
+    });
+    it("tests minLengthRule return error when null", () => {
+        expect(minLength10Rule(null)).toBe(true);
+    });
+    it("tests minLengthRule return error when undefined", () => {
+        expect(minLength10Rule(undefined)).toBe(true);
     });
 });
