@@ -34,12 +34,6 @@ Selection between `it@M` and `RIT`
 Selection between `Zwingend`, `Dringend`, and `Nachrangig`.
 Meaning `Urgent`, `Important`, and `Not important`.
 
-#### Zeitraum Nwk
-
-This field shows you the estimated time when the [Nwk](./../glossary.md#nwk) will be there.
-This is calculated by the application based on the chosen Studiengang/Ausbildungsrichtung, Semester/Ausbildungsjahr, and the current date.
-Beware that this is only an estimate and can be changed by the [örtliche Ausbildungsleitung](./../glossary.md#ortliche-ausbildungsleitung).
-
 #### Planstelle
 
 Radio button `Yes/No` selector for whether the [Praktikumsstelle](./../glossary.md#praktikumsstelle) is a [Planstelle](./../glossary.md#planstelle)
@@ -68,11 +62,19 @@ Selection between different training programs, e.g. `FISI`
 
 #### Studium: Studiensemester
 
-Selection between `1. ` to `6.` Semester
+Multi selection between `1. ` to `6.` Semester
+
+When a [Studiengang](#studium-studiengang) is selected,
+an estimated timeframe for the assignment is shown per semester.
 
 #### Ausbildung: Ausbildungsjahr
 
-Selection between `1.` to `3.` Year of training
+Multi selection between `1.` to `3.` Year of training 
+
+When a [Ausbildungsrichtung](#ausbildung-ausbildungsrichtung) is selected,
+an estimated timeframe for the assignment is shown per year of training.
+
+(1st year is removed for `FISI` because they are trained at a different location for the first year)
 
 #### Programmierkenntnisse
 
