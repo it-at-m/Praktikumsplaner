@@ -307,7 +307,6 @@ import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum
 import { Ausbildungsjahr } from "@/types/Ausbildungsjahr";
 import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
-import { Dringlichkeit } from "@/types/Dringlichkeit";
 import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";

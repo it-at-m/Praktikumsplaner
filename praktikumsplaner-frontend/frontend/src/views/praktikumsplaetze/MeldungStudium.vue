@@ -262,7 +262,6 @@ import { useRules } from "@/composables/rules";
 import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
 import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
-import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { Studiengang } from "@/types/Studiengang";
 import { Studiensemester } from "@/types/Studiensemester";
 import MeldungService from "@/api/PraktikumsstellenService";
