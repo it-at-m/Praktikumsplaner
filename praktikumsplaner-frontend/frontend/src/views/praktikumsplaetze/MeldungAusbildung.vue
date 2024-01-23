@@ -42,16 +42,10 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-select
+                        <DringlichkeitSelect
                             v-model="praktikumsstelle.dringlichkeit"
-                            label="Dringlichkeit*"
-                            :items="Dringlichkeit"
-                            :menu-props="customMenuProps"
-                            item-value="value"
-                            item-text="name"
                             :rules="requiredRule"
-                            outlined
-                        ></v-select>
+                        ></DringlichkeitSelect>
                     </v-col>
                     <v-col cols="2">
                         <v-tooltip right>
