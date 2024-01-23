@@ -12,9 +12,17 @@
             @meldezeitraumAdded="reloadMeldezeitraeume"
         ></CreateMeldezeitraum>
         <v-container>
+            <v-skeleton-loader
+                v-if="loading"
+                type="card-heading, divider, list-item, card-heading@2, divider, list-item, card-heading@2"
+            >
+            </v-skeleton-loader>
             <v-row>
                 <v-col>
-                    <meldezeitraum-list :value="current">
+                    <meldezeitraum-list
+                        v-if="!loading"
+                        :value="current"
+                    >
                         <template #card-title-icon>
                             <v-icon>mdi-star</v-icon>
                         </template>
@@ -27,7 +35,9 @@
             <v-divider></v-divider>
             <v-row>
                 <v-col>
-                    <meldezeitraum-list :value="upcoming"
+                    <meldezeitraum-list
+                        v-if="!loading"
+                        :value="upcoming"
                         ><template #header>
                             <h3>Kommende Meldezeiträume</h3>
                         </template>
@@ -40,7 +50,9 @@
             <v-divider></v-divider>
             <v-row>
                 <v-col>
-                    <meldezeitraum-list :value="passed"
+                    <meldezeitraum-list
+                        v-if="!loading"
+                        :value="passed"
                         ><template #header>
                             <h3>Vergangene Meldezeiträume</h3>
                         </template>
@@ -68,6 +80,7 @@ const userService = new UserService();
 const userStore = useUserStore();
 
 const model = ref<boolean>(true);
+const loading = ref<boolean>(false);
 const current = ref<Meldezeitraum[]>([]);
 const upcoming = ref<Meldezeitraum[]>([]);
 const passed = ref<Meldezeitraum[]>([]);
@@ -85,6 +98,7 @@ onBeforeMount(() => {
 });
 
 function reloadMeldezeitraeume() {
+    loading.value = true;
     MeldezeitraumService.getCurrentMeldezeitraum().then((response) => {
         current.value = response;
     });
@@ -93,9 +107,13 @@ function reloadMeldezeitraeume() {
         passed.value = response;
     });
 
-    MeldezeitraumService.getUpcomingMeldezeitraueme().then((response) => {
-        upcoming.value = response;
-    });
+    MeldezeitraumService.getUpcomingMeldezeitraueme()
+        .then((response) => {
+            upcoming.value = response;
+        })
+        .finally(() => {
+            loading.value = false;
+        });
 }
 </script>
 
