@@ -28,15 +28,9 @@
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
-                        <v-select
+                        <ReferatSelect
                             v-model="praktikumsstelle.referat"
-                            :items="Referat"
-                            :menu-props="customMenuProps"
-                            item-value="value"
-                            item-text="name"
-                            label="Referat"
-                            outlined
-                        ></v-select>
+                        ></ReferatSelect>
                     </v-col>
                     <v-col cols="1" />
                 </v-row>
@@ -243,7 +237,6 @@ import { onMounted, ref, computed } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
 import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
-import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Studiengang } from "@/types/Studiengang";
 import { Studiensemester } from "@/types/Studiensemester";
@@ -261,6 +254,7 @@ import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/Kei
 import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
 import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
 import AnforderungTooltip from "@/components/praktikumsplaetze/Meldung/AnforderungTooltip.vue";
+import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
