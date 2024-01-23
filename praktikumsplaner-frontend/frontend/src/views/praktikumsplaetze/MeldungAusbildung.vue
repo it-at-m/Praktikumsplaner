@@ -311,30 +311,10 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-select
+                        <MeldezeitraumSelect
                             v-model="praktikumsstelle.meldezeitraumID"
-                            label="Meldezeitraum*"
-                            :items="meldezeitraeume"
-                            :menu-props="customMenuProps"
-                            item-value="id"
-                            item-text="zeitraumName"
-                            outlined
-                        >
-                            <template #item="data">
-                                {{ data.item.zeitraumName }}:
-                                {{
-                                    formatter.formatDateFromString(
-                                        data.item.zeitraum.startZeitpunkt
-                                    )
-                                }}
-                                -
-                                {{
-                                    formatter.formatDateFromString(
-                                        data.item.zeitraum.endZeitpunkt
-                                    )
-                                }}
-                            </template>
-                        </v-select>
+                            :meldezeitraueme="meldezeitraeume"
+                        ></MeldezeitraumSelect>
                     </v-col>
                     <v-col cols="2" />
                     <v-col> </v-col>
@@ -373,10 +353,10 @@ import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { Programmierkenntnisse } from "@/types/YesNoEgalBoolean";
-import { useFormatter } from "@/composables/formatter";
 import { APP_SECURITY } from "@/constants";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
+import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -388,7 +368,6 @@ const zuweisungsZeitraum = ref<string>("");
 const isAusbildungsleitung = ref<boolean>(false);
 const userStore = useUserStore();
 const validationRules = useRules();
-const formatter = useFormatter();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
