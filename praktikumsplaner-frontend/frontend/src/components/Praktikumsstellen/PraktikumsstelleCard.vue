@@ -48,7 +48,10 @@
                     {{ getCardText(props.value) }}
                 </p></v-card-text
             >
-            <v-col v-if="assignedNwk && props.assignment">
+            <v-col v-if="loading">
+                <v-skeleton-loader type="chip"></v-skeleton-loader>
+            </v-col>
+            <v-col v-if="assignedNwk && props.assignment && !loading">
                 <v-chip
                     :color="getNwkColor(assignedNwk)"
                     close
@@ -102,6 +105,7 @@ const emits = defineEmits<{
     (e: "input", praktikumsstelle: Praktikumsstelle): void;
 }>();
 const show = ref<boolean>(false);
+const loading = ref<boolean>(false);
 const unassignDialogContent = ref<string>("");
 const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
 const unassignConfirmDialog = ref<boolean>(false);
@@ -313,12 +317,14 @@ function assignNwk() {
         nwkToAssignUnassing.value = undefined;
         return;
     }
-
+    loading.value = true;
     stelleToAssignUnassign.value.assignedNwk = nwkToAssignUnassing.value;
     PraktikumsstellenService.assignNwk(
         stelleToAssignUnassign.value.id || "",
         stelleToAssignUnassign.value.assignedNwk?.id
-    );
+    ).finally(() => {
+        loading.value = false;
+    });
     assignedNwk.value = nwkToAssignUnassing.value;
     emits("input", stelleToAssignUnassign.value);
     EventBus.$emit("assignedNwk", stelleToAssignUnassign.value.assignedNwk);
@@ -361,7 +367,12 @@ function calculateLehrjahr(nwk: Nwk) {
 
 function unassignNwk() {
     if (stelleToAssignUnassign.value?.id) {
-        PraktikumsstellenService.unassignNwk(stelleToAssignUnassign.value.id);
+        loading.value = true;
+        PraktikumsstellenService.unassignNwk(
+            stelleToAssignUnassign.value.id
+        ).finally(() => {
+            loading.value = false;
+        });
         EventBus.$emit(
             "unassignedNwk",
             stelleToAssignUnassign.value.assignedNwk

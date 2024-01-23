@@ -54,6 +54,7 @@ function removeNwkFromList(nwk: Nwk) {
 function addNwkToList(nwk: Nwk) {
     let nwksInternal = props.value;
     nwksInternal.push(nwk);
+    nwksInternal.sort((a, b) => a.nachname.localeCompare(b.nachname));
     emits("input", nwksInternal);
 }
 </script>
