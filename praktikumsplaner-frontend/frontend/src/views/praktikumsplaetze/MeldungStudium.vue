@@ -8,25 +8,7 @@
             page-header-text="Praktikumsplatz für Studierende"
         ></page-title>
         <div v-if="!activeMeldezeitraum">
-            <v-row class="align-center">
-                <v-col
-                    cols="auto"
-                    class="d-flex align-center"
-                >
-                    <v-icon
-                        color="blue"
-                        large
-                        >mdi-information-outline</v-icon
-                    >
-                </v-col>
-                <v-col class="d-flex align-center">
-                    <p class="mt-5">
-                        Ihre örtliche Ausbildungsleitung hat die Meldung von
-                        Stellen noch nicht freigegeben, daher können aktuell
-                        leider noch keine Praktikumsplätze gemeldet werden.
-                    </p>
-                </v-col>
-            </v-row>
+            <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
         </div>
         <div v-else>
             <v-container class="box">
@@ -315,6 +297,7 @@ import { useUserStore } from "@/stores/user";
 import { APP_SECURITY } from "@/constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
+import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
