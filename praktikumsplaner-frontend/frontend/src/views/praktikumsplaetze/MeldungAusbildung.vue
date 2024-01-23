@@ -136,24 +136,7 @@
                         ></v-text-field>
                     </v-col>
                     <v-col cols="1">
-                        <v-tooltip right>
-                            <template #activator="{ on, attrs }">
-                                <v-icon
-                                    color="blue"
-                                    class="v-tooltip-spacing"
-                                    v-bind="attrs"
-                                    large
-                                    v-on="on"
-                                >
-                                    mdi-information
-                                </v-icon>
-                            </template>
-                            <span
-                                >Bei Anforderung einer bestimmten NWK für die
-                                Stelle, hier den vollständigen Namen
-                                eintragen.</span
-                            >
-                        </v-tooltip>
+                        <AnforderungTooltip></AnforderungTooltip>
                     </v-col>
                     <v-col cols="2"></v-col>
                     <v-col></v-col>
@@ -319,6 +302,7 @@ import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/Meldezei
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
 import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
+import AnforderungTooltip from "@/components/praktikumsplaetze/Meldung/AnforderungTooltip.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
