@@ -46,13 +46,15 @@
                     ></two-choice-dialog-cards>
                 </v-col>
             </v-row>
-            <v-row
-                v-security.allow="
-                    userStore.getRoles.includes('ROLE_AUSBILDUNGSLEITUNG')
-                "
+            <v-row></v-row>
+            <v-skeleton-loader
+                v-if="isAusbildungsleitung && loading"
+                type="image@3"
             >
+            </v-skeleton-loader>
+            <v-row v-if="isAusbildungsleitung && !loading">
                 <v-container
-                    v-if="!mapIsEmpty"
+                    v-if="!mapIsEmpty && !loading"
                     class="box"
                 >
                     <span> Übersicht aus dem aktuellen Meldezeitraum </span>
@@ -62,7 +64,7 @@
                     ></PraktikumsstellenList>
                 </v-container>
                 <v-container
-                    v-else
+                    v-if="mapIsEmpty && !loading"
                     class="box"
                 >
                     <v-row class="align-center">
@@ -98,9 +100,17 @@ import { useUserStore } from "@/stores/user";
 import PraktikumsstellenList from "@/components/Praktikumsstellen/PraktikumsstellenList.vue";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import { APP_SECURITY } from "@/Constants";
 
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
+const loading = ref<boolean>(false);
+const isAusbildungsleitung = computed(() => {
+    return (
+        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
+        APP_SECURITY !== "true"
+    );
+});
 const twoChoiceDialogVisible = ref<boolean>(false);
 const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
     new Map<string, Praktikumsstelle[]>()
@@ -111,12 +121,13 @@ const mapIsEmpty = computed(() => {
 });
 
 onMounted(() => {
+    loading.value = true;
     MeldezeitraumService.getCurrentMeldezeitraum()
         .then((zeitraueme) => {
             activeMeldezeitraum.value = zeitraueme.length > 0;
         })
         .then(() => {
-            if (userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG")) {
+            if (isAusbildungsleitung) {
                 activeMeldezeitraum.value = true;
             }
         });
@@ -136,17 +147,24 @@ function getAllPraktikumsstellenInCurrentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
         "current"
-    ).then((fetchedStellen) => {
-        for (const [key, value] of Object.entries(fetchedStellen)) {
-            helperMap.set(key, value);
-        }
-        praktikumsstellenMap.value = helperMap;
-    });
+    )
+        .then((fetchedStellen) => {
+            for (const [key, value] of Object.entries(fetchedStellen)) {
+                helperMap.set(key, value);
+            }
+            praktikumsstellenMap.value = helperMap;
+        })
+        .finally(() => {
+            loading.value = false;
+        });
 }
 </script>
 <style>
 .box {
     margin: 1%;
     border: 2px solid #0000001a;
+}
+.v-skeleton-loader {
+    margin: 1%;
 }
 </style>
