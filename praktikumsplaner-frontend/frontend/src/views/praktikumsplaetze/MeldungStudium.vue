@@ -48,23 +48,7 @@
                         ></DringlichkeitSelect>
                     </v-col>
                     <v-col cols="2">
-                        <v-tooltip right>
-                            <template #activator="{ on, attrs }">
-                                <v-icon
-                                    color="blue"
-                                    class="v-tooltip-spacing"
-                                    v-bind="attrs"
-                                    large
-                                    v-on="on"
-                                >
-                                    mdi-information
-                                </v-icon>
-                            </template>
-                            <span
-                                >Die Dringlichkeit gibt an, wie hoch priorisiert
-                                der Praktikumsplatz zu besetzen ist.</span
-                            >
-                        </v-tooltip>
+                        <DringlichkeitTooltip></DringlichkeitTooltip>
                     </v-col>
                     <v-col>
                         <v-text-field
@@ -292,6 +276,8 @@ import { APP_SECURITY } from "@/constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
+import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
+import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
