@@ -1,6 +1,6 @@
 <template>
     <v-container
-        @drop="props.assignment ? drop($event, value) : noDropAllowed()"
+        @drop="drop($event, value)"
         @dragover.prevent
         @dragenter.prevent
     >
@@ -93,15 +93,13 @@ import Nwk from "@/types/Nwk";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
 import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
 import { useWarnings } from "@/composables/warnings";
+import { useTextGenerator } from "@/composables/textGenerator";
 
 const props = defineProps<{
     value: Praktikumsstelle;
     assignment: boolean;
 }>();
 
-const emits = defineEmits<{
-    (e: "input", praktikumsstelle: Praktikumsstelle): void;
-}>();
 const show = ref<boolean>(false);
 const unassignDialogContent = ref<string>("");
 const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
@@ -114,65 +112,14 @@ const warningDialogTitle = ref<string>(
 );
 const warningDialogText = ref<string>("");
 const assignedNwk = ref(props.value.assignedNwk);
+const generator = useTextGenerator();
 
 function getCardText(stelle: Praktikumsstelle): string {
-    let cardText = "";
-
-    if (stelle.studiengang) {
-        cardText +=
-            "Studiengang: " +
-            stelle.studiengang +
-            "\n" +
-            "Studiensemester: ab " +
-            stelle.studiensemester?.charAt(stelle.studiensemester?.length - 1) +
-            ". Semester";
-    } else if (stelle.ausbildungsrichtung) {
-        cardText +=
-            "Ausbildungsrichtung: " +
-            stelle.ausbildungsrichtung +
-            "\n" +
-            "Ausbildungsjahr: " +
-            stelle.ausbildungsjahr?.charAt(stelle.ausbildungsjahr?.length - 1) +
-            ". Ausbildungsjahr";
-    }
-
-    return cardText;
+    return generator.getPraktikumsstellenCardText(stelle);
 }
 
 function getCardDetailText(stelle: Praktikumsstelle): string {
-    let cardText = "";
-    let dringlichkeit =
-        stelle.dringlichkeit.charAt(0).toUpperCase() +
-        stelle.dringlichkeit.slice(1).toLowerCase();
-    cardText += "Dringlichkeit: " + dringlichkeit + "\n";
-    if (stelle.programmierkenntnisse) {
-        cardText += "Programmierkenntnisse: ";
-        switch (stelle.programmierkenntnisse) {
-            case "true":
-                cardText += "Ja" + "\n";
-                break;
-            case "false":
-                cardText += "Nein" + "\n";
-                break;
-            case "EGAL":
-                cardText += "egal" + "\n";
-                break;
-        }
-    }
-    if (stelle.ausbildungsrichtung) {
-        cardText +=
-            "Projektarbeit: " + (stelle.projektarbeit ? "Ja" : "Nein") + "\n";
-    }
-    cardText +=
-        "Ausbilder*in: " +
-        stelle.oertlicheAusbilder +
-        "\n" +
-        "Mailadresse Ausbilder*in: " +
-        stelle.email +
-        "\n" +
-        "Tätigkeiten: " +
-        stelle.taetigkeiten;
-    return cardText;
+    return generator.getPraktikumsstellenCardDetailText(stelle);
 }
 
 function drop(event: DragEvent, stelle: Praktikumsstelle) {
@@ -230,7 +177,6 @@ function assignNwk() {
         stelleToAssignUnassign.value.assignedNwk?.id
     );
     assignedNwk.value = nwkToAssignUnassing.value;
-    emits("input", stelleToAssignUnassign.value);
     EventBus.$emit("assignedNwk", stelleToAssignUnassign.value.assignedNwk);
     resetWarningDialog();
 }
@@ -262,13 +208,6 @@ function openConfirmationDialog(stelle: Praktikumsstelle) {
 function resetUnassign() {
     stelleToAssignUnassign.value = undefined;
     unassignConfirmDialog.value = false;
-}
-
-function noDropAllowed() {
-    useSnackbarStore().showMessage({
-        message: "Die Zuweisung ist hier nicht erlaubt.",
-        level: Levels.ERROR,
-    });
 }
 
 function getNwkColor(nwk: Nwk): string {

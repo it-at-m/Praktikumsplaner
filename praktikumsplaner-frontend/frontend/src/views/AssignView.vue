@@ -40,14 +40,14 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import PraktikumsstellenList from "@/components/praktikumsstellen/PraktikumsstellenList.vue";
-import ActiveNwkListForZuweisung from "@/components/assignment/ActiveNwkListForZuweisung.vue";
-import QueryPraktikumsPeriodDialog from "@/components/assignment/QueryPraktikumsPeriodDialog.vue";
+import PraktikumsstellenList from "@/components/common/PraktikumsstellenList.vue";
+import ActiveNwkListForZuweisung from "@/components/assign/ActiveNwkListForZuweisung.vue";
+import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { onMounted, ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import WarningDialog from "@/components/common/WarningDialog.vue";
-import ExcelExport from "@/components/assignment/ExcelExport.vue";
+import ExcelExport from "@/components/assign/ExcelExport.vue";
 import Nwk from "@/types/Nwk";
 import Warning from "@/types/Warning";
 import NwkService from "@/api/NwkService";
