@@ -116,7 +116,7 @@ import YesNoDialog from "@/components/common/YesNoDialog.vue";
 import Zeitraum from "@/types/Zeitraum";
 import MailService from "@/api/MailService";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import UndeliveredMailsDialog from "@/components/assignment/UndeliveredMailsDialog.vue";
+import UndeliveredMailsDialog from "@/components/assign/UndeliveredMailsDialog.vue";
 
 const form = ref<HTMLFormElement>();
 

@@ -24,9 +24,9 @@ import { EventBus } from "@/stores/event-bus";
 const nwks = ref<Nwk[]>([]);
 
 onMounted(() => {
-    getAllActiveNwks();
+    loadAllActiveNwks();
 });
-function getAllActiveNwks() {
+function loadAllActiveNwks() {
     NwkService.getAllActiveNwks().then((fetchedNwks) => {
         nwks.value = [...fetchedNwks];
     });
@@ -43,7 +43,7 @@ function getSubtitle(nwk: Nwk): string {
 }
 
 EventBus.$on("nwkCreated", () => {
-    getAllActiveNwks();
+    loadAllActiveNwks();
 });
 </script>
 <style scoped lang="scss">
