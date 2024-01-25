@@ -20,10 +20,10 @@ import { Studiensemester } from "@/types/Studiensemester";
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: object;
+    value: string | undefined;
 }>();
 const emits = defineEmits<{
-    (e: "input", studiensemester: object): void;
+    (e: "input", studiensemester: string | undefined): void;
 }>();
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];

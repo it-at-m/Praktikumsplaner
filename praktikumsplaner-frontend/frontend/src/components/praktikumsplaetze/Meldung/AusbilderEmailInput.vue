@@ -14,10 +14,10 @@ import { useRules } from "@/composables/rules";
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: string;
+    value: string | undefined;
 }>();
 const emits = defineEmits<{
-    (e: "input", email: string): void;
+    (e: "input", email: string | undefined): void;
 }>();
 
 const emailRule = [

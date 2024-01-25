@@ -29,7 +29,7 @@ import { computed } from "vue";
 
 const props = defineProps<{
     meldezeitraueme: Meldezeitraum[];
-    value: string;
+    value: string | undefined;
 }>();
 
 const emits = defineEmits<{
@@ -41,7 +41,7 @@ const formatter = useFormatter();
 const zeitraum = computed({
     // getter
     get() {
-        return props.value;
+        return props.value || "";
     },
     // setter
     set(newValue) {

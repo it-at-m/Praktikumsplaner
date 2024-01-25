@@ -15,10 +15,10 @@ import { computed } from "vue";
 import { Referat } from "@/types/Referat";
 
 const props = defineProps<{
-    value: object;
+    value: string | undefined;
 }>();
 const emits = defineEmits<{
-    (e: "input", dringlichkeit: object): void;
+    (e: "input", dringlichkeit: string | undefined): void;
 }>();
 
 const customMenuProps = {

@@ -198,8 +198,12 @@ const userStore = useUserStore();
 
 const form = ref<HTMLFormElement>();
 const meldezeitraeume = computed(() => {
+    let list: Meldezeitraum[] = [];
+    if (currentMeldezeitraum.value) {
+        list = [currentMeldezeitraum.value];
+    }
     return [
-        currentMeldezeitraum.value,
+        ...list,
         ...upcomingMeldezeitraeume.value,
         ...passedMeldezeitraeume.value,
     ];

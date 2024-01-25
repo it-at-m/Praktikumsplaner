@@ -20,10 +20,10 @@ import { Ausbildungsjahr } from "@/types/Ausbildungsjahr";
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: object;
+    value: string | undefined;
 }>();
 const emits = defineEmits<{
-    (e: "input", ausbildungsjahr: object): void;
+    (e: "input", ausbildungsjahr: string | undefined): void;
 }>();
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];

@@ -26,10 +26,10 @@ import { YesNoBoolean } from "@/types/YesNoBoolean";
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: boolean;
+    value: boolean | undefined;
 }>();
 const emits = defineEmits<{
-    (e: "input", projektarbeit: boolean): void;
+    (e: "input", projektarbeit: boolean | undefined): void;
 }>();
 
 const booleanRule = [

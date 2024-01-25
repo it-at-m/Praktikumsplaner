@@ -19,10 +19,10 @@ import { useRules } from "@/composables/rules";
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: object;
+    value: string | undefined;
 }>();
 const emits = defineEmits<{
-    (e: "input", dringlichkeit: object): void;
+    (e: "input", dringlichkeit: string | undefined): void;
 }>();
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
