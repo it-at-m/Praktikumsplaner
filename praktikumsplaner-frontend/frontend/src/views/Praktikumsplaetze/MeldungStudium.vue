@@ -179,86 +179,12 @@
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
-                        <v-select
-                            v-model="praktikumsstelle.studiensemester"
-                            label="Studiensemester*"
-                            :items="Studiensemester"
-                            item-value="value"
-                            item-text="name"
-                            :rules="requiredArrayRule"
-                            :menu-props="customMenuProps"
-                            outlined
-                            multiple
-                            @change="
-                                () => {
-                                    sortSemester();
-                                }
+                        <SelectMultipleStudiensemester
+                            :praktikumsstelle="praktikumsstelle"
+                            @update:praktikumsstelle="
+                                (value) => (praktikumsstelle = value)
                             "
-                        >
-                            <template #prepend-item>
-                                <v-list-item
-                                    ripple
-                                    @mousedown.prevent
-                                    @click="selectAllStudiensemester"
-                                >
-                                    <v-list-item-action>
-                                        <v-icon :color="semesterIconColor()">
-                                            {{ semesterIcon }}
-                                        </v-icon>
-                                    </v-list-item-action>
-                                    <v-list-item-content>
-                                        <v-list-item-title>
-                                            Egal
-                                        </v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
-                                <v-divider class="mt-2"></v-divider>
-                            </template>
-                            <template #item="data">
-                                <v-list-item-action>
-                                    <v-icon
-                                        v-if="
-                                            data.attrs['aria-selected'] ===
-                                            'true'
-                                        "
-                                    >
-                                        mdi-checkbox-marked
-                                    </v-icon>
-                                    <v-icon v-else>
-                                        mdi-checkbox-blank-outline
-                                    </v-icon>
-                                </v-list-item-action>
-                                <v-list-item-content>
-                                    <v-list-item-title>
-                                        {{ data.item.name }}
-                                    </v-list-item-title>
-                                    <v-list-item-subtitle
-                                        v-if="
-                                            praktikumsstelle.studiengang ===
-                                            'BSC'
-                                        "
-                                    >
-                                        {{ data.item.zeitraumBSC }}
-                                    </v-list-item-subtitle>
-                                    <v-list-item-subtitle
-                                        v-else-if="
-                                            praktikumsstelle.studiengang ===
-                                            'BWI'
-                                        "
-                                    >
-                                        {{ data.item.zeitraumBWI }}
-                                    </v-list-item-subtitle>
-                                    <v-list-item-subtitle
-                                        v-else-if="
-                                            praktikumsstelle.studiengang ===
-                                            'VI'
-                                        "
-                                    >
-                                        {{ data.item.zeitraumVI }}
-                                    </v-list-item-subtitle>
-                                </v-list-item-content>
-                            </template>
-                        </v-select>
+                        />
                     </v-col>
                     <v-col cols="1" />
                 </v-row>
@@ -366,14 +292,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
 import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { Studiengang } from "@/types/Studiengang";
-import { Studiensemester } from "@/types/Studiensemester";
 import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
@@ -384,6 +309,7 @@ import { useFormatter } from "@/composables/formatter";
 import { useUserStore } from "@/stores/user";
 import { APP_SECURITY } from "@/Constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
+import SelectMultipleStudiensemester from "@/components/Praktikumsstellen/SelectMultipleStudiensemester.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -395,13 +321,10 @@ const userStore = useUserStore();
 const validationRules = useRules();
 const formatter = useFormatter();
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
-const requiredArrayRule = [
-    validationRules.notEmptyArrayRule("Darf nicht leer sein."),
-];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.regexRule(
-        /^[A-Z0-9._%+-]{1,64}@[A-Z0-9.-]{1,63}\.[A-Z]{1,63}$/,
+        /^[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,63}\.[A-Za-z]{1,63}$/,
         "Keine gültige Email."
     ),
     validationRules.maxLengthRule(
@@ -454,27 +377,6 @@ const meldezeitraeume = computed(() => {
 const currentMeldezeitraum = ref<Meldezeitraum>();
 const upcomingMeldezeitraeume = ref<Meldezeitraum[]>([]);
 const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
-
-const allSemesterSelected = computed(() => {
-    return (
-        praktikumsstelle.value.studiensemester?.length ===
-        Studiensemester.length
-    );
-});
-
-const someSemesterSelected = computed(() => {
-    return (
-        praktikumsstelle.value.studiensemester?.length !== 0 &&
-        praktikumsstelle.value.studiensemester?.length !== undefined &&
-        !allSemesterSelected.value
-    );
-});
-
-const semesterIcon = computed(() => {
-    if (allSemesterSelected.value) return "mdi-checkbox-marked";
-    if (someSemesterSelected.value) return "mdi-minus-box";
-    return "mdi-checkbox-blank-outline";
-});
 
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
@@ -530,26 +432,6 @@ function uploadPraktikumsstelle() {
             resetForm();
         });
     }
-}
-
-function selectAllStudiensemester() {
-    if (allSemesterSelected.value) {
-        praktikumsstelle.value.studiensemester = [];
-    } else {
-        praktikumsstelle.value.studiensemester = Studiensemester.map(
-            (studiensemester) => studiensemester.value
-        );
-    }
-}
-
-function sortSemester() {
-    praktikumsstelle.value.studiensemester?.sort((a, b) => a.localeCompare(b));
-}
-
-function semesterIconColor() {
-    return allSemesterSelected.value || someSemesterSelected.value
-        ? "primary"
-        : "darkgrey";
 }
 </script>
 <style lang="scss">
