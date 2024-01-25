@@ -55,25 +55,10 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-radio-group
+                        <PlanstelleRadioGroup
                             v-model="praktikumsstelle.planstelleVorhanden"
-                            class="radios custom-label"
-                            row
-                            :rules="booleanRule"
                         >
-                            <template #label>
-                                <span class="custom-label"
-                                    >Planstelle vorhanden*:</span
-                                >
-                            </template>
-                            <v-radio
-                                v-for="item in YesNoBoolean"
-                                :key="item.value"
-                                :label="item.name"
-                                :value="item.value"
-                                class="ml-5"
-                            ></v-radio>
-                        </v-radio-group>
+                        </PlanstelleRadioGroup>
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
@@ -234,7 +219,6 @@ import { onMounted, ref, computed } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
 import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
-import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Studiengang } from "@/types/Studiengang";
 import { Studiensemester } from "@/types/Studiensemester";
 import MeldungService from "@/api/PraktikumsstellenService";
@@ -253,6 +237,7 @@ import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/Dringli
 import AnforderungTooltip from "@/components/praktikumsplaetze/Meldung/AnforderungTooltip.vue";
 import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
 import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
+import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -275,9 +260,6 @@ const emailRule = [
         255,
         "Die Email darf nicht länger als 255 Zeichen sein."
     ),
-];
-const booleanRule = [
-    validationRules.notEmptyBooleanRule("Darf nicht leer sein."),
 ];
 
 const oertlAusbidlerRule = [
