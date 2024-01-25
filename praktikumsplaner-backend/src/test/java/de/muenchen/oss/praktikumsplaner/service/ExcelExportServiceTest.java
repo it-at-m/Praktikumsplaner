@@ -143,7 +143,7 @@ public class ExcelExportServiceTest {
             case "3. Ausbildungsjahr" -> ausbildungsjahrSet.add(Ausbildungsjahr.JAHR3);
             }
         }
-        return ausbildungsjahrSet.isEmpty() ? null : ausbildungsjahrSet;
+        return ausbildungsjahrSet;
     }
 
     private Set<Studiensemester> decodeStudiensemester(String studiensemester) {
@@ -159,7 +159,7 @@ public class ExcelExportServiceTest {
             case "6. Semester" -> studiensemesterSet.add(Studiensemester.SEMESTER6);
             }
         }
-        return studiensemesterSet.isEmpty() ? null : studiensemesterSet;
+        return studiensemesterSet;
     }
 
     private String decodeProgrammierkenntnisse(String programmierkenntnisse) {
