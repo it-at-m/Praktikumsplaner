@@ -1,6 +1,6 @@
 <template>
     <v-select
-        v-model="praktikumsstelleInternal.ausbildungsjahr"
+        v-model="praktikumsstelle.ausbildungsjahr"
         label="Ausbildungsjahr*"
         :items="Ausbildungsjahr"
         item-value="value"
@@ -9,12 +9,7 @@
         :menu-props="customMenuProps"
         outlined
         multiple
-        @change="
-            () => {
-                sortAusbildungsjahre();
-                emit('update:praktikumsstelle', praktikumsstelleInternal);
-            }
-        "
+        @change="sortAusbildungsjahre"
     >
         <template #prepend-item>
             <v-list-item
@@ -62,12 +57,21 @@ import { Ausbildungsjahr } from "@/types/Ausbildungsjahr";
 const validationRules = useRules();
 
 const props = defineProps<{
-    praktikumsstelle: Praktikumsstelle;
+    value: Praktikumsstelle;
 }>();
-const emit = defineEmits<{
-    (e: "update:praktikumsstelle", b: Praktikumsstelle): void;
+const emits = defineEmits<{
+    (e: "input", stelle: Praktikumsstelle): void;
 }>();
-const praktikumsstelleInternal = computed(() => props.praktikumsstelle);
+const praktikumsstelle = computed({
+    // getter
+    get() {
+        return props.value;
+    },
+    // setter
+    set(newValue) {
+        emits("input", newValue);
+    },
+});
 
 const requiredArrayRule = [
     validationRules.notEmptyArrayRule("Darf nicht leer sein."),
@@ -78,15 +82,15 @@ const customMenuProps = {
 
 const allAusbildungsjahreSelected = computed(() => {
     return (
-        praktikumsstelleInternal.value.ausbildungsjahr?.length ===
+        praktikumsstelle.value.ausbildungsjahr?.length ===
         Ausbildungsjahr.length
     );
 });
 
 const someAusbildungsjahreSelected = computed(() => {
     return (
-        praktikumsstelleInternal.value.ausbildungsjahr?.length !== 0 &&
-        praktikumsstelleInternal.value.ausbildungsjahr?.length !== undefined &&
+        praktikumsstelle.value.ausbildungsjahr?.length !== 0 &&
+        praktikumsstelle.value.ausbildungsjahr?.length !== undefined &&
         !allAusbildungsjahreSelected.value
     );
 });
@@ -99,18 +103,16 @@ const AusbildungsjahrIcon = computed(() => {
 
 function selectAllAusbildungsjahre() {
     if (allAusbildungsjahreSelected.value) {
-        praktikumsstelleInternal.value.ausbildungsjahr = [];
+        praktikumsstelle.value.ausbildungsjahr = [];
     } else {
-        praktikumsstelleInternal.value.ausbildungsjahr = Ausbildungsjahr.map(
+        praktikumsstelle.value.ausbildungsjahr = Ausbildungsjahr.map(
             (ausbildungsjahr) => ausbildungsjahr.value
         );
     }
 }
 
 function sortAusbildungsjahre() {
-    praktikumsstelleInternal.value.ausbildungsjahr?.sort((a, b) =>
-        a.localeCompare(b)
-    );
+    praktikumsstelle.value.ausbildungsjahr?.sort((a, b) => a.localeCompare(b));
 }
 
 function ausbildungsjahrIconColor() {

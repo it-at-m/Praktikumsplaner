@@ -95,7 +95,7 @@
                     <v-col cols="2" />
                     <v-col>
                         <AusbildungsJahrSelect
-                            v-model="praktikumsstelle.ausbildungsjahr"
+                            v-model="praktikumsstelle"
                         ></AusbildungsJahrSelect>
                     </v-col>
                     <v-col cols="1" />

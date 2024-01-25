@@ -83,7 +83,7 @@
                     <v-col cols="2" />
                     <v-col>
                         <SemesterSelect
-                            v-model="praktikumsstelle.studiensemester"
+                            v-model="praktikumsstelle"
                         ></SemesterSelect>
                     </v-col>
                     <v-col cols="1" />

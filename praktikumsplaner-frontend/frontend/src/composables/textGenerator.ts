@@ -1,4 +1,6 @@
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import { valueToNameStudiensemester } from "@/types/Studiensemester";
+import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
 
 export function useTextGenerator() {
     function getPraktikumsstellenCardText(
@@ -61,27 +63,47 @@ export function useTextGenerator() {
     function getAusbildungsPraktikumsstellenCardText(
         stelle: Praktikumsstelle
     ): string {
-        return (
-            "Ausbildungsrichtung: " +
-            stelle.ausbildungsrichtung +
-            "\n" +
-            "Ausbildungsjahr: " +
-            stelle.ausbildungsjahr?.charAt(stelle.ausbildungsjahr?.length - 1) +
-            ". Ausbildungsjahr"
-        );
+        let cardText = "";
+        cardText += "Ausbildungsrichtung: " + stelle.ausbildungsrichtung + "\n";
+        if (stelle.ausbildungsjahr) {
+            cardText += "Ausbildungsjahr: ";
+            stelle.ausbildungsjahr.sort();
+            for (let i = 0; i < stelle.ausbildungsjahr.length - 1; i++) {
+                cardText +=
+                    valueToNameAusbildungsjahr(stelle.ausbildungsjahr[i]) +
+                    ", ";
+            }
+            cardText +=
+                valueToNameAusbildungsjahr(
+                    stelle.ausbildungsjahr[stelle.ausbildungsjahr.length - 1]
+                ) + "\n";
+        }
+        return cardText;
     }
 
     function getStudiumssPraktikumsstellenCardText(
         stelle: Praktikumsstelle
     ): string {
-        return (
-            "Studiengang: " +
-            stelle.studiengang +
-            "\n" +
-            "Studiensemester: ab " +
-            stelle.studiensemester?.charAt(stelle.studiensemester?.length - 1) +
-            ". Semester"
-        );
+        let cardText = "";
+        cardText += "Studiengang: " + stelle.studiengang + "\n";
+        cardText += "Semester: ";
+        if (stelle.studiensemester) {
+            stelle.studiensemester.sort();
+            for (
+                let i = 0;
+                i < (stelle.studiensemester?.length || 0) - 1;
+                i++
+            ) {
+                cardText +=
+                    valueToNameStudiensemester(stelle.studiensemester[i]) +
+                    ", ";
+            }
+            cardText +=
+                valueToNameStudiensemester(
+                    stelle.studiensemester[stelle.studiensemester.length - 1]
+                ) + "\n";
+        }
+        return cardText;
     }
 
     return { getPraktikumsstellenCardText, getPraktikumsstellenCardDetailText };

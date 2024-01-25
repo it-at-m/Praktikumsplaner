@@ -71,20 +71,30 @@ export function useWarnings() {
         if (
             stelle.studiengang != undefined &&
             nwk.ausbildungsrichtung == undefined &&
+            nwk.studiengang != undefined &&
             stelle.studiensemester
         ) {
-            const expectedSemester: number = +stelle.studiensemester.substring(
-                8,
-                10
-            );
+            const expectedSemesters: number[] = [];
+            for (let i = 0; i < stelle.studiensemester.length; i++) {
+                expectedSemesters.push(
+                    +stelle.studiensemester[i].substring(8, 9)
+                );
+            }
+
             const actualSemester = calculateSemester(nwk);
-            if (expectedSemester > actualSemester) {
-                const warningText =
+            if (!expectedSemesters.includes(actualSemester)) {
+                let warningText =
                     "Wollen sie wirklich eine/n Student*in im " +
                     actualSemester +
-                    " Semester auf diese Stelle setzen, obwohl ein/e Student*in ab dem " +
-                    expectedSemester +
-                    " Semester gefordert ist?";
+                    " Semester auf diese Stelle setzen, obwohl ein/e Student*in im ";
+                for (let i = 0; i < expectedSemesters.length - 1; i++) {
+                    warningText += expectedSemesters[i] + ". Semester";
+                    warningText += ", ";
+                }
+                warningText +=
+                    expectedSemesters[expectedSemesters.length - 1] +
+                    ". Semester";
+                warningText += " erwartet wird.\n";
                 warnings.push(new Warning("", warningText));
             }
         }
@@ -93,20 +103,28 @@ export function useWarnings() {
         if (
             stelle.ausbildungsrichtung != undefined &&
             nwk.studiengang == undefined &&
+            nwk.ausbildungsrichtung != undefined &&
             stelle.ausbildungsjahr
         ) {
-            const expectedLehrjahr: number = +stelle.ausbildungsjahr.substring(
-                4,
-                6
-            );
+            const expectedLehrjahre: number[] = [];
+            for (let i = 0; i < stelle.ausbildungsjahr.length; i++) {
+                expectedLehrjahre.push(
+                    +stelle.ausbildungsjahr[i].substring(4, 5)
+                );
+            }
             const actualLehrjahr = calculateLehrjahr(nwk);
-            if (expectedLehrjahr > actualLehrjahr) {
-                const warningText =
+            if (!expectedLehrjahre.includes(actualLehrjahr)) {
+                let warningText =
                     "Wollen sie wirklich eine/n Auszubildende/n im " +
                     actualLehrjahr +
-                    " Lehrjahr auf diese Stelle setzen, obwohl eine/n Auszubildende/n ab dem " +
-                    expectedLehrjahr +
-                    " Lehrjahr gefordert ist?";
+                    ". Lehrjahr auf diese Stelle setzen, obwohl ein/e Auszubildende/r im ";
+                for (let i = 0; i < expectedLehrjahre.length - 1; i++) {
+                    warningText += expectedLehrjahre[i] + ". Lehrjahr";
+                    warningText += ", ";
+                }
+                warningText +=
+                    expectedLehrjahre[expectedLehrjahre.length - 1] +
+                    ". Lehrjahr";
                 warnings.push(new Warning("", warningText));
             }
         }
