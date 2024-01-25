@@ -13,6 +13,7 @@ import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -173,37 +174,31 @@ public class ExcelExportService {
     }
 
     private String ausbildungsjahrToStringConverter(Set<Ausbildungsjahr> ausbildungsjahr) {
-        StringBuilder returnString = new StringBuilder();
+        StringJoiner returnString = new StringJoiner(", ");
         List<Ausbildungsjahr> ausbildungsjahrSortedList = ausbildungsjahr.stream().sorted(Comparator.comparingInt(Ausbildungsjahr::ordinal))
                 .collect(Collectors.toCollection(ArrayList::new));
         for (Ausbildungsjahr jahr : ausbildungsjahrSortedList) {
             switch (jahr) {
-            case JAHR1 -> returnString.append("1. Ausbildungsjahr");
-            case JAHR2 -> returnString.append("2. Ausbildungsjahr");
-            case JAHR3 -> returnString.append("3. Ausbildungsjahr");
-            }
-            if (ausbildungsjahrSortedList.toArray()[ausbildungsjahrSortedList.size() - 1] != jahr) {
-                returnString.append(", ");
+            case JAHR1 -> returnString.add("1. Ausbildungsjahr");
+            case JAHR2 -> returnString.add("2. Ausbildungsjahr");
+            case JAHR3 -> returnString.add("3. Ausbildungsjahr");
             }
         }
         return returnString.toString();
     }
 
     private String studiensemesterToStringConverter(Set<Studiensemester> studiensemester) {
-        StringBuilder returnString = new StringBuilder();
+        StringJoiner returnString = new StringJoiner(", ");
         List<Studiensemester> studiensemesterSortedList = studiensemester.stream().sorted(Comparator.comparingInt(Studiensemester::ordinal))
                 .collect(Collectors.toCollection(ArrayList::new));
         for (Studiensemester semester : studiensemesterSortedList) {
             switch (semester) {
-            case SEMESTER1 -> returnString.append("1. Semester");
-            case SEMESTER2 -> returnString.append("2. Semester");
-            case SEMESTER3 -> returnString.append("3. Semester");
-            case SEMESTER4 -> returnString.append("4. Semester");
-            case SEMESTER5 -> returnString.append("5. Semester");
-            case SEMESTER6 -> returnString.append("6. Semester");
-            }
-            if (studiensemesterSortedList.toArray()[studiensemesterSortedList.size() - 1] != semester) {
-                returnString.append(", ");
+            case SEMESTER1 -> returnString.add("1. Semester");
+            case SEMESTER2 -> returnString.add("2. Semester");
+            case SEMESTER3 -> returnString.add("3. Semester");
+            case SEMESTER4 -> returnString.add("4. Semester");
+            case SEMESTER5 -> returnString.add("5. Semester");
+            case SEMESTER6 -> returnString.add("6. Semester");
             }
         }
         return returnString.toString();
