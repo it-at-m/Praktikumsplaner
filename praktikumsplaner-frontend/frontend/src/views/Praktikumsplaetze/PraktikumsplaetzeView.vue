@@ -1,93 +1,106 @@
 <template>
     <v-container>
-        <page-title
-            back-button-url="/"
-            page-header-text="Praktikumsplätze"
-        ></page-title>
-
-        <div v-if="!activeMeldezeitraum">
-            <v-row class="align-center">
-                <v-col
-                    cols="auto"
-                    class="d-flex align-center"
-                >
-                    <v-icon
-                        color="blue"
-                        large
-                        >mdi-information-outline</v-icon
-                    >
-                </v-col>
-                <v-col class="d-flex align-center">
-                    <p class="mt-5">
-                        Ihre örtliche Ausbildungsleitung hat die Meldung von
-                        Stellen noch nicht freigegeben, daher können aktuell
-                        leider noch keine Praktikumsplätze gemeldet werden.
-                    </p>
-                </v-col>
-            </v-row>
-        </div>
-        <div v-else>
+        <v-container v-if="loadingSite">
             <v-row>
-                <v-col cols="10"></v-col>
+                <v-col cols="4">
+                    <v-skeleton-loader type="text"> </v-skeleton-loader>
+                </v-col>
+                <v-col cols="6"></v-col>
                 <v-col cols="2">
-                    <two-choice-dialog-cards
-                        v-model="twoChoiceDialogVisible"
-                        buttontext="Hinzufügen"
-                        icontext="mdi-plus"
-                        dialogtitle="Praktikumsplatz melden"
-                        dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
-                        choice-one="Studium"
-                        choice-one-subtitle="Praktikumsplatz für Studierende "
-                        choice-two="Ausbildung"
-                        choice-two-subtitle="Praktikumsplatz für Auszubildende"
-                        @choiceOne="toStudium"
-                        @choiceTwo="toAusbildung"
-                        @close="closeDialog"
-                    ></two-choice-dialog-cards>
+                    <v-skeleton-loader type="button"> </v-skeleton-loader>
                 </v-col>
             </v-row>
-            <v-row></v-row>
-            <v-skeleton-loader
-                v-if="isAusbildungsleitung && loading"
-                type="image@3"
-            >
-            </v-skeleton-loader>
-            <v-row v-if="isAusbildungsleitung && !loading">
-                <v-container
-                    v-if="!mapIsEmpty && !loading"
-                    class="box"
-                >
-                    <span> Übersicht aus dem aktuellen Meldezeitraum </span>
-                    <PraktikumsstellenList
-                        :assignment="false"
-                        :praktikumsstellen-map="praktikumsstellenMap"
-                    ></PraktikumsstellenList>
-                </v-container>
-                <v-container
-                    v-if="mapIsEmpty && !loading"
-                    class="box"
-                >
-                    <v-row class="align-center">
-                        <v-col
-                            cols="auto"
-                            class="d-flex align-center"
+        </v-container>
+        <v-container v-else>
+            <page-title
+                back-button-url="/"
+                page-header-text="Praktikumsplätze"
+            ></page-title>
+
+            <div v-if="!activeMeldezeitraum">
+                <v-row class="align-center">
+                    <v-col
+                        cols="auto"
+                        class="d-flex align-center"
+                    >
+                        <v-icon
+                            color="blue"
+                            large
+                            >mdi-information-outline</v-icon
                         >
-                            <v-icon
-                                color="blue"
-                                large
-                                >mdi-information-outline</v-icon
+                    </v-col>
+                    <v-col class="d-flex align-center">
+                        <p class="mt-5">
+                            Ihre örtliche Ausbildungsleitung hat die Meldung von
+                            Stellen noch nicht freigegeben, daher können aktuell
+                            leider noch keine Praktikumsplätze gemeldet werden.
+                        </p>
+                    </v-col>
+                </v-row>
+            </div>
+            <div v-else>
+                <v-row>
+                    <v-col cols="10"></v-col>
+                    <v-col cols="2">
+                        <two-choice-dialog-cards
+                            v-model="twoChoiceDialogVisible"
+                            buttontext="Hinzufügen"
+                            icontext="mdi-plus"
+                            dialogtitle="Praktikumsplatz melden"
+                            dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
+                            choice-one="Studium"
+                            choice-one-subtitle="Praktikumsplatz für Studierende "
+                            choice-two="Ausbildung"
+                            choice-two-subtitle="Praktikumsplatz für Auszubildende"
+                            @choiceOne="toStudium"
+                            @choiceTwo="toAusbildung"
+                            @close="closeDialog"
+                        ></two-choice-dialog-cards>
+                    </v-col>
+                </v-row>
+                <v-row></v-row>
+                <v-skeleton-loader
+                    v-if="isAusbildungsleitung && loadingUebersicht"
+                    type="image@3"
+                >
+                </v-skeleton-loader>
+                <v-row v-if="isAusbildungsleitung && !loadingUebersicht">
+                    <v-container
+                        v-if="!mapIsEmpty && !loadingUebersicht"
+                        class="box"
+                    >
+                        <span> Übersicht aus dem aktuellen Meldezeitraum </span>
+                        <PraktikumsstellenList
+                            :assignment="false"
+                            :praktikumsstellen-map="praktikumsstellenMap"
+                        ></PraktikumsstellenList>
+                    </v-container>
+                    <v-container
+                        v-if="mapIsEmpty && !loadingUebersicht"
+                        class="box"
+                    >
+                        <v-row class="align-center">
+                            <v-col
+                                cols="auto"
+                                class="d-flex align-center"
                             >
-                        </v-col>
-                        <v-col class="d-flex align-center">
-                            <p class="mt-5">
-                                Es wurden für den aktuellen Zeitraum noch keine
-                                Praktikumsstellen gemeldet.
-                            </p>
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </v-row>
-        </div>
+                                <v-icon
+                                    color="blue"
+                                    large
+                                    >mdi-information-outline</v-icon
+                                >
+                            </v-col>
+                            <v-col class="d-flex align-center">
+                                <p class="mt-5">
+                                    Es wurden für den aktuellen Zeitraum noch
+                                    keine Praktikumsstellen gemeldet.
+                                </p>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-row>
+            </div>
+        </v-container>
     </v-container>
 </template>
 <script setup lang="ts">
@@ -104,7 +117,8 @@ import { APP_SECURITY } from "@/Constants";
 
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
-const loading = ref<boolean>(false);
+const loadingUebersicht = ref<boolean>(false);
+const loadingSite = ref<boolean>(true);
 const isAusbildungsleitung = computed(() => {
     return (
         userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
@@ -121,7 +135,7 @@ const mapIsEmpty = computed(() => {
 });
 
 onMounted(() => {
-    loading.value = true;
+    loadingUebersicht.value = true;
     MeldezeitraumService.getCurrentMeldezeitraum()
         .then((zeitraueme) => {
             activeMeldezeitraum.value = zeitraueme.length > 0;
@@ -131,6 +145,7 @@ onMounted(() => {
                 activeMeldezeitraum.value = true;
             }
         });
+    loadingSite.value = false;
     getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
 
@@ -155,7 +170,7 @@ function getAllPraktikumsstellenInCurrentMeldezeitraum() {
             praktikumsstellenMap.value = helperMap;
         })
         .finally(() => {
-            loading.value = false;
+            loadingUebersicht.value = false;
         });
 }
 </script>
