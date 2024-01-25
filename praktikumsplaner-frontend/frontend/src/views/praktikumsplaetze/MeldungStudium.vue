@@ -137,21 +137,16 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-text-field
+                        <AusbilderInput
                             v-model="praktikumsstelle.oertlicheAusbilder"
-                            label="Name örtliche Ausbilder*in*"
-                            :rules="oertlAusbidlerRule"
-                            outlined
-                        ></v-text-field>
+                        >
+                        </AusbilderInput>
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
-                        <v-text-field
+                        <AusbilderEmailInput
                             v-model="praktikumsstelle.email"
-                            label="E-mail örtliche Ausbilder*in*"
-                            :rules="emailRule"
-                            outlined
-                        ></v-text-field>
+                        ></AusbilderEmailInput>
                     </v-col>
                     <v-col cols="1" />
                 </v-row>
@@ -205,7 +200,6 @@ import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
-import { Programmierkenntnisse } from "@/types/YesNoEgalBoolean";
 import "@/directives/security";
 import { useUserStore } from "@/stores/user";
 import { APP_SECURITY } from "@/constants";
@@ -221,6 +215,8 @@ import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/Planste
 import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
 import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/ProgrammierKenntnisseSelect.vue";
+import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
+import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -236,22 +232,6 @@ const customMenuProps = {
     offsetY: true,
 };
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
-const emailRule = [
-    validationRules.notEmptyRule("Darf nicht leer sein."),
-    validationRules.emailRule("Keine gültige Email."),
-    validationRules.maxLengthRule(
-        255,
-        "Die Email darf nicht länger als 255 Zeichen sein."
-    ),
-];
-
-const oertlAusbidlerRule = [
-    validationRules.notEmptyRule("Darf nicht leer sein."),
-    validationRules.maxLengthRule(
-        255,
-        "Örtliche Ausbilder*in darf nicht länger als 255 Zeichen sein."
-    ),
-];
 
 const form = ref<HTMLFormElement>();
 const meldezeitraeume = computed(() => {
