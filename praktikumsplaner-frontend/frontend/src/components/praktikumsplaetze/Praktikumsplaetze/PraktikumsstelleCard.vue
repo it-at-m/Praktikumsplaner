@@ -29,11 +29,6 @@
                     {{ getCardText(props.value) }}
                 </p></v-card-text
             >
-            <v-col v-if="assignedNwk && props.assignment">
-                <v-chip :color="getNwkColor(assignedNwk)">{{
-                    `${assignedNwk.vorname} ${assignedNwk.nachname}`
-                }}</v-chip></v-col
-            >
             <v-btn
                 icon
                 class="icon-bottom-right-position"
@@ -66,7 +61,6 @@ import { useTextGenerator } from "@/composables/textGenerator";
 
 const props = defineProps<{
     value: Praktikumsstelle;
-    assignment: boolean;
 }>();
 
 const show = ref<boolean>(false);
@@ -79,16 +73,6 @@ function getCardText(stelle: Praktikumsstelle): string {
 
 function getCardDetailText(stelle: Praktikumsstelle): string {
     return generator.getPraktikumsstellenCardDetailText(stelle);
-}
-
-function getNwkColor(nwk: Nwk): string {
-    let color = "primary";
-    if (nwk.studiengang && nwk.ausbildungsrichtung == undefined) {
-        color = findStudiengangColorByValue(nwk.studiengang);
-    } else if (nwk.ausbildungsrichtung && nwk.studiengang == undefined) {
-        color = findAusbildungsrichtungColorByValue(nwk.ausbildungsrichtung);
-    }
-    return color;
 }
 </script>
 <style scoped lang="scss">

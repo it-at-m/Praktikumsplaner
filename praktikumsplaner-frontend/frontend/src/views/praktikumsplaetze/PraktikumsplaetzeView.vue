@@ -95,7 +95,7 @@ import PageTitle from "@/components/common/PageTitle.vue";
 import router from "@/router";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import { useUserStore } from "@/stores/user";
-import PraktikumsstellenList from "@/components/common/PraktikumsstellenList.vue";
+import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
