@@ -184,7 +184,7 @@ export function useWarnings() {
                 warnings.push(warning);
             }
         }
-        return [];
+        return warnings;
     }
 
     function calculateSemester(nwk: Nwk) {
