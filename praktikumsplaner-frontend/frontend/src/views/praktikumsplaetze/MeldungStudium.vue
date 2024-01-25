@@ -19,12 +19,9 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-text-field
+                        <DienststellenInput
                             v-model="praktikumsstelle.dienststelle"
-                            label="Konkrete Dienststelle*"
-                            :rules="dienststelleRule"
-                            outlined
-                        ></v-text-field>
+                        ></DienststellenInput>
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
@@ -255,6 +252,7 @@ import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/Dringlic
 import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
 import AnforderungTooltip from "@/components/praktikumsplaetze/Meldung/AnforderungTooltip.vue";
 import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
+import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -281,13 +279,7 @@ const emailRule = [
 const booleanRule = [
     validationRules.notEmptyBooleanRule("Darf nicht leer sein."),
 ];
-const dienststelleRule = [
-    validationRules.notEmptyRule("Darf nicht leer sein."),
-    validationRules.maxLengthRule(
-        10,
-        "Die Dienststelle darf nicht länger als 10 Zeichen sein."
-    ),
-];
+
 const oertlAusbidlerRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.maxLengthRule(
