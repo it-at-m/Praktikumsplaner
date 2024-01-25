@@ -98,11 +98,7 @@
                             :rules="requiredRule"
                             :menu-props="customMenuProps"
                             outlined
-                            @change="
-                                () => {
-                                    changeVorrZuweisungsZeitraum();
-                                }
-                            "
+                            @change="changeVorrZuweisungsZeitraum"
                         >
                         </v-select>
                     </v-col>
@@ -117,11 +113,7 @@
                             :rules="requiredRule"
                             :menu-props="customMenuProps"
                             outlined
-                            @change="
-                                () => {
-                                    changeVorrZuweisungsZeitraum();
-                                }
-                            "
+                            @change="changeVorrZuweisungsZeitraum"
                         >
                         </v-select>
                     </v-col>
