@@ -53,7 +53,7 @@ public class ExcelExportService {
         return workbook;
     }
 
-    private void fillAusbildungspraktikumsstellen(List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen, XSSFSheet ausbildungsSheet) {
+    private void fillAusbildungspraktikumsstellen(final List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen, final XSSFSheet ausbildungsSheet) {
         for (int i = 0; i < assignedAusbildungspraktikumsstellen.size(); i++) {
             AusbildungsPraktikumsstelleDto praktikumsstelle = assignedAusbildungspraktikumsstellen.get(i);
             ausbildungsSheet.getRow(i + 3).getCell(0).setCellValue(praktikumsstelle.referat().name());
@@ -73,7 +73,7 @@ public class ExcelExportService {
         }
     }
 
-    private void fillStudiumspraktikumsstellen(List<StudiumsPraktikumsstelleDto> assignedStudiumspraktikumsstellen, XSSFSheet studiumsSheet) {
+    private void fillStudiumspraktikumsstellen(final List<StudiumsPraktikumsstelleDto> assignedStudiumspraktikumsstellen, final XSSFSheet studiumsSheet) {
         for (int i = 0; i < assignedStudiumspraktikumsstellen.size(); i++) {
             StudiumsPraktikumsstelleDto praktikumsstelle = assignedStudiumspraktikumsstellen.get(i);
             studiumsSheet.getRow(i + 3).getCell(0).setCellValue(praktikumsstelle.referat().name());
@@ -122,7 +122,7 @@ public class ExcelExportService {
         return Pair.of(assignedAusbildungspraktikumsstellen, assignedStudiumspraktikumsstellen);
     }
 
-    private static AusbildungsPraktikumsstelleDto turnStudiumsIntoAusbildungspraktikumsstelle(StudiumsPraktikumsstelleDto praktikumsstelle) {
+    private static AusbildungsPraktikumsstelleDto turnStudiumsIntoAusbildungspraktikumsstelle(final StudiumsPraktikumsstelleDto praktikumsstelle) {
         return AusbildungsPraktikumsstelleDto.builder()
                 .referat(praktikumsstelle.referat())
                 .dienststelle(praktikumsstelle.dienststelle())
@@ -138,7 +138,7 @@ public class ExcelExportService {
                 .build();
     }
 
-    private static StudiumsPraktikumsstelleDto turnAusbildungsIntoStudiumspraktikumsstelle(AusbildungsPraktikumsstelleDto praktikumsstelle) {
+    private static StudiumsPraktikumsstelleDto turnAusbildungsIntoStudiumspraktikumsstelle(final AusbildungsPraktikumsstelleDto praktikumsstelle) {
         return StudiumsPraktikumsstelleDto.builder()
                 .referat(praktikumsstelle.referat())
                 .dienststelle(praktikumsstelle.dienststelle())
@@ -155,7 +155,7 @@ public class ExcelExportService {
                 .build();
     }
 
-    private String programmierkenntnisseSwitch(String programmierkenntnisse) {
+    private String programmierkenntnisseSwitch(final String programmierkenntnisse) {
         if (programmierkenntnisse == null) return ("");
         switch (programmierkenntnisse) {
         case "true" -> {
@@ -173,7 +173,7 @@ public class ExcelExportService {
         }
     }
 
-    private String ausbildungsjahrToStringConverter(Set<Ausbildungsjahr> ausbildungsjahr) {
+    private String ausbildungsjahrToStringConverter(final Set<Ausbildungsjahr> ausbildungsjahr) {
         StringJoiner returnString = new StringJoiner(", ");
         List<Ausbildungsjahr> ausbildungsjahrSortedList = ausbildungsjahr.stream().sorted(Comparator.comparingInt(Ausbildungsjahr::ordinal))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -187,7 +187,7 @@ public class ExcelExportService {
         return returnString.toString();
     }
 
-    private String studiensemesterToStringConverter(Set<Studiensemester> studiensemester) {
+    private String studiensemesterToStringConverter(final Set<Studiensemester> studiensemester) {
         StringJoiner returnString = new StringJoiner(", ");
         List<Studiensemester> studiensemesterSortedList = studiensemester.stream().sorted(Comparator.comparingInt(Studiensemester::ordinal))
                 .collect(Collectors.toCollection(ArrayList::new));
