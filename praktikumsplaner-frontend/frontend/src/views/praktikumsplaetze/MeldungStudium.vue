@@ -165,7 +165,7 @@ import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { useUserStore } from "@/stores/user";
-import { APP_SECURITY } from "@/Constants";
+import { APP_SECURITY } from "@/constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
