@@ -121,17 +121,9 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-select
+                        <ProgrammierKenntnisseSelect
                             v-model="praktikumsstelle.programmierkenntnisse"
-                            label="Programmierkenntnisse*"
-                            :items="Programmierkenntnisse"
-                            :menu-props="customMenuProps"
-                            :rules="requiredRule"
-                            item-value="value"
-                            item-text="name"
-                            outlined
-                        >
-                        </v-select>
+                        ></ProgrammierKenntnisseSelect>
                     </v-col>
                     <v-col />
                     <v-col cols="3" />
@@ -228,6 +220,7 @@ import DienststellenInput from "@/components/praktikumsplaetze/Meldung/Dienstste
 import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
 import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
+import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/ProgrammierKenntnisseSelect.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
