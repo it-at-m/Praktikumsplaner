@@ -1,12 +1,15 @@
 package de.muenchen.oss.praktikumsplaner.domain;
 
 import de.muenchen.oss.praktikumsplaner.annotations.StudiumsAnnotation;
+import de.muenchen.oss.praktikumsplaner.domain.converter.StudiensemesterConverter;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,8 +31,8 @@ public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
     private String programmierkenntnisse;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private Studiensemester studiensemester;
+    @Convert(converter = StudiensemesterConverter.class)
+    private Set<Studiensemester> studiensemester;
 
     @NotNull
     @Enumerated(EnumType.STRING)

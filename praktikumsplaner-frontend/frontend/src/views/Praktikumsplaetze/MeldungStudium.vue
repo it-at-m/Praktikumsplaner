@@ -92,41 +92,6 @@
                     </v-col>
                     <v-col>
                         <v-text-field
-                            v-model="zuweisungsZeitraum"
-                            label="Zeitraum Nwk"
-                            outlined
-                            disabled
-                            filled
-                            background-color="grey"
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="1" />
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-radio-group
-                            v-model="praktikumsstelle.planstelleVorhanden"
-                            class="radios custom-label"
-                            row
-                            :rules="booleanRule"
-                        >
-                            <template #label>
-                                <span class="custom-label"
-                                    >Planstelle vorhanden*:</span
-                                >
-                            </template>
-                            <v-radio
-                                v-for="item in YesNoBoolean"
-                                :key="item.value"
-                                :label="item.name"
-                                :value="item.value"
-                                class="ml-5"
-                            ></v-radio>
-                        </v-radio-group>
-                    </v-col>
-                    <v-col cols="2" />
-                    <v-col>
-                        <v-text-field
                             v-model="praktikumsstelle.namentlicheAnforderung"
                             label="Anforderung bestimmter NWK"
                             :rules="namentlicheAnforderungRule"
@@ -153,6 +118,32 @@
                             >
                         </v-tooltip>
                     </v-col>
+                </v-row>
+                <v-row>
+                    <v-col>
+                        <v-radio-group
+                            v-model="praktikumsstelle.planstelleVorhanden"
+                            class="radios custom-label"
+                            row
+                            :rules="booleanRule"
+                        >
+                            <template #label>
+                                <span class="custom-label"
+                                    >Planstelle vorhanden*:</span
+                                >
+                            </template>
+                            <v-radio
+                                v-for="item in YesNoBoolean"
+                                :key="item.value"
+                                :label="item.name"
+                                :value="item.value"
+                                class="ml-5"
+                            ></v-radio>
+                        </v-radio-group>
+                    </v-col>
+                    <v-col cols="2" />
+                    <v-col />
+                    <v-col cols="1" />
                 </v-row>
                 <v-row>
                     <v-col>
@@ -183,32 +174,17 @@
                             :rules="requiredRule"
                             :menu-props="customMenuProps"
                             outlined
-                            @change="
-                                () => {
-                                    changeVorrZuweisungsZeitraum();
-                                }
-                            "
                         >
                         </v-select>
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
-                        <v-select
-                            v-model="praktikumsstelle.studiensemester"
-                            label="Studiensemester*"
-                            :items="Studiensemester"
-                            item-value="value"
-                            item-text="name"
-                            :rules="requiredRule"
-                            :menu-props="customMenuProps"
-                            outlined
-                            @change="
-                                () => {
-                                    changeVorrZuweisungsZeitraum();
-                                }
+                        <SelectMultipleStudiensemester
+                            :praktikumsstelle="praktikumsstelle"
+                            @update:praktikumsstelle="
+                                (value) => (praktikumsstelle = value)
                             "
-                        >
-                        </v-select>
+                        />
                     </v-col>
                     <v-col cols="1" />
                 </v-row>
@@ -316,15 +292,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
-import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
 import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { Studiengang } from "@/types/Studiengang";
-import { Studiensemester } from "@/types/Studiensemester";
 import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
@@ -335,14 +309,13 @@ import { useFormatter } from "@/composables/formatter";
 import { useUserStore } from "@/stores/user";
 import { APP_SECURITY } from "@/Constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
+import SelectMultipleStudiensemester from "@/components/Praktikumsstellen/SelectMultipleStudiensemester.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
-const zeitraeueme = useZeitraeume();
-const zuweisungsZeitraum = ref<string>("");
 const isAusbildungsleitung = ref<boolean>(false);
 const userStore = useUserStore();
 const validationRules = useRules();
@@ -351,7 +324,7 @@ const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.regexRule(
-        /^[A-Z0-9._%+-]{1,64}@[A-Z0-9.-]{1,63}\.[A-Z]{1,63}$/,
+        /^[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,63}\.[A-Za-z]{1,63}$/,
         "Keine gültige Email."
     ),
     validationRules.maxLengthRule(
@@ -434,13 +407,6 @@ function getPassedMeldezeitraeume() {
     MeldezeitraumService.getPassedMeldezeitraueme().then((zeitraeume) => {
         passedMeldezeitraeume.value = zeitraeume;
     });
-}
-
-function changeVorrZuweisungsZeitraum() {
-    zuweisungsZeitraum.value = zeitraeueme.studiumsZeitraum(
-        praktikumsstelle.value.studiengang,
-        praktikumsstelle.value.studiensemester
-    );
 }
 
 function resetForm() {

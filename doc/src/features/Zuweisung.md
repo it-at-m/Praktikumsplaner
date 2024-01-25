@@ -35,8 +35,8 @@ Warnings that can appear:
 - [Nwk](./../glossary.md#nwk) is an [Auszubildende](./../glossary.md#auszubildende) but a [Studentin](./../glossary.md#studentin) was requested.
 - [Nwk](./../glossary.md#nwk) has a different major than requested
 - [Nwk](./../glossary.md#nwk) is not the person the [Praktikumsstelle](./../glossary.md#praktikumsstelle) specifically requested.
-- [Nwk](./../glossary.md#nwk) is in a lower study semester than the minimum requested.
-- [Nwk](./../glossary.md#nwk) is in a lower [Lehrjahr](./../glossary.md#lehrjahr) than the minimum requested.
+- [Nwk](./../glossary.md#nwk) is not in the requested semester.
+- [Nwk](./../glossary.md#nwk) is not in the requested [Lehrjahr](./../glossary.md#lehrjahr).
 
 **⚠** All warnings *can* be ignored, but it is advised to reevaluate an assignment if a warning appears
 
