@@ -51,22 +51,22 @@
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
-                        <ProjektarbeitRadioGroup
-                            v-model="praktikumsstelle.projektarbeit"
-                        ></ProjektarbeitRadioGroup>
-                    </v-col>
-                    <v-col cols="1">
-                        <ProjektarbeitTooltip></ProjektarbeitTooltip>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
                         <NamentlicheAnforderungInput
                             v-model="praktikumsstelle.namentlicheAnforderung"
                         ></NamentlicheAnforderungInput>
                     </v-col>
                     <v-col cols="1">
                         <NamentlicheAnforderungTooltip></NamentlicheAnforderungTooltip>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col>
+                        <ProjektarbeitRadioGroup
+                            v-model="praktikumsstelle.projektarbeit"
+                        ></ProjektarbeitRadioGroup>
+                    </v-col>
+                    <v-col cols="1">
+                        <ProjektarbeitTooltip></ProjektarbeitTooltip>
                     </v-col>
                     <v-col cols="2"></v-col>
                     <v-col></v-col>

@@ -90,7 +90,7 @@ import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutA
 import Nwk from "@/types/Nwk";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
 import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
-import { useWarnings } from "@/composables/warnings";
+import { useWarnings } from "@/composables/warningGenerator";
 import { useTextGenerator } from "@/composables/textGenerator";
 
 const props = defineProps<{

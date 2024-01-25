@@ -52,7 +52,7 @@ import Nwk from "@/types/Nwk";
 import Warning from "@/types/Warning";
 import NwkService from "@/api/NwkService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
-import { useWarnings } from "@/composables/warnings";
+import { useWarnings } from "@/composables/warningGenerator";
 
 const showSendMailDialog = ref(false);
 const showWarningDialog = ref(false);

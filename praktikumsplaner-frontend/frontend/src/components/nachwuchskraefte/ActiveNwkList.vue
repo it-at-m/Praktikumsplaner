@@ -32,7 +32,7 @@
 import { ref, onMounted } from "vue";
 import Nwk from "@/types/Nwk";
 import NwkService from "@/api/NwkService";
-import NwkUpdateDialog from "@/components/Nachwuchskraefte/NwkUpdateDialog.vue";
+import NwkUpdateDialog from "@/components/nachwuchskraefte/NwkUpdateDialog.vue";
 import { EventBus } from "@/stores/event-bus";
 const nwks = ref<Nwk[]>([]);
 

@@ -23,7 +23,7 @@ const emits = defineEmits<{
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.regexRule(
-        /^[A-Z0-9._%+-]{1,64}@[A-Z0-9.-]{1,63}\.[A-Z]{1,63}$/,
+        /^[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,63}\.[A-Za-z]{1,63}$/,
         "Keine gültige Email."
     ),
     validationRules.maxLengthRule(
