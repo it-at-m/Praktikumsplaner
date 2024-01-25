@@ -73,12 +73,10 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-textarea
+                        <TaetigkeitenInput
                             v-model="praktikumsstelle.taetigkeiten"
-                            label="Aufgaben am Praktikumsplatz*"
-                            :rules="taetigkeitenRule"
-                            outlined
-                        ></v-textarea>
+                        >
+                        </TaetigkeitenInput>
                     </v-col>
                     <v-col cols="1" />
                 </v-row>
@@ -237,6 +235,7 @@ import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.
 import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
 import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
 import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
+import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -266,14 +265,6 @@ const oertlAusbidlerRule = [
     validationRules.maxLengthRule(
         255,
         "Örtliche Ausbilder*in darf nicht länger als 255 Zeichen sein."
-    ),
-];
-
-const taetigkeitenRule = [
-    validationRules.notEmptyRule("Darf nicht leer sein."),
-    validationRules.maxLengthRule(
-        5000,
-        "Tätigkeiten dürfen nicht länger als 5000 Zeichen sein."
     ),
 ];
 
