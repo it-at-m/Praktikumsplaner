@@ -1,6 +1,8 @@
 import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, NWK_BASE } from "@/constants";
 import Nwk from "@/types/Nwk";
+import { useSnackbarStore } from "@/stores/snackbar";
+import { Levels } from "@/api/error";
 
 export default {
     uploadExcelFile(excelDatei: File): Promise<void> {
@@ -55,6 +57,23 @@ export default {
                 return response.json();
             })
             .catch((err) => {
+                FetchUtils.defaultResponseHandler(err);
+            });
+    },
+    updateNwk(nwk: Nwk): Promise<void> {
+        return fetch(`${API_BASE}${NWK_BASE}`, FetchUtils.getPUTConfig(nwk))
+            .then((response) => {
+                useSnackbarStore().showMessage({
+                    message: "☑ NWK wurde erfolgreich bearbeitet.",
+                    level: Levels.SUCCESS,
+                });
+                FetchUtils.defaultResponseHandler(response);
+            })
+            .catch((err) => {
+                useSnackbarStore().showMessage({
+                    message: err.message,
+                    level: Levels.ERROR,
+                });
                 FetchUtils.defaultResponseHandler(err);
             });
     },

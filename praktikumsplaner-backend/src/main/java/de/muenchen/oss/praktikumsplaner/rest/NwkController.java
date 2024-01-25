@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,20 +23,19 @@ import org.springframework.web.server.ResponseStatusException;
 public class NwkController {
     private final NwkService nwkService;
 
-    private final String ACTIVE_STATUS = "aktiv";
+    private static final String ACTIVE_STATUS = "aktiv";
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping("/import")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveNwkExcel(@RequestBody String base64String) throws IOException {
+    public void saveNwkExcel(@RequestBody final String base64String) throws IOException {
         nwkService.importNwk(base64String);
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<NwkDto> getNwks(@RequestParam(name = "status", required = false) String status,
-            @RequestParam(name = "unassigned", required = false) String unassigned) {
+    public List<NwkDto> getNwks(@RequestParam(name = "status", required = false) final String status,
+            @RequestParam(name = "unassigned", required = false) final String unassigned) {
         if (status != null) {
             if (ACTIVE_STATUS.equals(status)) {
                 return nwkService.findAllActiveNwks();
@@ -48,5 +48,16 @@ public class NwkController {
             }
         }
         return nwkService.findAllNwks();
+    }
+
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PutMapping
+    public void updateNwk(@RequestBody final NwkDto nwkDto) {
+        if (!nwkService.nwkExistsById(nwkDto.id())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Nachwuchskraft mit der ID " + nwkDto.id() + " existiert nicht.");
+        } else {
+            nwkService.saveNwk(nwkDto);
+        }
     }
 }
