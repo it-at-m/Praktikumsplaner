@@ -2,7 +2,7 @@ import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, NWK_BASE } from "@/constants";
 import Nwk from "@/types/Nwk";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/error";
+import { Levels } from "@/api/Error";
 
 export default {
     uploadExcelFile(excelDatei: File): Promise<void> {
