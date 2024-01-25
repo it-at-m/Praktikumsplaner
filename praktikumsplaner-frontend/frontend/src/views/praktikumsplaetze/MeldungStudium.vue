@@ -62,12 +62,10 @@
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
-                        <v-text-field
+                        <NamentlicheAnforderungInput
                             v-model="praktikumsstelle.namentlicheAnforderung"
-                            label="Anforderung bestimmter NWK"
-                            :rules="namentlicheAnforderungRule"
-                            outlined
-                        ></v-text-field>
+                        >
+                        </NamentlicheAnforderungInput>
                     </v-col>
                     <v-col cols="1">
                         <AnforderungTooltip></AnforderungTooltip>
@@ -238,6 +236,7 @@ import AnforderungTooltip from "@/components/praktikumsplaetze/Meldung/Anforderu
 import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
 import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
 import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
+import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -269,12 +268,7 @@ const oertlAusbidlerRule = [
         "Örtliche Ausbilder*in darf nicht länger als 255 Zeichen sein."
     ),
 ];
-const namentlicheAnforderungRule = [
-    validationRules.maxLengthRule(
-        255,
-        "Der Name der angeforderte NWK darf nicht länger als 255 Zeichen sein."
-    ),
-];
+
 const taetigkeitenRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.maxLengthRule(
