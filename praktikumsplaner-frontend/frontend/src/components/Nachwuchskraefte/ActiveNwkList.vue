@@ -18,7 +18,7 @@
                         <NwkUpdateDialog
                             class="d-flex justify-center align-center"
                             :nwk="nwk"
-                            @updated="getAllActiveNwks"
+                            @updated="loadAllActiveNwks"
                         />
                     </v-col>
                     <v-col> </v-col>
