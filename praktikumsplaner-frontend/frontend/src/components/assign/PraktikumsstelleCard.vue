@@ -48,7 +48,7 @@
                     {{ getCardText(props.value) }}
                 </p></v-card-text
             >
-            <v-col v-if="assignedNwk && props.assignment">
+            <v-col v-if="assignedNwk">
                 <v-chip
                     :color="getNwkColor(assignedNwk)"
                     close
@@ -87,8 +87,6 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
-import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/Error";
 import Nwk from "@/types/Nwk";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
 import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
@@ -97,7 +95,6 @@ import { useTextGenerator } from "@/composables/textGenerator";
 
 const props = defineProps<{
     value: Praktikumsstelle;
-    assignment: boolean;
 }>();
 
 const show = ref<boolean>(false);
