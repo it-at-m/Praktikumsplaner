@@ -35,22 +35,12 @@
                     <v-col>
                         <DringlichkeitSelect
                             v-model="praktikumsstelle.dringlichkeit"
-                            :rules="requiredRule"
                         ></DringlichkeitSelect>
                     </v-col>
                     <v-col cols="2">
                         <DringlichkeitTooltip></DringlichkeitTooltip>
                     </v-col>
-                    <v-col>
-                        <v-text-field
-                            v-model="zuweisungsZeitraum"
-                            label="Zeitraum Nwk"
-                            outlined
-                            disabled
-                            filled
-                            background-color="grey"
-                        ></v-text-field>
-                    </v-col>
+                    <v-col> </v-col>
                     <v-col cols="1" />
                 </v-row>
                 <v-row>
@@ -89,33 +79,15 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-select
+                        <StudienrichtungSelect
                             v-model="praktikumsstelle.studiengang"
-                            label="Studienrichtung*"
-                            :items="Studiengang"
-                            item-value="value"
-                            item-text="name"
-                            :rules="requiredRule"
-                            :menu-props="customMenuProps"
-                            outlined
-                            @change="changeVorrZuweisungsZeitraum"
-                        >
-                        </v-select>
+                        ></StudienrichtungSelect>
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
-                        <v-select
+                        <SemesterSelect
                             v-model="praktikumsstelle.studiensemester"
-                            label="Studiensemester*"
-                            :items="Studiensemester"
-                            item-value="value"
-                            item-text="name"
-                            :rules="requiredRule"
-                            :menu-props="customMenuProps"
-                            outlined
-                            @change="changeVorrZuweisungsZeitraum"
-                        >
-                        </v-select>
+                        ></SemesterSelect>
                     </v-col>
                     <v-col cols="1" />
                 </v-row>
@@ -192,10 +164,6 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import { useRules } from "@/composables/rules";
-import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
-import { Studiengang } from "@/types/Studiengang";
-import { Studiensemester } from "@/types/Studiensemester";
 import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
@@ -217,21 +185,16 @@ import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/Taetigkeit
 import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/ProgrammierKenntnisseSelect.vue";
 import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
 import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
+import StudienrichtungSelect from "@/components/praktikumsplaetze/Meldung/StudienrichtungSelect.vue";
+import SemesterSelect from "@/components/praktikumsplaetze/Meldung/SemesterSelect.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
-const zeitraeueme = useZeitraeume();
-const zuweisungsZeitraum = ref<string>("");
 const isAusbildungsleitung = ref<boolean>(false);
 const userStore = useUserStore();
-const validationRules = useRules();
-const customMenuProps = {
-    offsetY: true,
-};
-const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 
 const form = ref<HTMLFormElement>();
 const meldezeitraeume = computed(() => {
@@ -274,13 +237,6 @@ function getPassedMeldezeitraeume() {
     MeldezeitraumService.getPassedMeldezeitraueme().then((zeitraeume) => {
         passedMeldezeitraeume.value = zeitraeume;
     });
-}
-
-function changeVorrZuweisungsZeitraum() {
-    zuweisungsZeitraum.value = zeitraeueme.studiumsZeitraum(
-        praktikumsstelle.value.studiengang,
-        praktikumsstelle.value.studiensemester
-    );
 }
 
 function resetForm() {

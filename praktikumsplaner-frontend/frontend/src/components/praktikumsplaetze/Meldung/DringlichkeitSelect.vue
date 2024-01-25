@@ -6,7 +6,7 @@
         :menu-props="customMenuProps"
         item-value="value"
         item-text="name"
-        :rules="rules"
+        :rules="requiredRule"
         outlined
     ></v-select>
 </template>
@@ -14,14 +14,18 @@
 <script setup lang="ts">
 import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { computed } from "vue";
+import { useRules } from "@/composables/rules";
+
+const validationRules = useRules();
 
 const props = defineProps<{
     value: object;
-    rules: object;
 }>();
 const emits = defineEmits<{
     (e: "input", dringlichkeit: object): void;
 }>();
+
+const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 
 const customMenuProps = {
     offsetY: true,

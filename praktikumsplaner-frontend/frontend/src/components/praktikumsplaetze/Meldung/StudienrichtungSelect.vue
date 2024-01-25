@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { computed } from "vue";
 import { useRules } from "@/composables/rules";
 import { Studiengang } from "@/types/Studiengang";
