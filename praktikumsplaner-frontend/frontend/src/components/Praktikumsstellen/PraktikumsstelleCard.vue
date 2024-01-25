@@ -125,9 +125,9 @@ function getCardText(stelle: Praktikumsstelle): string {
             cardText += "Semester: ";
             stelle.studiensemester.sort();
             for (let i = 0; i < stelle.studiensemester.length - 1; i++) {
-                cardText += valueToNameStudiensemester(
-                    stelle.studiensemester[i]
-                );
+                cardText +=
+                    valueToNameStudiensemester(stelle.studiensemester[i]) +
+                    ", ";
             }
             cardText +=
                 valueToNameStudiensemester(
@@ -140,9 +140,9 @@ function getCardText(stelle: Praktikumsstelle): string {
             cardText += "Ausbildungsjahr: ";
             stelle.ausbildungsjahr.sort();
             for (let i = 0; i < stelle.ausbildungsjahr.length; i++) {
-                cardText += valueToNameAusbildungsjahr(
-                    stelle.ausbildungsjahr[i]
-                );
+                cardText +=
+                    valueToNameAusbildungsjahr(stelle.ausbildungsjahr[i]) +
+                    ", ";
             }
             cardText +=
                 valueToNameAusbildungsjahr(
