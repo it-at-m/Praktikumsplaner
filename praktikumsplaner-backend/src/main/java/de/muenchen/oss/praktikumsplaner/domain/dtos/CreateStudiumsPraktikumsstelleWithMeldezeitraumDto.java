@@ -7,6 +7,7 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import java.util.Set;
 import java.util.UUID;
 import lombok.Builder;
 
@@ -30,7 +31,7 @@ public record CreateStudiumsPraktikumsstelleWithMeldezeitraumDto(@NotNull String
 
                                                                  boolean planstelleVorhanden,
 
-                                                                 @NotNull Studiensemester studiensemester,
+                                                                 @NotNull Set<Studiensemester> studiensemester,
 
                                                                  @NotNull Studiengang studiengang,
 

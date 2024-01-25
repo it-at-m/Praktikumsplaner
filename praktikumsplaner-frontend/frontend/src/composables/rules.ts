@@ -43,6 +43,11 @@ export function useRules() {
             (value && regex.test(value)) || message;
     }
 
+    function notEmptyArrayRule(message = "error") {
+        return (value: never[] | null | undefined) =>
+            (value && value.length > 0) || message;
+    }
+
     return {
         fileTypeRule,
         minLengthRule,
@@ -52,5 +57,6 @@ export function useRules() {
         notEmptyBooleanRule,
         fileRequiredRule,
         regexRule,
+        notEmptyArrayRule,
     };
 }

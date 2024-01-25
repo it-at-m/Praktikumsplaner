@@ -53,7 +53,7 @@ public class ServiceTestHelper {
 
     public AusbildungsPraktikumsstelle createAusbildungsPraktikumsstelleEntity(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten,
-            final Dringlichkeit dringlichkeit, final Referat referat, final Ausbildungsjahr semester,
+            final Dringlichkeit dringlichkeit, final Referat referat, final Set<Ausbildungsjahr> ausbildungsjahr,
             final Ausbildungsrichtung ausbildungsrichtung, final boolean projektarbeit, final UUID meldezeitraumId, final Nwk assignedNwk) {
         AusbildungsPraktikumsstelle newAusbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
         newAusbildungsPraktikumsstelle.setId(UUID.randomUUID());
@@ -63,7 +63,7 @@ public class ServiceTestHelper {
         newAusbildungsPraktikumsstelle.setTaetigkeiten(taetigkeiten);
         newAusbildungsPraktikumsstelle.setDringlichkeit(dringlichkeit);
         newAusbildungsPraktikumsstelle.setReferat(referat);
-        newAusbildungsPraktikumsstelle.setAusbildungsjahr(semester);
+        newAusbildungsPraktikumsstelle.setAusbildungsjahr(ausbildungsjahr);
         newAusbildungsPraktikumsstelle.setAusbildungsrichtung(ausbildungsrichtung);
         newAusbildungsPraktikumsstelle.setProjektarbeit(projektarbeit);
         newAusbildungsPraktikumsstelle.setAssignedNwk(assignedNwk);
@@ -72,7 +72,7 @@ public class ServiceTestHelper {
 
     public StudiumsPraktikumsstelle createStudiumsPraktikumsstelleEntity(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten,
-            final Dringlichkeit dringlichkeit, final Referat referat, final Studiensemester semester,
+            final Dringlichkeit dringlichkeit, final Referat referat, final Set<Studiensemester> semester,
             final Studiengang studiengang, final String programmierkenntnisse, final UUID meldezeitraumId, final Nwk assignedNwk) {
         StudiumsPraktikumsstelle newStudiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
         newStudiumsPraktikumsstelle.setId(UUID.randomUUID());
