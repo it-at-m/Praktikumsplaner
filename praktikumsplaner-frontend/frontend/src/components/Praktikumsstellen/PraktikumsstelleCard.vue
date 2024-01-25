@@ -92,6 +92,8 @@ import { Levels } from "@/api/error";
 import Nwk from "@/types/Nwk";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
 import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
+import { valueToNameStudiensemester } from "@/types/Studiensemester";
+import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
 
 const props = defineProps<{
     value: Praktikumsstelle;
@@ -122,16 +124,15 @@ function getCardText(stelle: Praktikumsstelle): string {
         if (stelle.studiensemester) {
             cardText += "Semester: ";
             stelle.studiensemester.sort();
-            for (let i = 0; i < stelle.studiensemester.length; i++) {
-                cardText +=
-                    stelle.studiensemester[i].charAt(
-                        stelle.studiensemester[i].length - 1
-                    ) + ". Semester";
-                if (i < stelle.studiensemester.length - 1) {
-                    cardText += ", ";
-                }
+            for (let i = 0; i < stelle.studiensemester.length - 1; i++) {
+                cardText += valueToNameStudiensemester(
+                    stelle.studiensemester[i]
+                );
             }
-            cardText += "\n";
+            cardText +=
+                valueToNameStudiensemester(
+                    stelle.studiensemester[stelle.studiensemester.length - 1]
+                ) + "\n";
         }
     } else if (stelle.ausbildungsrichtung) {
         cardText += "Ausbildungsrichtung: " + stelle.ausbildungsrichtung + "\n";
@@ -139,15 +140,14 @@ function getCardText(stelle: Praktikumsstelle): string {
             cardText += "Ausbildungsjahr: ";
             stelle.ausbildungsjahr.sort();
             for (let i = 0; i < stelle.ausbildungsjahr.length; i++) {
-                cardText +=
-                    stelle.ausbildungsjahr[i].charAt(
-                        stelle.ausbildungsjahr[i].length - 1
-                    ) + ". Ausbildungsjahr";
-                if (i < stelle.ausbildungsjahr.length - 1) {
-                    cardText += ", ";
-                }
+                cardText += valueToNameAusbildungsjahr(
+                    stelle.ausbildungsjahr[i]
+                );
             }
-            cardText += "\n";
+            cardText +=
+                valueToNameAusbildungsjahr(
+                    stelle.ausbildungsjahr[stelle.ausbildungsjahr.length - 1]
+                ) + "\n";
         }
     }
 
