@@ -92,15 +92,32 @@
                     </v-col>
                     <v-col>
                         <v-text-field
-                            v-model="zuweisungsZeitraum"
-                            label="Zeitraum Nwk"
+                            v-model="praktikumsstelle.namentlicheAnforderung"
+                            label="Anforderung bestimmter NWK"
+                            :rules="namentlicheAnforderungRule"
                             outlined
-                            disabled
-                            filled
-                            background-color="grey"
                         ></v-text-field>
                     </v-col>
-                    <v-col cols="1" />
+                    <v-col cols="1">
+                        <v-tooltip right>
+                            <template #activator="{ on, attrs }">
+                                <v-icon
+                                    color="blue"
+                                    class="v-tooltip-spacing"
+                                    v-bind="attrs"
+                                    large
+                                    v-on="on"
+                                >
+                                    mdi-information
+                                </v-icon>
+                            </template>
+                            <span
+                                >Bei Anforderung einer bestimmten NWK für die
+                                Stelle, hier den vollständigen Namen
+                                eintragen.</span
+                            >
+                        </v-tooltip>
+                    </v-col>
                 </v-row>
                 <v-row>
                     <v-col>
@@ -168,38 +185,6 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-text-field
-                            v-model="praktikumsstelle.namentlicheAnforderung"
-                            label="Anforderung bestimmter NWK"
-                            :rules="namentlicheAnforderungRule"
-                            outlined
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="1">
-                        <v-tooltip right>
-                            <template #activator="{ on, attrs }">
-                                <v-icon
-                                    color="blue"
-                                    class="v-tooltip-spacing"
-                                    v-bind="attrs"
-                                    large
-                                    v-on="on"
-                                >
-                                    mdi-information
-                                </v-icon>
-                            </template>
-                            <span
-                                >Bei Anforderung einer bestimmten NWK für die
-                                Stelle, hier den vollständigen Namen
-                                eintragen.</span
-                            >
-                        </v-tooltip>
-                    </v-col>
-                    <v-col cols="2"></v-col>
-                    <v-col></v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
                         <v-textarea
                             v-model="praktikumsstelle.taetigkeiten"
                             label="Aufgaben am Praktikumsplatz*"
@@ -227,32 +212,17 @@
                             :rules="requiredRule"
                             :menu-props="customMenuProps"
                             outlined
-                            @change="
-                                () => {
-                                    changeVorrZuweisungsZeitraum();
-                                }
-                            "
                         >
                         </v-select>
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
-                        <v-select
-                            v-model="praktikumsstelle.ausbildungsjahr"
-                            label="Ausbildungsjahr*"
-                            :items="Ausbildungsjahr"
-                            item-value="value"
-                            item-text="name"
-                            :rules="requiredRule"
-                            :menu-props="customMenuProps"
-                            outlined
-                            @change="
-                                () => {
-                                    changeVorrZuweisungsZeitraum();
-                                }
+                        <SelectMultipleAusbildungsjahr
+                            :praktikumsstelle="praktikumsstelle"
+                            @update:praktikumsstelle="
+                                (value) => (praktikumsstelle = value)
                             "
-                        >
-                        </v-select>
+                        />
                     </v-col>
                     <v-col cols="1" />
                 </v-row>
@@ -360,11 +330,9 @@
 
 <script setup lang="ts">
 import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
-import { onMounted, ref, computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useRules } from "@/composables/rules";
-import { useZeitraeume } from "@/composables/voraussichtlicherZuweisungsZeitraum";
-import { Ausbildungsjahr } from "@/types/Ausbildungsjahr";
 import { Referat } from "@/types/Referat";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
@@ -377,14 +345,13 @@ import { useFormatter } from "@/composables/formatter";
 import { APP_SECURITY } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
+import SelectMultipleAusbildungsjahr from "@/components/Praktikumsstellen/SelectMultipleAusbildungsjahr.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
-const zeitraeueme = useZeitraeume();
-const zuweisungsZeitraum = ref<string>("");
 const isAusbildungsleitung = ref<boolean>(false);
 const userStore = useUserStore();
 const validationRules = useRules();
@@ -393,7 +360,7 @@ const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.regexRule(
-        /^[A-Z0-9._%+-]{1,64}@[A-Z0-9.-]{1,63}\.[A-Z]{1,63}$/,
+        /^[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,63}\.[A-Za-z]{1,63}$/,
         "Keine gültige Email."
     ),
     validationRules.maxLengthRule(
@@ -478,12 +445,6 @@ function getPassedMeldezeitraeume() {
     });
 }
 
-function changeVorrZuweisungsZeitraum() {
-    zuweisungsZeitraum.value = zeitraeueme.ausbildungsZeitraum(
-        praktikumsstelle.value.ausbildungsrichtung,
-        praktikumsstelle.value.ausbildungsjahr
-    );
-}
 function resetForm() {
     form.value?.reset();
     router.push("/praktikumsplaetze");

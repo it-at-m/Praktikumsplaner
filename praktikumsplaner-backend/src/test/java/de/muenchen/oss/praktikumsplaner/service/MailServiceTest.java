@@ -52,15 +52,15 @@ public class MailServiceTest {
 
         AusbildungsPraktikumsstelleDto ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelleDto("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
-                Ausbildungsjahr.JAHR2, Ausbildungsrichtung.FISI, assignedNwk3);
+                Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, assignedNwk3);
         allPraktikumsstellen.add(ausbildungsPraktikumsstelle1);
 
         StudiumsPraktikumsstelleDto studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelleDto("KM83", "Test Tester", "test@tester.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM,
-                Studiensemester.SEMESTER5, Studiengang.BSC, assignedNwk2);
+                Set.of(Studiensemester.SEMESTER5), Studiengang.BSC, assignedNwk2);
         StudiumsPraktikumsstelleDto studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelleDto("InnoLab", "Test Testerin", "test@testerin.de",
                 "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM,
-                Studiensemester.SEMESTER5, Studiengang.BWI, assignedNwk1);
+                Set.of(Studiensemester.SEMESTER5), Studiengang.BWI, assignedNwk1);
         allPraktikumsstellen.add(studiumsPraktikumsstelle1);
         allPraktikumsstellen.add(studiumsPraktikumsstelle2);
 
@@ -79,7 +79,7 @@ public class MailServiceTest {
 
     private AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final Dringlichkeit dringlichkeit,
-            final Referat referat, final Ausbildungsjahr semester, final Ausbildungsrichtung ausbildungsrichtung, final NwkDto assignedNwk) {
+            final Referat referat, final Set<Ausbildungsjahr> semester, final Ausbildungsrichtung ausbildungsrichtung, final NwkDto assignedNwk) {
         return AusbildungsPraktikumsstelleDto.builder()
                 .dienststelle(dienststelle).oertlicheAusbilder(ausbilder).email(email).taetigkeiten(taetigkeiten)
                 .dringlichkeit(dringlichkeit).referat(referat).ausbildungsjahr(semester)
@@ -88,7 +88,7 @@ public class MailServiceTest {
 
     private StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final Dringlichkeit dringlichkeit,
-            final Referat referat, final Studiensemester semester, final Studiengang studiengang, final NwkDto assignedNwk) {
+            final Referat referat, final Set<Studiensemester> semester, final Studiengang studiengang, final NwkDto assignedNwk) {
         return StudiumsPraktikumsstelleDto.builder().dienststelle(dienststelle).oertlicheAusbilder(ausbilder).email(email).taetigkeiten(taetigkeiten)
                 .dringlichkeit(dringlichkeit).referat(referat).studiensemester(semester)
                 .studiengang(studiengang).assignedNwk(assignedNwk).build();
