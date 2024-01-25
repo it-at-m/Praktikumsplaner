@@ -53,7 +53,8 @@ public class ExcelExportService {
         return workbook;
     }
 
-    private void fillAusbildungspraktikumsstellen(final List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen, final XSSFSheet ausbildungsSheet) {
+    private void fillAusbildungspraktikumsstellen(final List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen,
+            final XSSFSheet ausbildungsSheet) {
         for (int i = 0; i < assignedAusbildungspraktikumsstellen.size(); i++) {
             AusbildungsPraktikumsstelleDto praktikumsstelle = assignedAusbildungspraktikumsstellen.get(i);
             ausbildungsSheet.getRow(i + 3).getCell(0).setCellValue(praktikumsstelle.referat().name());
