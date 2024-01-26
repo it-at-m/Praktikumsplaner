@@ -1,331 +1,359 @@
 <template>
-    <v-form
-        ref="form"
-        lazy-validation
-    >
-        <page-title
-            back-button-url="/praktikumsplaetze"
-            page-header-text="Praktikumsplatz für Auszubildende"
-        ></page-title>
-        <div v-if="!activeMeldezeitraum">
-            <v-row class="align-center">
-                <v-col
-                    cols="auto"
-                    class="d-flex align-center"
-                >
-                    <v-icon
-                        color="blue"
-                        large
-                        >mdi-information-outline</v-icon
-                    >
+    <v-container>
+        <v-container v-if="loadingSite">
+            <v-row>
+                <v-col cols="1">
+                    <v-skeleton-loader type="button"> </v-skeleton-loader>
                 </v-col>
-                <v-col class="d-flex align-center">
-                    <p class="mt-5">
-                        Ihre örtliche Ausbildungsleitung hat die Meldung von
-                        Stellen noch nicht freigegeben, daher können aktuell
-                        leider noch keine Praktikumsplätze gemeldet werden.
-                    </p>
+                <v-col cols="2">
+                    <v-skeleton-loader type="text"> </v-skeleton-loader>
+                </v-col>
+                <v-col cols="9" />
+            </v-row>
+            <v-skeleton-loader type="image@3"> </v-skeleton-loader>
+            <v-spacer />
+            <v-skeleton-loader type="image"> </v-skeleton-loader>
+            <v-spacer />
+            <v-skeleton-loader type="image"> </v-skeleton-loader>
+            <v-spacer />
+            <v-row>
+                <v-col cols="10" />
+                <v-col>
+                    <v-skeleton-loader type="button"> </v-skeleton-loader>
                 </v-col>
             </v-row>
-        </div>
-        <div v-else>
-            <v-container class="box">
-                <v-row>
-                    <v-col>
-                        <span class="text-h6">Stellenbeschreibung</span>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-text-field
-                            v-model="praktikumsstelle.dienststelle"
-                            label="Konkrete Dienststelle*"
-                            :rules="dienststelleRule"
-                            outlined
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="2" />
-                    <v-col>
-                        <v-select
-                            v-model="praktikumsstelle.referat"
-                            :items="Referat"
-                            :menu-props="customMenuProps"
-                            item-value="value"
-                            item-text="name"
-                            label="Referat"
-                            outlined
-                        ></v-select>
-                    </v-col>
-                    <v-col cols="1" />
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-select
-                            v-model="praktikumsstelle.dringlichkeit"
-                            label="Dringlichkeit*"
-                            :items="Dringlichkeit"
-                            :menu-props="customMenuProps"
-                            item-value="value"
-                            item-text="name"
-                            :rules="requiredRule"
-                            outlined
-                        ></v-select>
-                    </v-col>
-                    <v-col cols="2">
-                        <v-tooltip right>
-                            <template #activator="{ on, attrs }">
-                                <v-icon
-                                    color="blue"
-                                    class="v-tooltip-spacing"
-                                    v-bind="attrs"
-                                    large
-                                    v-on="on"
-                                >
-                                    mdi-information
-                                </v-icon>
-                            </template>
-                            <span
-                                >Die Dringlichkeit gibt an, wie hoch priorisiert
-                                der Praktikumsplatz zu besetzen ist.</span
-                            >
-                        </v-tooltip>
-                    </v-col>
-                    <v-col>
-                        <v-text-field
-                            v-model="praktikumsstelle.namentlicheAnforderung"
-                            label="Anforderung bestimmter NWK"
-                            :rules="namentlicheAnforderungRule"
-                            outlined
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="1">
-                        <v-tooltip right>
-                            <template #activator="{ on, attrs }">
-                                <v-icon
-                                    color="blue"
-                                    class="v-tooltip-spacing"
-                                    v-bind="attrs"
-                                    large
-                                    v-on="on"
-                                >
-                                    mdi-information
-                                </v-icon>
-                            </template>
-                            <span
-                                >Bei Anforderung einer bestimmten NWK für die
-                                Stelle, hier den vollständigen Namen
-                                eintragen.</span
-                            >
-                        </v-tooltip>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-radio-group
-                            v-model="praktikumsstelle.planstelleVorhanden"
-                            class="radios custom-label"
-                            row
-                            :rules="booleanRule"
+        </v-container>
+        <v-container v-else>
+            <page-title
+                back-button-url="/praktikumsplaetze"
+                page-header-text="Praktikumsplatz für Auszubildende"
+            ></page-title>
+            <div v-if="!activeMeldezeitraum">
+                <v-row class="align-center">
+                    <v-col
+                        cols="auto"
+                        class="d-flex align-center"
+                    >
+                        <v-icon
+                            color="blue"
+                            large
+                            >mdi-information-outline</v-icon
                         >
-                            <template #label>
-                                <span class="custom-label"
-                                    >Planstelle vorhanden*:</span
-                                >
-                            </template>
-                            <v-radio
-                                v-for="item in YesNoBoolean"
-                                :key="item.value"
-                                :label="item.name"
-                                :value="item.value"
-                                class="ml-5"
-                            ></v-radio>
-                        </v-radio-group>
                     </v-col>
-                    <v-col cols="2" />
-                    <v-col>
-                        <v-radio-group
-                            v-model="praktikumsstelle.projektarbeit"
-                            class="radios custom-label"
-                            row
-                            :rules="booleanRule"
-                        >
-                            <template #label>
-                                <span class="custom-label"
-                                    >Projektarbeit*:</span
-                                >
-                            </template>
-                            <v-radio
-                                v-for="item in YesNoBoolean"
-                                :key="item.value"
-                                :label="item.name"
-                                :value="item.value"
-                                class="ml-5"
-                            ></v-radio>
-                        </v-radio-group>
-                    </v-col>
-                    <v-col cols="1">
-                        <v-tooltip right>
-                            <template #activator="{ on, attrs }">
-                                <v-icon
-                                    color="blue"
-                                    class="v-tooltip-spacing"
-                                    v-bind="attrs"
-                                    large
-                                    v-on="on"
-                                >
-                                    mdi-information
-                                </v-icon>
-                            </template>
-                            <span
-                                >Die Projektarbeit ist die Abschlussarbeit der
-                                Auszubildenden</span
-                            >
-                        </v-tooltip>
+                    <v-col class="d-flex align-center">
+                        <p class="mt-5">
+                            Ihre örtliche Ausbildungsleitung hat die Meldung von
+                            Stellen noch nicht freigegeben, daher können aktuell
+                            leider noch keine Praktikumsplätze gemeldet werden.
+                        </p>
                     </v-col>
                 </v-row>
-                <v-row>
-                    <v-col>
-                        <v-textarea
-                            v-model="praktikumsstelle.taetigkeiten"
-                            label="Aufgaben am Praktikumsplatz*"
-                            :rules="taetigkeitenRule"
-                            outlined
-                        ></v-textarea>
-                    </v-col>
-                    <v-col cols="1" />
-                </v-row>
-            </v-container>
-            <v-container class="box">
-                <v-row>
-                    <v-col>
-                        <span class="text-h6">Nachwuchskraft</span>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-select
-                            v-model="praktikumsstelle.ausbildungsrichtung"
-                            label="Ausbildungsrichtung*"
-                            :items="Ausbildungsrichtung"
-                            item-value="value"
-                            item-text="name"
-                            :rules="requiredRule"
-                            :menu-props="customMenuProps"
-                            outlined
-                        >
-                        </v-select>
-                    </v-col>
-                    <v-col cols="2" />
-                    <v-col>
-                        <SelectMultipleAusbildungsjahr
-                            :praktikumsstelle="praktikumsstelle"
-                            @update:praktikumsstelle="
-                                (value) => (praktikumsstelle = value)
-                            "
-                        />
-                    </v-col>
-                    <v-col cols="1" />
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-select
-                            v-model="praktikumsstelle.programmierkenntnisse"
-                            label="Programmierkenntnisse"
-                            :items="Programmierkenntnisse"
-                            :menu-props="customMenuProps"
-                            item-value="value"
-                            item-text="name"
-                            outlined
-                        >
-                        </v-select>
-                    </v-col>
-                    <v-col />
-                    <v-col cols="3" />
-                </v-row>
-            </v-container>
-            <v-container class="box">
-                <v-row>
-                    <v-col>
-                        <span class="text-h6">örtliche*r Ausbilder*in</span>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-text-field
-                            v-model="praktikumsstelle.oertlicheAusbilder"
-                            label="Name örtliche Ausbilder*in*"
-                            :rules="oertlAusbidlerRule"
-                            outlined
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="2" />
-                    <v-col>
-                        <v-text-field
-                            v-model="praktikumsstelle.email"
-                            label="E-mail örtliche Ausbilder*in*"
-                            :rules="emailRule"
-                            outlined
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="1" />
-                </v-row>
-            </v-container>
-            <v-container
-                v-show="isAusbildungsleitung"
-                class="box"
+            </div>
+            <v-form
+                ref="form"
+                lazy-validation
             >
-                <v-row>
-                    <v-col>
-                        <span class="text-h6">Meldezeitraum Auswahl</span>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-select
-                            v-model="praktikumsstelle.meldezeitraumID"
-                            label="Meldezeitraum*"
-                            :items="meldezeitraeume"
-                            :menu-props="customMenuProps"
-                            item-value="id"
-                            item-text="zeitraumName"
-                            outlined
-                        >
-                            <template #item="data">
-                                {{ data.item.zeitraumName }}:
-                                {{
-                                    formatter.formatDateFromString(
-                                        data.item.zeitraum.startZeitpunkt
-                                    )
-                                }}
-                                -
-                                {{
-                                    formatter.formatDateFromString(
-                                        data.item.zeitraum.endZeitpunkt
-                                    )
-                                }}
-                            </template>
-                        </v-select>
-                    </v-col>
-                    <v-col cols="2" />
-                    <v-col> </v-col>
-                    <v-col cols="1" />
-                </v-row>
-            </v-container>
-            <v-container>
-                <v-row>
-                    <v-col cols="10" />
-                    <v-col>
-                        <v-btn
-                            color="primary"
-                            @click="uploadPraktikumsstelle"
-                        >
-                            speichern
-                        </v-btn>
-                    </v-col>
-                </v-row>
-            </v-container>
-        </div>
-    </v-form>
+                <v-container class="box">
+                    <v-row>
+                        <v-col>
+                            <span class="text-h6">Stellenbeschreibung</span>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-text-field
+                                v-model="praktikumsstelle.dienststelle"
+                                label="Konkrete Dienststelle*"
+                                :rules="dienststelleRule"
+                                outlined
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="2" />
+                        <v-col>
+                            <v-select
+                                v-model="praktikumsstelle.referat"
+                                :items="Referat"
+                                :menu-props="customMenuProps"
+                                item-value="value"
+                                item-text="name"
+                                label="Referat"
+                                outlined
+                            ></v-select>
+                        </v-col>
+                        <v-col cols="1" />
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-select
+                                v-model="praktikumsstelle.dringlichkeit"
+                                label="Dringlichkeit*"
+                                :items="Dringlichkeit"
+                                :menu-props="customMenuProps"
+                                item-value="value"
+                                item-text="name"
+                                :rules="requiredRule"
+                                outlined
+                            ></v-select>
+                        </v-col>
+                        <v-col cols="2">
+                            <v-tooltip right>
+                                <template #activator="{ on, attrs }">
+                                    <v-icon
+                                        color="blue"
+                                        class="v-tooltip-spacing"
+                                        v-bind="attrs"
+                                        large
+                                        v-on="on"
+                                    >
+                                        mdi-information
+                                    </v-icon>
+                                </template>
+                                <span
+                                    >Die Dringlichkeit gibt an, wie hoch
+                                    priorisiert der Praktikumsplatz zu besetzen
+                                    ist.</span
+                                >
+                            </v-tooltip>
+                        </v-col>
+                        <v-col>
+                            <v-text-field
+                                v-model="
+                                    praktikumsstelle.namentlicheAnforderung
+                                "
+                                label="Anforderung bestimmter NWK"
+                                :rules="namentlicheAnforderungRule"
+                                outlined
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="1">
+                            <v-tooltip right>
+                                <template #activator="{ on, attrs }">
+                                    <v-icon
+                                        color="blue"
+                                        class="v-tooltip-spacing"
+                                        v-bind="attrs"
+                                        large
+                                        v-on="on"
+                                    >
+                                        mdi-information
+                                    </v-icon>
+                                </template>
+                                <span
+                                    >Bei Anforderung einer bestimmten NWK für
+                                    die Stelle, hier den vollständigen Namen
+                                    eintragen.</span
+                                >
+                            </v-tooltip>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-radio-group
+                                v-model="praktikumsstelle.planstelleVorhanden"
+                                class="radios custom-label"
+                                row
+                                :rules="booleanRule"
+                            >
+                                <template #label>
+                                    <span class="custom-label"
+                                        >Planstelle vorhanden*:</span
+                                    >
+                                </template>
+                                <v-radio
+                                    v-for="item in YesNoBoolean"
+                                    :key="item.value"
+                                    :label="item.name"
+                                    :value="item.value"
+                                    class="ml-5"
+                                ></v-radio>
+                            </v-radio-group>
+                        </v-col>
+                        <v-col cols="2" />
+                        <v-col>
+                            <v-radio-group
+                                v-model="praktikumsstelle.projektarbeit"
+                                class="radios custom-label"
+                                row
+                                :rules="booleanRule"
+                            >
+                                <template #label>
+                                    <span class="custom-label"
+                                        >Projektarbeit*:</span
+                                    >
+                                </template>
+                                <v-radio
+                                    v-for="item in YesNoBoolean"
+                                    :key="item.value"
+                                    :label="item.name"
+                                    :value="item.value"
+                                    class="ml-5"
+                                ></v-radio>
+                            </v-radio-group>
+                        </v-col>
+                        <v-col cols="1">
+                            <v-tooltip right>
+                                <template #activator="{ on, attrs }">
+                                    <v-icon
+                                        color="blue"
+                                        class="v-tooltip-spacing"
+                                        v-bind="attrs"
+                                        large
+                                        v-on="on"
+                                    >
+                                        mdi-information
+                                    </v-icon>
+                                </template>
+                                <span
+                                    >Die Projektarbeit ist die Abschlussarbeit
+                                    der Auszubildenden</span
+                                >
+                            </v-tooltip>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-textarea
+                                v-model="praktikumsstelle.taetigkeiten"
+                                label="Aufgaben am Praktikumsplatz*"
+                                :rules="taetigkeitenRule"
+                                outlined
+                            ></v-textarea>
+                        </v-col>
+                        <v-col cols="1" />
+                    </v-row>
+                </v-container>
+                <v-container class="box">
+                    <v-row>
+                        <v-col>
+                            <span class="text-h6">Nachwuchskraft</span>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-select
+                                v-model="praktikumsstelle.ausbildungsrichtung"
+                                label="Ausbildungsrichtung*"
+                                :items="Ausbildungsrichtung"
+                                item-value="value"
+                                item-text="name"
+                                :rules="requiredRule"
+                                :menu-props="customMenuProps"
+                                outlined
+                            >
+                            </v-select>
+                        </v-col>
+                        <v-col cols="2" />
+                        <v-col>
+                            <SelectMultipleAusbildungsjahr
+                                :praktikumsstelle="praktikumsstelle"
+                                @update:praktikumsstelle="
+                                    (value) => (praktikumsstelle = value)
+                                "
+                            />
+                        </v-col>
+                        <v-col cols="1" />
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-select
+                                v-model="praktikumsstelle.programmierkenntnisse"
+                                label="Programmierkenntnisse"
+                                :items="Programmierkenntnisse"
+                                :menu-props="customMenuProps"
+                                item-value="value"
+                                item-text="name"
+                                outlined
+                            >
+                            </v-select>
+                        </v-col>
+                        <v-col />
+                        <v-col cols="3" />
+                    </v-row>
+                </v-container>
+                <v-container class="box">
+                    <v-row>
+                        <v-col>
+                            <span class="text-h6">örtliche*r Ausbilder*in</span>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-text-field
+                                v-model="praktikumsstelle.oertlicheAusbilder"
+                                label="Name örtliche Ausbilder*in*"
+                                :rules="oertlAusbidlerRule"
+                                outlined
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="2" />
+                        <v-col>
+                            <v-text-field
+                                v-model="praktikumsstelle.email"
+                                label="E-mail örtliche Ausbilder*in*"
+                                :rules="emailRule"
+                                outlined
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="1" />
+                    </v-row>
+                </v-container>
+                <v-container
+                    v-show="isAusbildungsleitung"
+                    class="box"
+                >
+                    <v-row>
+                        <v-col>
+                            <span class="text-h6">Meldezeitraum Auswahl</span>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-select
+                                v-model="praktikumsstelle.meldezeitraumID"
+                                label="Meldezeitraum*"
+                                :items="meldezeitraeume"
+                                :menu-props="customMenuProps"
+                                item-value="id"
+                                item-text="zeitraumName"
+                                outlined
+                            >
+                                <template #item="data">
+                                    {{ data.item.zeitraumName }}:
+                                    {{
+                                        formatter.formatDateFromString(
+                                            data.item.zeitraum.startZeitpunkt
+                                        )
+                                    }}
+                                    -
+                                    {{
+                                        formatter.formatDateFromString(
+                                            data.item.zeitraum.endZeitpunkt
+                                        )
+                                    }}
+                                </template>
+                            </v-select>
+                        </v-col>
+                        <v-col cols="2" />
+                        <v-col> </v-col>
+                        <v-col cols="1" />
+                    </v-row>
+                </v-container>
+                <v-container>
+                    <v-row>
+                        <v-col cols="10" />
+                        <v-col>
+                            <v-btn
+                                color="primary"
+                                @click="uploadPraktikumsstelle"
+                            >
+                                speichern
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-form>
+        </v-container>
+    </v-container>
 </template>
 
 <script setup lang="ts">
@@ -353,6 +381,7 @@ const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
 const isAusbildungsleitung = ref<boolean>(false);
+const loadingSite = ref<boolean>(true);
 const userStore = useUserStore();
 const validationRules = useRules();
 const formatter = useFormatter();
@@ -430,6 +459,9 @@ onMounted(() => {
                 getUpcomingMeldezeitraeume();
                 getPassedMeldezeitraeume();
             }
+        })
+        .finally(() => {
+            loadingSite.value = false;
         });
 });
 
