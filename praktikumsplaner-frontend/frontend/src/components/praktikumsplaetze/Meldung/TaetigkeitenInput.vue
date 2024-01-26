@@ -1,6 +1,6 @@
 <template>
     <v-textarea
-        v-model="taetigkeiten"
+        v-model="stelle.taetigkeiten"
         label="Aufgaben am Praktikumsplatz*"
         :rules="taetigkeitenRule"
         outlined
@@ -10,14 +10,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRules } from "@/composables/rules";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: string | undefined;
+    value: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", dienststelle: string | undefined): void;
+    (e: "input", dienststelle: Praktikumsstelle): void;
 }>();
 
 const taetigkeitenRule = [
@@ -28,7 +29,7 @@ const taetigkeitenRule = [
     ),
 ];
 
-const taetigkeiten = computed({
+const stelle = computed({
     // getter
     get() {
         return props.value;

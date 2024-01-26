@@ -1,6 +1,6 @@
 <template>
     <v-text-field
-        v-model="namentlicheAnforderung"
+        v-model="stelle.namentlicheAnforderung"
         label="Anforderung bestimmter NWK"
         :rules="namentlicheAnforderungRule"
         outlined
@@ -10,14 +10,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRules } from "@/composables/rules";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: string | undefined;
+    value: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", dienststelle: string | undefined): void;
+    (e: "input", dienststelle: Praktikumsstelle): void;
 }>();
 
 const namentlicheAnforderungRule = [
@@ -27,7 +28,7 @@ const namentlicheAnforderungRule = [
     ),
 ];
 
-const namentlicheAnforderung = computed({
+const stelle = computed({
     // getter
     get() {
         return props.value;

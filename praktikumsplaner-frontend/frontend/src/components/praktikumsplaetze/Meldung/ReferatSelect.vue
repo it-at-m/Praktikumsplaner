@@ -1,6 +1,6 @@
 <template>
     <v-select
-        v-model="referat"
+        v-model="stelle.referat"
         :items="Referat"
         :menu-props="customMenuProps"
         item-value="value"
@@ -13,18 +13,19 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { Referat } from "@/types/Referat";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const props = defineProps<{
-    value: string | undefined;
+    value: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", dringlichkeit: string | undefined): void;
+    (e: "input", stelle: Praktikumsstelle): void;
 }>();
 
 const customMenuProps = {
     offsetY: true,
 };
-const referat = computed({
+const stelle = computed({
     // getter
     get() {
         return props.value;

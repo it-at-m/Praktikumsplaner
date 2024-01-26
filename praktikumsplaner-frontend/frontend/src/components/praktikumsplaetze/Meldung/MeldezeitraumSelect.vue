@@ -1,6 +1,6 @@
 <template>
     <v-select
-        v-model="zeitraum"
+        v-model="stelle.meldezeitraumID"
         label="Meldezeitraum*"
         :items="props.meldezeitraueme"
         :menu-props="customMenuProps"
@@ -26,22 +26,23 @@
 import Meldezeitraum from "@/types/Meldezeitraum";
 import { useFormatter } from "@/composables/formatter";
 import { computed } from "vue";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const props = defineProps<{
     meldezeitraueme: Meldezeitraum[];
-    value: string | undefined;
+    value: Praktikumsstelle;
 }>();
 
 const emits = defineEmits<{
-    (e: "input", meldezeitraumId: string): void;
+    (e: "input", stelle: Praktikumsstelle): void;
 }>();
 
 const formatter = useFormatter();
 
-const zeitraum = computed({
+const stelle = computed({
     // getter
     get() {
-        return props.value || "";
+        return props.value;
     },
     // setter
     set(newValue) {

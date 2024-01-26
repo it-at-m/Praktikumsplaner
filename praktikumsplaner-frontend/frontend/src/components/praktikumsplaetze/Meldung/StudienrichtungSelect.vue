@@ -1,6 +1,6 @@
 <template>
     <v-select
-        v-model="studiengang"
+        v-model="stelle.studiengang"
         label="Studienrichtung*"
         :items="Studiengang"
         item-value="value"
@@ -16,14 +16,15 @@
 import { computed } from "vue";
 import { useRules } from "@/composables/rules";
 import { Studiengang } from "@/types/Studiengang";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: string | undefined;
+    value: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", studiengang: string | undefined): void;
+    (e: "input", studiengang: Praktikumsstelle): void;
 }>();
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
@@ -31,7 +32,7 @@ const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const customMenuProps = {
     offsetY: true,
 };
-const studiengang = computed({
+const stelle = computed({
     // getter
     get() {
         return props.value;

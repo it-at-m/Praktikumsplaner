@@ -1,6 +1,6 @@
 <template>
     <v-radio-group
-        v-model="projektarbeit"
+        v-model="stelle.projektarbeit"
         class="radios custom-label"
         row
         :rules="booleanRule"
@@ -22,21 +22,22 @@
 import { computed } from "vue";
 import { useRules } from "@/composables/rules";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: boolean | undefined;
+    value: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", projektarbeit: boolean | undefined): void;
+    (e: "input", projektarbeit: Praktikumsstelle): void;
 }>();
 
 const booleanRule = [
     validationRules.notEmptyBooleanRule("Darf nicht leer sein."),
 ];
 
-const projektarbeit = computed({
+const stelle = computed({
     // getter
     get() {
         return props.value;

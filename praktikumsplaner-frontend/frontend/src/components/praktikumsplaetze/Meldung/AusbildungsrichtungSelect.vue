@@ -1,6 +1,6 @@
 <template>
     <v-select
-        v-model="ausbildungsrichtung"
+        v-model="stelle.ausbildungsrichtung"
         label="Ausbildungsrichtung*"
         :items="Ausbildungsrichtung"
         item-value="value"
@@ -16,14 +16,15 @@
 import { computed } from "vue";
 import { useRules } from "@/composables/rules";
 import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: string | undefined;
+    value: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", ausbildungsrichtung: string | undefined): void;
+    (e: "input", ausbildungsrichtung: Praktikumsstelle): void;
 }>();
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
@@ -31,7 +32,7 @@ const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const customMenuProps = {
     offsetY: true,
 };
-const ausbildungsrichtung = computed({
+const stelle = computed({
     // getter
     get() {
         return props.value;

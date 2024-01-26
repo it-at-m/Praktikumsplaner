@@ -20,13 +20,13 @@
                 <v-row>
                     <v-col>
                         <DienststellenInput
-                            v-model="praktikumsstelle.dienststelle"
+                            v-model="praktikumsstelle"
                         ></DienststellenInput>
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
                         <ReferatSelect
-                            v-model="praktikumsstelle.referat"
+                            v-model="praktikumsstelle"
                         ></ReferatSelect>
                     </v-col>
                     <v-col cols="1" />
@@ -34,7 +34,7 @@
                 <v-row>
                     <v-col>
                         <DringlichkeitSelect
-                            v-model="praktikumsstelle.dringlichkeit"
+                            v-model="praktikumsstelle"
                         ></DringlichkeitSelect>
                     </v-col>
                     <v-col cols="2">
@@ -46,13 +46,13 @@
                 <v-row>
                     <v-col>
                         <PlanstelleRadioGroup
-                            v-model="praktikumsstelle.planstelleVorhanden"
+                            v-model="praktikumsstelle"
                         ></PlanstelleRadioGroup>
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
                         <NamentlicheAnforderungInput
-                            v-model="praktikumsstelle.namentlicheAnforderung"
+                            v-model="praktikumsstelle"
                         ></NamentlicheAnforderungInput>
                     </v-col>
                     <v-col cols="1">
@@ -62,7 +62,7 @@
                 <v-row>
                     <v-col>
                         <ProjektarbeitRadioGroup
-                            v-model="praktikumsstelle.projektarbeit"
+                            v-model="praktikumsstelle"
                         ></ProjektarbeitRadioGroup>
                     </v-col>
                     <v-col cols="1">
@@ -74,7 +74,7 @@
                 <v-row>
                     <v-col>
                         <TaetigkeitenInput
-                            v-model="praktikumsstelle.taetigkeiten"
+                            v-model="praktikumsstelle"
                         ></TaetigkeitenInput>
                     </v-col>
                     <v-col cols="1" />
@@ -89,7 +89,7 @@
                 <v-row>
                     <v-col>
                         <AusbildungsrichtungSelect
-                            v-model="praktikumsstelle.ausbildungsrichtung"
+                            v-model="praktikumsstelle"
                         ></AusbildungsrichtungSelect>
                     </v-col>
                     <v-col cols="2" />
@@ -103,7 +103,7 @@
                 <v-row>
                     <v-col>
                         <ProgrammierKenntnisseSelect
-                            v-model="praktikumsstelle.programmierkenntnisse"
+                            v-model="praktikumsstelle"
                         ></ProgrammierKenntnisseSelect>
                     </v-col>
                     <v-col />
@@ -119,13 +119,13 @@
                 <v-row>
                     <v-col>
                         <AusbilderInput
-                            v-model="praktikumsstelle.oertlicheAusbilder"
+                            v-model="praktikumsstelle"
                         ></AusbilderInput>
                     </v-col>
                     <v-col cols="2" />
                     <v-col>
                         <AusbilderEmailInput
-                            v-model="praktikumsstelle.email"
+                            v-model="praktikumsstelle"
                         ></AusbilderEmailInput>
                     </v-col>
                     <v-col cols="1" />
@@ -143,7 +143,7 @@
                 <v-row>
                     <v-col>
                         <MeldezeitraumSelect
-                            v-model="praktikumsstelle.meldezeitraumID"
+                            v-model="praktikumsstelle"
                             :meldezeitraueme="meldezeitraeume"
                         ></MeldezeitraumSelect>
                     </v-col>
@@ -196,6 +196,7 @@ import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/Ausbilde
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
 import AusbildungsJahrSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsJahrSelect.vue";
 import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
+import { useSecurity } from "@/composables/security";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -219,6 +220,7 @@ const meldezeitraeume = computed(() => {
 const currentMeldezeitraum = ref<Meldezeitraum>();
 const upcomingMeldezeitraeume = ref<Meldezeitraum[]>([]);
 const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
+const security = useSecurity();
 
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
@@ -237,6 +239,7 @@ onMounted(() => {
                 getPassedMeldezeitraeume();
             }
         });
+    console.log(security.checkRoles("ROLE_AUSBILDUNGSLEITUNG"));
 });
 
 function getUpcomingMeldezeitraeume() {

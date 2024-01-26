@@ -1,6 +1,6 @@
 <template>
     <v-text-field
-        v-model="oertlicheAusbilder"
+        v-model="stelle.oertlicheAusbilder"
         label="Name örtliche Ausbilder*in*"
         :rules="oertlAusbilderRule"
         outlined
@@ -10,14 +10,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRules } from "@/composables/rules";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: string | undefined;
+    value: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", oertlicheAusbilder: string | undefined): void;
+    (e: "input", oertlicheAusbilder: Praktikumsstelle): void;
 }>();
 
 const oertlAusbilderRule = [
@@ -28,7 +29,7 @@ const oertlAusbilderRule = [
     ),
 ];
 
-const oertlicheAusbilder = computed({
+const stelle = computed({
     // getter
     get() {
         return props.value;

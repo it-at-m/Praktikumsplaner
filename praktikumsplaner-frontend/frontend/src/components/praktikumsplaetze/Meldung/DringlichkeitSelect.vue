@@ -1,6 +1,6 @@
 <template>
     <v-select
-        v-model="dringlichkeit"
+        v-model="stelle.dringlichkeit"
         label="Dringlichkeit*"
         :items="Dringlichkeit"
         :menu-props="customMenuProps"
@@ -15,14 +15,15 @@
 import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { computed } from "vue";
 import { useRules } from "@/composables/rules";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: string | undefined;
+    value: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", dringlichkeit: string | undefined): void;
+    (e: "input", dringlichkeit: Praktikumsstelle): void;
 }>();
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
@@ -30,7 +31,7 @@ const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const customMenuProps = {
     offsetY: true,
 };
-const dringlichkeit = computed({
+const stelle = computed({
     // getter
     get() {
         return props.value;
