@@ -48,3 +48,9 @@ const stelle = computed({
     },
 });
 </script>
+
+<style scoped>
+.custom-label {
+    font-size: 18px !important;
+}
+</style>

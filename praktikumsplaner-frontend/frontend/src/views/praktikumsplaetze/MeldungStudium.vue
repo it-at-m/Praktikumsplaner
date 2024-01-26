@@ -40,16 +40,6 @@
                     <v-col cols="2">
                         <DringlichkeitTooltip></DringlichkeitTooltip>
                     </v-col>
-                    <v-col> </v-col>
-                    <v-col cols="1" />
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <PlanstelleRadioGroup
-                            v-model="praktikumsstelle"
-                        ></PlanstelleRadioGroup>
-                    </v-col>
-                    <v-col cols="2" />
                     <v-col>
                         <NamentlicheAnforderungInput
                             v-model="praktikumsstelle"
@@ -58,6 +48,16 @@
                     <v-col cols="1">
                         <NamentlicheAnforderungTooltip></NamentlicheAnforderungTooltip>
                     </v-col>
+                </v-row>
+                <v-row>
+                    <v-col>
+                        <PlanstelleRadioGroup
+                            v-model="praktikumsstelle"
+                        ></PlanstelleRadioGroup>
+                    </v-col>
+                    <v-col cols="2" />
+                    <v-col> </v-col>
+                    <v-col cols="1" />
                 </v-row>
                 <v-row>
                     <v-col>
@@ -170,18 +170,18 @@ import Meldezeitraum from "@/types/Meldezeitraum";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
 import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
+import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
 import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
 import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
 import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
 import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
-import StudienrichtungSelect from "@/components/praktikumsplaetze/Meldung/StudienrichtungSelect.vue";
 import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/ProgrammierKenntnisseSelect.vue";
-import SemesterSelect from "@/components/praktikumsplaetze/Meldung/SemesterSelect.vue";
 import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
 import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
-import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
+import SemesterSelect from "@/components/praktikumsplaetze/Meldung/SemesterSelect.vue";
+import StudienrichtungSelect from "@/components/praktikumsplaetze/Meldung/StudienrichtungSelect.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 

@@ -40,16 +40,6 @@
                     <v-col cols="2">
                         <DringlichkeitTooltip></DringlichkeitTooltip>
                     </v-col>
-                    <v-col> </v-col>
-                    <v-col cols="1" />
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <PlanstelleRadioGroup
-                            v-model="praktikumsstelle"
-                        ></PlanstelleRadioGroup>
-                    </v-col>
-                    <v-col cols="2" />
                     <v-col>
                         <NamentlicheAnforderungInput
                             v-model="praktikumsstelle"
@@ -61,6 +51,12 @@
                 </v-row>
                 <v-row>
                     <v-col>
+                        <PlanstelleRadioGroup
+                            v-model="praktikumsstelle"
+                        ></PlanstelleRadioGroup>
+                    </v-col>
+                    <v-col cols="2" />
+                    <v-col>
                         <ProjektarbeitRadioGroup
                             v-model="praktikumsstelle"
                         ></ProjektarbeitRadioGroup>
@@ -68,8 +64,6 @@
                     <v-col cols="1">
                         <ProjektarbeitTooltip></ProjektarbeitTooltip>
                     </v-col>
-                    <v-col cols="2"></v-col>
-                    <v-col></v-col>
                 </v-row>
                 <v-row>
                     <v-col>
@@ -176,8 +170,8 @@ import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
-import { APP_SECURITY } from "@/constants";
 import { useUserStore } from "@/stores/user";
+import { APP_SECURITY } from "@/constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
@@ -185,17 +179,17 @@ import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.
 import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
 import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
 import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
-import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/ProjektarbeitRadioGroup.vue";
-import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
 import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
+import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
-import AusbildungsrichtungSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsrichtungSelect.vue";
 import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/ProgrammierKenntnisseSelect.vue";
 import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
 import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
 import AusbildungsJahrSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsJahrSelect.vue";
-import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
+import AusbildungsrichtungSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsrichtungSelect.vue";
+import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/ProjektarbeitRadioGroup.vue";
+import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -286,8 +280,5 @@ function uploadPraktikumsstelle() {
 }
 .radios {
     margin: 2%;
-}
-.custom-label .v-label {
-    font-size: 18px !important;
 }
 </style>
