@@ -180,7 +180,7 @@ import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/
 import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
 import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
-import SemesterSelect from "@/components/praktikumsplaetze/Meldung/SemesterSelect.vue";
+import SemesterSelect from "@/components/praktikumsplaetze/Meldung/StudiensemesterSelect.vue";
 import StudienrichtungSelect from "@/components/praktikumsplaetze/Meldung/StudienrichtungSelect.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
