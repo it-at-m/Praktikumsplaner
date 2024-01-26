@@ -144,8 +144,10 @@ onMounted(() => {
             if (isAusbildungsleitung) {
                 activeMeldezeitraum.value = true;
             }
+        })
+        .finally(() => {
+            loadingSite.value = false;
         });
-    loadingSite.value = false;
     getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
 
