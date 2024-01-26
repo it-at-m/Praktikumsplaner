@@ -196,7 +196,6 @@ import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/Ausbilde
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
 import AusbildungsJahrSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsJahrSelect.vue";
 import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
-import { useSecurity } from "@/composables/security";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -220,7 +219,6 @@ const meldezeitraeume = computed(() => {
 const currentMeldezeitraum = ref<Meldezeitraum>();
 const upcomingMeldezeitraeume = ref<Meldezeitraum[]>([]);
 const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
-const security = useSecurity();
 
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
@@ -239,7 +237,6 @@ onMounted(() => {
                 getPassedMeldezeitraeume();
             }
         });
-    console.log(security.checkRoles("ROLE_AUSBILDUNGSLEITUNG"));
 });
 
 function getUpcomingMeldezeitraeume() {
