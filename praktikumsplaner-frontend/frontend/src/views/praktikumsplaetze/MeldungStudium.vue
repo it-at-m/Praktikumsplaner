@@ -186,15 +186,13 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import { useRules } from "@/composables/rules";
 import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import "@/directives/Security";
-import { useFormatter } from "@/composables/formatter";
 import { useUserStore } from "@/stores/user";
-import { APP_SECURITY } from "@/Constants";
+import { APP_SECURITY } from "@/constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
