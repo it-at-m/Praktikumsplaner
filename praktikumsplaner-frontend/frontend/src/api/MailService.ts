@@ -1,8 +1,8 @@
 import Zeitraum from "@/types/Zeitraum";
-import { API_BASE, MAIL_BASE } from "@/Constants";
+import { API_BASE, MAIL_BASE } from "@/constants";
 import FetchUtils from "@/api/FetchUtils";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/error";
+import { Levels } from "@/api/Error";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 export default {

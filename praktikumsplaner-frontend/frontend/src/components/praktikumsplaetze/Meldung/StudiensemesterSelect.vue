@@ -1,6 +1,6 @@
 <template>
     <v-select
-        v-model="praktikumsstelleInternal.studiensemester"
+        v-model="praktikumsstelle.studiensemester"
         label="Studiensemester*"
         :items="Studiensemester"
         item-value="value"
@@ -9,12 +9,7 @@
         :menu-props="customMenuProps"
         outlined
         multiple
-        @change="
-            () => {
-                sortSemester();
-                emit('update:praktikumsstelle', praktikumsstelleInternal);
-            }
-        "
+        @change="sortSemester"
     >
         <template #prepend-item>
             <v-list-item
@@ -72,31 +67,42 @@ import { computed } from "vue";
 const validationRules = useRules();
 
 const props = defineProps<{
-    praktikumsstelle: Praktikumsstelle;
+    value: Praktikumsstelle;
 }>();
-const emit = defineEmits<{
-    (e: "update:praktikumsstelle", b: Praktikumsstelle): void;
+const emits = defineEmits<{
+    (e: "input", stelle: Praktikumsstelle): void;
 }>();
-const praktikumsstelleInternal = computed(() => props.praktikumsstelle);
+
+const praktikumsstelle = computed({
+    // getter
+    get() {
+        return props.value;
+    },
+    // setter
+    set(newValue) {
+        emits("input", newValue);
+    },
+});
 
 const requiredArrayRule = [
     validationRules.notEmptyArrayRule("Darf nicht leer sein."),
 ];
+
 const customMenuProps = {
     offsetY: true,
 };
 
 const allSemesterSelected = computed(() => {
     return (
-        praktikumsstelleInternal.value.studiensemester?.length ===
+        praktikumsstelle.value.studiensemester?.length ===
         Studiensemester.length
     );
 });
 
 const someSemesterSelected = computed(() => {
     return (
-        praktikumsstelleInternal.value.studiensemester?.length !== 0 &&
-        praktikumsstelleInternal.value.studiensemester?.length !== undefined &&
+        praktikumsstelle.value.studiensemester?.length !== 0 &&
+        praktikumsstelle.value.studiensemester?.length !== undefined &&
         !allSemesterSelected.value
     );
 });
@@ -109,18 +115,16 @@ const semesterIcon = computed(() => {
 
 function selectAllStudiensemester() {
     if (allSemesterSelected.value) {
-        praktikumsstelleInternal.value.studiensemester = [];
+        praktikumsstelle.value.studiensemester = [];
     } else {
-        praktikumsstelleInternal.value.studiensemester = Studiensemester.map(
+        praktikumsstelle.value.studiensemester = Studiensemester.map(
             (studiensemester) => studiensemester.value
         );
     }
 }
 
 function sortSemester() {
-    praktikumsstelleInternal.value.studiensemester?.sort((a, b) =>
-        a.localeCompare(b)
-    );
+    praktikumsstelle.value.studiensemester?.sort((a, b) => a.localeCompare(b));
 }
 
 function semesterIconColor() {

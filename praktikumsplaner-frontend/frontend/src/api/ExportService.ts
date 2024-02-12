@@ -1,4 +1,4 @@
-import { API_BASE, EXPORT_BASE } from "@/Constants";
+import { API_BASE, EXPORT_BASE } from "@/constants";
 import FetchUtils from "@/api/FetchUtils";
 
 export default {

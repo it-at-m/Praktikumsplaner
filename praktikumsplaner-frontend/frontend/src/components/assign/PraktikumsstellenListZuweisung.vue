@@ -36,7 +36,7 @@
 </template>
 <script setup lang="ts">
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import PraktikumsstelleCard from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstelleCard.vue";
+import PraktikumsstelleCard from "@/components/assign/PraktikumsstelleCardZuweisung.vue";
 
 const props = defineProps<{
     praktikumsstellenMap: Map<string, Praktikumsstelle[]>;

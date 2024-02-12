@@ -89,7 +89,7 @@ import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { UserService } from "@/api/UserService";
 import { useUserStore } from "@/stores/user";
-import "@/directives/Security";
+import "@/directives/security";
 
 const drawer = ref(true);
 const query = ref("");

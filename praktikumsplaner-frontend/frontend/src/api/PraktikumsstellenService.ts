@@ -1,8 +1,8 @@
 import FetchUtils from "@/api/FetchUtils";
-import { API_BASE, PRAKTIKUMSSTELLE_BASE } from "@/Constants";
+import { API_BASE, PRAKTIKUMSSTELLE_BASE } from "@/constants";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/error";
+import { Levels } from "@/api/Error";
 
 export default {
     uploadStudiumsPraktikumsstelle(

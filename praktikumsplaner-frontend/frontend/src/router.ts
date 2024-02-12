@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Main from "./views/MainView.vue";
-import { ROUTER_BASE } from "@/Constants";
+import { ROUTER_BASE } from "@/constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
 import MeldungAusbildung from "@/views/praktikumsplaetze/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/praktikumsplaetze/MeldungStudium.vue";

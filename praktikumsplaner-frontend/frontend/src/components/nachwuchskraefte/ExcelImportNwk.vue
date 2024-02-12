@@ -67,7 +67,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/error";
+import { Levels } from "@/api/Error";
 import NwkService from "@/api/NwkService";
 import { useRules } from "@/composables/rules";
 import ErrorDialog from "@/components/common/ErrorDialog.vue";
