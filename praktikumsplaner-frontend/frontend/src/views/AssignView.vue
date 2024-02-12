@@ -52,7 +52,7 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import PraktikumsstellenList from "@/components/praktikumsstellen/Praktikumsplaetze/PraktikumsstellenList.vue";
+import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
 import ActiveNwkListForZuweisung from "@/components/assign/ActiveNwkListForZuweisung.vue";
 import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
