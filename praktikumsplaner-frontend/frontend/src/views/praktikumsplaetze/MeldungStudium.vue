@@ -190,7 +190,6 @@ import MeldungService from "@/api/PraktikumsstellenService";
 import router from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
-import "@/directives/Security";
 import { useUserStore } from "@/stores/user";
 import { APP_SECURITY } from "@/constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
