@@ -16,7 +16,7 @@
 import { onMounted } from "vue";
 import Nwk from "@/types/Nwk";
 import { EventBus } from "@/stores/event-bus";
-import NwkCard from "@/components/Assignment/NwkCard.vue";
+import NwkCard from "@/components/assign/NwkCard.vue";
 
 const props = defineProps<{
     value: Nwk[];
@@ -54,6 +54,7 @@ function removeNwkFromList(nwk: Nwk) {
 function addNwkToList(nwk: Nwk) {
     let nwksInternal = props.value;
     nwksInternal.push(nwk);
+    nwksInternal.sort((a, b) => a.nachname.localeCompare(b.nachname));
     emits("input", nwksInternal);
 }
 </script>

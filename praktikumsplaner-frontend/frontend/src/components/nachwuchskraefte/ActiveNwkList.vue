@@ -18,7 +18,7 @@
                         <NwkUpdateDialog
                             class="d-flex justify-center align-center"
                             :nwk="nwk"
-                            @updated="getAllActiveNwks"
+                            @updated="loadAllActiveNwks"
                         />
                     </v-col>
                     <v-col> </v-col>
@@ -32,14 +32,14 @@
 import { ref, onMounted } from "vue";
 import Nwk from "@/types/Nwk";
 import NwkService from "@/api/NwkService";
-import NwkUpdateDialog from "@/components/Nachwuchskraefte/NwkUpdateDialog.vue";
+import NwkUpdateDialog from "@/components/nachwuchskraefte/NwkUpdateDialog.vue";
 import { EventBus } from "@/stores/event-bus";
 const nwks = ref<Nwk[]>([]);
 
 onMounted(() => {
-    getAllActiveNwks();
+    loadAllActiveNwks();
 });
-function getAllActiveNwks() {
+function loadAllActiveNwks() {
     NwkService.getAllActiveNwks().then((fetchedNwks) => {
         nwks.value = [...fetchedNwks];
     });
@@ -56,7 +56,7 @@ function getSubtitle(nwk: Nwk): string {
 }
 
 EventBus.$on("nwkCreated", () => {
-    getAllActiveNwks();
+    loadAllActiveNwks();
 });
 </script>
 <style scoped lang="scss">

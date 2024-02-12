@@ -1,4 +1,4 @@
-import { API_BASE } from "@/Constants";
+import { API_BASE } from "@/constants";
 import UserInfo from "@/types/UserInfo";
 import FetchUtils from "@/api/FetchUtils";
 import { useSnackbarStore } from "@/stores/snackbar";

@@ -1,13 +1,13 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Main from "./views/MainView.vue";
-import { ROUTER_BASE } from "@/Constants";
+import { ROUTER_BASE } from "@/constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
-import MeldungAusbildung from "@/views/Praktikumsplaetze/MeldungAusbildung.vue";
-import MeldungStudium from "@/views/Praktikumsplaetze/MeldungStudium.vue";
-import assignView from "@/views/assignView.vue";
-import NachwuchskraefteView from "@/views/Nachwuchskraefte/NachwuchskraefteView.vue";
-import PraktikumsplaetzeView from "@/views/Praktikumsplaetze/PraktikumsplaetzeView.vue";
+import MeldungAusbildung from "@/views/praktikumsplaetze/MeldungAusbildung.vue";
+import MeldungStudium from "@/views/praktikumsplaetze/MeldungStudium.vue";
+import assignView from "@/views/AssignView.vue";
+import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";
+import PraktikumsplaetzeView from "@/views/praktikumsplaetze/PraktikumsplaetzeView.vue";
 
 Vue.use(Router);
 

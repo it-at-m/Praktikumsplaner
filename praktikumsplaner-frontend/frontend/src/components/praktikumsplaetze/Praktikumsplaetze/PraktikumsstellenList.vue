@@ -24,8 +24,6 @@
                                         :key="praktikumsstelle.assignedNwk?.id"
                                         :value="praktikumsstelle"
                                         :praktikumsstelle="praktikumsstelle"
-                                        :assignment="props.assignment"
-                                        @input="change"
                                     ></PraktikumsstelleCard>
                                 </v-list-item>
                             </v-list-item-group>
@@ -38,23 +36,11 @@
 </template>
 <script setup lang="ts">
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import PraktikumsstelleCard from "@/components/Praktikumsstellen/PraktikumsstelleCard.vue";
+import PraktikumsstelleCard from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstelleCard.vue";
 
 const props = defineProps<{
     praktikumsstellenMap: Map<string, Praktikumsstelle[]>;
-    assignment: boolean;
 }>();
-
-function change(p: Praktikumsstelle) {
-    //iterating over map and changing value
-    for (const [, value] of props.praktikumsstellenMap) {
-        for (let i = 0; i < value.length; i++) {
-            if (value[i].id === p.id) {
-                value[i] = p;
-            }
-        }
-    }
-}
 </script>
 <style scoped lang="scss">
 .spacer {

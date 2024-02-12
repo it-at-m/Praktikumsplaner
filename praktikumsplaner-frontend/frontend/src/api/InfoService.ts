@@ -1,5 +1,5 @@
 import FetchUtils from "@/api/FetchUtils";
-import { API_BASE } from "@/Constants";
+import { API_BASE } from "@/constants";
 
 export interface Info {
     application: Application;
