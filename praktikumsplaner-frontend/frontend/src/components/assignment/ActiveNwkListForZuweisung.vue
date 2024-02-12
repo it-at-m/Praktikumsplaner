@@ -16,7 +16,7 @@
 import { onMounted } from "vue";
 import Nwk from "@/types/Nwk";
 import { EventBus } from "@/stores/event-bus";
-import NwkCard from "@/components/Assignment/NwkCard.vue";
+import NwkCard from "@/components/assignment/NwkCard.vue";
 
 const props = defineProps<{
     value: Nwk[];

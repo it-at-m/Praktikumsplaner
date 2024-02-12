@@ -115,13 +115,13 @@
     </div>
 </template>
 <script setup lang="ts">
-import ZeitraumPicker from "@/components/Meldezeitraeume/ZeitraumPicker.vue";
+import ZeitraumPicker from "@/components/meldezeitraeume/ZeitraumPicker.vue";
 import { ref } from "vue";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
 import Zeitraum from "@/types/Zeitraum";
 import MailService from "@/api/MailService";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import UndeliveredMailsDialog from "@/components/Assignment/undeliveredMailsDialog.vue";
+import UndeliveredMailsDialog from "@/components/assignment/undeliveredMailsDialog.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const form = ref<HTMLFormElement>();
