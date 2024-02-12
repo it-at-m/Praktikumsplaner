@@ -48,8 +48,13 @@
                     {{ getCardText(props.value) }}
                 </p></v-card-text
             >
-            <v-col v-if="assignedNwk">
+            <v-col>
+                <v-skeleton-loader
+                    v-if="loading"
+                    type="chip"
+                ></v-skeleton-loader>
                 <v-chip
+                    v-if="assignedNwk && !loading"
                     :color="getNwkColor(assignedNwk)"
                     close
                     close-icon="mdi-close"
@@ -101,6 +106,7 @@ const generator = useTextGenerator();
 const warningsGenerator = useWarnings();
 
 const show = ref<boolean>(false);
+const loading = ref<boolean>(false);
 const unassignDialogContent = ref<string>("");
 const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
 const unassignConfirmDialog = ref<boolean>(false);
@@ -169,12 +175,15 @@ function assignNwk() {
         nwkToAssignUnassing.value = undefined;
         return;
     }
+    loading.value = true;
 
     stelleToAssignUnassign.assignedNwk = nwkToAssignUnassing.value;
     PraktikumsstellenService.assignNwk(
         stelleToAssignUnassign.id || "",
         stelleToAssignUnassign.assignedNwk?.id
-    );
+    ).finally(() => {
+        loading.value = false;
+    });
     assignedNwk.value = nwkToAssignUnassing.value;
     EventBus.$emit("assignedNwk", stelleToAssignUnassign.assignedNwk);
     resetWarningDialog();
@@ -187,7 +196,12 @@ function resetWarningDialog() {
 
 function unassignNwk() {
     if (stelleToAssignUnassign?.id) {
-        PraktikumsstellenService.unassignNwk(stelleToAssignUnassign.id);
+        loading.value = true;
+        PraktikumsstellenService.unassignNwk(stelleToAssignUnassign.id).finally(
+            () => {
+                loading.value = false;
+            }
+        );
         EventBus.$emit("unassignedNwk", stelleToAssignUnassign.assignedNwk);
         stelleToAssignUnassign.assignedNwk = undefined;
         assignedNwk.value = undefined;

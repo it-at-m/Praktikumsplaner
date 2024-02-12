@@ -64,9 +64,9 @@
                     type="image"
                 >
                 </v-skeleton-loader>
-                <v-row>
+                <v-row v-if="isAusbildungsleitung && !loadingUebersicht">
                     <v-container
-                        v-if="!mapIsEmpty && !loadingUebersicht"
+                        v-if="!mapIsEmpty"
                         class="box"
                     >
                         <span> Übersicht aus dem aktuellen Meldezeitraum </span>
@@ -76,7 +76,7 @@
                         ></PraktikumsstellenList>
                     </v-container>
                     <v-container
-                        v-if="mapIsEmpty && !loadingUebersicht"
+                        v-if="mapIsEmpty"
                         class="box"
                     >
                         <v-row class="align-center">
