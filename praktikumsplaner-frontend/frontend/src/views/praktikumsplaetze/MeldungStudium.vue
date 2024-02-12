@@ -350,7 +350,7 @@ import { useFormatter } from "@/composables/formatter";
 import { useUserStore } from "@/stores/user";
 import { APP_SECURITY } from "@/Constants";
 import Meldezeitraum from "@/types/Meldezeitraum";
-import SelectMultipleStudiensemester from "@/components/praktikumsstellen/SelectMultipleStudiensemester.vue";
+import SelectMultipleStudiensemester from "@/components/praktikumsstellen/Meldung/StudiensemesterSelect.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 

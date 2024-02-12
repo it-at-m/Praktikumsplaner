@@ -5,7 +5,7 @@ import { ROUTER_BASE } from "@/Constants";
 import Meldezeitraeume from "./views/MeldezeitraeumeView.vue";
 import MeldungAusbildung from "@/views/praktikumsplaetze/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/praktikumsplaetze/MeldungStudium.vue";
-import assignView from "@/views/assignView.vue";
+import assignView from "@/views/AssignView.vue";
 import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";
 import PraktikumsplaetzeView from "@/views/praktikumsplaetze/PraktikumsplaetzeView.vue";
 

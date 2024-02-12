@@ -110,7 +110,7 @@ import PageTitle from "@/components/common/PageTitle.vue";
 import router from "@/router";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import { useUserStore } from "@/stores/user";
-import PraktikumsstellenList from "@/components/praktikumsstellen/PraktikumsstellenList.vue";
+import PraktikumsstellenList from "@/components/praktikumsstellen/Praktikumsplaetze/PraktikumsstellenList.vue";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { APP_SECURITY } from "@/Constants";
