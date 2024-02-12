@@ -10,7 +10,7 @@
                 </v-col>
                 <v-col cols="9" />
             </v-row>
-            <v-skeleton-loader type="image@3"> </v-skeleton-loader>
+            <v-skeleton-loader type="image"> </v-skeleton-loader>
             <v-spacer />
             <v-skeleton-loader type="image"> </v-skeleton-loader>
             <v-spacer />
