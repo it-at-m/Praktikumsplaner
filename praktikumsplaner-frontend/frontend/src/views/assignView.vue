@@ -8,7 +8,7 @@
             <v-col cols="5">
                 <v-skeleton-loader
                     v-if="loadingNwk"
-                    type="image@4"
+                    type="image"
                 ></v-skeleton-loader>
                 <active-nwk-list-for-zuweisung
                     v-if="!loadingNwk"
@@ -19,7 +19,7 @@
             <v-col cols="7">
                 <v-skeleton-loader
                     v-if="loadingPraktikumsstellen"
-                    type="image@4"
+                    type="image"
                 ></v-skeleton-loader>
                 <praktikumsstellen-list
                     v-if="!loadingPraktikumsstellen"

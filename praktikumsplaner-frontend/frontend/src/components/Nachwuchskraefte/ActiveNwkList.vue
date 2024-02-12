@@ -1,5 +1,10 @@
 <template>
     <v-container>
+        <v-skeleton-loader
+            v-if="loading"
+            type="card"
+        >
+        </v-skeleton-loader>
         <v-col
             v-for="nwk in nwks"
             :key="nwk.id"
@@ -25,20 +30,16 @@
                 </v-card-actions>
             </v-card>
         </v-col>
-        <v-skeleton-loader
-            v-if="loading"
-            type="card@4"
-        >
-        </v-skeleton-loader>
     </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import Nwk from "@/types/Nwk";
 import NwkService from "@/api/NwkService";
 import NwkUpdateDialog from "@/components/Nachwuchskraefte/NwkUpdateDialog.vue";
 import { EventBus } from "@/stores/event-bus";
+
 const nwks = ref<Nwk[]>([]);
 const loading = ref<boolean>(false);
 

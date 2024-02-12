@@ -1,8 +1,5 @@
 <template>
     <div>
-        <progress-circular-overlay
-            :loading="loading"
-        ></progress-circular-overlay>
         <v-dialog
             v-model="visible"
             persistent
@@ -97,6 +94,9 @@
                 </v-card>
             </v-form>
         </v-dialog>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
     </div>
 </template>
 

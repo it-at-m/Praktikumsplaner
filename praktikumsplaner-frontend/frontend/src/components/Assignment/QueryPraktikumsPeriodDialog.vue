@@ -1,8 +1,5 @@
 <template>
     <div>
-        <progress-circular-overlay
-            :loading="loading"
-        ></progress-circular-overlay>
         <v-dialog
             max-width="850px"
             :value="props.showDialog"
@@ -112,6 +109,9 @@
                 </v-card>
             </v-form>
         </v-dialog>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
     </div>
 </template>
 <script setup lang="ts">

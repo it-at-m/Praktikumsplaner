@@ -61,7 +61,7 @@
                 <v-row></v-row>
                 <v-skeleton-loader
                     v-if="isAusbildungsleitung && loadingUebersicht"
-                    type="image@3"
+                    type="image"
                 >
                 </v-skeleton-loader>
                 <v-row v-if="isAusbildungsleitung && !loadingUebersicht">
