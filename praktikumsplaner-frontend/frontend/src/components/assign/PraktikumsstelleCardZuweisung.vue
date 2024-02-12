@@ -97,6 +97,9 @@ const props = defineProps<{
     value: Praktikumsstelle;
 }>();
 
+const generator = useTextGenerator();
+const warningsGenerator = useWarnings();
+
 const show = ref<boolean>(false);
 const unassignDialogContent = ref<string>("");
 const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
@@ -108,7 +111,6 @@ const warningDialogTitle = ref<string>(
 );
 const warningDialogText = ref<string>("");
 const assignedNwk = ref(props.value.assignedNwk);
-const generator = useTextGenerator();
 
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
 
@@ -148,7 +150,7 @@ function drop(event: DragEvent, stelle: Praktikumsstelle) {
         return;
     }
 
-    let warnings = useWarnings().getBeforeAssignmentWarnings(
+    let warnings = warningsGenerator.getBeforeAssignmentWarnings(
         stelle,
         nwkToAssignUnassing.value
     );

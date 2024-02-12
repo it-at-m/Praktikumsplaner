@@ -54,6 +54,8 @@ import NwkService from "@/api/NwkService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import { useWarnings } from "@/composables/warningGenerator";
 
+const warningsGenerator = useWarnings();
+
 const showSendMailDialog = ref(false);
 const showWarningDialog = ref(false);
 const warnings = ref<Warning[]>([]);
@@ -72,7 +74,7 @@ function collectWarnings() {
         }
     }
 
-    warnings.value = useWarnings().getAfterAssignmentWarnings(
+    warnings.value = warningsGenerator.getAfterAssignmentWarnings(
         stellen,
         nwks.value
     );
