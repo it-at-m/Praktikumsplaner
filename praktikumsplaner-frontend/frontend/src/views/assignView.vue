@@ -11,7 +11,7 @@
                     type="image"
                 ></v-skeleton-loader>
                 <active-nwk-list-for-zuweisung
-                    v-if="!loadingNwk"
+                    v-else
                     v-model="nwks"
                 />
             </v-col>
@@ -22,7 +22,7 @@
                     type="image"
                 ></v-skeleton-loader>
                 <praktikumsstellen-list
-                    v-if="!loadingPraktikumsstellen"
+                    v-else
                     :assignment="true"
                     :praktikumsstellen-map="praktikumsstellenMap"
                 />

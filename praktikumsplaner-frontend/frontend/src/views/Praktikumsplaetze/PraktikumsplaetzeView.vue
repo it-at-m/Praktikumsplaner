@@ -64,7 +64,7 @@
                     type="image"
                 >
                 </v-skeleton-loader>
-                <v-row v-if="isAusbildungsleitung && !loadingUebersicht">
+                <v-row v-else>
                     <v-container
                         v-if="!mapIsEmpty && !loadingUebersicht"
                         class="box"
