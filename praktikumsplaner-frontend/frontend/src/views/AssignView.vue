@@ -21,9 +21,8 @@
                     v-if="loadingPraktikumsstellen"
                     type="image"
                 ></v-skeleton-loader>
-                <praktikumsstellen-list
+                <praktikumsstellen-list-zuweisung
                     v-else
-                    :assignment="true"
                     :praktikumsstellen-map="praktikumsstellenMap"
                 />
             </v-col>
@@ -52,7 +51,7 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
+import PraktikumsstellenListZuweisung from "@/components/assign/PraktikumsstellenListZuweisung.vue";
 import ActiveNwkListForZuweisung from "@/components/assign/ActiveNwkListForZuweisung.vue";
 import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
