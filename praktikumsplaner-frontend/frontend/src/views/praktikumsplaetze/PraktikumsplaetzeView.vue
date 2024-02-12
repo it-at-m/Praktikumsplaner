@@ -106,14 +106,14 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
-import PageTitle from "@/components/common/PageTitle.vue";
-import router from "@/router";
-import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
-import { useUserStore } from "@/stores/user";
-import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import { APP_SECURITY } from "@/Constants";
+import router from "@/router";
+import { useUserStore } from "@/stores/user";
+import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
+import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
+import PageTitle from "@/components/common/PageTitle.vue";
+import { APP_SECURITY } from "@/constants";
 
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
