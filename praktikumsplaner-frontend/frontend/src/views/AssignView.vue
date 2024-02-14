@@ -6,12 +6,23 @@
         ></PageTitle>
         <v-row>
             <v-col cols="5">
-                <active-nwk-list-for-zuweisung v-model="nwks" />
+                <v-skeleton-loader
+                    v-if="loadingNwk"
+                    type="image"
+                ></v-skeleton-loader>
+                <active-nwk-list-for-zuweisung
+                    v-else
+                    v-model="nwks"
+                />
             </v-col>
             <v-divider vertical />
             <v-col cols="7">
-                <praktikumsstellen-list
-                    :assignment="true"
+                <v-skeleton-loader
+                    v-if="loadingPraktikumsstellen"
+                    type="image"
+                ></v-skeleton-loader>
+                <praktikumsstellen-list-zuweisung
+                    v-else
                     :praktikumsstellen-map="praktikumsstellenMap"
                 />
             </v-col>
@@ -40,7 +51,7 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import PraktikumsstellenList from "@/components/assign/PraktikumsstellenListZuweisung.vue";
+import PraktikumsstellenListZuweisung from "@/components/assign/PraktikumsstellenListZuweisung.vue";
 import ActiveNwkListForZuweisung from "@/components/assign/ActiveNwkListForZuweisung.vue";
 import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
@@ -56,6 +67,8 @@ import { useWarnings } from "@/composables/warningGenerator";
 
 const warningsGenerator = useWarnings();
 
+const loadingNwk = ref(true);
+const loadingPraktikumsstellen = ref(true);
 const showSendMailDialog = ref(false);
 const showWarningDialog = ref(false);
 const warnings = ref<Warning[]>([]);
@@ -119,20 +132,28 @@ onMounted(() => {
 });
 
 function getAllActiveNwks() {
-    NwkService.getAllUnassignedNwks().then((fetchedNwks) => {
-        nwks.value = [...fetchedNwks];
-    });
+    NwkService.getAllUnassignedNwks()
+        .then((fetchedNwks) => {
+            nwks.value = [...fetchedNwks];
+        })
+        .finally(() => {
+            loadingNwk.value = false;
+        });
 }
 
 function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
         "most_recent"
-    ).then((fetchedStellen) => {
-        for (const [key, value] of Object.entries(fetchedStellen)) {
-            helperMap.set(key, value);
-        }
-        praktikumsstellenMap.value = helperMap;
-    });
+    )
+        .then((fetchedStellen) => {
+            for (const [key, value] of Object.entries(fetchedStellen)) {
+                helperMap.set(key, value);
+            }
+            praktikumsstellenMap.value = helperMap;
+        })
+        .finally(() => {
+            loadingPraktikumsstellen.value = false;
+        });
 }
 </script>

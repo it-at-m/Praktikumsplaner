@@ -50,6 +50,9 @@
                 </v-card>
             </v-form>
         </v-dialog>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
     </div>
 </template>
 
@@ -58,8 +61,10 @@ import { ref } from "vue";
 import NwkService from "@/api/NwkService";
 import { useRules } from "@/composables/rules";
 import { EventBus } from "@/stores/event-bus";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const visible = ref<boolean>();
+const loading = ref<boolean>(false);
 const excelDatei = ref<File>();
 const form = ref<HTMLFormElement>();
 const excelFormat =
@@ -81,12 +86,15 @@ function cancel() {
 }
 function uploadFile() {
     if (!excelDatei.value || !form.value?.validate()) return;
+    visible.value = false;
+    loading.value = true;
     NwkService.uploadExcelFile(excelDatei.value)
         .then(() => {
             EventBus.$emit("nwkCreated");
         })
         .finally(() => {
-            cancel();
+            loading.value = false;
+            form.value?.reset();
         });
 }
 </script>

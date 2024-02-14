@@ -94,6 +94,9 @@
                 </v-card>
             </v-form>
         </v-dialog>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
     </div>
 </template>
 
@@ -104,8 +107,10 @@ import Nwk from "@/types/Nwk";
 import { Studiengang } from "@/types/Studiengang";
 import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
 import { useRules } from "@/composables/rules";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const visible = ref<boolean>(false);
+const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
 const validationRules = useRules();
 const nameRule = [
@@ -155,10 +160,15 @@ function updateNwk() {
     if (!form.value?.validate()) {
         return;
     }
-    NwkService.updateNwk(nwkToUpdate.value).then(() => {
-        emits("updated");
-        cancel();
-    });
+    loading.value = true;
+    cancel();
+    NwkService.updateNwk(nwkToUpdate.value)
+        .then(() => {
+            emits("updated");
+        })
+        .finally(() => {
+            loading.value = false;
+        });
 }
 </script>
 
