@@ -15,6 +15,9 @@
             :value="errorDialog"
             @close="errorDialog = false"
         ></Error-dialog>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
     </div>
 </template>
 
@@ -22,7 +25,9 @@
 import ErrorDialog from "@/components/common/ErrorDialog.vue";
 import { ref, watch } from "vue";
 import ExportService from "@/api/ExportService";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
+const loading = ref<boolean>(false);
 const props = defineProps<{
     startDownload: boolean;
 }>();
@@ -53,7 +58,8 @@ function clickExport() {
 }
 
 function downloadExcel() {
-    ExportService.downloadExcelFile();
+    loading.value = true;
+    ExportService.downloadExcelFile().finally(() => (loading.value = false));
 }
 </script>
 

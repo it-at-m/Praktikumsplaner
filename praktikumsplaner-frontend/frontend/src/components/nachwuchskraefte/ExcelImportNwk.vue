@@ -58,6 +58,9 @@
             :value="errorDialog"
             @close="errorDialog = false"
         ></Error-dialog>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
     </div>
 </template>
 
@@ -69,8 +72,10 @@ import NwkService from "@/api/NwkService";
 import { useRules } from "@/composables/rules";
 import ErrorDialog from "@/components/common/ErrorDialog.vue";
 import { EventBus } from "@/stores/event-bus";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const visible = ref<boolean>();
+const loading = ref<boolean>(false);
 const excelDatei = ref<File>();
 const form = ref<HTMLFormElement>();
 const snackbarStore = useSnackbarStore();
@@ -98,6 +103,8 @@ function cancel() {
 }
 function uploadFile() {
     if (!excelDatei.value || !form.value?.validate()) return;
+    visible.value = false;
+    loading.value = true;
     NwkService.uploadExcelFile(excelDatei.value)
         .then(() => {
             snackbarStore.showMessage({
@@ -110,7 +117,8 @@ function uploadFile() {
             showError();
         })
         .finally(() => {
-            cancel();
+            loading.value = false;
+            form.value?.reset();
         });
 }
 

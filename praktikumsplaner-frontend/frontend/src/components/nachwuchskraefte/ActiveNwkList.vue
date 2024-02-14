@@ -1,5 +1,10 @@
 <template>
     <v-container>
+        <v-skeleton-loader
+            v-if="loading"
+            type="card"
+        >
+        </v-skeleton-loader>
         <v-col
             v-for="nwk in nwks"
             :key="nwk.id"
@@ -34,15 +39,22 @@ import Nwk from "@/types/Nwk";
 import NwkService from "@/api/NwkService";
 import NwkUpdateDialog from "@/components/nachwuchskraefte/NwkUpdateDialog.vue";
 import { EventBus } from "@/stores/event-bus";
+
 const nwks = ref<Nwk[]>([]);
+const loading = ref<boolean>(false);
 
 onMounted(() => {
     loadAllActiveNwks();
 });
 function loadAllActiveNwks() {
-    NwkService.getAllActiveNwks().then((fetchedNwks) => {
-        nwks.value = [...fetchedNwks];
-    });
+    loading.value = true;
+    NwkService.getAllActiveNwks()
+        .then((fetchedNwks) => {
+            nwks.value = [...fetchedNwks];
+        })
+        .finally(() => {
+            loading.value = false;
+        });
 }
 
 function getSubtitle(nwk: Nwk): string {
