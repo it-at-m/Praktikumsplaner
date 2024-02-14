@@ -27,7 +27,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public String ExcelImportException(final ExcelImportException ex) {
-        return ex.getExceptionInfos().toString();
+        StringBuilder formattedExceptionInfos = new StringBuilder();
+        for (ExcelImportException.ExcelImportExceptionInfo exceptionInfo : ex.getExceptionInfos()) {
+            formattedExceptionInfos.append("Zeile: ").append(exceptionInfo.getRow() + 1).append(" - ")
+                    .append("Spalte: ").append(exceptionInfo.getColumName()).append(" - ")
+                    .append("Fehler: ").append(exceptionInfo.getValue()).append(";");
+        }
+        return formattedExceptionInfos.toString();
     }
 
     // Is thrown when a non Excel file is Imported
