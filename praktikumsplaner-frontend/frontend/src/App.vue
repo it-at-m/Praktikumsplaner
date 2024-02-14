@@ -18,7 +18,7 @@
                             max-height="50"
                             max-width="50"
                             contain
-                            src="src/assets/logo.png"
+                            src="src/assets/logo.jpg"
                         ></v-img>
                     </router-link>
                     <router-link to="/">
