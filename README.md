@@ -2,7 +2,7 @@
 
 __Praktikumsplaner__ is an application designed for the management and allocation of traineeship positions to junior staff.
 
-![Logo of the application](praktikumsplaner-frontend/frontend/src/assets/logo.png)
+![Logo of the application](./praktikumsplaner-frontend/frontend/src/assets/logo.png)
 ### Built with
 
 The documentation project is built with technologies we use in our projects:
