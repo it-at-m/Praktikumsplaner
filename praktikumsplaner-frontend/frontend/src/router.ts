@@ -8,6 +8,8 @@ import MeldungStudium from "@/views/praktikumsplaetze/MeldungStudium.vue";
 import assignView from "@/views/AssignView.vue";
 import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";
 import PraktikumsplaetzeView from "@/views/praktikumsplaetze/PraktikumsplaetzeView.vue";
+import { useSecurity } from "@/composables/security";
+import AccessDeniedView from "@/views/AccessDeniedView.vue";
 
 Vue.use(Router);
 
@@ -32,7 +34,7 @@ routerMethods.forEach((method: string) => {
 });
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
-export default new Router({
+const router = new Router({
     base: ROUTER_BASE,
     routes: [
         {
@@ -55,6 +57,9 @@ export default new Router({
             path: "/praktikumsplaetze",
             name: "praktikumsplätze",
             component: PraktikumsplaetzeView,
+            meta: {
+                requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+            },
         },
         {
             path: "/praktikumsplaetze/meldungAusbildung",
@@ -71,6 +76,28 @@ export default new Router({
             name: "Zuweisung",
             component: assignView,
         },
+        {
+            path: "/accessDenied",
+            name: "AccessDenied",
+            component: AccessDeniedView,
+        },
         { path: "*", redirect: "/" }, //Fallback 2
     ],
 });
+
+router.beforeEach((to, from, next) => {
+    const requiresRoles = to.meta?.requiresRole ?? undefined;
+    const security = useSecurity();
+    if (
+        requiresRoles !== undefined &&
+        security.checkForAnyRole(requiresRoles)
+    ) {
+        next();
+    } else if (requiresRoles !== undefined) {
+        next({ name: "AccessDenied" });
+    } else {
+        next();
+    }
+});
+
+export default router;

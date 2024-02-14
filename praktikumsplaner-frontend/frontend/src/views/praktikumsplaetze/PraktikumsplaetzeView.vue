@@ -49,12 +49,11 @@
                     >
                         <span> Übersicht aus dem aktuellen Meldezeitraum </span>
                         <PraktikumsstellenList
-                            :assignment="false"
                             :praktikumsstellen-map="praktikumsstellenMap"
                         ></PraktikumsstellenList>
                     </v-container>
                     <v-container
-                        v-if="mapIsEmpty"
+                        v-else
                         class="box"
                     >
                         <v-row class="align-center">
