@@ -108,8 +108,8 @@ export default class FetchUtils {
                             level: Levels.ERROR,
                         });
                         throw new ApiError({
-                            level: Levels.ERROR,
                             message: message,
+                            level: Levels.ERROR,
                         });
                     });
             } else if (response.status >= 500 && response.status <= 599) {
@@ -119,8 +119,8 @@ export default class FetchUtils {
                     level: Levels.ERROR,
                 });
                 throw new ApiError({
-                    level: Levels.ERROR,
                     message: errorMessage,
+                    level: Levels.ERROR,
                 });
             } else {
                 useSnackbarStore().showMessage({
@@ -128,8 +128,8 @@ export default class FetchUtils {
                     level: Levels.WARNING,
                 });
                 throw new ApiError({
-                    level: Levels.WARNING,
                     message: errorMessage,
+                    level: Levels.WARNING,
                 });
             }
         }

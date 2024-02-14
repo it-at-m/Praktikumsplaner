@@ -5,15 +5,22 @@
         :color="color"
         :timeout="timeout"
     >
-        {{ message }}
-        <v-btn
-            v-if="color === 'error'"
-            color="black"
-            text
-            @click="show = false"
-        >
-            Schließen
-        </v-btn>
+        <div class="messageAndButton">
+            <v-row>
+                <p class="message">
+                    {{ message }}
+                </p>
+            </v-row>
+            <v-row class="d-flex justify-center">
+                <v-btn
+                    v-if="color === 'error'"
+                    color="primary"
+                    @click="show = false"
+                >
+                    Schließen
+                </v-btn>
+            </v-row>
+        </div>
     </v-snackbar>
 </template>
 
@@ -60,3 +67,13 @@ watch(
     }
 );
 </script>
+<style>
+.messageAndButton {
+    margin: 2%;
+}
+.message {
+    white-space: pre-line;
+    overflow: auto;
+    font-size: larger;
+}
+</style>
