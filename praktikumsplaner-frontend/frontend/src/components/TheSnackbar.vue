@@ -8,7 +8,7 @@
         {{ message }}
         <v-btn
             v-if="color === 'error'"
-            color="primary"
+            color="black"
             text
             @click="show = false"
         >
