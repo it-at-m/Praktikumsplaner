@@ -28,7 +28,7 @@
                 back-button-url="/praktikumsplaetze"
                 page-header-text="Praktikumsplatz für Auszubildende"
             ></page-title>
-            <div v-if="!activeMeldezeitraum">
+            <div v-if="!canStellenBeSubmitted()">
                 <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
             </div>
             <v-form
@@ -217,13 +217,15 @@ import AusbildungsrichtungSelect from "@/components/praktikumsplaetze/Meldung/Au
 import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/ProjektarbeitRadioGroup.vue";
 import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
 
-const activeMeldezeitraum = ref<boolean>(false);
-
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
-const isAusbildungsleitung = ref<boolean>(false);
 const loadingSite = ref<boolean>(true);
+const isAusbildungsleitung = computed(
+    () =>
+        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
+        APP_SECURITY !== "true"
+);
 const userStore = useUserStore();
 const form = ref<HTMLFormElement>();
 const meldezeitraeume = computed(() => {
@@ -244,24 +246,25 @@ const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
         .then((zeitraueme) => {
-            activeMeldezeitraum.value = zeitraueme.length > 0;
             currentMeldezeitraum.value = zeitraueme[0];
-        })
-        .then(() => {
-            if (
-                userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-                APP_SECURITY !== "true"
-            ) {
-                isAusbildungsleitung.value = true;
-                activeMeldezeitraum.value = true;
-                getUpcomingMeldezeitraeume();
-                getPassedMeldezeitraeume();
-            }
         })
         .finally(() => {
             loadingSite.value = false;
         });
+
+    if (isAusbildungsleitung) {
+        getUpcomingMeldezeitraeume();
+        getPassedMeldezeitraeume();
+    }
 });
+
+function canStellenBeSubmitted() {
+    return (
+        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
+        APP_SECURITY !== "true" ||
+        currentMeldezeitraum.value
+    );
+}
 
 function getUpcomingMeldezeitraeume() {
     MeldezeitraumService.getUpcomingMeldezeitraueme().then((zeitraeume) => {
@@ -279,12 +282,10 @@ function resetForm() {
     form.value?.reset();
     router.push("/praktikumsplaetze");
 }
+
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
-    if (
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true"
-    ) {
+    if (isAusbildungsleitung) {
         MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
             praktikumsstelle.value
         ).finally(() => {
