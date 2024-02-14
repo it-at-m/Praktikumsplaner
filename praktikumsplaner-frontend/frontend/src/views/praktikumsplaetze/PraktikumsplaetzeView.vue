@@ -16,11 +16,7 @@
                 back-button-url="/"
                 page-header-text="Praktikumsplätze"
             ></page-title>
-
-            <div v-if="!canStellenBeSubmitted()">
-                <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
-            </div>
-            <div v-else>
+            <div v-if="canStellenBeSubmitted()">
                 <v-row>
                     <v-col cols="10"></v-col>
                     <v-col cols="2">
@@ -82,9 +78,13 @@
                     </v-container>
                 </v-row>
             </div>
+            <div v-else>
+                <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
+            </div>
         </v-container>
     </v-container>
 </template>
+
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import MeldezeitraumService from "@/api/MeldezeitraumService";

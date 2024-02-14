@@ -28,11 +28,8 @@
                 back-button-url="/praktikumsplaetze"
                 page-header-text="Praktikumsplatz für Auszubildende"
             ></page-title>
-            <div v-if="!canStellenBeSubmitted()">
-                <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
-            </div>
             <v-form
-                v-else
+                v-if="canStellenBeSubmitted()"
                 ref="form"
                 lazy-validation
             >
@@ -185,6 +182,7 @@
                     </v-row>
                 </v-container>
             </v-form>
+            <KeinMeldezeitraumMessage v-else></KeinMeldezeitraumMessage>
         </v-container>
     </v-container>
 </template>
