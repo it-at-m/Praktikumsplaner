@@ -11,22 +11,14 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
-        )
-            .then((response) => {
-                useSnackbarStore().showMessage({
-                    message: "☑ Speichern erfolgreich.",
-                    level: Levels.SUCCESS,
-                });
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            useSnackbarStore().showMessage({
+                message: "☑ Praktikumsstelle erfolgreich angelegt",
+                level: Levels.SUCCESS,
             });
+            return response.json();
+        });
     },
     uploadStudiumsPraktikumsstelleWithMeldezeitraum(
         praktikumsstelle: Praktikumsstelle
@@ -34,22 +26,14 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/ausbildungsleitung`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
-        )
-            .then((response) => {
-                useSnackbarStore().showMessage({
-                    message: "☑ Speichern erfolgreich.",
-                    level: Levels.SUCCESS,
-                });
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            useSnackbarStore().showMessage({
+                message: "☑ Praktikumsstelle erfolgreich angelegt",
+                level: Levels.SUCCESS,
             });
+            return response.json();
+        });
     },
     uploadAusbildungsPraktikumsstelle(
         praktikumsstelle: Praktikumsstelle
@@ -57,22 +41,14 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
-        )
-            .then((response) => {
-                useSnackbarStore().showMessage({
-                    message: "☑ Speichern erfolgreich.",
-                    level: Levels.SUCCESS,
-                });
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            useSnackbarStore().showMessage({
+                message: "☑ Praktikumsstelle erfolgreich angelegt",
+                level: Levels.SUCCESS,
             });
+            return response.json();
+        });
     },
     uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
         praktikumsstelle: Praktikumsstelle
@@ -80,22 +56,14 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/ausbildungsleitung`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
-        )
-            .then((response) => {
-                useSnackbarStore().showMessage({
-                    message: "☑ Speichern erfolgreich.",
-                    level: Levels.SUCCESS,
-                });
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            useSnackbarStore().showMessage({
+                message: "☑ Praktikumsstelle erfolgreich angelegt",
+                level: Levels.SUCCESS,
             });
+            return response.json();
+        });
     },
     getAllPraktikumsstellenInSpecificMeldezeitraum(
         meldezeitraum: string
@@ -103,14 +71,10 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}?meldezeitraum=${meldezeitraum}`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     assignNwk(
         stellenId: string,
@@ -119,42 +83,26 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}?nwkId=${nwkId}`,
             FetchUtils.getPATCHConfig({})
-        )
-            .then((response) => {
-                useSnackbarStore().showMessage({
-                    message: "☑ Zuweisung erfolgreich.",
-                    level: Levels.SUCCESS,
-                });
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            useSnackbarStore().showMessage({
+                message: "☑ Zuweisung erfolgreich",
+                level: Levels.SUCCESS,
             });
+            return response.json();
+        });
     },
     unassignNwk(stellenId: string): Promise<Praktikumsstelle> {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}`,
             FetchUtils.getPATCHConfig({})
-        )
-            .then((response) => {
-                useSnackbarStore().showMessage({
-                    message: "☑ Zuweisung erfolgreich aufgehoben.",
-                    level: Levels.SUCCESS,
-                });
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            useSnackbarStore().showMessage({
+                message: "☑ Zuweisung erfolgreich aufgehoben",
+                level: Levels.SUCCESS,
             });
+            return response.json();
+        });
     },
 };

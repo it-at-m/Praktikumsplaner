@@ -12,13 +12,13 @@ export default {
                 `${API_BASE}${NWK_BASE}/import`,
                 // Base64 String starts after the comma
                 FetchUtils.getPOSTConfig(base64string.split(",")[1])
-            )
-                .then((response) => {
-                    FetchUtils.defaultResponseHandler(response);
-                })
-                .catch((err) => {
-                    FetchUtils.defaultResponseHandler(err);
+            ).then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                useSnackbarStore().showMessage({
+                    message: "☑ Nachwuchskräfte erfolgreich angelegt.",
+                    level: Levels.SUCCESS,
                 });
+            });
         });
     },
     readString(excelDatei: File): Promise<string> {
@@ -38,43 +38,30 @@ export default {
         return fetch(
             `${API_BASE}${NWK_BASE}?status=aktiv`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     getAllUnassignedNwks(): Promise<Nwk[]> {
         return fetch(
             `${API_BASE}${NWK_BASE}?unassigned=true`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     updateNwk(nwk: Nwk): Promise<void> {
-        return fetch(`${API_BASE}${NWK_BASE}`, FetchUtils.getPUTConfig(nwk))
-            .then((response) => {
-                useSnackbarStore().showMessage({
-                    message: "☑ NWK wurde erfolgreich bearbeitet.",
-                    level: Levels.SUCCESS,
-                });
-                FetchUtils.defaultResponseHandler(response);
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
+        return fetch(
+            `${API_BASE}${NWK_BASE}`,
+            FetchUtils.getPUTConfig(nwk)
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            useSnackbarStore().showMessage({
+                message: "☑ Nachwuchskraft wurde erfolgreich bearbeitet.",
+                level: Levels.SUCCESS,
             });
+        });
     },
 };

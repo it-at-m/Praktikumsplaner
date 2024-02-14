@@ -1,4 +1,5 @@
 import { ApiError, Levels } from "@/api/Error";
+import { useSnackbarStore } from "@/stores/snackbar";
 
 export default class FetchUtils {
     /**
@@ -95,11 +96,42 @@ export default class FetchUtils {
                 });
             } else if (response.type === "opaqueredirect") {
                 location.reload();
+            } else if (response.status >= 400 && response.status <= 499) {
+                response.body
+                    ?.getReader()
+                    .read()
+                    .then((result) => {
+                        const decoder = new TextDecoder("utf-8");
+                        const message = decoder.decode(result.value);
+                        useSnackbarStore().showMessage({
+                            message: message,
+                            level: Levels.ERROR,
+                        });
+                        throw new ApiError({
+                            level: Levels.ERROR,
+                            message: message,
+                        });
+                    });
+            } else if (response.status >= 500 && response.status <= 599) {
+                useSnackbarStore().showMessage({
+                    message:
+                        "Serverfehler. Bitte versuchen Sie es später erneut, oder wenden Sie sich an die Administration.",
+                    level: Levels.ERROR,
+                });
+                throw new ApiError({
+                    level: Levels.ERROR,
+                    message: errorMessage,
+                });
+            } else {
+                useSnackbarStore().showMessage({
+                    message: errorMessage,
+                    level: Levels.WARNING,
+                });
+                throw new ApiError({
+                    level: Levels.WARNING,
+                    message: errorMessage,
+                });
             }
-            throw new ApiError({
-                level: Levels.WARNING,
-                message: errorMessage,
-            });
         }
     }
 
