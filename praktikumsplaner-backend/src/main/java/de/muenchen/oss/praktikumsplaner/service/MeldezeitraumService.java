@@ -7,10 +7,11 @@ import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
-import java.time.LocalDate;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -50,7 +51,7 @@ public class MeldezeitraumService {
     public MeldezeitraumDto getMostRecentPassedMeldezeitraum() {
         List<Meldezeitraum> passedZeitraueme = meldezeitraumRepository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now());
         if (passedZeitraueme.isEmpty()) {
-            throw new EntityNotFoundException("Kein vergangener Meldezeitraum gefunden!");
+            throw new EntityNotFoundException("Kein vergangener Meldezeitraum gefunden");
         }
         return meldezeitraumMapper.toDto(passedZeitraueme.get(0));
     }

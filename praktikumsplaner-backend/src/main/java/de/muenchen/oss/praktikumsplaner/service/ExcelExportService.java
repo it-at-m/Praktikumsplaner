@@ -5,6 +5,11 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleD
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
+import lombok.AllArgsConstructor;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Service;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,10 +20,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
@@ -36,7 +37,7 @@ public class ExcelExportService {
 
     private XSSFWorkbook getTemplateExcelFile() throws IOException {
         try (InputStream stream = getClass().getResourceAsStream("/templates/ITM_IT_POR.xlsx")) {
-            if (stream == null) throw new IOException("Template file not found");
+            if (stream == null) throw new IOException("ExcelExport Vorlage nicht gefunden");
             return new XSSFWorkbook(stream);
         }
     }
