@@ -50,30 +50,18 @@
                 </v-card>
             </v-form>
         </v-dialog>
-        <Error-dialog
-            :dialogtext="errorDialogText"
-            :dialogtitle="errorDialogTitle"
-            icontext="mdi mdi-alert-octagon-outline"
-            iconcolor="red"
-            :value="errorDialog"
-            @close="errorDialog = false"
-        ></Error-dialog>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/Error";
 import NwkService from "@/api/NwkService";
 import { useRules } from "@/composables/rules";
-import ErrorDialog from "@/components/common/ErrorDialog.vue";
 import { EventBus } from "@/stores/event-bus";
 
 const visible = ref<boolean>();
 const excelDatei = ref<File>();
 const form = ref<HTMLFormElement>();
-const snackbarStore = useSnackbarStore();
 const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const validationRules = useRules();
@@ -86,11 +74,6 @@ const rules = [
         "Falsches Dateiformat. Es muss eine Excel-Datei hochgeladen werden."
     ),
 ];
-const errorDialog = ref<boolean>(false);
-const errorDialogText = ref<string>(
-    "Ihre Exceldatei konnte nicht hochgeladen werde. Bitte überprüfen Sie die Datei und versuchen Sie es erneut."
-);
-const errorDialogTitle = ref<string>("Excel Import fehlgeschlagen");
 
 function cancel() {
     visible.value = false;
@@ -100,23 +83,11 @@ function uploadFile() {
     if (!excelDatei.value || !form.value?.validate()) return;
     NwkService.uploadExcelFile(excelDatei.value)
         .then(() => {
-            snackbarStore.showMessage({
-                message: "Nachwuchskräfte erfolgreich angelegt.",
-                level: Levels.SUCCESS,
-            });
             EventBus.$emit("nwkCreated");
-        })
-        .catch(() => {
-            showError();
         })
         .finally(() => {
             cancel();
         });
-}
-
-function showError() {
-    visible.value = false;
-    errorDialog.value = true;
 }
 </script>
 
