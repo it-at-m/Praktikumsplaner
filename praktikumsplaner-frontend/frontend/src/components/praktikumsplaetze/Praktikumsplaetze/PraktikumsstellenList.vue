@@ -42,7 +42,7 @@ const props = defineProps<{
     praktikumsstellenMap: Map<string, Praktikumsstelle[]>;
 }>();
 </script>
-<style scoped lang="scss">
+<style scoped>
 .spacer {
     padding-bottom: 10px;
 }

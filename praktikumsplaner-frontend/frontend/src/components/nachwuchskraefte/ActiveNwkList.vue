@@ -71,7 +71,7 @@ EventBus.$on("nwkCreated", () => {
     loadAllActiveNwks();
 });
 </script>
-<style scoped lang="scss">
+<style scoped>
 .cards {
     background-color: var(--v-accent-base);
 }

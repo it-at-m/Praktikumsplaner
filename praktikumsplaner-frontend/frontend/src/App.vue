@@ -89,12 +89,11 @@
 <script setup lang="ts">
 import InfoService from "@/api/InfoService";
 import { onBeforeMount, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router/composables";
+import { useRoute } from "vue-router";
 import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { UserService } from "@/api/UserService";
 import { useUserStore } from "@/stores/user";
-import "@/directives/security";
 import { useSecurity } from "@/composables/security";
 
 const drawer = ref(true);

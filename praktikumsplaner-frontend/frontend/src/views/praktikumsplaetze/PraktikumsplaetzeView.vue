@@ -89,7 +89,7 @@ import { computed, onMounted, ref } from "vue";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import router from "@/router";
+import index from "@/router";
 import { useUserStore } from "@/stores/user";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
@@ -136,10 +136,10 @@ function canStellenBeSubmitted() {
     );
 }
 function toAusbildung(): void {
-    router.push("/praktikumsplaetze/meldungAusbildung");
+    index.push("/praktikumsplaetze/meldungAusbildung");
 }
 function toStudium(): void {
-    router.push("/praktikumsplaetze/meldungStudium");
+    index.push("/praktikumsplaetze/meldungStudium");
 }
 function closeDialog(): void {
     twoChoiceDialogVisible.value = false;

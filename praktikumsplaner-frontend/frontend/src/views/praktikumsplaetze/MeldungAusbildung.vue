@@ -191,7 +191,7 @@
 import { computed, onMounted, ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import MeldungService from "@/api/PraktikumsstellenService";
-import router from "@/router";
+import index from "@/router";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { APP_SECURITY } from "@/constants";
@@ -278,7 +278,7 @@ function getPassedMeldezeitraeume() {
 
 function resetForm() {
     form.value?.reset();
-    router.push("/praktikumsplaetze");
+    index.push("/praktikumsplaetze");
 }
 
 function uploadPraktikumsstelle() {
@@ -298,7 +298,7 @@ function uploadPraktikumsstelle() {
     }
 }
 </script>
-<style lang="scss">
+<style>
 .box {
     margin: 3%;
     border: 2px solid #0000001a;

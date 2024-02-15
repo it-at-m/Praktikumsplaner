@@ -230,7 +230,7 @@ function getNwkColor(nwk: Nwk): string {
     return color;
 }
 </script>
-<style scoped lang="scss">
+<style scoped>
 .custom-card-active {
     border-color: #cfcfcf;
     background-color: #cfcfcf;

@@ -89,7 +89,7 @@ function getNwkColor(nwk: Nwk): string {
     return color;
 }
 </script>
-<style scoped lang="scss">
+<style scoped>
 .v-expansion-panel--disabled {
     color: var(--v-text-base) !important;
 }

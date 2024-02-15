@@ -72,7 +72,7 @@ function getCardDetailText(stelle: Praktikumsstelle): string {
     return generator.getPraktikumsstellenCardDetailText(stelle);
 }
 </script>
-<style scoped lang="scss">
+<style scoped>
 .custom-card-active {
     border-color: #cfcfcf;
     background-color: #cfcfcf;
