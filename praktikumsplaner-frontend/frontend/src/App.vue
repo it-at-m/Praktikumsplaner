@@ -1,12 +1,7 @@
 <template>
     <v-app>
         <the-snackbar />
-        <v-app-bar
-            app
-            clipped-left
-            dark
-            color="primary"
-        >
+        <v-app-bar color="primary">
             <v-row align="center">
                 <v-col
                     cols="3"
@@ -14,9 +9,9 @@
                 >
                     <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
                     <router-link to="/">
-                        <v-toolbar-title class="white--text">
-                            Praktikumsplaner</v-toolbar-title
-                        >
+                        <v-toolbar-title class="font-weight-bold">
+                          <span class="text-white">Praktikumsplaner</span>
+                        </v-toolbar-title>
                     </router-link>
                 </v-col>
                 <v-col

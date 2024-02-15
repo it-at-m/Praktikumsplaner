@@ -35,11 +35,10 @@
                 <v-card-actions>
                     <v-btn
                         outlined
-                        text
+                        text="Zurück"
                         color="primary"
                         @click="clickAbbrechen()"
                     >
-                        Zurück
                     </v-btn>
                     <VSpacer></VSpacer>
                     <v-btn

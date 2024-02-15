@@ -72,11 +72,10 @@
             <v-card-actions>
                 <v-spacer />
                 <v-btn
-                    text
+                    text="Schliessen"
                     color="primary"
                     @click="close"
                 >
-                    Schliessen
                 </v-btn>
             </v-card-actions>
         </v-card>

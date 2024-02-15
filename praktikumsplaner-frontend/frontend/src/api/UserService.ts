@@ -1,7 +1,7 @@
 import { API_BASE } from "@/constants";
-import UserInfo from "@/types/UserInfo";
 import FetchUtils from "@/api/FetchUtils";
 import { useSnackbarStore } from "@/stores/snackbar";
+import type UserInfo from "@/types/UserInfo";
 
 export class UserService {
     private static URL: string = API_BASE + "/api/sso/userinfo/";

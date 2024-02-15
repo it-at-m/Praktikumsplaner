@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineEmits, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import Warning from "@/types/Warning";
 
 const emits = defineEmits<{

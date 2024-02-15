@@ -50,7 +50,7 @@ const isStartBeforeEnd = computed(() => {
     );
 });
 
-const isEndBeforeStart = computed(() => {
+const isEndAfterStart = computed(() => {
     return (
         range.value.isStartBeforeEnd ||
         "Das Ende des " + props.label + "s darf nicht vor dem Beginn liegen."
@@ -62,7 +62,7 @@ const endZeitpunktRules = computed(() => {
         validationRules.notEmptyDateRule(
             "Es muss ein Endzeitpunkt angegeben werden"
         ),
-        isEndBeforeStart.value,
+        isEndAfterStart.value,
     ];
 });
 

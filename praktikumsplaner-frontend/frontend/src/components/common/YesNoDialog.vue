@@ -37,10 +37,9 @@
                 <v-spacer />
                 <v-btn
                     id="yesnodialog-btn-no"
-                    text
+                    text="Nein"
                     @click="no"
                 >
-                    Nein
                 </v-btn>
                 <v-btn
                     id="yesnodialog-btn-yes"

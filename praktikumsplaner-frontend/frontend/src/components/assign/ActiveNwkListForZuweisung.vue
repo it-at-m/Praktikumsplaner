@@ -1,19 +1,18 @@
 <template>
-    <v-list>
-        <v-list-item-group>
-            <v-list-item
-                v-for="nwk in props.value"
-                :key="nwk.id"
-                draggable="true"
-                @dragstart="dragStart($event, nwk)"
-            >
-                <nwk-card :nwk="nwk" />
-            </v-list-item>
-        </v-list-item-group>
-    </v-list>
+  <v-list v-model:selected="selectedNwks">
+    <v-list-item
+        v-for="nwk in props.value"
+        :key="nwk.id"
+        :value="nwk"
+        draggable="true"
+        @dragstart="dragStart($event, nwk)"
+    >
+      <nwk-card :nwk="nwk" />
+    </v-list-item>
+  </v-list>
 </template>
 <script setup lang="ts">
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import Nwk from "@/types/Nwk";
 import NwkCard from "@/components/assign/NwkCard.vue";
 import mitt from "mitt";
@@ -25,6 +24,8 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: "input", nwks: Nwk[]): void;
 }>();
+
+const selectedNwks = ref<Nwk[]>([]);
 
 type Events = {
   assignedNwk: Nwk;

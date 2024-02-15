@@ -7,28 +7,27 @@
                     :key="abteilung"
                     class="custom-panel"
                 >
-                    <v-expansion-panel-header>{{
+                    <v-expansion-panel-title>{{
                         abteilung
-                    }}</v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                        <v-list>
-                            <v-list-item-group>
-                                <v-list-item
-                                    v-for="praktikumsstelle in props.praktikumsstellenMap.get(
-                                        abteilung
-                                    )"
-                                    :key="praktikumsstelle.id"
-                                    :ripple="false"
-                                >
-                                    <PraktikumsstelleCard
-                                        :key="praktikumsstelle.assignedNwk?.id"
-                                        :value="praktikumsstelle"
-                                        :praktikumsstelle="praktikumsstelle"
-                                    ></PraktikumsstelleCard>
-                                </v-list-item>
-                            </v-list-item-group>
+                    }}</v-expansion-panel-title>
+                    <v-expansion-panel-text>
+                        <v-list v-model:selected="selectedPraktikumsstellen">
+                            <v-list-item>
+                              v-for="praktikumsstelle in props.praktikumsstellenMap.get(
+                                abteilung
+                              )"
+
+                              :key="praktikumsstelle.id"
+                              :ripple="false"
+                              >
+                              <PraktikumsstelleCard
+                                  :key="praktikumsstelle.assignedNwk?.id"
+                                  :value="praktikumsstelle"
+                                  :praktikumsstelle="praktikumsstelle"
+                              ></PraktikumsstelleCard>
+                            </v-list-item>
                         </v-list>
-                    </v-expansion-panel-content>
+                    </v-expansion-panel-text>
                 </v-expansion-panel>
             </v-expansion-panels>
         </v-container>
@@ -37,10 +36,13 @@
 <script setup lang="ts">
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstelleCard from "@/components/assign/PraktikumsstelleCardZuweisung.vue";
+import { ref } from "vue";
 
 const props = defineProps<{
     praktikumsstellenMap: Map<string, Praktikumsstelle[]>;
 }>();
+
+const selectedPraktikumsstellen = ref<Praktikumsstelle[]>([]);
 </script>
 <style scoped>
 .spacer {

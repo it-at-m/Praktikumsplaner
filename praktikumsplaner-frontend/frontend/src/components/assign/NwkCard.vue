@@ -6,7 +6,7 @@
     >
         <v-expansion-panels>
             <v-expansion-panel :disabled="!hasDetails(props.nwk)">
-                <v-expansion-panel-header>
+                <v-expansion-panel-title>
                     <v-row
                         no-gutters
                         align="center"
@@ -28,8 +28,8 @@
                             </div>
                         </v-col>
                     </v-row>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
+                </v-expansion-panel-title>
+                <v-expansion-panel-text>
                     <v-chip-group
                         active-class="primary--text"
                         column
@@ -44,7 +44,7 @@
                             {{ day }}
                         </v-chip>
                     </v-chip-group>
-                </v-expansion-panel-content>
+                </v-expansion-panel-text>
             </v-expansion-panel>
         </v-expansion-panels>
     </v-card>

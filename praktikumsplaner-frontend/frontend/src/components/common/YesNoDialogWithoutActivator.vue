@@ -19,17 +19,16 @@
                 <v-spacer />
                 <v-btn
                     id="yesnodialog-btn-no"
-                    text
+                    text="Nein"
                     @click="no"
                 >
-                    Nein
                 </v-btn>
                 <v-btn
+                    text="Ja"
                     id="yesnodialog-btn-yes"
                     color="primary"
                     @click="yes"
                 >
-                    Ja
                 </v-btn>
             </v-card-actions>
         </v-card>

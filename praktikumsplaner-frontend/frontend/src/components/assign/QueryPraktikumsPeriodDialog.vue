@@ -94,7 +94,7 @@
                                             dialogtitle="Bestätigung des Mailversands"
                                             @no="confirmSendMailDialog = false"
                                             @yes="sendMails"
-                                        ></yes-no-dialog>
+                                         value></yes-no-dialog>
                                         <undelivered-mails-dialog
                                             :faulty-stellen="faultyStellen"
                                             :show-undelivered-mails-dialog="

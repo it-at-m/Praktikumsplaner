@@ -10,7 +10,7 @@
             :dialogtext="warningDialogText"
             @no="resetWarningDialog"
             @yes="assignNwk"
-        ></yes-no-dialog-without-activator>
+         value></yes-no-dialog-without-activator>
 
         <yes-no-dialog-without-activator
             v-model="unassignConfirmDialog"
@@ -18,7 +18,7 @@
             :dialogtext="unassignDialogContent"
             @no="resetUnassign"
             @yes="unassignNwk"
-        ></yes-no-dialog-without-activator>
+         value></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
             :class="{
@@ -64,15 +64,11 @@
                     }}</v-chip
                 ></v-col
             >
-            <v-btn
-                icon
-                class="icon-bottom-right-position"
-                @click.stop="show = !show"
-            >
-                <v-icon>{{
-                    show ? "mdi-chevron-up" : "mdi-chevron-down"
-                }}</v-icon>
-            </v-btn>
+          <v-btn
+              :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+              class="icon-bottom-right-position"
+              @click.stop="show = !show"
+          ></v-btn>
             <v-expand-transition>
                 <div v-show="show">
                     <v-divider></v-divider>
