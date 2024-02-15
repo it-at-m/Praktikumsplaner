@@ -1,4 +1,5 @@
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
+import { describe, expect, it } from "vitest";
 
 describe("germanWeekdayMapper.ts", () => {
     it("returns the correct german weekday for a given english weekdays", () => {

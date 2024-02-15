@@ -1,4 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
+import { describe, expect, it } from "vitest";
 import ZeitraumPicker from "@/components/meldezeitraeume/ZeitraumPicker.vue";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Zeitraum from "@/types/Zeitraum";
