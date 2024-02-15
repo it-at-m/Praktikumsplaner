@@ -18,11 +18,13 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import router from "@/router";
+
 export default {
     methods: {
         goBack() {
-            this.$router.push({ name: "home" });
+            router.push({ name: "home" });
         },
     },
 };
