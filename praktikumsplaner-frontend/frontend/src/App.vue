@@ -1,6 +1,7 @@
 <template>
     <v-app>
         <the-snackbar />
+        <error-dialog />
         <v-app-bar
             app
             clipped-left
@@ -90,6 +91,7 @@ import TheSnackbar from "@/components/TheSnackbar.vue";
 import { UserService } from "@/api/UserService";
 import { useUserStore } from "@/stores/user";
 import "@/directives/security";
+import ErrorDialog from "@/components/TheErrorDialog.vue";
 
 const drawer = ref(true);
 const query = ref("");
