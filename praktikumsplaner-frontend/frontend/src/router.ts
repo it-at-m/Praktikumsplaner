@@ -8,8 +8,8 @@ import MeldungStudium from "@/views/praktikumsplaetze/MeldungStudium.vue";
 import assignView from "@/views/AssignView.vue";
 import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";
 import PraktikumsplaetzeView from "@/views/praktikumsplaetze/PraktikumsplaetzeView.vue";
-import { useSecurity } from "@/composables/security";
 import AccessDeniedView from "@/views/AccessDeniedView.vue";
+import { useSecurity } from "@/composables/security";
 
 Vue.use(Router);
 
@@ -41,17 +41,18 @@ const router = new Router({
             path: "/",
             name: "home",
             component: Main,
-            meta: {},
         },
         {
             path: "/nachwuchskraefte",
             name: "nachwuchskraefte",
             component: NachwuchskraefteView,
+            meta: { requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"] },
         },
         {
             path: "/meldezeitraum",
             name: "meldezeitraum",
             component: Meldezeitraeume,
+            meta: { requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"] },
         },
         {
             path: "/praktikumsplaetze",
@@ -65,16 +66,23 @@ const router = new Router({
             path: "/praktikumsplaetze/meldungAusbildung",
             name: "MeldungAusbildung",
             component: MeldungAusbildung,
+            meta: {
+                requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+            },
         },
         {
             path: "/praktikumsplaetze/meldungStudium",
             name: "MeldungStudium",
             component: MeldungStudium,
+            meta: {
+                requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+            },
         },
         {
             path: "/zuweisung",
             name: "Zuweisung",
             component: assignView,
+            meta: { requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"] },
         },
         {
             path: "/accessDenied",
@@ -84,20 +92,22 @@ const router = new Router({
         { path: "*", redirect: "/" }, //Fallback 2
     ],
 });
-
-router.beforeEach((to, from, next) => {
-    const requiresRoles = to.meta?.requiresRole ?? undefined;
-    const security = useSecurity();
-    if (
-        requiresRoles !== undefined &&
-        security.checkForAnyRole(requiresRoles)
-    ) {
-        next();
-    } else if (requiresRoles !== undefined) {
-        next({ name: "AccessDenied" });
-    } else {
-        next();
-    }
-});
-
 export default router;
+
+export function addNavigationGuard() {
+    router.beforeEach((to, from, next) => {
+        const requiresRoles = to.meta?.requiresRole ?? undefined;
+
+        const security = useSecurity();
+        if (
+            requiresRoles !== undefined &&
+            security.checkForAnyRole(requiresRoles)
+        ) {
+            next();
+        } else if (requiresRoles !== undefined) {
+            next({ name: "AccessDenied" });
+        } else {
+            next();
+        }
+    });
+}
