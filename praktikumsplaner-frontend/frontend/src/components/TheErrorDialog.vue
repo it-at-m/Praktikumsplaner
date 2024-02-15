@@ -2,9 +2,8 @@
     <v-dialog
         id="error"
         v-model="show"
-        :color="color"
         persistent
-        width="550"
+        width="800"
     >
         <v-card>
             <v-card-title>
@@ -35,7 +34,6 @@ import { useErrorStore } from "@/stores/error";
 const show = ref(false);
 const message = ref("");
 const title = ref("");
-const color = ref("info");
 
 const errorStore = useErrorStore();
 
