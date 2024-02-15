@@ -38,7 +38,7 @@ import { ref, onMounted } from "vue";
 import Nwk from "@/types/Nwk";
 import NwkService from "@/api/NwkService";
 import NwkUpdateDialog from "@/components/nachwuchskraefte/NwkUpdateDialog.vue";
-import { EventBus } from "@/stores/event-bus";
+import mitt from "mitt";
 
 const nwks = ref<Nwk[]>([]);
 const loading = ref<boolean>(false);
@@ -67,7 +67,13 @@ function getSubtitle(nwk: Nwk): string {
     return subtitle;
 }
 
-EventBus.$on("nwkCreated", () => {
+type Events = {
+  nwkCreated: boolean
+}
+
+const emitter = mitt<Events>();
+
+emitter.on("nwkCreated", () => {
     loadAllActiveNwks();
 });
 </script>

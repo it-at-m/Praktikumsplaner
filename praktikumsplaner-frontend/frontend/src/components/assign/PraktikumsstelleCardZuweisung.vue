@@ -90,7 +90,7 @@
 import { ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
-import { EventBus } from "@/stores/event-bus";
+import emitter from "@/stores/eventBus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 import Nwk from "@/types/Nwk";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
@@ -185,7 +185,7 @@ function assignNwk() {
         loading.value = false;
     });
     assignedNwk.value = nwkToAssignUnassing.value;
-    EventBus.$emit("assignedNwk", stelleToAssignUnassign.assignedNwk);
+    emitter.emit("assignedNwk", stelleToAssignUnassign.assignedNwk);
     resetWarningDialog();
 }
 
@@ -202,7 +202,7 @@ function unassignNwk() {
                 loading.value = false;
             }
         );
-        EventBus.$emit("unassignedNwk", stelleToAssignUnassign.assignedNwk);
+        emitter.emit("unassignedNwk", stelleToAssignUnassign.assignedNwk);
         stelleToAssignUnassign.assignedNwk = undefined;
         assignedNwk.value = undefined;
     }

@@ -13,10 +13,10 @@
     </v-list>
 </template>
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import Nwk from "@/types/Nwk";
-import { EventBus } from "@/stores/event-bus";
 import NwkCard from "@/components/assign/NwkCard.vue";
+import mitt from "mitt";
 
 const props = defineProps<{
     value: Nwk[];
@@ -26,11 +26,21 @@ const emits = defineEmits<{
     (e: "input", nwks: Nwk[]): void;
 }>();
 
-onMounted(() => {
-    EventBus.$on("assignedNwk", removeNwkFromList);
-    EventBus.$on("unassignedNwk", addNwkToList);
-});
+type Events = {
+  assignedNwk: Nwk;
+  unassignedNwk: Nwk;
+}
 
+const emitter = mitt<Events>();
+
+onMounted(() => {
+    emitter.on("assignedNwk", removeNwkFromList);
+    emitter.on("unassignedNwk", addNwkToList);
+});
+onUnmounted(() => {
+  emitter.off("assignedNwk", removeNwkFromList);
+  emitter.off("unassignedNwk", addNwkToList);
+});
 function dragStart(event: DragEvent, nwk: Nwk) {
     event.dataTransfer?.setData("application/json", JSON.stringify(nwk));
 }

@@ -71,8 +71,8 @@ import { Levels } from "@/api/Error";
 import NwkService from "@/api/NwkService";
 import { useRules } from "@/composables/rules";
 import ErrorDialog from "@/components/common/ErrorDialog.vue";
-import { EventBus } from "@/stores/event-bus";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
+import emitter from "@/stores/eventBus"
 
 const visible = ref<boolean>();
 const loading = ref<boolean>(false);
@@ -111,7 +111,7 @@ function uploadFile() {
                 message: "Nachwuchskräfte erfolgreich angelegt.",
                 level: Levels.SUCCESS,
             });
-            EventBus.$emit("nwkCreated");
+            emitter.emit("nwkCreated");
         })
         .catch(() => {
             showError();
