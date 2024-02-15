@@ -11,12 +11,11 @@
             </v-col>
             <v-col>
                 <v-btn
+                    prepend-icon="mdi-plus"
                     disabled
                     class="primary"
-                >
-                    <v-icon>mdi-plus</v-icon>
-                    Hinzufügen
-                </v-btn>
+                    text="Hinzufügen"
+                />
             </v-col>
         </v-row>
         <v-row></v-row>

@@ -5,14 +5,13 @@
             persistent
             max-width="550"
         >
-            <template #activator="{ on }">
+            <template #activator="{ props }">
                 <v-btn
+                    prepend-icon="mdi-tray-arrow-up"
+                    text="Datei hochladen"
                     color="primary"
-                    v-on="on"
-                >
-                    <v-icon>mdi-tray-arrow-up</v-icon>
-                    Datei Hochladen
-                </v-btn>
+                    v-bind="props"
+                />
             </template>
             <v-form ref="form">
                 <v-card>
@@ -74,9 +73,9 @@ import ErrorDialog from "@/components/common/ErrorDialog.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import emitter from "@/stores/eventBus"
 
-const visible = ref<boolean>();
+const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
-const excelDatei = ref<File>();
+const excelDatei = ref<File[]>();
 const form = ref<HTMLFormElement>();
 const snackbarStore = useSnackbarStore();
 const excelFormat =
@@ -102,10 +101,11 @@ function cancel() {
     form.value?.reset();
 }
 function uploadFile() {
-    if (!excelDatei.value || !form.value?.validate()) return;
+
+    if (!form.value?.validate() || !excelDatei.value ) return;
     visible.value = false;
     loading.value = true;
-    NwkService.uploadExcelFile(excelDatei.value)
+    NwkService.uploadExcelFile(excelDatei.value[0])
         .then(() => {
             snackbarStore.showMessage({
                 message: "Nachwuchskräfte erfolgreich angelegt.",

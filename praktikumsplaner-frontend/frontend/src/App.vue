@@ -28,25 +28,19 @@
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
-            app
-            clipped
         >
             <v-list nav>
                 <v-list-item
                     v-if="security.isAusbildungsleitung()"
                     :to="{ path: '/nachwuchskraefte' }"
                 >
-                    <v-list-item-content>
-                        <v-list-item-title>Nachwuchskräfte</v-list-item-title>
-                    </v-list-item-content>
+                  <v-list-item-title>Nachwuchskräfte</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                     v-if="security.isAusbildungsleitung()"
                     :to="{ path: '/meldezeitraum' }"
                 >
-                    <v-list-item-content>
-                        <v-list-item-title>Meldezeitraum</v-list-item-title>
-                    </v-list-item-content>
+                  <v-list-item-title>Meldezeitraum</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                     v-if="
@@ -57,25 +51,23 @@
                     "
                     :to="{ path: '/praktikumsplaetze' }"
                 >
-                    <v-list-item-content>
-                        <v-list-item-title>Praktikumsplätze</v-list-item-title>
-                    </v-list-item-content>
+                  <v-list-item-title>Praktikumsplätze</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                     v-if="security.isAusbildungsleitung()"
                     :to="{ path: '/zuweisung' }"
                 >
-                    <v-list-item-content>
-                        <v-list-item-title>Zuweisung</v-list-item-title>
-                    </v-list-item-content>
+                  <v-list-item-title>Zuweisung</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
         <v-main>
             <v-container fluid>
+              <router-view v-slot="{ Component }">
                 <v-fade-transition mode="out-in">
-                    <router-view />
+                  <component :is="Component" />
                 </v-fade-transition>
+              </router-view>
             </v-container>
         </v-main>
     </v-app>
@@ -83,8 +75,7 @@
 
 <script setup lang="ts">
 import InfoService from "@/api/InfoService";
-import { onBeforeMount, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { onBeforeMount, onMounted, ref } from "vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { UserService } from "@/api/UserService";
@@ -92,9 +83,7 @@ import { useUserStore } from "@/stores/user";
 import { useSecurity } from "@/composables/security";
 
 const drawer = ref(true);
-const query = ref("");
 const userStore = useUserStore();
-const route = useRoute();
 const snackbarStore = useSnackbarStore();
 const userService = new UserService();
 const security = useSecurity();
@@ -109,22 +98,10 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-    /* eslint-disable  @typescript-eslint/no-explicit-any */
-    query.value = route.params.query;
     InfoService.getInfo().catch((error) => {
         snackbarStore.showMessage(error);
     });
-    /* eslint-enable  @typescript-eslint/no-explicit-any */
 });
-
-watch(
-    () => route.params.query,
-    (q: string) => {
-        if (query.value !== q) {
-            query.value = q;
-        }
-    }
-);
 </script>
 
 <style>
