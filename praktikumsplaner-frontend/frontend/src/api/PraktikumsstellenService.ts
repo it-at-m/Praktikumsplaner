@@ -110,7 +110,7 @@ export default {
             FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Zuweisung erfolgreich aufgehoben",
+                    message: "☑ Zuweisung aufgehoben",
                     level: Levels.SUCCESS,
                 });
                 return response.json();
