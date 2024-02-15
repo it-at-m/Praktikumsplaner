@@ -14,10 +14,12 @@ export default {
                 FetchUtils.getPOSTConfig(base64string.split(",")[1])
             ).then((response) => {
                 FetchUtils.defaultResponseHandler(response);
-                useSnackbarStore().showMessage({
-                    message: "☑ Nachwuchskräfte erfolgreich angelegt.",
-                    level: Levels.SUCCESS,
-                });
+                if (response.ok) {
+                    useSnackbarStore().showMessage({
+                        message: "☑ Nachwuchskräfte erfolgreich angelegt.",
+                        level: Levels.SUCCESS,
+                    });
+                }
             });
         });
     },
@@ -58,10 +60,12 @@ export default {
             FetchUtils.getPUTConfig(nwk)
         ).then((response) => {
             FetchUtils.defaultResponseHandler(response);
-            useSnackbarStore().showMessage({
-                message: "☑ Nachwuchskraft wurde erfolgreich bearbeitet.",
-                level: Levels.SUCCESS,
-            });
+            if (response.ok) {
+                useSnackbarStore().showMessage({
+                    message: "☑ Nachwuchskraft wurde erfolgreich bearbeitet.",
+                    level: Levels.SUCCESS,
+                });
+            }
         });
     },
 };

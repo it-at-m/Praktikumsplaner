@@ -11,11 +11,13 @@ export default {
             FetchUtils.getPOSTConfig(meldezeitraum)
         ).then((response) => {
             FetchUtils.defaultResponseHandler(response);
-            useSnackbarStore().showMessage({
-                message: "☑ Meldezeitraum erfolgreich angelegt",
-                level: Levels.SUCCESS,
-            });
-            return response.json();
+            if (response.ok) {
+                useSnackbarStore().showMessage({
+                    message: "☑ Meldezeitraum erfolgreich angelegt",
+                    level: Levels.SUCCESS,
+                });
+                return response.json();
+            }
         });
     },
     getCurrentMeldezeitraum(): Promise<Meldezeitraum[]> {

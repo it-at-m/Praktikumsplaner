@@ -1,5 +1,6 @@
 import { ApiError, Levels } from "@/api/Error";
 import { useSnackbarStore } from "@/stores/snackbar";
+import { useErrorStore } from "@/stores/error";
 
 export default class FetchUtils {
     /**
@@ -79,7 +80,8 @@ export default class FetchUtils {
      *
      * - Fehler bei fehlenden Berechtigungen --> HTTP 403
      * - Reload der App bei Session-Timeout --> HTTP 3xx
-     * - Default-Fehler bei allen HTTP-Codes !2xx
+     * - Fehler bei fehlerhaften Eingaben --> HTTP 4xx
+     * - Fehler bei Serverproblemen --> HTTP 5xx
      *
      * @param response Die response aus fetch-Befehl die geprüft werden soll.
      * @param errorMessage Die Fehlermeldung, welche bei einem HTTP-Code != 2xx angezeigt werden soll.
@@ -103,9 +105,9 @@ export default class FetchUtils {
                     .then((result) => {
                         const decoder = new TextDecoder("utf-8");
                         const message = decoder.decode(result.value);
-                        useSnackbarStore().showMessage({
+                        useErrorStore().showMessage({
+                            title: "Fehlerhafte Eingaben",
                             message: message,
-                            level: Levels.ERROR,
                         });
                         throw new ApiError({
                             message: message,

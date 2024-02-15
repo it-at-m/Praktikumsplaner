@@ -13,11 +13,13 @@ export default {
             FetchUtils.getPOSTConfig(praktikumsstelle)
         ).then((response) => {
             FetchUtils.defaultResponseHandler(response);
-            useSnackbarStore().showMessage({
-                message: "☑ Praktikumsstelle erfolgreich angelegt",
-                level: Levels.SUCCESS,
-            });
-            return response.json();
+            if (response.ok) {
+                useSnackbarStore().showMessage({
+                    message: "☑ Praktikumsstelle erfolgreich angelegt",
+                    level: Levels.SUCCESS,
+                });
+                return response.json();
+            }
         });
     },
     uploadStudiumsPraktikumsstelleWithMeldezeitraum(
@@ -28,11 +30,13 @@ export default {
             FetchUtils.getPOSTConfig(praktikumsstelle)
         ).then((response) => {
             FetchUtils.defaultResponseHandler(response);
-            useSnackbarStore().showMessage({
-                message: "☑ Praktikumsstelle erfolgreich angelegt",
-                level: Levels.SUCCESS,
-            });
-            return response.json();
+            if (response.ok) {
+                useSnackbarStore().showMessage({
+                    message: "☑ Praktikumsstelle erfolgreich angelegt",
+                    level: Levels.SUCCESS,
+                });
+                return response.json();
+            }
         });
     },
     uploadAusbildungsPraktikumsstelle(
@@ -43,11 +47,13 @@ export default {
             FetchUtils.getPOSTConfig(praktikumsstelle)
         ).then((response) => {
             FetchUtils.defaultResponseHandler(response);
-            useSnackbarStore().showMessage({
-                message: "☑ Praktikumsstelle erfolgreich angelegt",
-                level: Levels.SUCCESS,
-            });
-            return response.json();
+            if (response.ok) {
+                useSnackbarStore().showMessage({
+                    message: "☑ Praktikumsstelle erfolgreich angelegt",
+                    level: Levels.SUCCESS,
+                });
+                return response.json();
+            }
         });
     },
     uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
@@ -58,11 +64,13 @@ export default {
             FetchUtils.getPOSTConfig(praktikumsstelle)
         ).then((response) => {
             FetchUtils.defaultResponseHandler(response);
-            useSnackbarStore().showMessage({
-                message: "☑ Praktikumsstelle erfolgreich angelegt",
-                level: Levels.SUCCESS,
-            });
-            return response.json();
+            if (response.ok) {
+                useSnackbarStore().showMessage({
+                    message: "☑ Praktikumsstelle erfolgreich angelegt",
+                    level: Levels.SUCCESS,
+                });
+                return response.json();
+            }
         });
     },
     getAllPraktikumsstellenInSpecificMeldezeitraum(
@@ -85,11 +93,13 @@ export default {
             FetchUtils.getPATCHConfig({})
         ).then((response) => {
             FetchUtils.defaultResponseHandler(response);
-            useSnackbarStore().showMessage({
-                message: "☑ Zuweisung erfolgreich",
-                level: Levels.SUCCESS,
-            });
-            return response.json();
+            if (response.ok) {
+                useSnackbarStore().showMessage({
+                    message: "☑ Zuweisung erfolgreich",
+                    level: Levels.SUCCESS,
+                });
+                return response.json();
+            }
         });
     },
     unassignNwk(stellenId: string): Promise<Praktikumsstelle> {
@@ -98,11 +108,13 @@ export default {
             FetchUtils.getPATCHConfig({})
         ).then((response) => {
             FetchUtils.defaultResponseHandler(response);
-            useSnackbarStore().showMessage({
-                message: "☑ Zuweisung erfolgreich aufgehoben",
-                level: Levels.SUCCESS,
-            });
-            return response.json();
+            if (response.ok) {
+                useSnackbarStore().showMessage({
+                    message: "☑ Zuweisung erfolgreich aufgehoben",
+                    level: Levels.SUCCESS,
+                });
+                return response.json();
+            }
         });
     },
 };

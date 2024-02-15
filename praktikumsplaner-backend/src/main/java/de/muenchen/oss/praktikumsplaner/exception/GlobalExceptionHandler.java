@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
         for (ExcelImportException.ExcelImportExceptionInfo exceptionInfo : ex.getExceptionInfos()) {
             formattedExceptionInfos.append("Zeile: ").append(exceptionInfo.getRow() + 1).append(" - ")
                     .append("Spalte: ").append(exceptionInfo.getColumName()).append(" - ")
-                    .append("Fehler: ").append(exceptionInfo.getValue()).append(";");
+                    .append("Fehler: ").append(exceptionInfo.getValue()).append("\n");
         }
         return formattedExceptionInfos.toString();
     }
