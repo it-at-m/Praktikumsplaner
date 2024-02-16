@@ -5,14 +5,13 @@
             persistent
             width="600"
         >
-            <template #activator="{ on }">
+            <template #activator="{ props }">
                 <v-btn
                     color="primary"
-                    v-on="on"
+                    v-bind="props"
                     >Meldezeitraum Anlegen</v-btn
                 >
             </template>
-
             <v-card>
                 <v-card-title>Meldezeitraum Anlegen</v-card-title>
                 <v-card-text>
@@ -22,28 +21,31 @@
                                 v-model="meldezeitraum.zeitraumName"
                                 label="Zeitraumname"
                                 :rules="zeitraumNameRules"
-                                outlined
+                                variant="outlined"
+                                class="mb-3"
                             ></v-text-field>
 
-                            <ZeitraumPicker
+                            <zeitraum-picker
                                 :value="meldezeitraum.zeitraum"
                                 :label="'Meldezeitraum'"
-                            ></ZeitraumPicker>
+                            ></zeitraum-picker>
                         </v-form>
                     </v-col>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn
-                        outlined
-                        text="Zurück"
+                        variant="outlined"
                         color="primary"
+                        class="ml-7 mb-2"
                         @click="clickAbbrechen()"
                     >
+                        Zurück
                     </v-btn>
                     <VSpacer></VSpacer>
                     <v-btn
                         color="primary"
-                        variant="text"
+                        variant="elevated"
+                        class="mr-7 mb-2"
                         @click="clickSpeichern()"
                     >
                         Speichern

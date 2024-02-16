@@ -1,13 +1,20 @@
 <template>
     <v-container class="finishedBackground">
-        <PageTitle
-            back-button-url="/"
-            page-header-text="Meldezeiträume"
-        ></PageTitle>
-        <CreateMeldezeitraum
-            v-model="model"
-            @meldezeitraumAdded="reloadMeldezeitraeume"
-        ></CreateMeldezeitraum>
+        <v-row>
+            <page-title
+                back-button-url="/"
+                page-header-text="Meldezeiträume"
+            ></page-title>
+        </v-row>
+        <v-row>
+            <v-col cols="8"></v-col>
+            <v-col cols="4">
+                <create-meldezeitraum
+                    v-model="model"
+                    @meldezeitraum-added="reloadMeldezeitraeume"
+                ></create-meldezeitraum>
+            </v-col>
+        </v-row>
         <v-container>
             <v-skeleton-loader
                 v-if="loading"

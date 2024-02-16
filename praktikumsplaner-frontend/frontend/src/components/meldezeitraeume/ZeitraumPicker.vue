@@ -5,8 +5,8 @@
                 <v-col cols="12">
                     <v-text-field
                         v-model="range.startZeitpunkt"
-                        dense
-                        outlined
+                        density="compact"
+                        variant="outlined"
                         type="date"
                         :rules="startZeitpunktRules"
                         :label="'Beginn des ' + props.label + 's'"
@@ -16,8 +16,8 @@
                 <v-col cols="12">
                     <v-text-field
                         v-model="range.endZeitpunkt"
-                        dense
-                        outlined
+                        density="compact"
+                        variant="outlined"
                         type="date"
                         :label="'Ende des ' + props.label + 's'"
                         :rules="endZeitpunktRules"
