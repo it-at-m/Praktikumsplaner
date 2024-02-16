@@ -6,7 +6,7 @@
         >
             <v-icon
                 color="blue"
-                large
+                size="large"
                 >mdi-information-outline</v-icon
             >
         </v-col>

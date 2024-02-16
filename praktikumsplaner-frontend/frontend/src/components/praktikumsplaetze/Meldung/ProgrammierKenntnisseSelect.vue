@@ -3,11 +3,10 @@
         v-model="stelle.programmierkenntnisse"
         label="Programmierkenntnisse*"
         :items="Programmierkenntnisse"
-        :menu-props="customMenuProps"
         :rules="requiredRule"
         item-value="value"
-        item-text="name"
-        outlined
+        item-title="name"
+        variant="outlined"
     >
     </v-select>
 </template>
@@ -22,25 +21,22 @@ import { Programmierkenntnisse } from "@/types/YesNoEgalBoolean";
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", programmierkenntnisse: Praktikumsstelle): void;
+    (e: "update:modelValue", programmierkenntnisse: Praktikumsstelle): void;
 }>();
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 
-const customMenuProps = {
-    offsetY: true,
-};
 const stelle = computed({
     // getter
     get() {
-        return props.value;
+        return props.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
 </script>

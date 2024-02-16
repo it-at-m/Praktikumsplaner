@@ -1,12 +1,11 @@
 <template>
-    <v-tooltip right>
-        <template #activator="{ on, attrs }">
+    <v-tooltip location="right">
+        <template #activator="{ props }">
             <v-icon
                 color="blue"
                 class="v-tooltip-spacing"
-                v-bind="attrs"
-                large
-                v-on="on"
+                size="large"
+                v-bind="props"
             >
                 mdi-information
             </v-icon>

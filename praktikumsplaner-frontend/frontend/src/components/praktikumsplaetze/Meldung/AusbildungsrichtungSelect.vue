@@ -4,10 +4,9 @@
         label="Ausbildungsrichtung*"
         :items="Ausbildungsrichtung"
         item-value="value"
-        item-text="name"
+        item-title="name"
         :rules="requiredRule"
-        :menu-props="customMenuProps"
-        outlined
+        variant="outlined"
     >
     </v-select>
 </template>
@@ -22,25 +21,22 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", ausbildungsrichtung: Praktikumsstelle): void;
+    (e: "update:modelValue", ausbildungsrichtung: Praktikumsstelle): void;
 }>();
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 
-const customMenuProps = {
-    offsetY: true,
-};
 const stelle = computed({
     // getter
     get() {
-        return props.value;
+        return props.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
 </script>

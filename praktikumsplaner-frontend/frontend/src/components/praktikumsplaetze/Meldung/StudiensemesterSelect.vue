@@ -4,12 +4,11 @@
         label="Studiensemester*"
         :items="Studiensemester"
         item-value="value"
-        item-text="name"
+        item-title="name"
         :rules="requiredArrayRule"
-        :menu-props="customMenuProps"
-        outlined
+        variant="outlined"
         multiple
-        @change="sortSemester"
+        @update:model-value="sortSemester"
     >
         <template #prepend-item>
             <v-list-item
@@ -22,9 +21,8 @@
                         {{ semesterIcon }}
                     </v-icon>
                 </v-list-item-action>
-                <v-list-item-content>
-                    <v-list-item-title> Egal </v-list-item-title>
-                </v-list-item-content>
+
+                <v-list-item-title> Egal </v-list-item-title>
             </v-list-item>
             <v-divider class="mt-2"></v-divider>
         </template>
@@ -35,26 +33,23 @@
                 </v-icon>
                 <v-icon v-else> mdi-checkbox-blank-outline </v-icon>
             </v-list-item-action>
-            <v-list-item-content>
-                <v-list-item-title>
-                    {{ data.item.name }}
-                </v-list-item-title>
-                <v-list-item-subtitle
-                    v-if="praktikumsstelle.studiengang === 'BSC'"
-                >
-                    {{ data.item.zeitraumBSC }}
-                </v-list-item-subtitle>
-                <v-list-item-subtitle
-                    v-else-if="praktikumsstelle.studiengang === 'BWI'"
-                >
-                    {{ data.item.zeitraumBWI }}
-                </v-list-item-subtitle>
-                <v-list-item-subtitle
-                    v-else-if="praktikumsstelle.studiengang === 'VI'"
-                >
-                    {{ data.item.zeitraumVI }}
-                </v-list-item-subtitle>
-            </v-list-item-content>
+
+            <v-list-item-title>
+                {{ data.item.name }}
+            </v-list-item-title>
+            <v-list-item-subtitle v-if="praktikumsstelle.studiengang === 'BSC'">
+                {{ data.item.zeitraumBSC }}
+            </v-list-item-subtitle>
+            <v-list-item-subtitle
+                v-else-if="praktikumsstelle.studiengang === 'BWI'"
+            >
+                {{ data.item.zeitraumBWI }}
+            </v-list-item-subtitle>
+            <v-list-item-subtitle
+                v-else-if="praktikumsstelle.studiengang === 'VI'"
+            >
+                {{ data.item.zeitraumVI }}
+            </v-list-item-subtitle>
         </template>
     </v-select>
 </template>
@@ -68,30 +63,26 @@ import { Studiensemester } from "@/types/Studiensemester";
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", stelle: Praktikumsstelle): void;
+    (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
 
 const praktikumsstelle = computed({
     // getter
     get() {
-        return props.value;
+        return props.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
 
 const requiredArrayRule = [
     validationRules.notEmptyArrayRule("Darf nicht leer sein."),
 ];
-
-const customMenuProps = {
-    offsetY: true,
-};
 
 const allSemesterSelected = computed(() => {
     return (

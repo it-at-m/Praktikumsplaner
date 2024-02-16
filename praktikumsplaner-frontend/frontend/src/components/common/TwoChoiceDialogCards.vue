@@ -9,7 +9,7 @@
                 <v-btn
                     color="primary"
                     :prepend-icon="properties.icontext"
-                    v-on="props"
+                    v-bind="props"
                 >
                     {{ buttontext }}
                 </v-btn>

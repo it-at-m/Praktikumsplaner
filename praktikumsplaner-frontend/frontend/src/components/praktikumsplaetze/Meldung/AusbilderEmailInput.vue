@@ -3,7 +3,7 @@
         v-model="stelle.email"
         label="E-mail örtliche Ausbilder*in*"
         :rules="emailRule"
-        outlined
+        variant="outlined"
     ></v-text-field>
 </template>
 
@@ -16,10 +16,10 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", email: Praktikumsstelle): void;
+    (e: "update:modelValue", email: Praktikumsstelle): void;
 }>();
 
 const emailRule = [
@@ -37,11 +37,11 @@ const emailRule = [
 const stelle = computed({
     // getter
     get() {
-        return props.value;
+        return props.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
 </script>

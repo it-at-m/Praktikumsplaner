@@ -1,9 +1,9 @@
 <template>
     <v-text-field
         v-model="stelle.oertlicheAusbilder"
-        label="Name örtliche Ausbilder*in*"
         :rules="oertlAusbilderRule"
-        outlined
+        label="Name örtliche Ausbilder*in*"
+        variant="outlined"
     ></v-text-field>
 </template>
 
@@ -16,10 +16,10 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", oertlicheAusbilder: Praktikumsstelle): void;
+    (e: "update:modelValue", oertlicheAusbilder: Praktikumsstelle): void;
 }>();
 
 const oertlAusbilderRule = [
@@ -33,11 +33,11 @@ const oertlAusbilderRule = [
 const stelle = computed({
     // getter
     get() {
-        return props.value;
+        return props.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
 </script>

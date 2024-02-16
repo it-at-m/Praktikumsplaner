@@ -3,10 +3,9 @@
         v-model="stelle.meldezeitraumID"
         label="Meldezeitraum*"
         :items="props.meldezeitraueme"
-        :menu-props="customMenuProps"
         item-value="id"
-        item-text="zeitraumName"
-        outlined
+        item-title="zeitraumName"
+        variant="outlined"
     >
         <template #item="data">
             {{ data.item.zeitraumName }}:
@@ -31,11 +30,11 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const props = defineProps<{
     meldezeitraueme: Meldezeitraum[];
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 
 const emits = defineEmits<{
-    (e: "input", stelle: Praktikumsstelle): void;
+    (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
 
 const formatter = useFormatter();
@@ -43,14 +42,11 @@ const formatter = useFormatter();
 const stelle = computed({
     // getter
     get() {
-        return props.value;
+        return props.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
-const customMenuProps = {
-    offsetY: true,
-};
 </script>
