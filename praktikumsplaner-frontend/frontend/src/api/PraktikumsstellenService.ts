@@ -157,4 +157,24 @@ export default {
                 FetchUtils.defaultResponseHandler(err);
             });
     },
+    deletePraktikumsstelle(
+        stellenId: string | undefined
+    ): Promise<void> | void {
+        if (stellenId != undefined) {
+            return fetch(
+                `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}`,
+                FetchUtils.getDELETEConfig({})
+            )
+                .then((response) => {
+                    FetchUtils.defaultResponseHandler(response);
+                    useSnackbarStore().showMessage({
+                        message: "☑ Praktikumsstelle erfolgreich gelöscht",
+                        level: Levels.SUCCESS,
+                    });
+                })
+                .catch((err) => {
+                    FetchUtils.defaultCatchHandler(err);
+                });
+        }
+    },
 };
