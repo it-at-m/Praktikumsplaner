@@ -103,4 +103,8 @@ onMounted(() => {
 });
 </script>
 
-<style></style>
+<style scoped>
+.v-navigation-drawer .v-list-item-title {
+  font-size: 16px;
+}
+</style>
