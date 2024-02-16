@@ -71,6 +71,9 @@
                     >
                         <span> Übersicht aus dem aktuellen Meldezeitraum </span>
                         <PraktikumsstellenList
+                            :deleted="
+                                getAllPraktikumsstellenInCurrentMeldezeitraum()
+                            "
                             :assignment="false"
                             :praktikumsstellen-map="praktikumsstellenMap"
                         ></PraktikumsstellenList>
