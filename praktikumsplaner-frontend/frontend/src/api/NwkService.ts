@@ -3,8 +3,18 @@ import { API_BASE, NWK_BASE } from "@/constants";
 import Nwk from "@/types/Nwk";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { Levels } from "@/api/Error";
+import NwkCreate from "@/types/NwkCreate";
 
 export default {
+    saveNwk(nwk: NwkCreate): Promise<void> {
+        return fetch(`${API_BASE}${NWK_BASE}`, FetchUtils.getPOSTConfig(nwk))
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+            })
+            .catch((err) => {
+                FetchUtils.defaultCatchHandler(err);
+            });
+    },
     uploadExcelFile(excelDatei: File): Promise<void> {
         // File Reader encodes as Base64
         return this.readString(excelDatei).then((base64string: string) => {

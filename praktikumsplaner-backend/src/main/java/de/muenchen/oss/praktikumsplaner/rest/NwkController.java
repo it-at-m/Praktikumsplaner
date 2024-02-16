@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.service.NwkService;
 import java.io.IOException;
@@ -30,6 +31,14 @@ public class NwkController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveNwkExcel(@RequestBody final String base64String) throws IOException {
         nwkService.importNwk(base64String);
+    }
+
+    @PreAuthorize("hasRole('ROLE_'+T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveNwk(@RequestBody final CreateNwkDto createNwkDto) {
+        //Mögliche Abfrage ob die Nwk schon existiert
+        nwkService.saveNwk(createNwkDto);
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")

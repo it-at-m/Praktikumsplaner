@@ -160,4 +160,11 @@ public class NwkServiceTest {
         when(repository.existsById(nwk1.getId())).thenReturn(true);
         assertTrue(service.nwkExistsById(nwk1.getId()));
     }
+
+    @Test
+    public void testSaveNwkCreateDto() {
+        CreateNwkDto createNwkDto = new CreateNwkDto("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY));
+        service.saveNwk(createNwkDto);
+        verify(repository, times(1)).save(any(Nwk.class));
+    }
 }

@@ -10,13 +10,7 @@
                 <excel-import-nwk></excel-import-nwk>
             </v-col>
             <v-col>
-                <v-btn
-                    disabled
-                    class="primary"
-                >
-                    <v-icon>mdi-plus</v-icon>
-                    Hinzufügen
-                </v-btn>
+                <NwkCreateDialog></NwkCreateDialog>
             </v-col>
         </v-row>
         <v-row></v-row>
@@ -31,6 +25,8 @@
 import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import ActiveNwkList from "@/components/nachwuchskraefte/ActiveNwkList.vue";
+import router from "@/router";
+import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
 </script>
 
 <style scoped>
