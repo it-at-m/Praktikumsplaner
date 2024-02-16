@@ -3,6 +3,7 @@
         <v-btn
             :to="{ path: backButtonUrl }"
             icon="mdi-arrow-left"
+            elevation="0"
         >
         </v-btn>
         <span class="text-h5">{{ props.pageHeaderText }}</span>
