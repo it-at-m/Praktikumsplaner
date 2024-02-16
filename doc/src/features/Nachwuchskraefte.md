@@ -42,6 +42,21 @@ The days can be chained together by plus signs, for example: Mo + Di + Mi.
 
 If the upload is successful, a green success message will appear. If it's not, a red error will appear.
 
+### Manually creating [Nwks](./../glossary.md#nwk)
+In the top right of the site is a blue upload button labeled `Erstellen`.
+
+It is possible to create a [Nwks](./../glossary.md#nwk) manually there.
+
+The first name (Vorname) has to be between 2 and 255 characters.
+
+The last name (Nachname) has to be between 2 and 255 characters.
+
+There a two selectors to select either the training direction or course of study
+
+The year (Jahrgang) has to be in this format: XX/XX Example: 20/24 for someone who started training in 2020 and finishes in 2024.
+
+The lecture days selector is used to select the lecture days of a [Nwks](./../glossary.md#nwk).
+
 ### English days to German short notation
 | English | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday |
 |---------|--------|---------|-----------|----------|--------|----------|
