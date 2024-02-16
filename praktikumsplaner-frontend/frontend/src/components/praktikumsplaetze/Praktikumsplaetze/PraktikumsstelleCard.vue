@@ -1,5 +1,12 @@
 <template>
     <v-container>
+        <yes-no-dialog-without-activator
+            v-model="warningDialog"
+            :dialogtitle="warningDialogTitle"
+            :dialogtext="warningDialogText"
+            @no="resetWarningDialog"
+            @yes="delPraktikumsstelle(props.value.id)"
+        ></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
             :class="{
@@ -48,6 +55,11 @@
                     </v-card-text>
                 </div>
             </v-expand-transition>
+            <v-card-actions>
+                <v-btn @click.stop="warningDialog = true"
+                    ><v-icon>mdi-delete</v-icon></v-btn
+                >
+            </v-card-actions>
         </v-card>
     </v-container>
 </template>
@@ -55,11 +67,23 @@
 import { ref } from "vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useTextGenerator } from "@/composables/textGenerator";
+import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
+import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 
 const props = defineProps<{
     value: Praktikumsstelle;
 }>();
 
+const emits = defineEmits<{
+    (e: "deleted"): void;
+}>();
+
+const warningDialog = ref<boolean>(false);
+const warningDialogTitle = ref("Löschen?");
+const warningDialogText = ref(
+    "Wollen Sie die Praktikumsstelle wirklich löschen?"
+);
+const isActive = ref<boolean>(true);
 const show = ref<boolean>(false);
 const assignedNwk = ref(props.value.assignedNwk);
 const generator = useTextGenerator();
@@ -70,6 +94,19 @@ function getCardText(stelle: Praktikumsstelle): string {
 
 function getCardDetailText(stelle: Praktikumsstelle): string {
     return generator.getPraktikumsstellenCardDetailText(stelle);
+}
+
+function delPraktikumsstelle(uuid: string | undefined) {
+    if (props.value.id) {
+        resetWarningDialog();
+        PraktikumsstellenService.deletePraktikumsstelle(uuid!).then(() => {
+            emits("deleted");
+        });
+    }
+}
+
+function resetWarningDialog() {
+    warningDialog.value = false;
 }
 </script>
 <style scoped lang="scss">
