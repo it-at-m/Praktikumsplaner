@@ -4,8 +4,8 @@
     "private": true,
     "scripts": {
         "security": "vite --mode developmentSecurity",
-        "serve": "vite",
-        "build": "vite build && eslint . --fix &&",
+        "serve": "vite ",
+        "build": "vite build && eslint . --fix && vue-tsc --noEmit",
         "test:unit": "vitest run",
         "preview": "vite preview",
         "lint": "prettier . --check && eslint . && vue-tsc --noEmit --skipLibCheck",

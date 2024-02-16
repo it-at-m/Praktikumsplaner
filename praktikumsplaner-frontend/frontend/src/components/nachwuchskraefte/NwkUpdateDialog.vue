@@ -9,9 +9,10 @@
                 <v-btn
                     color="primary"
                     v-on="on"
+                    prepend-icon="mdi-pencil-outline"
+                    text="Bearbeiten"
+                    variant="outlined"
                 >
-                    <v-icon>mdi-pencil-outline</v-icon>
-                    Bearbeiten
                 </v-btn>
             </template>
             <v-form ref="form">

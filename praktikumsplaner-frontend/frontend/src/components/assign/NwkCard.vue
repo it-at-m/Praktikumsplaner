@@ -29,7 +29,7 @@
                         </v-col>
                     </v-row>
                 </v-expansion-panel-title>
-                <v-expansion-panel-text>
+                <v-expansion-panel-text  v-if="hasDetails(nwk)">
                     <v-chip-group
                         active-class="primary--text"
                         column
@@ -91,7 +91,16 @@ function getNwkColor(nwk: Nwk): string {
 }
 </script>
 <style scoped>
-.v-expansion-panel--disabled {
-    color: var(--v-text-base) !important;
+.v-expansion-panels .v-expansion-panel--disabled {
+  color: #000000 !important;
+  background-color: #FFFFFF !important;
+  opacity: 1 !important;
+}
+
+.v-expansion-panels .v-expansion-panel--disabled .v-expansion-panel-title,
+.v-expansion-panels .v-expansion-panel--disabled .v-expansion-panel-text {
+  color: #000000 !important;
+  background-color: #FFFFFF !important;
+  opacity: 1 !important;
 }
 </style>

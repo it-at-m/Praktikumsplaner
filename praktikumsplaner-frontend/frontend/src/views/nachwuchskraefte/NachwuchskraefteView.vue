@@ -18,9 +18,10 @@
                 />
             </v-col>
         </v-row>
-        <v-row></v-row>
+        <v-row>
+          <span> Übersicht</span>
+        </v-row>
         <v-container class="box">
-            <span> Übersicht</span>
             <active-nwk-list></active-nwk-list>
         </v-container>
     </v-container>
