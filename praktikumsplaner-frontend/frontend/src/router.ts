@@ -8,6 +8,7 @@ import MeldungStudium from "@/views/praktikumsplaetze/MeldungStudium.vue";
 import assignView from "@/views/AssignView.vue";
 import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";
 import PraktikumsplaetzeView from "@/views/praktikumsplaetze/PraktikumsplaetzeView.vue";
+import TestView from "@/views/TestView.vue";
 
 Vue.use(Router);
 
@@ -70,6 +71,11 @@ export default new Router({
             path: "/zuweisung",
             name: "Zuweisung",
             component: assignView,
+        },
+        {
+            path: "/test",
+            name: "test",
+            component: TestView,
         },
         { path: "*", redirect: "/" }, //Fallback 2
     ],

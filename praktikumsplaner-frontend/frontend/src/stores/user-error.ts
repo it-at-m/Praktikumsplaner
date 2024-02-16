@@ -1,30 +1,27 @@
 import { defineStore } from "pinia";
 
-export interface ErrorState {
+export interface UserErrorState {
     title: string | undefined;
     message: string | undefined;
-    show: boolean;
+    visible: boolean;
 }
 
-export const useErrorStore = defineStore("error", {
-    state: (): ErrorState => ({
+export const useUserErrorStore = defineStore("user-error", {
+    state: (): UserErrorState => ({
         title: undefined,
         message: undefined,
-        show: false,
+        visible: false,
     }),
     getters: {},
     actions: {
-        showMessage(message: {
+        showUserError(message: {
             title?: string;
             message?: string;
             show?: boolean;
         }): void {
             this.title = message.title;
             this.message = message.message;
-            this.show = true;
-        },
-        updateShow(show: boolean): void {
-            this.show = show;
+            this.visible = true;
         },
     },
 });

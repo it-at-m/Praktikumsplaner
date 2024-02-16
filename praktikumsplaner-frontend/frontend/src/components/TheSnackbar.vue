@@ -9,11 +9,7 @@
             <v-col class="message"> {{ message }}</v-col>
             <v-col>
                 <v-btn
-                    v-if="
-                        backgroundColor === 'error' ||
-                        backgroundColor === 'warning' ||
-                        backgroundColor === 'info'
-                    "
+                    v-if="backgroundColor !== 'success'"
                     :color="btnTextColor"
                     text
                     @click="show = false"
@@ -26,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 
 const snackbarStore = useSnackbarStore();
@@ -35,14 +31,9 @@ const defaultTimeout = 5000;
 
 const show = ref(false);
 const timeout = ref(defaultTimeout);
-const message = ref("");
+const message = computed(() => snackbarStore.message ?? "");
 const backgroundColor = ref("info");
-const btnTextColor = ref("#DA8CFF");
-
-watch(
-    () => snackbarStore.message,
-    () => (message.value = snackbarStore.message ?? "")
-);
+const btnTextColor = ref("infoBtnText");
 
 watch(
     () => snackbarStore.level,
@@ -50,13 +41,13 @@ watch(
         backgroundColor.value = snackbarStore.level;
         if (backgroundColor.value === "error") {
             timeout.value = 0;
-            btnTextColor.value = "#96E6E9";
+            btnTextColor.value = "errorBtnText";
         } else if (backgroundColor.value === "warning") {
             timeout.value = defaultTimeout;
-            btnTextColor.value = "#F44336";
+            btnTextColor.value = "warningBtnText";
         } else if (backgroundColor.value === "info") {
             timeout.value = defaultTimeout;
-            btnTextColor.value = "#DA8CFF";
+            btnTextColor.value = "infoBtnText";
         } else {
             timeout.value = defaultTimeout;
         }

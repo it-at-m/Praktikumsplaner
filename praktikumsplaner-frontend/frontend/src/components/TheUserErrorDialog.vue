@@ -28,34 +28,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { useErrorStore } from "@/stores/error";
+import { ref, watch, computed } from "vue";
+import { useUserErrorStore } from "@/stores/user-error";
 
 const show = ref(false);
-const message = ref("");
-const title = ref("");
+const message = computed(() => errorStore.message ?? "");
+const title = computed(() => errorStore.title ?? "");
 
-const errorStore = useErrorStore();
-
-watch(
-    () => errorStore.title,
-    () => (title.value = errorStore.title ?? "")
-);
+const errorStore = useUserErrorStore();
 
 watch(
-    () => errorStore.message,
-    () => (message.value = errorStore.message ?? "")
-);
-
-watch(
-    () => errorStore.show,
+    () => errorStore.visible,
     () => {
-        if (errorStore.show) {
-            show.value = false;
-            setTimeout(() => {
-                show.value = true;
-                errorStore.show = false;
-            }, 100);
+        if (errorStore.visible) {
+            show.value = true;
+            errorStore.visible = false;
         }
     }
 );

@@ -1,6 +1,6 @@
 import { ApiError, Levels } from "@/api/Error";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { useErrorStore } from "@/stores/error";
+import { useUserErrorStore } from "@/stores/user-error";
 
 export default class FetchUtils {
     /**
@@ -106,7 +106,7 @@ export default class FetchUtils {
                     .then((result) => {
                         const decoder = new TextDecoder("utf-8");
                         const message = decoder.decode(result.value);
-                        useErrorStore().showMessage({
+                        useUserErrorStore().showUserError({
                             title: "Fehlerhafte Eingaben",
                             message: message,
                         });

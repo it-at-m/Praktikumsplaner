@@ -99,7 +99,7 @@ import TheSnackbar from "@/components/TheSnackbar.vue";
 import { UserService } from "@/api/UserService";
 import { useUserStore } from "@/stores/user";
 import "@/directives/security";
-import ErrorDialog from "@/components/TheErrorDialog.vue";
+import ErrorDialog from "@/components/TheUserErrorDialog.vue";
 
 const drawer = ref(true);
 const query = ref("");
