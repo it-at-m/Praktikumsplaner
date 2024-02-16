@@ -74,7 +74,6 @@
                             Akzeptieren
                         </v-btn>
                     </v-card-actions>
-                    {{ nwk }}
                 </v-card>
             </v-form>
         </v-dialog>
