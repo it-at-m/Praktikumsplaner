@@ -15,6 +15,7 @@ import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -87,5 +88,12 @@ public class PraktikumsstellenController {
             return praktikumsstellenService.unassignNwk(praktikumsstellenId);
         }
         return praktikumsstellenService.assignNwk(praktikumsstellenId, nwkId);
+    }
+
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @DeleteMapping("/{praktikumsstellenId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deletePratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId){
+
     }
 }

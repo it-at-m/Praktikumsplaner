@@ -133,6 +133,12 @@ public class PraktikumsstellenService {
         return getPraktikumsstellenGroupedByDienststelle(lastMeldezeitraumID);
     }
 
+    public void deletePraktikumsstelle(UUID praktikumsstellenId){
+        if(ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)){
+            ausbildungsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
+        }
+    }
+
     private TreeMap<String, List<PraktikumsstelleDto>> getPraktikumsstellenGroupedByDienststelle(UUID meldezeitraumID) {
         List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID).stream()
                 .map(praktikumsstellenMapper::toDto).toList();
