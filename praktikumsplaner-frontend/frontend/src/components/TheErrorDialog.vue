@@ -20,7 +20,7 @@
                     color="primary"
                     @click="close"
                 >
-                    Schliessen
+                    Schließen
                 </v-btn>
             </v-card-actions>
         </v-card>

@@ -2,18 +2,26 @@
     <v-snackbar
         id="snackbar"
         v-model="show"
-        :color="color"
+        :color="backgroundColor"
         :timeout="timeout"
     >
-        {{ message }}
-        <v-btn
-            v-if="color === 'error'"
-            color="primary"
-            text
-            @click="show = false"
-        >
-            Schließen
-        </v-btn>
+        <v-row class="snackbarContent">
+            <v-col class="message"> {{ message }}</v-col>
+            <v-col>
+                <v-btn
+                    v-if="
+                        backgroundColor === 'error' ||
+                        backgroundColor === 'warning' ||
+                        backgroundColor === 'info'
+                    "
+                    :color="btnTextColor"
+                    text
+                    @click="show = false"
+                >
+                    Schließen
+                </v-btn>
+            </v-col>
+        </v-row>
     </v-snackbar>
 </template>
 
@@ -28,7 +36,8 @@ const defaultTimeout = 5000;
 const show = ref(false);
 const timeout = ref(defaultTimeout);
 const message = ref("");
-const color = ref("info");
+const backgroundColor = ref("info");
+const btnTextColor = ref("#DA8CFF");
 
 watch(
     () => snackbarStore.message,
@@ -38,9 +47,16 @@ watch(
 watch(
     () => snackbarStore.level,
     () => {
-        color.value = snackbarStore.level;
-        if (color.value === "error") {
+        backgroundColor.value = snackbarStore.level;
+        if (backgroundColor.value === "error") {
             timeout.value = 0;
+            btnTextColor.value = "#96E6E9";
+        } else if (backgroundColor.value === "warning") {
+            timeout.value = defaultTimeout;
+            btnTextColor.value = "#F44336";
+        } else if (backgroundColor.value === "info") {
+            timeout.value = defaultTimeout;
+            btnTextColor.value = "#DA8CFF";
         } else {
             timeout.value = defaultTimeout;
         }
@@ -60,3 +76,12 @@ watch(
     }
 );
 </script>
+<style>
+.snackbarContent {
+    white-space: nowrap;
+    overflow: auto;
+}
+.message {
+    margin: 8px;
+}
+</style>
