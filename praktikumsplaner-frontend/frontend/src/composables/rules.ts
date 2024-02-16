@@ -11,7 +11,10 @@ export function useRules() {
 
     function fileRequiredRule(message = "Eine Datei ist erforderlich.") {
         return (value: FileList | null | undefined) => {
-            return (value !== null && value !== undefined && value.length > 0) || message;
+            return (
+                (value !== null && value !== undefined && value.length > 0) ||
+                message
+            );
         };
     }
 

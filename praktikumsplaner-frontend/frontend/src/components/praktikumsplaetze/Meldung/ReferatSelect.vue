@@ -12,8 +12,9 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { Referat } from "@/types/Referat";
+
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import { Referat } from "@/types/Referat";
 
 const props = defineProps<{
     value: Praktikumsstelle;

@@ -1,5 +1,5 @@
-import { API_BASE, EXPORT_BASE } from "@/constants";
 import FetchUtils from "@/api/FetchUtils";
+import { API_BASE, EXPORT_BASE } from "@/constants";
 
 export default {
     downloadExcelFile(): Promise<void> {

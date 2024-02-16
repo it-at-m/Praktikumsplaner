@@ -20,9 +20,10 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
-import { YesNoBoolean } from "@/types/YesNoBoolean";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import { YesNoBoolean } from "@/types/YesNoBoolean";
 
 const validationRules = useRules();
 

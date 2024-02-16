@@ -14,9 +14,10 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
-import { Studiengang } from "@/types/Studiengang";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import { Studiengang } from "@/types/Studiengang";
 
 const validationRules = useRules();
 

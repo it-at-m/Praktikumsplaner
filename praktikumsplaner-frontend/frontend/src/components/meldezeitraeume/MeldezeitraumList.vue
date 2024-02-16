@@ -41,8 +41,8 @@
 </template>
 
 <script setup lang="ts">
-import Meldezeitraum from "@/types/Meldezeitraum";
 import { useFormatter } from "@/composables/formatter";
+import Meldezeitraum from "@/types/Meldezeitraum";
 
 const props = defineProps<{
     value: Meldezeitraum[];

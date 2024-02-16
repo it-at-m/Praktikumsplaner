@@ -64,6 +64,4 @@ function close(): void {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -34,11 +34,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import Nwk from "@/types/Nwk";
+import mitt from "mitt";
+import { onMounted, ref } from "vue";
+
 import NwkService from "@/api/NwkService";
 import NwkUpdateDialog from "@/components/nachwuchskraefte/NwkUpdateDialog.vue";
-import mitt from "mitt";
+import Nwk from "@/types/Nwk";
 
 const nwks = ref<Nwk[]>([]);
 const loading = ref<boolean>(false);
@@ -68,8 +69,8 @@ function getSubtitle(nwk: Nwk): string {
 }
 
 type Events = {
-  nwkCreated: boolean
-}
+    nwkCreated: boolean;
+};
 
 const emitter = mitt<Events>();
 

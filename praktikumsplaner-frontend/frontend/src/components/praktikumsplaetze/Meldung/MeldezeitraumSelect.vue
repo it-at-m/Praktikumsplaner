@@ -23,9 +23,10 @@
     </v-select>
 </template>
 <script setup lang="ts">
-import Meldezeitraum from "@/types/Meldezeitraum";
-import { useFormatter } from "@/composables/formatter";
 import { computed } from "vue";
+
+import { useFormatter } from "@/composables/formatter";
+import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const props = defineProps<{

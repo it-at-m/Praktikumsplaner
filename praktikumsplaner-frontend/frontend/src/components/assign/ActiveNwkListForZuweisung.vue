@@ -1,21 +1,22 @@
 <template>
-  <v-list v-model:selected="selectedNwks">
-    <v-list-item
-        v-for="nwk in props.value"
-        :key="nwk.id"
-        :value="nwk"
-        draggable="true"
-        @dragstart="dragStart($event, nwk)"
-    >
-      <nwk-card :nwk="nwk" />
-    </v-list-item>
-  </v-list>
+    <v-list v-model:selected="selectedNwks">
+        <v-list-item
+            v-for="nwk in props.value"
+            :key="nwk.id"
+            :value="nwk"
+            draggable="true"
+            @dragstart="dragStart($event, nwk)"
+        >
+            <nwk-card :nwk="nwk" />
+        </v-list-item>
+    </v-list>
 </template>
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
-import Nwk from "@/types/Nwk";
-import NwkCard from "@/components/assign/NwkCard.vue";
 import mitt from "mitt";
+import { onMounted, onUnmounted, ref } from "vue";
+
+import NwkCard from "@/components/assign/NwkCard.vue";
+import Nwk from "@/types/Nwk";
 
 const props = defineProps<{
     value: Nwk[];
@@ -28,9 +29,9 @@ const emits = defineEmits<{
 const selectedNwks = ref<Nwk[]>([]);
 
 type Events = {
-  assignedNwk: Nwk;
-  unassignedNwk: Nwk;
-}
+    assignedNwk: Nwk;
+    unassignedNwk: Nwk;
+};
 
 const emitter = mitt<Events>();
 
@@ -39,8 +40,8 @@ onMounted(() => {
     emitter.on("unassignedNwk", addNwkToList);
 });
 onUnmounted(() => {
-  emitter.off("assignedNwk", removeNwkFromList);
-  emitter.off("unassignedNwk", addNwkToList);
+    emitter.off("assignedNwk", removeNwkFromList);
+    emitter.off("unassignedNwk", addNwkToList);
 });
 function dragStart(event: DragEvent, nwk: Nwk) {
     event.dataTransfer?.setData("application/json", JSON.stringify(nwk));

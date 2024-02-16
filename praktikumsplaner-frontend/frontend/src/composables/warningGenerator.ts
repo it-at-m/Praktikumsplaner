@@ -1,6 +1,6 @@
-import Warning from "@/types/Warning";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Nwk from "@/types/Nwk";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
+import Warning from "@/types/Warning";
 
 export function useWarnings() {
     function getBeforeAssignmentWarnings(

@@ -1,12 +1,13 @@
+import type { Wrapper } from "@vue/test-utils";
+import type { DefineComponent } from "vue";
+
+import { ExtractDefaultPropTypes, ExtractPropTypes } from "vue";
 import {
-    ComputedOptions,
     ComponentOptionsMixin,
+    ComputedOptions,
     MethodOptions,
 } from "vue/types/v3-component-options";
-import { ExtractPropTypes, ExtractDefaultPropTypes } from "vue";
 import { EmitsOptions } from "vue/types/v3-setup-context";
-import type { DefineComponent } from "vue";
-import type { Wrapper } from "@vue/test-utils";
 
 // This method fixes the issue with the frontend tests in this pipeline: https://github.com/it-at-m/Praktikumsplaner/actions/runs/6655108043/job/18084611498
 // The solution is inspired by the comments in this issue: https://github.com/vuejs/vue-test-utils/issues/2026#issuecomment-1429963862
@@ -22,7 +23,7 @@ declare module "@vue/test-utils" {
         E extends EmitsOptions = Record<string, any>,
         EE extends string = string,
         Props = Readonly<ExtractPropTypes<PropsOrPropOptions>>,
-        Defaults extends object = ExtractDefaultPropTypes<PropsOrPropOptions>
+        Defaults extends object = ExtractDefaultPropTypes<PropsOrPropOptions>,
     >(
         component: DefineComponent<
             PropsOrPropOptions,
@@ -52,7 +53,7 @@ declare module "@vue/test-utils" {
         E extends EmitsOptions = Record<string, any>,
         EE extends string = string,
         Props = Readonly<ExtractPropTypes<PropsOrPropOptions>>,
-        Defaults extends object = ExtractDefaultPropTypes<PropsOrPropOptions>
+        Defaults extends object = ExtractDefaultPropTypes<PropsOrPropOptions>,
     >(
         component: DefineComponent<
             PropsOrPropOptions,

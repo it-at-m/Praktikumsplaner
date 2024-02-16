@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
 import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
 import Praktikumsstelle from "@/types/Praktikumsstelle";

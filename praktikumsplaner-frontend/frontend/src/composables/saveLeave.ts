@@ -9,9 +9,9 @@
  *
  * Mit dem Aufruf von `leave()` oder `cancel()` kann die Entscheidung des Nutzers ausgeführt werden.
  */
-import { onBeforeRouteLeave } from "vue-router/composables";
-import { NavigationGuardNext, Route } from "vue-router";
 import { ref } from "vue";
+import { NavigationGuardNext, Route } from "vue-router";
+import { onBeforeRouteLeave } from "vue-router/composables";
 
 export function useSaveLeave(isDirty: () => boolean) {
     const saveLeaveDialogTitle = ref("Ungespeicherte Änderungen");

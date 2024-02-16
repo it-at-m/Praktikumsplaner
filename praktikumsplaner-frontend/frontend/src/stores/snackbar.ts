@@ -1,5 +1,6 @@
-import { Levels } from "@/api/Error";
 import { defineStore } from "pinia";
+
+import { Levels } from "@/api/Error";
 
 export interface SnackbarState {
     message: string | undefined;

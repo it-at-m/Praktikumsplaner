@@ -51,19 +51,20 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import PraktikumsstellenListZuweisung from "@/components/assign/PraktikumsstellenListZuweisung.vue";
-import ActiveNwkListForZuweisung from "@/components/assign/ActiveNwkListForZuweisung.vue";
-import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
-import PageTitle from "@/components/common/PageTitle.vue";
 import { onMounted, ref } from "vue";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
-import WarningDialog from "@/components/common/WarningDialog.vue";
-import ExcelExport from "@/components/assign/ExcelExport.vue";
-import Nwk from "@/types/Nwk";
-import Warning from "@/types/Warning";
+
 import NwkService from "@/api/NwkService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import ActiveNwkListForZuweisung from "@/components/assign/ActiveNwkListForZuweisung.vue";
+import ExcelExport from "@/components/assign/ExcelExport.vue";
+import PraktikumsstellenListZuweisung from "@/components/assign/PraktikumsstellenListZuweisung.vue";
+import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
+import PageTitle from "@/components/common/PageTitle.vue";
+import WarningDialog from "@/components/common/WarningDialog.vue";
 import { useWarnings } from "@/composables/warningGenerator";
+import Nwk from "@/types/Nwk";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
+import Warning from "@/types/Warning";
 
 const warningsGenerator = useWarnings();
 

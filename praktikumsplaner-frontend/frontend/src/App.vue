@@ -10,7 +10,7 @@
                     <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
                     <router-link to="/">
                         <v-toolbar-title class="font-weight-bold">
-                          <span class="text-white">Praktikumsplaner</span>
+                            <span class="text-white">Praktikumsplaner</span>
                         </v-toolbar-title>
                     </router-link>
                 </v-col>
@@ -26,21 +26,19 @@
                 </v-col>
             </v-row>
         </v-app-bar>
-        <v-navigation-drawer
-            v-model="drawer"
-        >
+        <v-navigation-drawer v-model="drawer">
             <v-list nav>
                 <v-list-item
                     v-if="security.isAusbildungsleitung()"
                     :to="{ path: '/nachwuchskraefte' }"
                 >
-                  <v-list-item-title>Nachwuchskräfte</v-list-item-title>
+                    <v-list-item-title>Nachwuchskräfte</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                     v-if="security.isAusbildungsleitung()"
                     :to="{ path: '/meldezeitraum' }"
                 >
-                  <v-list-item-title>Meldezeitraum</v-list-item-title>
+                    <v-list-item-title>Meldezeitraum</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                     v-if="
@@ -51,36 +49,37 @@
                     "
                     :to="{ path: '/praktikumsplaetze' }"
                 >
-                  <v-list-item-title>Praktikumsplätze</v-list-item-title>
+                    <v-list-item-title>Praktikumsplätze</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                     v-if="security.isAusbildungsleitung()"
                     :to="{ path: '/zuweisung' }"
                 >
-                  <v-list-item-title>Zuweisung</v-list-item-title>
+                    <v-list-item-title>Zuweisung</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
         <v-main>
             <v-container fluid>
-              <router-view v-slot="{ Component }">
-                <v-fade-transition mode="out-in">
-                  <component :is="Component" />
-                </v-fade-transition>
-              </router-view>
+                <router-view v-slot="{ Component }">
+                    <v-fade-transition mode="out-in">
+                        <component :is="Component" />
+                    </v-fade-transition>
+                </router-view>
             </v-container>
         </v-main>
     </v-app>
 </template>
 
 <script setup lang="ts">
-import InfoService from "@/api/InfoService";
 import { onBeforeMount, onMounted, ref } from "vue";
-import { useSnackbarStore } from "@/stores/snackbar";
-import TheSnackbar from "@/components/TheSnackbar.vue";
+
+import InfoService from "@/api/InfoService";
 import { UserService } from "@/api/UserService";
-import { useUserStore } from "@/stores/user";
+import TheSnackbar from "@/components/TheSnackbar.vue";
 import { useSecurity } from "@/composables/security";
+import { useSnackbarStore } from "@/stores/snackbar";
+import { useUserStore } from "@/stores/user";
 
 const drawer = ref(true);
 const userStore = useUserStore();
@@ -104,5 +103,4 @@ onMounted(() => {
 });
 </script>
 
-<style>
-</style>
+<style></style>

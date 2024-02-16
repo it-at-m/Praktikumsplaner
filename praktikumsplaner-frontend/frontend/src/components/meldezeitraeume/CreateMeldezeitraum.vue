@@ -56,10 +56,11 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import Meldezeitraum from "@/types/Meldezeitraum";
+
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import ZeitraumPicker from "@/components/meldezeitraeume/ZeitraumPicker.vue";
 import { useRules } from "@/composables/rules";
+import Meldezeitraum from "@/types/Meldezeitraum";
 import Zeitraum from "@/types/Zeitraum";
 
 const visible = ref(false);

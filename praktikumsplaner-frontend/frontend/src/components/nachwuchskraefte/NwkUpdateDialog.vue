@@ -102,12 +102,13 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+
 import NwkService from "@/api/NwkService";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
+import { useRules } from "@/composables/rules";
+import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
 import Nwk from "@/types/Nwk";
 import { Studiengang } from "@/types/Studiengang";
-import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
-import { useRules } from "@/composables/rules";
-import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
@@ -172,6 +173,4 @@ function updateNwk() {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

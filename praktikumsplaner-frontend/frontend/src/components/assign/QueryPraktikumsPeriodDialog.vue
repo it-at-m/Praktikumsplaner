@@ -94,7 +94,8 @@
                                             dialogtitle="Bestätigung des Mailversands"
                                             @no="confirmSendMailDialog = false"
                                             @yes="sendMails"
-                                         value></yes-no-dialog>
+                                            value
+                                        ></yes-no-dialog>
                                         <undelivered-mails-dialog
                                             :faulty-stellen="faultyStellen"
                                             :show-undelivered-mails-dialog="
@@ -115,14 +116,15 @@
     </div>
 </template>
 <script setup lang="ts">
-import ZeitraumPicker from "@/components/meldezeitraeume/ZeitraumPicker.vue";
 import { ref } from "vue";
-import YesNoDialog from "@/components/common/YesNoDialog.vue";
-import Zeitraum from "@/types/Zeitraum";
+
 import MailService from "@/api/MailService";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
 import UndeliveredMailsDialog from "@/components/assign/UndeliveredMailsDialog.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
+import YesNoDialog from "@/components/common/YesNoDialog.vue";
+import ZeitraumPicker from "@/components/meldezeitraeume/ZeitraumPicker.vue";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
+import Zeitraum from "@/types/Zeitraum";
 
 const form = ref<HTMLFormElement>();
 

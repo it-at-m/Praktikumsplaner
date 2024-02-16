@@ -53,8 +53,9 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
+
 import { useTextGenerator } from "@/composables/textGenerator";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const props = defineProps<{
     value: Praktikumsstelle;

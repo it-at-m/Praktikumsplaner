@@ -10,7 +10,8 @@
             :dialogtext="warningDialogText"
             @no="resetWarningDialog"
             @yes="assignNwk"
-         value></yes-no-dialog-without-activator>
+            value
+        ></yes-no-dialog-without-activator>
 
         <yes-no-dialog-without-activator
             v-model="unassignConfirmDialog"
@@ -18,7 +19,8 @@
             :dialogtext="unassignDialogContent"
             @no="resetUnassign"
             @yes="unassignNwk"
-         value></yes-no-dialog-without-activator>
+            value
+        ></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
             :class="{
@@ -64,11 +66,11 @@
                     }}</v-chip
                 ></v-col
             >
-          <v-btn
-              :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-              class="icon-bottom-right-position"
-              @click.stop="show = !show"
-          ></v-btn>
+            <v-btn
+                :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+                class="icon-bottom-right-position"
+                @click.stop="show = !show"
+            ></v-btn>
             <v-expand-transition>
                 <div v-show="show">
                     <v-divider></v-divider>
@@ -84,15 +86,16 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
+
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
-import emitter from "@/stores/eventBus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
-import Nwk from "@/types/Nwk";
-import { findStudiengangColorByValue } from "@/types/Studiengang";
-import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
-import { useWarnings } from "@/composables/warningGenerator";
 import { useTextGenerator } from "@/composables/textGenerator";
+import { useWarnings } from "@/composables/warningGenerator";
+import emitter from "@/stores/eventBus";
+import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
+import Nwk from "@/types/Nwk";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
+import { findStudiengangColorByValue } from "@/types/Studiengang";
 
 const props = defineProps<{
     value: Praktikumsstelle;

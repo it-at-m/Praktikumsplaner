@@ -1,6 +1,6 @@
+import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { valueToNameStudiensemester } from "@/types/Studiensemester";
-import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
 
 export function useTextGenerator() {
     function getPraktikumsstellenCardText(

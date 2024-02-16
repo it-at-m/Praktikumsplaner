@@ -64,14 +64,15 @@
 </template>
 
 <script setup lang="ts">
-import CreateMeldezeitraum from "@/components/meldezeitraeume/CreateMeldezeitraum.vue";
-import PageTitle from "@/components/common/PageTitle.vue";
 import { onBeforeMount, onMounted, ref } from "vue";
+
 import MeldezeitraumService from "@/api/MeldezeitraumService";
-import Meldezeitraum from "@/types/Meldezeitraum";
+import { UserService } from "@/api/UserService";
+import PageTitle from "@/components/common/PageTitle.vue";
+import CreateMeldezeitraum from "@/components/meldezeitraeume/CreateMeldezeitraum.vue";
 import MeldezeitraumList from "@/components/meldezeitraeume/MeldezeitraumList.vue";
 import { useUserStore } from "@/stores/user";
-import { UserService } from "@/api/UserService";
+import Meldezeitraum from "@/types/Meldezeitraum";
 
 const userService = new UserService();
 const userStore = useUserStore();
@@ -113,4 +114,3 @@ function reloadMeldezeitraeume() {
         });
 }
 </script>
-

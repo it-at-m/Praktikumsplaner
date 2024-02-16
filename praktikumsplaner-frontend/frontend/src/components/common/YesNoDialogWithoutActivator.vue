@@ -36,6 +36,7 @@
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
+
 const props = defineProps<{
     dialogtitle: string;
     dialogtext: string;
@@ -64,6 +65,4 @@ function yes(): void {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

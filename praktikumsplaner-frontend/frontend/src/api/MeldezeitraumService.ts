@@ -1,8 +1,8 @@
+import { Levels } from "@/api/Error";
 import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, MELDEZEITRAUM_BASE } from "@/constants";
-import Meldezeitraum from "@/types/Meldezeitraum";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/Error";
+import Meldezeitraum from "@/types/Meldezeitraum";
 
 export default {
     create(meldezeitraum: Meldezeitraum): Promise<Meldezeitraum> {

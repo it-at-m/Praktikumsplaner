@@ -31,6 +31,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
 import Zeitraum from "@/types/Zeitraum";
 

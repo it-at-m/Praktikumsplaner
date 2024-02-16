@@ -13,18 +13,14 @@
                     <v-expansion-panel-text>
                         <v-list v-model:selected="selectedPraktikumsstellen">
                             <v-list-item>
-                              v-for="praktikumsstelle in props.praktikumsstellenMap.get(
-                                abteilung
-                              )"
-
-                              :key="praktikumsstelle.id"
-                              :ripple="false"
-                              >
-                              <PraktikumsstelleCard
-                                  :key="praktikumsstelle.assignedNwk?.id"
-                                  :value="praktikumsstelle"
-                                  :praktikumsstelle="praktikumsstelle"
-                              ></PraktikumsstelleCard>
+                                v-for="praktikumsstelle in
+                                props.praktikumsstellenMap.get( abteilung )"
+                                :key="praktikumsstelle.id" :ripple="false" >
+                                <PraktikumsstelleCard
+                                    :key="praktikumsstelle.assignedNwk?.id"
+                                    :value="praktikumsstelle"
+                                    :praktikumsstelle="praktikumsstelle"
+                                ></PraktikumsstelleCard>
                             </v-list-item>
                         </v-list>
                     </v-expansion-panel-text>
@@ -34,9 +30,10 @@
     </div>
 </template>
 <script setup lang="ts">
-import Praktikumsstelle from "@/types/Praktikumsstelle";
-import PraktikumsstelleCard from "@/components/assign/PraktikumsstelleCardZuweisung.vue";
 import { ref } from "vue";
+
+import PraktikumsstelleCard from "@/components/assign/PraktikumsstelleCardZuweisung.vue";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const props = defineProps<{
     praktikumsstellenMap: Map<string, Praktikumsstelle[]>;

@@ -65,13 +65,14 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useSnackbarStore } from "@/stores/snackbar";
+
 import { Levels } from "@/api/Error";
 import NwkService from "@/api/NwkService";
-import { useRules } from "@/composables/rules";
 import ErrorDialog from "@/components/common/ErrorDialog.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
-import emitter from "@/stores/eventBus"
+import { useRules } from "@/composables/rules";
+import emitter from "@/stores/eventBus";
+import { useSnackbarStore } from "@/stores/snackbar";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
@@ -101,8 +102,7 @@ function cancel() {
     form.value?.reset();
 }
 function uploadFile() {
-
-    if (!form.value?.validate() || !excelDatei.value ) return;
+    if (!form.value?.validate() || !excelDatei.value) return;
     visible.value = false;
     loading.value = true;
     NwkService.uploadExcelFile(excelDatei.value[0])
@@ -128,5 +128,4 @@ function showError() {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

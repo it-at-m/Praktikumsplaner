@@ -55,6 +55,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
 /**
  * Der YesNo-Dialog ist ein generischer Dialog zur binären Abfrage beim Nutzer.
  * So kann z.B. die Bestätigung für das Löschen einer Entität damit realisiert werden.

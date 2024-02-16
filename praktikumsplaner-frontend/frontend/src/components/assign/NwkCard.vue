@@ -50,12 +50,13 @@
     </v-card>
 </template>
 <script setup lang="ts">
-import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
-import Nwk, { hasDetails } from "@/types/Nwk";
 import { computed } from "vue";
-import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
-import { findStudiengangColorByValue } from "@/types/Studiengang";
+
+import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
 import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
+import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
+import Nwk, { hasDetails } from "@/types/Nwk";
+import { findStudiengangColorByValue } from "@/types/Studiengang";
 
 const props = defineProps<{
     nwk: Nwk;

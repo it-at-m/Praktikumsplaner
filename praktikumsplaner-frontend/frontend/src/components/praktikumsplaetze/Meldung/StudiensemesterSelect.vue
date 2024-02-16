@@ -59,10 +59,11 @@
     </v-select>
 </template>
 <script setup lang="ts">
+import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { Studiensemester } from "@/types/Studiensemester";
-import { computed } from "vue";
 
 const validationRules = useRules();
 
