@@ -82,7 +82,7 @@ export default class FetchUtils {
      * - Reload der App bei Session-Timeout --> HTTP 3xx
      * - Fehler bei fehlerhaften Eingaben --> HTTP 4xx
      * - Fehler bei Serverproblemen --> HTTP 5xx
-     * - Fehler bei unbekannten Problemen --> HTTP 1xx, 2xx, 6xx
+     * - Fehler bei unbekannten Problemen --> alle anderen error Codes
      *
      * @param response Die response aus fetch-Befehl die geprüft werden soll.
      * @param errorMessage Die Fehlermeldung, welche bei einem HTTP-Code != 2xx angezeigt werden soll.

@@ -15,7 +15,7 @@ export default {
             FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Praktikumsstelle erfolgreich angelegt",
+                    message: "☑ Praktikumsstelle erfolgreich gemeldet",
                     level: Levels.SUCCESS,
                 });
                 return response.json();
@@ -32,7 +32,7 @@ export default {
             FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Praktikumsstelle erfolgreich angelegt",
+                    message: "☑ Praktikumsstelle erfolgreich gemeldet",
                     level: Levels.SUCCESS,
                 });
                 return response.json();
@@ -49,7 +49,7 @@ export default {
             FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Praktikumsstelle erfolgreich angelegt",
+                    message: "☑ Praktikumsstelle erfolgreich gemeldet",
                     level: Levels.SUCCESS,
                 });
                 return response.json();
@@ -66,7 +66,7 @@ export default {
             FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Praktikumsstelle erfolgreich angelegt",
+                    message: "☑ Praktikumsstelle erfolgreich gemeldet",
                     level: Levels.SUCCESS,
                 });
                 return response.json();

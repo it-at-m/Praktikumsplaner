@@ -49,7 +49,7 @@ public class MeldezeitraumController {
         } else if (period != null && period.equalsIgnoreCase("future")) {
             return meldezeitraumService.getUpcomingMeldezeitraeume();
         } else if (period != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wert '" + period + "' für Parameter ist nicht unterstützt.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wert '" + period + "' für Parameter 'period' ist nicht unterstützt.");
         }
         return meldezeitraumService.getAllMeldezeitraeume();
     }
