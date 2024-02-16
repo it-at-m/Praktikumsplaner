@@ -72,6 +72,20 @@ export default class FetchUtils {
             redirect: "manual",
         };
     }
+    static getDELETEConfig(body: any): RequestInit {
+        const headers = FetchUtils.getHeaders();
+        if (body.version !== undefined) {
+            headers.append("If-Match", body.version);
+        }
+        return {
+            method: "DELETE",
+            body: this.getBody(body),
+            headers,
+            mode: "cors",
+            credentials: this.getCredentials(),
+            redirect: "manual",
+        };
+    }
 
     /**
      * Deckt das Default-Handling einer Response ab. Dazu zählt:
