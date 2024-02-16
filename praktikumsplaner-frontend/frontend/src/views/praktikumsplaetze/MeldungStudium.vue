@@ -180,6 +180,9 @@
                 </v-container>
             </v-form>
         </v-container>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
     </v-container>
 </template>
 
@@ -208,6 +211,7 @@ import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/Ausbilde
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
 import SemesterSelect from "@/components/praktikumsplaetze/Meldung/StudiensemesterSelect.vue";
 import StudienrichtungSelect from "@/components/praktikumsplaetze/Meldung/StudienrichtungSelect.vue";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -216,6 +220,7 @@ const praktikumsstelle = ref<Praktikumsstelle>(
 );
 const isAusbildungsleitung = ref<boolean>(false);
 const loadingSite = ref<boolean>(true);
+const loading = ref<boolean>(false);
 const userStore = useUserStore();
 
 const form = ref<HTMLFormElement>();
@@ -275,6 +280,7 @@ function resetForm() {
 
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
+    loading.value = true;
     if (
         userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
         APP_SECURITY !== "true"
@@ -282,12 +288,14 @@ function uploadPraktikumsstelle() {
         MeldungService.uploadStudiumsPraktikumsstelleWithMeldezeitraum(
             praktikumsstelle.value
         ).finally(() => {
+            loading.value = false;
             resetForm();
         });
     } else {
         MeldungService.uploadStudiumsPraktikumsstelle(
             praktikumsstelle.value
         ).finally(() => {
+            loading.value = false;
             resetForm();
         });
     }

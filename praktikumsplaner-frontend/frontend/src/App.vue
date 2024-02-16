@@ -15,6 +15,14 @@
                 >
                     <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
                     <router-link to="/">
+                        <v-img
+                            max-height="50"
+                            max-width="50"
+                            contain
+                            src="src/assets/logo.png"
+                        ></v-img>
+                    </router-link>
+                    <router-link to="/">
                         <v-toolbar-title class="white--text">
                             Praktikumsplaner</v-toolbar-title
                         >

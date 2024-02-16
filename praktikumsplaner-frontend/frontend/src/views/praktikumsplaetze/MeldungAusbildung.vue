@@ -186,6 +186,9 @@
                 </v-container>
             </v-form>
         </v-container>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
     </v-container>
 </template>
 
@@ -216,6 +219,7 @@ import AusbildungsJahrSelect from "@/components/praktikumsplaetze/Meldung/Ausbil
 import AusbildungsrichtungSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsrichtungSelect.vue";
 import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/ProjektarbeitRadioGroup.vue";
 import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -224,6 +228,7 @@ const praktikumsstelle = ref<Praktikumsstelle>(
 );
 const isAusbildungsleitung = ref<boolean>(false);
 const loadingSite = ref<boolean>(true);
+const loading = ref<boolean>(false);
 const userStore = useUserStore();
 const form = ref<HTMLFormElement>();
 const meldezeitraeume = computed(() => {
@@ -281,6 +286,7 @@ function resetForm() {
 }
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
+    loading.value = true;
     if (
         userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
         APP_SECURITY !== "true"
@@ -288,12 +294,14 @@ function uploadPraktikumsstelle() {
         MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
             praktikumsstelle.value
         ).finally(() => {
+            loading.value = false;
             resetForm();
         });
     } else {
         MeldungService.uploadAusbildungsPraktikumsstelle(
             praktikumsstelle.value
         ).finally(() => {
+            loading.value = false;
             resetForm();
         });
     }
