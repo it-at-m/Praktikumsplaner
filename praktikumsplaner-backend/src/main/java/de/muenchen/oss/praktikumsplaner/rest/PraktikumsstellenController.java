@@ -93,7 +93,7 @@ public class PraktikumsstellenController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @DeleteMapping("/{praktikumsstellenId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deletePratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId){
+    public void deletePratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId) {
         praktikumsstellenService.deletePraktikumsstelle(praktikumsstellenId);
     }
 }

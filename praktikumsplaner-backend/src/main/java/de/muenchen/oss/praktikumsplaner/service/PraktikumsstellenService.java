@@ -133,10 +133,10 @@ public class PraktikumsstellenService {
         return getPraktikumsstellenGroupedByDienststelle(lastMeldezeitraumID);
     }
 
-    public void deletePraktikumsstelle(UUID praktikumsstellenId){
-        if(ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)){
+    public void deletePraktikumsstelle(UUID praktikumsstellenId) {
+        if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             ausbildungsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
-        }else if(studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)){
+        } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             studiumsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
         }
     }
