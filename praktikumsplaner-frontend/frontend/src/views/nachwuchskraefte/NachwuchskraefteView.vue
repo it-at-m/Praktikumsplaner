@@ -10,22 +10,28 @@
                 <excel-import-nwk></excel-import-nwk>
             </v-col>
             <v-col>
-                <NwkCreateDialog></NwkCreateDialog>
+                <NwkCreateDialog @nwkCreated="created"></NwkCreateDialog>
             </v-col>
         </v-row>
         <v-row></v-row>
         <v-container class="box">
             <span> Übersicht</span>
-            <active-nwk-list></active-nwk-list>
+            <active-nwk-list ref="nwkList"></active-nwk-list>
         </v-container>
     </v-container>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import ActiveNwkList from "@/components/nachwuchskraefte/ActiveNwkList.vue";
 import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
+
+const nwkList = ref();
+function created() {
+    nwkList.value.loadAllActiveNwks();
+}
 </script>
 
 <style scoped>

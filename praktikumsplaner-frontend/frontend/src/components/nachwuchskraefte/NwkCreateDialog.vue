@@ -62,40 +62,9 @@
                             </v-col>
                         </v-row>
                         <v-row>
-                            <v-col>
-                                <v-list-item>
-                                    <v-select
-                                        v-model="nwk.studiengang"
-                                        label="Studienrichtung"
-                                        :items="Studiengang"
-                                        item-value="value"
-                                        item-text="name"
-                                        outlined
-                                        clearable
-                                        :rules="isStudiumOrAusbildungRule"
-                                        @click:clear="
-                                            nwk.studiengang = undefined
-                                        "
-                                    ></v-select>
-                                </v-list-item>
-                            </v-col>
-                            <v-col>
-                                <v-list-item>
-                                    <v-select
-                                        v-model="nwk.ausbildungsrichtung"
-                                        label="Ausbildungsrichtung"
-                                        :items="Ausbildungsrichtung"
-                                        item-value="value"
-                                        item-text="name"
-                                        outlined
-                                        clearable
-                                        :rules="isStudiumOrAusbildungRule"
-                                        @click:clear="
-                                            nwk.ausbildungsrichtung = undefined
-                                        "
-                                    ></v-select>
-                                </v-list-item>
-                            </v-col>
+                            <StudienrichtungOrAusbildungsrichtungSelect
+                                :nwk="nwk"
+                            ></StudienrichtungOrAusbildungsrichtungSelect>
                         </v-row>
                     </v-list>
                     <v-card-actions>
@@ -135,6 +104,7 @@ import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
 import NwkCreate from "@/types/NwkCreate";
 import FetchUtils from "@/api/FetchUtils";
 import VorlesungstageSelector from "@/components/nachwuchskraefte/VorlesungstageSelect.vue";
+import StudienrichtungOrAusbildungsrichtungSelect from "@/components/common/StudienrichtungOrAusbildungsrichtungSelect.vue";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
@@ -161,18 +131,8 @@ const jahrgangRule = [
 
 const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
 
-const isStudiumOrAusbildungRule = computed(() => {
-    return [
-        (nwk.value.studiengang != undefined &&
-            nwk.value.ausbildungsrichtung == undefined) ||
-            (nwk.value.studiengang == undefined &&
-                nwk.value.ausbildungsrichtung != undefined) ||
-            "Es muss eine Studienrichtung oder eine Ausbildungsrichtung angegeben werden.",
-    ];
-});
-
 const emits = defineEmits<{
-    (e: "updated"): void;
+    (e: "nwkCreated"): void;
 }>();
 
 function cancel() {
@@ -185,13 +145,10 @@ function saveNwk() {
     }
     loading.value = true;
     cancel();
-    NwkService.saveNwk(nwk.value)
-        .then(() => {
-            emits("updated");
-        })
-        .finally(() => {
-            loading.value = false;
-        });
+    NwkService.saveNwk(nwk.value).finally(() => {
+        loading.value = false;
+        emits("nwkCreated");
+    });
 }
 </script>
 
