@@ -1,66 +1,50 @@
 <template>
-    <div>
-        <v-dialog
-            v-model="visible"
-            persistent
-            max-width="550"
-        >
-            <template #activator="{ props }">
-                <v-btn
-                    prepend-icon="mdi-tray-arrow-up"
-                    text="Datei hochladen"
-                    color="primary"
-                    v-bind="props"
-                />
-            </template>
-            <v-form ref="form">
-                <v-card>
-                    <v-card-title class="text-h5 font-weight-bold"
-                        >Datei hochladen</v-card-title
-                    >
-                    <v-list>
-                        <v-list-item>
-                            <v-file-input
-                                v-model="excelDatei"
-                                :accept="excelFormat"
-                                :rules="rules"
-                                label="Datei auswählen"
-                                prepend-icon="mdi-tray-arrow-up"
-                            >
-                            </v-file-input>
-                        </v-list-item>
-                    </v-list>
-                    <v-card-actions>
-                        <v-spacer />
-                        <v-btn
-                            color="primary"
-                            outlined
-                            @click="cancel()"
-                        >
-                            Abbrechen
-                        </v-btn>
-                        <v-btn
-                            color="primary"
-                            @click="uploadFile()"
-                        >
-                            Hochladen
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-form>
-        </v-dialog>
-        <Error-dialog
-            :dialogtext="errorDialogText"
-            :dialogtitle="errorDialogTitle"
-            icontext="mdi mdi-alert-octagon-outline"
-            iconcolor="red"
-            :value="errorDialog"
-            @close="errorDialog = false"
-        ></Error-dialog>
-        <progress-circular-overlay
-            :loading="loading"
-        ></progress-circular-overlay>
-    </div>
+  <div>
+    <v-btn
+        prepend-icon="mdi-tray-arrow-up"
+        color="primary"
+        @click="visible = true"
+    >
+      Datei Hochladen
+    </v-btn>
+    <v-dialog v-model="visible" persistent max-width="550">
+      <v-form ref="form">
+        <v-card>
+          <v-card-title class="text-h5 font-weight-bold">
+            Datei hochladen
+          </v-card-title>
+          <v-card-text>
+            <v-file-input
+                v-model="file"
+                :accept="excelFormat"
+                :rules="rules"
+                label="Datei auswählen"
+                prepend-icon="mdi-tray-arrow-up"
+            ></v-file-input>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn color="primary" outlined @click="cancel()">
+              Abbrechen
+            </v-btn>
+            <v-btn color="primary" @click="uploadFile()">
+              Hochladen
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-form>
+    </v-dialog>
+
+    <Error-dialog
+        :dialogtext="errorDialogText"
+        :dialogtitle="errorDialogTitle"
+        icontext="mdi mdi-alert-octagon-outline"
+        iconcolor="red"
+        :value="errorDialog"
+        @close="errorDialog = false"
+    ></Error-dialog>
+    <progress-circular-overlay :loading="loading" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -76,7 +60,7 @@ import { useSnackbarStore } from "@/stores/snackbar";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
-const excelDatei = ref<File[]>();
+const file = ref<File[]>();
 const form = ref<HTMLFormElement>();
 const snackbarStore = useSnackbarStore();
 const excelFormat =
@@ -102,10 +86,10 @@ function cancel() {
     form.value?.reset();
 }
 function uploadFile() {
-    if (!form.value?.validate() || !excelDatei.value) return;
+    if (!form.value?.validate() || !file.value) return;
     visible.value = false;
     loading.value = true;
-    NwkService.uploadExcelFile(excelDatei.value[0])
+    NwkService.uploadExcelFile(file.value[0])
         .then(() => {
             snackbarStore.showMessage({
                 message: "Nachwuchskräfte erfolgreich angelegt.",
@@ -119,6 +103,7 @@ function uploadFile() {
         .finally(() => {
             loading.value = false;
             form.value?.reset();
+            file.value = []
         });
 }
 

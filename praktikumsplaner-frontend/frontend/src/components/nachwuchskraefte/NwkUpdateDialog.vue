@@ -10,10 +10,8 @@
                     color="primary"
                     v-on="on"
                     prepend-icon="mdi-pencil-outline"
-                    text="Bearbeiten"
                     variant="outlined"
-                >
-                </v-btn>
+                >Bearbeiten</v-btn>
             </template>
             <v-form ref="form">
                 <v-card>

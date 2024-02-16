@@ -14,12 +14,8 @@
                     prepend-icon="mdi-plus"
                     disabled
                     class="primary"
-                    text="Hinzufügen"
-                />
+                >Hinzufügen</v-btn>
             </v-col>
-        </v-row>
-        <v-row>
-          <span> Übersicht</span>
         </v-row>
         <v-container class="box">
             <active-nwk-list></active-nwk-list>
@@ -35,7 +31,7 @@ import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 
 <style scoped>
 .box {
-    margin: 1%;
-    border: 2px solid #0000001a;
+  margin: 2% 1% 1%;
+  border: 2px solid #0000001a;
 }
 </style>
