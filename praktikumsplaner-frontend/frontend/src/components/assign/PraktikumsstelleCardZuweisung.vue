@@ -27,8 +27,7 @@
                 'custom-card-active': assignedNwk,
                 spacer: true,
             }"
-            elevation="16"
-            outlined
+            elevation="6"
             :ripple="false"
             @click="show = !show"
         >
@@ -39,12 +38,11 @@
                 Namentliche Anforderung:
                 {{ props.modelValue.namentlicheAnforderung }}
             </v-card-subtitle>
-            <v-icon
-                v-if="props.modelValue.planstelleVorhanden"
-                x-large
-                class="icon-top-right-position"
-                >mdi-account-star</v-icon
-            >
+          <v-icon
+                  v-if="props.modelValue.planstelleVorhanden"
+                  x-large
+                  class="icon-top-right-position"
+          >mdi-account-star</v-icon>
             <v-card-text class="pt-0 mt-0 mb-0 pb-0">
                 <p style="white-space: pre-line">
                     {{ getCardText(props.modelValue) }}
