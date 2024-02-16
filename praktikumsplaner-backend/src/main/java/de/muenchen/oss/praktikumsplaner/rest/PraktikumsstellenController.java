@@ -94,6 +94,6 @@ public class PraktikumsstellenController {
     @DeleteMapping("/{praktikumsstellenId}")
     @ResponseStatus(HttpStatus.OK)
     public void deletePratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId){
-
+        praktikumsstellenService.deletePraktikumsstelle(praktikumsstellenId);
     }
 }
