@@ -134,7 +134,7 @@ import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay
 import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
 import NwkCreate from "@/types/NwkCreate";
 import FetchUtils from "@/api/FetchUtils";
-import VorlesungstageSelector from "@/components/nachwuchskraefte/VorlesungstageSelector.vue";
+import VorlesungstageSelector from "@/components/nachwuchskraefte/VorlesungstageSelect.vue";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
