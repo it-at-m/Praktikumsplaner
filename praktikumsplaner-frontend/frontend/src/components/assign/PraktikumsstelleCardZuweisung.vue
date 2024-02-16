@@ -1,6 +1,6 @@
 <template>
     <v-container
-        @drop="drop($event, value)"
+        @drop="drop($event, modelValue)"
         @dragover.prevent
         @dragenter.prevent
     >
@@ -33,21 +33,21 @@
             @click="show = !show"
         >
             <v-card-title
-                >Stelle bei {{ props.value.dienststelle }}</v-card-title
+                >Stelle bei {{ props.modelValue.dienststelle }}</v-card-title
             >
-            <v-card-subtitle v-if="props.value.namentlicheAnforderung">
+            <v-card-subtitle v-if="props.modelValue.namentlicheAnforderung">
                 Namentliche Anforderung:
-                {{ props.value.namentlicheAnforderung }}
+                {{ props.modelValue.namentlicheAnforderung }}
             </v-card-subtitle>
             <v-icon
-                v-if="props.value.planstelleVorhanden"
+                v-if="props.modelValue.planstelleVorhanden"
                 x-large
                 class="icon-top-right-position"
                 >mdi-account-star</v-icon
             >
             <v-card-text class="pt-0 mt-0 mb-0 pb-0">
                 <p style="white-space: pre-line">
-                    {{ getCardText(props.value) }}
+                    {{ getCardText(props.modelValue) }}
                 </p></v-card-text
             >
             <v-col>
@@ -60,7 +60,7 @@
                     :color="getNwkColor(assignedNwk)"
                     close
                     close-icon="mdi-close"
-                    @click:close="openConfirmationDialog(value)"
+                    @click:close="openConfirmationDialog(modelValue)"
                     >{{
                         `${assignedNwk.vorname} ${assignedNwk.nachname}`
                     }}</v-chip
@@ -76,7 +76,7 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         <p style="white-space: pre-line">
-                            {{ getCardDetailText(props.value) }}
+                            {{ getCardDetailText(props.modelValue) }}
                         </p>
                     </v-card-text>
                 </div>
@@ -98,7 +98,7 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
 
 const props = defineProps<{
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 
 const generator = useTextGenerator();
@@ -115,7 +115,7 @@ const warningDialogTitle = ref<string>(
     "Warnung. Wollen sie wirklich fortfahren?"
 );
 const warningDialogText = ref<string>("");
-const assignedNwk = ref(props.value.assignedNwk);
+const assignedNwk = ref(props.modelValue.assignedNwk);
 
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
 

@@ -13,7 +13,7 @@
                 <active-nwk-list-for-zuweisung
                     v-else
                     v-model="nwks"
-                />
+                 />
             </v-col>
             <v-divider vertical />
             <v-col cols="7">
@@ -33,7 +33,8 @@
                 color="primary"
                 class="mr-4"
                 @click="openMailWarningDialog"
-                >Mails senden</v-btn
+                text="Mails senden"
+                ></v-btn
             >
             <ExcelExport
                 :start-download="startDownload"

@@ -11,18 +11,19 @@
                         abteilung
                     }}</v-expansion-panel-title>
                     <v-expansion-panel-text>
-                        <v-list v-model:selected="selectedPraktikumsstellen">
-                            <v-list-item>
-                                v-for="praktikumsstelle in
-                                props.praktikumsstellenMap.get( abteilung )"
-                                :key="praktikumsstelle.id" :ripple="false" >
-                                <PraktikumsstelleCard
-                                    :key="praktikumsstelle.assignedNwk?.id"
-                                    :value="praktikumsstelle"
-                                    :praktikumsstelle="praktikumsstelle"
-                                ></PraktikumsstelleCard>
-                            </v-list-item>
-                        </v-list>
+                      <v-list>
+                        <v-list-item
+                            v-for="praktikumsstelle in props.praktikumsstellenMap.get(abteilung)"
+                            :key="praktikumsstelle.id"
+                            :ripple="false"
+                        >
+                          <PraktikumsstelleCard
+                              :model-value="praktikumsstelle"
+                              :key="praktikumsstelle.id"
+                          ></PraktikumsstelleCard>
+                        </v-list-item>
+                      </v-list>
+
                     </v-expansion-panel-text>
                 </v-expansion-panel>
             </v-expansion-panels>

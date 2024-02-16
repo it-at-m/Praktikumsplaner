@@ -3,9 +3,9 @@
         <v-btn
             color="primary"
             @click="clickExport"
+            prepend-icon="mdi-tray-arrow-down"
+            text="Exportieren"
         >
-            <v-icon>mdi-tray-arrow-down</v-icon>
-            Exportieren
         </v-btn>
         <Error-dialog
             :dialogtext="errorDialogText"

@@ -1,9 +1,9 @@
 <template>
     <v-list v-model:selected="selectedNwks">
         <v-list-item
-            v-for="nwk in props.value"
+            v-for="nwk in props.modelValue"
             :key="nwk.id"
-            :value="nwk"
+            :modelValue="nwk"
             draggable="true"
             @dragstart="dragStart($event, nwk)"
         >
@@ -19,7 +19,7 @@ import NwkCard from "@/components/assign/NwkCard.vue";
 import Nwk from "@/types/Nwk";
 
 const props = defineProps<{
-    value: Nwk[];
+    modelValue: Nwk[];
 }>();
 
 const emits = defineEmits<{
@@ -70,3 +70,5 @@ function addNwkToList(nwk: Nwk) {
     emits("input", nwksInternal);
 }
 </script>
+<style scoped>
+</style>
