@@ -8,7 +8,7 @@
                     class="d-flex align-center justify-start"
                 >
                     <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-                    <router-link to="/">
+                    <router-link to="/" class="no-underline">
                         <v-toolbar-title class="font-weight-bold">
                             <span class="text-white">Praktikumsplaner</span>
                         </v-toolbar-title>
@@ -106,5 +106,8 @@ onMounted(() => {
 <style scoped>
 .v-navigation-drawer .v-list-item-title {
   font-size: 16px;
+}
+.no-underline, .no-underline:hover {
+  text-decoration: none;
 }
 </style>
