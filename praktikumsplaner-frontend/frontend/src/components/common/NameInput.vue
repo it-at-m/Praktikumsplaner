@@ -1,3 +1,19 @@
+<template>
+    <v-text-field
+        v-if="type == 'vorname'"
+        v-model="propHandler.vorname"
+        label="Vorname"
+        :rules="nameRule"
+        outlined
+    ></v-text-field>
+    <v-text-field
+        v-else-if="type == 'nachname'"
+        v-model="propHandler.nachname"
+        label="Nachname"
+        :rules="nameRule"
+        outlined
+    ></v-text-field>
+</template>
 <script setup lang="ts">
 import { useRules } from "@/composables/rules";
 import NwkCreate from "@/types/NwkCreate";
@@ -31,20 +47,3 @@ const propHandler = computed({
     set: (v) => emits("updated", v),
 });
 </script>
-
-<template>
-    <v-text-field
-        v-if="type == 'vorname'"
-        v-model="propHandler.vorname"
-        label="Vorname"
-        :rules="nameRule"
-        outlined
-    ></v-text-field>
-    <v-text-field
-        v-else-if="type == 'nachname'"
-        v-model="propHandler.nachname"
-        label="Nachname"
-        :rules="nameRule"
-        outlined
-    ></v-text-field>
-</template>

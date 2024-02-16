@@ -41,12 +41,7 @@
                         <v-row>
                             <v-col>
                                 <v-list-item>
-                                    <v-text-field
-                                        v-model="nwk.jahrgang"
-                                        label="Jahrgang"
-                                        :rules="jahrgangRule"
-                                        outlined
-                                    ></v-text-field>
+                                    <JahrgangInput :nwk="nwk"></JahrgangInput>
                                 </v-list-item>
                             </v-col>
                             <v-col>
@@ -79,6 +74,7 @@
                             Akzeptieren
                         </v-btn>
                     </v-card-actions>
+                    {{ nwk }}
                 </v-card>
             </v-form>
         </v-dialog>
@@ -89,31 +85,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import NwkService from "@/api/NwkService";
-import Nwk from "@/types/Nwk";
-import { Studiengang } from "@/types/Studiengang";
-import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
 import { useRules } from "@/composables/rules";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
-import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
 import NwkCreate from "@/types/NwkCreate";
-import FetchUtils from "@/api/FetchUtils";
 import VorlesungstageSelector from "@/components/nachwuchskraefte/VorlesungstageSelect.vue";
 import StudienrichtungOrAusbildungsrichtungSelect from "@/components/common/StudienrichtungOrAusbildungsrichtungSelect.vue";
 import NameInput from "@/components/common/NameInput.vue";
+import JahrgangInput from "@/components/common/JahrgangInput.vue";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
 const validationRules = useRules();
-const jahrgangRule = [
-    validationRules.notEmptyRule("Der Jahrgang darf nicht leer sein."),
-    validationRules.regexRule(
-        /^([0-9]{2})\/([0-9]{2})$/,
-        "Der Jahrgang muss im Format XX/XX angegeben werden."
-    ),
-];
 
 const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
 
