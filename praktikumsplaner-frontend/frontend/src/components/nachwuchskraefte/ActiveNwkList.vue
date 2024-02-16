@@ -7,7 +7,7 @@
           v-for="nwk in nwks"
           :key="nwk.id"
       >
-        <v-card class="cards" border="primary md" elevation="6" >
+        <v-card class="cards" border="primary" elevation="6" >
           <v-card-title class="text-center">{{ nwk.vorname }} {{ nwk.nachname }}</v-card-title>
           <v-card-subtitle class="text-center">{{ getSubtitle(nwk) }}</v-card-subtitle>
           <v-card-actions class="d-flex justify-center">
@@ -21,19 +21,26 @@
 
 
 <script setup lang="ts">
-import mitt from "mitt";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 import NwkService from "@/api/NwkService";
 import NwkUpdateDialog from "@/components/nachwuchskraefte/NwkUpdateDialog.vue";
 import Nwk from "@/types/Nwk";
+import emitter from "@/stores/eventBus";
 
 const nwks = ref<Nwk[]>([]);
 const loading = ref<boolean>(false);
 
 onMounted(() => {
     loadAllActiveNwks();
+    emitter.on("nwkCreated", () => {
+      loadAllActiveNwks();
+    });
 });
+onUnmounted(() => {
+  emitter.off("nwkCreated", loadAllActiveNwks);
+});
+
 function loadAllActiveNwks() {
     loading.value = true;
     NwkService.getAllActiveNwks()
@@ -55,19 +62,11 @@ function getSubtitle(nwk: Nwk): string {
     return subtitle;
 }
 
-type Events = {
-    nwkCreated: boolean;
-};
 
-const emitter = mitt<Events>();
-
-emitter.on("nwkCreated", () => {
-    loadAllActiveNwks();
-});
 </script>
 <style scoped>
 .cards {
-  margin-bottom: 20px; /* Fügt einen Abstand zwischen den Karten hinzu */
+  margin-bottom: 20px;
 }
 .v-card .v-card-title {
   color: #000000;
