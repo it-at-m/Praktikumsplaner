@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public String ExcelImportException(final ExcelImportException ex) {
-        StringBuilder formattedExceptionInfos = new StringBuilder();
+        final StringBuilder formattedExceptionInfos = new StringBuilder();
         for (ExcelImportException.ExcelImportExceptionInfo exceptionInfo : ex.getExceptionInfos()) {
             formattedExceptionInfos.append("Zeile: ").append(exceptionInfo.getRow() + 1).append(" - ")
                     .append("Spalte: ").append(exceptionInfo.getColumName()).append(" - ")
