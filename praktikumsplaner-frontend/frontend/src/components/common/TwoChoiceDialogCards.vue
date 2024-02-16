@@ -1,15 +1,14 @@
 <template>
     <v-dialog
-        :key="props.value"
         v-model="visible"
         persistent
         width="800"
     >
-        <template #activator="{ on }">
+        <template #activator="{ props }">
             <template v-if="props.icontext">
                 <v-btn
                     color="primary"
-                    v-on="on"
+                    v-on="props"
                 >
                     <v-icon> {{ icontext }} </v-icon>
                     {{ buttontext }}
@@ -18,7 +17,7 @@
             <template v-else>
                 <v-btn
                     color="primary"
-                    v-on="on"
+                    v-bind="props"
                 >
                     {{ buttontext }}
                 </v-btn>
@@ -36,32 +35,32 @@
                 <v-row>
                     <v-col cols="6">
                         <v-card
-                            class="mx-auto"
+                            class="mx-auto my-2"
                             max-width="300"
-                            outlined
+                            variant="outlined"
                             rounded
                             @click="choiceOne"
                         >
-                            <v-card-title>
-                                {{ props.choiceOne }}
+                            <v-card-title class="mt-1">
+                                {{ props.choiceOneTitle }}
                             </v-card-title>
-                            <v-card-subtitle>
+                            <v-card-subtitle class="mb-4">
                                 {{ props.choiceOneSubtitle }}</v-card-subtitle
                             >
                         </v-card>
                     </v-col>
                     <v-col cols="6">
                         <v-card
-                            class="mx-auto"
+                            class="mx-auto my-2"
                             max-width="300"
-                            outlined
+                            variant="outlined"
                             rounded
                             @click="choiceTwo"
                         >
-                            <v-card-title>
-                                {{ props.choiceTwo }}
+                            <v-card-title class="mt-1">
+                                {{ props.choiceTwoTitle }}
                             </v-card-title>
-                            <v-card-subtitle>
+                            <v-card-subtitle class="mb-4">
                                 {{ props.choiceTwoSubtitle }}
                             </v-card-subtitle>
                         </v-card>
@@ -72,10 +71,11 @@
             <v-card-actions>
                 <v-spacer />
                 <v-btn
-                    text="Schliessen"
+                    variant="text"
                     color="primary"
                     @click="close"
                 >
+                    Schließen
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -90,26 +90,25 @@ const props = defineProps<{
     icontext?: string;
     dialogtitle: string;
     dialogsubtitle: string;
-    choiceOne: string;
+    choiceOneTitle: string;
     choiceOneSubtitle?: string;
-    choiceTwo: string;
+    choiceTwoTitle: string;
     choiceTwoSubtitle?: string;
     /**
      * Control-flag
      */
-    value: boolean;
+    modelValue: boolean;
 }>();
 
 const emits = defineEmits<{
     (e: "choiceOne"): void;
     (e: "choiceTwo"): void;
-    (e: "close"): void;
-    (e: "input", v: boolean): void;
+    (e: "update:modelValue", v: boolean): void;
 }>();
 
 const visible = computed({
-    get: () => props.value,
-    set: (v) => emits("input", v),
+    get: () => props.modelValue,
+    set: (v) => emits("update:modelValue", v),
 });
 
 function choiceOne(): void {
@@ -119,6 +118,6 @@ function choiceTwo(): void {
     emits("choiceTwo");
 }
 function close(): void {
-    emits("close");
+    visible.value = false;
 }
 </script>

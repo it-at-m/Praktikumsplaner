@@ -26,13 +26,12 @@
                             icontext="mdi-plus"
                             dialogtitle="Praktikumsplatz melden"
                             dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
-                            choice-one="Studium"
+                            choice-one-title="Studium"
                             choice-one-subtitle="Praktikumsplatz für Studierende "
-                            choice-two="Ausbildung"
+                            choice-two-title="Ausbildung"
                             choice-two-subtitle="Praktikumsplatz für Auszubildende"
-                            @choiceOne="toStudium"
-                            @choiceTwo="toAusbildung"
-                            @close="closeDialog"
+                            @choice-one="toStudium"
+                            @choice-two="toAusbildung"
                         ></two-choice-dialog-cards>
                     </v-col>
                 </v-row>
@@ -48,9 +47,9 @@
                         class="box"
                     >
                         <span> Übersicht aus dem aktuellen Meldezeitraum </span>
-                        <PraktikumsstellenList
+                        <praktikumsstellen-list
                             :praktikumsstellen-map="praktikumsstellenMap"
-                        ></PraktikumsstellenList>
+                        ></praktikumsstellen-list>
                     </v-container>
                     <v-container
                         v-else
@@ -63,7 +62,7 @@
                             >
                                 <v-icon
                                     color="blue"
-                                    large
+                                    size="large"
                                     >mdi-information-outline</v-icon
                                 >
                             </v-col>
@@ -78,7 +77,7 @@
                 </v-row>
             </div>
             <div v-else>
-                <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
+                <kein-meldezeitraum-message></kein-meldezeitraum-message>
             </div>
         </v-container>
     </v-container>
