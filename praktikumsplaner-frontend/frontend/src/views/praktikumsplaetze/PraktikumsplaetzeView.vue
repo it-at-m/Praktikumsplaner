@@ -141,9 +141,7 @@ function toAusbildung(): void {
 function toStudium(): void {
     index.push("/praktikumsplaetze/meldungStudium");
 }
-function closeDialog(): void {
-    twoChoiceDialogVisible.value = false;
-}
+
 function getAllPraktikumsstellenInCurrentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(

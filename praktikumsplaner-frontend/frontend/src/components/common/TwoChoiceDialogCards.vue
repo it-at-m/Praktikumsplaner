@@ -5,12 +5,12 @@
         width="800"
     >
         <template #activator="{ props }">
-            <template v-if="props.icontext">
+            <template v-if="properties.icontext">
                 <v-btn
                     color="primary"
+                    :prepend-icon="properties.icontext"
                     v-on="props"
                 >
-                    <v-icon> {{ icontext }} </v-icon>
                     {{ buttontext }}
                 </v-btn>
             </template>
@@ -25,11 +25,11 @@
         </template>
         <v-card>
             <v-card-title>
-                {{ props.dialogtitle }}
+                {{ properties.dialogtitle }}
             </v-card-title>
             <v-spacer />
             <v-card-subtitle>
-                {{ props.dialogsubtitle }}
+                {{ properties.dialogsubtitle }}
             </v-card-subtitle>
             <v-card-text>
                 <v-row>
@@ -42,10 +42,12 @@
                             @click="choiceOne"
                         >
                             <v-card-title class="mt-1">
-                                {{ props.choiceOneTitle }}
+                                {{ properties.choiceOneTitle }}
                             </v-card-title>
                             <v-card-subtitle class="mb-4">
-                                {{ props.choiceOneSubtitle }}</v-card-subtitle
+                                {{
+                                    properties.choiceOneSubtitle
+                                }}</v-card-subtitle
                             >
                         </v-card>
                     </v-col>
@@ -58,10 +60,10 @@
                             @click="choiceTwo"
                         >
                             <v-card-title class="mt-1">
-                                {{ props.choiceTwoTitle }}
+                                {{ properties.choiceTwoTitle }}
                             </v-card-title>
                             <v-card-subtitle class="mb-4">
-                                {{ props.choiceTwoSubtitle }}
+                                {{ properties.choiceTwoSubtitle }}
                             </v-card-subtitle>
                         </v-card>
                     </v-col>
@@ -85,7 +87,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-const props = defineProps<{
+const properties = defineProps<{
     buttontext: string;
     icontext?: string;
     dialogtitle: string;
@@ -107,7 +109,7 @@ const emits = defineEmits<{
 }>();
 
 const visible = computed({
-    get: () => props.modelValue,
+    get: () => properties.modelValue,
     set: (v) => emits("update:modelValue", v),
 });
 
