@@ -1,24 +1,24 @@
 <template>
-    <div>
-        <v-btn
-            color="primary"
-            @click="clickExport"
-            prepend-icon="mdi-tray-arrow-down"
-            text="Exportieren"
-        >
-        </v-btn>
-        <Error-dialog
-            :dialogtext="errorDialogText"
-            :dialogtitle="errorDialogTitle"
-            icontext="mdi mdi-alert-octagon-outline"
-            iconcolor="red"
-            :value="errorDialog"
-            @close="errorDialog = false"
-        ></Error-dialog>
-        <progress-circular-overlay
-            :loading="loading"
-        ></progress-circular-overlay>
-    </div>
+  <div>
+    <v-btn
+        color="primary"
+        @click="clickExport"
+        prepend-icon="mdi-tray-arrow-down"
+    >
+      Exportieren
+    </v-btn>
+    <ErrorDialog
+        :dialog-text="errorDialogText"
+        :dialog-title="errorDialogTitle"
+        icon-text="mdi mdi-alert-octagon-outline"
+        icon-color="red"
+        v-model="errorDialog"
+        @close="errorDialog = false"
+    ></ErrorDialog>
+    <ProgressCircularOverlay
+        :loading="loading"
+    ></ProgressCircularOverlay>
+  </div>
 </template>
 
 <script setup lang="ts">

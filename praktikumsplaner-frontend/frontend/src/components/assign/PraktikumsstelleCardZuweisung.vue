@@ -58,8 +58,7 @@
                 <v-chip
                     v-if="assignedNwk && !loading"
                     :color="getNwkColor(assignedNwk)"
-                    close
-                    close-icon="mdi-close"
+                    closable
                     @click:close="openConfirmationDialog(modelValue)"
                     >{{
                         `${assignedNwk.vorname} ${assignedNwk.nachname}`
