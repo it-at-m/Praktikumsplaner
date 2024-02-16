@@ -76,15 +76,15 @@ public class PraktikumsstellenService {
                 praktikumsstelle.setAssignedNwk(assignedNwk);
                 ausbildungsPraktikumsstellenRepository.save(praktikumsstelle);
                 return praktikumsstellenMapper.toDto(praktikumsstelle);
-            } else throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft");
+            } else throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
             StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
             if (praktikumsstelle.getAssignedNwk() == null) {
                 praktikumsstelle.setAssignedNwk(assignedNwk);
                 studiumsPraktikumsstellenRepository.save(praktikumsstelle);
                 return praktikumsstellenMapper.toDto(praktikumsstelle);
-            } else throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft");
-        } else throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden");
+            } else throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
+        } else throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
     }
 
     public PraktikumsstelleDto unassignNwk(UUID praktikumsstellenId) {
@@ -98,7 +98,7 @@ public class PraktikumsstellenService {
             praktikumsstelle.setAssignedNwk(null);
             studiumsPraktikumsstellenRepository.save(praktikumsstelle);
             return praktikumsstellenMapper.toDto(praktikumsstelle);
-        } else throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden");
+        } else throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
     }
 
     public List<PraktikumsstelleDto> getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum() {

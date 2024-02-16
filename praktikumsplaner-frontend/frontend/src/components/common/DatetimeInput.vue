@@ -118,7 +118,7 @@ const time = ref<string | null>(null);
 const error = ref(false);
 const errorMessages = ref("");
 const dateFilled = (): string | boolean =>
-    checkBothFieldsFilled() || "Datum und Zeit muss ausgefüllt werden";
+    checkBothFieldsFilled() || "Datum und Zeit muss ausgefüllt werden.";
 
 const emits = defineEmits<{
     (e: "input", v: string | null): void;
@@ -183,7 +183,7 @@ function parseTime(timestamp: Date): string {
 function leaveInput(): void {
     if (!checkBothFieldsFilled()) {
         error.value = true;
-        errorMessages.value = "Datum und Zeit muss ausgefüllt werden";
+        errorMessages.value = "Datum und Zeit muss ausgefüllt werden.";
     }
 }
 
