@@ -2,9 +2,9 @@
     <div>
         <v-dialog
             max-width="850px"
-            :value="props.showDialog"
+            v-model="props.showDialog"
             persistent
-            @input="closeSendMailDialog"
+            @update:modelValue="closeSendMailDialog"
         >
             <v-form ref="form">
                 <v-card>
@@ -20,7 +20,7 @@
                         <v-container>
                             <v-row>
                                 <v-col cols="12">
-                                    <v-container class="v-container">
+                                    <v-container class="v-container-single-box">
                                         <v-col>
                                             <h4>
                                                 Bachelor of Science (B.Sc.) -
@@ -36,7 +36,7 @@
                                     </v-container>
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-container class="v-container">
+                                    <v-container class="v-container-single-box">
                                         <v-col>
                                             <h4>Verwaltungsinformatik (VI)</h4>
                                         </v-col>
@@ -47,7 +47,7 @@
                                     </v-container>
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-container class="v-container">
+                                    <v-container class="v-container-single-box">
                                         <v-col>
                                             <h4>Wirtschaftsinformatik (BWI)</h4>
                                         </v-col>
@@ -58,7 +58,7 @@
                                     </v-container>
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-container class="v-container">
+                                    <v-container class="v-container-single-box">
                                         <v-col>
                                             <h4>
                                                 Fachinformatiker für
@@ -74,18 +74,20 @@
                             </v-row>
                             <v-card-actions class="pl-0 pr-0">
                                 <v-row>
-                                    <v-col class="col-auto mr-auto">
+                                    <v-col class="v-col-auto mr-auto">
                                         <v-btn
                                             color="primary"
-                                            outlined
+                                            variant="outlined"
                                             @click="closeSendMailDialog"
                                             >Abbrechen</v-btn
                                         >
                                     </v-col>
-                                    <v-col class="col-auto">
+                                    <v-col class="v-col-auto">
                                         <v-btn
                                             color="primary"
+                                            variant="elevated"
                                             @click="openConfirmationDialog"
+                                            :disabled="!allValid"
                                             >Weiter</v-btn
                                         >
                                         <yes-no-dialog
@@ -116,7 +118,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 import MailService from "@/api/MailService";
 import UndeliveredMailsDialog from "@/components/assign/UndeliveredMailsDialog.vue";
@@ -143,12 +145,15 @@ const props = defineProps<{
     showDialog: boolean;
 }>();
 
-const emit = defineEmits<{
-    (e: "update:showDialog", b: boolean): void;
-}>();
+const allValid = computed(() => {
+  return form.value?.checkValidity();
+});
 
-function openConfirmationDialog(): void {
-    if (form.value?.validate()) {
+const emit = defineEmits(['update:showDialog']);
+
+function openConfirmationDialog() {
+  form.value?.validate();
+    if (form.value?.isValid) {
         confirmSendMailDialog.value = true;
     }
 }
@@ -176,15 +181,7 @@ function sendMails(): void {
 
 function closeSendMailDialog(): void {
     emit("update:showDialog", false);
-    resetForm();
-}
-
-function resetForm() {
-    bsc.value = new Zeitraum();
-    vi.value = new Zeitraum();
-    bwi.value = new Zeitraum();
-    fisi.value = new Zeitraum();
-    form.value?.resetValidation();
+    form.value?.reset();
 }
 
 function checkIfUndeliveredMails() {
@@ -194,7 +191,7 @@ function checkIfUndeliveredMails() {
 }
 </script>
 <style scoped>
-.v-container {
+.v-container-single-box {
     border: 2px solid grey;
     padding-top: 5px;
     padding-bottom: 5px;

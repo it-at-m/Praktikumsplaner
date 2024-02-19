@@ -1,6 +1,6 @@
 <template>
     <v-dialog
-        :value="visible"
+        v-model="props.visible"
         max-width="500px"
     >
         <v-card>
@@ -9,14 +9,17 @@
                 {{ currentWarning?.message }}
             </v-card-text>
             <v-card-actions>
+                <v-spacer/>
                 <v-btn
                     color="primary"
                     @click="accept"
+                    variant="elevated"
                     >Akzeptieren</v-btn
                 >
                 <v-btn
                     color="error"
                     @click="reject"
+                    variant="elevated"
                     >Ablehnen</v-btn
                 >
             </v-card-actions>

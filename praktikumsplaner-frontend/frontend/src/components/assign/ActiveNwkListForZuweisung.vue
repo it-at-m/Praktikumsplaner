@@ -17,6 +17,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 
 import NwkCard from "@/components/assign/NwkCard.vue";
 import Nwk from "@/types/Nwk";
+import emitter from "@/stores/eventBus";
 
 const props = defineProps<{
     modelValue: Nwk[];
@@ -27,13 +28,6 @@ const emits = defineEmits<{
 }>();
 
 const selectedNwks = ref<Nwk[]>([]);
-
-type Events = {
-    assignedNwk: Nwk;
-    unassignedNwk: Nwk;
-};
-
-const emitter = mitt<Events>();
 
 onMounted(() => {
     emitter.on("assignedNwk", removeNwkFromList);
@@ -48,7 +42,7 @@ function dragStart(event: DragEvent, nwk: Nwk) {
 }
 
 function removeNwkFromList(nwk: Nwk) {
-    let nwksInternal = props.value;
+    let nwksInternal = props.modelValue;
     let index = -1;
 
     const nwkToRemove: Nwk | undefined = nwksInternal.find(
@@ -64,11 +58,14 @@ function removeNwkFromList(nwk: Nwk) {
 }
 
 function addNwkToList(nwk: Nwk) {
-    let nwksInternal = props.value;
+    let nwksInternal = props.modelValue;
     nwksInternal.push(nwk);
     nwksInternal.sort((a, b) => a.nachname.localeCompare(b.nachname));
     emits("input", nwksInternal);
 }
 </script>
 <style scoped>
+[v-cloak] [draggable="true"] {
+  cursor: grab;
+}
 </style>

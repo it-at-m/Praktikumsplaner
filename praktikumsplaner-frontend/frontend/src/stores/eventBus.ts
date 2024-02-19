@@ -1,5 +1,11 @@
 import mitt from "mitt";
+import Nwk from "@/types/Nwk";
 
-const emitter = mitt();
+type Events = {
+    assignedNwk: Nwk;
+    unassignedNwk: Nwk;
+};
+
+const emitter = mitt<Events>();
 
 export default emitter;

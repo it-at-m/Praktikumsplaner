@@ -48,7 +48,7 @@
             @accepted="acceptedWarningDialog"
             @rejected="rejectedWarningDialog"
         />
-        <QueryPraktikumsPeriodDialog :show-dialog.sync="showSendMailDialog" />
+        <QueryPraktikumsPeriodDialog v-model:showDialog="showSendMailDialog" />
     </v-container>
 </template>
 <script setup lang="ts">

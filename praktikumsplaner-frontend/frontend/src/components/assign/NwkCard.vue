@@ -1,12 +1,11 @@
 <template>
     <v-card
         width="100%"
-        elevation="4"
-        outlined
+        border
     >
         <v-expansion-panels>
-            <v-expansion-panel :disabled="!hasDetails(props.nwk)">
-                <v-expansion-panel-title>
+            <v-expansion-panel >
+                <v-expansion-panel-title :hide-actions="!hasDetails(nwk)">
                     <v-row
                         no-gutters
                         align="center"
@@ -29,7 +28,7 @@
                         </v-col>
                     </v-row>
                 </v-expansion-panel-title>
-                <v-expansion-panel-text  v-if="hasDetails(nwk)">
+                <v-expansion-panel-text v-if="hasDetails(nwk)">
                     <v-chip-group
                         active-class="primary--text"
                         column
@@ -46,6 +45,7 @@
                     </v-chip-group>
                 </v-expansion-panel-text>
             </v-expansion-panel>
+
         </v-expansion-panels>
     </v-card>
 </template>
@@ -89,18 +89,7 @@ function getNwkColor(nwk: Nwk): string {
     }
     return color;
 }
+
 </script>
 <style scoped>
-.v-expansion-panels .v-expansion-panel--disabled {
-  color: #000000 !important;
-  background-color: #FFFFFF !important;
-  opacity: 1 !important;
-}
-
-.v-expansion-panels .v-expansion-panel--disabled .v-expansion-panel-title,
-.v-expansion-panels .v-expansion-panel--disabled .v-expansion-panel-text {
-  color: #000000 !important;
-  background-color: #FFFFFF !important;
-  opacity: 1 !important;
-}
 </style>
