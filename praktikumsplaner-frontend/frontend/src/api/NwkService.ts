@@ -9,9 +9,17 @@ export default {
     saveNwk(nwk: NwkCreate): Promise<void> {
         return fetch(`${API_BASE}${NWK_BASE}`, FetchUtils.getPOSTConfig(nwk))
             .then((response) => {
+                useSnackbarStore().showMessage({
+                    message: "☑ NWK wurde erfolgreich erstellt.",
+                    level: Levels.SUCCESS,
+                });
                 FetchUtils.defaultResponseHandler(response);
             })
             .catch((err) => {
+                useSnackbarStore().showMessage({
+                    message: err.message,
+                    level: Levels.ERROR,
+                });
                 FetchUtils.defaultCatchHandler(err);
             });
     },
