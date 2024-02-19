@@ -21,27 +21,14 @@
                     >
                     <v-list>
                         <v-row>
-                            <v-col>
-                                <v-list-item>
-                                    <NameInput
-                                        :nwk="nwk"
-                                        type="nachname"
-                                    ></NameInput>
-                                </v-list-item>
-                            </v-col>
-                            <v-col>
-                                <v-list-item>
-                                    <NameInput
-                                        :nwk="nwk"
-                                        type="vorname"
-                                    ></NameInput>
-                                </v-list-item>
-                            </v-col>
+                            <NameInput v-model="nwk"></NameInput>
                         </v-row>
                         <v-row>
                             <v-col>
                                 <v-list-item>
-                                    <JahrgangInput :nwk="nwk"></JahrgangInput>
+                                    <JahrgangInput
+                                        v-model="nwk"
+                                    ></JahrgangInput>
                                 </v-list-item>
                             </v-col>
                             <v-col>
@@ -54,7 +41,7 @@
                         </v-row>
                         <v-row>
                             <StudienrichtungOrAusbildungsrichtungSelect
-                                :nwk="nwk"
+                                v-model="nwk"
                             ></StudienrichtungOrAusbildungsrichtungSelect>
                         </v-row>
                     </v-list>
