@@ -76,9 +76,9 @@ const props = defineProps<{
 }>();
 
 const warningDialog = ref<boolean>(false);
-const warningDialogTitle = ref("Unwiderrufliche Aktion!");
+const warningDialogTitle = ref("Stelle löschen?");
 const warningDialogText = ref(
-    "Wollen Sie die Praktikumsstelle wirklich löschen?"
+    "Wollen Sie die Praktikumsstelle wirklich unwiderruflich löschen?"
 );
 const show = ref<boolean>(false);
 const assignedNwk = ref(props.value.assignedNwk);
