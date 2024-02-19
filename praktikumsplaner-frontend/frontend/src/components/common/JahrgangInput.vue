@@ -1,6 +1,6 @@
 <template>
     <v-text-field
-        v-model="propHandler.jahrgang"
+        v-model="nwk.jahrgang"
         label="Jahrgang"
         :rules="jahrgangRule"
         outlined
@@ -22,15 +22,15 @@ const jahrgangRule = [
 ];
 
 const props = defineProps<{
-    nwk: NwkCreate;
+    value: NwkCreate;
 }>();
 
 const emits = defineEmits<{
     (e: "updated", v: NwkCreate): void;
 }>();
 
-const propHandler = computed({
-    get: () => props.nwk,
+const nwk = computed({
+    get: () => props.value,
     set: (v) => emits("updated", v),
 });
 </script>

@@ -1,18 +1,28 @@
 <template>
-    <v-text-field
-        v-if="type == 'vorname'"
-        v-model="propHandler.vorname"
-        label="Vorname"
-        :rules="nameRule"
-        outlined
-    ></v-text-field>
-    <v-text-field
-        v-else-if="type == 'nachname'"
-        v-model="propHandler.nachname"
-        label="Nachname"
-        :rules="nameRule"
-        outlined
-    ></v-text-field>
+    <v-container>
+        <v-row>
+            <v-col>
+                <v-list-item>
+                    <v-text-field
+                        v-model="nwk.vorname"
+                        label="Vorname"
+                        :rules="nameRule"
+                        outlined
+                    ></v-text-field>
+                </v-list-item>
+            </v-col>
+            <v-col>
+                <v-list-item>
+                    <v-text-field
+                        v-model="nwk.nachname"
+                        label="Nachname"
+                        :rules="nameRule"
+                        outlined
+                    ></v-text-field>
+                </v-list-item>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 <script setup lang="ts">
 import { useRules } from "@/composables/rules";
@@ -34,16 +44,15 @@ const nameRule = [
 ];
 
 const props = defineProps<{
-    nwk: NwkCreate;
-    type: string;
+    value: NwkCreate;
 }>();
 
 const emits = defineEmits<{
-    (e: "updated", v: NwkCreate): void;
+    (e: "updated", nwkToCreate: NwkCreate): void;
 }>();
 
-const propHandler = computed({
-    get: () => props.nwk,
-    set: (v) => emits("updated", v),
+const nwk = computed({
+    get: () => props.value,
+    set: (newValue) => emits("updated", newValue),
 });
 </script>
