@@ -28,16 +28,10 @@
         <template #selection="{ item }">
             {{ item.raw.zeitraumName }} :
             {{
-                formatter.formatDateFromString(
-                    item.raw.zeitraum.startZeitpunkt
-                )
+                formatter.formatDateFromString(item.raw.zeitraum.startZeitpunkt)
             }}
             -
-            {{
-                formatter.formatDateFromString(
-                    item.raw.zeitraum.endZeitpunkt
-                )
-            }}
+            {{ formatter.formatDateFromString(item.raw.zeitraum.endZeitpunkt) }}
         </template>
     </v-select>
 </template>
