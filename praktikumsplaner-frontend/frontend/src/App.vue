@@ -9,9 +9,17 @@
                 >
                     <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
                     <router-link to="/" class="no-underline">
-                        <v-toolbar-title class="font-weight-bold">
-                            <span class="text-white">Praktikumsplaner</span>
-                        </v-toolbar-title>
+                        <v-img
+                            max-height="50"
+                            max-width="50"
+                            contain
+                            src="src/assets/logo.png"
+                        ></v-img>
+                    </router-link>
+                    <router-link to="/">
+                      <v-toolbar-title class="font-weight-bold">
+                        <span class="text-white">Praktikumsplaner</span>
+                      </v-toolbar-title>
                     </router-link>
                 </v-col>
                 <v-col
