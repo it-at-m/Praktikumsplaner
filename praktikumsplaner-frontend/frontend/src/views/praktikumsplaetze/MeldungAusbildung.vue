@@ -148,7 +148,7 @@
                     </v-row>
                 </v-container>
                 <v-container
-                    v-show="isAusbildungsleitung"
+                    v-if="isAusbildungsleitung"
                     class="box"
                 >
                     <v-row>
@@ -255,7 +255,7 @@ onMounted(() => {
             loadingSite.value = false;
         });
 
-    if (isAusbildungsleitung) {
+    if (isAusbildungsleitung.value) {
         getUpcomingMeldezeitraeume();
         getPassedMeldezeitraeume();
     }
@@ -263,8 +263,7 @@ onMounted(() => {
 
 function canStellenBeSubmitted() {
     return (
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true" ||
+        isAusbildungsleitung.value ||
         currentMeldezeitraum.value
     );
 }
@@ -289,7 +288,7 @@ function resetForm() {
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
     loading.value = true;
-    if (isAusbildungsleitung) {
+    if (isAusbildungsleitung.value) {
         MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
             praktikumsstelle.value
         ).finally(() => {
