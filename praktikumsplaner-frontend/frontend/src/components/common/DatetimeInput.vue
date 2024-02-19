@@ -4,11 +4,11 @@
             {{ props.label }}
         </div>
         <v-input
+            v-model:error="error"
             :readonly="props.readonly"
             :hide-details="props.hideDetails"
             :rules="validierungsRegeln"
-            :dense="props.dense"
-            :error.sync="error"
+            :density="props.dense && 'compact'"
             :error-messages="errorMessages"
             :persistent-hint="props.persistentHint"
             :hint="props.hint"
@@ -23,9 +23,9 @@
                         :readonly="props.readonly"
                         :error="error"
                         hide-details
-                        :dense="props.dense"
-                        :filled="props.filled"
-                        :outlined="props.outlined"
+                        :density="props.dense && 'compact'"
+                        :variant="props.filled && 'filled'"
+                        :variant="props.outlined && 'outlined'"
                         type="date"
                         @focusout="leaveInput"
                         @focus="enterInput"
@@ -41,9 +41,9 @@
                         :readonly="props.readonly"
                         :error="error"
                         hide-details
-                        :dense="props.dense"
-                        :filled="props.filled"
-                        :outlined="props.outlined"
+                        :density="props.dense && 'compact'"
+                        :variant="props.filled && 'filled'"
+                        :variant="props.outlined && 'outlined'"
                         type="time"
                         @focusout="leaveInput"
                         @focus="enterInput"

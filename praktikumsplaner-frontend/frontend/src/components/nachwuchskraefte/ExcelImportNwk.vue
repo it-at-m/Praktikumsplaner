@@ -1,50 +1,62 @@
 <template>
-  <div>
-    <v-btn
-        prepend-icon="mdi-tray-arrow-up"
-        color="primary"
-        @click="visible = true"
-    >
-      Datei Hochladen
-    </v-btn>
-    <v-dialog v-model="visible" persistent max-width="550">
-      <v-form ref="form">
-        <v-card>
-          <v-card-title class="text-h5 font-weight-bold">
-            Datei hochladen
-          </v-card-title>
-          <v-card-text>
-            <v-file-input
-                v-model="file"
-                :accept="excelFormat"
-                :rules="rules"
-                label="Datei auswählen"
-                prepend-icon="mdi-tray-arrow-up"
-            ></v-file-input>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn color="primary" variant="outlined" @click="cancel()">
-              Abbrechen
-            </v-btn>
-            <v-btn color="primary" variant="flat" @click="uploadFile()">
-              Hochladen
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-form>
-    </v-dialog>
+    <div>
+        <v-btn
+            prepend-icon="mdi-tray-arrow-up"
+            color="primary"
+            @click="visible = true"
+        >
+            Datei Hochladen
+        </v-btn>
+        <v-dialog
+            v-model="visible"
+            persistent
+            max-width="550"
+        >
+            <v-form ref="form">
+                <v-card>
+                    <v-card-title class="text-h5 font-weight-bold">
+                        Datei hochladen
+                    </v-card-title>
+                    <v-card-text>
+                        <v-file-input
+                            v-model="file"
+                            :accept="excelFormat"
+                            :rules="rules"
+                            label="Datei auswählen"
+                            prepend-icon="mdi-tray-arrow-up"
+                        ></v-file-input>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer />
+                        <v-btn
+                            color="primary"
+                            variant="outlined"
+                            @click="cancel()"
+                        >
+                            Abbrechen
+                        </v-btn>
+                        <v-btn
+                            color="primary"
+                            variant="flat"
+                            @click="uploadFile()"
+                        >
+                            Hochladen
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-form>
+        </v-dialog>
 
-    <Error-dialog
-        :dialogtext="errorDialogText"
-        :dialogtitle="errorDialogTitle"
-        icontext="mdi mdi-alert-octagon-outline"
-        iconcolor="red"
-        :value="errorDialog"
-        @close="errorDialog = false"
-    ></Error-dialog>
-    <progress-circular-overlay :loading="loading" />
-  </div>
+        <error-dialog
+            :dialogtext="errorDialogText"
+            :dialogtitle="errorDialogTitle"
+            icontext="mdi mdi-alert-octagon-outline"
+            iconcolor="red"
+            :value="errorDialog"
+            @close="errorDialog = false"
+        ></error-dialog>
+        <progress-circular-overlay :loading="loading" />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -103,7 +115,7 @@ function uploadFile() {
         .finally(() => {
             loading.value = false;
             form.value?.reset();
-            file.value = []
+            file.value = [];
         });
 }
 

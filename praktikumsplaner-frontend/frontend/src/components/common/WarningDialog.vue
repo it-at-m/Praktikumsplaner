@@ -9,17 +9,17 @@
                 {{ currentWarning?.message }}
             </v-card-text>
             <v-card-actions>
-                <v-spacer/>
+                <v-spacer />
                 <v-btn
                     color="primary"
-                    @click="accept"
                     variant="elevated"
+                    @click="accept"
                     >Akzeptieren</v-btn
                 >
                 <v-btn
                     color="error"
-                    @click="reject"
                     variant="elevated"
+                    @click="reject"
                     >Ablehnen</v-btn
                 >
             </v-card-actions>

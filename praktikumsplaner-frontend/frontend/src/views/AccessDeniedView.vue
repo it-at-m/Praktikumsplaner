@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-icon
-            large
+            size="large"
             color="red"
             >mdi-alert-octagon</v-icon
         >
