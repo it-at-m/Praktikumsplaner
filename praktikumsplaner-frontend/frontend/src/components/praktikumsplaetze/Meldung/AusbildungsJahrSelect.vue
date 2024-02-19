@@ -1,47 +1,55 @@
 <template>
     <v-select
         v-model="praktikumsstelle.ausbildungsjahr"
-        label="Ausbildungsjahr*"
         :items="Ausbildungsjahr"
-        item-value="value"
-        item-title="name"
-        :rules="requiredArrayRule"
-        variant="outlined"
+        label="Ausbildungsjahr*"
         multiple
+        variant="outlined"
+        item-title="name"
+        item-value="value"
+        :rules="requiredArrayRule"
         @update:model-value="sortAusbildungsjahre"
     >
         <template #prepend-item>
-            <v-list-item
-                ripple
-                @mousedown.prevent
+            <v-checkbox
+                v-model="selectAll"
+                label="Egal"
+                hide-details
+                color="primary"
+                :false-icon="ausbildungsjahrIcon"
+                :true-icon="ausbildungsjahrIcon"
+                :value="allAusbildungsjahreSelected"
                 @click="selectAllAusbildungsjahre"
             >
-                <v-list-item-action>
-                    <v-icon :color="ausbildungsjahrIconColor()">
-                        {{ AusbildungsjahrIcon }}
-                    </v-icon>
-                </v-list-item-action>
-
-                <v-list-item-title> Egal </v-list-item-title>
-            </v-list-item>
+                <template #label>
+                    <v-list-item>
+                        <v-list-item-title> Egal </v-list-item-title>
+                    </v-list-item>
+                </template>
+            </v-checkbox>
             <v-divider class="mt-2"></v-divider>
         </template>
-        <template #item="data">
-            <v-list-item-action>
-                <v-icon v-if="data.attrs['aria-selected'] === 'true'">
-                    mdi-checkbox-marked
-                </v-icon>
-                <v-icon v-else> mdi-checkbox-blank-outline </v-icon>
-            </v-list-item-action>
-
-            <v-list-item-title>
-                {{ data.item.name }}
-            </v-list-item-title>
-            <v-list-item-subtitle
-                v-if="praktikumsstelle.ausbildungsrichtung === 'FISI'"
+        <template #item="{ item }">
+            <v-checkbox
+                :model-value="isSelected(item)"
+                hide-details
+                @click="toggleSelection(item)"
             >
-                {{ data.item.zeitraumFISI }}
-            </v-list-item-subtitle>
+                <template #label>
+                    <v-list-item>
+                        <v-list-item-title>
+                            {{ item.title }}
+                        </v-list-item-title>
+                        <v-list-item-subtitle
+                            v-if="
+                                praktikumsstelle.ausbildungsrichtung === 'FISI'
+                            "
+                        >
+                            {{ item.raw.zeitraumFISI }}
+                        </v-list-item-subtitle>
+                    </v-list-item>
+                </template>
+            </v-checkbox>
         </template>
     </v-select>
 </template>
@@ -60,6 +68,9 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
+
+const selectAll = true;
+
 const praktikumsstelle = computed({
     // getter
     get() {
@@ -90,7 +101,7 @@ const someAusbildungsjahreSelected = computed(() => {
     );
 });
 
-const AusbildungsjahrIcon = computed(() => {
+const ausbildungsjahrIcon = computed(() => {
     if (allAusbildungsjahreSelected.value) return "mdi-checkbox-marked";
     if (someAusbildungsjahreSelected.value) return "mdi-minus-box";
     return "mdi-checkbox-blank-outline";
@@ -110,10 +121,33 @@ function sortAusbildungsjahre() {
     praktikumsstelle.value.ausbildungsjahr?.sort((a, b) => a.localeCompare(b));
 }
 
-function ausbildungsjahrIconColor() {
-    return allAusbildungsjahreSelected.value ||
-        someAusbildungsjahreSelected.value
-        ? "primary"
-        : "darkgrey";
+function toggleSelection(item: {
+    name: string;
+    value: string;
+    zeitraumFISI: string;
+}) {
+    if (praktikumsstelle.value.ausbildungsjahr) {
+        const index = praktikumsstelle.value.ausbildungsjahr.findIndex(
+            (selectedItem) => selectedItem === item.value
+        );
+        if (index > -1) {
+            praktikumsstelle.value.ausbildungsjahr.splice(index, 1);
+        } else {
+            praktikumsstelle.value.ausbildungsjahr.push(item.value);
+        }
+    } else {
+        praktikumsstelle.value.ausbildungsjahr = [];
+        praktikumsstelle.value.ausbildungsjahr.push(item.value);
+    }
+}
+
+function isSelected(item: {
+    name: string;
+    value: string;
+    zeitraumFISI: string;
+}) {
+    return praktikumsstelle.value.ausbildungsjahr?.some(
+        (selectedItem) => selectedItem === item.value
+    );
 }
 </script>

@@ -11,19 +11,20 @@
                         abteilung
                     }}</v-expansion-panel-title>
                     <v-expansion-panel-text>
-                      <v-list>
-                        <v-list-item
-                            v-for="praktikumsstelle in props.praktikumsstellenMap.get(abteilung)"
-                            :key="praktikumsstelle.id"
-                            :ripple="false"
-                        >
-                          <PraktikumsstelleCard
-                              :model-value="praktikumsstelle"
-                              :key="praktikumsstelle.id"
-                          ></PraktikumsstelleCard>
-                        </v-list-item>
-                      </v-list>
-
+                        <v-list>
+                            <v-list-item
+                                v-for="praktikumsstelle in props.praktikumsstellenMap.get(
+                                    abteilung
+                                )"
+                                :key="praktikumsstelle.id"
+                                :ripple="false"
+                            >
+                                <praktikumsstelle-card
+                                    :key="praktikumsstelle.id"
+                                    :model-value="praktikumsstelle"
+                                ></praktikumsstelle-card>
+                            </v-list-item>
+                        </v-list>
                     </v-expansion-panel-text>
                 </v-expansion-panel>
             </v-expansion-panels>
@@ -31,21 +32,14 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
-
 import PraktikumsstelleCard from "@/components/assign/PraktikumsstelleCardZuweisung.vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const props = defineProps<{
     praktikumsstellenMap: Map<string, Praktikumsstelle[]>;
 }>();
-
-const selectedPraktikumsstellen = ref<Praktikumsstelle[]>([]);
 </script>
 <style scoped>
-.spacer {
-    padding-bottom: 10px;
-}
 .custom-panel {
     margin: 2px;
 }

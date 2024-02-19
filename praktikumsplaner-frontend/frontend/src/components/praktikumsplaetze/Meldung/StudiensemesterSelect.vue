@@ -1,55 +1,63 @@
 <template>
     <v-select
         v-model="praktikumsstelle.studiensemester"
-        label="Studiensemester*"
         :items="Studiensemester"
-        item-value="value"
-        item-title="name"
-        :rules="requiredArrayRule"
-        variant="outlined"
+        label="Studienseemster*"
         multiple
+        variant="outlined"
+        item-title="name"
+        item-value="value"
+        :rules="requiredArrayRule"
         @update:model-value="sortSemester"
     >
         <template #prepend-item>
-            <v-list-item
-                ripple
-                @mousedown.prevent
+            <v-checkbox
+                v-model="selectAll"
+                label="Egal"
+                hide-details
+                color="primary"
+                :false-icon="semesterIcon"
+                :true-icon="semesterIcon"
+                :value="allSemesterSelected"
                 @click="selectAllStudiensemester"
             >
-                <v-list-item-action>
-                    <v-icon :color="semesterIconColor()">
-                        {{ semesterIcon }}
-                    </v-icon>
-                </v-list-item-action>
-
-                <v-list-item-title> Egal </v-list-item-title>
-            </v-list-item>
+                <template #label>
+                    <v-list-item>
+                        <v-list-item-title>Egal</v-list-item-title>
+                    </v-list-item>
+                </template>
+            </v-checkbox>
             <v-divider class="mt-2"></v-divider>
         </template>
-        <template #item="data">
-            <v-list-item-action>
-                <v-icon v-if="data.attrs['aria-selected'] === 'true'">
-                    mdi-checkbox-marked
-                </v-icon>
-                <v-icon v-else> mdi-checkbox-blank-outline </v-icon>
-            </v-list-item-action>
-
-            <v-list-item-title>
-                {{ data.item.name }}
-            </v-list-item-title>
-            <v-list-item-subtitle v-if="praktikumsstelle.studiengang === 'BSC'">
-                {{ data.item.zeitraumBSC }}
-            </v-list-item-subtitle>
-            <v-list-item-subtitle
-                v-else-if="praktikumsstelle.studiengang === 'BWI'"
+        <template #item="{ item }">
+            <v-checkbox
+                :model-value="isSelected(item)"
+                hide-details
+                @click="toggleSelection(item)"
             >
-                {{ data.item.zeitraumBWI }}
-            </v-list-item-subtitle>
-            <v-list-item-subtitle
-                v-else-if="praktikumsstelle.studiengang === 'VI'"
-            >
-                {{ data.item.zeitraumVI }}
-            </v-list-item-subtitle>
+                <template #label>
+                    <v-list-item>
+                        <v-list-item-title>
+                            {{ item.title }}
+                        </v-list-item-title>
+                        <v-list-item-subtitle
+                            v-if="praktikumsstelle.studiengang === 'BSC'"
+                        >
+                            {{ item.raw.zeitraumBSC }}
+                        </v-list-item-subtitle>
+                        <v-list-item-subtitle
+                            v-else-if="praktikumsstelle.studiengang === 'BWI'"
+                        >
+                            {{ item.raw.zeitraumBWI }}
+                        </v-list-item-subtitle>
+                        <v-list-item-subtitle
+                            v-else-if="praktikumsstelle.studiengang === 'VI'"
+                        >
+                            {{ item.raw.zeitraumVI }}
+                        </v-list-item-subtitle>
+                    </v-list-item>
+                </template>
+            </v-checkbox>
         </template>
     </v-select>
 </template>
@@ -68,6 +76,8 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
+
+const selectAll = true;
 
 const praktikumsstelle = computed({
     // getter
@@ -105,6 +115,40 @@ const semesterIcon = computed(() => {
     return "mdi-checkbox-blank-outline";
 });
 
+function toggleSelection(item: {
+    name: string;
+    value: string;
+    zeitraumBSC: string;
+    zeitraumBWI: string;
+    zeitraumVI: string;
+}) {
+    if (praktikumsstelle.value.studiensemester) {
+        const index = praktikumsstelle.value.studiensemester.findIndex(
+            (selectedItem) => selectedItem === item.value
+        );
+        if (index > -1) {
+            praktikumsstelle.value.studiensemester.splice(index, 1);
+        } else {
+            praktikumsstelle.value.studiensemester.push(item.value);
+        }
+    } else {
+        praktikumsstelle.value.studiensemester = [];
+        praktikumsstelle.value.studiensemester.push(item.value);
+    }
+}
+
+function isSelected(item: {
+    name: string;
+    value: string;
+    zeitraumBSC: string;
+    zeitraumBWI: string;
+    zeitraumVI: string;
+}) {
+    return praktikumsstelle.value.studiensemester?.some(
+        (selectedItem) => selectedItem === item.value
+    );
+}
+
 function selectAllStudiensemester() {
     if (allSemesterSelected.value) {
         praktikumsstelle.value.studiensemester = [];
@@ -117,11 +161,5 @@ function selectAllStudiensemester() {
 
 function sortSemester() {
     praktikumsstelle.value.studiensemester?.sort((a, b) => a.localeCompare(b));
-}
-
-function semesterIconColor() {
-    return allSemesterSelected.value || someSemesterSelected.value
-        ? "primary"
-        : "darkgrey";
 }
 </script>

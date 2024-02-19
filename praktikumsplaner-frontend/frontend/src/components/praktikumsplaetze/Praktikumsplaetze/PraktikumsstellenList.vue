@@ -7,28 +7,25 @@
                     :key="abteilung"
                     class="custom-panel"
                 >
-                    <v-expansion-panel-header>{{
+                    <v-expansion-panel-title>{{
                         abteilung
-                    }}</v-expansion-panel-header>
-                    <v-expansion-panel-content>
+                    }}</v-expansion-panel-title>
+                    <v-expansion-panel-text>
                         <v-list>
-                            <v-list-item-group>
-                                <v-list-item
-                                    v-for="praktikumsstelle in props.praktikumsstellenMap.get(
-                                        abteilung
-                                    )"
-                                    :key="praktikumsstelle.id"
-                                    :ripple="false"
-                                >
-                                    <PraktikumsstelleCard
-                                        :key="praktikumsstelle.assignedNwk?.id"
-                                        :value="praktikumsstelle"
-                                        :praktikumsstelle="praktikumsstelle"
-                                    ></PraktikumsstelleCard>
-                                </v-list-item>
-                            </v-list-item-group>
+                            <v-list-item
+                                v-for="praktikumsstelle in props.praktikumsstellenMap.get(
+                                    abteilung
+                                )"
+                                :key="praktikumsstelle.id"
+                                :ripple="false"
+                            >
+                                <praktikumsstelle-card
+                                    :key="praktikumsstelle.assignedNwk?.id"
+                                    :model-value="praktikumsstelle"
+                                ></praktikumsstelle-card>
+                            </v-list-item>
                         </v-list>
-                    </v-expansion-panel-content>
+                    </v-expansion-panel-text>
                 </v-expansion-panel>
             </v-expansion-panels>
         </v-container>
@@ -43,12 +40,7 @@ const props = defineProps<{
 }>();
 </script>
 <style scoped>
-.spacer {
-    padding-bottom: 10px;
-}
 .custom-panel {
-    background-color: #f0f0f0;
-    border: 2px solid #ccc;
     margin: 2px;
 }
 </style>

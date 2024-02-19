@@ -4,23 +4,6 @@
         @dragover.prevent
         @dragenter.prevent
     >
-        <yes-no-dialog-without-activator
-            v-model="warningDialog"
-            :dialogtitle="warningDialogTitle"
-            :dialogtext="warningDialogText"
-            @no="resetWarningDialog"
-            @yes="assignNwk"
-            value
-        ></yes-no-dialog-without-activator>
-
-        <yes-no-dialog-without-activator
-            v-model="unassignConfirmDialog"
-            :dialogtitle="unassignDialogTitle"
-            :dialogtext="unassignDialogContent"
-            @no="resetUnassign"
-            @yes="unassignNwk"
-            value
-        ></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
             :class="{
@@ -38,12 +21,12 @@
                 Namentliche Anforderung:
                 {{ props.modelValue.namentlicheAnforderung }}
             </v-card-subtitle>
-          <v-icon
-                  v-if="props.modelValue.planstelleVorhanden"
-                  x-large
-                  class="icon-top-right-position"
-                  icon="mdi-account-star"
-          ></v-icon>
+            <v-icon
+                v-if="props.modelValue.planstelleVorhanden"
+                size="x-large"
+                class="icon-top-right-position"
+                icon="mdi-account-star"
+            ></v-icon>
             <v-card-text class="pt-0 mt-0 mb-0 pb-0">
                 <p style="white-space: pre-line">
                     {{ getCardText(props.modelValue) }}
@@ -58,15 +41,14 @@
                     v-if="assignedNwk && !loading"
                     :color="getNwkColor(assignedNwk)"
                     variant="flat"
-                    >{{
-                        `${assignedNwk.vorname} ${assignedNwk.nachname}`
-                    }}
-                  <template #close>
-                    <v-icon icon="mdi-close-circle" @click.stop="openConfirmationDialog(modelValue)" />
-                  </template>
-                </v-chip
-                ></v-col
-            >
+                    >{{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
+                    <template #close>
+                        <v-icon
+                            icon="mdi-close-circle"
+                            @click.stop="openConfirmationDialog(modelValue)"
+                        />
+                    </template> </v-chip
+            ></v-col>
             <v-btn
                 :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
                 class="icon-bottom-right-position"
@@ -84,6 +66,23 @@
                 </div>
             </v-expand-transition>
         </v-card>
+        <yes-no-dialog-without-activator
+            v-model="warningDialog"
+            :dialogtitle="warningDialogTitle"
+            :dialogtext="warningDialogText"
+            value
+            @no="resetWarningDialog"
+            @yes="assignNwk"
+        ></yes-no-dialog-without-activator>
+
+        <yes-no-dialog-without-activator
+            v-model="unassignConfirmDialog"
+            :dialogtitle="unassignDialogTitle"
+            :dialogtext="unassignDialogContent"
+            value
+            @no="resetUnassign"
+            @yes="unassignNwk"
+        ></yes-no-dialog-without-activator>
     </v-container>
 </template>
 <script setup lang="ts">
@@ -157,7 +156,7 @@ function drop(event: DragEvent, stelle: Praktikumsstelle) {
         return;
     }
 
-    let warnings = warningsGenerator.getBeforeAssignmentWarnings(
+    const warnings = warningsGenerator.getBeforeAssignmentWarnings(
         stelle,
         nwkToAssignUnassing.value
     );
@@ -239,31 +238,6 @@ function getNwkColor(nwk: Nwk): string {
 
 .card {
     padding-right: 45px;
-}
-.custom-card-title {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-}
-
-.custom-card-text {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    padding-top: 1px;
-}
-
-.custom-card-actions {
-    margin-top: 5px;
-    padding-top: 1px;
-}
-.custom-card-title {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-}
-
-.custom-card-text {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    padding-top: 1px;
 }
 .icon-top-right-position {
     position: absolute;
