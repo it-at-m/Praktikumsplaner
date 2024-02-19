@@ -14,35 +14,40 @@
                     Erstellen
                 </v-btn>
             </template>
-            <v-form ref="form">
+            <v-form
+                ref="form"
+                class="no-scrollbar"
+            >
                 <v-card>
                     <v-card-title class="text-h5 font-weight-bold"
                         >NWK anlegen</v-card-title
                     >
                     <v-list>
                         <v-row>
-                            <NameInput v-model="nwk"></NameInput>
+                            <v-list-item>
+                                <NameInput v-model="nwk"></NameInput>
+                            </v-list-item>
                         </v-row>
                         <v-row>
-                            <v-col>
-                                <v-list-item>
+                            <v-list-item>
+                                <v-col cols="6">
                                     <JahrgangInput
                                         v-model="nwk"
                                     ></JahrgangInput>
-                                </v-list-item>
-                            </v-col>
-                            <v-col>
-                                <v-list-item>
+                                </v-col>
+                                <v-col cols="6">
                                     <VorlesungstageSelector
                                         v-model="nwk"
                                     ></VorlesungstageSelector>
-                                </v-list-item>
-                            </v-col>
+                                </v-col>
+                            </v-list-item>
                         </v-row>
                         <v-row>
-                            <StudienrichtungOrAusbildungsrichtungSelect
-                                v-model="nwk"
-                            ></StudienrichtungOrAusbildungsrichtungSelect>
+                            <v-list-item>
+                                <StudienrichtungOrAusbildungsrichtungSelect
+                                    v-model="nwk"
+                                ></StudienrichtungOrAusbildungsrichtungSelect>
+                            </v-list-item>
                         </v-row>
                     </v-list>
                     <v-card-actions>
@@ -110,5 +115,7 @@ function saveNwk() {
 </script>
 
 <style scoped>
-
+.no-scrollbar {
+    overflow: hidden !important;
+}
 </style>
