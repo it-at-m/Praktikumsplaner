@@ -30,11 +30,12 @@
         <v-row>
             <v-spacer></v-spacer>
             <v-btn
+                prepend-icon="mdi-mail"
                 color="primary"
                 class="mr-4"
-                variant="text"
                 @click="openMailWarningDialog"
-            ></v-btn>
+                >Mails senden</v-btn
+            >
             <excel-export
                 :start-download="startDownload"
                 @click="openExcelWarnings"

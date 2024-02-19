@@ -157,7 +157,8 @@ function cancel() {
 }
 
 function updateNwk() {
-    if (!form.value?.validate()) {
+    form.value?.validate();
+    if (!form.value?.isValid) {
         return;
     }
     loading.value = true;
