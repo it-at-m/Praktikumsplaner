@@ -42,7 +42,8 @@
                   v-if="props.modelValue.planstelleVorhanden"
                   x-large
                   class="icon-top-right-position"
-          >mdi-account-star</v-icon>
+                  icon="mdi-account-star"
+          ></v-icon>
             <v-card-text class="pt-0 mt-0 mb-0 pb-0">
                 <p style="white-space: pre-line">
                     {{ getCardText(props.modelValue) }}
@@ -56,16 +57,20 @@
                 <v-chip
                     v-if="assignedNwk && !loading"
                     :color="getNwkColor(assignedNwk)"
-                    closable
-                    @click:close="openConfirmationDialog(modelValue)"
+                    variant="flat"
                     >{{
                         `${assignedNwk.vorname} ${assignedNwk.nachname}`
-                    }}</v-chip
+                    }}
+                  <template #close>
+                    <v-icon icon="mdi-close-circle" @click.stop="openConfirmationDialog(modelValue)" />
+                  </template>
+                </v-chip
                 ></v-col
             >
             <v-btn
                 :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
                 class="icon-bottom-right-position"
+                elevation="0"
                 @click.stop="show = !show"
             ></v-btn>
             <v-expand-transition>

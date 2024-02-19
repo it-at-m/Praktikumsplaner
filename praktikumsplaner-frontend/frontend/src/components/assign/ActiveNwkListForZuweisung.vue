@@ -17,6 +17,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 
 import NwkCard from "@/components/assign/NwkCard.vue";
 import Nwk from "@/types/Nwk";
+import emitter from "@/stores/eventBus";
 
 const props = defineProps<{
     modelValue: Nwk[];
@@ -27,13 +28,6 @@ const emits = defineEmits<{
 }>();
 
 const selectedNwks = ref<Nwk[]>([]);
-
-type Events = {
-    assignedNwk: Nwk;
-    unassignedNwk: Nwk;
-};
-
-const emitter = mitt<Events>();
 
 onMounted(() => {
     emitter.on("assignedNwk", removeNwkFromList);
