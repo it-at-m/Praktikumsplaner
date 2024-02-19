@@ -12,7 +12,6 @@
                         <v-img
                             max-height="50"
                             max-width="50"
-                            contain
                             src="@/assets/logo.png"
                         ></v-img>
                     </router-link>

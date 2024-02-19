@@ -12,7 +12,6 @@
     </v-list>
 </template>
 <script setup lang="ts">
-import mitt from "mitt";
 import { onMounted, onUnmounted, ref } from "vue";
 
 import NwkCard from "@/components/assign/NwkCard.vue";
