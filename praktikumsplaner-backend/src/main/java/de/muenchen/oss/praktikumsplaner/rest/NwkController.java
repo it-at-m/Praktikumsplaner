@@ -37,7 +37,6 @@ public class NwkController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveNwk(@RequestBody final CreateNwkDto createNwkDto) {
-        //Mögliche Abfrage ob die Nwk schon existiert
         nwkService.saveNwk(createNwkDto);
     }
 
