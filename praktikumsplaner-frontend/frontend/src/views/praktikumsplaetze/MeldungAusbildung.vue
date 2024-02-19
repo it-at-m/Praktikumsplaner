@@ -28,11 +28,8 @@
                 back-button-url="/praktikumsplaetze"
                 page-header-text="Praktikumsplatz für Auszubildende"
             ></page-title>
-            <div v-if="!activeMeldezeitraum">
-                <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
-            </div>
             <v-form
-                v-else
+                v-if="canStellenBeSubmitted()"
                 ref="form"
                 lazy-validation
             >
@@ -151,7 +148,7 @@
                     </v-row>
                 </v-container>
                 <v-container
-                    v-show="isAusbildungsleitung"
+                    v-if="isAusbildungsleitung"
                     class="box"
                 >
                     <v-row>
@@ -185,6 +182,7 @@
                     </v-row>
                 </v-container>
             </v-form>
+            <KeinMeldezeitraumMessage v-else></KeinMeldezeitraumMessage>
         </v-container>
         <progress-circular-overlay
             :loading="loading"
@@ -221,13 +219,15 @@ import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/Proj
 import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
-const activeMeldezeitraum = ref<boolean>(false);
-
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
-const isAusbildungsleitung = ref<boolean>(false);
 const loadingSite = ref<boolean>(true);
+const isAusbildungsleitung = computed(
+    () =>
+        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
+        APP_SECURITY !== "true"
+);
 const loading = ref<boolean>(false);
 const userStore = useUserStore();
 const form = ref<HTMLFormElement>();
@@ -249,24 +249,24 @@ const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
         .then((zeitraueme) => {
-            activeMeldezeitraum.value = zeitraueme.length > 0;
             currentMeldezeitraum.value = zeitraueme[0];
-        })
-        .then(() => {
-            if (
-                userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-                APP_SECURITY !== "true"
-            ) {
-                isAusbildungsleitung.value = true;
-                activeMeldezeitraum.value = true;
-                getUpcomingMeldezeitraeume();
-                getPassedMeldezeitraeume();
-            }
         })
         .finally(() => {
             loadingSite.value = false;
         });
+
+    if (isAusbildungsleitung.value) {
+        getUpcomingMeldezeitraeume();
+        getPassedMeldezeitraeume();
+    }
 });
+
+function canStellenBeSubmitted() {
+    return (
+        isAusbildungsleitung.value ||
+        currentMeldezeitraum.value
+    );
+}
 
 function getUpcomingMeldezeitraeume() {
     MeldezeitraumService.getUpcomingMeldezeitraueme().then((zeitraeume) => {
@@ -284,13 +284,11 @@ function resetForm() {
     form.value?.reset();
     router.push("/praktikumsplaetze");
 }
+
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
     loading.value = true;
-    if (
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true"
-    ) {
+    if (isAusbildungsleitung.value) {
         MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
             praktikumsstelle.value
         ).finally(() => {
