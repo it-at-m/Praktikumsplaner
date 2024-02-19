@@ -143,7 +143,7 @@
                     </v-row>
                 </v-container>
                 <v-container
-                    v-show="isAusbildungsleitung"
+                    v-if="isAusbildungsleitung"
                     class="box"
                 >
                     <v-row>
@@ -179,6 +179,9 @@
             </v-form>
             <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
         </v-container>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
     </v-container>
 </template>
 
@@ -208,6 +211,8 @@ import index from "@/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import StudienrichtungSelect from "@/components/praktikumsplaetze/Meldung/StudienrichtungSelect.vue";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -215,6 +220,7 @@ const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
 const loadingSite = ref<boolean>(true);
+const loading = ref<boolean>(false);
 const isAusbildungsleitung = computed(
     () =>
         userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
@@ -255,8 +261,7 @@ onMounted(() => {
 
 function canStellenBeSubmitted() {
     return (
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true" ||
+        isAusbildungsleitung.value ||
         currentMeldezeitraum.value
     );
 }
@@ -280,19 +285,21 @@ function resetForm() {
 
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
+    loading.value = true;
     if (
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true"
+        isAusbildungsleitung.value
     ) {
         MeldungService.uploadStudiumsPraktikumsstelleWithMeldezeitraum(
             praktikumsstelle.value
         ).finally(() => {
+            loading.value = false;
             resetForm();
         });
     } else {
         MeldungService.uploadStudiumsPraktikumsstelle(
             praktikumsstelle.value
         ).finally(() => {
+            loading.value = false;
             resetForm();
         });
     }

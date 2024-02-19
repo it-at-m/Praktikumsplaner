@@ -130,8 +130,7 @@ onMounted(() => {
 
 function canStellenBeSubmitted() {
     return (
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true" ||
+        isAusbildungsleitung.value ||
         activeMeldezeitraum.value
     );
 }
