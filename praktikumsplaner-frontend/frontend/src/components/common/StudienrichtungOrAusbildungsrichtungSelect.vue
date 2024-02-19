@@ -1,10 +1,10 @@
 <template>
     <v-container>
-        <v-row>
-            <v-col>
+        <v-col>
+            <v-row>
                 <v-list-item>
                     <v-select
-                        v-model="nwkProp.studiengang"
+                        v-model="nwk.studiengang"
                         label="Studienrichtung"
                         :items="Studiengang"
                         item-value="value"
@@ -12,14 +12,14 @@
                         outlined
                         clearable
                         :rules="isStudiumOrAusbildungRule"
-                        @click:clear="nwkProp.studiengang = undefined"
+                        @click:clear="clearStudienrichtung()"
                     ></v-select>
                 </v-list-item>
-            </v-col>
-            <v-col>
+            </v-row>
+            <v-row>
                 <v-list-item>
                     <v-select
-                        v-model="nwkProp.ausbildungsrichtung"
+                        v-model="nwk.ausbildungsrichtung"
                         label="Ausbildungsrichtung"
                         :items="Ausbildungsrichtung"
                         item-value="value"
@@ -27,11 +27,11 @@
                         outlined
                         clearable
                         :rules="isStudiumOrAusbildungRule"
-                        @click:clear="nwkProp.ausbildungsrichtung = undefined"
+                        @click:clear="clearAusbildungsrichtung()"
                     ></v-select>
                 </v-list-item>
-            </v-col>
-        </v-row>
+            </v-row>
+        </v-col>
     </v-container>
 </template>
 
@@ -42,24 +42,32 @@ import NwkCreate from "@/types/NwkCreate";
 import { computed } from "vue";
 
 const props = defineProps<{
-    nwk: NwkCreate;
+    value: NwkCreate;
 }>();
 
 const emits = defineEmits<{
     (e: "updated", v: NwkCreate): void;
 }>();
 
-const nwkProp = computed({
-    get: () => props.nwk,
+const nwk = computed({
+    get: () => props.value,
     set: (v) => emits("updated", v),
 });
 
+function clearAusbildungsrichtung() {
+    nwk.value.ausbildungsrichtung = undefined;
+}
+
+function clearStudienrichtung() {
+    nwk.value.studiengang = undefined;
+}
+
 const isStudiumOrAusbildungRule = computed(() => {
     return [
-        (nwkProp.value.studiengang != undefined &&
-            nwkProp.value.ausbildungsrichtung == undefined) ||
-            (nwkProp.value.studiengang == undefined &&
-                nwkProp.value.ausbildungsrichtung != undefined) ||
+        (nwk.value.studiengang != undefined &&
+            nwk.value.ausbildungsrichtung == undefined) ||
+            (nwk.value.studiengang == undefined &&
+                nwk.value.ausbildungsrichtung != undefined) ||
             "Es muss eine Studienrichtung oder eine Ausbildungsrichtung angegeben werden.",
     ];
 });
