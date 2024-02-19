@@ -8,13 +8,12 @@
       Exportieren
     </v-btn>
     <ErrorDialog
-        :dialog-text="errorDialogText"
-        :dialog-title="errorDialogTitle"
-        icon-text="mdi mdi-alert-octagon-outline"
-        icon-color="red"
+        :dialogtext="errorDialogText"
+        :dialogtitle="errorDialogTitle"
+        icontext="mdi mdi-alert-octagon-outline"
+        iconcolor="red"
         v-model="errorDialog"
-        @close="errorDialog = false"
-    ></ErrorDialog>
+        @close="errorDialog = false"></ErrorDialog>
     <ProgressCircularOverlay
         :loading="loading"
     ></ProgressCircularOverlay>
