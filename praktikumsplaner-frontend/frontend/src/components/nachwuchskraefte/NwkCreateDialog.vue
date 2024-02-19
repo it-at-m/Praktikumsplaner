@@ -85,6 +85,7 @@ import VorlesungstageSelector from "@/components/nachwuchskraefte/Vorlesungstage
 import StudienrichtungOrAusbildungsrichtungSelect from "@/components/common/StudienrichtungOrAusbildungsrichtungSelect.vue";
 import NameInput from "@/components/common/NameInput.vue";
 import JahrgangInput from "@/components/common/JahrgangInput.vue";
+import { EventBus } from "@/stores/event-bus";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
@@ -92,10 +93,6 @@ const form = ref<HTMLFormElement>();
 const validationRules = useRules();
 
 const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
-
-const emits = defineEmits<{
-    (e: "nwkCreated"): void;
-}>();
 
 function cancel() {
     visible.value = false;
@@ -109,7 +106,7 @@ function saveNwk() {
     cancel();
     NwkService.saveNwk(nwk.value).finally(() => {
         loading.value = false;
-        emits("nwkCreated");
+        EventBus.$emit("nwkCreated");
     });
 }
 </script>
