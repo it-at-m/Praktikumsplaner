@@ -56,8 +56,8 @@
                 </div>
             </v-expand-transition>
             <v-card-actions>
-                <v-btn @click.stop="warningDialog = true"
-                    ><v-icon>mdi-delete</v-icon></v-btn
+                <v-btn @click.stop="openDialog()"
+                    ><v-icon color="red">mdi-delete</v-icon></v-btn
                 >
             </v-card-actions>
         </v-card>
@@ -69,21 +69,17 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { useTextGenerator } from "@/composables/textGenerator";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import { EventBus } from "@/stores/event-bus";
 
 const props = defineProps<{
     value: Praktikumsstelle;
 }>();
 
-const emits = defineEmits<{
-    (e: "deleted"): void;
-}>();
-
 const warningDialog = ref<boolean>(false);
-const warningDialogTitle = ref("Löschen?");
+const warningDialogTitle = ref("Unwiderrufliche Aktion!");
 const warningDialogText = ref(
     "Wollen Sie die Praktikumsstelle wirklich löschen?"
 );
-const isActive = ref<boolean>(true);
 const show = ref<boolean>(false);
 const assignedNwk = ref(props.value.assignedNwk);
 const generator = useTextGenerator();
@@ -100,11 +96,14 @@ function delPraktikumsstelle(uuid: string | undefined) {
     if (props.value.id) {
         resetWarningDialog();
         PraktikumsstellenService.deletePraktikumsstelle(uuid!).then(() => {
-            emits("deleted");
+            EventBus.$emit("deleted");
         });
     }
 }
 
+function openDialog() {
+    warningDialog.value = true;
+}
 function resetWarningDialog() {
     warningDialog.value = false;
 }
