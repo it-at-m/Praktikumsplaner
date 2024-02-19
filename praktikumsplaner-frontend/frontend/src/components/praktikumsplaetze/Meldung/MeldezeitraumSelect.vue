@@ -2,21 +2,41 @@
     <v-select
         v-model="stelle.meldezeitraumID"
         label="Meldezeitraum*"
-        :items="props.meldezeitraueme"
         item-value="id"
         item-title="zeitraumName"
+        :items="props.meldezeitraueme"
         variant="outlined"
+        @select="onClick"
     >
-        <template #item="data">
-            {{ data.item.zeitraumName }}:
+        <template #item="{ props, item }">
+            <v-list-item v-bind="props">
+                <v-list-item-title>
+                    {{
+                        formatter.formatDateFromString(
+                            item.raw.zeitraum.startZeitpunkt
+                        )
+                    }}
+                    -
+                    {{
+                        formatter.formatDateFromString(
+                            item.raw.zeitraum.endZeitpunkt
+                        )
+                    }}
+                </v-list-item-title>
+            </v-list-item>
+        </template>
+        <template #selection="{ item }">
+            {{ item.raw.zeitraumName }} :
             {{
                 formatter.formatDateFromString(
-                    data.item.zeitraum.startZeitpunkt
+                    item.raw.zeitraum.startZeitpunkt
                 )
             }}
             -
             {{
-                formatter.formatDateFromString(data.item.zeitraum.endZeitpunkt)
+                formatter.formatDateFromString(
+                    item.raw.zeitraum.endZeitpunkt
+                )
             }}
         </template>
     </v-select>
@@ -49,4 +69,9 @@ const stelle = computed({
         emits("update:modelValue", newValue);
     },
 });
+
+function onClick(item: Meldezeitraum) {
+    stelle.value.meldezeitraumID = item.id;
+    emits("update:modelValue", stelle.value);
+}
 </script>
