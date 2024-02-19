@@ -10,7 +10,7 @@
                 <excel-import-nwk></excel-import-nwk>
             </v-col>
             <v-col>
-                <NwkCreateDialog @nwkCreated="created"></NwkCreateDialog>
+                <NwkCreateDialog></NwkCreateDialog>
             </v-col>
         </v-row>
         <v-row></v-row>
@@ -22,16 +22,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import ActiveNwkList from "@/components/nachwuchskraefte/ActiveNwkList.vue";
 import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
+import { EventBus } from "@/stores/event-bus";
 
-const nwkList = ref();
-function created() {
-    nwkList.value.loadAllActiveNwks();
-}
+EventBus.$on("nwkCreated", () => {
+    EventBus.$emit("nwkCreated");
+});
 </script>
 
 <style scoped>
