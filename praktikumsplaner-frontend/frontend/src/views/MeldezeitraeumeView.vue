@@ -22,6 +22,7 @@
                     <meldezeitraum-list
                         v-if="!loading"
                         :value="current"
+                        @delete="reloadMeldezeitraeume"
                     >
                         <template #card-title-icon>
                             <v-icon>mdi-star</v-icon>
@@ -38,6 +39,7 @@
                     <meldezeitraum-list
                         v-if="!loading"
                         :value="upcoming"
+                        @delete="reloadMeldezeitraeume"
                         ><template #header>
                             <h3>Kommende Meldezeiträume</h3>
                         </template>
@@ -53,6 +55,7 @@
                     <meldezeitraum-list
                         v-if="!loading"
                         :value="passed"
+                        @delete="reloadMeldezeitraeume"
                         ><template #header>
                             <h3>Vergangene Meldezeiträume</h3>
                         </template>
