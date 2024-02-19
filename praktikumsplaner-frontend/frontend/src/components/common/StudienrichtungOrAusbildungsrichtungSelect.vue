@@ -2,34 +2,30 @@
     <v-container>
         <v-col>
             <v-row>
-                <v-list-item>
-                    <v-select
-                        v-model="nwk.studiengang"
-                        label="Studienrichtung"
-                        :items="Studiengang"
-                        item-value="value"
-                        item-text="name"
-                        outlined
-                        clearable
-                        :rules="isStudiumOrAusbildungRule"
-                        @click:clear="clearStudienrichtung()"
-                    ></v-select>
-                </v-list-item>
+                <v-select
+                    v-model="nwk.studiengang"
+                    label="Studienrichtung"
+                    :items="Studiengang"
+                    item-value="value"
+                    item-text="name"
+                    outlined
+                    clearable
+                    :rules="isStudiumOrAusbildungRule"
+                    @click:clear="clearStudienrichtung()"
+                ></v-select>
             </v-row>
             <v-row>
-                <v-list-item>
-                    <v-select
-                        v-model="nwk.ausbildungsrichtung"
-                        label="Ausbildungsrichtung"
-                        :items="Ausbildungsrichtung"
-                        item-value="value"
-                        item-text="name"
-                        outlined
-                        clearable
-                        :rules="isStudiumOrAusbildungRule"
-                        @click:clear="clearAusbildungsrichtung()"
-                    ></v-select>
-                </v-list-item>
+                <v-select
+                    v-model="nwk.ausbildungsrichtung"
+                    label="Ausbildungsrichtung"
+                    :items="Ausbildungsrichtung"
+                    item-value="value"
+                    item-text="name"
+                    outlined
+                    clearable
+                    :rules="isStudiumOrAusbildungRule"
+                    @click:clear="clearAusbildungsrichtung()"
+                ></v-select>
             </v-row>
         </v-col>
     </v-container>

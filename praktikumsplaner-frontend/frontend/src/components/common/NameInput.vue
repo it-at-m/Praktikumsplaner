@@ -1,25 +1,21 @@
 <template>
     <v-container>
         <v-row>
-            <v-col>
-                <v-list-item>
-                    <v-text-field
-                        v-model="nwk.vorname"
-                        label="Vorname"
-                        :rules="nameRule"
-                        outlined
-                    ></v-text-field>
-                </v-list-item>
+            <v-col cols="6">
+                <v-text-field
+                    v-model="nwk.vorname"
+                    label="Vorname"
+                    :rules="nameRule"
+                    outlined
+                ></v-text-field>
             </v-col>
-            <v-col>
-                <v-list-item>
-                    <v-text-field
-                        v-model="nwk.nachname"
-                        label="Nachname"
-                        :rules="nameRule"
-                        outlined
-                    ></v-text-field>
-                </v-list-item>
+            <v-col cols="6">
+                <v-text-field
+                    v-model="nwk.nachname"
+                    label="Nachname"
+                    :rules="nameRule"
+                    outlined
+                ></v-text-field>
             </v-col>
         </v-row>
     </v-container>
