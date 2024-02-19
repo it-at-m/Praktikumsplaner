@@ -1,18 +1,16 @@
 <template>
     <div>
+      <v-btn
+          prepend-icon="mdi-pencil-outline"
+          color="primary"
+          variant="outlined"
+          @click="visible = true"
+      >Bearbeiten</v-btn>
         <v-dialog
             v-model="visible"
             persistent
             max-width="550"
         >
-            <template #activator="{ on }">
-                <v-btn
-                    color="primary"
-                    v-on="on"
-                    prepend-icon="mdi-pencil-outline"
-                    variant="outlined"
-                >Bearbeiten</v-btn>
-            </template>
             <v-form ref="form">
                 <v-card>
                     <v-card-title class="text-h5 font-weight-bold"
@@ -78,13 +76,14 @@
                         <v-spacer />
                         <v-btn
                             color="primary"
-                            outlined
+                            variant="outlined"
                             @click="cancel()"
                         >
                             Abbrechen
                         </v-btn>
                         <v-btn
                             color="primary"
+                            variant="flat"
                             @click="updateNwk()"
                         >
                             Akzeptieren

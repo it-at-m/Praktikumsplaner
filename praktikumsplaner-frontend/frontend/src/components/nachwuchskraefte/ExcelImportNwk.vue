@@ -24,10 +24,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn color="primary" outlined @click="cancel()">
+            <v-btn color="primary" variant="outlined" @click="cancel()">
               Abbrechen
             </v-btn>
-            <v-btn color="primary" @click="uploadFile()">
+            <v-btn color="primary" variant="flat" @click="uploadFile()">
               Hochladen
             </v-btn>
           </v-card-actions>
