@@ -15,9 +15,9 @@
                 v-model="selectAll"
                 label="Egal"
                 hide-details
+                color="primary"
                 :false-icon="ausbildungsjahrIcon"
                 :true-icon="ausbildungsjahrIcon"
-                color="primary"
                 :value="allAusbildungsjahreSelected"
                 @click="selectAllAusbildungsjahre"
             >
@@ -135,7 +135,7 @@ function toggleSelection(item: {
         } else {
             praktikumsstelle.value.ausbildungsjahr.push(item.value);
         }
-    }else{
+    } else {
         praktikumsstelle.value.ausbildungsjahr = [];
         praktikumsstelle.value.ausbildungsjahr.push(item.value);
     }

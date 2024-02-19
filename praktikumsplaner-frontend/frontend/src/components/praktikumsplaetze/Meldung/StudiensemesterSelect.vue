@@ -15,17 +15,15 @@
                 v-model="selectAll"
                 label="Egal"
                 hide-details
+                color="primary"
                 :false-icon="semesterIcon"
                 :true-icon="semesterIcon"
-                color="primary"
                 :value="allSemesterSelected"
                 @click="selectAllStudiensemester"
             >
                 <template #label>
                     <v-list-item>
-                        <v-list-item-title>
-                           Egal
-                        </v-list-item-title>
+                        <v-list-item-title>Egal</v-list-item-title>
                     </v-list-item>
                 </template>
             </v-checkbox>
@@ -133,11 +131,10 @@ function toggleSelection(item: {
         } else {
             praktikumsstelle.value.studiensemester.push(item.value);
         }
-    }else{
+    } else {
         praktikumsstelle.value.studiensemester = [];
         praktikumsstelle.value.studiensemester.push(item.value);
     }
-
 }
 
 function isSelected(item: {
@@ -165,6 +162,4 @@ function selectAllStudiensemester() {
 function sortSemester() {
     praktikumsstelle.value.studiensemester?.sort((a, b) => a.localeCompare(b));
 }
-
-
 </script>
