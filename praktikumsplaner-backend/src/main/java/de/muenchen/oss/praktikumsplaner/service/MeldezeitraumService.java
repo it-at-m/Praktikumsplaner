@@ -4,11 +4,14 @@ import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
+import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
+import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,8 @@ import org.springframework.stereotype.Service;
 public class MeldezeitraumService {
     private final MeldezeitraumMapper meldezeitraumMapper;
     private final MeldezeitraumRepository meldezeitraumRepository;
+    private final AusbildungsPraktikumsstellenRepository ausbildungsPraktikumsstellenRepository;
+    private final StudiumsPraktikumsstellenRepository studiumsPraktikumsstellenRepository;
 
     public MeldezeitraumDto createMeldezeitraum(final CreateMeldezeitraumDto meldezeitraumCreateDto) {
         checkOverlappingMeldezeitraum(meldezeitraumCreateDto);
@@ -57,5 +62,11 @@ public class MeldezeitraumService {
 
     public List<MeldezeitraumDto> getAllMeldezeitraeume() {
         return meldezeitraumRepository.findAll().stream().map(meldezeitraumMapper::toDto).toList();
+    }
+
+    public void deleteMeldezeitraumAndAttachedPraktikumsstellen(UUID id) {
+        ausbildungsPraktikumsstellenRepository.deleteAll(ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(id));
+        studiumsPraktikumsstellenRepository.deleteAll(studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(id));
+        meldezeitraumRepository.deleteById(id);
     }
 }
