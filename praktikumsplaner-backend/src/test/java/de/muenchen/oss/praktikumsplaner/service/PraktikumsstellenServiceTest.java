@@ -478,17 +478,17 @@ public class PraktikumsstellenServiceTest {
     }
 
     @Test
-    public void testDeletePraktikumsstelle(){
+    public void testDeletePraktikumsstelle() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = helper.createAusbildungsPraktikumsstelleEntity("KM81", "Max Musterfrau", "max@musterfrau.de",
-            "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
-            Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, false, meldezeitraumDto.id(),
-            helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+                "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
+                Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, false, meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle = helper.createStudiumsPraktikumsstelleEntity("GL13", "John Smith", "John@smith.com",
-            "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT,
-            Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, "true", meldezeitraumDto.id(),
-            helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+                "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT,
+                Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, "true", meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
 
         ausbildungsRepository.save(ausbildungsPraktikumsstelle);
         studiumsRepository.save(studiumsPraktikumsstelle);
