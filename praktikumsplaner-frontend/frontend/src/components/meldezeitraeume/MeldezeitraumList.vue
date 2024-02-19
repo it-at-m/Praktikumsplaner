@@ -30,16 +30,16 @@
                                 }}
                             </v-list-item-subtitle>
                         </v-list-item-content>
+                        <v-list-item-action>
+                            <v-btn
+                                icon
+                                @click="warnBeforeDelete(meldezeitraum)"
+                            >
+                                <v-icon>mdi-delete</v-icon>
+                            </v-btn>
+                        </v-list-item-action>
                     </v-list-item>
                     <v-divider></v-divider>
-                    <v-card-actions>
-                        <v-btn
-                            icon
-                            @click="warnBeforeDelete(meldezeitraum)"
-                        >
-                            <v-icon> mdi-delete </v-icon>
-                        </v-btn>
-                    </v-card-actions>
                 </v-card>
             </v-list>
             <slot
