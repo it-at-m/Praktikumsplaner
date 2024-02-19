@@ -1,6 +1,6 @@
 <template>
     <v-dialog
-        v-model="props.visible"
+        v-model="computedVisible"
         max-width="500px"
     >
         <v-card>
@@ -43,6 +43,10 @@ const props = defineProps<{
 }>();
 
 const currentIndex = ref(0);
+
+const computedVisible = computed(() => {
+    return props.visible;
+});
 
 const currentWarning = computed(() => {
     if (currentIndex.value < props.warnings.length) {

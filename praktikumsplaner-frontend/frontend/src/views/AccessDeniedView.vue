@@ -18,12 +18,10 @@
     </div>
 </template>
 
-<script>
-export default {
-    methods: {
-        goBack() {
-            this.$router.push({ name: "home" });
-        },
-    },
-};
+<script setup lang="ts">
+import router from "@/router";
+
+function goBack() {
+    router.push({ name: "home" });
+}
 </script>

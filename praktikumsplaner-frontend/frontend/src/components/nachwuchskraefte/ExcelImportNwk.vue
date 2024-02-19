@@ -52,8 +52,8 @@
             :dialogtitle="errorDialogTitle"
             icontext="mdi mdi-alert-octagon-outline"
             iconcolor="red"
-            :value="errorDialog"
-            @close="errorDialog = false"
+            :value="errorDialogVisible"
+            @close="errorDialogVisible = false"
         ></error-dialog>
         <progress-circular-overlay :loading="loading" />
     </div>
@@ -87,7 +87,7 @@ const rules = [
         "Falsches Dateiformat. Es muss eine Excel-Datei hochgeladen werden."
     ),
 ];
-const errorDialog = ref<boolean>(false);
+const errorDialogVisible = ref<boolean>(false);
 const errorDialogText = ref<string>(
     "Ihre Exceldatei konnte nicht hochgeladen werde. Bitte überprüfen Sie die Datei und versuchen Sie es erneut."
 );
@@ -121,7 +121,7 @@ function uploadFile() {
 
 function showError() {
     visible.value = false;
-    errorDialog.value = true;
+    errorDialogVisible.value = true;
 }
 </script>
 

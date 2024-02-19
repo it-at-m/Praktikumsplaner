@@ -1,13 +1,13 @@
 <template>
     <v-menu max-width="100%">
-        <template #activator="{ props }">
+        <template #activator="{ properties }">
             <v-text-field
                 ref="dateField"
                 :prepend-icon="props.prependIcon"
                 :label="props.label"
                 :model-value="formatDate(props.value)"
                 :rules="props.rules"
-                v-bind="props"
+                v-bind="properties"
             ></v-text-field>
         </template>
         <v-date-picker

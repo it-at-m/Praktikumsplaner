@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-dialog
-            v-model="props.showDialog"
+            v-model="computedShowDialog"
             max-width="850px"
             persistent
             @update:model-value="closeSendMailDialog"
@@ -147,6 +147,10 @@ const props = defineProps<{
 
 const allValid = computed(() => {
     return form.value?.checkValidity();
+});
+
+const computedShowDialog = computed(() => {
+    return props.showDialog;
 });
 
 const emit = defineEmits(["update:showDialog"]);

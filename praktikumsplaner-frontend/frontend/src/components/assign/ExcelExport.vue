@@ -8,12 +8,12 @@
             Exportieren
         </v-btn>
         <error-dialog
-            v-model="errorDialog"
+            v-model="errorDialogVisible"
             :dialogtext="errorDialogText"
             :dialogtitle="errorDialogTitle"
             icontext="mdi mdi-alert-octagon-outline"
             iconcolor="red"
-            @close="errorDialog = false"
+            @close="errorDialogVisible = false"
         ></error-dialog>
         <progress-circular-overlay
             :loading="loading"
@@ -38,7 +38,7 @@ const emits = defineEmits<{
     (e: "exported"): void;
 }>();
 
-const errorDialog = ref<boolean>(false);
+const errorDialogVisible = ref<boolean>(false);
 const errorDialogText = ref<string>(
     "Beim Exportieren ist ein Fehler aufgetreten."
 );
