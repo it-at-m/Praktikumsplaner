@@ -17,7 +17,7 @@
                 hide-details
                 :false-icon="semesterIcon"
                 :true-icon="semesterIcon"
-                :color="semesterIconColor()"
+                color="primary"
                 :value="allSemesterSelected"
                 @click="selectAllStudiensemester"
             >
@@ -117,12 +117,6 @@ const semesterIcon = computed(() => {
     return "mdi-checkbox-blank-outline";
 });
 
-const semesterIconColor = computed(() => {
-    return allSemesterSelected.value || someSemesterSelected.value
-        ? "primary"
-        : "darkgrey";
-});
-
 function toggleSelection(item: {
     name: string;
     value: string;
@@ -139,7 +133,11 @@ function toggleSelection(item: {
         } else {
             praktikumsstelle.value.studiensemester.push(item.value);
         }
+    }else{
+        praktikumsstelle.value.studiensemester = [];
+        praktikumsstelle.value.studiensemester.push(item.value);
     }
+
 }
 
 function isSelected(item: {

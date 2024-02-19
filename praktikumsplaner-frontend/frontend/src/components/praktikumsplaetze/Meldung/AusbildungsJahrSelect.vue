@@ -17,7 +17,7 @@
                 hide-details
                 :false-icon="ausbildungsjahrIcon"
                 :true-icon="ausbildungsjahrIcon"
-                :color="ausbildungsjahrIconColor()"
+                color="primary"
                 :value="allAusbildungsjahreSelected"
                 @click="selectAllAusbildungsjahre"
             >
@@ -121,13 +121,6 @@ function sortAusbildungsjahre() {
     praktikumsstelle.value.ausbildungsjahr?.sort((a, b) => a.localeCompare(b));
 }
 
-function ausbildungsjahrIconColor() {
-    return allAusbildungsjahreSelected.value ||
-        someAusbildungsjahreSelected.value
-        ? "primary"
-        : "darkgrey";
-}
-
 function toggleSelection(item: {
     name: string;
     value: string;
@@ -142,6 +135,9 @@ function toggleSelection(item: {
         } else {
             praktikumsstelle.value.ausbildungsjahr.push(item.value);
         }
+    }else{
+        praktikumsstelle.value.ausbildungsjahr = [];
+        praktikumsstelle.value.ausbildungsjahr.push(item.value);
     }
 }
 
