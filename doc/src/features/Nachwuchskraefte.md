@@ -51,7 +51,7 @@ The first name (Vorname) has to be between 2 and 255 characters.
 
 The last name (Nachname) has to be between 2 and 255 characters.
 
-There a two selectors to select either the training direction or course of study
+There are two selectors to select either the training direction or course of study
 
 The year (Jahrgang) has to be in this format: XX/XX Example: 20/24 for someone who started training in 2020 and finishes in 2024.
 
