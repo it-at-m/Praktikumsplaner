@@ -80,8 +80,6 @@ export default class FetchUtils {
      *
      * - Fehler bei fehlenden Berechtigungen --> HTTP 403
      * - Reload der App bei Session-Timeout --> HTTP 3xx
-     * - Fehler bei fehlerhaften Eingaben --> HTTP 4xx
-     * - Fehler bei Serverproblemen --> HTTP 5xx
      * - Fehler bei unbekannten Problemen --> alle anderen error Codes
      *
      * @param response Die response aus fetch-Befehl die geprüft werden soll.
@@ -99,7 +97,7 @@ export default class FetchUtils {
                 });
             } else if (response.type === "opaqueredirect") {
                 location.reload();
-            } else if (response.status >= 400 && response.status <= 499) {
+            } else if (this.isStatusInput(response)) {
                 response.body
                     ?.getReader()
                     .read()
@@ -115,7 +113,7 @@ export default class FetchUtils {
                             level: Levels.ERROR,
                         });
                     });
-            } else if (response.status >= 500 && response.status <= 599) {
+            } else if (this.isStatusServer(response)) {
                 useSnackbarStore().showMessage({
                     message:
                         "Serverfehler. Bitte versuchen Sie es später erneut, oder wenden Sie sich an die Administration.",
@@ -139,18 +137,21 @@ export default class FetchUtils {
     }
 
     /**
-     * Default Catch-Handler für alle Anfragen des Service.
-     * Schmeißt derzeit nur einen ApiError
-     * @param error die Fehlermeldung aus fetch-Befehl
+     * Prüft, ob der Status der Response auf einen Server-Fehler hinweist.
+     * @param response Die Response, die geprüft werden soll.
+     * @returns {boolean} true, wenn der Status auf einen Server-Fehler hinweist, sonst false.
      */
-    static defaultCatchHandler(
-        error: Error,
-        errorMessage = "Es ist ein unbekannter Fehler aufgetreten."
-    ): PromiseLike<never> {
-        throw new ApiError({
-            level: Levels.WARNING,
-            message: errorMessage,
-        });
+    private static isStatusServer(response: Response): boolean {
+        return response.status >= 500 && response.status <= 599;
+    }
+
+    /**
+     * Prüft, ob der Status der Response auf einen Input-Fehler hinweist.
+     * @param response Die Response, die geprüft werden soll.
+     * @returns {boolean} true, wenn der Status auf einen Input-Fehler hinweist, sonst false.
+     */
+    private static isStatusInput(response: Response): boolean {
+        return response.status >= 400 && response.status <= 499;
     }
 
     /**
