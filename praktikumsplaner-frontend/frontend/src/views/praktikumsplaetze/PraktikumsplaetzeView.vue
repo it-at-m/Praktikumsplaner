@@ -67,7 +67,7 @@
                                 >
                             </v-col>
                             <v-col class="d-flex align-center">
-                                <p class="mt-5">
+                                <p>
                                     Es wurden für den aktuellen Zeitraum noch
                                     keine Praktikumsstellen gemeldet.
                                 </p>

@@ -1,6 +1,6 @@
 <template>
     <v-dialog
-        v-model="props.visible"
+        v-model="computedVisible"
         max-width="500px"
     >
         <v-card>
@@ -9,17 +9,17 @@
                 {{ currentWarning?.message }}
             </v-card-text>
             <v-card-actions>
-                <v-spacer/>
+                <v-spacer />
                 <v-btn
                     color="primary"
-                    @click="accept"
                     variant="elevated"
+                    @click="accept"
                     >Akzeptieren</v-btn
                 >
                 <v-btn
                     color="error"
-                    @click="reject"
                     variant="elevated"
+                    @click="reject"
                     >Ablehnen</v-btn
                 >
             </v-card-actions>
@@ -43,6 +43,10 @@ const props = defineProps<{
 }>();
 
 const currentIndex = ref(0);
+
+const computedVisible = computed(() => {
+    return props.visible;
+});
 
 const currentWarning = computed(() => {
     if (currentIndex.value < props.warnings.length) {

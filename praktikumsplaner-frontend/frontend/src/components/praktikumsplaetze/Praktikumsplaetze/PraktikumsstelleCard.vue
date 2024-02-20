@@ -7,7 +7,7 @@
             @click="show = !show"
         >
             <v-card-title
-            >Stelle bei {{ props.modelValue.dienststelle }}</v-card-title
+                >Stelle bei {{ props.modelValue.dienststelle }}</v-card-title
             >
             <v-card-subtitle v-if="props.modelValue.namentlicheAnforderung">
                 Namentliche Anforderung:

@@ -7,7 +7,7 @@ spring:
       naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   mail:
     host: localhost
-    port: 8125
+    port: 8225
     username: pp-mail-user
     password: pp-mail-password
     properties:

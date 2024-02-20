@@ -66,7 +66,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const requiresRoles = to.meta?.requiresRole ?? undefined;
+    const requiresRoles = (to.meta?.requiresRole as string[]) ?? undefined;
     const security = useSecurity();
     if (
         requiresRoles !== undefined &&

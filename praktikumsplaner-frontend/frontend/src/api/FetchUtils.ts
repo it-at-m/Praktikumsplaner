@@ -18,7 +18,7 @@ export default class FetchUtils {
      * @param body Optional zu übertragender Body
      */
     // eslint-disable-next-line
-    static getPOSTConfig(body: any): RequestInit {
+    static getPOSTConfig(body: any): { mode: string; redirect: string; headers: Headers; method: string; credentials: "include" | "omit" | "same-origin"; body: unknown } {
         return {
             method: "POST",
             body: this.getBody(body),
@@ -36,7 +36,7 @@ export default class FetchUtils {
      * @param body Optional zu übertragender Body
      */
     // eslint-disable-next-line
-    static getPUTConfig(body: any): RequestInit {
+    static getPUTConfig(body: any): { mode: string; redirect: string; headers: Headers; method: string; credentials: "include" | "omit" | "same-origin"; body: unknown } {
         const headers = FetchUtils.getHeaders();
         if (body.version) {
             headers.append("If-Match", body.version);
@@ -58,7 +58,7 @@ export default class FetchUtils {
      * @param body Optional zu übertragender Body
      */
     // eslint-disable-next-line
-    static getPATCHConfig(body: any): RequestInit {
+    static getPATCHConfig(body: any): { mode: string; redirect: string; headers: Headers; method: string; credentials: "include" | "omit" | "same-origin"; body: unknown } {
         const headers = FetchUtils.getHeaders();
         if (body.version !== undefined) {
             headers.append("If-Match", body.version);
@@ -102,22 +102,6 @@ export default class FetchUtils {
             });
         }
     }
-
-    /**
-     * Default Catch-Handler für alle Anfragen des Service.
-     * Schmeißt derzeit nur einen ApiError
-     * @param error die Fehlermeldung aus fetch-Befehl
-     */
-    static defaultCatchHandler(
-        error: Error,
-        errorMessage = "Es ist ein unbekannter Fehler aufgetreten."
-    ): PromiseLike<never> {
-        throw new ApiError({
-            level: Levels.WARNING,
-            message: errorMessage,
-        });
-    }
-
     /**
      *  Baut den Header fuer den Request auf
      * @returns {Headers}
@@ -147,7 +131,7 @@ export default class FetchUtils {
     /**
      * @returns {any}
      */
-    static getBody(body: any): any {
+    static getBody(body: unknown): unknown {
         if (!body) {
             return undefined;
         } else if (typeof body == "string") {

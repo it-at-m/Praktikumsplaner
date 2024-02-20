@@ -1,9 +1,9 @@
 <template>
     <v-container>
-        <PageTitle
+        <page-title
             back-button-url="/"
             page-header-text="Zuweisung"
-        ></PageTitle>
+        ></page-title>
         <v-row>
             <v-col cols="5">
                 <v-skeleton-loader
@@ -13,7 +13,7 @@
                 <active-nwk-list-for-zuweisung
                     v-else
                     v-model="nwks"
-                 />
+                />
             </v-col>
             <v-divider vertical />
             <v-col cols="7">
@@ -30,25 +30,27 @@
         <v-row>
             <v-spacer></v-spacer>
             <v-btn
+                prepend-icon="mdi-mail"
                 color="primary"
                 class="mr-4"
                 @click="openMailWarningDialog"
-                text="Mails senden"
-                ></v-btn
+                >Mails senden</v-btn
             >
-            <ExcelExport
+            <excel-export
                 :start-download="startDownload"
                 @click="openExcelWarnings"
                 @exported="exported"
-            ></ExcelExport>
+            ></excel-export>
         </v-row>
-        <WarningDialog
+        <warning-dialog
             :visible="showWarningDialog"
             :warnings="warnings"
             @accepted="acceptedWarningDialog"
             @rejected="rejectedWarningDialog"
         />
-        <QueryPraktikumsPeriodDialog v-model:showDialog="showSendMailDialog" />
+        <query-praktikums-period-dialog
+            v-model:showDialog="showSendMailDialog"
+        />
     </v-container>
 </template>
 <script setup lang="ts">

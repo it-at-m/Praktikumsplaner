@@ -119,8 +119,8 @@ services:
   mail-mailpit:
     image: axllent/mailpit
     ports:
-      - "8180:8025"
-      - "8125:1025"
+      - "8280:8025"
+      - "8225:1025"
     environment:
       MP_SMTP_AUTH: "pp-mail-user:pp-mail-password"
       MP_SMTP_AUTH_ALLOW_INSECURE: true

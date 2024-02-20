@@ -4,7 +4,7 @@
         border
     >
         <v-expansion-panels>
-            <v-expansion-panel >
+            <v-expansion-panel>
                 <v-expansion-panel-title :hide-actions="!hasDetails(nwk)">
                     <v-row
                         no-gutters
@@ -30,14 +30,14 @@
                 </v-expansion-panel-title>
                 <v-expansion-panel-text v-if="hasDetails(nwk)">
                     <v-chip-group
-                        active-class="primary--text"
+                        selected-class="primary--text"
                         column
                     >
                         <v-chip
                             v-for="day in germanDays"
                             :key="day"
                             color="primary"
-                            outlined
+                            variant="outlined"
                             class="ml-4 mr-0"
                         >
                             {{ day }}
@@ -45,7 +45,6 @@
                     </v-chip-group>
                 </v-expansion-panel-text>
             </v-expansion-panel>
-
         </v-expansion-panels>
     </v-card>
 </template>
@@ -89,7 +88,5 @@ function getNwkColor(nwk: Nwk): string {
     }
     return color;
 }
-
 </script>
-<style scoped>
-</style>
+<style scoped></style>

@@ -8,8 +8,8 @@
         variant="outlined"
         @select="onClick"
     >
-        <template #item="{ props, item }">
-            <v-list-item v-bind="props">
+        <template #item="{ properties, item }">
+            <v-list-item v-bind="properties">
                 <v-list-item-title>
                     {{
                         formatter.formatDateFromString(

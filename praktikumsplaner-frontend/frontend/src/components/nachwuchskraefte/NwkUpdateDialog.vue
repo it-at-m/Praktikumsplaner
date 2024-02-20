@@ -1,11 +1,12 @@
 <template>
     <div>
-      <v-btn
-          prepend-icon="mdi-pencil-outline"
-          color="primary"
-          variant="outlined"
-          @click="visible = true"
-      >Bearbeiten</v-btn>
+        <v-btn
+            prepend-icon="mdi-pencil-outline"
+            color="primary"
+            variant="outlined"
+            @click="visible = true"
+            >Bearbeiten</v-btn
+        >
         <v-dialog
             v-model="visible"
             persistent
@@ -22,7 +23,7 @@
                                 v-model="nwkToUpdate.vorname"
                                 label="Vorname"
                                 :rules="nameRule"
-                                outlined
+                                variant="outlined"
                             ></v-text-field>
                         </v-list-item>
                         <v-list-item>
@@ -30,7 +31,7 @@
                                 v-model="nwkToUpdate.nachname"
                                 label="Nachname"
                                 :rules="nameRule"
-                                outlined
+                                variant="outlined"
                             ></v-text-field>
                         </v-list-item>
                         <v-list-item>
@@ -38,7 +39,7 @@
                                 v-model="nwkToUpdate.jahrgang"
                                 label="Jahrgang"
                                 :rules="jahrgangRule"
-                                outlined
+                                variant="outlined"
                             ></v-text-field>
                         </v-list-item>
                         <v-list-item>
@@ -47,8 +48,8 @@
                                 label="Studienrichtung"
                                 :items="Studiengang"
                                 item-value="value"
-                                item-text="name"
-                                outlined
+                                item-title="name"
+                                variant="outlined"
                                 clearable
                                 :rules="isStudiumOrAusbildungRule"
                                 @click:clear="
@@ -62,8 +63,8 @@
                                 label="Ausbildungsrichtung"
                                 :items="Ausbildungsrichtung"
                                 item-value="value"
-                                item-text="name"
-                                outlined
+                                item-title="name"
+                                variant="outlined"
                                 clearable
                                 :rules="isStudiumOrAusbildungRule"
                                 @click:clear="
@@ -156,7 +157,8 @@ function cancel() {
 }
 
 function updateNwk() {
-    if (!form.value?.validate()) {
+    form.value?.validate();
+    if (!form.value?.isValid) {
         return;
     }
     loading.value = true;

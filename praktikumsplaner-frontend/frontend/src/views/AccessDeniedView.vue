@@ -1,7 +1,7 @@
 <template>
     <div class="m-2 p-2">
         <v-icon
-            large
+            size="large"
             color="red"
             >mdi-alert-octagon</v-icon
         >
@@ -19,14 +19,10 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import router from "@/router";
 
-export default {
-    methods: {
-        goBack() {
-            router.push({ name: "home" });
-        },
-    },
-};
+function goBack() {
+    router.push({ name: "home" });
+}
 </script>

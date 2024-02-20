@@ -1,56 +1,56 @@
 <template>
-  <v-dialog
-      v-model="visible"
-      persistent
-      width="800"
-  >
-    <template #activator="{ props: open }">
-      <template v-if="buttontext">
-        <v-btn
-            color="primary"
-            v-bind="open"
-        >
-          {{ buttontext }}
-        </v-btn>
-      </template>
-      <template v-else-if="icontext">
-        <v-btn
-            color="primary"
-            v-bind="open"
-        >
-          <v-icon size="large">
-            {{ icontext }}
-          </v-icon>
-        </v-btn>
-      </template>
-    </template>
-    <v-card>
-      <v-card-title>
-        {{ dialogtitle }}
-      </v-card-title>
-      <v-card-text>
-        {{ dialogtext }}
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer />
-        <v-btn
-            id="yesnodialog-btn-no"
-            variant="outlined"
-            @click="no"
-        >
-          Nein
-        </v-btn>
-        <v-btn
-            id="yesnodialog-btn-yes"
-            color="primary"
-            variant="elevated"
-            @click="yes"
-        >
-          Ja
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+    <v-dialog
+        v-model="visible"
+        persistent
+        width="800"
+    >
+        <template #activator="{ props: open }">
+            <template v-if="buttontext">
+                <v-btn
+                    color="primary"
+                    v-bind="open"
+                >
+                    {{ buttontext }}
+                </v-btn>
+            </template>
+            <template v-else-if="icontext">
+                <v-btn
+                    color="primary"
+                    v-bind="open"
+                >
+                    <v-icon size="large">
+                        {{ icontext }}
+                    </v-icon>
+                </v-btn>
+            </template>
+        </template>
+        <v-card>
+            <v-card-title>
+                {{ dialogtitle }}
+            </v-card-title>
+            <v-card-text>
+                {{ dialogtext }}
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer />
+                <v-btn
+                    id="yesnodialog-btn-no"
+                    variant="outlined"
+                    @click="no"
+                >
+                    Nein
+                </v-btn>
+                <v-btn
+                    id="yesnodialog-btn-yes"
+                    color="primary"
+                    variant="elevated"
+                    @click="yes"
+                >
+                    Ja
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -80,31 +80,31 @@ import { computed } from "vue";
  */
 
 const props = defineProps<{
-  buttontext?: string;
-  icontext?: string;
-  dialogtitle: string;
-  dialogtext: string;
-  /**
-   * Steuerflag für den Dialog
-   */
-  modelValue: boolean;
+    buttontext?: string;
+    icontext?: string;
+    dialogtitle: string;
+    dialogtext: string;
+    /**
+     * Steuerflag für den Dialog
+     */
+    modelValue: boolean;
 }>();
 
 const emits = defineEmits<{
-  (e: "no"): void;
-  (e: "yes"): void;
-  (e: "update:modelValue", v: boolean): void;
+    (e: "no"): void;
+    (e: "yes"): void;
+    (e: "update:modelValue", v: boolean): void;
 }>();
 
 const visible = computed({
-  get: () => props.modelValue,
-  set: (v) => emits("update:modelValue", v),
+    get: () => props.modelValue,
+    set: (v) => emits("update:modelValue", v),
 });
 
 function no(): void {
-  emits("no");
+    emits("no");
 }
 function yes(): void {
-  emits("yes");
+    emits("yes");
 }
 </script>

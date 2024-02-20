@@ -1,23 +1,24 @@
 <template>
-  <div>
-    <v-btn
-        color="primary"
-        @click="clickExport"
-        prepend-icon="mdi-tray-arrow-down"
-    >
-      Exportieren
-    </v-btn>
-    <ErrorDialog
-        :dialogtext="errorDialogText"
-        :dialogtitle="errorDialogTitle"
-        icontext="mdi mdi-alert-octagon-outline"
-        iconcolor="red"
-        v-model="errorDialog"
-        @close="errorDialog = false"></ErrorDialog>
-    <ProgressCircularOverlay
-        :loading="loading"
-    ></ProgressCircularOverlay>
-  </div>
+    <div>
+        <v-btn
+            color="primary"
+            prepend-icon="mdi-tray-arrow-down"
+            @click="clickExport"
+        >
+            Exportieren
+        </v-btn>
+        <error-dialog
+            v-model="errorDialogVisible"
+            :dialogtext="errorDialogText"
+            :dialogtitle="errorDialogTitle"
+            icontext="mdi mdi-alert-octagon-outline"
+            iconcolor="red"
+            @close="errorDialogVisible = false"
+        ></error-dialog>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -37,7 +38,7 @@ const emits = defineEmits<{
     (e: "exported"): void;
 }>();
 
-const errorDialog = ref<boolean>(false);
+const errorDialogVisible = ref<boolean>(false);
 const errorDialogText = ref<string>(
     "Beim Exportieren ist ein Fehler aufgetreten."
 );

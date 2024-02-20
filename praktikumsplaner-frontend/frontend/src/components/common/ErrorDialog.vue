@@ -13,7 +13,7 @@
                 <v-row>
                     <v-col cols="1">
                         <v-icon
-                            x-large
+                            size="x-large"
                             :color="iconcolor"
                             >{{ props.icontext }}</v-icon
                         >
@@ -26,7 +26,7 @@
             <v-card-actions>
                 <v-spacer />
                 <v-btn
-                    text
+                    variant="text"
                     @click="close"
                 >
                     Schliessen

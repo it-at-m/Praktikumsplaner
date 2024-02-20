@@ -19,13 +19,13 @@
                 <v-spacer />
                 <v-btn
                     id="yesnodialog-btn-no"
-                    text="Nein"
+                    variant="text"
                     @click="no"
                 >
                 </v-btn>
                 <v-btn
-                    text="Ja"
                     id="yesnodialog-btn-yes"
+                    variant="text"
                     color="primary"
                     @click="yes"
                 >

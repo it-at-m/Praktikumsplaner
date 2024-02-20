@@ -1,10 +1,10 @@
 <template>
     <div>
         <v-dialog
+            v-model="computedShowDialog"
             max-width="850px"
-            v-model="props.showDialog"
             persistent
-            @update:modelValue="closeSendMailDialog"
+            @update:model-value="closeSendMailDialog"
         >
             <v-form ref="form">
                 <v-card>
@@ -28,10 +28,10 @@
                                             </h4>
                                         </v-col>
                                         <v-col>
-                                            <ZeitraumPicker
+                                            <zeitraum-picker
                                                 :value="bsc"
                                                 label="Zuweisungszeitraum"
-                                            ></ZeitraumPicker>
+                                            ></zeitraum-picker>
                                         </v-col>
                                     </v-container>
                                 </v-col>
@@ -40,10 +40,10 @@
                                         <v-col>
                                             <h4>Verwaltungsinformatik (VI)</h4>
                                         </v-col>
-                                        <ZeitraumPicker
+                                        <zeitraum-picker
                                             :value="vi"
                                             label="Zuweisungszeitraum"
-                                        ></ZeitraumPicker>
+                                        ></zeitraum-picker>
                                     </v-container>
                                 </v-col>
                                 <v-col cols="12">
@@ -51,10 +51,10 @@
                                         <v-col>
                                             <h4>Wirtschaftsinformatik (BWI)</h4>
                                         </v-col>
-                                        <ZeitraumPicker
+                                        <zeitraum-picker
                                             :value="bwi"
                                             label="Zuweisungszeitraum"
-                                        ></ZeitraumPicker>
+                                        ></zeitraum-picker>
                                     </v-container>
                                 </v-col>
                                 <v-col cols="12">
@@ -65,10 +65,10 @@
                                                 Systemintegration (FISI)
                                             </h4>
                                         </v-col>
-                                        <ZeitraumPicker
+                                        <zeitraum-picker
                                             :value="fisi"
                                             label="Zuweisungszeitraum"
-                                        ></ZeitraumPicker>
+                                        ></zeitraum-picker>
                                     </v-container>
                                 </v-col>
                             </v-row>
@@ -86,17 +86,17 @@
                                         <v-btn
                                             color="primary"
                                             variant="elevated"
-                                            @click="openConfirmationDialog"
                                             :disabled="!allValid"
+                                            @click="openConfirmationDialog"
                                             >Weiter</v-btn
                                         >
                                         <yes-no-dialog
                                             v-model="confirmSendMailDialog"
                                             dialogtext="Sind Sie sicher, dass Sie die Zuweisungs-Mails an die Ausbilder*innen versenden wollen?"
                                             dialogtitle="Bestätigung des Mailversands"
+                                            value
                                             @no="confirmSendMailDialog = false"
                                             @yes="sendMails"
-                                            value
                                         ></yes-no-dialog>
                                         <undelivered-mails-dialog
                                             :faulty-stellen="faultyStellen"
@@ -118,7 +118,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed, ref } from "vue";
 
 import MailService from "@/api/MailService";
 import UndeliveredMailsDialog from "@/components/assign/UndeliveredMailsDialog.vue";
@@ -146,13 +146,17 @@ const props = defineProps<{
 }>();
 
 const allValid = computed(() => {
-  return form.value?.checkValidity();
+    return form.value?.checkValidity();
 });
 
-const emit = defineEmits(['update:showDialog']);
+const computedShowDialog = computed(() => {
+    return props.showDialog;
+});
+
+const emit = defineEmits(["update:showDialog"]);
 
 function openConfirmationDialog() {
-  form.value?.validate();
+    form.value?.validate();
     if (form.value?.isValid) {
         confirmSendMailDialog.value = true;
     }

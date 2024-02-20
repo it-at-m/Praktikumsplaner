@@ -8,7 +8,17 @@
                     class="d-flex align-center justify-start"
                 >
                     <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-                    <router-link to="/" class="no-underline">
+                    <router-link to="/">
+                        <v-img
+                            max-height="50"
+                            max-width="50"
+                            src="@/assets/logo.png"
+                        ></v-img>
+                    </router-link>
+                    <router-link
+                        to="/"
+                        class="no-underline"
+                    >
                         <v-toolbar-title class="font-weight-bold">
                             <span class="text-white">Praktikumsplaner</span>
                         </v-toolbar-title>
@@ -105,9 +115,10 @@ onMounted(() => {
 
 <style scoped>
 .v-navigation-drawer .v-list-item-title {
-  font-size: 16px;
+    font-size: 16px;
 }
-.no-underline, .no-underline:hover {
-  text-decoration: none;
+.no-underline,
+.no-underline:hover {
+    text-decoration: none;
 }
 </style>
