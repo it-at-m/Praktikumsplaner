@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
@@ -473,5 +476,40 @@ public class PraktikumsstellenServiceTest {
         assertNotNull(result);
         assertEquals(5, result.size());
         assertEquals(dtos, result);
+    }
+
+    @Test
+    public void testShouldDeleteAllPraktikumsstellenByMeldezeitraumId() {
+        UUID meldezeitraumId = UUID.randomUUID();
+
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
+        ausbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraumId);
+
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
+        studiumsPraktikumsstelle.setMeldezeitraumID(meldezeitraumId);
+
+        List<AusbildungsPraktikumsstelle> ausbildungsPraktikumsstellen = List.of(ausbildungsPraktikumsstelle);
+        List<StudiumsPraktikumsstelle> studiumsPraktikumsstellen = List.of(studiumsPraktikumsstelle);
+
+        when(ausbildungsRepository.findAllByMeldezeitraumID(meldezeitraumId)).thenReturn(ausbildungsPraktikumsstellen);
+        when(studiumsRepository.findAllByMeldezeitraumID(meldezeitraumId)).thenReturn(studiumsPraktikumsstellen);
+
+        service.deleteAllPraktikumsstellenByMeldezeitraumId(meldezeitraumId);
+
+        verify(ausbildungsRepository, times(1)).deleteAll(ausbildungsPraktikumsstellen);
+        verify(studiumsRepository, times(1)).deleteAll(studiumsPraktikumsstellen);
+    }
+
+    @Test
+    public void testShouldNotDeletePraktikumsstellenWhenNoneExistForMeldezeitraumId() {
+        UUID meldezeitraumId = UUID.randomUUID();
+
+        when(ausbildungsRepository.findAllByMeldezeitraumID(meldezeitraumId)).thenReturn(new ArrayList<>());
+        when(studiumsRepository.findAllByMeldezeitraumID(meldezeitraumId)).thenReturn(new ArrayList<>());
+
+        service.deleteAllPraktikumsstellenByMeldezeitraumId(meldezeitraumId);
+
+        verify(ausbildungsRepository, times(1)).deleteAll(anyList());
+        verify(studiumsRepository, times(1)).deleteAll(anyList());
     }
 }

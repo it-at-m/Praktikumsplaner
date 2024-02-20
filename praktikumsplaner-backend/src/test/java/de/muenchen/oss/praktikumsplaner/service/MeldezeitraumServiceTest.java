@@ -9,20 +9,15 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
-import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
-import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
-import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -40,9 +35,7 @@ public class MeldezeitraumServiceTest {
     @Mock
     private MeldezeitraumRepository repository;
     @Mock
-    private AusbildungsPraktikumsstellenRepository ausbildungsPraktikumsstellenRepository;
-    @Mock
-    private StudiumsPraktikumsstellenRepository studiumsPraktikumsstellenRepository;
+    private PraktikumsstellenService praktikumsstellenService;
     @InjectMocks
     private MeldezeitraumService service;
     private final ServiceTestHelper helper = new ServiceTestHelper();
@@ -206,38 +199,12 @@ public class MeldezeitraumServiceTest {
     }
 
     @Test
-    public void testDeleteMeldezeitraumAndAttachedPraktikumsstellen_ShouldDeleteAllRelatedEntities() {
+    public void testShouldDeleteMeldezeitraumAndAttachedPraktikumsstellen() {
         UUID id = UUID.randomUUID();
-
-        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
-        ausbildungsPraktikumsstelle.setMeldezeitraumID(id);
-        List<AusbildungsPraktikumsstelle> ausbildungsPraktikumsstellenList = List.of(ausbildungsPraktikumsstelle);
-
-        StudiumsPraktikumsstelle studiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
-        studiumsPraktikumsstelle.setMeldezeitraumID(id);
-        List<StudiumsPraktikumsstelle> studiumsPraktikumsstellenList = List.of(studiumsPraktikumsstelle);
-
-        when(ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(id)).thenReturn(ausbildungsPraktikumsstellenList);
-        when(studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(id)).thenReturn(studiumsPraktikumsstellenList);
 
         service.deleteMeldezeitraumAndAttachedPraktikumsstellen(id);
 
-        verify(ausbildungsPraktikumsstellenRepository, times(1)).deleteAll(ausbildungsPraktikumsstellenList);
-        verify(studiumsPraktikumsstellenRepository, times(1)).deleteAll(studiumsPraktikumsstellenList);
-        verify(repository, times(1)).deleteById(id);
-    }
-
-    @Test
-    public void testDeleteMeldezeitraumAndAttachedPraktikumsstellen_ShouldHandleNoRelatedEntities() {
-        UUID id = UUID.randomUUID();
-
-        when(ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(id)).thenReturn(Collections.emptyList());
-        when(studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(id)).thenReturn(Collections.emptyList());
-
-        service.deleteMeldezeitraumAndAttachedPraktikumsstellen(id);
-
-        verify(ausbildungsPraktikumsstellenRepository, times(1)).deleteAll(Collections.emptyList());
-        verify(studiumsPraktikumsstellenRepository, times(1)).deleteAll(Collections.emptyList());
+        verify(praktikumsstellenService, times(1)).deleteAllPraktikumsstellenByMeldezeitraumId(id);
         verify(repository, times(1)).deleteById(id);
     }
 }
