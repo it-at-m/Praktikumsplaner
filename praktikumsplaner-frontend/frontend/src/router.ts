@@ -8,6 +8,8 @@ import MeldungStudium from "@/views/praktikumsplaetze/MeldungStudium.vue";
 import assignView from "@/views/AssignView.vue";
 import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";
 import PraktikumsplaetzeView from "@/views/praktikumsplaetze/PraktikumsplaetzeView.vue";
+import AccessDeniedView from "@/views/AccessDeniedView.vue";
+import { useSecurity } from "@/composables/security";
 
 Vue.use(Router);
 
@@ -32,45 +34,80 @@ routerMethods.forEach((method: string) => {
 });
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
-export default new Router({
+const router = new Router({
     base: ROUTER_BASE,
     routes: [
         {
             path: "/",
             name: "home",
             component: Main,
-            meta: {},
         },
         {
             path: "/nachwuchskraefte",
             name: "nachwuchskraefte",
             component: NachwuchskraefteView,
+            meta: { requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"] },
         },
         {
             path: "/meldezeitraum",
             name: "meldezeitraum",
             component: Meldezeitraeume,
+            meta: { requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"] },
         },
         {
             path: "/praktikumsplaetze",
             name: "praktikumsplätze",
             component: PraktikumsplaetzeView,
+            meta: {
+                requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+            },
         },
         {
             path: "/praktikumsplaetze/meldungAusbildung",
             name: "MeldungAusbildung",
             component: MeldungAusbildung,
+            meta: {
+                requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+            },
         },
         {
             path: "/praktikumsplaetze/meldungStudium",
             name: "MeldungStudium",
             component: MeldungStudium,
+            meta: {
+                requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+            },
         },
         {
             path: "/zuweisung",
             name: "Zuweisung",
             component: assignView,
+            meta: { requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"] },
+        },
+        {
+            path: "/accessDenied",
+            name: "AccessDenied",
+            component: AccessDeniedView,
         },
         { path: "*", redirect: "/" }, //Fallback 2
     ],
 });
+export default router;
+
+export function addNavigationGuard() {
+    router.beforeEach((to, from, next) => {
+        const requiresRoles = to.meta?.requiresRole ?? undefined;
+
+        const security = useSecurity();
+        if (
+            requiresRoles !== undefined &&
+            security.checkForAnyRole(requiresRoles)
+        ) {
+            next();
+        } else if (requiresRoles !== undefined) {
+            next({ name: "AccessDenied" });
+        } else {
+            next();
+        }
+    });
+}

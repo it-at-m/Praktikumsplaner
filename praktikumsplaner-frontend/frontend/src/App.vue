@@ -47,7 +47,7 @@
         >
             <v-list nav>
                 <v-list-item
-                    v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
+                    v-if="security.isAusbildungsleitung()"
                     :to="{ path: '/nachwuchskraefte' }"
                 >
                     <v-list-item-content>
@@ -55,7 +55,7 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
-                    v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
+                    v-if="security.isAusbildungsleitung()"
                     :to="{ path: '/meldezeitraum' }"
                 >
                     <v-list-item-content>
@@ -63,7 +63,12 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
-                    v-security.restrict="['ROLE_NWK']"
+                    v-if="
+                        security.checkForAnyRole([
+                            'ROLE_AUSBILDER',
+                            'ROLE_AUSBILDUNGSLEITUNG',
+                        ])
+                    "
                     :to="{ path: '/praktikumsplaetze' }"
                 >
                     <v-list-item-content>
@@ -71,7 +76,7 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
-                    v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
+                    v-if="security.isAusbildungsleitung()"
                     :to="{ path: '/zuweisung' }"
                 >
                     <v-list-item-content>
@@ -99,14 +104,16 @@ import TheSnackbar from "@/components/TheSnackbar.vue";
 import { UserService } from "@/api/UserService";
 import { useUserStore } from "@/stores/user";
 import "@/directives/security";
+import { useSecurity } from "@/composables/security";
 import ErrorDialog from "@/components/TheUserErrorDialog.vue";
 
 const drawer = ref(true);
 const query = ref("");
+const userStore = useUserStore();
 const route = useRoute();
 const snackbarStore = useSnackbarStore();
 const userService = new UserService();
-const userStore = useUserStore();
+const security = useSecurity();
 
 onBeforeMount(() => {
     userService.getPermissions().then((userinfo) => {

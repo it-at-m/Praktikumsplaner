@@ -1,8 +1,5 @@
 <template>
-    <v-container
-        v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
-        class="finishedBackground"
-    >
+    <v-container class="finishedBackground">
         <PageTitle
             back-button-url="/"
             page-header-text="Meldezeiträume"
