@@ -35,15 +35,10 @@ const emits = defineEmits<{
 }>();
 
 const nwk = computed({
-    // getter
-    get() {
-        return props.value;
-    },
-    // setter
-    set(newValue) {
-        emits("input", newValue);
-    },
+    get: () => props.value,
+    set: (newValue) => emits("input", newValue),
 });
+
 function sortVorlesungstage() {
     germanWeekdayMapper.getGermanDays(nwk.value.vorlesungstage).sort();
 }
