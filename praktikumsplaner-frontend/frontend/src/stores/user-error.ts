@@ -14,11 +14,7 @@ export const useUserErrorStore = defineStore("user-error", {
     }),
     getters: {},
     actions: {
-        showUserError(message: {
-            title?: string;
-            message?: string;
-            show?: boolean;
-        }): void {
+        showUserError(message: { title?: string; message?: string }): void {
             this.title = message.title;
             this.message = message.message;
             this.visible = true;

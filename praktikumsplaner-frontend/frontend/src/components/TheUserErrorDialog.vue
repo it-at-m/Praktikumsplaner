@@ -1,7 +1,7 @@
 <template>
     <v-dialog
         id="error"
-        v-model="show"
+        :value="show"
         persistent
         width="800"
     >
