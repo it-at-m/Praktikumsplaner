@@ -287,7 +287,8 @@ function resetForm() {
 }
 
 function uploadPraktikumsstelle() {
-    if (!form.value?.validate()) return;
+    form.value?.validate()
+    if (!form.value?.isValid) return;
     loading.value = true;
     if (isAusbildungsleitung.value) {
         MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
