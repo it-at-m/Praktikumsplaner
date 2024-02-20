@@ -28,27 +28,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from "vue";
+import { computed } from "vue";
 import { useUserErrorStore } from "@/stores/user-error";
 
-const show = ref(false);
+const show = computed(() => errorStore.visible);
 const message = computed(() => errorStore.message ?? "");
 const title = computed(() => errorStore.title ?? "");
 
 const errorStore = useUserErrorStore();
 
-watch(
-    () => errorStore.visible,
-    () => {
-        if (errorStore.visible) {
-            show.value = true;
-            errorStore.visible = false;
-        }
-    }
-);
-
 function close(): void {
-    show.value = false;
+    errorStore.hideUserError();
 }
 </script>
 

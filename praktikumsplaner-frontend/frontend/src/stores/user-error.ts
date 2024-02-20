@@ -23,5 +23,8 @@ export const useUserErrorStore = defineStore("user-error", {
             this.message = message.message;
             this.visible = true;
         },
+        hideUserError(): void {
+            this.visible = false;
+        },
     },
 });
