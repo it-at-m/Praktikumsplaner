@@ -21,28 +21,24 @@
                     >
                     <v-list>
                         <v-list-item>
-                            <v-text-field
-                                v-model="nwkToUpdate.vorname"
-                                label="Vorname"
-                                :rules="nameRule"
-                                outlined
-                            ></v-text-field>
+                            <NameInput v-model="nwkToUpdate"></NameInput>
                         </v-list-item>
                         <v-list-item>
-                            <v-text-field
-                                v-model="nwkToUpdate.nachname"
-                                label="Nachname"
-                                :rules="nameRule"
-                                outlined
-                            ></v-text-field>
-                        </v-list-item>
-                        <v-list-item>
-                            <v-text-field
-                                v-model="nwkToUpdate.jahrgang"
-                                label="Jahrgang"
-                                :rules="jahrgangRule"
-                                outlined
-                            ></v-text-field>
+                            <v-row>
+                                <v-col cols="6">
+                                    <v-text-field
+                                        v-model="nwkToUpdate.jahrgang"
+                                        label="Jahrgang"
+                                        :rules="jahrgangRule"
+                                        outlined
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="6">
+                                    <VorlesungstageSelect
+                                        v-model="nwkToUpdate"
+                                    ></VorlesungstageSelect>
+                                </v-col>
+                            </v-row>
                         </v-list-item>
                         <v-list-item>
                             <v-select
@@ -108,6 +104,7 @@ import { Studiengang } from "@/types/Studiengang";
 import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
 import { useRules } from "@/composables/rules";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
+import VorlesungstageSelect from "@/components/nachwuchskraefte/VorlesungstageSelect.vue";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
