@@ -89,7 +89,8 @@ function resetForm() {
 }
 
 function clickSpeichern() {
-    if (form.value?.validate()) {
+    form.value?.validate();
+    if (form.value?.isValid) {
         MeldezeitraumService.create(meldezeitraum.value)
             .then(() => {
                 emits("meldezeitraumAdded", meldezeitraum.value);
