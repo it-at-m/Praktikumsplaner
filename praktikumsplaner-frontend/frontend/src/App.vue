@@ -9,11 +9,13 @@
                 >
                     <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
                     <router-link to="/">
-                        <v-img
-                            max-height="50"
-                            max-width="50"
+                        <img
+                            height="50"
+                            width="50"
                             src="@/assets/logo.png"
-                        ></v-img>
+                            alt="Logo der Applikation"
+                            class="mt-1 mr-1"
+                        />
                     </router-link>
                     <router-link
                         to="/"
