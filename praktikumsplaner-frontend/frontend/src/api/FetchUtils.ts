@@ -18,7 +18,7 @@ export default class FetchUtils {
      * @param body Optional zu übertragender Body
      */
     // eslint-disable-next-line
-    static getPOSTConfig(body: any): { mode: string; redirect: string; headers: Headers; method: string; credentials: "include" | "omit" | "same-origin"; body: unknown } {
+    static getPOSTConfig(body: any): RequestInit {
         return {
             method: "POST",
             body: this.getBody(body),
@@ -36,7 +36,7 @@ export default class FetchUtils {
      * @param body Optional zu übertragender Body
      */
     // eslint-disable-next-line
-    static getPUTConfig(body: any): { mode: string; redirect: string; headers: Headers; method: string; credentials: "include" | "omit" | "same-origin"; body: unknown } {
+    static getPUTConfig(body: any): RequestInit {
         const headers = FetchUtils.getHeaders();
         if (body.version) {
             headers.append("If-Match", body.version);
@@ -58,7 +58,7 @@ export default class FetchUtils {
      * @param body Optional zu übertragender Body
      */
     // eslint-disable-next-line
-    static getPATCHConfig(body: any): { mode: string; redirect: string; headers: Headers; method: string; credentials: "include" | "omit" | "same-origin"; body: unknown } {
+    static getPATCHConfig(body: any):RequestInit {
         const headers = FetchUtils.getHeaders();
         if (body.version !== undefined) {
             headers.append("If-Match", body.version);
@@ -131,7 +131,7 @@ export default class FetchUtils {
     /**
      * @returns {any}
      */
-    static getBody(body: unknown): unknown {
+    static getBody(body: unknown): string | undefined {
         if (!body) {
             return undefined;
         } else if (typeof body == "string") {

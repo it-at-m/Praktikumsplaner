@@ -29,35 +29,24 @@
             </v-checkbox>
             <v-divider class="mt-2"></v-divider>
         </template>
-        <template #item="{ item }">
-            <v-checkbox
-                :model-value="isSelected(item)"
-                hide-details
-                @click="toggleSelection(item)"
-            >
-                <template #label>
-                    <v-list-item>
-                        <v-list-item-title>
-                            {{ item.title }}
-                        </v-list-item-title>
-                        <v-list-item-subtitle
-                            v-if="praktikumsstelle.studiengang === 'BSC'"
-                        >
-                            {{ item.raw.zeitraumBSC }}
-                        </v-list-item-subtitle>
-                        <v-list-item-subtitle
-                            v-else-if="praktikumsstelle.studiengang === 'BWI'"
-                        >
-                            {{ item.raw.zeitraumBWI }}
-                        </v-list-item-subtitle>
-                        <v-list-item-subtitle
-                            v-else-if="praktikumsstelle.studiengang === 'VI'"
-                        >
-                            {{ item.raw.zeitraumVI }}
-                        </v-list-item-subtitle>
-                    </v-list-item>
-                </template>
-            </v-checkbox>
+        <template #item="{ item, props }">
+            <v-list-item v-bind="props">
+                <v-list-item-subtitle
+                    v-if="praktikumsstelle.studiengang === 'BSC'"
+                >
+                    {{ item.raw.zeitraumBSC }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle
+                    v-else-if="praktikumsstelle.studiengang === 'BWI'"
+                >
+                    {{ item.raw.zeitraumBWI }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle
+                    v-else-if="praktikumsstelle.studiengang === 'VI'"
+                >
+                    {{ item.raw.zeitraumVI }}
+                </v-list-item-subtitle>
+            </v-list-item>
         </template>
     </v-select>
 </template>
@@ -70,7 +59,7 @@ import { Studiensemester } from "@/types/Studiensemester";
 
 const validationRules = useRules();
 
-const props = defineProps<{
+const properties = defineProps<{
     modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
@@ -82,7 +71,7 @@ const selectAll = true;
 const praktikumsstelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {
@@ -114,40 +103,6 @@ const semesterIcon = computed(() => {
     if (someSemesterSelected.value) return "mdi-minus-box";
     return "mdi-checkbox-blank-outline";
 });
-
-function toggleSelection(item: {
-    name: string;
-    value: string;
-    zeitraumBSC: string;
-    zeitraumBWI: string;
-    zeitraumVI: string;
-}) {
-    if (praktikumsstelle.value.studiensemester) {
-        const index = praktikumsstelle.value.studiensemester.findIndex(
-            (selectedItem) => selectedItem === item.value
-        );
-        if (index > -1) {
-            praktikumsstelle.value.studiensemester.splice(index, 1);
-        } else {
-            praktikumsstelle.value.studiensemester.push(item.value);
-        }
-    } else {
-        praktikumsstelle.value.studiensemester = [];
-        praktikumsstelle.value.studiensemester.push(item.value);
-    }
-}
-
-function isSelected(item: {
-    name: string;
-    value: string;
-    zeitraumBSC: string;
-    zeitraumBWI: string;
-    zeitraumVI: string;
-}) {
-    return praktikumsstelle.value.studiensemester?.some(
-        (selectedItem) => selectedItem === item.value
-    );
-}
 
 function selectAllStudiensemester() {
     if (allSemesterSelected.value) {

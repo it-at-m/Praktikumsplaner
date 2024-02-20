@@ -52,7 +52,7 @@
             :dialogtitle="errorDialogTitle"
             icontext="mdi mdi-alert-octagon-outline"
             iconcolor="red"
-            :value="errorDialogVisible"
+            :model-value="errorDialogVisible"
             @close="errorDialogVisible = false"
         ></error-dialog>
         <progress-circular-overlay :loading="loading" />

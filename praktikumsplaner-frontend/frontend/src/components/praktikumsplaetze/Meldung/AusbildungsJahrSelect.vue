@@ -29,27 +29,14 @@
             </v-checkbox>
             <v-divider class="mt-2"></v-divider>
         </template>
-        <template #item="{ item }">
-            <v-checkbox
-                :model-value="isSelected(item)"
-                hide-details
-                @click="toggleSelection(item)"
-            >
-                <template #label>
-                    <v-list-item>
-                        <v-list-item-title>
-                            {{ item.title }}
-                        </v-list-item-title>
-                        <v-list-item-subtitle
-                            v-if="
-                                praktikumsstelle.ausbildungsrichtung === 'FISI'
-                            "
-                        >
-                            {{ item.raw.zeitraumFISI }}
-                        </v-list-item-subtitle>
-                    </v-list-item>
-                </template>
-            </v-checkbox>
+        <template #item="{ item, props }">
+            <v-list-item v-bind="props">
+                <v-list-item-subtitle
+                    v-if="praktikumsstelle.ausbildungsrichtung === 'FISI'"
+                >
+                    {{ item.raw.zeitraumFISI }}
+                </v-list-item-subtitle>
+            </v-list-item>
         </template>
     </v-select>
 </template>
@@ -62,7 +49,7 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
-const props = defineProps<{
+const properties = defineProps<{
     modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
@@ -74,7 +61,7 @@ const selectAll = true;
 const praktikumsstelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {
@@ -119,35 +106,5 @@ function selectAllAusbildungsjahre() {
 
 function sortAusbildungsjahre() {
     praktikumsstelle.value.ausbildungsjahr?.sort((a, b) => a.localeCompare(b));
-}
-
-function toggleSelection(item: {
-    name: string;
-    value: string;
-    zeitraumFISI: string;
-}) {
-    if (praktikumsstelle.value.ausbildungsjahr) {
-        const index = praktikumsstelle.value.ausbildungsjahr.findIndex(
-            (selectedItem) => selectedItem === item.value
-        );
-        if (index > -1) {
-            praktikumsstelle.value.ausbildungsjahr.splice(index, 1);
-        } else {
-            praktikumsstelle.value.ausbildungsjahr.push(item.value);
-        }
-    } else {
-        praktikumsstelle.value.ausbildungsjahr = [];
-        praktikumsstelle.value.ausbildungsjahr.push(item.value);
-    }
-}
-
-function isSelected(item: {
-    name: string;
-    value: string;
-    zeitraumFISI: string;
-}) {
-    return praktikumsstelle.value.ausbildungsjahr?.some(
-        (selectedItem) => selectedItem === item.value
-    );
 }
 </script>

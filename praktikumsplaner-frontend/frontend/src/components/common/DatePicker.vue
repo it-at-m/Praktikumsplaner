@@ -1,18 +1,18 @@
 <template>
     <v-menu max-width="100%">
-        <template #activator="{ properties }">
+        <template #activator="{ props }">
             <v-text-field
                 ref="dateField"
-                :prepend-icon="props.prependIcon"
-                :label="props.label"
-                :model-value="formatDate(props.value)"
-                :rules="props.rules"
-                v-bind="properties"
+                :prepend-icon="properties.prependIcon"
+                :label="properties.label"
+                :model-value="formatDate(properties.value)"
+                :rules="properties.rules"
+                v-bind="props"
             ></v-text-field>
         </template>
         <v-date-picker
             v-model="date"
-            :title="props.label"
+            :title="properties.label"
         ></v-date-picker>
     </v-menu>
 </template>
@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-const props = defineProps<{
+const properties = defineProps<{
     prependIcon: string;
     label: string;
     rules: ((value: string) => string | boolean)[];
@@ -35,7 +35,7 @@ const dateField = ref();
 
 const date = computed({
     get() {
-        return props.value;
+        return properties.value;
     },
     set(date) {
         emits("input", date ? date : undefined);

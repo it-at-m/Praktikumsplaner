@@ -4,12 +4,12 @@
         label="Meldezeitraum*"
         item-value="id"
         item-title="zeitraumName"
-        :items="props.meldezeitraueme"
+        :items="properties.meldezeitraueme"
         variant="outlined"
         @select="onClick"
     >
-        <template #item="{ properties, item }">
-            <v-list-item v-bind="properties">
+        <template #item="{ props, item }">
+            <v-list-item v-bind="props">
                 <v-list-item-title>
                     {{
                         formatter.formatDateFromString(
@@ -42,7 +42,7 @@ import { useFormatter } from "@/composables/formatter";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-const props = defineProps<{
+const properties = defineProps<{
     meldezeitraueme: Meldezeitraum[];
     modelValue: Praktikumsstelle;
 }>();
@@ -56,7 +56,7 @@ const formatter = useFormatter();
 const stelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {

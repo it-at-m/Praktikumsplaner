@@ -263,10 +263,7 @@ onMounted(() => {
 });
 
 function canStellenBeSubmitted() {
-    return (
-        isAusbildungsleitung.value ||
-        currentMeldezeitraum.value
-    );
+    return isAusbildungsleitung.value || currentMeldezeitraum.value;
 }
 
 function getUpcomingMeldezeitraeume() {
@@ -311,14 +308,5 @@ function uploadPraktikumsstelle() {
     margin: 3%;
     border: 2px solid #0000001a;
     border-radius: 5px;
-}
-.v-tooltip-spacing {
-    margin-top: 10px;
-}
-.radios {
-    margin: 2%;
-}
-.custom-label .v-label {
-    font-size: 18px !important;
 }
 </style>

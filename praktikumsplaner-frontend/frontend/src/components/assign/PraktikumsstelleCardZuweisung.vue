@@ -185,7 +185,8 @@ function assignNwk() {
         loading.value = false;
     });
     assignedNwk.value = nwkToAssignUnassing.value;
-    emitter.emit("assignedNwk", stelleToAssignUnassign.assignedNwk);
+    if (stelleToAssignUnassign.assignedNwk)
+        emitter.emit("assignedNwk", stelleToAssignUnassign.assignedNwk);
     resetWarningDialog();
 }
 
@@ -202,7 +203,8 @@ function unassignNwk() {
                 loading.value = false;
             }
         );
-        emitter.emit("unassignedNwk", stelleToAssignUnassign.assignedNwk);
+        if (stelleToAssignUnassign.assignedNwk)
+            emitter.emit("unassignedNwk", stelleToAssignUnassign.assignedNwk);
         stelleToAssignUnassign.assignedNwk = undefined;
         assignedNwk.value = undefined;
     }
