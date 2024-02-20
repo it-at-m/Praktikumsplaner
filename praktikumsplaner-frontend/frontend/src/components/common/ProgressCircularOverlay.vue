@@ -1,7 +1,7 @@
 <template>
-    <v-overlay v-show="loading">
+    <v-overlay v-if="loading">
         <v-progress-circular
-            v-show="props.loading"
+            v-if="props.loading"
             indeterminate
             color="primary"
         >

@@ -16,15 +16,13 @@
                                 :background-color="getNwkColor(props.nwk)"
                             />
                         </v-col>
-                        <v-col>
-                            <div>
+                        <v-col cols="9" class="mr-5">
                                 <v-card-title>
                                     {{ getFullName(props.nwk) }}
                                 </v-card-title>
                                 <v-card-subtitle>
                                     {{ getSubtitle(props.nwk) }}
                                 </v-card-subtitle>
-                            </div>
                         </v-col>
                     </v-row>
                 </v-expansion-panel-title>
@@ -89,4 +87,3 @@ function getNwkColor(nwk: Nwk): string {
     return color;
 }
 </script>
-<style scoped></style>
