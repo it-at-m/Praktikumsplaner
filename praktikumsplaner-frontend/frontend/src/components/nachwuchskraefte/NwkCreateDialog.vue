@@ -98,6 +98,11 @@ function cancel() {
     visible.value = false;
 }
 
+function clear() {
+    nwk.value = new NwkCreate("", "", "", [], undefined, undefined);
+    form.value?.resetValidation();
+}
+
 function saveNwk() {
     if (!form.value?.validate()) {
         return;
@@ -107,6 +112,7 @@ function saveNwk() {
     NwkService.saveNwk(nwk.value)
         .then(() => {
             EventBus.$emit("nwkCreated");
+            clear();
         })
         .finally(() => {
             loading.value = false;
