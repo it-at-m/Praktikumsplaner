@@ -16,29 +16,7 @@
                 back-button-url="/"
                 page-header-text="Praktikumsplätze"
             ></page-title>
-
-            <div v-if="!activeMeldezeitraum">
-                <v-row class="align-center">
-                    <v-col
-                        cols="auto"
-                        class="d-flex align-center"
-                    >
-                        <v-icon
-                            color="blue"
-                            large
-                            >mdi-information-outline</v-icon
-                        >
-                    </v-col>
-                    <v-col class="d-flex align-center">
-                        <p class="mt-5">
-                            Ihre örtliche Ausbildungsleitung hat die Meldung von
-                            Stellen noch nicht freigegeben, daher können aktuell
-                            leider noch keine Praktikumsplätze gemeldet werden.
-                        </p>
-                    </v-col>
-                </v-row>
-            </div>
-            <div v-else>
+            <div v-if="canStellenBeSubmitted()">
                 <v-row>
                     <v-col cols="10"></v-col>
                     <v-col cols="2">
@@ -71,12 +49,11 @@
                     >
                         <span> Übersicht aus dem aktuellen Meldezeitraum </span>
                         <PraktikumsstellenList
-                            :assignment="false"
                             :praktikumsstellen-map="praktikumsstellenMap"
                         ></PraktikumsstellenList>
                     </v-container>
                     <v-container
-                        v-if="mapIsEmpty"
+                        v-else
                         class="box"
                     >
                         <v-row class="align-center">
@@ -100,9 +77,13 @@
                     </v-container>
                 </v-row>
             </div>
+            <div v-else>
+                <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
+            </div>
         </v-container>
     </v-container>
 </template>
+
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
@@ -112,6 +93,7 @@ import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
+import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { APP_SECURITY } from "@/constants";
 
@@ -140,17 +122,18 @@ onMounted(() => {
         .then((zeitraueme) => {
             activeMeldezeitraum.value = zeitraueme.length > 0;
         })
-        .then(() => {
-            if (isAusbildungsleitung) {
-                activeMeldezeitraum.value = true;
-            }
-        })
         .finally(() => {
             loadingSite.value = false;
         });
     getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
 
+function canStellenBeSubmitted() {
+    return (
+        isAusbildungsleitung.value ||
+        activeMeldezeitraum.value
+    );
+}
 function toAusbildung(): void {
     router.push("/praktikumsplaetze/meldungAusbildung");
 }
@@ -180,8 +163,5 @@ function getAllPraktikumsstellenInCurrentMeldezeitraum() {
 .box {
     margin: 1%;
     border: 2px solid #0000001a;
-}
-.v-skeleton-loader {
-    margin: 1%;
 }
 </style>

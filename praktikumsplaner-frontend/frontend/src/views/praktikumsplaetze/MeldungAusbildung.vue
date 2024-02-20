@@ -28,11 +28,8 @@
                 back-button-url="/praktikumsplaetze"
                 page-header-text="Praktikumsplatz für Auszubildende"
             ></page-title>
-            <div v-if="!activeMeldezeitraum">
-                <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
-            </div>
             <v-form
-                v-else
+                v-if="canStellenBeSubmitted()"
                 ref="form"
                 lazy-validation
             >
@@ -151,7 +148,7 @@
                     </v-row>
                 </v-container>
                 <v-container
-                    v-show="isAusbildungsleitung"
+                    v-if="isAusbildungsleitung"
                     class="box"
                 >
                     <v-row>
@@ -185,7 +182,11 @@
                     </v-row>
                 </v-container>
             </v-form>
+            <KeinMeldezeitraumMessage v-else></KeinMeldezeitraumMessage>
         </v-container>
+        <progress-circular-overlay
+            :loading="loading"
+        ></progress-circular-overlay>
     </v-container>
 </template>
 
@@ -216,14 +217,18 @@ import AusbildungsJahrSelect from "@/components/praktikumsplaetze/Meldung/Ausbil
 import AusbildungsrichtungSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsrichtungSelect.vue";
 import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/ProjektarbeitRadioGroup.vue";
 import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
-
-const activeMeldezeitraum = ref<boolean>(false);
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const praktikumsstelle = ref<Praktikumsstelle>(
     new Praktikumsstelle("", "", "", "", "")
 );
-const isAusbildungsleitung = ref<boolean>(false);
 const loadingSite = ref<boolean>(true);
+const isAusbildungsleitung = computed(
+    () =>
+        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
+        APP_SECURITY !== "true"
+);
+const loading = ref<boolean>(false);
 const userStore = useUserStore();
 const form = ref<HTMLFormElement>();
 const meldezeitraeume = computed(() => {
@@ -244,24 +249,24 @@ const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
         .then((zeitraueme) => {
-            activeMeldezeitraum.value = zeitraueme.length > 0;
             currentMeldezeitraum.value = zeitraueme[0];
-        })
-        .then(() => {
-            if (
-                userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-                APP_SECURITY !== "true"
-            ) {
-                isAusbildungsleitung.value = true;
-                activeMeldezeitraum.value = true;
-                getUpcomingMeldezeitraeume();
-                getPassedMeldezeitraeume();
-            }
         })
         .finally(() => {
             loadingSite.value = false;
         });
+
+    if (isAusbildungsleitung.value) {
+        getUpcomingMeldezeitraeume();
+        getPassedMeldezeitraeume();
+    }
 });
+
+function canStellenBeSubmitted() {
+    return (
+        isAusbildungsleitung.value ||
+        currentMeldezeitraum.value
+    );
+}
 
 function getUpcomingMeldezeitraeume() {
     MeldezeitraumService.getUpcomingMeldezeitraueme().then((zeitraeume) => {
@@ -279,21 +284,22 @@ function resetForm() {
     form.value?.reset();
     router.push("/praktikumsplaetze");
 }
+
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
-    if (
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true"
-    ) {
+    loading.value = true;
+    if (isAusbildungsleitung.value) {
         MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
             praktikumsstelle.value
         ).finally(() => {
+            loading.value = false;
             resetForm();
         });
     } else {
         MeldungService.uploadAusbildungsPraktikumsstelle(
             praktikumsstelle.value
         ).finally(() => {
+            loading.value = false;
             resetForm();
         });
     }
