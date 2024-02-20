@@ -26,11 +26,6 @@ import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import ActiveNwkList from "@/components/nachwuchskraefte/ActiveNwkList.vue";
 import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
-import { EventBus } from "@/stores/event-bus";
-
-EventBus.$on("nwkCreated", () => {
-    EventBus.$emit("nwkCreated");
-});
 </script>
 
 <style scoped>
