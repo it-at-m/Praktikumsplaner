@@ -258,10 +258,7 @@ onMounted(() => {
 });
 
 function canStellenBeSubmitted() {
-    return (
-        isAusbildungsleitung.value ||
-        currentMeldezeitraum.value
-    );
+    return isAusbildungsleitung.value || currentMeldezeitraum.value;
 }
 
 function getUpcomingMeldezeitraeume() {
@@ -284,9 +281,7 @@ function resetForm() {
 function uploadPraktikumsstelle() {
     if (!form.value?.validate()) return;
     loading.value = true;
-    if (
-        isAusbildungsleitung.value
-    ) {
+    if (isAusbildungsleitung.value) {
         MeldungService.uploadStudiumsPraktikumsstelleWithMeldezeitraum(
             praktikumsstelle.value
         ).finally(() => {

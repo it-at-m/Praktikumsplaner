@@ -129,10 +129,7 @@ onMounted(() => {
 });
 
 function canStellenBeSubmitted() {
-    return (
-        isAusbildungsleitung.value ||
-        activeMeldezeitraum.value
-    );
+    return isAusbildungsleitung.value || activeMeldezeitraum.value;
 }
 function toAusbildung(): void {
     router.push("/praktikumsplaetze/meldungAusbildung");

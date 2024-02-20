@@ -262,10 +262,7 @@ onMounted(() => {
 });
 
 function canStellenBeSubmitted() {
-    return (
-        isAusbildungsleitung.value ||
-        currentMeldezeitraum.value
-    );
+    return isAusbildungsleitung.value || currentMeldezeitraum.value;
 }
 
 function getUpcomingMeldezeitraeume() {

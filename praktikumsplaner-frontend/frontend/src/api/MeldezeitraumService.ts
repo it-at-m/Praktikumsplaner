@@ -9,89 +9,51 @@ export default {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}`,
             FetchUtils.getPOSTConfig(meldezeitraum)
-        )
-            .then((response) => {
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Speichern erfolgreich.",
+                    message: "☑ Meldezeitraum erfolgreich angelegt",
                     level: Levels.SUCCESS,
                 });
-                FetchUtils.defaultResponseHandler(response);
                 return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+            }
+        });
     },
     getCurrentMeldezeitraum(): Promise<Meldezeitraum[]> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=current`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     getUpcomingMeldezeitraueme(): Promise<Meldezeitraum[]> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=future`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     getPassedMeldezeitraueme(): Promise<Meldezeitraum[]> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=past`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     getAllMeldezeitraeume(): Promise<Meldezeitraum[]> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
 };
