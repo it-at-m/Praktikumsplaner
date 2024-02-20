@@ -55,7 +55,7 @@
                         <v-btn
                             color="primary"
                             outlined
-                            @click="cancel()"
+                            @click="close()"
                         >
                             Abbrechen
                         </v-btn>
@@ -94,7 +94,7 @@ const validationRules = useRules();
 
 const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
 
-function cancel() {
+function close() {
     visible.value = false;
 }
 
@@ -108,14 +108,15 @@ function saveNwk() {
         return;
     }
     loading.value = true;
-    cancel();
+    close();
     NwkService.saveNwk(nwk.value)
         .then(() => {
             EventBus.$emit("nwkCreated");
-            clear();
+
         })
         .finally(() => {
             loading.value = false;
+            clear();
         });
 }
 </script>
