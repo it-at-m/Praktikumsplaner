@@ -1,5 +1,9 @@
 <template>
     <v-container>
+        <page-title
+            back-button-url="/"
+            page-header-text="Praktikumsplätze"
+        ></page-title>
         <v-container v-if="loadingSite">
             <v-row>
                 <v-col cols="4">
@@ -12,10 +16,6 @@
             </v-row>
         </v-container>
         <v-container v-else>
-            <page-title
-                back-button-url="/"
-                page-header-text="Praktikumsplätze"
-            ></page-title>
             <div v-if="canStellenBeSubmitted()">
                 <v-row>
                     <v-col cols="10"></v-col>

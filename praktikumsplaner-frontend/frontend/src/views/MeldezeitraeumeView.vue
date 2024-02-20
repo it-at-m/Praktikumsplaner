@@ -1,11 +1,9 @@
 <template>
     <v-container class="finishedBackground">
-        <v-row>
-            <page-title
-                back-button-url="/"
-                page-header-text="Meldezeiträume"
-            ></page-title>
-        </v-row>
+        <page-title
+            back-button-url="/"
+            page-header-text="Meldezeiträume">
+        </page-title>
         <v-row>
             <v-col cols="9"></v-col>
             <v-col>

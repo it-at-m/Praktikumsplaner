@@ -1,5 +1,9 @@
 <template>
     <v-container>
+        <page-title
+            back-button-url="/praktikumsplaetze"
+            page-header-text="Praktikumsplatz für Studierende"
+        ></page-title>
         <v-container v-if="loadingSite">
             <v-row>
                 <v-col cols="1">
@@ -24,10 +28,6 @@
             </v-row>
         </v-container>
         <v-container v-else>
-            <page-title
-                back-button-url="/praktikumsplaetze"
-                page-header-text="Praktikumsplatz für Studierende"
-            ></page-title>
             <div v-if="!activeMeldezeitraum"></div>
             <v-form
                 v-if="canStellenBeSubmitted()"
