@@ -1,10 +1,11 @@
 export function useRules() {
     function fileTypeRule(acceptedType: string, errorMessage: string) {
-        return (fileList: FileList | null) => {
+        return (fileList: FileList | null | undefined) => {
             if (!fileList || fileList.length === 0) {
                 return true;
             }
-            const file = fileList[0];
+            const file = fileList.item(0);
+            if (!file) return true;
             return file.type === acceptedType || errorMessage;
         };
     }
