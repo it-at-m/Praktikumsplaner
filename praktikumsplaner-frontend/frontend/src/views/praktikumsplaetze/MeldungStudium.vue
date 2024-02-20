@@ -187,7 +187,6 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import MeldungService from "@/api/PraktikumsstellenService";
 import PageTitle from "@/components/common/PageTitle.vue";
@@ -259,7 +258,10 @@ onMounted(() => {
 });
 
 function canStellenBeSubmitted() {
-    return isAusbildungsleitung.value || currentMeldezeitraum.value;
+    return (
+        isAusbildungsleitung.value ||
+        currentMeldezeitraum.value
+    );
 }
 
 function getUpcomingMeldezeitraeume() {
