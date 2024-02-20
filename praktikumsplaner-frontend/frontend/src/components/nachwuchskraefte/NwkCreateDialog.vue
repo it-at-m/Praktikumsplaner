@@ -23,9 +23,9 @@
                         >NWK anlegen</v-card-title
                     >
                     <v-list>
-                            <v-list-item>
-                                <NameInput v-model="nwk"></NameInput>
-                            </v-list-item>
+                        <v-list-item>
+                            <NameInput v-model="nwk"></NameInput>
+                        </v-list-item>
                         <v-row>
                             <v-list-item>
                                 <v-col cols="6">
