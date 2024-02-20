@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class MeldezeitraumService {
     private final MeldezeitraumMapper meldezeitraumMapper;
     private final MeldezeitraumRepository meldezeitraumRepository;
-    private final PraktikumsstellenService praktikumsstellenService;
 
     public MeldezeitraumDto createMeldezeitraum(final CreateMeldezeitraumDto meldezeitraumCreateDto) {
         checkOverlappingMeldezeitraum(meldezeitraumCreateDto);
@@ -61,8 +60,7 @@ public class MeldezeitraumService {
         return meldezeitraumRepository.findAll().stream().map(meldezeitraumMapper::toDto).toList();
     }
 
-    public void deleteMeldezeitraumAndAttachedPraktikumsstellen(UUID id) {
-        praktikumsstellenService.deleteAllPraktikumsstellenByMeldezeitraumId(id);
+    public void deleteMeldezeitraumById(UUID id) {
         meldezeitraumRepository.deleteById(id);
     }
 }

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,8 +35,6 @@ public class MeldezeitraumServiceTest {
     private MeldezeitraumMapper mapper = Mappers.getMapper(MeldezeitraumMapper.class);
     @Mock
     private MeldezeitraumRepository repository;
-    @Mock
-    private PraktikumsstellenService praktikumsstellenService;
     @InjectMocks
     private MeldezeitraumService service;
     private final ServiceTestHelper helper = new ServiceTestHelper();
@@ -199,12 +198,13 @@ public class MeldezeitraumServiceTest {
     }
 
     @Test
-    public void testShouldDeleteMeldezeitraumAndAttachedPraktikumsstellen() {
+    public void testShouldDeleteMeldezeitraumByIdWhenExists() {
         UUID id = UUID.randomUUID();
 
-        service.deleteMeldezeitraumAndAttachedPraktikumsstellen(id);
+        doNothing().when(repository).deleteById(id);
 
-        verify(praktikumsstellenService, times(1)).deleteAllPraktikumsstellenByMeldezeitraumId(id);
+        service.deleteMeldezeitraumById(id);
+
         verify(repository, times(1)).deleteById(id);
     }
 }
