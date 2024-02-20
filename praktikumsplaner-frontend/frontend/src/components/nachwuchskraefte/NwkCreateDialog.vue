@@ -26,8 +26,9 @@
                         <v-list-item>
                             <NameInput v-model="nwk"></NameInput>
                         </v-list-item>
-                        <v-row>
-                            <v-list-item>
+
+                        <v-list-item>
+                            <v-row>
                                 <v-col cols="6">
                                     <JahrgangInput
                                         v-model="nwk"
@@ -38,8 +39,9 @@
                                         v-model="nwk"
                                     ></VorlesungstageSelector>
                                 </v-col>
-                            </v-list-item>
-                        </v-row>
+                            </v-row>
+                        </v-list-item>
+
                         <v-row>
                             <v-list-item>
                                 <StudienrichtungOrAusbildungsrichtungSelect
