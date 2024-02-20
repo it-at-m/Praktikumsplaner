@@ -48,8 +48,8 @@
             ></slot>
         </v-col>
         <yes-no-dialog-without-activator
-            dialogtitle="Achtung!"
-            dialogtext="Wenn Sie den Meldezeitraum löschen, werden auch alle zugehörigen Praktikumsplätze gelöscht. Wollen Sie den Meldezeitraum wirklich löschen?"
+            :dialogtitle="deleteWarningDialogTitle"
+            :dialogtext="deleteWarningDialogText"
             :value="showDeleteWarningDialog"
             @no="resetDeleteWarningDialog"
             @yes="deleteMeldezeitraum"
@@ -71,13 +71,17 @@ import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay
 const showDeleteWarningDialog = ref(false);
 const loading = ref(false);
 const meldezeitraumToDelete = ref<Meldezeitraum>();
+const deleteWarningDialogTitle = ref("ACHTUNG!");
+const deleteWarningDialogText = ref(
+    "Wenn Sie den Meldezeitraum löschen, werden auch ALLE zugehörigen Praktikumsplätze gelöscht. Wollen Sie den Meldezeitraum wirklich löschen?"
+);
 
 const props = defineProps<{
     value: Meldezeitraum[];
 }>();
 
 const emits = defineEmits<{
-    (e: "delete", meldezeitraum: Meldezeitraum | undefined): void;
+    (e: "deleted", meldezeitraum: Meldezeitraum | undefined): void;
 }>();
 
 function warnBeforeDelete(meldezeitraum: Meldezeitraum) {
@@ -97,7 +101,7 @@ function deleteMeldezeitraum() {
     loading.value = true;
     MeldezeitraumService.deleteMeldezeitraumById(meldezeitraumToDelete.value.id)
         .then(() => {
-            emits("delete", meldezeitraumToDelete.value);
+            emits("deleted", meldezeitraumToDelete.value);
         })
         .finally(() => {
             loading.value = false;
