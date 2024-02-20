@@ -7,15 +7,15 @@
             ></page-title>
         </v-row>
         <v-row>
-            <v-col cols="8"></v-col>
-            <v-col cols="4">
+            <v-col cols="9"></v-col>
+            <v-col>
                 <create-meldezeitraum
                     v-model="model"
                     @meldezeitraum-added="reloadMeldezeitraeume"
                 ></create-meldezeitraum>
             </v-col>
         </v-row>
-        <v-container>
+        <v-container class="box">
             <v-skeleton-loader
                 v-if="loading"
                 type="card-heading, divider, list-item, card-heading@2, divider, list-item, card-heading@2"

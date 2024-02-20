@@ -15,7 +15,7 @@
                     v-model="nwks"
                 />
             </v-col>
-            <v-divider vertical />
+            <v-divider vertical/>
             <v-col cols="7">
                 <v-skeleton-loader
                     v-if="loadingPraktikumsstellen"

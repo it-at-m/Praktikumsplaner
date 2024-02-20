@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-container>
+        <v-container v-if="props.praktikumsstellenMap && props.praktikumsstellenMap.size > 0">
             <v-expansion-panels multiple>
                 <v-expansion-panel
                     v-for="abteilung in props.praktikumsstellenMap.keys()"
@@ -28,6 +28,14 @@
                     </v-expansion-panel-text>
                 </v-expansion-panel>
             </v-expansion-panels>
+        </v-container>
+        <v-container v-else class="d-flex justify-center align-center">
+            <v-row justify="center">
+                <v-col cols="auto" class="d-flex align-center justify-center">
+                    <v-icon color="blue" size="large" class="mr-3">mdi-information-outline</v-icon>
+                    <span>Für den vergangenen Meldezeitraum sind keine Praktikumsstellen vorhanden.</span>
+                </v-col>
+            </v-row>
         </v-container>
     </div>
 </template>

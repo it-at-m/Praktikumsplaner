@@ -5,7 +5,7 @@
             back-button-url="/"
         ></page-title>
         <v-row>
-            <v-col cols="7"></v-col>
+            <v-col cols="8"></v-col>
             <v-col>
                 <excel-import-nwk></excel-import-nwk>
             </v-col>

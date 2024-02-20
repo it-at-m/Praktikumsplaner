@@ -1,15 +1,25 @@
 <template>
-    <v-list v-model:selected="selectedNwks">
-        <v-list-item
-            v-for="nwk in props.modelValue"
-            :key="nwk.id"
-            :model-value="nwk"
-            draggable="true"
-            @dragstart="dragStart($event, nwk)"
-        >
-            <nwk-card :nwk="nwk" />
-        </v-list-item>
-    </v-list>
+    <v-container v-if="props.modelValue && modelValue.length > 0">
+        <v-list v-model:selected="selectedNwks">
+            <v-list-item
+                v-for="nwk in props.modelValue"
+                :key="nwk.id"
+                :model-value="nwk"
+                draggable="true"
+                @dragstart="dragStart($event, nwk)"
+            >
+                <nwk-card :nwk="nwk" />
+            </v-list-item>
+        </v-list>
+    </v-container>
+    <v-container v-else class="d-flex justify-center align-center">
+        <v-row justify="center">
+            <v-col cols="auto" class="d-flex align-center justify-center">
+                <v-icon color="blue" size="large" class="mr-3">mdi-information-outline</v-icon>
+                <span>Es sind noch keine Nachwuchskräfte vorhanden.</span>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from "vue";
