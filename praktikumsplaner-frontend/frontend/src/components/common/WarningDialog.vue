@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 
 import Warning from "@/types/Warning";
 
@@ -45,6 +45,10 @@ const props = defineProps<{
 const currentIndex = ref(0);
 
 const computedVisible = computed(() => {
+    if (props.visible && props.warnings.length <= 0) {
+        emits("accepted");
+        return false;
+    }
     return props.visible;
 });
 
@@ -55,23 +59,16 @@ const currentWarning = computed(() => {
     return null;
 });
 
-const accept = () => {
+function accept() {
     currentIndex.value++;
     if (currentIndex.value >= props.warnings.length) {
         currentIndex.value = 0;
         emits("accepted");
     }
-};
+}
 
-const reject = () => {
+function reject() {
     currentIndex.value = 0;
     emits("rejected");
-};
-
-onMounted(() => {
-    if (props.visible && props.warnings.length <= 0) {
-        currentIndex.value = 0;
-        emits("accepted");
-    }
-});
+}
 </script>
