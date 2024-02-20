@@ -8,7 +8,7 @@ export const Studiengang = [
     {
         name: "Verwaltungsinformatik (VI)",
         value: "VI",
-        color: "deep-purple-lighten-3",
+        color: "deep-purple-lighten-4",
     },
 ] as const;
 

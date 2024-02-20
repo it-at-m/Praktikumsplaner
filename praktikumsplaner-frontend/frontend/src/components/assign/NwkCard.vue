@@ -16,7 +16,7 @@
                                 :background-color="getNwkColor(props.nwk)"
                             />
                         </v-col>
-                        <v-col cols="9" class="mr-5">
+                        <v-col cols="5">
                                 <v-card-title>
                                     {{ getFullName(props.nwk) }}
                                 </v-card-title>

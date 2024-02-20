@@ -2,7 +2,7 @@ export const Ausbildungsrichtung = [
     {
         name: "Fachinformatiker Systemintegration (FISI)",
         value: "FISI",
-        color: "light-blue lighten-4",
+        color: "light-blue-lighten-4",
     },
 ] as const;
 

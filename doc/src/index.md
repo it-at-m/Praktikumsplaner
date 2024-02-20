@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: itm_logo.png
+heroImage: logo.png
 heroText: null
 tagline: Praktikumsplaner
 actionText: Technical Documentation →
