@@ -1,4 +1,6 @@
 import { ApiError, Levels } from "@/api/Error";
+import { useSnackbarStore } from "@/stores/snackbar";
+import { useUserErrorStore } from "@/stores/user-error";
 
 export default class FetchUtils {
     /**
@@ -58,7 +60,7 @@ export default class FetchUtils {
      * @param body Optional zu übertragender Body
      */
     // eslint-disable-next-line
-    static getPATCHConfig(body: any):RequestInit {
+    static getPATCHConfig(body: any): RequestInit {
         const headers = FetchUtils.getHeaders();
         if (body.version !== undefined) {
             headers.append("If-Match", body.version);
@@ -78,7 +80,7 @@ export default class FetchUtils {
      *
      * - Fehler bei fehlenden Berechtigungen --> HTTP 403
      * - Reload der App bei Session-Timeout --> HTTP 3xx
-     * - Default-Fehler bei allen HTTP-Codes !2xx
+     * - Fehler bei unbekannten Problemen --> alle anderen error Codes
      *
      * @param response Die response aus fetch-Befehl die geprüft werden soll.
      * @param errorMessage Die Fehlermeldung, welche bei einem HTTP-Code != 2xx angezeigt werden soll.
@@ -95,13 +97,63 @@ export default class FetchUtils {
                 });
             } else if (response.type === "opaqueredirect") {
                 location.reload();
+            } else if (this.isStatusInput(response)) {
+                response.body
+                    ?.getReader()
+                    .read()
+                    .then((result) => {
+                        const decoder = new TextDecoder("utf-8");
+                        const message = decoder.decode(result.value);
+                        useUserErrorStore().showUserError({
+                            title: "Fehlerhafte Eingaben",
+                            message: message,
+                        });
+                        throw new ApiError({
+                            message: message,
+                            level: Levels.ERROR,
+                        });
+                    });
+            } else if (this.isStatusServer(response)) {
+                useSnackbarStore().showMessage({
+                    message:
+                        "Serverfehler. Bitte versuchen Sie es später erneut, oder wenden Sie sich an die Administration.",
+                    level: Levels.ERROR,
+                });
+                throw new ApiError({
+                    message: errorMessage,
+                    level: Levels.ERROR,
+                });
+            } else {
+                useSnackbarStore().showMessage({
+                    message: errorMessage,
+                    level: Levels.WARNING,
+                });
+                throw new ApiError({
+                    message: errorMessage,
+                    level: Levels.WARNING,
+                });
             }
-            throw new ApiError({
-                level: Levels.WARNING,
-                message: errorMessage,
-            });
         }
     }
+
+    /**
+     * Prüft, ob der Status der Response auf einen Server-Fehler hinweist.
+     * @param response Die Response, die geprüft werden soll.
+     * @returns {boolean} true, wenn der Status auf einen Server-Fehler hinweist, sonst false.
+     */
+    private static isStatusServer(response: Response): boolean {
+        return response.status >= 500 && response.status <= 599;
+    }
+
+    /**
+     * Prüft, ob der Status der Response auf einen Input-Fehler hinweist.
+     * @param response Die Response, die geprüft werden soll.
+     * @returns {boolean} true, wenn der Status auf einen Input-Fehler hinweist, sonst false.
+     */
+    private static isStatusInput(response: Response): boolean {
+        return response.status >= 400 && response.status <= 499;
+    }
+
     /**
      *  Baut den Header fuer den Request auf
      * @returns {Headers}

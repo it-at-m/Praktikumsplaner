@@ -1,6 +1,7 @@
 <template>
     <v-app>
         <the-snackbar />
+        <error-dialog />
         <v-app-bar color="primary">
             <v-row align="center">
                 <v-col
@@ -92,6 +93,7 @@ import TheSnackbar from "@/components/TheSnackbar.vue";
 import { useSecurity } from "@/composables/security";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
+import ErrorDialog from "@/components/TheUserErrorDialog.vue";
 
 const drawer = ref(true);
 const userStore = useUserStore();

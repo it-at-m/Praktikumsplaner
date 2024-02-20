@@ -46,15 +46,6 @@
                 </v-card>
             </v-form>
         </v-dialog>
-
-        <error-dialog
-            :dialogtext="errorDialogText"
-            :dialogtitle="errorDialogTitle"
-            icontext="mdi mdi-alert-octagon-outline"
-            iconcolor="red"
-            :model-value="errorDialogVisible"
-            @close="errorDialogVisible = false"
-        ></error-dialog>
         <progress-circular-overlay :loading="loading" />
     </div>
 </template>
@@ -64,7 +55,8 @@ import { ref } from "vue";
 
 import { Levels } from "@/api/Error";
 import NwkService from "@/api/NwkService";
-import ErrorDialog from "@/components/common/ErrorDialog.vue";
+import { useRules } from "@/composables/rules";
+import { EventBus } from "@/stores/event-bus";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import { useRules } from "@/composables/rules";
 import emitter from "@/stores/eventBus";
@@ -74,7 +66,6 @@ const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
 const file = ref<File[]>();
 const form = ref<HTMLFormElement>();
-const snackbarStore = useSnackbarStore();
 const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const validationRules = useRules();
@@ -87,11 +78,6 @@ const rules = [
         "Falsches Dateiformat. Es muss eine Excel-Datei hochgeladen werden."
     ),
 ];
-const errorDialogVisible = ref<boolean>(false);
-const errorDialogText = ref<string>(
-    "Ihre Exceldatei konnte nicht hochgeladen werde. Bitte überprüfen Sie die Datei und versuchen Sie es erneut."
-);
-const errorDialogTitle = ref<string>("Excel Import fehlgeschlagen");
 
 function cancel() {
     visible.value = false;
@@ -109,20 +95,10 @@ function uploadFile() {
             });
             emitter.emit("nwkCreated");
         })
-        .catch(() => {
-            showError();
-        })
         .finally(() => {
             loading.value = false;
             form.value?.reset();
             file.value = [];
         });
 }
-
-function showError() {
-    visible.value = false;
-    errorDialogVisible.value = true;
-}
 </script>
-
-<style scoped></style>
