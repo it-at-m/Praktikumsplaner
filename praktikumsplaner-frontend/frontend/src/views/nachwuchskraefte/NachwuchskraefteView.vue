@@ -16,7 +16,7 @@
         <v-row></v-row>
         <v-container class="box">
             <span> Übersicht</span>
-            <active-nwk-list ref="nwkList"></active-nwk-list>
+            <active-nwk-list></active-nwk-list>
         </v-container>
     </v-container>
 </template>

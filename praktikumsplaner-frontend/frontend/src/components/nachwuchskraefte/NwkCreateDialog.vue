@@ -104,10 +104,13 @@ function saveNwk() {
     }
     loading.value = true;
     cancel();
-    NwkService.saveNwk(nwk.value).finally(() => {
-        loading.value = false;
-        EventBus.$emit("nwkCreated");
-    });
+    NwkService.saveNwk(nwk.value)
+        .then(() => {
+            EventBus.$emit("nwkCreated");
+        })
+        .finally(() => {
+            loading.value = false;
+        });
 }
 </script>
 

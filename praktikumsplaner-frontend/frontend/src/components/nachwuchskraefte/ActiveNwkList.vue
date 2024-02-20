@@ -70,10 +70,6 @@ function getSubtitle(nwk: Nwk): string {
 EventBus.$on("nwkCreated", () => {
     loadAllActiveNwks();
 });
-
-defineExpose({
-    loadAllActiveNwks,
-});
 </script>
 <style scoped lang="scss">
 .cards {
