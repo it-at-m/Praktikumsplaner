@@ -149,6 +149,7 @@ export function useWarnings() {
             warnings.push(warning);
         }
         for (const stelle of stellen) {
+            if (!stelle.dringlichkeit) continue;
             if (
                 (stelle.dringlichkeit.toLocaleLowerCase() == "dringend" ||
                     stelle.dringlichkeit.toLocaleLowerCase() == "zwingend") &&
