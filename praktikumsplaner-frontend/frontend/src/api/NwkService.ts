@@ -7,21 +7,19 @@ import NwkCreate from "@/types/NwkCreate";
 
 export default {
     saveNwk(nwk: NwkCreate): Promise<void> {
-        return fetch(`${API_BASE}${NWK_BASE}`, FetchUtils.getPOSTConfig(nwk))
-            .then((response) => {
+        return fetch(
+            `${API_BASE}${NWK_BASE}`,
+            FetchUtils.getPOSTConfig(nwk)
+        ).then((response) => {
+            if (response.ok) {
                 useSnackbarStore().showMessage({
                     message: "☑ NWK wurde erfolgreich erstellt.",
                     level: Levels.SUCCESS,
                 });
+            } else {
                 FetchUtils.defaultResponseHandler(response);
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultCatchHandler(err);
-            });
+            }
+        });
     },
     uploadExcelFile(excelDatei: File): Promise<void> {
         // File Reader encodes as Base64
@@ -31,12 +29,13 @@ export default {
                 // Base64 String starts after the comma
                 FetchUtils.getPOSTConfig(base64string.split(",")[1])
             ).then((response) => {
-                FetchUtils.defaultResponseHandler(response);
                 if (response.ok) {
                     useSnackbarStore().showMessage({
                         message: "☑ Nachwuchskräfte erfolgreich angelegt.",
                         level: Levels.SUCCESS,
                     });
+                } else {
+                    FetchUtils.defaultResponseHandler(response);
                 }
             });
         });
@@ -77,12 +76,13 @@ export default {
             `${API_BASE}${NWK_BASE}`,
             FetchUtils.getPUTConfig(nwk)
         ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
                     message: "☑ Nachwuchskraft wurde erfolgreich bearbeitet.",
                     level: Levels.SUCCESS,
                 });
+            } else {
+                FetchUtils.defaultResponseHandler(response);
             }
         });
     },

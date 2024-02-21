@@ -10,13 +10,14 @@ export default {
             `${API_BASE}${MELDEZEITRAUM_BASE}`,
             FetchUtils.getPOSTConfig(meldezeitraum)
         ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
                     message: "☑ Meldezeitraum erfolgreich angelegt",
                     level: Levels.SUCCESS,
                 });
                 return response.json();
+            } else {
+                FetchUtils.defaultResponseHandler(response);
             }
         });
     },
