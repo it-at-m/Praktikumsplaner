@@ -112,7 +112,6 @@ function saveNwk() {
     NwkService.saveNwk(nwk.value)
         .then(() => {
             EventBus.$emit("nwkCreated");
-
         })
         .finally(() => {
             loading.value = false;
