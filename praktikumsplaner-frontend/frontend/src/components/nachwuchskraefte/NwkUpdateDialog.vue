@@ -158,9 +158,7 @@ function cancel() {
 
 function updateNwk() {
     form.value?.validate();
-    if (!form.value?.isValid) {
-        return;
-    }
+    if (!form.value?.isValid) return;
     loading.value = true;
     cancel();
     NwkService.updateNwk(nwkToUpdate.value)
