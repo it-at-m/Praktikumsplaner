@@ -7,14 +7,6 @@
         >
             Exportieren
         </v-btn>
-        <error-dialog
-            v-model="errorDialogVisible"
-            :dialogtext="errorDialogText"
-            :dialogtitle="errorDialogTitle"
-            icontext="mdi mdi-alert-octagon-outline"
-            iconcolor="red"
-            @close="errorDialogVisible = false"
-        ></error-dialog>
         <progress-circular-overlay
             :loading="loading"
         ></progress-circular-overlay>
@@ -25,7 +17,6 @@
 import { ref, watch } from "vue";
 
 import ExportService from "@/api/ExportService";
-import ErrorDialog from "@/components/common/ErrorDialog.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const loading = ref<boolean>(false);
@@ -37,12 +28,6 @@ const emits = defineEmits<{
     (e: "click"): void;
     (e: "exported"): void;
 }>();
-
-const errorDialogVisible = ref<boolean>(false);
-const errorDialogText = ref<string>(
-    "Beim Exportieren ist ein Fehler aufgetreten."
-);
-const errorDialogTitle = ref<string>("Fehler");
 
 watch(
     () => props.startDownload,

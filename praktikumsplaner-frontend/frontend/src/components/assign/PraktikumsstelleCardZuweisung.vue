@@ -51,7 +51,7 @@
             ></v-col>
             <v-btn
                 :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-                :class="{'custom-card-active': assignedNwk}"
+                :class="{ 'custom-card-active': assignedNwk }"
                 class="icon-bottom-right-position"
                 elevation="0"
                 @click.stop="show = !show"

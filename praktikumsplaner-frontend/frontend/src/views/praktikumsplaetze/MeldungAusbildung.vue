@@ -284,7 +284,7 @@ function resetForm() {
 }
 
 function uploadPraktikumsstelle() {
-    form.value?.validate()
+    form.value?.validate();
     if (!form.value?.isValid) return;
     loading.value = true;
     if (isAusbildungsleitung.value) {

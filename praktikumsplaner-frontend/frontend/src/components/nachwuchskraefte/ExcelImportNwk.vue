@@ -53,14 +53,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import { Levels } from "@/api/Error";
 import NwkService from "@/api/NwkService";
-import { useRules } from "@/composables/rules";
-import { EventBus } from "@/stores/event-bus";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import { useRules } from "@/composables/rules";
 import emitter from "@/stores/eventBus";
-import { useSnackbarStore } from "@/stores/snackbar";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
@@ -89,10 +85,6 @@ function uploadFile() {
     loading.value = true;
     NwkService.uploadExcelFile(file.value[0])
         .then(() => {
-            snackbarStore.showMessage({
-                message: "Nachwuchskräfte erfolgreich angelegt.",
-                level: Levels.SUCCESS,
-            });
             emitter.emit("nwkCreated");
         })
         .finally(() => {

@@ -187,6 +187,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
+
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import MeldungService from "@/api/PraktikumsstellenService";
 import PageTitle from "@/components/common/PageTitle.vue";
@@ -279,7 +280,7 @@ function resetForm() {
 }
 
 function uploadPraktikumsstelle() {
-    form.value?.validate()
+    form.value?.validate();
     if (!form.value?.isValid) return;
     loading.value = true;
     if (isAusbildungsleitung.value) {

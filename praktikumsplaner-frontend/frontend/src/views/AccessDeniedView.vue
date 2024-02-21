@@ -4,12 +4,15 @@
             back-button-url="/"
             page-header-text="Zurück zur Startseite"
         ></page-title>
-        <v-row align="center" class="ml-auto">
+        <v-row
+            align="center"
+            class="ml-auto"
+        >
             <v-col cols="auto">
                 <v-icon
                     size="large"
                     color="red"
-                >mdi-alert-octagon</v-icon
+                    >mdi-alert-octagon</v-icon
                 >
             </v-col>
             <v-col>

@@ -17,12 +17,12 @@
                             />
                         </v-col>
                         <v-col cols="5">
-                                <v-card-title>
-                                    {{ getFullName(props.nwk) }}
-                                </v-card-title>
-                                <v-card-subtitle>
-                                    {{ getSubtitle(props.nwk) }}
-                                </v-card-subtitle>
+                            <v-card-title>
+                                {{ getFullName(props.nwk) }}
+                            </v-card-title>
+                            <v-card-subtitle>
+                                {{ getSubtitle(props.nwk) }}
+                            </v-card-subtitle>
                         </v-col>
                     </v-row>
                 </v-expansion-panel-title>

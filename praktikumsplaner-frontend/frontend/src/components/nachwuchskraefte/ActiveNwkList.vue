@@ -34,9 +34,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <v-container
-            v-else
-        >
+        <v-container v-else>
             <v-row class="align-center">
                 <v-col
                     cols="auto"
@@ -45,13 +43,11 @@
                     <v-icon
                         color="blue"
                         size="large"
-                    >mdi-information-outline</v-icon
+                        >mdi-information-outline</v-icon
                     >
                 </v-col>
                 <v-col class="d-flex align-center">
-                    <p>
-                        Es sind noch keine Nachwuchskräfte vorhanden.
-                    </p>
+                    <p>Es sind noch keine Nachwuchskräfte vorhanden.</p>
                 </v-col>
             </v-row>
         </v-container>

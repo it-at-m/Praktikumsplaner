@@ -20,14 +20,14 @@
                     id="yesnodialog-btn-no"
                     variant="outlined"
                     @click="no"
-                >Nein
+                    >Nein
                 </v-btn>
                 <v-btn
                     id="yesnodialog-btn-yes"
                     variant="flat"
                     color="primary"
                     @click="yes"
-                >Ja
+                    >Ja
                 </v-btn>
             </v-card-actions>
         </v-card>

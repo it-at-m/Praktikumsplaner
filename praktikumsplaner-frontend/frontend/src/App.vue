@@ -90,10 +90,10 @@ import { onBeforeMount, onMounted, ref } from "vue";
 import InfoService from "@/api/InfoService";
 import { UserService } from "@/api/UserService";
 import TheSnackbar from "@/components/TheSnackbar.vue";
+import ErrorDialog from "@/components/TheUserErrorDialog.vue";
 import { useSecurity } from "@/composables/security";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
-import ErrorDialog from "@/components/TheUserErrorDialog.vue";
 
 const drawer = ref(true);
 const userStore = useUserStore();

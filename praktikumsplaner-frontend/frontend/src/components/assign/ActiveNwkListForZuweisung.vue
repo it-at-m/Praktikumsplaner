@@ -12,10 +12,21 @@
             </v-list-item>
         </v-list>
     </v-container>
-    <v-container v-else class="d-flex justify-center align-center">
+    <v-container
+        v-else
+        class="d-flex justify-center align-center"
+    >
         <v-row justify="center">
-            <v-col cols="auto" class="d-flex align-center justify-center">
-                <v-icon color="blue" size="large" class="mr-3">mdi-information-outline</v-icon>
+            <v-col
+                cols="auto"
+                class="d-flex align-center justify-center"
+            >
+                <v-icon
+                    color="blue"
+                    size="large"
+                    class="mr-3"
+                    >mdi-information-outline</v-icon
+                >
                 <span>Es sind noch keine Nachwuchskräfte vorhanden.</span>
             </v-col>
         </v-row>
