@@ -29,12 +29,13 @@ export default {
                 // Base64 String starts after the comma
                 FetchUtils.getPOSTConfig(base64string.split(",")[1])
             ).then((response) => {
-                FetchUtils.defaultResponseHandler(response);
                 if (response.ok) {
                     useSnackbarStore().showMessage({
                         message: "☑ Nachwuchskräfte erfolgreich angelegt.",
                         level: Levels.SUCCESS,
                     });
+                } else {
+                    FetchUtils.defaultResponseHandler(response);
                 }
             });
         });
