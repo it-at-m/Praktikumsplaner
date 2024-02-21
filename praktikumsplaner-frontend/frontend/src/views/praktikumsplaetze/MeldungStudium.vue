@@ -206,9 +206,7 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
-const praktikumsstelle = ref<Praktikumsstelle>(
-    new Praktikumsstelle("", "", "", "", "")
-);
+const praktikumsstelle = ref<Praktikumsstelle>(new Praktikumsstelle());
 const loadingSite = ref<boolean>(true);
 const isAusbildungsleitung = computed(
     () =>

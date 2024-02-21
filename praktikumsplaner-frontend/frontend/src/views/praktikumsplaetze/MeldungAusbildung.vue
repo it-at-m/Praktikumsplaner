@@ -211,9 +211,7 @@ import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-const praktikumsstelle = ref<Praktikumsstelle>(
-    new Praktikumsstelle("", "", "", "", "")
-);
+const praktikumsstelle = ref<Praktikumsstelle>(new Praktikumsstelle());
 const loadingSite = ref<boolean>(true);
 const isAusbildungsleitung = computed(
     () =>
