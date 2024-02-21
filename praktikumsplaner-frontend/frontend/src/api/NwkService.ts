@@ -76,12 +76,13 @@ export default {
             `${API_BASE}${NWK_BASE}`,
             FetchUtils.getPUTConfig(nwk)
         ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
                     message: "☑ Nachwuchskraft wurde erfolgreich bearbeitet.",
                     level: Levels.SUCCESS,
                 });
+            } else {
+                FetchUtils.defaultResponseHandler(response);
             }
         });
     },
