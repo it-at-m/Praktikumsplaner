@@ -11,12 +11,13 @@ export default {
             `${API_BASE}${NWK_BASE}`,
             FetchUtils.getPOSTConfig(nwk)
         ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
                     message: "☑ NWK wurde erfolgreich erstellt.",
                     level: Levels.SUCCESS,
                 });
+            } else {
+                FetchUtils.defaultResponseHandler(response);
             }
         });
     },
