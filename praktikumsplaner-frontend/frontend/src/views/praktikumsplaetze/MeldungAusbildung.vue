@@ -5,15 +5,6 @@
             page-header-text="Praktikumsplatz für Auszubildende"
         ></page-title>
         <v-container v-if="loadingSite">
-            <v-row>
-                <v-col cols="1">
-                    <v-skeleton-loader type="button"> </v-skeleton-loader>
-                </v-col>
-                <v-col cols="2">
-                    <v-skeleton-loader type="text"> </v-skeleton-loader>
-                </v-col>
-                <v-col cols="9" />
-            </v-row>
             <v-skeleton-loader type="image"> </v-skeleton-loader>
             <v-spacer />
             <v-skeleton-loader type="image"> </v-skeleton-loader>
