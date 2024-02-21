@@ -66,7 +66,7 @@ const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const validationRules = useRules();
 const rules = [
-    validationRules.fileRequiredRule(),
+    validationRules.fileRequiredRule("Es muss eine Datei hochgeladen werden."),
     validationRules.fileTypeRule(
         excelFormat,
         "Falsches Dateiformat. Es muss eine Excel-Datei hochgeladen werden."
@@ -78,7 +78,8 @@ function cancel() {
     form.value?.reset();
 }
 function uploadFile() {
-    if (!form.value?.validate() || !file.value) return;
+    form.value?.validate();
+    if (!form.value?.isValid || !file.value) return;
     visible.value = false;
     loading.value = true;
     NwkService.uploadExcelFile(file.value[0])
