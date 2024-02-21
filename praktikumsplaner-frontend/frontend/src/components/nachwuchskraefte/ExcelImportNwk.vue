@@ -66,9 +66,7 @@ const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const validationRules = useRules();
 const rules = [
-    validationRules.fileRequiredRule(
-        "Eine Excel-Datei hochladen oder abbrechen."
-    ),
+    validationRules.fileRequiredRule(),
     validationRules.fileTypeRule(
         excelFormat,
         "Falsches Dateiformat. Es muss eine Excel-Datei hochgeladen werden."

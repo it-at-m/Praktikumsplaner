@@ -11,27 +11,15 @@ describe("rules fileFormat test", () => {
             "text/plain",
             errorMessage
         );
-        const txtFile = {
-            length: 1,
-            item: (index: number) =>
-                index === 0
-                    ? new File(["foo"], "foo.txt", { type: "text/plain" })
-                    : null,
-        };
+        const fileList = [new File(["foo"], "foo.txt", { type: "text/plain" })];
 
-        expect(txtRule(txtFile)).toBe(true);
+        expect(txtRule(fileList)).toBe(true);
     });
     const aacRule = validationRules.fileTypeRule("audio/aac", errorMessage);
     it("tests fileFormatRules returns Error when using wrong fileformat", () => {
-        const txtFile = {
-            length: 1,
-            item: (index: number) =>
-                index === 0
-                    ? new File(["foo"], "foo.txt", { type: "text/plain" })
-                    : null,
-        };
+        const fileList = [new File(["foo"], "foo.txt", { type: "text/plain" })];
 
-        expect(aacRule(txtFile)).toBe(errorMessage);
+        expect(aacRule(fileList)).toBe(errorMessage);
     });
     it("tests fileFormatRules with null filelist", () => {
         expect(aacRule(null)).toBe(true);
@@ -43,13 +31,7 @@ describe("rules fileFormat test", () => {
 describe("rules fileRequired test", () => {
     const fileRule = validationRules.fileRequiredRule(errorMessage);
     it("tests fileRequired return true", () => {
-        const txtFile = {
-            length: 1,
-            item: (index: number) =>
-                index === 0
-                    ? new File(["foo"], "foo.txt", { type: "text/plain" })
-                    : null,
-        };
+        const txtFile = [new File(["foo"], "foo.txt", { type: "text/plain" })];
 
         expect(fileRule(txtFile)).toBe(true);
     });
