@@ -4,6 +4,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.service.MeldezeitraumService;
 import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class MeldezeitraumController {
     }
 
     @DeleteMapping
+    @Transactional
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     public void deleteMeldezeitraum(@RequestParam(name = "id") UUID id) {
         praktikumsstellenService.deleteAllPraktikumsstellenByMeldezeitraumId(id);
