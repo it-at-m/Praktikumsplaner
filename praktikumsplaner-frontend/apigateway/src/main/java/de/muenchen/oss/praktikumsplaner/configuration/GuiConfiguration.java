@@ -27,7 +27,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 public class GuiConfiguration {
 
     /**
-     * A index which returns the index.html as a resource.
+     * A router which returns the index.html as a resource.
      *
      * @param indexHtml The path to the index.html which serves as the starting point.
      * @return the index.html as a resource.
