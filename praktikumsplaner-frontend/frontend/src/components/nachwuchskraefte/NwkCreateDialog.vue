@@ -5,10 +5,10 @@
             persistent
             max-width="550"
         >
-            <template #activator="{ on }">
+            <template #activator="{ props }">
                 <v-btn
                     color="primary"
-                    v-on="on"
+                    v-bind="props"
                 >
                     <v-icon>mdi-plus</v-icon>
                     Erstellen
@@ -24,43 +24,47 @@
                     >
                     <v-list>
                         <v-list-item>
-                            <NameInput v-model="nwk"></NameInput>
+                            <v-container>
+                            <name-input v-model="nwk"></name-input>
+                            </v-container>
                         </v-list-item>
 
                         <v-list-item>
+                            <v-container>
                             <v-row>
                                 <v-col cols="6">
-                                    <JahrgangInput
+                                    <jahrgang-input
                                         v-model="nwk"
-                                    ></JahrgangInput>
+                                    ></jahrgang-input>
                                 </v-col>
                                 <v-col cols="6">
-                                    <VorlesungstageSelector
+                                    <vorlesungstage-selector
                                         v-model="nwk"
-                                    ></VorlesungstageSelector>
+                                    ></vorlesungstage-selector>
                                 </v-col>
                             </v-row>
+                            </v-container>
                         </v-list-item>
-
-                        <v-row>
                             <v-list-item>
-                                <StudienrichtungOrAusbildungsrichtungSelect
+                                <v-container>
+                                    <studienrichtung-or-ausbildungsrichtung-select
                                     v-model="nwk"
-                                ></StudienrichtungOrAusbildungsrichtungSelect>
+                                    ></studienrichtung-or-ausbildungsrichtung-select>
+                                </v-container>
                             </v-list-item>
-                        </v-row>
                     </v-list>
                     <v-card-actions>
                         <v-spacer />
                         <v-btn
                             color="primary"
-                            outlined
+                            variant="outlined"
                             @click="close()"
                         >
                             Abbrechen
                         </v-btn>
                         <v-btn
                             color="primary"
+                            variant="flat"
                             @click="saveNwk()"
                         >
                             Akzeptieren
@@ -77,20 +81,19 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+
 import NwkService from "@/api/NwkService";
-import { useRules } from "@/composables/rules";
-import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
-import NwkCreate from "@/types/NwkCreate";
-import VorlesungstageSelector from "@/components/nachwuchskraefte/VorlesungstageSelect.vue";
-import StudienrichtungOrAusbildungsrichtungSelect from "@/components/common/StudienrichtungOrAusbildungsrichtungSelect.vue";
-import NameInput from "@/components/common/NameInput.vue";
 import JahrgangInput from "@/components/common/JahrgangInput.vue";
-import { EventBus } from "@/stores/event-bus";
+import NameInput from "@/components/common/NameInput.vue";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
+import StudienrichtungOrAusbildungsrichtungSelect from "@/components/common/StudienrichtungOrAusbildungsrichtungSelect.vue";
+import VorlesungstageSelector from "@/components/nachwuchskraefte/VorlesungstageSelect.vue";
+import emitter from "@/stores/eventBus";
+import NwkCreate from "@/types/NwkCreate";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
-const validationRules = useRules();
 
 const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
 
@@ -111,8 +114,7 @@ function saveNwk() {
     close();
     NwkService.saveNwk(nwk.value)
         .then(() => {
-            EventBus.$emit("nwkCreated");
-
+            emitter.emit("nwkCreated");
         })
         .finally(() => {
             loading.value = false;

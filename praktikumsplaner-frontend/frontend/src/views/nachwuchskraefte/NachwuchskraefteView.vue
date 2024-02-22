@@ -10,7 +10,7 @@
                 <excel-import-nwk></excel-import-nwk>
             </v-col>
             <v-col>
-                <NwkCreateDialog></NwkCreateDialog>
+                <nwk-create-dialog></nwk-create-dialog>
             </v-col>
         </v-row>
         <v-row></v-row>

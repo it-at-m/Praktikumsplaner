@@ -1,44 +1,43 @@
 <template>
-    <v-container>
-        <v-col>
-            <v-row>
+        <v-row>
+            <v-col cols="12">
                 <v-select
                     v-model="nwk.studiengang"
                     label="Studienrichtung"
                     :items="Studiengang"
                     item-value="value"
-                    item-text="name"
-                    outlined
+                    item-title="name"
+                    variant="outlined"
                     clearable
                     :rules="isStudiumOrAusbildungRule"
                     @click:clear="clearStudienrichtung()"
                 ></v-select>
-            </v-row>
-            <v-row>
+            </v-col>
+            <v-col cols="12">
                 <v-select
                     v-model="nwk.ausbildungsrichtung"
                     label="Ausbildungsrichtung"
                     :items="Ausbildungsrichtung"
                     item-value="value"
-                    item-text="name"
-                    outlined
+                    item-title="name"
+                    variant="outlined"
                     clearable
                     :rules="isStudiumOrAusbildungRule"
                     @click:clear="clearAusbildungsrichtung()"
                 ></v-select>
-            </v-row>
-        </v-col>
-    </v-container>
+            </v-col>
+        </v-row>
 </template>
 
 <script setup lang="ts">
-import { Studiengang } from "@/types/Studiengang";
-import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
-import NwkCreate from "@/types/NwkCreate";
 import { computed } from "vue";
 
+import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
+import NwkCreate from "@/types/NwkCreate";
+import { Studiengang } from "@/types/Studiengang";
+
 const props = defineProps<{
-    value: NwkCreate;
+    modelValue: NwkCreate;
 }>();
 
 const emits = defineEmits<{
@@ -46,7 +45,7 @@ const emits = defineEmits<{
 }>();
 
 const nwk = computed({
-    get: () => props.value,
+    get: () => props.modelValue,
     set: (v) => emits("updated", v),
 });
 

@@ -3,7 +3,7 @@
         v-model="nwk.jahrgang"
         label="Jahrgang"
         :rules="jahrgangRule"
-        outlined
+        variant="outlined"
     ></v-text-field>
 </template>
 <script setup lang="ts">
@@ -22,7 +22,7 @@ const jahrgangRule = [
 ];
 
 const props = defineProps<{
-    value: NwkCreate;
+    modelValue: NwkCreate;
 }>();
 
 const emits = defineEmits<{
@@ -30,7 +30,7 @@ const emits = defineEmits<{
 }>();
 
 const nwk = computed({
-    get: () => props.value,
+    get: () => props.modelValue,
     set: (v) => emits("updated", v),
 });
 </script>

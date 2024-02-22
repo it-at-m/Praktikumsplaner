@@ -4,10 +4,10 @@
         :items="days"
         label="Vorlesungstage"
         item-value="weekDay"
-        item-text="germanWeekDay"
-        outlined
+        item-title="germanWeekDay"
+        variant="outlined"
         multiple
-        @change="sortVorlesungstage"
+        @update:model-value="sortVorlesungstage"
     >
     </v-select>
 </template>
@@ -28,14 +28,14 @@ const days = ref<Day[]>([
     new Day("FRIDAY", "Freitag"),
 ]);
 const props = defineProps<{
-    value: NwkCreate;
+    modelValue: NwkCreate;
 }>();
 const emits = defineEmits<{
     (e: "input", nwk: NwkCreate): void;
 }>();
 
 const nwk = computed({
-    get: () => props.value,
+    get: () => props.modelValue,
     set: (newValue) => emits("input", newValue),
 });
 
@@ -44,6 +44,4 @@ function sortVorlesungstage() {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
