@@ -183,7 +183,7 @@ export default class FetchUtils {
     /**
      * @returns {any}
      */
-    static getBody(body: any): any {
+    static getBody(body: unknown): string | undefined {
         if (!body) {
             return undefined;
         } else if (typeof body == "string") {

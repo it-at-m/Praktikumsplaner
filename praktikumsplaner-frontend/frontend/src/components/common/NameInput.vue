@@ -5,7 +5,7 @@
                 v-model="nwk.vorname"
                 label="Vorname"
                 :rules="nameRule"
-                outlined
+                variant="outlined"
             ></v-text-field>
         </v-col>
         <v-col cols="6">
@@ -13,15 +13,16 @@
                 v-model="nwk.nachname"
                 label="Nachname"
                 :rules="nameRule"
-                outlined
+                variant="outlined"
             ></v-text-field>
         </v-col>
     </v-row>
 </template>
 <script setup lang="ts">
+import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
 import NwkCreate from "@/types/NwkCreate";
-import { computed } from "vue";
 
 const validationRules = useRules();
 
@@ -38,7 +39,7 @@ const nameRule = [
 ];
 
 const props = defineProps<{
-    value: NwkCreate;
+    modelValue: NwkCreate;
 }>();
 
 const emits = defineEmits<{
@@ -46,7 +47,7 @@ const emits = defineEmits<{
 }>();
 
 const nwk = computed({
-    get: () => props.value,
+    get: () => props.modelValue,
     set: (newValue) => emits("updated", newValue),
 });
 </script>

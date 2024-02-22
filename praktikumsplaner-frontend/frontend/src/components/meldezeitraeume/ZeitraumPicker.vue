@@ -5,8 +5,8 @@
                 <v-col cols="12">
                     <v-text-field
                         v-model="range.startZeitpunkt"
-                        dense
-                        outlined
+                        density="compact"
+                        variant="outlined"
                         type="date"
                         :rules="startZeitpunktRules"
                         :label="'Beginn des ' + props.label + 's'"
@@ -16,8 +16,8 @@
                 <v-col cols="12">
                     <v-text-field
                         v-model="range.endZeitpunkt"
-                        dense
-                        outlined
+                        density="compact"
+                        variant="outlined"
                         type="date"
                         :label="'Ende des ' + props.label + 's'"
                         :rules="endZeitpunktRules"
@@ -31,6 +31,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
 import Zeitraum from "@/types/Zeitraum";
 
@@ -50,7 +51,7 @@ const isStartBeforeEnd = computed(() => {
     );
 });
 
-const isEndBeforeStart = computed(() => {
+const isEndAfterStart = computed(() => {
     return (
         range.value.isStartBeforeEnd ||
         "Das Ende des " + props.label + "s darf nicht vor dem Beginn liegen."
@@ -62,7 +63,7 @@ const endZeitpunktRules = computed(() => {
         validationRules.notEmptyDateRule(
             "Es muss ein Endzeitpunkt angegeben werden"
         ),
-        isEndBeforeStart.value,
+        isEndAfterStart.value,
     ];
 });
 

@@ -1,6 +1,6 @@
 <template>
     <v-dialog
-        :value="visible"
+        v-model="computedVisible"
         max-width="500px"
     >
         <v-card>
@@ -9,13 +9,16 @@
                 {{ currentWarning?.message }}
             </v-card-text>
             <v-card-actions>
+                <v-spacer />
                 <v-btn
                     color="primary"
+                    variant="elevated"
                     @click="accept"
                     >Akzeptieren</v-btn
                 >
                 <v-btn
                     color="error"
+                    variant="elevated"
                     @click="reject"
                     >Ablehnen</v-btn
                 >
@@ -25,7 +28,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineEmits, onMounted } from "vue";
+import { computed, ref } from "vue";
+
 import Warning from "@/types/Warning";
 
 const emits = defineEmits<{
@@ -40,6 +44,14 @@ const props = defineProps<{
 
 const currentIndex = ref(0);
 
+const computedVisible = computed(() => {
+    if (props.visible && props.warnings.length <= 0) {
+        emits("accepted");
+        return false;
+    }
+    return props.visible;
+});
+
 const currentWarning = computed(() => {
     if (currentIndex.value < props.warnings.length) {
         return props.warnings[currentIndex.value];
@@ -47,23 +59,16 @@ const currentWarning = computed(() => {
     return null;
 });
 
-const accept = () => {
+function accept() {
     currentIndex.value++;
     if (currentIndex.value >= props.warnings.length) {
         currentIndex.value = 0;
         emits("accepted");
     }
-};
+}
 
-const reject = () => {
+function reject() {
     currentIndex.value = 0;
     emits("rejected");
-};
-
-onMounted(() => {
-    if (props.visible && props.warnings.length <= 0) {
-        currentIndex.value = 0;
-        emits("accepted");
-    }
-});
+}
 </script>

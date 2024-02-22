@@ -2,37 +2,34 @@
     <v-select
         v-model="stelle.referat"
         :items="Referat"
-        :menu-props="customMenuProps"
         item-value="value"
-        item-text="name"
+        item-title="name"
         label="Referat"
-        outlined
+        variant="outlined"
     ></v-select>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { Referat } from "@/types/Referat";
+
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import { Referat } from "@/types/Referat";
 
 const props = defineProps<{
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", stelle: Praktikumsstelle): void;
+    (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
 
-const customMenuProps = {
-    offsetY: true,
-};
 const stelle = computed({
     // getter
     get() {
-        return props.value;
+        return props.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
 </script>

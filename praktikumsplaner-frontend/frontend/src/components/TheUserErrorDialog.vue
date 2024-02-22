@@ -1,7 +1,7 @@
 <template>
     <v-dialog
         id="error"
-        :value="show"
+        :model-value="show"
         persistent
         width="800"
     >
@@ -29,6 +29,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
 import { useUserErrorStore } from "@/stores/user-error";
 
 const show = computed(() => errorStore.visible);

@@ -3,42 +3,39 @@
         v-model="stelle.dringlichkeit"
         label="Dringlichkeit*"
         :items="Dringlichkeit"
-        :menu-props="customMenuProps"
         item-value="value"
-        item-text="name"
+        item-title="name"
         :rules="requiredRule"
-        outlined
+        variant="outlined"
     ></v-select>
 </template>
 
 <script setup lang="ts">
-import { Dringlichkeit } from "@/types/Dringlichkeit";
 import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
+import { Dringlichkeit } from "@/types/Dringlichkeit";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", dringlichkeit: Praktikumsstelle): void;
+    (e: "update:modelValue", dringlichkeit: Praktikumsstelle): void;
 }>();
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 
-const customMenuProps = {
-    offsetY: true,
-};
 const stelle = computed({
     // getter
     get() {
-        return props.value;
+        return props.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
 </script>

@@ -1,6 +1,7 @@
-import { useUserStore } from "@/stores/user";
-import { APP_SECURITY } from "@/constants";
 import { createPinia } from "pinia";
+
+import { APP_SECURITY } from "@/constants";
+import { useUserStore } from "@/stores/user";
 
 export function useSecurity() {
     const userStore = useUserStore();

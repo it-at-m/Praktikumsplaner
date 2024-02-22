@@ -1,21 +1,18 @@
 <template>
     <v-container>
+        <page-title
+            back-button-url="/"
+            page-header-text="Praktikumsplätze"
+        ></page-title>
         <v-container v-if="loadingSite">
             <v-row>
-                <v-col cols="4">
-                    <v-skeleton-loader type="text"> </v-skeleton-loader>
-                </v-col>
-                <v-col cols="6"></v-col>
+                <v-col cols="10"></v-col>
                 <v-col cols="2">
                     <v-skeleton-loader type="button"> </v-skeleton-loader>
                 </v-col>
             </v-row>
         </v-container>
         <v-container v-else>
-            <page-title
-                back-button-url="/"
-                page-header-text="Praktikumsplätze"
-            ></page-title>
             <div v-if="canStellenBeSubmitted()">
                 <v-row>
                     <v-col cols="10"></v-col>
@@ -26,13 +23,12 @@
                             icontext="mdi-plus"
                             dialogtitle="Praktikumsplatz melden"
                             dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
-                            choice-one="Studium"
+                            choice-one-title="Studium"
                             choice-one-subtitle="Praktikumsplatz für Studierende "
-                            choice-two="Ausbildung"
+                            choice-two-title="Ausbildung"
                             choice-two-subtitle="Praktikumsplatz für Auszubildende"
-                            @choiceOne="toStudium"
-                            @choiceTwo="toAusbildung"
-                            @close="closeDialog"
+                            @choice-one="toStudium"
+                            @choice-two="toAusbildung"
                         ></two-choice-dialog-cards>
                     </v-col>
                 </v-row>
@@ -48,9 +44,9 @@
                         class="box"
                     >
                         <span> Übersicht aus dem aktuellen Meldezeitraum </span>
-                        <PraktikumsstellenList
+                        <praktikumsstellen-list
                             :praktikumsstellen-map="praktikumsstellenMap"
-                        ></PraktikumsstellenList>
+                        ></praktikumsstellen-list>
                     </v-container>
                     <v-container
                         v-else
@@ -63,12 +59,12 @@
                             >
                                 <v-icon
                                     color="blue"
-                                    large
+                                    size="large"
                                     >mdi-information-outline</v-icon
                                 >
                             </v-col>
                             <v-col class="d-flex align-center">
-                                <p class="mt-5">
+                                <p>
                                     Es wurden für den aktuellen Zeitraum noch
                                     keine Praktikumsstellen gemeldet.
                                 </p>
@@ -78,7 +74,7 @@
                 </v-row>
             </div>
             <div v-else>
-                <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
+                <kein-meldezeitraum-message></kein-meldezeitraum-message>
             </div>
         </v-container>
     </v-container>
@@ -86,16 +82,17 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
+
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
-import router from "@/router";
-import { useUserStore } from "@/stores/user";
-import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
-import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
-import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
+import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
+import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
+import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
 import { APP_SECURITY } from "@/constants";
+import index from "@/router";
+import { useUserStore } from "@/stores/user";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
@@ -132,14 +129,12 @@ function canStellenBeSubmitted() {
     return isAusbildungsleitung.value || activeMeldezeitraum.value;
 }
 function toAusbildung(): void {
-    router.push("/praktikumsplaetze/meldungAusbildung");
+    index.push("/praktikumsplaetze/meldungAusbildung");
 }
 function toStudium(): void {
-    router.push("/praktikumsplaetze/meldungStudium");
+    index.push("/praktikumsplaetze/meldungStudium");
 }
-function closeDialog(): void {
-    twoChoiceDialogVisible.value = false;
-}
+
 function getAllPraktikumsstellenInCurrentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(

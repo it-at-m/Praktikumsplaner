@@ -2,19 +2,11 @@
     <div>
         <v-btn
             color="primary"
+            prepend-icon="mdi-tray-arrow-down"
             @click="clickExport"
         >
-            <v-icon>mdi-tray-arrow-down</v-icon>
             Exportieren
         </v-btn>
-        <Error-dialog
-            :dialogtext="errorDialogText"
-            :dialogtitle="errorDialogTitle"
-            icontext="mdi mdi-alert-octagon-outline"
-            iconcolor="red"
-            :value="errorDialog"
-            @close="errorDialog = false"
-        ></Error-dialog>
         <progress-circular-overlay
             :loading="loading"
         ></progress-circular-overlay>
@@ -23,6 +15,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
+
 import ExportService from "@/api/ExportService";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
@@ -35,12 +28,6 @@ const emits = defineEmits<{
     (e: "click"): void;
     (e: "exported"): void;
 }>();
-
-const errorDialog = ref<boolean>(false);
-const errorDialogText = ref<string>(
-    "Beim Exportieren ist ein Fehler aufgetreten."
-);
-const errorDialogTitle = ref<string>("Fehler");
 
 watch(
     () => props.startDownload,
@@ -62,6 +49,4 @@ function downloadExcel() {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

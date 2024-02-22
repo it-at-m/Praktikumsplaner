@@ -5,14 +5,13 @@
             persistent
             width="600"
         >
-            <template #activator="{ on }">
+            <template #activator="{ props }">
                 <v-btn
                     color="primary"
-                    v-on="on"
+                    v-bind="props"
                     >Meldezeitraum Anlegen</v-btn
                 >
             </template>
-
             <v-card>
                 <v-card-title>Meldezeitraum Anlegen</v-card-title>
                 <v-card-text>
@@ -22,21 +21,22 @@
                                 v-model="meldezeitraum.zeitraumName"
                                 label="Zeitraumname"
                                 :rules="zeitraumNameRules"
-                                outlined
+                                variant="outlined"
+                                class="mb-3"
                             ></v-text-field>
 
-                            <ZeitraumPicker
+                            <zeitraum-picker
                                 :value="meldezeitraum.zeitraum"
                                 :label="'Meldezeitraum'"
-                            ></ZeitraumPicker>
+                            ></zeitraum-picker>
                         </v-form>
                     </v-col>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn
-                        outlined
-                        text
+                        variant="outlined"
                         color="primary"
+                        class="ml-7 mb-2"
                         @click="clickAbbrechen()"
                     >
                         Zurück
@@ -44,7 +44,8 @@
                     <VSpacer></VSpacer>
                     <v-btn
                         color="primary"
-                        variant="text"
+                        variant="elevated"
+                        class="mr-7 mb-2"
                         @click="clickSpeichern()"
                     >
                         Speichern
@@ -57,10 +58,11 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import Meldezeitraum from "@/types/Meldezeitraum";
+
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import ZeitraumPicker from "@/components/meldezeitraeume/ZeitraumPicker.vue";
 import { useRules } from "@/composables/rules";
+import Meldezeitraum from "@/types/Meldezeitraum";
 import Zeitraum from "@/types/Zeitraum";
 
 const visible = ref(false);
@@ -87,7 +89,8 @@ function resetForm() {
 }
 
 function clickSpeichern() {
-    if (form.value?.validate()) {
+    form.value?.validate();
+    if (form.value?.isValid) {
         MeldezeitraumService.create(meldezeitraum.value)
             .then(() => {
                 emits("meldezeitraumAdded", meldezeitraum.value);

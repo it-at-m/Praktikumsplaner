@@ -1,96 +1,87 @@
 <template>
     <v-select
         v-model="praktikumsstelle.studiensemester"
-        label="Studiensemester*"
         :items="Studiensemester"
-        item-value="value"
-        item-text="name"
-        :rules="requiredArrayRule"
-        :menu-props="customMenuProps"
-        outlined
+        label="Studienseemster*"
         multiple
-        @change="sortSemester"
+        variant="outlined"
+        item-title="name"
+        item-value="value"
+        :rules="requiredArrayRule"
+        @update:model-value="sortSemester"
     >
         <template #prepend-item>
-            <v-list-item
-                ripple
-                @mousedown.prevent
+            <v-checkbox
+                v-model="selectAll"
+                label="Egal"
+                hide-details
+                color="primary"
+                :false-icon="semesterIcon"
+                :true-icon="semesterIcon"
+                :value="allSemesterSelected"
                 @click="selectAllStudiensemester"
             >
-                <v-list-item-action>
-                    <v-icon :color="semesterIconColor()">
-                        {{ semesterIcon }}
-                    </v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                    <v-list-item-title> Egal </v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+                <template #label>
+                    <v-list-item>
+                        <v-list-item-title>Egal</v-list-item-title>
+                    </v-list-item>
+                </template>
+            </v-checkbox>
             <v-divider class="mt-2"></v-divider>
         </template>
-        <template #item="data">
-            <v-list-item-action>
-                <v-icon v-if="data.attrs['aria-selected'] === 'true'">
-                    mdi-checkbox-marked
-                </v-icon>
-                <v-icon v-else> mdi-checkbox-blank-outline </v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-                <v-list-item-title>
-                    {{ data.item.name }}
-                </v-list-item-title>
+        <template #item="{ item, props }">
+            <v-list-item v-bind="props">
                 <v-list-item-subtitle
                     v-if="praktikumsstelle.studiengang === 'BSC'"
                 >
-                    {{ data.item.zeitraumBSC }}
+                    {{ item.raw.zeitraumBSC }}
                 </v-list-item-subtitle>
                 <v-list-item-subtitle
                     v-else-if="praktikumsstelle.studiengang === 'BWI'"
                 >
-                    {{ data.item.zeitraumBWI }}
+                    {{ item.raw.zeitraumBWI }}
                 </v-list-item-subtitle>
                 <v-list-item-subtitle
                     v-else-if="praktikumsstelle.studiengang === 'VI'"
                 >
-                    {{ data.item.zeitraumVI }}
+                    {{ item.raw.zeitraumVI }}
                 </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item>
         </template>
     </v-select>
 </template>
 <script setup lang="ts">
+import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { Studiensemester } from "@/types/Studiensemester";
-import { computed } from "vue";
 
 const validationRules = useRules();
 
-const props = defineProps<{
-    value: Praktikumsstelle;
+const properties = defineProps<{
+    modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", stelle: Praktikumsstelle): void;
+    (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
+
+const selectAll = true;
 
 const praktikumsstelle = computed({
     // getter
     get() {
-        return props.value;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
 
 const requiredArrayRule = [
     validationRules.notEmptyArrayRule("Darf nicht leer sein."),
 ];
-
-const customMenuProps = {
-    offsetY: true,
-};
 
 const allSemesterSelected = computed(() => {
     return (
@@ -125,11 +116,5 @@ function selectAllStudiensemester() {
 
 function sortSemester() {
     praktikumsstelle.value.studiensemester?.sort((a, b) => a.localeCompare(b));
-}
-
-function semesterIconColor() {
-    return allSemesterSelected.value || someSemesterSelected.value
-        ? "primary"
-        : "darkgrey";
 }
 </script>

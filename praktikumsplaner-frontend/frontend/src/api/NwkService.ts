@@ -1,8 +1,8 @@
+import { Levels } from "@/api/Error";
 import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, NWK_BASE } from "@/constants";
-import Nwk from "@/types/Nwk";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/Error";
+import Nwk from "@/types/Nwk";
 import NwkCreate from "@/types/NwkCreate";
 
 export default {
