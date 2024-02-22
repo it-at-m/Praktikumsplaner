@@ -25,33 +25,33 @@
                     <v-list>
                         <v-list-item>
                             <v-container>
-                            <name-input v-model="nwk"></name-input>
+                                <name-input v-model="nwk"></name-input>
                             </v-container>
                         </v-list-item>
 
                         <v-list-item>
                             <v-container>
-                            <v-row>
-                                <v-col cols="6">
-                                    <jahrgang-input
-                                        v-model="nwk"
-                                    ></jahrgang-input>
-                                </v-col>
-                                <v-col cols="6">
-                                    <vorlesungstage-selector
-                                        v-model="nwk"
-                                    ></vorlesungstage-selector>
-                                </v-col>
-                            </v-row>
+                                <v-row>
+                                    <v-col cols="6">
+                                        <jahrgang-input
+                                            v-model="nwk"
+                                        ></jahrgang-input>
+                                    </v-col>
+                                    <v-col cols="6">
+                                        <vorlesungstage-selector
+                                            v-model="nwk"
+                                        ></vorlesungstage-selector>
+                                    </v-col>
+                                </v-row>
                             </v-container>
                         </v-list-item>
-                            <v-list-item>
-                                <v-container>
-                                    <studienrichtung-or-ausbildungsrichtung-select
+                        <v-list-item>
+                            <v-container>
+                                <studienrichtung-or-ausbildungsrichtung-select
                                     v-model="nwk"
-                                    ></studienrichtung-or-ausbildungsrichtung-select>
-                                </v-container>
-                            </v-list-item>
+                                ></studienrichtung-or-ausbildungsrichtung-select>
+                            </v-container>
+                        </v-list-item>
                     </v-list>
                     <v-card-actions>
                         <v-spacer />

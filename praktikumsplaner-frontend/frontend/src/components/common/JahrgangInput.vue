@@ -7,9 +7,10 @@
     ></v-text-field>
 </template>
 <script setup lang="ts">
+import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
 import NwkCreate from "@/types/NwkCreate";
-import { computed } from "vue";
 
 const validationRules = useRules();
 

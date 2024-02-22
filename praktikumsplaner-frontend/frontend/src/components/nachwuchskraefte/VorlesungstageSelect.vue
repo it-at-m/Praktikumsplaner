@@ -13,10 +13,11 @@
 </template>
 
 <script setup lang="ts">
-import NwkCreate from "@/types/NwkCreate";
 import { computed, ref } from "vue";
+
 import Day from "@/types/Day";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
+import NwkCreate from "@/types/NwkCreate";
 
 const germanWeekdayMapper = new GermanWeekdayMapper();
 
