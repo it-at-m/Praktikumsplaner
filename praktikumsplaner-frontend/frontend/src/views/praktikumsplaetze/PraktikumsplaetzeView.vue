@@ -71,9 +71,6 @@
                     >
                         <span> Übersicht aus dem aktuellen Meldezeitraum </span>
                         <PraktikumsstellenList
-                            :deleted="
-                                getAllPraktikumsstellenInCurrentMeldezeitraum()
-                            "
                             :assignment="false"
                             :praktikumsstellen-map="praktikumsstellenMap"
                         ></PraktikumsstellenList>
@@ -117,6 +114,7 @@ import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import { APP_SECURITY } from "@/constants";
+import { EventBus } from "@/stores/event-bus";
 
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
@@ -153,6 +151,7 @@ onMounted(() => {
         });
     getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
+EventBus.$on("deleted", getAllPraktikumsstellenInCurrentMeldezeitraum);
 
 function toAusbildung(): void {
     router.push("/praktikumsplaetze/meldungAusbildung");

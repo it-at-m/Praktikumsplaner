@@ -93,7 +93,7 @@ function getCardDetailText(stelle: Praktikumsstelle): string {
 }
 
 function delPraktikumsstelle(uuid: string | undefined) {
-    if (props.value.id) {
+    if (props.value.id !== undefined) {
         resetWarningDialog();
         PraktikumsstellenService.deletePraktikumsstelle(uuid!).then(() => {
             EventBus.$emit("deleted");

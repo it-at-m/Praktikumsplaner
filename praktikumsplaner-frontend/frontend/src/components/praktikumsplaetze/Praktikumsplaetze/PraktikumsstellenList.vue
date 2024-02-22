@@ -22,7 +22,6 @@
                                 >
                                     <PraktikumsstelleCard
                                         :key="praktikumsstelle.assignedNwk?.id"
-                                        :deleted="$emit('deleted')"
                                         :value="praktikumsstelle"
                                         :praktikumsstelle="praktikumsstelle"
                                     ></PraktikumsstelleCard>
