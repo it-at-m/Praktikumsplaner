@@ -56,9 +56,12 @@
                 </div>
             </v-expand-transition>
             <v-card-actions>
-                <v-btn @click.stop="openDialog()"
-                    ><v-icon color="red">mdi-delete</v-icon></v-btn
+                <v-btn
+                    icon
+                    @click.stop="openDialog()"
                 >
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
             </v-card-actions>
         </v-card>
     </v-container>
