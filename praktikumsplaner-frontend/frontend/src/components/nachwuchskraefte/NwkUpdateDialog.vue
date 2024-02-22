@@ -171,4 +171,8 @@ function updateNwk() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-text-field{
+    padding-top: 1%;
+}
+</style>
