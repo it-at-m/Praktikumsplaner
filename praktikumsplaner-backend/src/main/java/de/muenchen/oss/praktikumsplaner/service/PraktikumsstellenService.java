@@ -18,6 +18,7 @@ import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepo
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.TreeMap;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -133,11 +134,19 @@ public class PraktikumsstellenService {
         return getPraktikumsstellenGroupedByDienststelle(lastMeldezeitraumID);
     }
 
-    public void deletePraktikumsstelle(UUID praktikumsstellenId) {
+    public void deleteStudiumsPraktikumsstelle(UUID praktikumsstellenId) {
+        if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
+            studiumsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
+        }else{
+            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
+        }
+    }
+
+    public void deleteAusbildungsPraktikumsstelle(UUID praktikumsstellenId) {
         if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             ausbildungsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
-        } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
-            studiumsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
+        }else{
+            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }
 

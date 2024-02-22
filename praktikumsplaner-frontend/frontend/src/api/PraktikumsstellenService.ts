@@ -121,20 +121,39 @@ export default {
             }
         });
     },
-    deletePraktikumsstelle(stellenId: string): Promise<void> {
-        return fetch(
-            `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}`,
-            FetchUtils.getDELETEConfig({})
-        )
-            .then((response) => {
+    deletePraktikumsstelle(stelle: Praktikumsstelle): Promise<void> {
+        if (isAusbildunsPraktikumsstelle(stelle)) {
+            return fetch(
+                `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/${stelle.id}`,
+                FetchUtils.getDELETEConfig({})
+            ).then((response) => {
                 FetchUtils.defaultResponseHandler(response);
                 useSnackbarStore().showMessage({
                     message: "☑ Praktikumsstelle erfolgreich gelöscht",
                     level: Levels.SUCCESS,
                 });
-            })
-            .catch((err) => {
-                FetchUtils.defaultCatchHandler(err);
             });
+        } else if (isStudiumsPraktikumsstelle(stelle)) {
+            return fetch(
+                `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/${stelle.id}`,
+                FetchUtils.getDELETEConfig({})
+            ).then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                useSnackbarStore().showMessage({
+                    message: "☑ Praktikumsstelle erfolgreich gelöscht",
+                    level: Levels.SUCCESS,
+                });
+            });
+        } else {
+            throw new Error("Praktikumsstelle nicht gefunden.");
+        }
     },
 };
+
+function isStudiumsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
+    return stelle.studiengang !== undefined;
+}
+
+function isAusbildunsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
+    return stelle.ausbildungsrichtung !== undefined;
+}
