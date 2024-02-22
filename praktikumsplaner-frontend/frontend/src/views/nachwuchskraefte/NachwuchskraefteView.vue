@@ -22,9 +22,9 @@
 </template>
 
 <script setup lang="ts">
-import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import ActiveNwkList from "@/components/nachwuchskraefte/ActiveNwkList.vue";
+import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
 </script>
 

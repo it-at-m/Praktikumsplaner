@@ -1,32 +1,32 @@
 <template>
-        <v-row>
-            <v-col cols="12">
-                <v-select
-                    v-model="nwk.studiengang"
-                    label="Studienrichtung"
-                    :items="Studiengang"
-                    item-value="value"
-                    item-title="name"
-                    variant="outlined"
-                    clearable
-                    :rules="isStudiumOrAusbildungRule"
-                    @click:clear="clearStudienrichtung()"
-                ></v-select>
-            </v-col>
-            <v-col cols="12">
-                <v-select
-                    v-model="nwk.ausbildungsrichtung"
-                    label="Ausbildungsrichtung"
-                    :items="Ausbildungsrichtung"
-                    item-value="value"
-                    item-title="name"
-                    variant="outlined"
-                    clearable
-                    :rules="isStudiumOrAusbildungRule"
-                    @click:clear="clearAusbildungsrichtung()"
-                ></v-select>
-            </v-col>
-        </v-row>
+    <v-row>
+        <v-col cols="12">
+            <v-select
+                v-model="nwk.studiengang"
+                label="Studienrichtung"
+                :items="Studiengang"
+                item-value="value"
+                item-title="name"
+                variant="outlined"
+                clearable
+                :rules="isStudiumOrAusbildungRule"
+                @click:clear="clearStudienrichtung()"
+            ></v-select>
+        </v-col>
+        <v-col cols="12">
+            <v-select
+                v-model="nwk.ausbildungsrichtung"
+                label="Ausbildungsrichtung"
+                :items="Ausbildungsrichtung"
+                item-value="value"
+                item-title="name"
+                variant="outlined"
+                clearable
+                :rules="isStudiumOrAusbildungRule"
+                @click:clear="clearAusbildungsrichtung()"
+            ></v-select>
+        </v-col>
+    </v-row>
 </template>
 
 <script setup lang="ts">

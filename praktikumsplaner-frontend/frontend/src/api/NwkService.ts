@@ -1,9 +1,9 @@
+import { Levels } from "@/api/Error";
 import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, NWK_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/Error";
-import NwkCreate from "@/types/NwkCreate";
 import Nwk from "@/types/Nwk";
+import NwkCreate from "@/types/NwkCreate";
 
 export default {
     saveNwk(nwk: NwkCreate): Promise<void> {
