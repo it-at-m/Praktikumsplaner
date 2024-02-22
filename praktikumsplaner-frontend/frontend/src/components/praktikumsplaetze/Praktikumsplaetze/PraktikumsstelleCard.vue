@@ -5,7 +5,7 @@
             :dialogtitle="warningDialogTitle"
             :dialogtext="warningDialogText"
             @no="resetWarningDialog"
-            @yes="delPraktikumsstelle(props.value.id)"
+            @yes="delPraktikumsstelle(props.value)"
         ></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
@@ -95,13 +95,11 @@ function getCardDetailText(stelle: Praktikumsstelle): string {
     return generator.getPraktikumsstellenCardDetailText(stelle);
 }
 
-function delPraktikumsstelle(uuid: string | undefined) {
-    if (props.value.id !== undefined) {
-        resetWarningDialog();
-        PraktikumsstellenService.deletePraktikumsstelle(uuid!).then(() => {
-            EventBus.$emit("deleted");
-        });
-    }
+function delPraktikumsstelle(stelle: Praktikumsstelle) {
+    resetWarningDialog();
+    PraktikumsstellenService.deletePraktikumsstelle(stelle!).then(() => {
+        EventBus.$emit("deleted");
+    });
 }
 
 function openDialog() {
