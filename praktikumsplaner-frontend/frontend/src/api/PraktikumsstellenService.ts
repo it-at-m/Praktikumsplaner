@@ -46,13 +46,14 @@ export default {
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
         ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
                     message: "☑ Praktikumsstelle erfolgreich gemeldet",
                     level: Levels.SUCCESS,
                 });
                 return response.json();
+            } else {
+                FetchUtils.defaultResponseHandler(response);
             }
         });
     },
@@ -63,13 +64,14 @@ export default {
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/ausbildungsleitung`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
         ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
                     message: "☑ Praktikumsstelle erfolgreich gemeldet",
                     level: Levels.SUCCESS,
                 });
                 return response.json();
+            } else {
+                FetchUtils.defaultResponseHandler(response);
             }
         });
     },
@@ -92,13 +94,14 @@ export default {
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}?nwkId=${nwkId}`,
             FetchUtils.getPATCHConfig({})
         ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
                     message: "☑ Zuweisung erfolgreich",
                     level: Levels.SUCCESS,
                 });
                 return response.json();
+            } else {
+                FetchUtils.defaultResponseHandler(response);
             }
         });
     },
@@ -107,13 +110,14 @@ export default {
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}`,
             FetchUtils.getPATCHConfig({})
         ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
             if (response.ok) {
                 useSnackbarStore().showMessage({
                     message: "☑ Zuweisung aufgehoben",
                     level: Levels.SUCCESS,
                 });
                 return response.json();
+            } else {
+                FetchUtils.defaultResponseHandler(response);
             }
         });
     },
