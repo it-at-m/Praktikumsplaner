@@ -11,22 +11,16 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
-        )
-            .then((response) => {
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Speichern erfolgreich.",
+                    message: "☑ Praktikumsstelle erfolgreich gemeldet",
                     level: Levels.SUCCESS,
                 });
-                FetchUtils.defaultResponseHandler(response);
                 return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+            }
+        });
     },
     uploadStudiumsPraktikumsstelleWithMeldezeitraum(
         praktikumsstelle: Praktikumsstelle
@@ -34,22 +28,16 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/ausbildungsleitung`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
-        )
-            .then((response) => {
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Speichern erfolgreich.",
+                    message: "☑ Praktikumsstelle erfolgreich gemeldet",
                     level: Levels.SUCCESS,
                 });
-                FetchUtils.defaultResponseHandler(response);
                 return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+            }
+        });
     },
     uploadAusbildungsPraktikumsstelle(
         praktikumsstelle: Praktikumsstelle
@@ -57,22 +45,17 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
-        )
-            .then((response) => {
+        ).then((response) => {
+            if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Speichern erfolgreich.",
+                    message: "☑ Praktikumsstelle erfolgreich gemeldet",
                     level: Levels.SUCCESS,
                 });
-                FetchUtils.defaultResponseHandler(response);
                 return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+            } else {
+                FetchUtils.defaultResponseHandler(response);
+            }
+        });
     },
     uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
         praktikumsstelle: Praktikumsstelle
@@ -80,22 +63,17 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/ausbildungsleitung`,
             FetchUtils.getPOSTConfig(praktikumsstelle)
-        )
-            .then((response) => {
+        ).then((response) => {
+            if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Speichern erfolgreich.",
+                    message: "☑ Praktikumsstelle erfolgreich gemeldet",
                     level: Levels.SUCCESS,
                 });
-                FetchUtils.defaultResponseHandler(response);
                 return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+            } else {
+                FetchUtils.defaultResponseHandler(response);
+            }
+        });
     },
     getAllPraktikumsstellenInSpecificMeldezeitraum(
         meldezeitraum: string
@@ -103,14 +81,10 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}?meldezeitraum=${meldezeitraum}`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     assignNwk(
         stellenId: string,
@@ -119,43 +93,33 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}?nwkId=${nwkId}`,
             FetchUtils.getPATCHConfig({})
-        )
-            .then((response) => {
+        ).then((response) => {
+            if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Zuweisung erfolgreich.",
+                    message: "☑ Zuweisung erfolgreich",
                     level: Levels.SUCCESS,
                 });
-                FetchUtils.defaultResponseHandler(response);
                 return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+            } else {
+                FetchUtils.defaultResponseHandler(response);
+            }
+        });
     },
     unassignNwk(stellenId: string): Promise<Praktikumsstelle> {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}`,
             FetchUtils.getPATCHConfig({})
-        )
-            .then((response) => {
+        ).then((response) => {
+            if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Zuweisung erfolgreich aufgehoben.",
+                    message: "☑ Zuweisung aufgehoben",
                     level: Levels.SUCCESS,
                 });
-                FetchUtils.defaultResponseHandler(response);
                 return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+            } else {
+                FetchUtils.defaultResponseHandler(response);
+            }
+        });
     },
     deletePraktikumsstelle(stellenId: string): Promise<void> {
         return fetch(

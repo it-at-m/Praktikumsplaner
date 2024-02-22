@@ -75,7 +75,7 @@ public class PraktikumsstellenController {
         } else if (meldezeitraum.equals("most_recent")) {
             return praktikumsstellenService.getRecentPraktikumsstellenGroupedByDienststelle();
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Value '" + meldezeitraum + "' for parameter Meldezeitraum not supported.");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wert '" + meldezeitraum + "' für Parameter 'meldezeitraum' ist nicht unterstützt.");
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
