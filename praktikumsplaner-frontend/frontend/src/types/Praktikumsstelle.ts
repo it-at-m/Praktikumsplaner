@@ -2,15 +2,15 @@ import Nwk from "@/types/Nwk";
 
 export default class Praktikumsstelle {
     constructor(
-        public dienststelle: string,
+        public dienststelle?: string,
 
-        public oertlicheAusbilder: string,
+        public oertlicheAusbilder?: string,
 
-        public email: string,
+        public email?: string,
 
-        public taetigkeiten: string,
+        public taetigkeiten?: string,
 
-        public dringlichkeit: string,
+        public dringlichkeit?: string,
 
         public projektarbeit?: boolean,
 

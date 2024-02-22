@@ -1,3 +1,5 @@
+import { describe, expect, it } from "vitest";
+
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 
 describe("germanWeekdayMapper.ts", () => {
@@ -16,6 +18,11 @@ describe("germanWeekdayMapper.ts", () => {
         const germanWeekday = new GermanWeekdayMapper().getGermanDays(
             englishWeekdays
         );
-        expect(germanWeekday).toEqual(["Montag", "Dienstag", "Donnerstag", "Freitag"]);
+        expect(germanWeekday).toEqual([
+            "Montag",
+            "Dienstag",
+            "Donnerstag",
+            "Freitag",
+        ]);
     });
 });

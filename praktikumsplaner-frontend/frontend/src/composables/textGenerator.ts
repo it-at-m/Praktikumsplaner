@@ -1,6 +1,6 @@
+import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { valueToNameStudiensemester } from "@/types/Studiensemester";
-import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
 
 export function useTextGenerator() {
     function getPraktikumsstellenCardText(
@@ -23,6 +23,7 @@ export function useTextGenerator() {
     ): string {
         let cardText = "";
         if (!stelle) return cardText;
+        if (!stelle.dringlichkeit) return cardText;
 
         const dringlichkeit =
             stelle.dringlichkeit.charAt(0).toUpperCase() +

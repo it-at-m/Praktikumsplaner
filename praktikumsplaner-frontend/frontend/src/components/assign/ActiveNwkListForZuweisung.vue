@@ -1,42 +1,68 @@
 <template>
-    <v-list>
-        <v-list-item-group>
+    <v-container v-if="props.modelValue && modelValue.length > 0">
+        <v-list v-model:selected="selectedNwks">
             <v-list-item
-                v-for="nwk in props.value"
+                v-for="nwk in props.modelValue"
                 :key="nwk.id"
+                :model-value="nwk"
                 draggable="true"
                 @dragstart="dragStart($event, nwk)"
             >
                 <nwk-card :nwk="nwk" />
             </v-list-item>
-        </v-list-item-group>
-    </v-list>
+        </v-list>
+    </v-container>
+    <v-container
+        v-else
+        class="d-flex justify-center align-center"
+    >
+        <v-row justify="center">
+            <v-col
+                cols="auto"
+                class="d-flex align-center justify-center"
+            >
+                <v-icon
+                    color="blue"
+                    size="large"
+                    class="mr-3"
+                    >mdi-information-outline</v-icon
+                >
+                <span>Es sind noch keine Nachwuchskräfte vorhanden.</span>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 <script setup lang="ts">
-import { onMounted } from "vue";
-import Nwk from "@/types/Nwk";
-import { EventBus } from "@/stores/event-bus";
+import { onMounted, onUnmounted, ref } from "vue";
+
 import NwkCard from "@/components/assign/NwkCard.vue";
+import emitter from "@/stores/eventBus";
+import Nwk from "@/types/Nwk";
 
 const props = defineProps<{
-    value: Nwk[];
+    modelValue: Nwk[];
 }>();
 
 const emits = defineEmits<{
     (e: "input", nwks: Nwk[]): void;
 }>();
 
-onMounted(() => {
-    EventBus.$on("assignedNwk", removeNwkFromList);
-    EventBus.$on("unassignedNwk", addNwkToList);
-});
+const selectedNwks = ref<Nwk[]>([]);
 
+onMounted(() => {
+    emitter.on("assignedNwk", removeNwkFromList);
+    emitter.on("unassignedNwk", addNwkToList);
+});
+onUnmounted(() => {
+    emitter.off("assignedNwk", removeNwkFromList);
+    emitter.off("unassignedNwk", addNwkToList);
+});
 function dragStart(event: DragEvent, nwk: Nwk) {
     event.dataTransfer?.setData("application/json", JSON.stringify(nwk));
 }
 
 function removeNwkFromList(nwk: Nwk) {
-    let nwksInternal = props.value;
+    const nwksInternal = props.modelValue;
     let index = -1;
 
     const nwkToRemove: Nwk | undefined = nwksInternal.find(
@@ -52,9 +78,14 @@ function removeNwkFromList(nwk: Nwk) {
 }
 
 function addNwkToList(nwk: Nwk) {
-    let nwksInternal = props.value;
+    const nwksInternal = props.modelValue;
     nwksInternal.push(nwk);
     nwksInternal.sort((a, b) => a.nachname.localeCompare(b.nachname));
     emits("input", nwksInternal);
 }
 </script>
+<style scoped>
+[v-cloak] [draggable="true"] {
+    cursor: grab;
+}
+</style>

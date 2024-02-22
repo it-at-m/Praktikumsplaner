@@ -1,20 +1,23 @@
 <template>
-    <v-container
-        v-security.allow="['ROLE_AUSBILDUNGSLEITUNG']"
-        class="finishedBackground"
-    >
-        <PageTitle
+    <v-container class="finishedBackground">
+        <page-title
             back-button-url="/"
             page-header-text="Meldezeiträume"
-        ></PageTitle>
-        <CreateMeldezeitraum
-            v-model="model"
-            @meldezeitraumAdded="reloadMeldezeitraeume"
-        ></CreateMeldezeitraum>
-        <v-container>
+        >
+        </page-title>
+        <v-row>
+            <v-col cols="9"></v-col>
+            <v-col>
+                <create-meldezeitraum
+                    v-model="model"
+                    @meldezeitraum-added="reloadMeldezeitraeume"
+                ></create-meldezeitraum>
+            </v-col>
+        </v-row>
+        <v-container class="box">
             <v-skeleton-loader
                 v-if="loading"
-                type="card-heading, divider, list-item, card-heading@2, divider, list-item, card-heading@2"
+                type="heading, divider, list-item, heading, divider, list-item, heading"
             >
             </v-skeleton-loader>
             <v-row>
@@ -70,14 +73,15 @@
 </template>
 
 <script setup lang="ts">
-import CreateMeldezeitraum from "@/components/meldezeitraeume/CreateMeldezeitraum.vue";
-import PageTitle from "@/components/common/PageTitle.vue";
 import { onBeforeMount, onMounted, ref } from "vue";
+
 import MeldezeitraumService from "@/api/MeldezeitraumService";
-import Meldezeitraum from "@/types/Meldezeitraum";
+import { UserService } from "@/api/UserService";
+import PageTitle from "@/components/common/PageTitle.vue";
+import CreateMeldezeitraum from "@/components/meldezeitraeume/CreateMeldezeitraum.vue";
 import MeldezeitraumList from "@/components/meldezeitraeume/MeldezeitraumList.vue";
 import { useUserStore } from "@/stores/user";
-import { UserService } from "@/api/UserService";
+import Meldezeitraum from "@/types/Meldezeitraum";
 
 const userService = new UserService();
 const userStore = useUserStore();
@@ -119,4 +123,3 @@ function reloadMeldezeitraeume() {
         });
 }
 </script>
-

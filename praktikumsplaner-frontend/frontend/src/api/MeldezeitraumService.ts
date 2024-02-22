@@ -1,98 +1,61 @@
+import { Levels } from "@/api/Error";
 import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, MELDEZEITRAUM_BASE } from "@/constants";
-import Meldezeitraum from "@/types/Meldezeitraum";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { Levels } from "@/api/Error";
+import Meldezeitraum from "@/types/Meldezeitraum";
 
 export default {
     create(meldezeitraum: Meldezeitraum): Promise<Meldezeitraum> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}`,
             FetchUtils.getPOSTConfig(meldezeitraum)
-        )
-            .then((response) => {
+        ).then((response) => {
+            if (response.ok) {
                 useSnackbarStore().showMessage({
-                    message: "☑ Speichern erfolgreich.",
+                    message: "☑ Meldezeitraum erfolgreich angelegt",
                     level: Levels.SUCCESS,
                 });
-                FetchUtils.defaultResponseHandler(response);
                 return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+            } else {
+                FetchUtils.defaultResponseHandler(response);
+            }
+        });
     },
     getCurrentMeldezeitraum(): Promise<Meldezeitraum[]> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=current`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     getUpcomingMeldezeitraueme(): Promise<Meldezeitraum[]> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=future`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     getPassedMeldezeitraueme(): Promise<Meldezeitraum[]> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=past`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     getAllMeldezeitraeume(): Promise<Meldezeitraum[]> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}`,
             FetchUtils.getGETConfig()
-        )
-            .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
-                return response.json();
-            })
-            .catch((err) => {
-                useSnackbarStore().showMessage({
-                    message: err.message,
-                    level: Levels.ERROR,
-                });
-                FetchUtils.defaultResponseHandler(err);
-            });
+        ).then((response) => {
+            FetchUtils.defaultResponseHandler(response);
+            return response.json();
+        });
     },
     deleteMeldezeitraumById(id: string | undefined): Promise<void> {
         return fetch(

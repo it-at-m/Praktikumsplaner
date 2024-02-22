@@ -1,15 +1,10 @@
 <template>
     <v-container>
+        <page-title
+            back-button-url="/praktikumsplaetze"
+            page-header-text="Praktikumsplatz für Auszubildende"
+        ></page-title>
         <v-container v-if="loadingSite">
-            <v-row>
-                <v-col cols="1">
-                    <v-skeleton-loader type="button"> </v-skeleton-loader>
-                </v-col>
-                <v-col cols="2">
-                    <v-skeleton-loader type="text"> </v-skeleton-loader>
-                </v-col>
-                <v-col cols="9" />
-            </v-row>
             <v-skeleton-loader type="image"> </v-skeleton-loader>
             <v-spacer />
             <v-skeleton-loader type="image"> </v-skeleton-loader>
@@ -24,15 +19,8 @@
             </v-row>
         </v-container>
         <v-container v-else>
-            <page-title
-                back-button-url="/praktikumsplaetze"
-                page-header-text="Praktikumsplatz für Auszubildende"
-            ></page-title>
-            <div v-if="!activeMeldezeitraum">
-                <KeinMeldezeitraumMessage></KeinMeldezeitraumMessage>
-            </div>
             <v-form
-                v-else
+                v-if="canStellenBeSubmitted()"
                 ref="form"
                 lazy-validation
             >
@@ -44,57 +32,57 @@
                     </v-row>
                     <v-row>
                         <v-col>
-                            <DienststellenInput
+                            <dienststellen-input
                                 v-model="praktikumsstelle"
-                            ></DienststellenInput>
+                            ></dienststellen-input>
                         </v-col>
                         <v-col cols="2" />
                         <v-col>
-                            <ReferatSelect
+                            <referat-select
                                 v-model="praktikumsstelle"
-                            ></ReferatSelect>
+                            ></referat-select>
                         </v-col>
                         <v-col cols="1" />
                     </v-row>
                     <v-row>
                         <v-col>
-                            <DringlichkeitSelect
+                            <dringlichkeit-select
                                 v-model="praktikumsstelle"
-                            ></DringlichkeitSelect>
+                            ></dringlichkeit-select>
                         </v-col>
                         <v-col cols="2">
-                            <DringlichkeitTooltip></DringlichkeitTooltip>
+                            <dringlichkeit-tooltip></dringlichkeit-tooltip>
                         </v-col>
                         <v-col>
-                            <NamentlicheAnforderungInput
+                            <namentliche-anforderung-input
                                 v-model="praktikumsstelle"
-                            ></NamentlicheAnforderungInput>
+                            ></namentliche-anforderung-input>
                         </v-col>
                         <v-col cols="1">
-                            <NamentlicheAnforderungTooltip></NamentlicheAnforderungTooltip>
+                            <namentliche-anforderung-tooltip></namentliche-anforderung-tooltip>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col>
-                            <PlanstelleRadioGroup
+                            <planstelle-radio-group
                                 v-model="praktikumsstelle"
-                            ></PlanstelleRadioGroup>
+                            ></planstelle-radio-group>
                         </v-col>
                         <v-col cols="2" />
                         <v-col>
-                            <ProjektarbeitRadioGroup
+                            <projektarbeit-radio-group
                                 v-model="praktikumsstelle"
-                            ></ProjektarbeitRadioGroup>
+                            ></projektarbeit-radio-group>
                         </v-col>
                         <v-col cols="1">
-                            <ProjektarbeitTooltip></ProjektarbeitTooltip>
+                            <projektarbeit-tooltip></projektarbeit-tooltip>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col>
-                            <TaetigkeitenInput
+                            <taetigkeiten-input
                                 v-model="praktikumsstelle"
-                            ></TaetigkeitenInput>
+                            ></taetigkeiten-input>
                         </v-col>
                         <v-col cols="1" />
                     </v-row>
@@ -107,23 +95,23 @@
                     </v-row>
                     <v-row>
                         <v-col>
-                            <AusbildungsrichtungSelect
+                            <ausbildungsrichtung-select
                                 v-model="praktikumsstelle"
-                            ></AusbildungsrichtungSelect>
+                            ></ausbildungsrichtung-select>
                         </v-col>
                         <v-col cols="2" />
                         <v-col>
-                            <AusbildungsJahrSelect
+                            <ausbildungs-jahr-select
                                 v-model="praktikumsstelle"
-                            ></AusbildungsJahrSelect>
+                            ></ausbildungs-jahr-select>
                         </v-col>
                         <v-col cols="1" />
                     </v-row>
                     <v-row>
                         <v-col>
-                            <ProgrammierKenntnisseSelect
+                            <programmier-kenntnisse-select
                                 v-model="praktikumsstelle"
-                            ></ProgrammierKenntnisseSelect>
+                            ></programmier-kenntnisse-select>
                         </v-col>
                         <v-col />
                         <v-col cols="3" />
@@ -137,21 +125,21 @@
                     </v-row>
                     <v-row>
                         <v-col>
-                            <AusbilderInput
+                            <ausbilder-input
                                 v-model="praktikumsstelle"
-                            ></AusbilderInput>
+                            ></ausbilder-input>
                         </v-col>
                         <v-col cols="2" />
                         <v-col>
-                            <AusbilderEmailInput
+                            <ausbilder-email-input
                                 v-model="praktikumsstelle"
-                            ></AusbilderEmailInput>
+                            ></ausbilder-email-input>
                         </v-col>
                         <v-col cols="1" />
                     </v-row>
                 </v-container>
                 <v-container
-                    v-show="isAusbildungsleitung"
+                    v-if="isAusbildungsleitung"
                     class="box"
                 >
                     <v-row>
@@ -161,10 +149,10 @@
                     </v-row>
                     <v-row>
                         <v-col>
-                            <MeldezeitraumSelect
+                            <meldezeitraum-select
                                 v-model="praktikumsstelle"
                                 :meldezeitraueme="meldezeitraeume"
-                            ></MeldezeitraumSelect>
+                            ></meldezeitraum-select>
                         </v-col>
                         <v-col cols="2" />
                         <v-col> </v-col>
@@ -185,6 +173,7 @@
                     </v-row>
                 </v-container>
             </v-form>
+            <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
         </v-container>
         <progress-circular-overlay
             :loading="loading"
@@ -194,40 +183,41 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
-import MeldungService from "@/api/PraktikumsstellenService";
-import router from "@/router";
+
 import MeldezeitraumService from "@/api/MeldezeitraumService";
+import MeldungService from "@/api/PraktikumsstellenService";
 import PageTitle from "@/components/common/PageTitle.vue";
-import { APP_SECURITY } from "@/constants";
-import { useUserStore } from "@/stores/user";
-import Meldezeitraum from "@/types/Meldezeitraum";
-import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
-import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
-import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
-import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
-import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
-import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
-import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
-import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
-import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
-import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/ProgrammierKenntnisseSelect.vue";
-import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
-import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
+import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
 import AusbildungsJahrSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsJahrSelect.vue";
 import AusbildungsrichtungSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsrichtungSelect.vue";
+import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
+import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
+import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
+import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
+import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
+import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
+import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
+import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
+import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/ProgrammierKenntnisseSelect.vue";
 import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/ProjektarbeitRadioGroup.vue";
 import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
-import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
+import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
+import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
+import { APP_SECURITY } from "@/constants";
+import index from "@/router";
+import { useUserStore } from "@/stores/user";
+import Meldezeitraum from "@/types/Meldezeitraum";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-const activeMeldezeitraum = ref<boolean>(false);
-
-const praktikumsstelle = ref<Praktikumsstelle>(
-    new Praktikumsstelle("", "", "", "", "")
-);
-const isAusbildungsleitung = ref<boolean>(false);
+const praktikumsstelle = ref<Praktikumsstelle>(new Praktikumsstelle());
 const loadingSite = ref<boolean>(true);
+const isAusbildungsleitung = computed(
+    () =>
+        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
+        APP_SECURITY !== "true"
+);
 const loading = ref<boolean>(false);
 const userStore = useUserStore();
 const form = ref<HTMLFormElement>();
@@ -249,24 +239,21 @@ const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum()
         .then((zeitraueme) => {
-            activeMeldezeitraum.value = zeitraueme.length > 0;
             currentMeldezeitraum.value = zeitraueme[0];
-        })
-        .then(() => {
-            if (
-                userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-                APP_SECURITY !== "true"
-            ) {
-                isAusbildungsleitung.value = true;
-                activeMeldezeitraum.value = true;
-                getUpcomingMeldezeitraeume();
-                getPassedMeldezeitraeume();
-            }
         })
         .finally(() => {
             loadingSite.value = false;
         });
+
+    if (isAusbildungsleitung.value) {
+        getUpcomingMeldezeitraeume();
+        getPassedMeldezeitraeume();
+    }
 });
+
+function canStellenBeSubmitted() {
+    return isAusbildungsleitung.value || currentMeldezeitraum.value;
+}
 
 function getUpcomingMeldezeitraeume() {
     MeldezeitraumService.getUpcomingMeldezeitraueme().then((zeitraeume) => {
@@ -282,15 +269,14 @@ function getPassedMeldezeitraeume() {
 
 function resetForm() {
     form.value?.reset();
-    router.push("/praktikumsplaetze");
+    index.push("/praktikumsplaetze");
 }
+
 function uploadPraktikumsstelle() {
-    if (!form.value?.validate()) return;
+    form.value?.validate();
+    if (!form.value?.isValid) return;
     loading.value = true;
-    if (
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true"
-    ) {
+    if (isAusbildungsleitung.value) {
         MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
             praktikumsstelle.value
         ).finally(() => {
@@ -307,19 +293,10 @@ function uploadPraktikumsstelle() {
     }
 }
 </script>
-<style lang="scss">
+<style>
 .box {
     margin: 3%;
     border: 2px solid #0000001a;
     border-radius: 5px;
-}
-.v-tooltip-spacing {
-    margin-top: 10px;
-}
-.radios {
-    margin: 2%;
-}
-.custom-label .v-label {
-    font-size: 18px !important;
 }
 </style>

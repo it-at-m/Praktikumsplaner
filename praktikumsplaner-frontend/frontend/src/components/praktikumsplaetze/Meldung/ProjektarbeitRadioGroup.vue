@@ -2,7 +2,7 @@
     <v-radio-group
         v-model="stelle.projektarbeit"
         class="radios custom-label"
-        row
+        inline
         :rules="booleanRule"
     >
         <template #label>
@@ -10,7 +10,7 @@
         </template>
         <v-radio
             v-for="item in YesNoBoolean"
-            :key="item.value"
+            :key="item.name"
             :label="item.name"
             :value="item.value"
             class="ml-5"
@@ -20,17 +20,18 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
 import { useRules } from "@/composables/rules";
-import { YesNoBoolean } from "@/types/YesNoBoolean";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import { YesNoBoolean } from "@/types/YesNoBoolean";
 
 const validationRules = useRules();
 
 const props = defineProps<{
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", projektarbeit: Praktikumsstelle): void;
+    (e: "update:modelValue", projektarbeit: Praktikumsstelle): void;
 }>();
 
 const booleanRule = [
@@ -40,11 +41,11 @@ const booleanRule = [
 const stelle = computed({
     // getter
     get() {
-        return props.value;
+        return props.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
 </script>

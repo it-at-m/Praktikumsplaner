@@ -1,12 +1,22 @@
 export function useRules() {
-    function fileTypeRule(format: string, message = "error") {
-        return (value: File | null | undefined) =>
-            !value || (value && value.type == format) || message;
+    function fileTypeRule(acceptedType: string, errorMessage: string) {
+        return (fileList: File[] | null | undefined) => {
+            if (!fileList || fileList.length === 0) {
+                return true;
+            }
+            const file = fileList[0];
+            if (!file) return true;
+            return file.type === acceptedType || errorMessage;
+        };
     }
 
-    function fileRequiredRule(message = "error") {
-        return (value: File | null | undefined) =>
-            value != null || value != undefined || message;
+    function fileRequiredRule(message = "Eine Datei ist erforderlich.") {
+        return (value: File[] | null | undefined) => {
+            return (
+                (value !== null && value !== undefined && value.length > 0) ||
+                message
+            );
+        };
     }
 
     function minLengthRule(length: number, message = "error") {
