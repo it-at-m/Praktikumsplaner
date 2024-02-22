@@ -17,7 +17,7 @@
         <v-container class="box">
             <v-skeleton-loader
                 v-if="loading"
-                type="card-heading, divider, list-item, card-heading@2, divider, list-item, card-heading@2"
+                type="heading, divider, list-item, heading, divider, list-item, heading"
             >
             </v-skeleton-loader>
             <v-row>

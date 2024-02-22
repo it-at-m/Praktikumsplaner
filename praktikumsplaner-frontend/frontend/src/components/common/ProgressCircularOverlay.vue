@@ -1,15 +1,23 @@
 <template>
-    <v-overlay v-if="loading">
+    <v-overlay
+        v-model="loadingComputed"
+        class="align-center justify-center"
+    >
         <v-progress-circular
-            v-if="props.loading"
             indeterminate
             color="primary"
-        >
-        </v-progress-circular>
+            size="large"
+        ></v-progress-circular>
     </v-overlay>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
+const loadingComputed = computed(() => {
+    return props.loading;
+});
+
 const props = defineProps<{
     loading: boolean;
 }>();
