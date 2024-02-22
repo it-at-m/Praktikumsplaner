@@ -89,8 +89,14 @@ public class PraktikumsstellenController {
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
-    @DeleteMapping("/{praktikumsstellenId}")
-    public void deletePratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId) {
-        praktikumsstellenService.deletePraktikumsstelle(praktikumsstellenId);
+    @DeleteMapping("/studium/{praktikumsstellenId}")
+    public void deleteStudiumPratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId) {
+        praktikumsstellenService.deleteStudiumsPraktikumsstelle(praktikumsstellenId);
+    }
+
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @DeleteMapping("/ausbildung/{praktikumsstellenId}")
+    public void deleteAusbildungPratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId) {
+        praktikumsstellenService.deleteAusbildungsPraktikumsstelle(praktikumsstellenId);
     }
 }
