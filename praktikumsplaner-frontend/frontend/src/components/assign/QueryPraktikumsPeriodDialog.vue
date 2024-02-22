@@ -95,7 +95,7 @@
                                             dialogtext="Sind Sie sicher, dass Sie die Zuweisungs-Mails an die Ausbilder*innen versenden wollen?"
                                             dialogtitle="Bestätigung des Mailversands"
                                             value
-                                            @no="confirmSendMailDialog = false"
+                                            @no="closeConfirmDialog"
                                             @yes="sendMails"
                                         ></yes-no-dialog>
                                         <undelivered-mails-dialog
@@ -181,11 +181,16 @@ function sendMails(): void {
         });
     checkIfUndeliveredMails();
     closeSendMailDialog();
+    closeConfirmDialog();
 }
 
 function closeSendMailDialog(): void {
     emit("update:showDialog", false);
     form.value?.reset();
+}
+
+function closeConfirmDialog(): void {
+    confirmSendMailDialog.value = false;
 }
 
 function checkIfUndeliveredMails() {

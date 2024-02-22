@@ -36,7 +36,7 @@ public class ExcelExportService {
 
     private XSSFWorkbook getTemplateExcelFile() throws IOException {
         try (InputStream stream = getClass().getResourceAsStream("/templates/ITM_IT_POR.xlsx")) {
-            if (stream == null) throw new IOException("Template file not found");
+            if (stream == null) throw new IOException("ExcelExport Vorlage nicht gefunden.");
             return new XSSFWorkbook(stream);
         }
     }

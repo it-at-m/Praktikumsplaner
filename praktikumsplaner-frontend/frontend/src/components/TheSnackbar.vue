@@ -2,23 +2,27 @@
     <v-snackbar
         id="snackbar"
         v-model="show"
-        :color="color"
-        :timeout="timeout"
+        :color="backgroundColor"
+        :close-delay="timeout"
     >
-        {{ message }}
-        <v-btn
-            v-if="color === 'error'"
-            color="primary"
-            variant="text"
-            @click="show = false"
-        >
-            Schließen
-        </v-btn>
+        <v-row class="snackbarContent">
+            <v-col class="message"> {{ message }}</v-col>
+            <v-col>
+                <v-btn
+                    v-if="backgroundColor !== 'success'"
+                    :color="btnTextColor"
+                    variant="text"
+                    @click="show = false"
+                >
+                    Schließen
+                </v-btn>
+            </v-col>
+        </v-row>
     </v-snackbar>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 import { useSnackbarStore } from "@/stores/snackbar";
 
@@ -28,20 +32,23 @@ const defaultTimeout = 5000;
 
 const show = ref(false);
 const timeout = ref(defaultTimeout);
-const message = ref("");
-const color = ref("info");
-
-watch(
-    () => snackbarStore.message,
-    () => (message.value = snackbarStore.message ?? "")
-);
+const message = computed(() => snackbarStore.message ?? "");
+const backgroundColor = ref("info");
+const btnTextColor = ref("infoBtnText");
 
 watch(
     () => snackbarStore.level,
     () => {
-        color.value = snackbarStore.level;
-        if (color.value === "error") {
+        backgroundColor.value = snackbarStore.level;
+        if (backgroundColor.value === "error") {
             timeout.value = 0;
+            btnTextColor.value = "errorBtnText";
+        } else if (backgroundColor.value === "warning") {
+            timeout.value = defaultTimeout;
+            btnTextColor.value = "warningBtnText";
+        } else if (backgroundColor.value === "info") {
+            timeout.value = defaultTimeout;
+            btnTextColor.value = "infoBtnText";
         } else {
             timeout.value = defaultTimeout;
         }
@@ -61,3 +68,12 @@ watch(
     }
 );
 </script>
+<style>
+.snackbarContent {
+    white-space: nowrap;
+    overflow: auto;
+}
+.message {
+    margin: 8px;
+}
+</style>

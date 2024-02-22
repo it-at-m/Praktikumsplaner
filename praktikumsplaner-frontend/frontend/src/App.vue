@@ -1,6 +1,7 @@
 <template>
     <v-app>
         <the-snackbar />
+        <error-dialog />
         <v-app-bar color="primary">
             <v-row align="center">
                 <v-col
@@ -89,6 +90,7 @@ import { onBeforeMount, onMounted, ref } from "vue";
 import InfoService from "@/api/InfoService";
 import { UserService } from "@/api/UserService";
 import TheSnackbar from "@/components/TheSnackbar.vue";
+import ErrorDialog from "@/components/TheUserErrorDialog.vue";
 import { useSecurity } from "@/composables/security";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
@@ -118,6 +120,7 @@ onMounted(() => {
 <style scoped>
 .v-navigation-drawer .v-list-item-title {
     font-size: 16px;
+    padding-bottom: 1px;
 }
 .no-underline,
 .no-underline:hover {

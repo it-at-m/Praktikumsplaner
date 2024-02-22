@@ -113,7 +113,7 @@ public class ExcelImportService {
                 try {
                     logger.error("Column Value: " + cellValue);
                     if (isBlank(cellValue)) {
-                        logger.error("leere Zelle");
+                        logger.error("leere Zelle.");
                         createNwkDtoBuilder.studiengang(null);
                         createNwkDtoBuilder.ausbildungsrichtung(null);
                     } else {

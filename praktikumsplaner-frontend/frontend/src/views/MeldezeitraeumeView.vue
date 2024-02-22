@@ -2,7 +2,8 @@
     <v-container class="finishedBackground">
         <page-title
             back-button-url="/"
-            page-header-text="Meldezeiträume">
+            page-header-text="Meldezeiträume"
+        >
         </page-title>
         <v-row>
             <v-col cols="9"></v-col>

@@ -38,7 +38,7 @@ public class NfcServletInputStream extends ServletInputStream {
 
     @Override
     public void setReadListener(final ReadListener listener) {
-        throw new NotImplementedException("Not implemented");
+        throw new NotImplementedException("Not implemented.");
     }
 
 }

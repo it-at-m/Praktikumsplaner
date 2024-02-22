@@ -6,10 +6,7 @@
         ></page-title>
         <v-container v-if="loadingSite">
             <v-row>
-                <v-col cols="4">
-                    <v-skeleton-loader type="text"> </v-skeleton-loader>
-                </v-col>
-                <v-col cols="6"></v-col>
+                <v-col cols="10"></v-col>
                 <v-col cols="2">
                     <v-skeleton-loader type="button"> </v-skeleton-loader>
                 </v-col>

@@ -3,7 +3,7 @@
         <template #activator="{ props }">
             <v-icon
                 color="blue"
-                class="v-tooltip-spacing"
+                class="mt-3"
                 size="large"
                 v-bind="props"
             >

@@ -23,6 +23,7 @@ export function useTextGenerator() {
     ): string {
         let cardText = "";
         if (!stelle) return cardText;
+        if (!stelle.dringlichkeit) return cardText;
 
         const dringlichkeit =
             stelle.dringlichkeit.charAt(0).toUpperCase() +

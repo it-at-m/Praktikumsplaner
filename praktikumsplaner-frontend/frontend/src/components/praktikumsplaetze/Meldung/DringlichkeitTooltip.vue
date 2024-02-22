@@ -2,8 +2,8 @@
     <v-tooltip location="right">
         <template #activator="{ props }">
             <v-icon
+                class="mt-3"
                 color="blue"
-                class="v-tooltip-spacing"
                 size="large"
                 v-bind="props"
             >
@@ -16,3 +16,4 @@
         >
     </v-tooltip>
 </template>
+<script setup lang="ts"></script>
