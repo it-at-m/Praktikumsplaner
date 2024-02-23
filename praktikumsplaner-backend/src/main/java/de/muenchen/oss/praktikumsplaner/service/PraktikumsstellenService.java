@@ -137,7 +137,7 @@ public class PraktikumsstellenService {
     public void deleteStudiumsPraktikumsstelle(UUID praktikumsstellenId) {
         if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             studiumsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
-        }else{
+        } else {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }
@@ -145,7 +145,7 @@ public class PraktikumsstellenService {
     public void deleteAusbildungsPraktikumsstelle(UUID praktikumsstellenId) {
         if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             ausbildungsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
-        }else{
+        } else {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }
