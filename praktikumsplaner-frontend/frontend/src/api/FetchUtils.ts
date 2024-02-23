@@ -74,6 +74,11 @@ export default class FetchUtils {
             redirect: "manual",
         };
     }
+    /**
+     * Liefert eine default POST-Config für fetch
+     * @param body Optional zu übertragender Body
+     */
+    // eslint-disable-next-line
     static getDELETEConfig(body: any): RequestInit {
         const headers = FetchUtils.getHeaders();
         if (body.version !== undefined) {
