@@ -5,7 +5,7 @@
             :dialogtitle="warningDialogTitle"
             :dialogtext="warningDialogText"
             @no="resetWarningDialog"
-            @yes="delPraktikumsstelle(props.value)"
+            @yes="delPraktikumsstelle(props.modelValue)"
         ></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
@@ -67,7 +67,7 @@ import { useTextGenerator } from "@/composables/textGenerator";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
-import { EventBus } from "@/stores/event-bus";
+import emitter from "@/stores/eventBus";
 
 const props = defineProps<{
     modelValue: Praktikumsstelle;
@@ -92,7 +92,7 @@ function getCardDetailText(stelle: Praktikumsstelle): string {
 function delPraktikumsstelle(stelle: Praktikumsstelle) {
     resetWarningDialog();
     PraktikumsstellenService.deletePraktikumsstelle(stelle!).then(() => {
-        EventBus.$emit("deleted");
+        emitter.emit("nwkDeleted");
     });
 }
 

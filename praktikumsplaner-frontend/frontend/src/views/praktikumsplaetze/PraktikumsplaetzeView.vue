@@ -91,7 +91,7 @@ import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/Kei
 import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
 import { APP_SECURITY } from "@/constants";
 import index from "@/router";
-import { EventBus } from "@/stores/event-bus";
+import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
@@ -126,7 +126,8 @@ onMounted(() => {
         });
     getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
-EventBus.$on("deleted", getAllPraktikumsstellenInCurrentMeldezeitraum);
+
+emitter.on("nwkDeleted", getAllPraktikumsstellenInCurrentMeldezeitraum);
 
 function canStellenBeSubmitted() {
     return isAusbildungsleitung.value || activeMeldezeitraum.value;

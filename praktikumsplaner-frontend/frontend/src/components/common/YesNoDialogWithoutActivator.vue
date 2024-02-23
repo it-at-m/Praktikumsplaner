@@ -42,7 +42,7 @@ const props = defineProps<{
     /**
      * Steuerflag für den Dialog
      */
-    value: boolean;
+    modelValue: boolean;
 }>();
 
 const emits = defineEmits<{
@@ -52,7 +52,7 @@ const emits = defineEmits<{
 }>();
 
 const visible = computed({
-    get: () => props.value,
+    get: () => props.modelValue,
     set: (v) => emits("input", v),
 });
 
