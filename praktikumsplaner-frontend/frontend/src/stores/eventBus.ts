@@ -6,6 +6,7 @@ type Events = {
     assignedNwk: Nwk;
     unassignedNwk: Nwk;
     nwkCreated: void;
+    nwkDeleted: void;
 };
 
 const emitter = mitt<Events>();
