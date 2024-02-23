@@ -1,43 +1,41 @@
 <template>
     <v-dialog
-        :key="props.value"
         v-model="visible"
         persistent
         width="800"
     >
-        <template #activator="{ on }">
-            <template v-if="props.buttontext">
+        <template #activator="{ props: open }">
+            <template v-if="buttontext">
                 <v-btn
                     color="primary"
-                    v-on="on"
+                    v-bind="open"
                 >
                     {{ buttontext }}
                 </v-btn>
             </template>
-            <template v-else-if="props.icontext">
+            <template v-else-if="icontext">
                 <v-btn
-                    text
                     color="primary"
-                    v-on="on"
+                    v-bind="open"
                 >
-                    <v-icon large>
-                        {{ props.icontext }}
+                    <v-icon size="large">
+                        {{ icontext }}
                     </v-icon>
                 </v-btn>
             </template>
         </template>
         <v-card>
             <v-card-title>
-                {{ props.dialogtitle }}
+                {{ dialogtitle }}
             </v-card-title>
             <v-card-text>
-                {{ props.dialogtext }}
+                {{ dialogtext }}
             </v-card-text>
             <v-card-actions>
                 <v-spacer />
                 <v-btn
                     id="yesnodialog-btn-no"
-                    text
+                    variant="outlined"
                     @click="no"
                 >
                     Nein
@@ -45,6 +43,7 @@
                 <v-btn
                     id="yesnodialog-btn-yes"
                     color="primary"
+                    variant="elevated"
                     @click="yes"
                 >
                     Ja
@@ -56,6 +55,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
 /**
  * Der YesNo-Dialog ist ein generischer Dialog zur binären Abfrage beim Nutzer.
  * So kann z.B. die Bestätigung für das Löschen einer Entität damit realisiert werden.
@@ -87,18 +87,18 @@ const props = defineProps<{
     /**
      * Steuerflag für den Dialog
      */
-    value: boolean;
+    modelValue: boolean;
 }>();
 
 const emits = defineEmits<{
     (e: "no"): void;
     (e: "yes"): void;
-    (e: "input", v: boolean): void;
+    (e: "update:modelValue", v: boolean): void;
 }>();
 
 const visible = computed({
-    get: () => props.value,
-    set: (v) => emits("input", v),
+    get: () => props.modelValue,
+    set: (v) => emits("update:modelValue", v),
 });
 
 function no(): void {

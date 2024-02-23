@@ -1,12 +1,11 @@
 <template>
     <v-card
         width="100%"
-        elevation="4"
-        outlined
+        border
     >
         <v-expansion-panels>
-            <v-expansion-panel :disabled="!hasDetails(props.nwk)">
-                <v-expansion-panel-header>
+            <v-expansion-panel>
+                <v-expansion-panel-title :hide-actions="!hasDetails(nwk)">
                     <v-row
                         no-gutters
                         align="center"
@@ -17,45 +16,44 @@
                                 :background-color="getNwkColor(props.nwk)"
                             />
                         </v-col>
-                        <v-col>
-                            <div>
-                                <v-card-title>
-                                    {{ getFullName(props.nwk) }}
-                                </v-card-title>
-                                <v-card-subtitle>
-                                    {{ getSubtitle(props.nwk) }}
-                                </v-card-subtitle>
-                            </div>
+                        <v-col cols="5">
+                            <v-card-title>
+                                {{ getFullName(props.nwk) }}
+                            </v-card-title>
+                            <v-card-subtitle>
+                                {{ getSubtitle(props.nwk) }}
+                            </v-card-subtitle>
                         </v-col>
                     </v-row>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
+                </v-expansion-panel-title>
+                <v-expansion-panel-text v-if="hasDetails(nwk)">
                     <v-chip-group
-                        active-class="primary--text"
+                        selected-class="primary--text"
                         column
                     >
                         <v-chip
                             v-for="day in germanDays"
                             :key="day"
                             color="primary"
-                            outlined
+                            variant="outlined"
                             class="ml-4 mr-0"
                         >
                             {{ day }}
                         </v-chip>
                     </v-chip-group>
-                </v-expansion-panel-content>
+                </v-expansion-panel-text>
             </v-expansion-panel>
         </v-expansion-panels>
     </v-card>
 </template>
 <script setup lang="ts">
-import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
-import Nwk, { hasDetails } from "@/types/Nwk";
 import { computed } from "vue";
-import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
-import { findStudiengangColorByValue } from "@/types/Studiengang";
+
+import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
 import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
+import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
+import Nwk, { hasDetails } from "@/types/Nwk";
+import { findStudiengangColorByValue } from "@/types/Studiengang";
 
 const props = defineProps<{
     nwk: Nwk;
@@ -89,8 +87,3 @@ function getNwkColor(nwk: Nwk): string {
     return color;
 }
 </script>
-<style scoped lang="scss">
-.v-expansion-panel--disabled {
-    color: var(--v-text-base) !important;
-}
-</style>

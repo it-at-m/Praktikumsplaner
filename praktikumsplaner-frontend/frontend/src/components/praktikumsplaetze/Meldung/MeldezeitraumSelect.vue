@@ -2,39 +2,53 @@
     <v-select
         v-model="stelle.meldezeitraumID"
         label="Meldezeitraum*"
-        :items="props.meldezeitraueme"
-        :menu-props="customMenuProps"
         item-value="id"
-        item-text="zeitraumName"
-        outlined
+        item-title="zeitraumName"
+        :items="properties.meldezeitraueme"
+        variant="outlined"
+        @select="onClick"
     >
-        <template #item="data">
-            {{ data.item.zeitraumName }}:
+        <template #item="{ props, item }">
+            <v-list-item v-bind="props">
+                <v-list-item-title>
+                    {{
+                        formatter.formatDateFromString(
+                            item.raw.zeitraum.startZeitpunkt
+                        )
+                    }}
+                    -
+                    {{
+                        formatter.formatDateFromString(
+                            item.raw.zeitraum.endZeitpunkt
+                        )
+                    }}
+                </v-list-item-title>
+            </v-list-item>
+        </template>
+        <template #selection="{ item }">
+            {{ item.raw.zeitraumName }} :
             {{
-                formatter.formatDateFromString(
-                    data.item.zeitraum.startZeitpunkt
-                )
+                formatter.formatDateFromString(item.raw.zeitraum.startZeitpunkt)
             }}
             -
-            {{
-                formatter.formatDateFromString(data.item.zeitraum.endZeitpunkt)
-            }}
+            {{ formatter.formatDateFromString(item.raw.zeitraum.endZeitpunkt) }}
         </template>
     </v-select>
 </template>
 <script setup lang="ts">
-import Meldezeitraum from "@/types/Meldezeitraum";
-import { useFormatter } from "@/composables/formatter";
 import { computed } from "vue";
+
+import { useFormatter } from "@/composables/formatter";
+import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-const props = defineProps<{
+const properties = defineProps<{
     meldezeitraueme: Meldezeitraum[];
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 
 const emits = defineEmits<{
-    (e: "input", stelle: Praktikumsstelle): void;
+    (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
 
 const formatter = useFormatter();
@@ -42,14 +56,16 @@ const formatter = useFormatter();
 const stelle = computed({
     // getter
     get() {
-        return props.value;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
-const customMenuProps = {
-    offsetY: true,
-};
+
+function onClick(item: Meldezeitraum) {
+    stelle.value.meldezeitraumID = item.id;
+    emits("update:modelValue", stelle.value);
+}
 </script>

@@ -1,84 +1,77 @@
 <template>
     <v-select
         v-model="praktikumsstelle.ausbildungsjahr"
-        label="Ausbildungsjahr*"
         :items="Ausbildungsjahr"
-        item-value="value"
-        item-text="name"
-        :rules="requiredArrayRule"
-        :menu-props="customMenuProps"
-        outlined
+        label="Ausbildungsjahr*"
         multiple
-        @change="sortAusbildungsjahre"
+        variant="outlined"
+        item-title="name"
+        item-value="value"
+        :rules="requiredArrayRule"
+        @update:model-value="sortAusbildungsjahre"
     >
         <template #prepend-item>
-            <v-list-item
-                ripple
-                @mousedown.prevent
+            <v-checkbox
+                v-model="selectAll"
+                label="Egal"
+                hide-details
+                color="primary"
+                :false-icon="ausbildungsjahrIcon"
+                :true-icon="ausbildungsjahrIcon"
+                :value="allAusbildungsjahreSelected"
                 @click="selectAllAusbildungsjahre"
             >
-                <v-list-item-action>
-                    <v-icon :color="ausbildungsjahrIconColor()">
-                        {{ AusbildungsjahrIcon }}
-                    </v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                    <v-list-item-title> Egal </v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+                <template #label>
+                    <v-list-item>
+                        <v-list-item-title> Egal </v-list-item-title>
+                    </v-list-item>
+                </template>
+            </v-checkbox>
             <v-divider class="mt-2"></v-divider>
         </template>
-        <template #item="data">
-            <v-list-item-action>
-                <v-icon v-if="data.attrs['aria-selected'] === 'true'">
-                    mdi-checkbox-marked
-                </v-icon>
-                <v-icon v-else> mdi-checkbox-blank-outline </v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-                <v-list-item-title>
-                    {{ data.item.name }}
-                </v-list-item-title>
+        <template #item="{ item, props }">
+            <v-list-item v-bind="props">
                 <v-list-item-subtitle
                     v-if="praktikumsstelle.ausbildungsrichtung === 'FISI'"
                 >
-                    {{ data.item.zeitraumFISI }}
+                    {{ item.raw.zeitraumFISI }}
                 </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item>
         </template>
     </v-select>
 </template>
 <script setup lang="ts">
-import { useRules } from "@/composables/rules";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { computed } from "vue";
+
+import { useRules } from "@/composables/rules";
 import { Ausbildungsjahr } from "@/types/Ausbildungsjahr";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
-const props = defineProps<{
-    value: Praktikumsstelle;
+const properties = defineProps<{
+    modelValue: Praktikumsstelle;
 }>();
 const emits = defineEmits<{
-    (e: "input", stelle: Praktikumsstelle): void;
+    (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
+
+const selectAll = true;
+
 const praktikumsstelle = computed({
     // getter
     get() {
-        return props.value;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {
-        emits("input", newValue);
+        emits("update:modelValue", newValue);
     },
 });
 
 const requiredArrayRule = [
     validationRules.notEmptyArrayRule("Darf nicht leer sein."),
 ];
-const customMenuProps = {
-    offsetY: true,
-};
 
 const allAusbildungsjahreSelected = computed(() => {
     return (
@@ -95,7 +88,7 @@ const someAusbildungsjahreSelected = computed(() => {
     );
 });
 
-const AusbildungsjahrIcon = computed(() => {
+const ausbildungsjahrIcon = computed(() => {
     if (allAusbildungsjahreSelected.value) return "mdi-checkbox-marked";
     if (someAusbildungsjahreSelected.value) return "mdi-minus-box";
     return "mdi-checkbox-blank-outline";
@@ -113,12 +106,5 @@ function selectAllAusbildungsjahre() {
 
 function sortAusbildungsjahre() {
     praktikumsstelle.value.ausbildungsjahr?.sort((a, b) => a.localeCompare(b));
-}
-
-function ausbildungsjahrIconColor() {
-    return allAusbildungsjahreSelected.value ||
-        someAusbildungsjahreSelected.value
-        ? "primary"
-        : "darkgrey";
 }
 </script>

@@ -1,51 +1,35 @@
 <template>
     <v-container
-        @drop="drop($event, value)"
+        @drop="drop($event, modelValue)"
         @dragover.prevent
         @dragenter.prevent
     >
-        <yes-no-dialog-without-activator
-            v-model="warningDialog"
-            :dialogtitle="warningDialogTitle"
-            :dialogtext="warningDialogText"
-            @no="resetWarningDialog"
-            @yes="assignNwk"
-        ></yes-no-dialog-without-activator>
-
-        <yes-no-dialog-without-activator
-            v-model="unassignConfirmDialog"
-            :dialogtitle="unassignDialogTitle"
-            :dialogtext="unassignDialogContent"
-            @no="resetUnassign"
-            @yes="unassignNwk"
-        ></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
             :class="{
                 'custom-card-active': assignedNwk,
                 spacer: true,
             }"
-            elevation="16"
-            outlined
+            elevation="6"
             :ripple="false"
             @click="show = !show"
         >
             <v-card-title
-                >Stelle bei {{ props.value.dienststelle }}</v-card-title
+                >Stelle bei {{ props.modelValue.dienststelle }}</v-card-title
             >
-            <v-card-subtitle v-if="props.value.namentlicheAnforderung">
+            <v-card-subtitle v-if="props.modelValue.namentlicheAnforderung">
                 Namentliche Anforderung:
-                {{ props.value.namentlicheAnforderung }}
+                {{ props.modelValue.namentlicheAnforderung }}
             </v-card-subtitle>
             <v-icon
-                v-if="props.value.planstelleVorhanden"
-                x-large
+                v-if="props.modelValue.planstelleVorhanden"
+                size="x-large"
                 class="icon-top-right-position"
-                >mdi-account-star</v-icon
-            >
+                icon="mdi-account-star"
+            ></v-icon>
             <v-card-text class="pt-0 mt-0 mb-0 pb-0">
                 <p style="white-space: pre-line">
-                    {{ getCardText(props.value) }}
+                    {{ getCardText(props.modelValue) }}
                 </p></v-card-text
             >
             <v-col>
@@ -56,50 +40,67 @@
                 <v-chip
                     v-if="assignedNwk && !loading"
                     :color="getNwkColor(assignedNwk)"
-                    close
-                    close-icon="mdi-close"
-                    @click:close="openConfirmationDialog(value)"
-                    >{{
-                        `${assignedNwk.vorname} ${assignedNwk.nachname}`
-                    }}</v-chip
-                ></v-col
-            >
+                    variant="flat"
+                    >{{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
+                    <template #close>
+                        <v-icon
+                            icon="mdi-close-circle"
+                            @click.stop="openConfirmationDialog(modelValue)"
+                        />
+                    </template> </v-chip
+            ></v-col>
             <v-btn
-                icon
+                :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+                :class="{ 'custom-card-active': assignedNwk }"
                 class="icon-bottom-right-position"
+                elevation="0"
                 @click.stop="show = !show"
-            >
-                <v-icon>{{
-                    show ? "mdi-chevron-up" : "mdi-chevron-down"
-                }}</v-icon>
-            </v-btn>
+            ></v-btn>
             <v-expand-transition>
                 <div v-show="show">
                     <v-divider></v-divider>
                     <v-card-text>
                         <p style="white-space: pre-line">
-                            {{ getCardDetailText(props.value) }}
+                            {{ getCardDetailText(props.modelValue) }}
                         </p>
                     </v-card-text>
                 </div>
             </v-expand-transition>
         </v-card>
+        <yes-no-dialog-without-activator
+            v-model="warningDialog"
+            :dialogtitle="warningDialogTitle"
+            :dialogtext="warningDialogText"
+            value
+            @no="resetWarningDialog"
+            @yes="assignNwk"
+        ></yes-no-dialog-without-activator>
+
+        <yes-no-dialog-without-activator
+            v-model="unassignConfirmDialog"
+            :dialogtitle="unassignDialogTitle"
+            :dialogtext="unassignDialogContent"
+            value
+            @no="resetUnassign"
+            @yes="unassignNwk"
+        ></yes-no-dialog-without-activator>
     </v-container>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
+
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
-import { EventBus } from "@/stores/event-bus";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
-import Nwk from "@/types/Nwk";
-import { findStudiengangColorByValue } from "@/types/Studiengang";
-import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
-import { useWarnings } from "@/composables/warningGenerator";
 import { useTextGenerator } from "@/composables/textGenerator";
+import { useWarnings } from "@/composables/warningGenerator";
+import emitter from "@/stores/eventBus";
+import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
+import Nwk from "@/types/Nwk";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
+import { findStudiengangColorByValue } from "@/types/Studiengang";
 
 const props = defineProps<{
-    value: Praktikumsstelle;
+    modelValue: Praktikumsstelle;
 }>();
 
 const generator = useTextGenerator();
@@ -116,7 +117,7 @@ const warningDialogTitle = ref<string>(
     "Warnung. Wollen sie wirklich fortfahren?"
 );
 const warningDialogText = ref<string>("");
-const assignedNwk = ref(props.value.assignedNwk);
+const assignedNwk = ref(props.modelValue.assignedNwk);
 
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
 
@@ -156,7 +157,7 @@ function drop(event: DragEvent, stelle: Praktikumsstelle) {
         return;
     }
 
-    let warnings = warningsGenerator.getBeforeAssignmentWarnings(
+    const warnings = warningsGenerator.getBeforeAssignmentWarnings(
         stelle,
         nwkToAssignUnassing.value
     );
@@ -185,7 +186,8 @@ function assignNwk() {
         loading.value = false;
     });
     assignedNwk.value = nwkToAssignUnassing.value;
-    EventBus.$emit("assignedNwk", stelleToAssignUnassign.assignedNwk);
+    if (stelleToAssignUnassign.assignedNwk)
+        emitter.emit("assignedNwk", stelleToAssignUnassign.assignedNwk);
     resetWarningDialog();
 }
 
@@ -202,7 +204,8 @@ function unassignNwk() {
                 loading.value = false;
             }
         );
-        EventBus.$emit("unassignedNwk", stelleToAssignUnassign.assignedNwk);
+        if (stelleToAssignUnassign.assignedNwk)
+            emitter.emit("unassignedNwk", stelleToAssignUnassign.assignedNwk);
         stelleToAssignUnassign.assignedNwk = undefined;
         assignedNwk.value = undefined;
     }
@@ -230,7 +233,7 @@ function getNwkColor(nwk: Nwk): string {
     return color;
 }
 </script>
-<style scoped lang="scss">
+<style scoped>
 .custom-card-active {
     border-color: #cfcfcf;
     background-color: #cfcfcf;
@@ -238,31 +241,6 @@ function getNwkColor(nwk: Nwk): string {
 
 .card {
     padding-right: 45px;
-}
-.custom-card-title {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-}
-
-.custom-card-text {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    padding-top: 1px;
-}
-
-.custom-card-actions {
-    margin-top: 5px;
-    padding-top: 1px;
-}
-.custom-card-title {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-}
-
-.custom-card-text {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    padding-top: 1px;
 }
 .icon-top-right-position {
     position: absolute;

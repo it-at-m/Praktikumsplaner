@@ -1,47 +1,43 @@
 <template>
     <div>
+        <v-btn
+            prepend-icon="mdi-tray-arrow-up"
+            color="primary"
+            @click="visible = true"
+        >
+            Datei Hochladen
+        </v-btn>
         <v-dialog
             v-model="visible"
             persistent
             max-width="550"
         >
-            <template #activator="{ on }">
-                <v-btn
-                    color="primary"
-                    v-on="on"
-                >
-                    <v-icon>mdi-tray-arrow-up</v-icon>
-                    Datei Hochladen
-                </v-btn>
-            </template>
             <v-form ref="form">
                 <v-card>
-                    <v-card-title class="text-h5 font-weight-bold"
-                        >Datei hochladen</v-card-title
-                    >
-                    <v-list>
-                        <v-list-item>
-                            <v-file-input
-                                v-model="excelDatei"
-                                :accept="excelFormat"
-                                :rules="rules"
-                                label="Datei auswählen"
-                                prepend-icon="mdi-tray-arrow-up"
-                            >
-                            </v-file-input>
-                        </v-list-item>
-                    </v-list>
+                    <v-card-title class="text-h5 font-weight-bold">
+                        Datei hochladen
+                    </v-card-title>
+                    <v-card-text>
+                        <v-file-input
+                            v-model="file"
+                            :accept="excelFormat"
+                            :rules="rules"
+                            label="Datei auswählen"
+                            prepend-icon="mdi-tray-arrow-up"
+                        ></v-file-input>
+                    </v-card-text>
                     <v-card-actions>
                         <v-spacer />
                         <v-btn
                             color="primary"
-                            outlined
+                            variant="outlined"
                             @click="cancel()"
                         >
                             Abbrechen
                         </v-btn>
                         <v-btn
                             color="primary"
+                            variant="flat"
                             @click="uploadFile()"
                         >
                             Hochladen
@@ -50,30 +46,27 @@
                 </v-card>
             </v-form>
         </v-dialog>
-        <progress-circular-overlay
-            :loading="loading"
-        ></progress-circular-overlay>
+        <progress-circular-overlay :loading="loading" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import NwkService from "@/api/NwkService";
-import { useRules } from "@/composables/rules";
-import { EventBus } from "@/stores/event-bus";
-import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
-const visible = ref<boolean>();
+import NwkService from "@/api/NwkService";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
+import { useRules } from "@/composables/rules";
+import emitter from "@/stores/eventBus";
+
+const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
-const excelDatei = ref<File>();
+const file = ref<File[]>();
 const form = ref<HTMLFormElement>();
 const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const validationRules = useRules();
 const rules = [
-    validationRules.fileRequiredRule(
-        "Eine Excel-Datei hochladen oder abbrechen."
-    ),
+    validationRules.fileRequiredRule("Es muss eine Datei hochgeladen werden."),
     validationRules.fileTypeRule(
         excelFormat,
         "Falsches Dateiformat. Es muss eine Excel-Datei hochgeladen werden."
@@ -85,19 +78,18 @@ function cancel() {
     form.value?.reset();
 }
 function uploadFile() {
-    if (!excelDatei.value || !form.value?.validate()) return;
+    form.value?.validate();
+    if (!form.value?.isValid || !file.value) return;
     visible.value = false;
     loading.value = true;
-    NwkService.uploadExcelFile(excelDatei.value)
+    NwkService.uploadExcelFile(file.value[0])
         .then(() => {
-            EventBus.$emit("nwkCreated");
+            emitter.emit("nwkCreated");
         })
         .finally(() => {
             loading.value = false;
             form.value?.reset();
+            file.value = [];
         });
 }
 </script>
-
-<style scoped>
-</style>

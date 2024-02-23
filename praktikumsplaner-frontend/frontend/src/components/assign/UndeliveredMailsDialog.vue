@@ -1,6 +1,6 @@
 <template>
     <v-dialog
-        :value="props.showUndeliveredMailsDialog"
+        :model-value="props.showUndeliveredMailsDialog"
         persistent
         max-width="850px"
     >
@@ -20,7 +20,7 @@
                         {{ stelle.assignedNwk }})
                     </p>
                 </div>
-                <v-divider class="grey" />
+                <v-divider class="bg-grey" />
             </v-card-text>
             <v-card-actions>
                 <v-row class="mb-2">

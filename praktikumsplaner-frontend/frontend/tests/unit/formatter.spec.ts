@@ -1,6 +1,9 @@
-import { describe } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import { useFormatter } from "@/composables/formatter";
+
 const formatter = useFormatter();
+
 describe("formatter startingCharUpperCase test", () => {
     it("tests startingCharUpperCase to be true", () => {
         const text = "lorem ipsum";

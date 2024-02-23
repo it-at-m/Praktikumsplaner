@@ -1,28 +1,27 @@
+import { describe, expect, it } from "vitest";
+
 import { useRules } from "@/composables/rules";
-import { describe } from "vitest";
+
 const errorMessage = "Error";
 const validationRules = useRules();
+
 describe("rules fileFormat test", () => {
     it("tests fileFormatRules return true", () => {
         const txtRule = validationRules.fileTypeRule(
             "text/plain",
             errorMessage
         );
-        const txtFile = new File(["foo"], "foo.txt", {
-            type: "text/plain",
-        });
+        const fileList = [new File(["foo"], "foo.txt", { type: "text/plain" })];
 
-        expect(txtRule(txtFile)).toBe(true);
+        expect(txtRule(fileList)).toBe(true);
     });
     const aacRule = validationRules.fileTypeRule("audio/aac", errorMessage);
     it("tests fileFormatRules returns Error when using wrong fileformat", () => {
-        const txtFile = new File(["foo"], "foo.txt", {
-            type: "text/plain",
-        });
+        const fileList = [new File(["foo"], "foo.txt", { type: "text/plain" })];
 
-        expect(aacRule(txtFile)).toBe(errorMessage);
+        expect(aacRule(fileList)).toBe(errorMessage);
     });
-    it("tests fileFormatRules with null", () => {
+    it("tests fileFormatRules with null filelist", () => {
         expect(aacRule(null)).toBe(true);
     });
     it("tests fileFormatRules with undefined", () => {
@@ -32,13 +31,11 @@ describe("rules fileFormat test", () => {
 describe("rules fileRequired test", () => {
     const fileRule = validationRules.fileRequiredRule(errorMessage);
     it("tests fileRequired return true", () => {
-        const txtFile = new File(["foo"], "foo.txt", {
-            type: "text/plain",
-        });
+        const txtFile = [new File(["foo"], "foo.txt", { type: "text/plain" })];
 
         expect(fileRule(txtFile)).toBe(true);
     });
-    it("tests fileRequired with null", () => {
+    it("tests fileRequired with null filelist", () => {
         expect(fileRule(null)).toBe(errorMessage);
     });
     it("tests fileRequired with undefined", () => {

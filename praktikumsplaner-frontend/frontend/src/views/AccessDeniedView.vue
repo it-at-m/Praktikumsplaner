@@ -1,32 +1,31 @@
 <template>
-    <div class="m-2 p-2">
-        <v-icon
-            large
-            color="red"
-            >mdi-alert-octagon</v-icon
+    <v-container>
+        <page-title
+            back-button-url="/"
+            page-header-text="Zurück zur Startseite"
+        ></page-title>
+        <v-row
+            align="center"
+            class="ml-auto"
         >
-        <h1>Zugriff verweigert</h1>
-        <p class="m-2 p-2">
-            Du hast nicht die erforderlichen Rechte, um auf diese Seite
-            zuzugreifen.
-        </p>
-        <v-btn
-            class="m-2 p-2"
-            color="primary"
-            @click="goBack"
-            >Zurück zur Startseite</v-btn
-        >
-    </div>
+            <v-col cols="auto">
+                <v-icon
+                    size="large"
+                    color="red"
+                    >mdi-alert-octagon</v-icon
+                >
+            </v-col>
+            <v-col>
+                <h1>Zugriff verweigert</h1>
+                <p class="m-2 p-2">
+                    Du hast nicht die erforderlichen Rechte, um auf diese Seite
+                    zuzugreifen.
+                </p>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
-<script lang="ts">
-import router from "@/router";
-
-export default {
-    methods: {
-        goBack() {
-            router.push({ name: "home" });
-        },
-    },
-};
+<script setup lang="ts">
+import PageTitle from "@/components/common/PageTitle.vue";
 </script>

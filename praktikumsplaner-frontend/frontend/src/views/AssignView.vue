@@ -1,9 +1,9 @@
 <template>
     <v-container>
-        <PageTitle
+        <page-title
             back-button-url="/"
             page-header-text="Zuweisung"
-        ></PageTitle>
+        ></page-title>
         <v-row>
             <v-col cols="5">
                 <v-skeleton-loader
@@ -30,40 +30,44 @@
         <v-row>
             <v-spacer></v-spacer>
             <v-btn
+                prepend-icon="mdi-mail"
                 color="primary"
                 class="mr-4"
                 @click="openMailWarningDialog"
                 >Mails senden</v-btn
             >
-            <ExcelExport
+            <excel-export
                 :start-download="startDownload"
                 @click="openExcelWarnings"
                 @exported="exported"
-            ></ExcelExport>
+            ></excel-export>
         </v-row>
-        <WarningDialog
+        <warning-dialog
             :visible="showWarningDialog"
             :warnings="warnings"
             @accepted="acceptedWarningDialog"
             @rejected="rejectedWarningDialog"
         />
-        <QueryPraktikumsPeriodDialog :show-dialog.sync="showSendMailDialog" />
+        <query-praktikums-period-dialog
+            v-model:showDialog="showSendMailDialog"
+        />
     </v-container>
 </template>
 <script setup lang="ts">
-import PraktikumsstellenListZuweisung from "@/components/assign/PraktikumsstellenListZuweisung.vue";
-import ActiveNwkListForZuweisung from "@/components/assign/ActiveNwkListForZuweisung.vue";
-import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
-import PageTitle from "@/components/common/PageTitle.vue";
 import { onMounted, ref } from "vue";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
-import WarningDialog from "@/components/common/WarningDialog.vue";
-import ExcelExport from "@/components/assign/ExcelExport.vue";
-import Nwk from "@/types/Nwk";
-import Warning from "@/types/Warning";
+
 import NwkService from "@/api/NwkService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import ActiveNwkListForZuweisung from "@/components/assign/ActiveNwkListForZuweisung.vue";
+import ExcelExport from "@/components/assign/ExcelExport.vue";
+import PraktikumsstellenListZuweisung from "@/components/assign/PraktikumsstellenListZuweisung.vue";
+import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
+import PageTitle from "@/components/common/PageTitle.vue";
+import WarningDialog from "@/components/common/WarningDialog.vue";
 import { useWarnings } from "@/composables/warningGenerator";
+import Nwk from "@/types/Nwk";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
+import Warning from "@/types/Warning";
 
 const warningsGenerator = useWarnings();
 

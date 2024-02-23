@@ -3,7 +3,7 @@
         id="snackbar"
         v-model="show"
         :color="backgroundColor"
-        :timeout="timeout"
+        :close-delay="timeout"
     >
         <v-row class="snackbarContent">
             <v-col class="message"> {{ message }}</v-col>
@@ -11,7 +11,7 @@
                 <v-btn
                     v-if="backgroundColor !== 'success'"
                     :color="btnTextColor"
-                    text
+                    variant="text"
                     @click="show = false"
                 >
                     Schließen
@@ -22,7 +22,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from "vue";
+import { computed, ref, watch } from "vue";
+
 import { useSnackbarStore } from "@/stores/snackbar";
 
 const snackbarStore = useSnackbarStore();

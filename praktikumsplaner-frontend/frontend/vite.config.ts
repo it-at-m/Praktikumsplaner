@@ -1,42 +1,41 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue2";
-import legacy from "@vitejs/plugin-legacy";
-import { fileURLToPath, URL } from "url";
-import { VuetifyResolver } from "unplugin-vue-components/resolvers";
-import Components from "unplugin-vue-components/vite";
-import AutoImport from "unplugin-auto-import/vite";
-import eslint from "vite-plugin-eslint";
+// Plugins
+import { fileURLToPath, URL } from "node:url";
 
+import vue from "@vitejs/plugin-vue";
+import ViteFonts from "unplugin-fonts/vite";
+// Utilities
+import { defineConfig } from "vite";
+import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
+
+// https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
-        vue(),
-        eslint({
-            fix: true,
+        vue({
+            template: { transformAssetUrls },
         }),
-        Components({
-            resolvers: [
-                VuetifyResolver(), // Fängt alle Komponenten ab, die mit `V` beginnen, was zu Problemen mit anderen Dependencies führen kann
-            ],
-            dts: false,
+        // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
+        vuetify({
+            autoImport: true,
         }),
-        AutoImport({
-            imports: ["vue", "vitest"],
-            ignore: ["createApp", "resolveComponent", "chai"],
-        }),
-        legacy({
-            targets: ["defaults", "not IE 11"],
+        ViteFonts({
+            google: {
+                families: [
+                    {
+                        name: "Roboto",
+                        styles: "wght@100;300;400;500;700;900",
+                    },
+                ],
+            },
         }),
     ],
-    server: {
-        port: 8081,
-    },
+    define: { "process.env": {} },
     resolve: {
         alias: {
             "@": fileURLToPath(new URL("./src", import.meta.url)),
         },
+        extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
     },
-    build: {
-        //Wenn CCS Split Probleme macht
-        //cssCodeSplit: false
+    server: {
+        port: 8081,
     },
 });

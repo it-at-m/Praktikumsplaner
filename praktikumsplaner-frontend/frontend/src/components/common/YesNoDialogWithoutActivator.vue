@@ -1,6 +1,5 @@
 <template>
     <v-dialog
-        :key="props.value"
         v-model="visible"
         persistent
         width="800"
@@ -19,17 +18,16 @@
                 <v-spacer />
                 <v-btn
                     id="yesnodialog-btn-no"
-                    text
+                    variant="outlined"
                     @click="no"
-                >
-                    Nein
+                    >Nein
                 </v-btn>
                 <v-btn
                     id="yesnodialog-btn-yes"
+                    variant="flat"
                     color="primary"
                     @click="yes"
-                >
-                    Ja
+                    >Ja
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -37,6 +35,7 @@
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
+
 const props = defineProps<{
     dialogtitle: string;
     dialogtext: string;
@@ -65,6 +64,4 @@ function yes(): void {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

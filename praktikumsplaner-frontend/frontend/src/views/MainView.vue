@@ -12,9 +12,10 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
+
 import HealthService from "@/api/HealthService";
 import { useSnackbarStore } from "@/stores/snackbar";
-import { onMounted } from "vue";
 
 const snackbarStore = useSnackbarStore();
 
@@ -25,5 +26,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
