@@ -3,7 +3,6 @@ package de.muenchen.oss.praktikumsplaner.rest;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.service.MeldezeitraumService;
-import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
@@ -29,7 +28,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class MeldezeitraumController {
 
     private final MeldezeitraumService meldezeitraumService;
-    private final PraktikumsstellenService praktikumsstellenService;
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping
@@ -62,7 +60,6 @@ public class MeldezeitraumController {
     @Transactional
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     public void deleteMeldezeitraum(@RequestParam(name = "id") UUID id) {
-        praktikumsstellenService.deleteAllPraktikumsstellenByMeldezeitraumId(id);
         meldezeitraumService.deleteMeldezeitraumById(id);
     }
 }
