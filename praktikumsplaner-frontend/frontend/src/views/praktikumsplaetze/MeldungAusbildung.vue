@@ -57,6 +57,7 @@
                         <v-col>
                             <namentliche-anforderung-input
                                 v-model="praktikumsstelle"
+                                :is-required="false"
                             ></namentliche-anforderung-input>
                         </v-col>
                         <v-col cols="1">
