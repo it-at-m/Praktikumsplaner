@@ -1,8 +1,8 @@
 <template>
     <v-text-field
         v-model="stelle.dienststelle"
-        label="Konkrete Dienststelle*"
-        :rules="dienststelleRule"
+        :label="conditionalRequiredLabel"
+        :rules="conditionalRequiredRules"
         variant="outlined"
     ></v-text-field>
 </template>
@@ -17,10 +17,17 @@ const validationRules = useRules();
 
 const props = defineProps<{
     modelValue: Praktikumsstelle;
+    isRequired: boolean;
+    requiredSymbol?: string;
 }>();
 const emits = defineEmits<{
     (e: "update:modelValue", dienststelle: Praktikumsstelle): void;
 }>();
+
+const label = "Konkrete Dienststelle";
+const conditionalRequiredLabel = computed(() => {
+    return props.isRequired ? label + props.requiredSymbol : label;
+});
 
 const dienststelleRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
@@ -29,6 +36,9 @@ const dienststelleRule = [
         "Die Dienststelle darf nicht länger als 10 Zeichen sein."
     ),
 ];
+const conditionalRequiredRules = computed(() => {
+    return props.isRequired ? dienststelleRule : undefined;
+});
 
 const stelle = computed({
     // getter

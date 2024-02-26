@@ -35,6 +35,8 @@
                         <v-col>
                             <dienststellen-input
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></dienststellen-input>
                         </v-col>
                         <v-col cols="2" />
