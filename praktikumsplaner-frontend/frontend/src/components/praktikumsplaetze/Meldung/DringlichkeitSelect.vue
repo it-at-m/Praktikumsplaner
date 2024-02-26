@@ -1,11 +1,11 @@
 <template>
     <v-select
         v-model="stelle.dringlichkeit"
-        label="Dringlichkeit*"
+        :label="conditionalRequiredLabel"
         :items="Dringlichkeit"
         item-value="value"
         item-title="name"
-        :rules="requiredRule"
+        :rules="conditionalRequiredRules"
         variant="outlined"
     ></v-select>
 </template>
@@ -21,12 +21,22 @@ const validationRules = useRules();
 
 const props = defineProps<{
     modelValue: Praktikumsstelle;
+    isRequired: boolean;
+    requiredSymbol?: string;
 }>();
 const emits = defineEmits<{
     (e: "update:modelValue", dringlichkeit: Praktikumsstelle): void;
 }>();
 
+const label = "Dringlichkeit";
+const conditionalRequiredLabel = computed(() => {
+    return props.isRequired ? label + props.requiredSymbol : label;
+});
+
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
+const conditionalRequiredRules = computed(() => {
+    return props.isRequired ? requiredRule : undefined;
+});
 
 const stelle = computed({
     // getter

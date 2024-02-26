@@ -49,6 +49,8 @@
                         <v-col>
                             <dringlichkeit-select
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></dringlichkeit-select>
                         </v-col>
                         <v-col cols="2">
