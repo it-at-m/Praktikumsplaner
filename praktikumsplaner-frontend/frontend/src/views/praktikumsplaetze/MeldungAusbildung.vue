@@ -84,7 +84,7 @@
                             <taetigkeiten-input
                                 v-model="praktikumsstelle"
                                 :is-required="true"
-                                required-symbol="*"
+                                :required-symbol="requiredFieldSymbol"
                             >
                             </taetigkeiten-input>
                         </v-col>
@@ -215,6 +215,8 @@ import index from "@/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+
+const requiredFieldSymbol = "*";
 
 const praktikumsstelle = ref<Praktikumsstelle>(new Praktikumsstelle());
 const loadingSite = ref<boolean>(true);
