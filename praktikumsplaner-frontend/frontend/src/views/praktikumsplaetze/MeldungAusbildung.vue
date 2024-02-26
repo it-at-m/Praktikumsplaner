@@ -67,6 +67,8 @@
                         <v-col>
                             <planstelle-radio-group
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></planstelle-radio-group>
                         </v-col>
                         <v-col cols="2" />
