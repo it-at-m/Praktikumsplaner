@@ -147,6 +147,8 @@
                         <v-col>
                             <ausbilder-email-input
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></ausbilder-email-input>
                         </v-col>
                         <v-col cols="1" />
