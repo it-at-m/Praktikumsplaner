@@ -2,12 +2,12 @@
     <v-select
         v-model="praktikumsstelle.ausbildungsjahr"
         :items="Ausbildungsjahr"
-        label="Ausbildungsjahr*"
+        :label="conditionalRequiredLabel"
         multiple
         variant="outlined"
         item-title="name"
         item-value="value"
-        :rules="requiredArrayRule"
+        :rules="conditionalRequiredRules"
         @update:model-value="sortAusbildungsjahre"
     >
         <template #prepend-item>
@@ -51,10 +51,17 @@ const validationRules = useRules();
 
 const properties = defineProps<{
     modelValue: Praktikumsstelle;
+    isRequired: boolean;
+    requiredSymbol?: string;
 }>();
 const emits = defineEmits<{
     (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
+
+const label = "Ausbildungsjahr";
+const conditionalRequiredLabel = computed(() => {
+    return properties.isRequired ? label + properties.requiredSymbol : label;
+});
 
 const selectAll = true;
 
@@ -72,6 +79,9 @@ const praktikumsstelle = computed({
 const requiredArrayRule = [
     validationRules.notEmptyArrayRule("Darf nicht leer sein."),
 ];
+const conditionalRequiredRules = computed(() => {
+    return properties.isRequired ? requiredArrayRule : undefined;
+});
 
 const allAusbildungsjahreSelected = computed(() => {
     return (

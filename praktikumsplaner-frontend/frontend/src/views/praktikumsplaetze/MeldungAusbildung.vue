@@ -118,6 +118,8 @@
                         <v-col>
                             <ausbildungs-jahr-select
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></ausbildungs-jahr-select>
                         </v-col>
                         <v-col cols="1" />
