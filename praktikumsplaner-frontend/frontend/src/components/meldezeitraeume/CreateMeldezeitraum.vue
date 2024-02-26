@@ -24,9 +24,8 @@
                                 variant="outlined"
                                 class="mb-3"
                             ></v-text-field>
-
                             <zeitraum-picker
-                                :value="meldezeitraum.zeitraum"
+                                v-model="meldezeitraum.zeitraum"
                                 :label="'Meldezeitraum'"
                             ></zeitraum-picker>
                         </v-form>
