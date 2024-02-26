@@ -39,6 +39,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -478,35 +479,68 @@ public class PraktikumsstellenServiceTest {
     }
 
     @Test
-    public void testDeletePraktikumsstelle() {
+    public void testDeleteAusbildungsPraktikumsstelle() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = helper.createAusbildungsPraktikumsstelleEntity("KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
                 Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, false, meldezeitraumDto.id(),
                 helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
 
-        StudiumsPraktikumsstelle studiumsPraktikumsstelle = helper.createStudiumsPraktikumsstelleEntity("GL13", "John Smith", "John@smith.com",
-                "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT,
-                Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, "true", meldezeitraumDto.id(),
-                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
-
         ausbildungsRepository.save(ausbildungsPraktikumsstelle);
-        studiumsRepository.save(studiumsPraktikumsstelle);
 
         verify(ausbildungsRepository, times(1)).save(ausbildungsPraktikumsstelle);
-        verify(studiumsRepository, times(1)).save(studiumsPraktikumsstelle);
 
         when(ausbildungsRepository.existsById(ausbildungsPraktikumsstelle.getId())).thenReturn(true);
-        when(studiumsRepository.existsById(studiumsPraktikumsstelle.getId())).thenReturn(true);
 
-        service.deletePraktikumsstelle(ausbildungsPraktikumsstelle.getId());
-        service.deletePraktikumsstelle(studiumsPraktikumsstelle.getId());
+        service.deleteAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle.getId());
 
         verify(ausbildungsRepository, times(1)).existsById(ausbildungsPraktikumsstelle.getId());
-        verify(studiumsRepository, times(1)).existsById(studiumsPraktikumsstelle.getId());
 
         verify(ausbildungsRepository, times(1)).deleteById(ausbildungsPraktikumsstelle.getId());
+
+    }
+    @Test
+    public void testDeleteAusbildungsPraktikumsstelleWithoutExisting() {
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = helper.createAusbildungsPraktikumsstelleEntity("KM81", "Max Musterfrau", "max@musterfrau.de",
+            "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
+            Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, false, meldezeitraumDto.id(),
+            helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+
+        Assertions.assertThrows(ResourceNotFoundException.class, ()->{service.deleteAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle.getId());});
+
+    }
+
+    @Test
+    public void testDeleteStudiumsPraktikumsstelle() {
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle = helper.createStudiumsPraktikumsstelleEntity("GL13", "John Smith", "John@smith.com",
+            "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT,
+            Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, "true", meldezeitraumDto.id(),
+            helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+
+        studiumsRepository.save(studiumsPraktikumsstelle);
+
+        verify(studiumsRepository, times(1)).save(studiumsPraktikumsstelle);
+
+        when(studiumsRepository.existsById(studiumsPraktikumsstelle.getId())).thenReturn(true);
+
+        service.deleteStudiumsPraktikumsstelle(studiumsPraktikumsstelle.getId());
+
+        verify(studiumsRepository, times(1)).existsById(studiumsPraktikumsstelle.getId());
+
         verify(studiumsRepository, times(1)).deleteById(studiumsPraktikumsstelle.getId());
+
+    }
+    @Test
+    public void testDeleteStudiumsPraktikumsstelleWithoutExisting() {
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle = helper.createStudiumsPraktikumsstelleEntity("GL13", "John Smith", "John@smith.com",
+            "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT,
+            Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, "true", meldezeitraumDto.id(),
+            helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+
+        Assertions.assertThrows(ResourceNotFoundException.class, ()->{service.deleteStudiumsPraktikumsstelle(studiumsPraktikumsstelle.getId());});
 
     }
 }
