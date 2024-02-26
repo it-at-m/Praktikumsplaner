@@ -145,7 +145,9 @@ export default {
                 });
             });
         } else {
-            throw new Error("Praktikumsstelle nicht gefunden.");
+            throw new Error(
+                "Praktikumsstelle konnte nicht nach Typ kategoresiert werden."
+            );
         }
     },
 };
