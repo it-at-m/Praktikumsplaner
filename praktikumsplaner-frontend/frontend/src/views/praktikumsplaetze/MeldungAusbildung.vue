@@ -73,6 +73,8 @@
                         <v-col>
                             <projektarbeit-radio-group
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></projektarbeit-radio-group>
                         </v-col>
                         <v-col cols="1">
