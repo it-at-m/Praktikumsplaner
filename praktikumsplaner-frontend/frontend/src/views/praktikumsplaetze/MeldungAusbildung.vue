@@ -115,6 +115,7 @@
                         <v-col>
                             <programmier-kenntnisse-select
                                 v-model="praktikumsstelle"
+                                :is-required="false"
                             ></programmier-kenntnisse-select>
                         </v-col>
                         <v-col />
