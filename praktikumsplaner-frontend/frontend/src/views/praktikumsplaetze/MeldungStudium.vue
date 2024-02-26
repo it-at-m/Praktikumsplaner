@@ -207,7 +207,7 @@ import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-const requiredFieldSymbol = "*"
+const requiredFieldSymbol = "*";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
