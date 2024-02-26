@@ -4,13 +4,13 @@
         :label="conditionalRequiredLabel"
         item-value="id"
         item-title="zeitraumName"
-        :items="props.meldezeitraueme"
+        :items="properties.meldezeitraueme"
         :rules="conditionalRequiredRules"
         variant="outlined"
         @select="onClick"
     >
-        <template #item="{ properties, item }">
-            <v-list-item v-bind="properties">
+        <template #item="{ props, item }">
+            <v-list-item v-bind="props">
                 <v-list-item-title>
                     {{
                         formatter.formatDateFromString(
@@ -46,12 +46,13 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
-interface Props {
+interface Properties {
     modelValue: Praktikumsstelle;
+    meldezeitraueme: Meldezeitraum[];
     isRequired: boolean;
     requiredSymbol?: string;
 }
-const props = withDefaults(defineProps<Props>(), {
+const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
 });
 
@@ -61,12 +62,12 @@ const emits = defineEmits<{
 
 const label = "Meldezeitraum";
 const conditionalRequiredLabel = computed(() => {
-    return props.isRequired ? label + props.requiredSymbol : label;
+    return properties.isRequired ? label + properties.requiredSymbol : label;
 });
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const conditionalRequiredRules = computed(() => {
-    return props.isRequired ? requiredRule : undefined;
+    return properties.isRequired ? requiredRule : undefined;
 });
 
 const formatter = useFormatter();
@@ -74,7 +75,7 @@ const formatter = useFormatter();
 const stelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {
