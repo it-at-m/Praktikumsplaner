@@ -91,7 +91,7 @@ const requiredArrayRule = [
 ];
 
 const conditionalRequiredRules = computed(() => {
-    return props.isRequired ? requiredArrayRule : undefined;
+    return properties.isRequired ? requiredArrayRule : undefined;
 });
 
 const allSemesterSelected = computed(() => {
