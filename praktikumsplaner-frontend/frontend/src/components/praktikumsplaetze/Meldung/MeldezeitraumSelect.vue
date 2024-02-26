@@ -5,6 +5,7 @@
         item-value="id"
         item-title="zeitraumName"
         :items="properties.meldezeitraueme"
+        :rules="conditionalRequiredRules"
         variant="outlined"
         @select="onClick"
     >
@@ -41,6 +42,9 @@ import { computed } from "vue";
 import { useFormatter } from "@/composables/formatter";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import {useRules} from "@/composables/rules";
+
+const validationRules = useRules();
 
 const properties = defineProps<{
     meldezeitraueme: Meldezeitraum[];
@@ -56,6 +60,11 @@ const emits = defineEmits<{
 const label = "Meldezeitraum";
 const conditionalRequiredLabel = computed(() => {
     return properties.isRequired ? label + properties.requiredSymbol : label;
+});
+
+const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
+const conditionalRequiredRules = computed(() => {
+    return properties.isRequired ? requiredRule : undefined;
 });
 
 const formatter = useFormatter();
