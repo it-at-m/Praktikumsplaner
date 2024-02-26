@@ -77,7 +77,10 @@
                         <v-col>
                             <taetigkeiten-input
                                 v-model="praktikumsstelle"
-                            ></taetigkeiten-input>
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
+                            >
+                            </taetigkeiten-input>
                         </v-col>
                         <v-col cols="1" />
                     </v-row>
@@ -203,6 +206,8 @@ import index from "@/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+
+const requiredFieldSymbol = "*"
 
 const activeMeldezeitraum = ref<boolean>(false);
 

@@ -82,7 +82,10 @@
                         <v-col>
                             <taetigkeiten-input
                                 v-model="praktikumsstelle"
-                            ></taetigkeiten-input>
+                                :is-required="true"
+                                required-symbol="*"
+                            >
+                            </taetigkeiten-input>
                         </v-col>
                         <v-col cols="1" />
                     </v-row>

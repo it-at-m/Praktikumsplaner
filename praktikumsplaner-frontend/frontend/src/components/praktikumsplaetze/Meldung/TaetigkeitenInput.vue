@@ -1,8 +1,8 @@
 <template>
     <v-textarea
         v-model="stelle.taetigkeiten"
-        label="Aufgaben am Praktikumsplatz*"
-        :rules="taetigkeitenRule"
+        :label="conditionalRequiredLabel"
+        :rules="conditionalRequiredRules"
         variant="outlined"
     ></v-textarea>
 </template>
@@ -17,10 +17,17 @@ const validationRules = useRules();
 
 const props = defineProps<{
     modelValue: Praktikumsstelle;
+    isRequired: boolean;
+    requiredSymbol?: string;
 }>();
 const emits = defineEmits<{
     (e: "update:modelValue", dienststelle: Praktikumsstelle): void;
 }>();
+
+const label = "Aufgaben am Praktikumsplatz";
+const conditionalRequiredLabel = computed(() => {
+    return props.isRequired ? label + props.requiredSymbol : label;
+});
 
 const taetigkeitenRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
@@ -29,6 +36,9 @@ const taetigkeitenRule = [
         "Tätigkeiten dürfen nicht länger als 5000 Zeichen sein."
     ),
 ];
+const conditionalRequiredRules = computed(() => {
+    return props.isRequired ? taetigkeitenRule : undefined;
+});
 
 const stelle = computed({
     // getter
