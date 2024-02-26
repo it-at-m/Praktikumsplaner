@@ -95,6 +95,8 @@
                         <v-col>
                             <studienrichtung-select
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></studienrichtung-select>
                         </v-col>
                         <v-col cols="2" />
