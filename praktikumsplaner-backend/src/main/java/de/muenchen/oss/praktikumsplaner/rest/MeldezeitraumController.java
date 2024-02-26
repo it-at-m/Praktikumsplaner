@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,10 +57,10 @@ public class MeldezeitraumController {
         return meldezeitraumService.getAllMeldezeitraeume();
     }
 
-    @DeleteMapping
+    @DeleteMapping(path = "/{id}")
     @Transactional
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
-    public void deleteMeldezeitraum(@RequestParam(name = "id") UUID id) {
+    public void deleteMeldezeitraum(@PathVariable(name = "id") UUID id) {
         meldezeitraumService.deleteMeldezeitraumById(id);
     }
 }

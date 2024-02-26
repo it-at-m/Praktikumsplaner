@@ -59,7 +59,7 @@ export default {
     },
     deleteMeldezeitraumById(id: string | undefined): Promise<void> {
         return fetch(
-            `${API_BASE}${MELDEZEITRAUM_BASE}?id=${id}`,
+            `${API_BASE}${MELDEZEITRAUM_BASE}/${id}`,
             FetchUtils.getDELETEConfigNoBody()
         )
             .then((response) => {
