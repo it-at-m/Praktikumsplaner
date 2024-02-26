@@ -107,9 +107,9 @@ function clear() {
 }
 
 function saveNwk() {
-    if (!form.value?.validate()) {
-        return;
-    }
+    form.value?.validate();
+    if (!form.value?.isValid) return;
+
     loading.value = true;
     close();
     NwkService.saveNwk(nwk.value)
