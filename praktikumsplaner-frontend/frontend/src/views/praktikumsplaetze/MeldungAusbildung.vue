@@ -40,6 +40,7 @@
                         <v-col>
                             <referat-select
                                 v-model="praktikumsstelle"
+                                :is-required="false"
                             ></referat-select>
                         </v-col>
                         <v-col cols="1" />
