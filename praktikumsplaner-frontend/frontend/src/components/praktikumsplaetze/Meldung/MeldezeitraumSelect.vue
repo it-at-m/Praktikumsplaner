@@ -1,7 +1,7 @@
 <template>
     <v-select
         v-model="stelle.meldezeitraumID"
-        label="Meldezeitraum*"
+        :label="conditionalRequiredLabel"
         item-value="id"
         item-title="zeitraumName"
         :items="properties.meldezeitraueme"
@@ -45,11 +45,18 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 const properties = defineProps<{
     meldezeitraueme: Meldezeitraum[];
     modelValue: Praktikumsstelle;
+    isRequired: boolean;
+    requiredSymbol?: string;
 }>();
 
 const emits = defineEmits<{
     (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
+
+const label = "Meldezeitraum";
+const conditionalRequiredLabel = computed(() => {
+    return properties.isRequired ? label + properties.requiredSymbol : label;
+});
 
 const formatter = useFormatter();
 

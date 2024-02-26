@@ -162,6 +162,8 @@
                             <meldezeitraum-select
                                 v-model="praktikumsstelle"
                                 :meldezeitraueme="meldezeitraeume"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></meldezeitraum-select>
                         </v-col>
                         <v-col cols="2" />
