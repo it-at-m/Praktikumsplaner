@@ -101,6 +101,8 @@
                         <v-col>
                             <semester-select
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></semester-select>
                         </v-col>
                         <v-col cols="1" />
