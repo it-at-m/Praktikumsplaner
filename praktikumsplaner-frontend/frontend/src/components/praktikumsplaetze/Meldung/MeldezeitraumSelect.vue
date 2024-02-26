@@ -4,13 +4,13 @@
         :label="conditionalRequiredLabel"
         item-value="id"
         item-title="zeitraumName"
-        :items="properties.meldezeitraueme"
+        :items="props.meldezeitraueme"
         :rules="conditionalRequiredRules"
         variant="outlined"
         @select="onClick"
     >
-        <template #item="{ props, item }">
-            <v-list-item v-bind="props">
+        <template #item="{ properties, item }">
+            <v-list-item v-bind="properties">
                 <v-list-item-title>
                     {{
                         formatter.formatDateFromString(
@@ -40,18 +40,20 @@
 import { computed } from "vue";
 
 import { useFormatter } from "@/composables/formatter";
+import { useRules } from "@/composables/rules";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import {useRules} from "@/composables/rules";
 
 const validationRules = useRules();
 
-const properties = defineProps<{
-    meldezeitraueme: Meldezeitraum[];
+interface Props {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
-}>();
+}
+const props = withDefaults(defineProps<Props>(), {
+    requiredSymbol: "*",
+});
 
 const emits = defineEmits<{
     (e: "update:modelValue", stelle: Praktikumsstelle): void;
@@ -59,12 +61,12 @@ const emits = defineEmits<{
 
 const label = "Meldezeitraum";
 const conditionalRequiredLabel = computed(() => {
-    return properties.isRequired ? label + properties.requiredSymbol : label;
+    return props.isRequired ? label + props.requiredSymbol : label;
 });
 
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const conditionalRequiredRules = computed(() => {
-    return properties.isRequired ? requiredRule : undefined;
+    return props.isRequired ? requiredRule : undefined;
 });
 
 const formatter = useFormatter();
@@ -72,7 +74,7 @@ const formatter = useFormatter();
 const stelle = computed({
     // getter
     get() {
-        return properties.modelValue;
+        return props.modelValue;
     },
     // setter
     set(newValue) {

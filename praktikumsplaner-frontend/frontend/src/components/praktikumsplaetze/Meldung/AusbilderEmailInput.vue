@@ -15,11 +15,15 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
-const props = defineProps<{
+interface Props {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
-}>();
+}
+const props = withDefaults(defineProps<Props>(), {
+    requiredSymbol: "*",
+});
+
 const emits = defineEmits<{
     (e: "update:modelValue", email: Praktikumsstelle): void;
 }>();

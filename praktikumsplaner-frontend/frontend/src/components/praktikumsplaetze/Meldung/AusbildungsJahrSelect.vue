@@ -29,8 +29,8 @@
             </v-checkbox>
             <v-divider class="mt-2"></v-divider>
         </template>
-        <template #item="{ item, props }">
-            <v-list-item v-bind="props">
+        <template #item="{ item, properties }">
+            <v-list-item v-bind="properties">
                 <v-list-item-subtitle
                     v-if="praktikumsstelle.ausbildungsrichtung === 'FISI'"
                 >
@@ -49,18 +49,22 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
-const properties = defineProps<{
+interface Props {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
-}>();
+}
+const props = withDefaults(defineProps<Props>(), {
+    requiredSymbol: "*",
+});
+
 const emits = defineEmits<{
     (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
 
 const label = "Ausbildungsjahr";
 const conditionalRequiredLabel = computed(() => {
-    return properties.isRequired ? label + properties.requiredSymbol : label;
+    return props.isRequired ? label + props.requiredSymbol : label;
 });
 
 const selectAll = true;
@@ -68,7 +72,7 @@ const selectAll = true;
 const praktikumsstelle = computed({
     // getter
     get() {
-        return properties.modelValue;
+        return props.modelValue;
     },
     // setter
     set(newValue) {
@@ -80,7 +84,7 @@ const requiredArrayRule = [
     validationRules.notEmptyArrayRule("Darf nicht leer sein."),
 ];
 const conditionalRequiredRules = computed(() => {
-    return properties.isRequired ? requiredArrayRule : undefined;
+    return props.isRequired ? requiredArrayRule : undefined;
 });
 
 const allAusbildungsjahreSelected = computed(() => {

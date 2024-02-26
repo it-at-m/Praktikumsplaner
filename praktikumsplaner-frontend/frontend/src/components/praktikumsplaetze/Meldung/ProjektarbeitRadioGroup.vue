@@ -27,11 +27,15 @@ import { YesNoBoolean } from "@/types/YesNoBoolean";
 
 const validationRules = useRules();
 
-const props = defineProps<{
+interface Props {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
-}>();
+}
+const props = withDefaults(defineProps<Props>(), {
+    requiredSymbol: "*",
+});
+
 const emits = defineEmits<{
     (e: "update:modelValue", projektarbeit: Praktikumsstelle): void;
 }>();

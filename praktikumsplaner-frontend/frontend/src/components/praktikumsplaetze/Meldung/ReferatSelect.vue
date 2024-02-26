@@ -17,11 +17,15 @@ import { useRules } from "@/composables/rules";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { Referat } from "@/types/Referat";
 
-const props = defineProps<{
+interface Props {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
-}>();
+}
+const props = withDefaults(defineProps<Props>(), {
+    requiredSymbol: "*",
+});
+
 const emits = defineEmits<{
     (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
