@@ -110,6 +110,8 @@
                         <v-col>
                             <ausbildungsrichtung-select
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></ausbildungsrichtung-select>
                         </v-col>
                         <v-col cols="2" />
