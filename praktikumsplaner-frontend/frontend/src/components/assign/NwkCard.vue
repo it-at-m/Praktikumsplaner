@@ -9,7 +9,7 @@
                     <v-row
                         no-gutters
                         align="center"
-                        class="width-100"
+                        class="full-width"
                     >
                         <v-col cols="auto">
                             <initials-avatar
@@ -18,8 +18,9 @@
                             />
                         </v-col>
                         <v-col
-                            sm="8"
-                            cols="10"
+                            cols="6"
+                            md="8"
+                            xl="10"
                         >
                             <v-card-title>
                                 {{ getFullName(props.nwk) }}
@@ -92,7 +93,7 @@ function getNwkColor(nwk: Nwk): string {
 }
 </script>
 <style scoped>
-.width-100{
+.full-width{
     max-width: 100%;
 }
 </style>
