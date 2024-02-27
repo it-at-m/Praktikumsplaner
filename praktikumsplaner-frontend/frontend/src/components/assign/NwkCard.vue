@@ -18,6 +18,7 @@
                             />
                         </v-col>
                         <v-col
+                            sm="8"
                             cols="10"
                         >
                             <v-card-title>
