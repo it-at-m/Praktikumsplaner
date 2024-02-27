@@ -17,8 +17,9 @@
                             />
                         </v-col>
                         <v-col
-                            cols="6"
-                            xl="10"
+                            cols="3"
+                            xl="5"
+                            xxl="8"
                         >
                             <v-card-title>
                                 {{ getFullName(props.nwk) }}
