@@ -19,8 +19,7 @@ export default class FetchUtils {
      * Liefert eine default POST-Config für fetch
      * @param body Optional zu übertragender Body
      */
-    // eslint-disable-next-line
-    static getPOSTConfig(body: any): RequestInit {
+    static getPOSTConfig(body: unknown): RequestInit {
         return {
             method: "POST",
             body: this.getBody(body),
@@ -33,16 +32,10 @@ export default class FetchUtils {
 
     /**
      * Liefert eine default PUT-Config für fetch
-     * In dieser wird, wenn vorhanden, die Version der zu aktualisierenden Entität
-     * als "If-Match"-Header mitgesetzt.
      * @param body Optional zu übertragender Body
      */
-    // eslint-disable-next-line
-    static getPUTConfig(body: any): RequestInit {
+    static getPUTConfig(body: unknown): RequestInit {
         const headers = FetchUtils.getHeaders();
-        if (body.version) {
-            headers.append("If-Match", body.version);
-        }
         return {
             method: "PUT",
             body: this.getBody(body),
@@ -55,16 +48,10 @@ export default class FetchUtils {
 
     /**
      * Liefert eine default PATCH-Config für fetch
-     * In dieser wird, wenn vorhanden, die Version der zu aktualisierenden Entität
-     * als "If-Match"-Header mitgesetzt.
      * @param body Optional zu übertragender Body
      */
-    // eslint-disable-next-line
-    static getPATCHConfig(body: any): RequestInit {
+    static getPATCHConfig(body: unknown): RequestInit {
         const headers = FetchUtils.getHeaders();
-        if (body.version !== undefined) {
-            headers.append("If-Match", body.version);
-        }
         return {
             method: "PATCH",
             body: this.getBody(body),
@@ -78,12 +65,8 @@ export default class FetchUtils {
      * Liefert eine default POST-Config für fetch
      * @param body Optional zu übertragender Body
      */
-    // eslint-disable-next-line
-    static getDELETEConfig(body: any): RequestInit {
+    static getDELETEConfig(body: unknown): RequestInit {
         const headers = FetchUtils.getHeaders();
-        if (body.version !== undefined) {
-            headers.append("If-Match", body.version);
-        }
         return {
             method: "DELETE",
             body: this.getBody(body),
