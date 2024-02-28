@@ -273,24 +273,25 @@ function resetForm() {
 }
 
 function uploadPraktikumsstelle() {
-    form.value?.validate();
-    if (!form.value?.isValid) return;
-    loading.value = true;
-    if (isAusbildungsleitung.value) {
-        MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
-            praktikumsstelle.value
-        ).finally(() => {
-            loading.value = false;
-            resetForm();
-        });
-    } else {
-        MeldungService.uploadAusbildungsPraktikumsstelle(
-            praktikumsstelle.value
-        ).finally(() => {
-            loading.value = false;
-            resetForm();
-        });
-    }
+    form.value?.validate().then((validation: { valid: boolean }) => {
+        if (!validation.valid) return;
+        loading.value = true;
+        if (isAusbildungsleitung.value) {
+            MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
+                praktikumsstelle.value
+            ).finally(() => {
+                loading.value = false;
+                resetForm();
+            });
+        } else {
+            MeldungService.uploadAusbildungsPraktikumsstelle(
+                praktikumsstelle.value
+            ).finally(() => {
+                loading.value = false;
+                resetForm();
+            });
+        }
+    });
 }
 </script>
 <style>

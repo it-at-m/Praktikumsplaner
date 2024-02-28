@@ -156,10 +156,11 @@ const computedShowDialog = computed(() => {
 const emit = defineEmits(["update:showDialog"]);
 
 function openConfirmationDialog() {
-    form.value?.validate();
-    if (form.value?.isValid) {
-        confirmSendMailDialog.value = true;
-    }
+    form.value?.validate().then((validation: { valid: boolean }) => {
+        if (validation.valid) {
+            confirmSendMailDialog.value = true;
+        }
+    });
 }
 
 function sendMails(): void {

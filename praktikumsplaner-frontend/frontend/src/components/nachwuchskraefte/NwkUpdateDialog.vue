@@ -103,16 +103,18 @@ function cancel() {
 }
 
 function updateNwk() {
-    form.value?.validate();
-    if (!form.value?.isValid) return;
-    loading.value = true;
-    cancel();
-    NwkService.updateNwk(nwkToUpdate.value)
-        .then(() => {
-            emits("updated");
-        })
-        .finally(() => {
-            loading.value = false;
-        });
+    form.value?.validate().then((validation: { valid: boolean }) => {
+        if (!validation.valid) return;
+
+        loading.value = true;
+        cancel();
+        NwkService.updateNwk(nwkToUpdate.value)
+            .then(() => {
+                emits("updated");
+            })
+            .finally(() => {
+                loading.value = false;
+            });
+    });
 }
 </script>
