@@ -1,6 +1,6 @@
 <template>
     <v-dialog
-        :model-value="props.showUndeliveredMailsDialog"
+        :model-value="properties.showUndeliveredMailsDialog"
         persistent
         max-width="850px"
     >
@@ -11,7 +11,7 @@
             </v-card-title>
             <v-card-text>
                 <div
-                    v-for="stelle in props.faultyStellen"
+                    v-for="stelle in properties.faultyStellen"
                     :key="stelle.id"
                 >
                     <h4>Stelle bei {{ stelle.dienststelle }}</h4>
@@ -40,7 +40,7 @@
 <script setup lang="ts">
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-const props = defineProps<{
+const properties = defineProps<{
     faultyStellen: Praktikumsstelle[];
     showUndeliveredMailsDialog: boolean;
 }>();

@@ -79,7 +79,7 @@ import { computed } from "vue";
  *    @yes="deleteSome"></yes-no-dialog>
  */
 
-const props = defineProps<{
+const properties = defineProps<{
     buttontext?: string;
     icontext?: string;
     dialogtitle: string;
@@ -97,7 +97,7 @@ const emits = defineEmits<{
 }>();
 
 const visible = computed({
-    get: () => props.modelValue,
+    get: () => properties.modelValue,
     set: (v) => emits("update:modelValue", v),
 });
 

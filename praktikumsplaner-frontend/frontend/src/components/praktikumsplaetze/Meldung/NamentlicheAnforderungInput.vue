@@ -1,8 +1,8 @@
 <template>
     <v-text-field
         v-model="stelle.namentlicheAnforderung"
-        label="Anforderung bestimmter NWK"
-        :rules="namentlicheAnforderungRule"
+        :label="conditionalRequiredLabel"
+        :rules="conditionalRequiredRules"
         variant="outlined"
     ></v-text-field>
 </template>
@@ -15,12 +15,23 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
-const props = defineProps<{
+interface Properties {
     modelValue: Praktikumsstelle;
-}>();
+    isRequired: boolean;
+    requiredSymbol?: string;
+}
+const properties = withDefaults(defineProps<Properties>(), {
+    requiredSymbol: "*",
+});
+
 const emits = defineEmits<{
     (e: "update:modelValue", dienststelle: Praktikumsstelle): void;
 }>();
+
+const label = "Anforderung bestimmter NWK";
+const conditionalRequiredLabel = computed(() => {
+    return properties.isRequired ? label + properties.requiredSymbol : label;
+});
 
 const namentlicheAnforderungRule = [
     validationRules.maxLengthRule(
@@ -28,11 +39,14 @@ const namentlicheAnforderungRule = [
         "Der Name der angeforderte NWK darf nicht länger als 255 Zeichen sein."
     ),
 ];
+const conditionalRequiredRules = computed(() => {
+    return properties.isRequired ? namentlicheAnforderungRule : undefined;
+});
 
 const stelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {

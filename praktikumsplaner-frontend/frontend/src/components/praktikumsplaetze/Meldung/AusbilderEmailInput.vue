@@ -1,8 +1,8 @@
 <template>
     <v-text-field
         v-model="stelle.email"
-        label="E-mail örtliche Ausbilder*in*"
-        :rules="emailRule"
+        :label="conditionalRequiredLabel"
+        :rules="conditionalRequiredRules"
         variant="outlined"
     ></v-text-field>
 </template>
@@ -15,12 +15,23 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
-const props = defineProps<{
+interface Properties {
     modelValue: Praktikumsstelle;
-}>();
+    isRequired: boolean;
+    requiredSymbol?: string;
+}
+const properties = withDefaults(defineProps<Properties>(), {
+    requiredSymbol: "*",
+});
+
 const emits = defineEmits<{
     (e: "update:modelValue", email: Praktikumsstelle): void;
 }>();
+
+const label = "E-mail örtliche*r Ausbilder*in";
+const conditionalRequiredLabel = computed(() => {
+    return properties.isRequired ? label + properties.requiredSymbol : label;
+});
 
 const emailRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
@@ -33,11 +44,14 @@ const emailRule = [
         "Die Email darf nicht länger als 255 Zeichen sein."
     ),
 ];
+const conditionalRequiredRules = computed(() => {
+    return properties.isRequired ? emailRule : undefined;
+});
 
 const stelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {
