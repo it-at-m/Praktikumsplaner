@@ -1,5 +1,12 @@
 <template>
     <v-container>
+        <yes-no-dialog-without-activator
+            v-model="warningDialog"
+            :dialogtitle="warningDialogTitle"
+            :dialogtext="warningDialogText"
+            @no="resetWarningDialog"
+            @yes="delPraktikumsstelle(properties.modelValue)"
+        ></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
             elevation="6"
@@ -45,19 +52,35 @@
                     </v-card-text>
                 </div>
             </v-expand-transition>
+            <v-card-actions>
+                <v-btn
+                    icon
+                    @click.stop="openDialog()"
+                >
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+            </v-card-actions>
         </v-card>
     </v-container>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
 
+import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 import { useTextGenerator } from "@/composables/textGenerator";
+import emitter from "@/stores/eventBus";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const properties = defineProps<{
     modelValue: Praktikumsstelle;
 }>();
 
+const warningDialog = ref<boolean>(false);
+const warningDialogTitle = ref("Stelle löschen?");
+const warningDialogText = ref(
+    "Wollen Sie die Praktikumsstelle wirklich unwiderruflich löschen?"
+);
 const show = ref<boolean>(false);
 const generator = useTextGenerator();
 
@@ -67,6 +90,20 @@ function getCardText(stelle: Praktikumsstelle): string {
 
 function getCardDetailText(stelle: Praktikumsstelle): string {
     return generator.getPraktikumsstellenCardDetailText(stelle);
+}
+
+function delPraktikumsstelle(stelle: Praktikumsstelle) {
+    resetWarningDialog();
+    PraktikumsstellenService.deletePraktikumsstelle(stelle!).then(() => {
+        emitter.emit("nwkDeleted");
+    });
+}
+
+function openDialog() {
+    warningDialog.value = true;
+}
+function resetWarningDialog() {
+    warningDialog.value = false;
 }
 </script>
 <style scoped>
