@@ -4,7 +4,6 @@
  */
 package de.muenchen.oss.praktikumsplaner.filter;
 
-import com.hazelcast.org.apache.commons.codec.binary.StringUtils;
 import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
@@ -86,11 +85,14 @@ public class GlobalBackend5xxTo400Mapper implements GlobalFilter, Ordered {
                                 if (MAP_5xx_TO_400) {
                                     getDelegate().setStatusCode(HttpStatus.BAD_REQUEST);
                                     newDataBuffer = dataBufferFactory.wrap(
-                                            StringUtils.getBytesUtf8(ObjectUtils.defaultIfNull(GENERIC_ERROR_400, EMPTY_JSON_OBJECT)));
+
+                                            ObjectUtils.defaultIfNull(GENERIC_ERROR_400, EMPTY_JSON_OBJECT).getBytes(
+                                                    StandardCharsets.UTF_8));
                                 } else {
                                     getDelegate().setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
                                     newDataBuffer = dataBufferFactory.wrap(
-                                            StringUtils.getBytesUtf8(ObjectUtils.defaultIfNull(GENERIC_ERROR_500, EMPTY_JSON_OBJECT)));
+                                            ObjectUtils.defaultIfNull(GENERIC_ERROR_500, EMPTY_JSON_OBJECT).getBytes(
+                                                    StandardCharsets.UTF_8));
                                 }
 
                                 getDelegate().getHeaders().setContentLength(newDataBuffer.readableByteCount());
