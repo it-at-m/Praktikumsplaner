@@ -5,7 +5,7 @@
             :dialogtitle="warningDialogTitle"
             :dialogtext="warningDialogText"
             @no="resetWarningDialog"
-            @yes="delPraktikumsstelle(props.modelValue)"
+            @yes="delPraktikumsstelle(properties.modelValue)"
         ></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
@@ -66,11 +66,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import { useTextGenerator } from "@/composables/textGenerator";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
-import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
+import { useTextGenerator } from "@/composables/textGenerator";
 import emitter from "@/stores/eventBus";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const properties = defineProps<{
     modelValue: Praktikumsstelle;
