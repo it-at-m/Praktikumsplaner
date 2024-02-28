@@ -1,9 +1,9 @@
 <template>
     <v-col>
         <slot name="header"></slot>
-        <v-list v-if="props.value.length > 0">
+        <v-list v-if="properties.value.length > 0">
             <v-card
-                v-for="meldezeitraum in props.value"
+                v-for="meldezeitraum in properties.value"
                 :key="meldezeitraum.id"
                 rounded
                 border
@@ -44,7 +44,7 @@
 import { useFormatter } from "@/composables/formatter";
 import Meldezeitraum from "@/types/Meldezeitraum";
 
-const props = defineProps<{
+const properties = defineProps<{
     value: Meldezeitraum[];
 }>();
 </script>

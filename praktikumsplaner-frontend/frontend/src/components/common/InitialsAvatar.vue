@@ -1,6 +1,6 @@
 <template>
     <v-avatar
-        :color="props.backgroundColor"
+        :color="properties.backgroundColor"
         size="40"
     >
         <span> {{ initials }} </span>
@@ -9,13 +9,13 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-const props = defineProps<{
+const properties = defineProps<{
     nwkName: string;
     backgroundColor: string;
 }>();
 
 const initials = computed(() => {
-    const names = props.nwkName.split(" ");
+    const names = properties.nwkName.split(" ");
     return names.map((name) => name.charAt(0).toUpperCase()).join("");
 });
 </script>

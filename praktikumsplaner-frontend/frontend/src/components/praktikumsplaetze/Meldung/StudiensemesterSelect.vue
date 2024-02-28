@@ -2,12 +2,12 @@
     <v-select
         v-model="praktikumsstelle.studiensemester"
         :items="Studiensemester"
-        label="Studienseemster*"
+        :label="conditionalRequiredLabel"
         multiple
         variant="outlined"
         item-title="name"
         item-value="value"
-        :rules="requiredArrayRule"
+        :rules="conditionalRequiredRules"
         @update:model-value="sortSemester"
     >
         <template #prepend-item>
@@ -59,12 +59,24 @@ import { Studiensemester } from "@/types/Studiensemester";
 
 const validationRules = useRules();
 
-const properties = defineProps<{
+interface Properties {
     modelValue: Praktikumsstelle;
-}>();
+    isRequired: boolean;
+    requiredSymbol?: string;
+}
+
+const properties = withDefaults(defineProps<Properties>(), {
+    requiredSymbol: "*",
+});
+
 const emits = defineEmits<{
     (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
+
+const label = "Studiensemester";
+const conditionalRequiredLabel = computed(() => {
+    return properties.isRequired ? label + properties.requiredSymbol : label;
+});
 
 const selectAll = true;
 
@@ -82,6 +94,10 @@ const praktikumsstelle = computed({
 const requiredArrayRule = [
     validationRules.notEmptyArrayRule("Darf nicht leer sein."),
 ];
+
+const conditionalRequiredRules = computed(() => {
+    return properties.isRequired ? requiredArrayRule : undefined;
+});
 
 const allSemesterSelected = computed(() => {
     return (

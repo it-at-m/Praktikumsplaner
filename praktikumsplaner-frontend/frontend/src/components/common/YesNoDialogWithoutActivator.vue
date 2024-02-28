@@ -6,10 +6,10 @@
     >
         <v-card>
             <v-card-title>
-                {{ props.dialogtitle }}
+                {{ properties.dialogtitle }}
             </v-card-title>
             <v-card-text
-                v-for="(text, index) in props.dialogtext.split('\n')"
+                v-for="(text, index) in properties.dialogtext.split('\n')"
                 :key="index"
             >
                 {{ text }}
@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-const props = defineProps<{
+const properties = defineProps<{
     dialogtitle: string;
     dialogtext: string;
     /**
@@ -52,7 +52,7 @@ const emits = defineEmits<{
 }>();
 
 const visible = computed({
-    get: () => props.modelValue,
+    get: () => properties.modelValue,
     set: (v) => emits("input", v),
 });
 

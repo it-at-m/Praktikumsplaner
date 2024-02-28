@@ -1,10 +1,11 @@
 <template>
     <v-select
         v-model="stelle.meldezeitraumID"
-        label="Meldezeitraum*"
+        :label="conditionalRequiredLabel"
         item-value="id"
         item-title="zeitraumName"
         :items="properties.meldezeitraueme"
+        :rules="conditionalRequiredRules"
         variant="outlined"
         @select="onClick"
     >
@@ -39,17 +40,35 @@
 import { computed } from "vue";
 
 import { useFormatter } from "@/composables/formatter";
+import { useRules } from "@/composables/rules";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-const properties = defineProps<{
-    meldezeitraueme: Meldezeitraum[];
+const validationRules = useRules();
+
+interface Properties {
     modelValue: Praktikumsstelle;
-}>();
+    meldezeitraueme: Meldezeitraum[];
+    isRequired: boolean;
+    requiredSymbol?: string;
+}
+const properties = withDefaults(defineProps<Properties>(), {
+    requiredSymbol: "*",
+});
 
 const emits = defineEmits<{
     (e: "update:modelValue", stelle: Praktikumsstelle): void;
 }>();
+
+const label = "Meldezeitraum";
+const conditionalRequiredLabel = computed(() => {
+    return properties.isRequired ? label + properties.requiredSymbol : label;
+});
+
+const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
+const conditionalRequiredRules = computed(() => {
+    return properties.isRequired ? requiredRule : undefined;
+});
 
 const formatter = useFormatter();
 
