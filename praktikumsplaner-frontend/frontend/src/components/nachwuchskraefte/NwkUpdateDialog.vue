@@ -88,11 +88,11 @@ const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
 
-const props = defineProps<{
+const properties = defineProps<{
     nwk: Nwk;
 }>();
 
-const nwkToUpdate = ref<Nwk>(props.nwk);
+const nwkToUpdate = ref<Nwk>(properties.nwk);
 
 const emits = defineEmits<{
     (e: "updated"): void;

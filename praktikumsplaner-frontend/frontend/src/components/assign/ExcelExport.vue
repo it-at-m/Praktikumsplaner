@@ -20,7 +20,7 @@ import ExportService from "@/api/ExportService";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const loading = ref<boolean>(false);
-const props = defineProps<{
+const properties = defineProps<{
     startDownload: boolean;
 }>();
 
@@ -30,9 +30,9 @@ const emits = defineEmits<{
 }>();
 
 watch(
-    () => props.startDownload,
+    () => properties.startDownload,
     () => {
-        if (props.startDownload) {
+        if (properties.startDownload) {
             downloadExcel();
             emits("exported");
         }

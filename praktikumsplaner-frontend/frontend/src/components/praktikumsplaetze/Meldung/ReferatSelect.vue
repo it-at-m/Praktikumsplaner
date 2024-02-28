@@ -17,12 +17,12 @@ import { useRules } from "@/composables/rules";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { Referat } from "@/types/Referat";
 
-interface Props {
+interface Properties {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
 }
-const props = withDefaults(defineProps<Props>(), {
+const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
 });
 
@@ -32,19 +32,19 @@ const emits = defineEmits<{
 
 const label = "Referat";
 const conditionalRequiredLabel = computed(() => {
-    return props.isRequired ? label + props.requiredSymbol : label;
+    return properties.isRequired ? label + properties.requiredSymbol : label;
 });
 
 const validationRules = useRules();
 const notEmptyRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
 const conditionalRequiredRules = computed(() => {
-    return props.isRequired ? notEmptyRule : undefined;
+    return properties.isRequired ? notEmptyRule : undefined;
 });
 
 const stelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {

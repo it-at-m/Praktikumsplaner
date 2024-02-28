@@ -27,12 +27,12 @@ import { YesNoBoolean } from "@/types/YesNoBoolean";
 
 const validationRules = useRules();
 
-interface Props {
+interface Properties {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
 }
-const props = withDefaults(defineProps<Props>(), {
+const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
 });
 
@@ -42,20 +42,20 @@ const emits = defineEmits<{
 
 const label = "Planstelle vorhanden";
 const conditionalRequiredLabel = computed(() => {
-    return props.isRequired ? label + props.requiredSymbol : label;
+    return properties.isRequired ? label + properties.requiredSymbol : label;
 });
 
 const booleanRule = [
     validationRules.notEmptyBooleanRule("Darf nicht leer sein."),
 ];
 const conditionalRequiredRules = computed(() => {
-    return props.isRequired ? booleanRule : undefined;
+    return properties.isRequired ? booleanRule : undefined;
 });
 
 const stelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {

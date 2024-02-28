@@ -15,12 +15,12 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
-interface Props {
+interface Properties {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
 }
-const props = withDefaults(defineProps<Props>(), {
+const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
 });
 
@@ -30,7 +30,7 @@ const emits = defineEmits<{
 
 const label = "Anforderung bestimmter NWK";
 const conditionalRequiredLabel = computed(() => {
-    return props.isRequired ? label + props.requiredSymbol : label;
+    return properties.isRequired ? label + properties.requiredSymbol : label;
 });
 
 const namentlicheAnforderungRule = [
@@ -40,13 +40,13 @@ const namentlicheAnforderungRule = [
     ),
 ];
 const conditionalRequiredRules = computed(() => {
-    return props.isRequired ? namentlicheAnforderungRule : undefined;
+    return properties.isRequired ? namentlicheAnforderungRule : undefined;
 });
 
 const stelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {

@@ -1,11 +1,14 @@
 <template>
     <v-container
-        v-if="props.praktikumsstellenMap && props.praktikumsstellenMap.size > 0"
+        v-if="
+            properties.praktikumsstellenMap &&
+            properties.praktikumsstellenMap.size > 0
+        "
         class="mt-2"
     >
         <v-expansion-panels multiple>
             <v-expansion-panel
-                v-for="abteilung in props.praktikumsstellenMap.keys()"
+                v-for="abteilung in properties.praktikumsstellenMap.keys()"
                 :key="abteilung"
                 class="custom-panel"
             >
@@ -15,7 +18,7 @@
                 <v-expansion-panel-text>
                     <v-list>
                         <v-list-item
-                            v-for="praktikumsstelle in props.praktikumsstellenMap.get(
+                            v-for="praktikumsstelle in properties.praktikumsstellenMap.get(
                                 abteilung
                             )"
                             :key="praktikumsstelle.id"
@@ -58,7 +61,7 @@
 import PraktikumsstelleCard from "@/components/assign/PraktikumsstelleCardZuweisung.vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-const props = defineProps<{
+const properties = defineProps<{
     praktikumsstellenMap: Map<string, Praktikumsstelle[]>;
 }>();
 </script>
