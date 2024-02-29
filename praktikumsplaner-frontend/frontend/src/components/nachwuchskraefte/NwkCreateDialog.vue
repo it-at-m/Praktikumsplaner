@@ -92,7 +92,6 @@ import emitter from "@/stores/eventBus";
 import NwkCreate from "@/types/NwkCreate";
 
 const visible = ref<boolean>(false);
-const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
 
 const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
@@ -110,14 +109,12 @@ function saveNwk() {
     form.value?.validate().then((validation: { valid: boolean }) => {
         if (!validation.valid) return;
 
-        loading.value = true;
         close();
         NwkService.saveNwk(nwk.value)
             .then(() => {
                 emitter.emit("nwkCreated");
             })
             .finally(() => {
-                loading.value = false;
                 clear();
             });
     });
