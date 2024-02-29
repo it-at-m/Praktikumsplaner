@@ -2,9 +2,9 @@
     <v-container>
         <v-col>
             <slot name="header"></slot>
-            <v-list v-if="props.value.length > 0">
+            <v-list v-if="properties.value.length > 0">
                 <v-card
-                    v-for="meldezeitraum in props.value"
+                    v-for="meldezeitraum in properties.value"
                     :key="meldezeitraum.id"
                     rounded
                     border
@@ -77,7 +77,7 @@ const deleteWarningDialogText = ref(
     "Wenn Sie den Meldezeitraum löschen, werden auch ALLE zugehörigen Praktikumsplätze gelöscht. Wollen Sie den Meldezeitraum wirklich löschen?"
 );
 
-const props = defineProps<{
+const properties = defineProps<{
     value: Meldezeitraum[];
 }>();
 

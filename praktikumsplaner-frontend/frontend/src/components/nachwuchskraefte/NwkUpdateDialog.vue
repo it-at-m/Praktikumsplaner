@@ -88,11 +88,11 @@ const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
 
-const props = defineProps<{
+const properties = defineProps<{
     nwk: Nwk;
 }>();
 
-const nwkToUpdate = ref<Nwk>(props.nwk);
+const nwkToUpdate = ref<Nwk>(properties.nwk);
 
 const emits = defineEmits<{
     (e: "updated"): void;
@@ -103,16 +103,18 @@ function cancel() {
 }
 
 function updateNwk() {
-    form.value?.validate();
-    if (!form.value?.isValid) return;
-    loading.value = true;
-    cancel();
-    NwkService.updateNwk(nwkToUpdate.value)
-        .then(() => {
-            emits("updated");
-        })
-        .finally(() => {
-            loading.value = false;
-        });
+    form.value?.validate().then((validation: { valid: boolean }) => {
+        if (!validation.valid) return;
+
+        loading.value = true;
+        cancel();
+        NwkService.updateNwk(nwkToUpdate.value)
+            .then(() => {
+                emits("updated");
+            })
+            .finally(() => {
+                loading.value = false;
+            });
+    });
 }
 </script>

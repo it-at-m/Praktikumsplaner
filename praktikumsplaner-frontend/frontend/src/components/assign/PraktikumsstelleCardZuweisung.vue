@@ -15,21 +15,24 @@
             @click="show = !show"
         >
             <v-card-title
-                >Stelle bei {{ props.modelValue.dienststelle }}</v-card-title
+                >Stelle bei
+                {{ properties.modelValue.dienststelle }}</v-card-title
             >
-            <v-card-subtitle v-if="props.modelValue.namentlicheAnforderung">
+            <v-card-subtitle
+                v-if="properties.modelValue.namentlicheAnforderung"
+            >
                 Namentliche Anforderung:
-                {{ props.modelValue.namentlicheAnforderung }}
+                {{ properties.modelValue.namentlicheAnforderung }}
             </v-card-subtitle>
             <v-icon
-                v-if="props.modelValue.planstelleVorhanden"
+                v-if="properties.modelValue.planstelleVorhanden"
                 size="x-large"
                 class="icon-top-right-position"
                 icon="mdi-account-star"
             ></v-icon>
             <v-card-text class="pt-0 mt-0 mb-0 pb-0">
                 <p style="white-space: pre-line">
-                    {{ getCardText(props.modelValue) }}
+                    {{ getCardText(properties.modelValue) }}
                 </p></v-card-text
             >
             <v-col>
@@ -61,7 +64,7 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         <p style="white-space: pre-line">
-                            {{ getCardDetailText(props.modelValue) }}
+                            {{ getCardDetailText(properties.modelValue) }}
                         </p>
                     </v-card-text>
                 </div>
@@ -99,7 +102,7 @@ import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
 
-const props = defineProps<{
+const properties = defineProps<{
     modelValue: Praktikumsstelle;
 }>();
 
@@ -117,7 +120,7 @@ const warningDialogTitle = ref<string>(
     "Warnung. Wollen sie wirklich fortfahren?"
 );
 const warningDialogText = ref<string>("");
-const assignedNwk = ref(props.modelValue.assignedNwk);
+const assignedNwk = ref(properties.modelValue.assignedNwk);
 
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
 
