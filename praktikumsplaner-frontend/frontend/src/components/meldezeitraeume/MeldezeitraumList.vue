@@ -30,15 +30,15 @@
                                 )
                             }}
                         </v-list-item-subtitle>
+                        <template #append>
+                            <v-btn
+                                variant="text"
+                                icon="mdi-delete"
+                                @click="warnBeforeDelete(meldezeitraum)"
+                            >
+                            </v-btn>
+                        </template>
                     </v-list-item>
-                    <v-list-item-action>
-                        <v-btn
-                            variant="text"
-                            icon="mdi-delete"
-                            @click="warnBeforeDelete(meldezeitraum)"
-                        >
-                        </v-btn>
-                    </v-list-item-action>
                     <v-divider></v-divider>
                 </v-card>
             </v-list>
@@ -50,7 +50,7 @@
         <yes-no-dialog-without-activator
             :dialogtitle="deleteWarningDialogTitle"
             :dialogtext="deleteWarningDialogText"
-            :value="showDeleteWarningDialog"
+            :model-value="showDeleteWarningDialog"
             @no="resetDeleteWarningDialog"
             @yes="deleteMeldezeitraum"
         ></yes-no-dialog-without-activator>
