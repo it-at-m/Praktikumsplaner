@@ -19,7 +19,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 /**
  * This class supplies the endpoint which provides the gui.
- *
  * The default path to the gui entry point is "classpath:/static/index.html".
  */
 @Configuration
@@ -36,7 +35,7 @@ public class GuiConfiguration {
     public RouterFunction<ServerResponse> indexRouter(
             @Value("classpath:/static/index.html") final Resource indexHtml) {
         log.debug("Location gui entry point: {}", indexHtml);
-        return route(GET("/"),
+        return route(GET("/*"),
                 request -> ok().contentType(MediaType.TEXT_HTML)
                         .bodyValue(indexHtml));
     }
