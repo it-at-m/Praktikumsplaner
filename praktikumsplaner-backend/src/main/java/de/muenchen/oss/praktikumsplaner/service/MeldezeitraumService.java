@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +58,9 @@ public class MeldezeitraumService {
 
     public List<MeldezeitraumDto> getAllMeldezeitraeume() {
         return meldezeitraumRepository.findAll().stream().map(meldezeitraumMapper::toDto).toList();
+    }
+
+    public void deleteMeldezeitraumById(UUID id) {
+        meldezeitraumRepository.deleteById(id);
     }
 }

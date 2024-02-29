@@ -78,6 +78,19 @@ export default class FetchUtils {
     }
 
     /**
+     * Liefert eine default DELETE-Config für fetch ohne Body
+     */
+    static getDELETEConfigNoBody(): RequestInit {
+        return {
+            method: "DELETE",
+            headers: this.getHeaders(),
+            mode: "cors",
+            credentials: this.getCredentials(),
+            redirect: "manual",
+        };
+    }
+
+    /**
      * Deckt das Default-Handling einer Response ab. Dazu zählt:
      *
      * - Fehler bei fehlenden Berechtigungen --> HTTP 403

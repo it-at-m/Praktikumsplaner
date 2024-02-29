@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
@@ -13,12 +16,11 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -193,5 +195,16 @@ public class MeldezeitraumServiceTest {
 
         when(repository.findAll()).thenReturn(meldezeitraume);
         assertEquals(service.getAllMeldezeitraeume(), meldezeitraume.stream().map(mapper::toDto).toList());
+    }
+
+    @Test
+    public void testShouldDeleteMeldezeitraumByIdWhenExists() {
+        UUID id = UUID.randomUUID();
+
+        doNothing().when(repository).deleteById(id);
+
+        service.deleteMeldezeitraumById(id);
+
+        verify(repository, times(1)).deleteById(id);
     }
 }
