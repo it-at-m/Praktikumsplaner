@@ -82,7 +82,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import NwkService from "@/api/NwkService";
+import NwkService, { loading } from "@/api/NwkService";
 import JahrgangInput from "@/components/common/JahrgangInput.vue";
 import NameInput from "@/components/common/NameInput.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
