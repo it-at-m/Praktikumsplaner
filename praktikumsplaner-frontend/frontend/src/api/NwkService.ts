@@ -1,3 +1,5 @@
+import { ref } from "vue";
+
 import { Levels } from "@/api/Error";
 import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, NWK_BASE } from "@/constants";
@@ -5,21 +7,25 @@ import { useSnackbarStore } from "@/stores/snackbar";
 import Nwk from "@/types/Nwk";
 import NwkCreate from "@/types/NwkCreate";
 
+export const loading = ref(false);
+
 export default {
     saveNwk(nwk: NwkCreate): Promise<void> {
-        return fetch(
-            `${API_BASE}${NWK_BASE}`,
-            FetchUtils.getPOSTConfig(nwk)
-        ).then((response) => {
-            if (response.ok) {
-                useSnackbarStore().showMessage({
-                    message: "☑ NWK wurde erfolgreich erstellt.",
-                    level: Levels.SUCCESS,
-                });
-            } else {
-                FetchUtils.defaultResponseHandler(response);
-            }
-        });
+        loading.value = true;
+        return fetch(`${API_BASE}${NWK_BASE}`, FetchUtils.getPOSTConfig(nwk))
+            .then((response) => {
+                if (response.ok) {
+                    useSnackbarStore().showMessage({
+                        message: "☑ NWK wurde erfolgreich erstellt.",
+                        level: Levels.SUCCESS,
+                    });
+                } else {
+                    FetchUtils.defaultResponseHandler(response);
+                }
+            })
+            .finally(() => {
+                loading.value = false;
+            });
     },
     uploadExcelFile(excelDatei: File): Promise<void> {
         // File Reader encodes as Base64
