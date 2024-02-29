@@ -13,8 +13,8 @@
 
 
 - [Praktikumsplätze](Praktikumsplaetze.md)
-  - [Submission Örtliche Ausbilder](Praktikumsplaetze.md#meldung-örtl-ausbilder)
-  - [Submission Örtliche Ausbildungsleitung](Praktikumsplaetze.md#meldung-örtl-ausbilder)
+  - [Submission Örtliche Ausbilder](Praktikumsplaetze.md#submission-ortliche-ausbilder)
+  - [Submission Örtliche Ausbildungsleitung](Praktikumsplaetze.md#submission-ortliche-ausbildungsleitung)
   - [Using Submission Forms](Praktikumsplaetze.md#using-the-forms)
   - [Additional Information](Praktikumsplaetze.md#additional-information)
   

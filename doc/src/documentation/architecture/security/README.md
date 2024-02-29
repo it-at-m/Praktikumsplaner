@@ -2,7 +2,7 @@
 
 For the security concept, we identified the [personas](#personas) listed below.
 Then we determined which persona is allowed to use which feature.
-The results of this process are listed under [features](#features)
+The results of this process are listed under [features](#features-and-the-personas-that-can-use-it)
 
 ## Personas
 
