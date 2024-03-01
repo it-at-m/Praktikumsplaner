@@ -36,7 +36,7 @@ import { Ausbildungsrichtung } from "@/types/Ausbildungsrichtung";
 import NwkCreate from "@/types/NwkCreate";
 import { Studiengang } from "@/types/Studiengang";
 
-const props = defineProps<{
+const properties = defineProps<{
     modelValue: NwkCreate;
 }>();
 
@@ -45,7 +45,7 @@ const emits = defineEmits<{
 }>();
 
 const nwk = computed({
-    get: () => props.modelValue,
+    get: () => properties.modelValue,
     set: (v) => emits("updated", v),
 });
 

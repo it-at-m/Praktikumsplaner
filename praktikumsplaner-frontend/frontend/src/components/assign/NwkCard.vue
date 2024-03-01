@@ -9,19 +9,24 @@
                     <v-row
                         no-gutters
                         align="center"
+                        class="full-width"
                     >
                         <v-col cols="auto">
                             <initials-avatar
-                                :nwk-name="getFullName(props.nwk)"
-                                :background-color="getNwkColor(props.nwk)"
+                                :nwk-name="getFullName(properties.nwk)"
+                                :background-color="getNwkColor(properties.nwk)"
                             />
                         </v-col>
-                        <v-col cols="5">
+                        <v-col
+                            cols="6"
+                            md="8"
+                            xl="10"
+                        >
                             <v-card-title>
-                                {{ getFullName(props.nwk) }}
+                                {{ getFullName(properties.nwk) }}
                             </v-card-title>
                             <v-card-subtitle>
-                                {{ getSubtitle(props.nwk) }}
+                                {{ getSubtitle(properties.nwk) }}
                             </v-card-subtitle>
                         </v-col>
                     </v-row>
@@ -55,12 +60,14 @@ import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 import Nwk, { hasDetails } from "@/types/Nwk";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
 
-const props = defineProps<{
+const properties = defineProps<{
     nwk: Nwk;
 }>();
 
 const germanDays = computed(() => {
-    return new GermanWeekdayMapper().getGermanDays(props.nwk.vorlesungstage);
+    return new GermanWeekdayMapper().getGermanDays(
+        properties.nwk.vorlesungstage
+    );
 });
 
 function getFullName(nwk: Nwk): string {
@@ -87,3 +94,8 @@ function getNwkColor(nwk: Nwk): string {
     return color;
 }
 </script>
+<style scoped>
+.full-width{
+    max-width: 100%;
+}
+</style>

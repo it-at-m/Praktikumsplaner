@@ -107,19 +107,20 @@ function clear() {
 }
 
 function saveNwk() {
-    if (!form.value?.validate()) {
-        return;
-    }
-    loading.value = true;
-    close();
-    NwkService.saveNwk(nwk.value)
-        .then(() => {
-            emitter.emit("nwkCreated");
-        })
-        .finally(() => {
-            loading.value = false;
-            clear();
-        });
+    form.value?.validate().then((validation: { valid: boolean }) => {
+        if (!validation.valid) return;
+
+        loading.value = true;
+        close();
+        NwkService.saveNwk(nwk.value)
+            .then(() => {
+                emitter.emit("nwkCreated");
+            })
+            .finally(() => {
+                loading.value = false;
+                clear();
+            });
+    });
 }
 </script>
 

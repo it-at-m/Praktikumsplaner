@@ -88,16 +88,17 @@ function resetForm() {
 }
 
 function clickSpeichern() {
-    form.value?.validate();
-    if (form.value?.isValid) {
-        MeldezeitraumService.create(meldezeitraum.value)
-            .then(() => {
-                emits("meldezeitraumAdded", meldezeitraum.value);
-            })
-            .finally(() => {
-                clickAbbrechen();
-            });
-    }
+    form.value?.validate().then((validation: { valid: boolean }) => {
+        if (validation.valid) {
+            MeldezeitraumService.create(meldezeitraum.value)
+                .then(() => {
+                    emits("meldezeitraumAdded", meldezeitraum.value);
+                })
+                .finally(() => {
+                    clickAbbrechen();
+                });
+        }
+    });
 }
 
 function clickAbbrechen() {

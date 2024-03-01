@@ -141,7 +141,7 @@ const vi = ref<Zeitraum>(new Zeitraum());
 const bwi = ref<Zeitraum>(new Zeitraum());
 const fisi = ref<Zeitraum>(new Zeitraum());
 
-const props = defineProps<{
+const properties = defineProps<{
     showDialog: boolean;
 }>();
 
@@ -150,16 +150,17 @@ const allValid = computed(() => {
 });
 
 const computedShowDialog = computed(() => {
-    return props.showDialog;
+    return properties.showDialog;
 });
 
 const emit = defineEmits(["update:showDialog"]);
 
 function openConfirmationDialog() {
-    form.value?.validate();
-    if (form.value?.isValid) {
-        confirmSendMailDialog.value = true;
-    }
+    form.value?.validate().then((validation: { valid: boolean }) => {
+        if (validation.valid) {
+            confirmSendMailDialog.value = true;
+        }
+    });
 }
 
 function sendMails(): void {

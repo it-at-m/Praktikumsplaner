@@ -1,8 +1,8 @@
 <template>
     <v-text-field
         v-model="stelle.oertlicheAusbilder"
-        :rules="oertlAusbilderRule"
-        label="Name örtliche Ausbilder*in*"
+        :rules="conditionalRequiredRules"
+        :label="conditionalRequiredLabel"
         variant="outlined"
     ></v-text-field>
 </template>
@@ -15,12 +15,23 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
-const props = defineProps<{
+interface Properties {
     modelValue: Praktikumsstelle;
-}>();
+    isRequired: boolean;
+    requiredSymbol?: string;
+}
+const properties = withDefaults(defineProps<Properties>(), {
+    requiredSymbol: "*",
+});
+
 const emits = defineEmits<{
     (e: "update:modelValue", oertlicheAusbilder: Praktikumsstelle): void;
 }>();
+
+const label = "Name örtliche*r Ausbilder*in";
+const conditionalRequiredLabel = computed(() => {
+    return properties.isRequired ? label + properties.requiredSymbol : label;
+});
 
 const oertlAusbilderRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
@@ -29,11 +40,14 @@ const oertlAusbilderRule = [
         "Örtliche Ausbilder*in darf nicht länger als 255 Zeichen sein."
     ),
 ];
+const conditionalRequiredRules = computed(() => {
+    return properties.isRequired ? oertlAusbilderRule : undefined;
+});
 
 const stelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {

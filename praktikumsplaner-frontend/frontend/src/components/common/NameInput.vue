@@ -38,7 +38,7 @@ const nameRule = [
     validationRules.notEmptyRule("Der Name darf nicht leer sein."),
 ];
 
-const props = defineProps<{
+const properties = defineProps<{
     modelValue: NwkCreate;
 }>();
 
@@ -47,7 +47,7 @@ const emits = defineEmits<{
 }>();
 
 const nwk = computed({
-    get: () => props.modelValue,
+    get: () => properties.modelValue,
     set: (newValue) => emits("updated", newValue),
 });
 </script>
