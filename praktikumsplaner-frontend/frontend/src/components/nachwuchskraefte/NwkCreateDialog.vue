@@ -99,6 +99,7 @@ const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
 
 function close() {
     visible.value = false;
+    clear();
 }
 
 function clear() {
