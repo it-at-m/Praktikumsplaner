@@ -21,9 +21,11 @@ Each [Praktikumsstellen](./../glossary.md#praktikumsstelle) can be expanded agai
 To assign a [Nwk](./../glossary.md#nwk) to a [Praktikumsstelle](./../glossary.md#praktikumsstelle),
 all that has to be done is drag the [Nwk](./../glossary.md#nwk) over the desired [Praktikumsstelle](./../glossary.md#praktikumsstelle) and drop it there.
 If everything is all right, then the name of the [Nwk](./../glossary.md#nwk) will be shown underneath the [Praktikumsstelle](./../glossary.md#praktikumsstelle),
- the background changes to grey and feedback is given if it was successful.
+the background changes to grey and feedback is given if it was successful.
 If there is already a [Nwk](./../glossary.md#nwk) on the desired [Praktikumsstelle](./../glossary.md#praktikumsstelle),
 then it is not possible to drop another [Nwk](./../glossary.md#nwk) there.
+On the assignment page you can click on a [Nwk](./../glossary.md#nwk) to see additional information for example the lecture days.
+You can also click on a [Praktikumsstelle](./../glossary.md#praktikumsstelle) to see additional information about it.
 
 ### Warnings when assigning [Nwks](./../glossary.md#nwk)
 
