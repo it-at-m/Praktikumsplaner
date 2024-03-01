@@ -60,7 +60,9 @@ const isEndAfterStart = computed(() => {
     if (range.value.endZeitpunkt) endZeitpunktInput.value?.validate();
     return (
         range.value.isStartBeforeEnd ||
-        "Das Ende des " + properties.label + "s darf nicht vor dem Beginn liegen."
+        "Das Ende des " +
+            properties.label +
+            "s darf nicht vor dem Beginn liegen."
     );
 });
 
