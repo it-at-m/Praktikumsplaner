@@ -29,7 +29,7 @@
                                         </v-col>
                                         <v-col>
                                             <zeitraum-picker
-                                                :value="bsc"
+                                                :model-value="bsc"
                                                 label="Zuweisungszeitraum"
                                             ></zeitraum-picker>
                                         </v-col>
@@ -41,7 +41,7 @@
                                             <h4>Verwaltungsinformatik (VI)</h4>
                                         </v-col>
                                         <zeitraum-picker
-                                            :value="vi"
+                                            :model-value="vi"
                                             label="Zuweisungszeitraum"
                                         ></zeitraum-picker>
                                     </v-container>
@@ -52,7 +52,7 @@
                                             <h4>Wirtschaftsinformatik (BWI)</h4>
                                         </v-col>
                                         <zeitraum-picker
-                                            :value="bwi"
+                                            :model-value="bwi"
                                             label="Zuweisungszeitraum"
                                         ></zeitraum-picker>
                                     </v-container>
@@ -66,7 +66,7 @@
                                             </h4>
                                         </v-col>
                                         <zeitraum-picker
-                                            :value="fisi"
+                                            :model-value="fisi"
                                             label="Zuweisungszeitraum"
                                         ></zeitraum-picker>
                                     </v-container>
