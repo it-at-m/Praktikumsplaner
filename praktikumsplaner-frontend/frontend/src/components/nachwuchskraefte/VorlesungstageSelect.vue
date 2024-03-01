@@ -28,7 +28,7 @@ const days = ref<Day[]>([
     new Day("THURSDAY", "Donnerstag"),
     new Day("FRIDAY", "Freitag"),
 ]);
-const props = defineProps<{
+const properties = defineProps<{
     modelValue: NwkCreate;
 }>();
 const emits = defineEmits<{
@@ -36,7 +36,7 @@ const emits = defineEmits<{
 }>();
 
 const nwk = computed({
-    get: () => props.modelValue,
+    get: () => properties.modelValue,
     set: (newValue) => emits("input", newValue),
 });
 

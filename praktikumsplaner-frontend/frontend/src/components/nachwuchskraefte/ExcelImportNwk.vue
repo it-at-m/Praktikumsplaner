@@ -78,18 +78,19 @@ function cancel() {
     form.value?.reset();
 }
 function uploadFile() {
-    form.value?.validate();
-    if (!form.value?.isValid || !file.value) return;
-    visible.value = false;
-    loading.value = true;
-    NwkService.uploadExcelFile(file.value[0])
-        .then(() => {
-            emitter.emit("nwkCreated");
-        })
-        .finally(() => {
-            loading.value = false;
-            form.value?.reset();
-            file.value = [];
-        });
+    form.value?.validate().then((validation: { valid: boolean }) => {
+        if (!validation.valid || !file.value) return;
+        visible.value = false;
+        loading.value = true;
+        NwkService.uploadExcelFile(file.value[0])
+            .then(() => {
+                emitter.emit("nwkCreated");
+            })
+            .finally(() => {
+                loading.value = false;
+                form.value?.reset();
+                file.value = [];
+            });
+    });
 }
 </script>

@@ -15,6 +15,7 @@ import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,7 +68,6 @@ public class PraktikumsstellenController {
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInSpecificMeldezeitraum(
             @RequestParam(name = "meldezeitraum", required = false) String meldezeitraum) {
         if (meldezeitraum.equals("current")) {
@@ -80,12 +80,23 @@ public class PraktikumsstellenController {
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PatchMapping("/{praktikumsstellenId}")
-    @ResponseStatus(HttpStatus.OK)
     public PraktikumsstelleDto assignNwk(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
             @RequestParam(name = "nwkId", required = false) UUID nwkId) {
         if (nwkId == null) {
             return praktikumsstellenService.unassignNwk(praktikumsstellenId);
         }
         return praktikumsstellenService.assignNwk(praktikumsstellenId, nwkId);
+    }
+
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @DeleteMapping("/studium/{praktikumsstellenId}")
+    public void deleteStudiumPratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId) {
+        praktikumsstellenService.deleteStudiumsPraktikumsstelle(praktikumsstellenId);
+    }
+
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @DeleteMapping("/ausbildung/{praktikumsstellenId}")
+    public void deleteAusbildungPratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId) {
+        praktikumsstellenService.deleteAusbildungsPraktikumsstelle(praktikumsstellenId);
     }
 }

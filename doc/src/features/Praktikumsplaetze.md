@@ -125,6 +125,9 @@ This feature is only available for [örtliche Ausbildungsleitungen](./../glossar
 When clicking the `SPEICHERN` button, the data is sent.
 A green notification appears if it was successful, if not a red error will appear.
 
+## Deletion
+It is possible to delete [Praktikumsstellen](../glossary.md#praktikumsstelle) in the overview of [Praktikumsstellen](../glossary.md#praktikumsstelle) by clicking the delete button, marked with a trash can.
+
 ## Additional Information
 
 ### Mandatory information

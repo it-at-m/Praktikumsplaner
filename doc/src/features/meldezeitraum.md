@@ -17,3 +17,12 @@ These dates are validated so that the Startzeitpunkt cannot be later or the same
 
 When clicking on `Speichern`, the application tries to save the [Meldezeitraum](../glossary.md#meldezeitraum) and if it was successful, a success message will be displayed.
 Otherwise, an error message will be displayed.
+
+## Delete a Meldezeitraum
+On the page `[app-url]/#/meldezeitraum` it is possible to delete a [Meldezeitraum](../glossary.md#meldezeitraum).
+
+After clicking on the trash icon, a dialog opens up where the user can confirm the deletion of the [Meldezeitraum](../glossary.md#meldezeitraum).
+Deleting a [Meldezeitraum](../glossary.md#meldezeitraum) also deletes all [Praktikumsplätze](../glossary.md#praktikumsstelle) that are associated with it, so caution is advised.
+
+When clicking on `Ja`, the application tries to delete the [Meldezeitraum](../glossary.md#meldezeitraum) and if it was successful, a success message will be displayed.
+Otherwise, an error message will be displayed.

@@ -35,12 +35,15 @@
                         <v-col>
                             <dienststellen-input
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></dienststellen-input>
                         </v-col>
                         <v-col cols="2" />
                         <v-col>
                             <referat-select
                                 v-model="praktikumsstelle"
+                                :is-required="false"
                             ></referat-select>
                         </v-col>
                         <v-col cols="1" />
@@ -49,6 +52,8 @@
                         <v-col>
                             <dringlichkeit-select
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></dringlichkeit-select>
                         </v-col>
                         <v-col cols="2">
@@ -57,6 +62,7 @@
                         <v-col>
                             <namentliche-anforderung-input
                                 v-model="praktikumsstelle"
+                                :is-required="false"
                             ></namentliche-anforderung-input>
                         </v-col>
                         <v-col cols="1">
@@ -67,6 +73,8 @@
                         <v-col>
                             <planstelle-radio-group
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></planstelle-radio-group>
                         </v-col>
                         <v-col cols="2" />
@@ -77,7 +85,10 @@
                         <v-col>
                             <taetigkeiten-input
                                 v-model="praktikumsstelle"
-                            ></taetigkeiten-input>
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
+                            >
+                            </taetigkeiten-input>
                         </v-col>
                         <v-col cols="1" />
                     </v-row>
@@ -92,12 +103,16 @@
                         <v-col>
                             <studienrichtung-select
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></studienrichtung-select>
                         </v-col>
                         <v-col cols="2" />
                         <v-col>
                             <semester-select
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></semester-select>
                         </v-col>
                         <v-col cols="1" />
@@ -106,6 +121,8 @@
                         <v-col>
                             <programmier-kenntnisse-select
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></programmier-kenntnisse-select>
                         </v-col>
                         <v-col />
@@ -122,12 +139,16 @@
                         <v-col>
                             <ausbilder-input
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></ausbilder-input>
                         </v-col>
                         <v-col cols="2" />
                         <v-col>
                             <ausbilder-email-input
                                 v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></ausbilder-email-input>
                         </v-col>
                         <v-col cols="1" />
@@ -147,6 +168,8 @@
                             <meldezeitraum-select
                                 v-model="praktikumsstelle"
                                 :meldezeitraueme="meldezeitraeume"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
                             ></meldezeitraum-select>
                         </v-col>
                         <v-col cols="2" />
@@ -203,6 +226,8 @@ import index from "@/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+
+const requiredFieldSymbol = "*";
 
 const activeMeldezeitraum = ref<boolean>(false);
 
@@ -269,24 +294,25 @@ function resetForm() {
 }
 
 function uploadPraktikumsstelle() {
-    form.value?.validate();
-    if (!form.value?.isValid) return;
-    loading.value = true;
-    if (isAusbildungsleitung.value) {
-        MeldungService.uploadStudiumsPraktikumsstelleWithMeldezeitraum(
-            praktikumsstelle.value
-        ).finally(() => {
-            loading.value = false;
-            resetForm();
-        });
-    } else {
-        MeldungService.uploadStudiumsPraktikumsstelle(
-            praktikumsstelle.value
-        ).finally(() => {
-            loading.value = false;
-            resetForm();
-        });
-    }
+    form.value?.validate().then((validation: { valid: boolean }) => {
+        if (!validation.valid) return;
+        loading.value = true;
+        if (isAusbildungsleitung.value) {
+            MeldungService.uploadStudiumsPraktikumsstelleWithMeldezeitraum(
+                praktikumsstelle.value
+            ).finally(() => {
+                loading.value = false;
+                resetForm();
+            });
+        } else {
+            MeldungService.uploadStudiumsPraktikumsstelle(
+                praktikumsstelle.value
+            ).finally(() => {
+                loading.value = false;
+                resetForm();
+            });
+        }
+    });
 }
 </script>
 <style>
