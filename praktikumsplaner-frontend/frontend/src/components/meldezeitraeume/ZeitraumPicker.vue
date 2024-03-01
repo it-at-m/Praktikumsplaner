@@ -42,20 +42,11 @@ const props = defineProps<{
     label: string;
 }>();
 
-const emit = defineEmits<{
-    (event: "update:modelValue", value: Zeitraum): void;
-}>();
-
 const validationRules = useRules();
 const startZeitpunktInput = ref<HTMLFormElement>();
 const endZeitpunktInput = ref<HTMLFormElement>();
 
-const range = computed({
-    get: () => props.modelValue,
-    set: (value: Zeitraum) => {
-        emit("update:modelValue", value);
-    },
-});
+const range = computed(() => props.modelValue);
 
 const isStartBeforeEnd = computed(() => {
     if (range.value.startZeitpunkt) startZeitpunktInput.value?.validate();
