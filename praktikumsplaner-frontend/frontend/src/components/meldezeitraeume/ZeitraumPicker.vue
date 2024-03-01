@@ -38,7 +38,7 @@ import { useRules } from "@/composables/rules";
 import Zeitraum from "@/types/Zeitraum";
 
 const props = defineProps<{
-    modelValue: Zeitraum;
+    value: Zeitraum;
     label: string;
 }>();
 
@@ -46,7 +46,7 @@ const validationRules = useRules();
 const startZeitpunktInput = ref<HTMLFormElement>();
 const endZeitpunktInput = ref<HTMLFormElement>();
 
-const range = computed(() => props.modelValue);
+const range = computed(() => props.value);
 
 const isStartBeforeEnd = computed(() => {
     if (range.value.startZeitpunkt) startZeitpunktInput.value?.validate();
