@@ -83,12 +83,7 @@ module.exports = {
             {
               title: "Architecture",
               collapsable: true,
-              children: ["architecture/adrs", "architecture/security/", ],
-            },
-            {
-              title: "User Interface",
-              collapsable: true,
-              children: ["user_interface/", "user_interface/colorpalette"],
+              children: ["architecture/adrs", "architecture/security/", "architecture/user_interface/", "architecture/colorpalette/"],
             },
             {
               title: "Guides",
