@@ -58,7 +58,7 @@
                         <v-btn
                             color="primary"
                             variant="outlined"
-                            @click="close()"
+                            @click="cancel()"
                         >
                             Abbrechen
                         </v-btn>
@@ -96,6 +96,11 @@ const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
 
 const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
+
+function cancel() {
+    visible.value = false;
+    form.value?.reset();
+}
 
 function close() {
     visible.value = false;
