@@ -263,13 +263,11 @@ const upcomingMeldezeitraeume = ref<Meldezeitraum[]>([]);
 const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
 
 onMounted(() => {
-    MeldezeitraumService.getCurrentMeldezeitraum()
-        .then((zeitraueme) => {
+    MeldezeitraumService.getCurrentMeldezeitraum(loadingSite).then(
+        (zeitraueme) => {
             currentMeldezeitraum.value = zeitraueme[0];
-        })
-        .finally(() => {
-            loadingSite.value = false;
-        });
+        }
+    );
 
     if (isAusbildungsleitung.value) {
         getUpcomingMeldezeitraeume();
