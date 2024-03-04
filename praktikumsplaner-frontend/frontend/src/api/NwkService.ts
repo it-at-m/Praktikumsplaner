@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import type { Ref } from "vue";
 
 import { Levels } from "@/api/Error";
 import FetchUtils from "@/api/FetchUtils";
@@ -7,10 +7,8 @@ import { useSnackbarStore } from "@/stores/snackbar";
 import Nwk from "@/types/Nwk";
 import NwkCreate from "@/types/NwkCreate";
 
-export const loading = ref(false);
-
 export default {
-    saveNwk(nwk: NwkCreate): Promise<void> {
+    saveNwk(nwk: NwkCreate, loading: Ref<boolean>): Promise<void> {
         loading.value = true;
         return fetch(`${API_BASE}${NWK_BASE}`, FetchUtils.getPOSTConfig(nwk))
             .then((response) => {
@@ -27,23 +25,28 @@ export default {
                 loading.value = false;
             });
     },
-    uploadExcelFile(excelDatei: File): Promise<void> {
+    uploadExcelFile(excelDatei: File, loading: Ref<boolean>): Promise<void> {
+        loading.value = true;
         // File Reader encodes as Base64
         return this.readString(excelDatei).then((base64string: string) => {
             return fetch(
                 `${API_BASE}${NWK_BASE}/import`,
                 // Base64 String starts after the comma
                 FetchUtils.getPOSTConfig(base64string.split(",")[1])
-            ).then((response) => {
-                if (response.ok) {
-                    useSnackbarStore().showMessage({
-                        message: "☑ Nachwuchskräfte erfolgreich angelegt.",
-                        level: Levels.SUCCESS,
-                    });
-                } else {
-                    FetchUtils.defaultResponseHandler(response);
-                }
-            });
+            )
+                .then((response) => {
+                    if (response.ok) {
+                        useSnackbarStore().showMessage({
+                            message: "☑ Nachwuchskräfte erfolgreich angelegt.",
+                            level: Levels.SUCCESS,
+                        });
+                    } else {
+                        FetchUtils.defaultResponseHandler(response);
+                    }
+                })
+                .finally(() => {
+                    loading.value = false;
+                });
         });
     },
     readString(excelDatei: File): Promise<string> {
@@ -59,14 +62,19 @@ export default {
             reader.readAsDataURL(excelDatei);
         });
     },
-    getAllActiveNwks(): Promise<Nwk[]> {
+    getAllActiveNwks(loading: Ref<boolean>): Promise<Nwk[]> {
+        loading.value = true;
         return fetch(
             `${API_BASE}${NWK_BASE}?status=aktiv`,
             FetchUtils.getGETConfig()
-        ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
-            return response.json();
-        });
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .finally(() => {
+                loading.value = false;
+            });
     },
     getAllUnassignedNwks(): Promise<Nwk[]> {
         return fetch(
@@ -77,19 +85,22 @@ export default {
             return response.json();
         });
     },
-    updateNwk(nwk: Nwk): Promise<void> {
-        return fetch(
-            `${API_BASE}${NWK_BASE}`,
-            FetchUtils.getPUTConfig(nwk)
-        ).then((response) => {
-            if (response.ok) {
-                useSnackbarStore().showMessage({
-                    message: "☑ Nachwuchskraft wurde erfolgreich bearbeitet.",
-                    level: Levels.SUCCESS,
-                });
-            } else {
-                FetchUtils.defaultResponseHandler(response);
-            }
-        });
+    updateNwk(nwk: Nwk, loading: Ref<boolean>): Promise<void> {
+        loading.value = true;
+        return fetch(`${API_BASE}${NWK_BASE}`, FetchUtils.getPUTConfig(nwk))
+            .then((response) => {
+                if (response.ok) {
+                    useSnackbarStore().showMessage({
+                        message:
+                            "☑ Nachwuchskraft wurde erfolgreich bearbeitet.",
+                        level: Levels.SUCCESS,
+                    });
+                } else {
+                    FetchUtils.defaultResponseHandler(response);
+                }
+            })
+            .finally(() => {
+                loading.value = false;
+            });
     },
 };

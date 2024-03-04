@@ -179,15 +179,13 @@ function assignNwk() {
         nwkToAssignUnassing.value = undefined;
         return;
     }
-    loading.value = true;
 
     stelleToAssignUnassign.assignedNwk = nwkToAssignUnassing.value;
     PraktikumsstellenService.assignNwk(
         stelleToAssignUnassign.id || "",
-        stelleToAssignUnassign.assignedNwk?.id
-    ).finally(() => {
-        loading.value = false;
-    });
+        stelleToAssignUnassign.assignedNwk?.id,
+        loading
+    );
     assignedNwk.value = nwkToAssignUnassing.value;
     if (stelleToAssignUnassign.assignedNwk)
         emitter.emit("assignedNwk", stelleToAssignUnassign.assignedNwk);
@@ -201,11 +199,9 @@ function resetWarningDialog() {
 
 function unassignNwk() {
     if (stelleToAssignUnassign?.id) {
-        loading.value = true;
-        PraktikumsstellenService.unassignNwk(stelleToAssignUnassign.id).finally(
-            () => {
-                loading.value = false;
-            }
+        PraktikumsstellenService.unassignNwk(
+            stelleToAssignUnassign.id,
+            loading
         );
         if (stelleToAssignUnassign.assignedNwk)
             emitter.emit("unassignedNwk", stelleToAssignUnassign.assignedNwk);

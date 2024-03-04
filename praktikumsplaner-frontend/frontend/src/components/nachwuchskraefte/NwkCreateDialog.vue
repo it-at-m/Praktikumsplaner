@@ -82,7 +82,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import NwkService, { loading } from "@/api/NwkService";
+import NwkService from "@/api/NwkService";
 import JahrgangInput from "@/components/common/JahrgangInput.vue";
 import NameInput from "@/components/common/NameInput.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
@@ -92,6 +92,7 @@ import emitter from "@/stores/eventBus";
 import NwkCreate from "@/types/NwkCreate";
 
 const visible = ref<boolean>(false);
+const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
 
 const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
@@ -110,7 +111,7 @@ function saveNwk() {
         if (!validation.valid) return;
 
         close();
-        NwkService.saveNwk(nwk.value)
+        NwkService.saveNwk(nwk.value, loading)
             .then(() => {
                 emitter.emit("nwkCreated");
             })

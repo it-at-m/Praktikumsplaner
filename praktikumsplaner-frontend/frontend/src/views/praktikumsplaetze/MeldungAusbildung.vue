@@ -301,19 +301,19 @@ function resetForm() {
 function uploadPraktikumsstelle() {
     form.value?.validate().then((validation: { valid: boolean }) => {
         if (!validation.valid) return;
-        loading.value = true;
+
         if (isAusbildungsleitung.value) {
             MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
-                praktikumsstelle.value
+                praktikumsstelle.value,
+                loading
             ).finally(() => {
-                loading.value = false;
                 resetForm();
             });
         } else {
             MeldungService.uploadAusbildungsPraktikumsstelle(
-                praktikumsstelle.value
+                praktikumsstelle.value,
+                loading
             ).finally(() => {
-                loading.value = false;
                 resetForm();
             });
         }

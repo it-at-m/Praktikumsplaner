@@ -1,3 +1,5 @@
+import type { Ref } from "vue";
+
 import { Levels } from "@/api/Error";
 import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, MELDEZEITRAUM_BASE } from "@/constants";
@@ -21,32 +23,49 @@ export default {
             }
         });
     },
-    getCurrentMeldezeitraum(): Promise<Meldezeitraum[]> {
+    getCurrentMeldezeitraum(loading: Ref<boolean>): Promise<Meldezeitraum[]> {
+        loading.value = true;
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=current`,
             FetchUtils.getGETConfig()
-        ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
-            return response.json();
-        });
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .finally(() => {
+                loading.value = false;
+            });
     },
-    getUpcomingMeldezeitraueme(): Promise<Meldezeitraum[]> {
+    getUpcomingMeldezeitraueme(
+        loading: Ref<boolean>
+    ): Promise<Meldezeitraum[]> {
+        loading.value = true;
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=future`,
             FetchUtils.getGETConfig()
-        ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
-            return response.json();
-        });
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .finally(() => {
+                loading.value = false;
+            });
     },
-    getPassedMeldezeitraueme(): Promise<Meldezeitraum[]> {
+    getPassedMeldezeitraueme(loading: Ref<boolean>): Promise<Meldezeitraum[]> {
+        loading.value = true;
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=past`,
             FetchUtils.getGETConfig()
-        ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
-            return response.json();
-        });
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .finally(() => {
+                loading.value = false;
+            });
     },
     getAllMeldezeitraeume(): Promise<Meldezeitraum[]> {
         return fetch(
@@ -57,7 +76,11 @@ export default {
             return response.json();
         });
     },
-    deleteMeldezeitraumById(id: string | undefined): Promise<void> {
+    deleteMeldezeitraumById(
+        id: string | undefined,
+        loading: Ref<boolean>
+    ): Promise<void> {
+        loading.value = true;
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}/${id}`,
             FetchUtils.getDELETEConfigNoBody()
@@ -75,6 +98,9 @@ export default {
                     level: Levels.ERROR,
                 });
                 FetchUtils.defaultResponseHandler(err);
+            })
+            .finally(() => {
+                loading.value = false;
             });
     },
 };
