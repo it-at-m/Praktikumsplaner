@@ -38,9 +38,11 @@ export default {
             });
     },
     getUpcomingMeldezeitraueme(
-        loading: Ref<boolean>
+        loading: Ref<boolean> | undefined
     ): Promise<Meldezeitraum[]> {
-        loading.value = true;
+        if (loading!) {
+            loading.value = true;
+        }
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=future`,
             FetchUtils.getGETConfig()
@@ -50,11 +52,17 @@ export default {
                 return response.json();
             })
             .finally(() => {
-                loading.value = false;
+                if (loading!) {
+                    loading.value = false;
+                }
             });
     },
-    getPassedMeldezeitraueme(loading: Ref<boolean>): Promise<Meldezeitraum[]> {
-        loading.value = true;
+    getPassedMeldezeitraueme(
+        loading: Ref<boolean> | undefined
+    ): Promise<Meldezeitraum[]> {
+        if (loading!) {
+            loading.value = true;
+        }
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=past`,
             FetchUtils.getGETConfig()
@@ -64,7 +72,9 @@ export default {
                 return response.json();
             })
             .finally(() => {
-                loading.value = false;
+                if (loading!) {
+                    loading.value = false;
+                }
             });
     },
     getAllMeldezeitraeume(): Promise<Meldezeitraum[]> {

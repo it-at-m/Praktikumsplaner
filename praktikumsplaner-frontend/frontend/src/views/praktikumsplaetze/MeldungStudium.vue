@@ -277,15 +277,19 @@ function canStellenBeSubmitted() {
 }
 
 function getUpcomingMeldezeitraeume() {
-    MeldezeitraumService.getUpcomingMeldezeitraueme().then((zeitraeume) => {
-        upcomingMeldezeitraeume.value = zeitraeume;
-    });
+    MeldezeitraumService.getUpcomingMeldezeitraueme(undefined).then(
+        (zeitraeume) => {
+            upcomingMeldezeitraeume.value = zeitraeume;
+        }
+    );
 }
 
 function getPassedMeldezeitraeume() {
-    MeldezeitraumService.getPassedMeldezeitraueme().then((zeitraeume) => {
-        passedMeldezeitraeume.value = zeitraeume;
-    });
+    MeldezeitraumService.getPassedMeldezeitraueme(undefined).then(
+        (zeitraeume) => {
+            passedMeldezeitraeume.value = zeitraeume;
+        }
+    );
 }
 
 function resetForm() {
