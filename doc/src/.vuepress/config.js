@@ -72,22 +72,27 @@ module.exports = {
           "/documentation/": [
             {
               title: "Tools",
-              collapsable: false,
+              collapsable: true,
               children: ["TOOLS.md"],
             },
             {
               title: "Configuration",
-              collapsable: false,
+              collapsable: true,
               children: ["architecture/configuration"],
             },
             {
               title: "Architecture",
-              collapsable: false,
+              collapsable: true,
               children: ["architecture/adrs", "architecture/security/", ],
             },
             {
+              title: "User Interface",
+              collapsable: true,
+              children: ["user_interface/", "user_interface/colorpalette"],
+            },
+            {
               title: "Guides",
-              collapsable: false,
+              collapsable: true,
               children: ["guides/technical-setup/", "guides/database-migration/", "guides/local-development/"],
             },
           ],
