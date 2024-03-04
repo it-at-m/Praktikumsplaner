@@ -102,15 +102,25 @@ export default {
             });
     },
     getAllPraktikumsstellenInSpecificMeldezeitraum(
-        meldezeitraum: string
+        meldezeitraum: string,
+        loading: Ref<boolean> | undefined
     ): Promise<Map<string, Praktikumsstelle[]>> {
+        if (loading) {
+            loading.value = true;
+        }
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}?meldezeitraum=${meldezeitraum}`,
             FetchUtils.getGETConfig()
-        ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
-            return response.json();
-        });
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .finally(() => {
+                if (loading) {
+                    loading.value = false;
+                }
+            });
     },
     assignNwk(
         stellenId: string,
