@@ -76,14 +76,23 @@ export default {
                 loading.value = false;
             });
     },
-    getAllUnassignedNwks(): Promise<Nwk[]> {
+    getAllUnassignedNwks(loading: Ref<boolean> | undefined): Promise<Nwk[]> {
+        if (loading) {
+            loading.value = true;
+        }
         return fetch(
             `${API_BASE}${NWK_BASE}?unassigned=true`,
             FetchUtils.getGETConfig()
-        ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
-            return response.json();
-        });
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .finally(() => {
+                if (loading) {
+                    loading.value = false;
+                }
+            });
     },
     updateNwk(nwk: Nwk, loading: Ref<boolean>): Promise<void> {
         loading.value = true;
