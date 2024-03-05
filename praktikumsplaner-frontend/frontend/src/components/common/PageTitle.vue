@@ -6,12 +6,12 @@
             elevation="0"
         >
         </v-btn>
-        <span class="text-h5">{{ props.pageHeaderText }}</span>
+        <span class="text-h5">{{ properties.pageHeaderText }}</span>
     </v-row>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+const properties = defineProps<{
     pageHeaderText: string;
     backButtonUrl: string;
 }>();

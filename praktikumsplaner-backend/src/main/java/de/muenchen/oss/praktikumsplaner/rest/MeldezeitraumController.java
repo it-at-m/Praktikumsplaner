@@ -3,14 +3,18 @@ package de.muenchen.oss.praktikumsplaner.rest;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.service.MeldezeitraumService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +39,6 @@ public class MeldezeitraumController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<MeldezeitraumDto> getMeldezeitraeume(@RequestParam(name = "period", required = false) String period) {
         if (period != null && period.equalsIgnoreCase("current")) {
             try {
@@ -52,5 +55,12 @@ public class MeldezeitraumController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wert '" + period + "' für Parameter 'period' ist nicht unterstützt.");
         }
         return meldezeitraumService.getAllMeldezeitraeume();
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @Transactional
+    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    public void deleteMeldezeitraum(@PathVariable(name = "id") UUID id) {
+        meldezeitraumService.deleteMeldezeitraumById(id);
     }
 }

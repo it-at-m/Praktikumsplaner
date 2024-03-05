@@ -3,10 +3,10 @@
         v-model="stelle.planstelleVorhanden"
         class="radios custom-label"
         inline
-        :rules="booleanRule"
+        :rules="conditionalRequiredRules"
     >
         <template #label>
-            <span class="custom-label">Planstelle vorhanden*:</span>
+            <span class="custom-label">{{ conditionalRequiredLabel }}:</span>
         </template>
         <v-radio
             v-for="item in YesNoBoolean"
@@ -27,22 +27,35 @@ import { YesNoBoolean } from "@/types/YesNoBoolean";
 
 const validationRules = useRules();
 
-const props = defineProps<{
+interface Properties {
     modelValue: Praktikumsstelle;
-}>();
+    isRequired: boolean;
+    requiredSymbol?: string;
+}
+const properties = withDefaults(defineProps<Properties>(), {
+    requiredSymbol: "*",
+});
 
 const emits = defineEmits<{
     (e: "update:modelValue", planstelleVorhanden: Praktikumsstelle): void;
 }>();
 
+const label = "Planstelle vorhanden";
+const conditionalRequiredLabel = computed(() => {
+    return properties.isRequired ? label + properties.requiredSymbol : label;
+});
+
 const booleanRule = [
     validationRules.notEmptyBooleanRule("Darf nicht leer sein."),
 ];
+const conditionalRequiredRules = computed(() => {
+    return properties.isRequired ? booleanRule : undefined;
+});
 
 const stelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {

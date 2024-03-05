@@ -57,4 +57,24 @@ export default {
             return response.json();
         });
     },
+    deleteMeldezeitraumById(id: string | undefined): Promise<void> {
+        return fetch(
+            `${API_BASE}${MELDEZEITRAUM_BASE}/${id}`,
+            FetchUtils.getDELETEConfigNoBody()
+        )
+            .then((response) => {
+                useSnackbarStore().showMessage({
+                    message: "☑ Löschen erfolgreich.",
+                    level: Levels.SUCCESS,
+                });
+                FetchUtils.defaultResponseHandler(response);
+            })
+            .catch((err) => {
+                useSnackbarStore().showMessage({
+                    message: err.message,
+                    level: Levels.ERROR,
+                });
+                FetchUtils.defaultResponseHandler(err);
+            });
+    },
 };

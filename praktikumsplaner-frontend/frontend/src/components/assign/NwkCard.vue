@@ -13,8 +13,8 @@
                     >
                         <v-col cols="auto">
                             <initials-avatar
-                                :nwk-name="getFullName(props.nwk)"
-                                :background-color="getNwkColor(props.nwk)"
+                                :nwk-name="getFullName(properties.nwk)"
+                                :background-color="getNwkColor(properties.nwk)"
                             />
                         </v-col>
                         <v-col
@@ -23,10 +23,10 @@
                             xl="10"
                         >
                             <v-card-title>
-                                {{ getFullName(props.nwk) }}
+                                {{ getFullName(properties.nwk) }}
                             </v-card-title>
                             <v-card-subtitle>
-                                {{ getSubtitle(props.nwk) }}
+                                {{ getSubtitle(properties.nwk) }}
                             </v-card-subtitle>
                         </v-col>
                     </v-row>
@@ -60,12 +60,14 @@ import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 import Nwk, { hasDetails } from "@/types/Nwk";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
 
-const props = defineProps<{
+const properties = defineProps<{
     nwk: Nwk;
 }>();
 
 const germanDays = computed(() => {
-    return new GermanWeekdayMapper().getGermanDays(props.nwk.vorlesungstage);
+    return new GermanWeekdayMapper().getGermanDays(
+        properties.nwk.vorlesungstage
+    );
 });
 
 function getFullName(nwk: Nwk): string {

@@ -15,10 +15,10 @@
 import { computed } from "vue";
 
 const loadingComputed = computed(() => {
-    return props.loading;
+    return properties.loading;
 });
 
-const props = defineProps<{
+const properties = defineProps<{
     loading: boolean;
 }>();
 </script>

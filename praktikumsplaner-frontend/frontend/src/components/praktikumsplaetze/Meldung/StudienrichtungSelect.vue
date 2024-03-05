@@ -1,11 +1,11 @@
 <template>
     <v-select
         v-model="stelle.studiengang"
-        label="Studienrichtung*"
+        :label="conditionalRequiredLabel"
         :items="Studiengang"
         item-value="value"
         item-title="name"
-        :rules="requiredRule"
+        :rules="conditionalRequiredRules"
         variant="outlined"
     >
     </v-select>
@@ -20,19 +20,33 @@ import { Studiengang } from "@/types/Studiengang";
 
 const validationRules = useRules();
 
-const props = defineProps<{
+interface Properties {
     modelValue: Praktikumsstelle;
-}>();
+    isRequired: boolean;
+    requiredSymbol?: string;
+}
+const properties = withDefaults(defineProps<Properties>(), {
+    requiredSymbol: "*",
+});
+
 const emits = defineEmits<{
     (e: "update:modelValue", studiengang: Praktikumsstelle): void;
 }>();
 
+const label = "Studienrichtung";
+const conditionalRequiredLabel = computed(() => {
+    return properties.isRequired ? label + properties.requiredSymbol : label;
+});
+
 const requiredRule = [validationRules.notEmptyRule("Darf nicht leer sein.")];
+const conditionalRequiredRules = computed(() => {
+    return properties.isRequired ? requiredRule : undefined;
+});
 
 const stelle = computed({
     // getter
     get() {
-        return props.modelValue;
+        return properties.modelValue;
     },
     // setter
     set(newValue) {

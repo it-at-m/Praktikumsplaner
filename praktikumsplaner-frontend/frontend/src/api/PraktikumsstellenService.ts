@@ -121,4 +121,41 @@ export default {
             }
         });
     },
+    deletePraktikumsstelle(stelle: Praktikumsstelle): Promise<void> {
+        if (isAusbildunsPraktikumsstelle(stelle)) {
+            return fetch(
+                `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/${stelle.id}`,
+                FetchUtils.getDELETEConfig({})
+            ).then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                useSnackbarStore().showMessage({
+                    message: "☑ Praktikumsstelle erfolgreich gelöscht",
+                    level: Levels.SUCCESS,
+                });
+            });
+        } else if (isStudiumsPraktikumsstelle(stelle)) {
+            return fetch(
+                `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/${stelle.id}`,
+                FetchUtils.getDELETEConfig({})
+            ).then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                useSnackbarStore().showMessage({
+                    message: "☑ Praktikumsstelle erfolgreich gelöscht",
+                    level: Levels.SUCCESS,
+                });
+            });
+        } else {
+            throw new Error(
+                "Praktikumsstelle konnte nicht nach Typ kategorisiert werden."
+            );
+        }
+    },
 };
+
+function isStudiumsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
+    return stelle.studiengang !== undefined;
+}
+
+function isAusbildunsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
+    return stelle.ausbildungsrichtung !== undefined;
+}

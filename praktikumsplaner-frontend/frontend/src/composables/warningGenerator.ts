@@ -46,7 +46,7 @@ export function useWarnings() {
                 nwk.studiengang +
                 " Student*in auf eine " +
                 stelle.studiengang +
-                " Stelle setzen?\n";
+                " Stelle setzen?";
             warnings.push(new Warning("", warningText));
         }
 
@@ -94,7 +94,7 @@ export function useWarnings() {
                 warningText +=
                     expectedSemesters[expectedSemesters.length - 1] +
                     ". Semester";
-                warningText += " erwartet wird.\n";
+                warningText += " erwartet wird.";
                 warnings.push(new Warning("", warningText));
             }
         }

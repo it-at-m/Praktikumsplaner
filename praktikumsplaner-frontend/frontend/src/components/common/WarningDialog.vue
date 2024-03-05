@@ -37,7 +37,7 @@ const emits = defineEmits<{
     (e: "rejected"): void;
 }>();
 
-const props = defineProps<{
+const properties = defineProps<{
     warnings: Warning[];
     visible: boolean;
 }>();
@@ -45,23 +45,23 @@ const props = defineProps<{
 const currentIndex = ref(0);
 
 const computedVisible = computed(() => {
-    if (props.visible && props.warnings.length <= 0) {
+    if (properties.visible && properties.warnings.length <= 0) {
         emits("accepted");
         return false;
     }
-    return props.visible;
+    return properties.visible;
 });
 
 const currentWarning = computed(() => {
-    if (currentIndex.value < props.warnings.length) {
-        return props.warnings[currentIndex.value];
+    if (currentIndex.value < properties.warnings.length) {
+        return properties.warnings[currentIndex.value];
     }
     return null;
 });
 
 function accept() {
     currentIndex.value++;
-    if (currentIndex.value >= props.warnings.length) {
+    if (currentIndex.value >= properties.warnings.length) {
         currentIndex.value = 0;
         emits("accepted");
     }

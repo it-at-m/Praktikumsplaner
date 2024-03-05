@@ -111,6 +111,9 @@ A green notification appears if it was successful, if not a red error will appea
 
 The mandatory information is marked with `*`
 
+## Deletion
+It is possible to delete [Praktikumsstellen](../glossary.md#praktikumsstelle) in the overview of [Praktikumsstellen](../glossary.md#praktikumsstelle) by clicking the delete button, marked with a trash can.
+
 ## Link between [Praktikumsstellen](../glossary.md#praktikumsstelle) and [Meldezeitraum](../glossary.md#meldezeitraum)
 When a [Praktikumsstelle](../glossary.md#praktikumsstelle) is reported, it is verified that there is an active [Meldezeitraum](../glossary.md#meldezeitraum) at that moment.
 
