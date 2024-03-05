@@ -95,7 +95,6 @@ import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
 const loadingUebersicht = ref<boolean>(false);
@@ -117,13 +116,11 @@ const mapIsEmpty = computed(() => {
 
 onMounted(() => {
     loadingUebersicht.value = true;
-    MeldezeitraumService.getCurrentMeldezeitraum()
-        .then((zeitraueme) => {
+    MeldezeitraumService.getCurrentMeldezeitraum(loadingUebersicht).then(
+        (zeitraueme) => {
             activeMeldezeitraum.value = zeitraueme.length > 0;
-        })
-        .finally(() => {
-            loadingSite.value = false;
-        });
+        }
+    );
     getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
 
@@ -142,17 +139,14 @@ function toStudium(): void {
 function getAllPraktikumsstellenInCurrentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
-        "current"
-    )
-        .then((fetchedStellen) => {
-            for (const [key, value] of Object.entries(fetchedStellen)) {
-                helperMap.set(key, value);
-            }
-            praktikumsstellenMap.value = helperMap;
-        })
-        .finally(() => {
-            loadingUebersicht.value = false;
-        });
+        "current",
+        loadingSite
+    ).then((fetchedStellen) => {
+        for (const [key, value] of Object.entries(fetchedStellen)) {
+            helperMap.set(key, value);
+        }
+        praktikumsstellenMap.value = helperMap;
+    });
 }
 </script>
 <style>

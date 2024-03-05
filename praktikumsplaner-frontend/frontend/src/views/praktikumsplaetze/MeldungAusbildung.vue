@@ -263,13 +263,11 @@ const upcomingMeldezeitraeume = ref<Meldezeitraum[]>([]);
 const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
 
 onMounted(() => {
-    MeldezeitraumService.getCurrentMeldezeitraum()
-        .then((zeitraueme) => {
+    MeldezeitraumService.getCurrentMeldezeitraum(loadingSite).then(
+        (zeitraueme) => {
             currentMeldezeitraum.value = zeitraueme[0];
-        })
-        .finally(() => {
-            loadingSite.value = false;
-        });
+        }
+    );
 
     if (isAusbildungsleitung.value) {
         getUpcomingMeldezeitraeume();
@@ -282,15 +280,19 @@ function canStellenBeSubmitted() {
 }
 
 function getUpcomingMeldezeitraeume() {
-    MeldezeitraumService.getUpcomingMeldezeitraueme().then((zeitraeume) => {
-        upcomingMeldezeitraeume.value = zeitraeume;
-    });
+    MeldezeitraumService.getUpcomingMeldezeitraueme(undefined).then(
+        (zeitraeume) => {
+            upcomingMeldezeitraeume.value = zeitraeume;
+        }
+    );
 }
 
 function getPassedMeldezeitraeume() {
-    MeldezeitraumService.getPassedMeldezeitraueme().then((zeitraeume) => {
-        passedMeldezeitraeume.value = zeitraeume;
-    });
+    MeldezeitraumService.getPassedMeldezeitraueme(undefined).then(
+        (zeitraeume) => {
+            passedMeldezeitraeume.value = zeitraeume;
+        }
+    );
 }
 
 function resetForm() {
@@ -301,19 +303,19 @@ function resetForm() {
 function uploadPraktikumsstelle() {
     form.value?.validate().then((validation: { valid: boolean }) => {
         if (!validation.valid) return;
-        loading.value = true;
+
         if (isAusbildungsleitung.value) {
             MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
-                praktikumsstelle.value
+                praktikumsstelle.value,
+                loading
             ).finally(() => {
-                loading.value = false;
                 resetForm();
             });
         } else {
             MeldungService.uploadAusbildungsPraktikumsstelle(
-                praktikumsstelle.value
+                praktikumsstelle.value,
+                loading
             ).finally(() => {
-                loading.value = false;
                 resetForm();
             });
         }

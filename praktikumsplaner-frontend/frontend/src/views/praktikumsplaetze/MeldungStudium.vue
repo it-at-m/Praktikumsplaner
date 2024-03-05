@@ -258,7 +258,7 @@ const upcomingMeldezeitraeume = ref<Meldezeitraum[]>([]);
 const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
 
 onMounted(() => {
-    MeldezeitraumService.getCurrentMeldezeitraum()
+    MeldezeitraumService.getCurrentMeldezeitraum(loadingSite)
         .then((zeitraueme) => {
             currentMeldezeitraum.value = zeitraueme[0];
         })
@@ -277,15 +277,19 @@ function canStellenBeSubmitted() {
 }
 
 function getUpcomingMeldezeitraeume() {
-    MeldezeitraumService.getUpcomingMeldezeitraueme().then((zeitraeume) => {
-        upcomingMeldezeitraeume.value = zeitraeume;
-    });
+    MeldezeitraumService.getUpcomingMeldezeitraueme(undefined).then(
+        (zeitraeume) => {
+            upcomingMeldezeitraeume.value = zeitraeume;
+        }
+    );
 }
 
 function getPassedMeldezeitraeume() {
-    MeldezeitraumService.getPassedMeldezeitraueme().then((zeitraeume) => {
-        passedMeldezeitraeume.value = zeitraeume;
-    });
+    MeldezeitraumService.getPassedMeldezeitraueme(undefined).then(
+        (zeitraeume) => {
+            passedMeldezeitraeume.value = zeitraeume;
+        }
+    );
 }
 
 function resetForm() {
@@ -296,19 +300,18 @@ function resetForm() {
 function uploadPraktikumsstelle() {
     form.value?.validate().then((validation: { valid: boolean }) => {
         if (!validation.valid) return;
-        loading.value = true;
         if (isAusbildungsleitung.value) {
             MeldungService.uploadStudiumsPraktikumsstelleWithMeldezeitraum(
-                praktikumsstelle.value
+                praktikumsstelle.value,
+                loading
             ).finally(() => {
-                loading.value = false;
                 resetForm();
             });
         } else {
             MeldungService.uploadStudiumsPraktikumsstelle(
-                praktikumsstelle.value
+                praktikumsstelle.value,
+                loading
             ).finally(() => {
-                loading.value = false;
                 resetForm();
             });
         }

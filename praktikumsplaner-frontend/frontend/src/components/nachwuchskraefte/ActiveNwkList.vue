@@ -76,14 +76,9 @@ onUnmounted(() => {
 });
 
 function loadAllActiveNwks() {
-    loading.value = true;
-    NwkService.getAllActiveNwks()
-        .then((fetchedNwks) => {
-            nwks.value = [...fetchedNwks];
-        })
-        .finally(() => {
-            loading.value = false;
-        });
+    NwkService.getAllActiveNwks(loading).then((fetchedNwks) => {
+        nwks.value = [...fetchedNwks];
+    });
 }
 
 function getSubtitle(nwk: Nwk): string {

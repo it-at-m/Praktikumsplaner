@@ -44,8 +44,7 @@ function clickExport() {
 }
 
 function downloadExcel() {
-    loading.value = true;
-    ExportService.downloadExcelFile().finally(() => (loading.value = false));
+    ExportService.downloadExcelFile(loading);
 }
 </script>
 

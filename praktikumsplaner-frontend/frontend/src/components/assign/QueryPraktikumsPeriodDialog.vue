@@ -164,7 +164,6 @@ function openConfirmationDialog() {
 }
 
 function sendMails(): void {
-    loading.value = true;
     const assignmentPeriods = new Map<string, Zeitraum>();
     assignmentPeriods.set("BSC", bsc.value);
     assignmentPeriods.set("VI", vi.value);
@@ -173,13 +172,11 @@ function sendMails(): void {
 
     const assignmentPeriodsObj = Object.fromEntries(assignmentPeriods);
 
-    MailService.sendSuccessfulAssignedMails(assignmentPeriodsObj)
-        .then((fetchedStellen) => {
+    MailService.sendSuccessfulAssignedMails(assignmentPeriodsObj, loading).then(
+        (fetchedStellen) => {
             faultyStellen.value = fetchedStellen;
-        })
-        .finally(() => {
-            loading.value = false;
-        });
+        }
+    );
     checkIfUndeliveredMails();
     closeSendMailDialog();
     closeConfirmDialog();

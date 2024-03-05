@@ -105,21 +105,18 @@ onBeforeMount(() => {
 });
 
 function reloadMeldezeitraeume() {
-    loading.value = true;
-    MeldezeitraumService.getCurrentMeldezeitraum().then((response) => {
+    MeldezeitraumService.getCurrentMeldezeitraum(loading).then((response) => {
         current.value = response;
     });
 
-    MeldezeitraumService.getPassedMeldezeitraueme().then((response) => {
+    MeldezeitraumService.getPassedMeldezeitraueme(loading).then((response) => {
         passed.value = response;
     });
 
-    MeldezeitraumService.getUpcomingMeldezeitraueme()
-        .then((response) => {
+    MeldezeitraumService.getUpcomingMeldezeitraueme(loading).then(
+        (response) => {
             upcoming.value = response;
-        })
-        .finally(() => {
-            loading.value = false;
-        });
+        }
+    );
 }
 </script>

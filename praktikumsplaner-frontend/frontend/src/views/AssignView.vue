@@ -136,28 +136,21 @@ onMounted(() => {
 });
 
 function getAllActiveNwks() {
-    NwkService.getAllUnassignedNwks()
-        .then((fetchedNwks) => {
-            nwks.value = [...fetchedNwks];
-        })
-        .finally(() => {
-            loadingNwk.value = false;
-        });
+    NwkService.getAllUnassignedNwks(loadingNwk).then((fetchedNwks) => {
+        nwks.value = [...fetchedNwks];
+    });
 }
 
 function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
-        "most_recent"
-    )
-        .then((fetchedStellen) => {
-            for (const [key, value] of Object.entries(fetchedStellen)) {
-                helperMap.set(key, value);
-            }
-            praktikumsstellenMap.value = helperMap;
-        })
-        .finally(() => {
-            loadingPraktikumsstellen.value = false;
-        });
+        "most_recent",
+        loadingPraktikumsstellen
+    ).then((fetchedStellen) => {
+        for (const [key, value] of Object.entries(fetchedStellen)) {
+            helperMap.set(key, value);
+        }
+        praktikumsstellenMap.value = helperMap;
+    });
 }
 </script>
