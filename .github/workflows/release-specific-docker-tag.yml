@@ -1,9 +1,12 @@
-inputs:
-  release-version:
-    description: 'Tag-Name'
-    type: string
-    required: true
+name: Release specific docker tag
 
+on:
+  workflow_dispatch:
+    inputs:
+      release-version:
+        description: 'Services release version'
+        type: string
+        required: true
 jobs:
   backend-build-and-docker-push:
     runs-on: ubuntu-latest
