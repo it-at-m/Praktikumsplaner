@@ -4,7 +4,7 @@
  */
 package de.muenchen.oss.praktikumsplaner.filter;
 
-import com.hazelcast.org.apache.commons.codec.binary.StringUtils;
+import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.reactivestreams.Publisher;
@@ -70,7 +70,8 @@ public class GlobalAuthenticationErrorFilter implements GlobalFilter, Ordered {
                 if (body instanceof Flux && responseHttpStatus.equals(httpStatus)) {
                     final DataBufferFactory dataBufferFactory = response.bufferFactory();
                     final DataBuffer newDataBuffer = dataBufferFactory.wrap(
-                            StringUtils.getBytesUtf8(ObjectUtils.defaultIfNull(newResponseBody, EMPTY_JSON_OBJECT)));
+                            ObjectUtils.defaultIfNull(newResponseBody, EMPTY_JSON_OBJECT).getBytes(
+                                    StandardCharsets.UTF_8));
 
                     log.debug("Response from upstream {} get new response body: {}", httpStatus, newResponseBody);
                     getDelegate().getHeaders().setContentLength(newDataBuffer.readableByteCount());
