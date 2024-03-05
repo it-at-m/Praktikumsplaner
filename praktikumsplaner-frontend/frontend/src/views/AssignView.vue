@@ -16,7 +16,7 @@
                 />
             </v-col>
             <v-divider vertical />
-            <v-col cols="7">
+            <v-col cols="6">
                 <v-skeleton-loader
                     v-if="loadingPraktikumsstellen"
                     type="image"
