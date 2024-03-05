@@ -261,6 +261,5 @@ function getNwkColor(nwk: Nwk): string {
 .chip-text {
     min-width: 30vmin;
     max-width: 45vmin;
-    width: 90%;
 }
 </style>
