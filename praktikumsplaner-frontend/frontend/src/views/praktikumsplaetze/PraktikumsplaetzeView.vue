@@ -116,7 +116,7 @@ const mapIsEmpty = computed(() => {
 
 onMounted(() => {
     loadingUebersicht.value = true;
-    MeldezeitraumService.getCurrentMeldezeitraum(loadingSite).then(
+    MeldezeitraumService.getCurrentMeldezeitraum(loadingUebersicht).then(
         (zeitraueme) => {
             activeMeldezeitraum.value = zeitraueme.length > 0;
         }

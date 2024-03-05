@@ -40,7 +40,7 @@ export default {
     getUpcomingMeldezeitraueme(
         loading: Ref<boolean> | undefined
     ): Promise<Meldezeitraum[]> {
-        if (loading) {
+        if (loading !== undefined) {
             loading.value = true;
         }
         return fetch(
@@ -52,7 +52,7 @@ export default {
                 return response.json();
             })
             .finally(() => {
-                if (loading) {
+                if (loading !== undefined) {
                     loading.value = false;
                 }
             });
@@ -60,7 +60,7 @@ export default {
     getPassedMeldezeitraueme(
         loading: Ref<boolean> | undefined
     ): Promise<Meldezeitraum[]> {
-        if (loading) {
+        if (loading !== undefined) {
             loading.value = true;
         }
         return fetch(
@@ -72,7 +72,7 @@ export default {
                 return response.json();
             })
             .finally(() => {
-                if (loading) {
+                if (loading !== undefined) {
                     loading.value = false;
                 }
             });

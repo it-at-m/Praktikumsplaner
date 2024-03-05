@@ -77,7 +77,7 @@ export default {
             });
     },
     getAllUnassignedNwks(loading: Ref<boolean> | undefined): Promise<Nwk[]> {
-        if (loading) {
+        if (loading !== undefined) {
             loading.value = true;
         }
         return fetch(
@@ -89,7 +89,7 @@ export default {
                 return response.json();
             })
             .finally(() => {
-                if (loading) {
+                if (loading !== undefined) {
                     loading.value = false;
                 }
             });

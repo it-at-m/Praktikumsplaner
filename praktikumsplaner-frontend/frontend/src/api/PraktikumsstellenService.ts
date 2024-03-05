@@ -105,7 +105,7 @@ export default {
         meldezeitraum: string,
         loading: Ref<boolean> | undefined
     ): Promise<Map<string, Praktikumsstelle[]>> {
-        if (loading) {
+        if (loading !== undefined) {
             loading.value = true;
         }
         return fetch(
@@ -117,7 +117,7 @@ export default {
                 return response.json();
             })
             .finally(() => {
-                if (loading) {
+                if (loading !== undefined) {
                     loading.value = false;
                 }
             });
