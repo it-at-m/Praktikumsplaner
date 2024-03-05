@@ -95,7 +95,6 @@ import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
 const loadingUebersicht = ref<boolean>(false);
