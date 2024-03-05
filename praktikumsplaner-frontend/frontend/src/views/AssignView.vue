@@ -5,7 +5,10 @@
             page-header-text="Zuweisung"
         ></page-title>
         <v-row>
-            <v-col cols="5">
+            <v-col cols="5"
+                   class="overflow-y-auto"
+                   style="max-height: 70vh"
+            >
                 <v-skeleton-loader
                     v-if="loadingNwk"
                     type="image"
@@ -13,10 +16,13 @@
                 <active-nwk-list-for-zuweisung
                     v-else
                     v-model="nwks"
+                    class="overflow-y-auto"
                 />
             </v-col>
             <v-divider vertical />
-            <v-col cols="7">
+            <v-col cols="7"
+                   class="overflow-y-auto"
+                   style="max-height: 70vh">
                 <v-skeleton-loader
                     v-if="loadingPraktikumsstellen"
                     type="image"
@@ -24,6 +30,7 @@
                 <praktikumsstellen-list-zuweisung
                     v-else
                     :praktikumsstellen-map="praktikumsstellenMap"
+                    class="overflow-y-auto"
                 />
             </v-col>
         </v-row>
