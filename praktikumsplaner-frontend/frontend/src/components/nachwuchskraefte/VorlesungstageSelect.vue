@@ -2,6 +2,7 @@
     <v-select
         v-model="nwk.vorlesungstage"
         :items="days"
+        color="primary"
         label="Vorlesungstage"
         item-value="weekDay"
         item-title="germanWeekDay"
