@@ -4,17 +4,17 @@ sequenceDiagram
     actor ÖAL as Örtliche Ausbildungsleitung
     actor POR as Personal- und Organisationsreferat
     actor NWK as Nachwuchskräfte
-    ÖAL->>ÖA: Mitteilung, dass Praktikumsplätze gemeldet werden können
+    ÖAL->>ÖA: Notification, that internships can be reported
     rect rgb(0, 90, 159)
-    ÖA->>ÖAL: Melden Praktikumsstellen
-    ÖAL->>ÖAL: Pflegen Nachwuchskräfte ins System ein 
-    ÖAL->>ÖAL: Weisen jede Nachwuchskraft eine passenden Stelle zu
+    ÖA->>ÖAL: Report internships
+    ÖAL->>ÖAL: Add junior staff information to the system
+    ÖAL->>ÖAL: Assign each junior staff to a suitable position
     end
-    ÖAL->>POR: Sendet Zuweisungstabelle zur Überprüfung
-    POR->>ÖAL: Sendet Feedback zur Zuweisung
+    ÖAL->>POR: Sends assignment table for checking
+    POR->>ÖAL: Sends feedback for assignments
     rect rgb(0, 90, 159)
-    ÖAL->>ÖAL: Passt gegebenenfalls Zuweisung an
-    ÖAL->>ÖA: Versendet Infos zur zugewiesenen Nachwuchskraft per Mail
+    ÖAL->>ÖAL: Adjusts assignment if necessary
+    ÖAL->>ÖA: Sends information about the assigned junior staff by e-mail
     end
-    POR ->> NWK: Versendet Infos zur zugewiesenen Praktikumsstelle
+    POR ->> NWK: Sends information about the assigned internship position
 ```
