@@ -260,7 +260,17 @@ function getNwkColor(nwk: Nwk): string {
     bottom: 10px;
     right: 10px;
 }
+@media only screen and (max-width: 1000px) {
+    .chip-text {
+        max-width: 10vw !important;
+    }
+}
+@media only screen and (max-width: 1900px) and (min-width: 1000px) {
+    .chip-text {
+        max-width: 15vw !important;
+    }
+}
 .chip-text {
-    max-width: 20vw;
+    max-width: 25vw;
 }
 </style>
