@@ -50,6 +50,7 @@ module.exports = {
    */
   themeConfig: {
     repo: "https://github.com/it-at-m/praktikumsplaner",
+    logo: "/logo.png",
     editLinks: false,
     docsDir: "",
     editLinkText: "",
