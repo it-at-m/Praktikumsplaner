@@ -15,6 +15,7 @@
                 v-model="selectAll"
                 label="Egal"
                 hide-details
+                base-color="primary"
                 color="primary"
                 :false-icon="ausbildungsjahrIcon"
                 :true-icon="ausbildungsjahrIcon"
