@@ -44,10 +44,12 @@
                     v-if="assignedNwk && !loading"
                     :color="getNwkColor(assignedNwk)"
                     variant="flat"
+                    class="chip"
                 >
                     <span class="text-truncate chip-text">
                         {{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
                     </span>
+
                     <template #close>
                         <v-icon
                             icon="mdi-close-circle"
@@ -259,7 +261,6 @@ function getNwkColor(nwk: Nwk): string {
     right: 10px;
 }
 .chip-text {
-    min-width: 30vmin;
-    max-width: 45vmin;
+    max-width: 20vw;
 }
 </style>
