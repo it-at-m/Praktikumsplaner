@@ -115,14 +115,12 @@ function saveNwk() {
     form.value?.validate().then((validation: { valid: boolean }) => {
         if (!validation.valid) return;
 
-        loading.value = true;
         close();
-        NwkService.saveNwk(nwk.value)
+        NwkService.saveNwk(nwk.value, loading)
             .then(() => {
                 emitter.emit("nwkCreated");
             })
             .finally(() => {
-                loading.value = false;
                 clear();
             });
     });

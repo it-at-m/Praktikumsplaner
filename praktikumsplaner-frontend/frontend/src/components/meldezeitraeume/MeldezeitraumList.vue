@@ -99,13 +99,14 @@ function deleteMeldezeitraum() {
     if (!meldezeitraumToDelete.value) {
         return;
     }
-    loading.value = true;
-    MeldezeitraumService.deleteMeldezeitraumById(meldezeitraumToDelete.value.id)
+    MeldezeitraumService.deleteMeldezeitraumById(
+        meldezeitraumToDelete.value.id,
+        loading
+    )
         .then(() => {
             emits("deleted", meldezeitraumToDelete.value);
         })
         .finally(() => {
-            loading.value = false;
             resetDeleteWarningDialog();
         });
 }

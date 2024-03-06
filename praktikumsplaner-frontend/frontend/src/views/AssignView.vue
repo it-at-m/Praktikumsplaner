@@ -5,9 +5,10 @@
             page-header-text="Zuweisung"
         ></page-title>
         <v-row>
-            <v-col cols="5"
-                   class="overflow-y-auto"
-                   style="max-height: 70vh"
+            <v-col
+                cols="5"
+                class="overflow-y-auto"
+                style="max-height: 70vh"
             >
                 <v-skeleton-loader
                     v-if="loadingNwk"
@@ -20,9 +21,11 @@
                 />
             </v-col>
             <v-divider vertical />
-            <v-col cols="7"
-                   class="overflow-y-auto"
-                   style="max-height: 70vh">
+            <v-col
+                cols="6"
+                class="overflow-y-auto"
+                style="max-height: 70vh"
+            >
                 <v-skeleton-loader
                     v-if="loadingPraktikumsstellen"
                     type="image"
@@ -143,28 +146,21 @@ onMounted(() => {
 });
 
 function getAllActiveNwks() {
-    NwkService.getAllUnassignedNwks()
-        .then((fetchedNwks) => {
-            nwks.value = [...fetchedNwks];
-        })
-        .finally(() => {
-            loadingNwk.value = false;
-        });
+    NwkService.getAllUnassignedNwks(loadingNwk).then((fetchedNwks) => {
+        nwks.value = [...fetchedNwks];
+    });
 }
 
 function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
-        "most_recent"
-    )
-        .then((fetchedStellen) => {
-            for (const [key, value] of Object.entries(fetchedStellen)) {
-                helperMap.set(key, value);
-            }
-            praktikumsstellenMap.value = helperMap;
-        })
-        .finally(() => {
-            loadingPraktikumsstellen.value = false;
-        });
+        "most_recent",
+        loadingPraktikumsstellen
+    ).then((fetchedStellen) => {
+        for (const [key, value] of Object.entries(fetchedStellen)) {
+            helperMap.set(key, value);
+        }
+        praktikumsstellenMap.value = helperMap;
+    });
 }
 </script>
