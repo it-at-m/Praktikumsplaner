@@ -80,6 +80,8 @@ import { UserService } from "@/api/UserService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import CreateMeldezeitraum from "@/components/meldezeitraeume/CreateMeldezeitraum.vue";
 import MeldezeitraumList from "@/components/meldezeitraeume/MeldezeitraumList.vue";
+import { useSecurity } from "@/composables/security";
+import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 
@@ -94,6 +96,9 @@ const passed = ref<Meldezeitraum[]>([]);
 
 onMounted(() => {
     reloadMeldezeitraeume();
+    if (!useSecurity().isAusbildungsleitung()) {
+        router.push("/AccessDenied");
+    }
 });
 onBeforeMount(() => {
     userService.getPermissions().then((userinfo) => {

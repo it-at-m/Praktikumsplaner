@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import { useSecurity } from "@/composables/security";
 import { ROUTES_HOME } from "@/constants";
+import { initializeUserStore } from "@/userStoreInitializer";
 import AccessDeniedView from "@/views/AccessDeniedView.vue";
 import assignView from "@/views/AssignView.vue";
 import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";
@@ -23,34 +24,49 @@ const routes = [
         path: "/nachwuchskraefte",
         name: "nachwuchskraefte",
         component: NachwuchskraefteView,
+        meta: {
+            requiresRole: ["ROLE_AUSBILDER"],
+        },
     },
     {
         path: "/meldezeitraum",
         name: "meldezeitraum",
         component: Meldezeitraeume,
+        meta: {
+            requiresRole: ["ROLE_AUSBILDER"],
+        },
     },
     {
         path: "/praktikumsplaetze",
         name: "praktikumsplätze",
         component: PraktikumsplaetzeView,
         meta: {
-            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+            requiresRole: ["ROLE_AUSBILDER"],
         },
     },
     {
         path: "/praktikumsplaetze/meldungAusbildung",
         name: "MeldungAusbildung",
         component: MeldungAusbildung,
+        meta: {
+            requiresRole: ["ROLE_AUSBILDER"],
+        },
     },
     {
         path: "/praktikumsplaetze/meldungStudium",
         name: "MeldungStudium",
         component: MeldungStudium,
+        meta: {
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
+        },
     },
     {
         path: "/zuweisung",
         name: "Zuweisung",
         component: assignView,
+        meta: {
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
+        },
     },
     {
         path: "/accessDenied",
@@ -65,7 +81,8 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+    await initializeUserStore();
     const requiresRoles = (to.meta?.requiresRole as string[]) ?? undefined;
     const security = useSecurity();
     if (
