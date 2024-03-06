@@ -1,8 +1,8 @@
 ---
 home: true
 heroImage: logo.png
-heroText: null
-tagline: Praktikumsplaner
+heroText: Praktikumsplaner
+tagline: The Praktikumsplaner offers a way to organize junior staff and their internships during their vocational training.
 actionText: Technical Documentation →
 actionLink: /documentation/
 features:
