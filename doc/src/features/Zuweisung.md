@@ -15,7 +15,7 @@ If no [Praktikumsstellen](./../glossary.md#praktikumsstelle) from this [Dienstst
 If the [Dienststelle](../glossary.md#dienststelle) provided information, that their team has a [Planstelle](../glossary.md#planstelle),
 it will be marked with a special icon (mdi-account-star).
 Each [Praktikumsstellen](./../glossary.md#praktikumsstelle) can be expanded again by clicking on the arrow or the card itself to display more details with all the information about the position.  
-Both lists can be scrolled separately to make the assignment more efficient and convenient.
+Both lists can be scrolled separately.
 
 ## Assign [Nwks](./../glossary.md#nwk) to [Praktikumsstellen](./../glossary.md#praktikumsstelle)
 
