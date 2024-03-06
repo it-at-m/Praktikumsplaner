@@ -27,7 +27,7 @@ then it is not possible to drop another [Nwk](./../glossary.md#nwk) there.
 On the assignment page you can click on a [Nwk](./../glossary.md#nwk) to see additional information for example the lecture days.
 You can also click on a [Praktikumsstelle](./../glossary.md#praktikumsstelle) to see additional information about it.
 
-### Warnings when assigning [Nwks](./../glossary.md#nwk)
+## Warnings when assigning [Nwks](./../glossary.md#nwk)
 
 When assigning [Nwks](./../glossary.md#nwk), it can happen that the [Nwk](./../glossary.md#nwk) and [Praktikumsstelle](./../glossary.md#praktikumsstelle) don't match in certain criteria.
 In this case a waring window appear when trying to drop the [Nwks](./../glossary.md#nwk) onto the [Praktikumsstelle](./../glossary.md#praktikumsstelle).
@@ -42,7 +42,7 @@ Warnings that can appear:
 
 **⚠** All warnings *can* be ignored, but it is advised to reevaluate an assignment if a warning appears
 
-### Unassinging [Nwks](./../glossary.md#nwk)
+## Unassinging [Nwks](./../glossary.md#nwk)
 When a [Nwk](./../glossary.md#nwk) is assigned to a [Praktikumsstelle](./../glossary.md#praktikumsstelle) a little chip with the name of the Nwk shows this assignment.
 This chip has the [color of the Ausbildungsrichtung](../documentation/architecture/colorpalette/README.md#colors-of-ausbildungsrichtung) or [of the Studiengang](../documentation/architecture/colorpalette/README.md#colors-of-studiengang) of the Nwk.
 Next to the name you can find a little x. By clicking on this x you can unassign the Nwk. When doing so,
@@ -50,7 +50,7 @@ a dialog will appear asking you if you really want to continue. When clicking ye
 and the Nwk will be selectable in the list on the left. When clicking no, the process will be cancelled and
 nothing will be changed.
 
-### Send successful assignment mails
+## Send successful assignment mails
 If the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) is satisfied with the assignment of the [Nwks](./../glossary.md#nwk) to the [Praktikumsstellen](./../glossary.md#praktikumsstelle),
 then the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) can send the assignment mails to the [Örtliche Ausbilderin](./../glossary.md#örtliche-ausbilderin).
 To do this, the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) must click on the `Mails Senden` button.
@@ -73,7 +73,7 @@ which [Praktikumsstellen](./../glossary.md#praktikumsstelle) could not be inform
 This has to be done manually.
 The other mails will still be sent.
 
-### Export assignments as Excel file
+## Export assignments as Excel file
 The [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) can export the assignments as an Excel file.
 To do this, the [Ausbildungsleitung](./../glossary.md#örtliche-ausbildungsleitung) must click on the `Exportieren` button.
 After clicking on the button, the file will be downloaded automatically.

@@ -77,13 +77,11 @@ module.exports = {
           "/documentation/": [
             {
               title: "Tools",
-              collapsable: true,
-              children: ["TOOLS.md"],
+              path: "TOOLS.md",
             },
             {
               title: "Configuration",
-              collapsable: true,
-              children: ["architecture/configuration"],
+              path: "architecture/configuration.md",
             },
             {
               title: "Architecture",
@@ -96,7 +94,24 @@ module.exports = {
               children: ["guides/technical-setup/", "guides/database-migration/", "guides/local-development/"],
             },
           ],
-          "/features/": [],
+          "/features/": [
+            {
+              title: 'Nachwuchskräfte',
+              path: 'Nachwuchskraefte.md',
+            },
+            {
+              title: 'Meldezeitraum',
+              path: 'meldezeitraum.md',
+            },
+            {
+              title: 'Praktikumsplätze',
+              path: 'Praktikumsplaetze.md',
+            },
+            {
+              title: 'Assignment',
+              path: 'Zuweisung.md',
+            }
+          ]
         },
       },
     },

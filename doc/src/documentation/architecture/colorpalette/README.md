@@ -7,7 +7,7 @@ The colors were selected with accessibility in mind.
 It is ensured that text on colored backgrounds always provides sufficient contrast for good legibility.
 
 ## Primary colors
-To Be Announced
+#005a9f
 
 ## Secondary colors
 To Be Announced
