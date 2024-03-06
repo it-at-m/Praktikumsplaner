@@ -260,6 +260,15 @@ function getNwkColor(nwk: Nwk): string {
     bottom: 10px;
     right: 10px;
 }
+
+/*
+This code can be updated when the Firefox version is updated.
+In some browsers the pseudo-class :has() is not yet supported.  A possible implementation could look like this.
+
+.v-chip__content:has(> .chip-text) {
+    overflow: hidden;
+}
+ */
 @media only screen and (max-width: 1000px) {
     .chip-text {
         max-width: 10vw !important;
