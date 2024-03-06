@@ -95,7 +95,7 @@ function getNwkColor(nwk: Nwk): string {
 }
 </script>
 <style scoped>
-.full-width{
+.full-width {
     max-width: 100%;
 }
 </style>
