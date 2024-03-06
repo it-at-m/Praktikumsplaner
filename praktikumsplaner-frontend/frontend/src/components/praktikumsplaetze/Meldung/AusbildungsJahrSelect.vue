@@ -8,6 +8,7 @@
         item-title="name"
         item-value="value"
         :rules="conditionalRequiredRules"
+        :clearable="!isRequired"
         @update:model-value="sortAusbildungsjahre"
     >
         <template #prepend-item>

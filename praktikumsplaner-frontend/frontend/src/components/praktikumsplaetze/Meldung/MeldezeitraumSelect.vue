@@ -7,6 +7,7 @@
         :items="properties.meldezeitraueme"
         :rules="conditionalRequiredRules"
         variant="outlined"
+        :clearable="!isRequired"
         @select="onClick"
     >
         <template #item="{ props, item }">
