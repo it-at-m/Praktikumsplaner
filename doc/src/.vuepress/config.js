@@ -61,6 +61,10 @@ module.exports = {
         ariaLabel: "Language",
         nav: [
           {
+            text: "About",
+            link: "/about/",
+          },
+          {
             text: "Features",
             link: "/features/",
           },
