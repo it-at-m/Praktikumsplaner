@@ -29,7 +29,7 @@
         </template>
         <template #item="{ item, props }">
             <v-list-item v-bind="props">
-                <v-list-item-title>{{ item.name }}</v-list-item-title>
+                <v-list-item-title>{{ item.raw.name }}</v-list-item-title>
                 <v-list-item-subtitle
                     v-if="praktikumsstelle.studiengang === 'BSC'"
                 >
