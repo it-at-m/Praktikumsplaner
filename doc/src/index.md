@@ -3,8 +3,8 @@ home: true
 heroImage: logo.png
 heroText: Praktikumsplaner
 tagline: The Praktikumsplaner offers a way to organize junior staff and their internships during their vocational training.
-actionText: Technical Documentation →
-actionLink: /documentation/
+actionText: Get started →
+actionLink: /getStarted/
 features:
 - title: Nachwuchskräfte
   details: View all Nwks and add new ones
