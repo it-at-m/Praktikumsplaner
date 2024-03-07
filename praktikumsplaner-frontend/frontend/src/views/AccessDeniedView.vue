@@ -23,9 +23,16 @@
                 </p>
             </v-col>
         </v-row>
+        <v-row>
+            <v-col cols="4">
+                <v-img :src="catImageUrl"></v-img>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
 <script setup lang="ts">
 import PageTitle from "@/components/common/PageTitle.vue";
+
+const catImageUrl = "https://cataas.com/cat";
 </script>
