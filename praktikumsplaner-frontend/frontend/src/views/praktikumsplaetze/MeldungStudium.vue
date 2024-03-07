@@ -268,7 +268,7 @@ onMounted(() => {
         getPassedMeldezeitraeume();
     }
 
-    if (userStore.username !== undefined) {
+    if (userStore.username) {
         redirectIfUnauthorized();
     } else {
         // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
