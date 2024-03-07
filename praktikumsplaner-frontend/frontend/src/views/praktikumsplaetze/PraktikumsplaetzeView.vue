@@ -34,11 +34,13 @@
                 </v-row>
                 <v-row></v-row>
                 <v-skeleton-loader
-                    v-if="isAusbildungsleitung && loadingUebersicht"
+                    v-if="security.isAusbildungsleitung() && loadingUebersicht"
                     type="image"
                 >
                 </v-skeleton-loader>
-                <v-row v-if="isAusbildungsleitung && !loadingUebersicht">
+                <v-row
+                    v-if="security.isAusbildungsleitung() && !loadingUebersicht"
+                >
                     <v-container
                         v-if="!mapIsEmpty"
                         class="box"
@@ -81,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
@@ -89,8 +91,8 @@ import PageTitle from "@/components/common/PageTitle.vue";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
-import { APP_SECURITY } from "@/constants";
-import index from "@/router";
+import { useSecurity } from "@/composables/security";
+import router from "@/router";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -99,12 +101,7 @@ const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
 const loadingUebersicht = ref<boolean>(false);
 const loadingSite = ref<boolean>(true);
-const isAusbildungsleitung = computed(() => {
-    return (
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true"
-    );
-});
+const security = useSecurity();
 const twoChoiceDialogVisible = ref<boolean>(false);
 const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
     new Map<string, Praktikumsstelle[]>()
@@ -113,6 +110,7 @@ const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
 const mapIsEmpty = computed(() => {
     return praktikumsstellenMap.value.size <= 0 || false;
 });
+const route = router.currentRoute.value;
 
 onMounted(() => {
     loadingUebersicht.value = true;
@@ -122,18 +120,44 @@ onMounted(() => {
         }
     );
     getAllPraktikumsstellenInCurrentMeldezeitraum();
+
+    if (userStore.username) {
+        redirectIfUnauthorized();
+    } else {
+        // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
+        watch(
+            () => userStore.roles,
+            () => {
+                redirectIfUnauthorized();
+            }
+        );
+    }
 });
+
+function redirectIfUnauthorized() {
+    const requiresRoles =
+        route.meta.requiresRole != undefined
+            ? (route.meta.requiresRole as string[])
+            : undefined;
+    const security = useSecurity();
+    if (
+        requiresRoles !== undefined &&
+        !security.checkForAnyRole(requiresRoles)
+    ) {
+        router.push("/AccessDenied");
+    }
+}
 
 emitter.on("nwkDeleted", getAllPraktikumsstellenInCurrentMeldezeitraum);
 
 function canStellenBeSubmitted() {
-    return isAusbildungsleitung.value || activeMeldezeitraum.value;
+    return security.isAusbildungsleitung() || activeMeldezeitraum.value;
 }
 function toAusbildung(): void {
-    index.push("/praktikumsplaetze/meldungAusbildung");
+    router.push("/praktikumsplaetze/meldungAusbildung");
 }
 function toStudium(): void {
-    index.push("/praktikumsplaetze/meldungStudium");
+    router.push("/praktikumsplaetze/meldungStudium");
 }
 
 function getAllPraktikumsstellenInCurrentMeldezeitraum() {

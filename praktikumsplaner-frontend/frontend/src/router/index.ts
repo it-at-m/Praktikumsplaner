@@ -1,7 +1,6 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
 
-import { useSecurity } from "@/composables/security";
 import { ROUTES_HOME } from "@/constants";
 import AccessDeniedView from "@/views/AccessDeniedView.vue";
 import assignView from "@/views/AssignView.vue";
@@ -23,11 +22,17 @@ const routes = [
         path: "/nachwuchskraefte",
         name: "nachwuchskraefte",
         component: NachwuchskraefteView,
+        meta: {
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
+        },
     },
     {
         path: "/meldezeitraum",
         name: "meldezeitraum",
         component: Meldezeitraeume,
+        meta: {
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
+        },
     },
     {
         path: "/praktikumsplaetze",
@@ -41,16 +46,25 @@ const routes = [
         path: "/praktikumsplaetze/meldungAusbildung",
         name: "MeldungAusbildung",
         component: MeldungAusbildung,
+        meta: {
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+        },
     },
     {
         path: "/praktikumsplaetze/meldungStudium",
         name: "MeldungStudium",
         component: MeldungStudium,
+        meta: {
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+        },
     },
     {
         path: "/zuweisung",
         name: "Zuweisung",
         component: assignView,
+        meta: {
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
+        },
     },
     {
         path: "/accessDenied",
@@ -63,21 +77,6 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
-});
-
-router.beforeEach((to, from, next) => {
-    const requiresRoles = (to.meta?.requiresRole as string[]) ?? undefined;
-    const security = useSecurity();
-    if (
-        requiresRoles !== undefined &&
-        security.checkForAnyRole(requiresRoles)
-    ) {
-        next();
-    } else if (requiresRoles !== undefined) {
-        next({ name: "AccessDenied" });
-    } else {
-        next();
-    }
 });
 
 export default router;
