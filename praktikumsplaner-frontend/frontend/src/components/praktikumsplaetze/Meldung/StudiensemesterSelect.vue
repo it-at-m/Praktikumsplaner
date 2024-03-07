@@ -12,22 +12,20 @@
         @update:model-value="sortSemester"
     >
         <template #prepend-item>
-            <v-checkbox
-                v-model="selectAll"
-                label="Egal"
-                hide-details
-                color="primary"
-                :false-icon="semesterIcon"
-                :true-icon="semesterIcon"
-                :value="allSemesterSelected"
+            <v-list-item
+                title="Egal"
                 @click="selectAllStudiensemester"
             >
-                <template #label>
-                    <v-list-item>
-                        <v-list-item-title>Egal</v-list-item-title>
-                    </v-list-item>
+                <template #prepend>
+                    <v-checkbox-btn
+                        color="primary"
+                        :indeterminate="
+                            someSemesterSelected && !allSemesterSelected
+                        "
+                        :model-value="allSemesterSelected"
+                    ></v-checkbox-btn>
                 </template>
-            </v-checkbox>
+            </v-list-item>
             <v-divider class="mt-2"></v-divider>
         </template>
         <template #item="{ item, props }">
@@ -79,8 +77,6 @@ const conditionalRequiredLabel = computed(() => {
     return properties.isRequired ? label + properties.requiredSymbol : label;
 });
 
-const selectAll = true;
-
 const praktikumsstelle = computed({
     // getter
     get() {
@@ -113,12 +109,6 @@ const someSemesterSelected = computed(() => {
         praktikumsstelle.value.studiensemester?.length !== undefined &&
         !allSemesterSelected.value
     );
-});
-
-const semesterIcon = computed(() => {
-    if (allSemesterSelected.value) return "mdi-checkbox-marked";
-    if (someSemesterSelected.value) return "mdi-minus-box";
-    return "mdi-checkbox-blank-outline";
 });
 
 function selectAllStudiensemester() {
