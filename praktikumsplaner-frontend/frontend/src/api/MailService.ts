@@ -1,3 +1,5 @@
+import type { Ref } from "vue";
+
 import { Levels } from "@/api/Error";
 import FetchUtils from "@/api/FetchUtils";
 import { API_BASE, MAIL_BASE } from "@/constants";
@@ -6,9 +8,13 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Zeitraum from "@/types/Zeitraum";
 
 export default {
-    sendSuccessfulAssignedMails(assignmentPeriods: {
-        [k: string]: Zeitraum;
-    }): Promise<Praktikumsstelle[]> {
+    sendSuccessfulAssignedMails(
+        assignmentPeriods: {
+            [k: string]: Zeitraum;
+        },
+        loading: Ref<boolean>
+    ): Promise<Praktikumsstelle[]> {
+        loading.value = true;
         return fetch(
             `${API_BASE}${MAIL_BASE}/send?assignmentStatus=successful`,
             FetchUtils.getPOSTConfig(assignmentPeriods)
@@ -37,6 +43,9 @@ export default {
                     level: Levels.ERROR,
                 });
                 return Promise.reject(err); // Fehler zurückgeben
+            })
+            .finally(() => {
+                loading.value = false;
             });
     },
 };

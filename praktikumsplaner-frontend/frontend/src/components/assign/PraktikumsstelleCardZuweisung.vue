@@ -44,7 +44,12 @@
                     v-if="assignedNwk && !loading"
                     :color="getNwkColor(assignedNwk)"
                     variant="flat"
-                    >{{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
+                    class="chip"
+                >
+                    <span class="text-truncate chip-text">
+                        {{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
+                    </span>
+
                     <template #close>
                         <v-icon
                             icon="mdi-close-circle"
@@ -179,15 +184,13 @@ function assignNwk() {
         nwkToAssignUnassing.value = undefined;
         return;
     }
-    loading.value = true;
 
     stelleToAssignUnassign.assignedNwk = nwkToAssignUnassing.value;
     PraktikumsstellenService.assignNwk(
         stelleToAssignUnassign.id || "",
-        stelleToAssignUnassign.assignedNwk?.id
-    ).finally(() => {
-        loading.value = false;
-    });
+        stelleToAssignUnassign.assignedNwk?.id,
+        loading
+    );
     assignedNwk.value = nwkToAssignUnassing.value;
     if (stelleToAssignUnassign.assignedNwk)
         emitter.emit("assignedNwk", stelleToAssignUnassign.assignedNwk);
@@ -201,11 +204,9 @@ function resetWarningDialog() {
 
 function unassignNwk() {
     if (stelleToAssignUnassign?.id) {
-        loading.value = true;
-        PraktikumsstellenService.unassignNwk(stelleToAssignUnassign.id).finally(
-            () => {
-                loading.value = false;
-            }
+        PraktikumsstellenService.unassignNwk(
+            stelleToAssignUnassign.id,
+            loading
         );
         if (stelleToAssignUnassign.assignedNwk)
             emitter.emit("unassignedNwk", stelleToAssignUnassign.assignedNwk);
@@ -254,5 +255,27 @@ function getNwkColor(nwk: Nwk): string {
     position: absolute;
     bottom: 10px;
     right: 10px;
+}
+
+/*
+This code can be updated when the Firefox version is updated.
+In some browsers the pseudo-class :has() is not yet supported.  A possible implementation could look like this.
+
+.v-chip__content:has(> .chip-text) {
+    overflow: hidden;
+}
+ */
+@media only screen and (max-width: 1000px) {
+    .chip-text {
+        max-width: 10vw !important;
+    }
+}
+@media only screen and (max-width: 1900px) and (min-width: 1000px) {
+    .chip-text {
+        max-width: 15vw !important;
+    }
+}
+.chip-text {
+    max-width: 25vw;
 }
 </style>

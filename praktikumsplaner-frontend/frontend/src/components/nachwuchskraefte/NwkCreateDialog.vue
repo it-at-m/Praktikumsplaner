@@ -58,7 +58,7 @@
                         <v-btn
                             color="primary"
                             variant="outlined"
-                            @click="close()"
+                            @click="cancel()"
                         >
                             Abbrechen
                         </v-btn>
@@ -97,6 +97,11 @@ const form = ref<HTMLFormElement>();
 
 const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
 
+function cancel() {
+    visible.value = false;
+    form.value?.reset();
+}
+
 function close() {
     visible.value = false;
 }
@@ -110,14 +115,12 @@ function saveNwk() {
     form.value?.validate().then((validation: { valid: boolean }) => {
         if (!validation.valid) return;
 
-        loading.value = true;
         close();
-        NwkService.saveNwk(nwk.value)
+        NwkService.saveNwk(nwk.value, loading)
             .then(() => {
                 emitter.emit("nwkCreated");
             })
             .finally(() => {
-                loading.value = false;
                 clear();
             });
     });

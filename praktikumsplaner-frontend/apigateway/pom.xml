@@ -17,11 +17,11 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <spring.boot.version>3.0.7</spring.boot.version>
-        <spring.cloud.version>2022.0.3</spring.cloud.version>
+        <spring.boot.version>3.2.3</spring.boot.version>
+        <spring.cloud.version>2023.0.0</spring.cloud.version>
         <logstash.encoder.version>7.0.1</logstash.encoder.version>
          <!-- Die Version von Hazelcast muss der Hazelcastversion in den spring-boot-dependencies entsprechen -->
-        <hazelcast.version>4.2.8</hazelcast.version>
+        <hazelcast.version>5.3.6</hazelcast.version>
         <apache.commons.lang.version>3.12.0</apache.commons.lang.version>
         <jvm.options>-Dorg.conscrypt.native.workdir=$(pwd)</jvm.options>
         <jacoco.version>0.8.7</jacoco.version>
@@ -91,11 +91,6 @@
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-hazelcast</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast-all</artifactId>
-            <version>${hazelcast.version}</version>
         </dependency>
 
         <!-- Testing -->

@@ -14,7 +14,8 @@ Each main-[Dienststelle](../glossary.md#dienststelle) can be folded out and then
 If no [Praktikumsstellen](./../glossary.md#praktikumsstelle) from this [Dienststelle](../glossary.md#dienststelle) has been reported, no fold-out element is displayed.
 If the [Dienststelle](../glossary.md#dienststelle) provided information, that their team has a [Planstelle](../glossary.md#planstelle),
 it will be marked with a special icon (mdi-account-star).
-Each [Praktikumsstellen](./../glossary.md#praktikumsstelle) can be expanded again by clicking on the arrow or the card itself to display more details with all the information about the position.
+Each [Praktikumsstellen](./../glossary.md#praktikumsstelle) can be expanded again by clicking on the arrow or the card itself to display more details with all the information about the position.  
+Both lists can be scrolled separately.
 
 ## Assign [Nwks](./../glossary.md#nwk) to [Praktikumsstellen](./../glossary.md#praktikumsstelle)
 
@@ -26,6 +27,7 @@ If there is already a [Nwk](./../glossary.md#nwk) on the desired [Praktikumsstel
 then it is not possible to drop another [Nwk](./../glossary.md#nwk) there.
 On the assignment page you can click on a [Nwk](./../glossary.md#nwk) to see additional information for example the lecture days.
 You can also click on a [Praktikumsstelle](./../glossary.md#praktikumsstelle) to see additional information about it.
+Scrolling works as soon as you press and hold the element at the top or bottom of the screen.
 
 ## Warnings when assigning [Nwks](./../glossary.md#nwk)
 

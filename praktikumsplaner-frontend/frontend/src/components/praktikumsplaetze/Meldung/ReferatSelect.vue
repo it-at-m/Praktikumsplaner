@@ -7,6 +7,7 @@
         :label="conditionalRequiredLabel"
         :rules="conditionalRequiredRules"
         variant="outlined"
+        :clearable="!isRequired"
     ></v-select>
 </template>
 

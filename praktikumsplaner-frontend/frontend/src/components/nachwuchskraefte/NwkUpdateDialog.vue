@@ -106,15 +106,10 @@ function updateNwk() {
     form.value?.validate().then((validation: { valid: boolean }) => {
         if (!validation.valid) return;
 
-        loading.value = true;
         cancel();
-        NwkService.updateNwk(nwkToUpdate.value)
-            .then(() => {
-                emits("updated");
-            })
-            .finally(() => {
-                loading.value = false;
-            });
+        NwkService.updateNwk(nwkToUpdate.value, loading).then(() => {
+            emits("updated");
+        });
     });
 }
 </script>

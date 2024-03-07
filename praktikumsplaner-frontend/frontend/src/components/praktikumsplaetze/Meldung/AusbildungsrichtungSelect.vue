@@ -7,6 +7,7 @@
         item-title="name"
         :rules="conditionalRequiredRules"
         variant="outlined"
+        :clearable="!isRequired"
     >
     </v-select>
 </template>

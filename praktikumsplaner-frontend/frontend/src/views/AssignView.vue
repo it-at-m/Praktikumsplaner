@@ -5,7 +5,11 @@
             page-header-text="Zuweisung"
         ></page-title>
         <v-row>
-            <v-col cols="5">
+            <v-col
+                cols="5"
+                class="overflow-y-auto"
+                style="max-height: 70vh"
+            >
                 <v-skeleton-loader
                     v-if="loadingNwk"
                     type="image"
@@ -13,10 +17,15 @@
                 <active-nwk-list-for-zuweisung
                     v-else
                     v-model="nwks"
+                    class="overflow-y-auto"
                 />
             </v-col>
             <v-divider vertical />
-            <v-col cols="7">
+            <v-col
+                cols="6"
+                class="overflow-y-auto"
+                style="max-height: 70vh"
+            >
                 <v-skeleton-loader
                     v-if="loadingPraktikumsstellen"
                     type="image"
@@ -24,6 +33,7 @@
                 <praktikumsstellen-list-zuweisung
                     v-else
                     :praktikumsstellen-map="praktikumsstellenMap"
+                    class="overflow-y-auto"
                 />
             </v-col>
         </v-row>
@@ -54,7 +64,7 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 import NwkService from "@/api/NwkService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
@@ -64,7 +74,10 @@ import PraktikumsstellenListZuweisung from "@/components/assign/Praktikumsstelle
 import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import WarningDialog from "@/components/common/WarningDialog.vue";
+import { useSecurity } from "@/composables/security";
 import { useWarnings } from "@/composables/warningGenerator";
+import router from "@/router";
+import { useUserStore } from "@/stores/user";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Warning from "@/types/Warning";
@@ -82,6 +95,8 @@ const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
 );
 const startDownload = ref(false);
 const isExcelWarningDialog = ref(false);
+const route = router.currentRoute.value;
+const userStore = useUserStore();
 
 function collectWarnings() {
     const stellen: Praktikumsstelle[] = [];
@@ -131,33 +146,51 @@ function rejectedWarningDialog() {
 }
 
 onMounted(() => {
+    if (userStore.username) {
+        redirectIfUnauthorized();
+    } else {
+        // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
+        watch(
+            () => userStore.roles,
+            () => {
+                redirectIfUnauthorized();
+            }
+        );
+    }
     getAllActiveNwks();
     getAllPraktikumsstellenInMostRecentMeldezeitraum();
 });
 
+function redirectIfUnauthorized() {
+    const requiresRoles =
+        route.meta.requiresRole != undefined
+            ? (route.meta.requiresRole as string[])
+            : undefined;
+    const security = useSecurity();
+    if (
+        requiresRoles !== undefined &&
+        !security.checkForAnyRole(requiresRoles)
+    ) {
+        router.push("/AccessDenied");
+    }
+}
+
 function getAllActiveNwks() {
-    NwkService.getAllUnassignedNwks()
-        .then((fetchedNwks) => {
-            nwks.value = [...fetchedNwks];
-        })
-        .finally(() => {
-            loadingNwk.value = false;
-        });
+    NwkService.getAllUnassignedNwks(loadingNwk).then((fetchedNwks) => {
+        nwks.value = [...fetchedNwks];
+    });
 }
 
 function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
-        "most_recent"
-    )
-        .then((fetchedStellen) => {
-            for (const [key, value] of Object.entries(fetchedStellen)) {
-                helperMap.set(key, value);
-            }
-            praktikumsstellenMap.value = helperMap;
-        })
-        .finally(() => {
-            loadingPraktikumsstellen.value = false;
-        });
+        "most_recent",
+        loadingPraktikumsstellen
+    ).then((fetchedStellen) => {
+        for (const [key, value] of Object.entries(fetchedStellen)) {
+            helperMap.set(key, value);
+        }
+        praktikumsstellenMap.value = helperMap;
+    });
 }
 </script>

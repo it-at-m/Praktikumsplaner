@@ -73,17 +73,17 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
-import { UserService } from "@/api/UserService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import CreateMeldezeitraum from "@/components/meldezeitraeume/CreateMeldezeitraum.vue";
 import MeldezeitraumList from "@/components/meldezeitraeume/MeldezeitraumList.vue";
+import { useSecurity } from "@/composables/security";
+import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 
-const userService = new UserService();
 const userStore = useUserStore();
 
 const model = ref<boolean>(true);
@@ -91,35 +91,51 @@ const loading = ref<boolean>(false);
 const current = ref<Meldezeitraum[]>([]);
 const upcoming = ref<Meldezeitraum[]>([]);
 const passed = ref<Meldezeitraum[]>([]);
+const route = router.currentRoute.value;
 
 onMounted(() => {
     reloadMeldezeitraeume();
-});
-onBeforeMount(() => {
-    userService.getPermissions().then((userinfo) => {
-        userStore.setUsername(userinfo.name);
-        if (userinfo.user_roles) {
-            userStore.setRoles(userinfo.user_roles);
-        }
-    });
+
+    if (userStore.username) {
+        redirectIfUnauthorized();
+    } else {
+        // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
+        watch(
+            () => userStore.roles,
+            () => {
+                redirectIfUnauthorized();
+            }
+        );
+    }
 });
 
+function redirectIfUnauthorized() {
+    const requiresRoles =
+        route.meta.requiresRole != undefined
+            ? (route.meta.requiresRole as string[])
+            : undefined;
+    const security = useSecurity();
+    if (
+        requiresRoles !== undefined &&
+        !security.checkForAnyRole(requiresRoles)
+    ) {
+        router.push("/AccessDenied");
+    }
+}
+
 function reloadMeldezeitraeume() {
-    loading.value = true;
-    MeldezeitraumService.getCurrentMeldezeitraum().then((response) => {
+    MeldezeitraumService.getCurrentMeldezeitraum(loading).then((response) => {
         current.value = response;
     });
 
-    MeldezeitraumService.getPassedMeldezeitraueme().then((response) => {
+    MeldezeitraumService.getPassedMeldezeitraueme(loading).then((response) => {
         passed.value = response;
     });
 
-    MeldezeitraumService.getUpcomingMeldezeitraueme()
-        .then((response) => {
+    MeldezeitraumService.getUpcomingMeldezeitraueme(loading).then(
+        (response) => {
             upcoming.value = response;
-        })
-        .finally(() => {
-            loading.value = false;
-        });
+        }
+    );
 }
 </script>

@@ -8,25 +8,25 @@
         item-title="name"
         item-value="value"
         :rules="conditionalRequiredRules"
+        :clearable="!isRequired"
         @update:model-value="sortAusbildungsjahre"
     >
         <template #prepend-item>
-            <v-checkbox
-                v-model="selectAll"
-                label="Egal"
-                hide-details
-                color="primary"
-                :false-icon="ausbildungsjahrIcon"
-                :true-icon="ausbildungsjahrIcon"
-                :value="allAusbildungsjahreSelected"
+            <v-list-item
+                title="Egal"
                 @click="selectAllAusbildungsjahre"
             >
-                <template #label>
-                    <v-list-item>
-                        <v-list-item-title> Egal </v-list-item-title>
-                    </v-list-item>
+                <template #prepend>
+                    <v-checkbox-btn
+                        color="primary"
+                        :indeterminate="
+                            someAusbildungsjahreSelected &&
+                            !allAusbildungsjahreSelected
+                        "
+                        :model-value="allAusbildungsjahreSelected"
+                    ></v-checkbox-btn>
                 </template>
-            </v-checkbox>
+            </v-list-item>
             <v-divider class="mt-2"></v-divider>
         </template>
         <template #item="{ item, props }">
@@ -67,8 +67,6 @@ const conditionalRequiredLabel = computed(() => {
     return properties.isRequired ? label + properties.requiredSymbol : label;
 });
 
-const selectAll = true;
-
 const praktikumsstelle = computed({
     // getter
     get() {
@@ -100,12 +98,6 @@ const someAusbildungsjahreSelected = computed(() => {
         praktikumsstelle.value.ausbildungsjahr?.length !== undefined &&
         !allAusbildungsjahreSelected.value
     );
-});
-
-const ausbildungsjahrIcon = computed(() => {
-    if (allAusbildungsjahreSelected.value) return "mdi-checkbox-marked";
-    if (someAusbildungsjahreSelected.value) return "mdi-minus-box";
-    return "mdi-checkbox-blank-outline";
 });
 
 function selectAllAusbildungsjahre() {

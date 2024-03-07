@@ -81,13 +81,11 @@ function uploadFile() {
     form.value?.validate().then((validation: { valid: boolean }) => {
         if (!validation.valid || !file.value) return;
         visible.value = false;
-        loading.value = true;
-        NwkService.uploadExcelFile(file.value[0])
+        NwkService.uploadExcelFile(file.value[0], loading)
             .then(() => {
                 emitter.emit("nwkCreated");
             })
             .finally(() => {
-                loading.value = false;
                 form.value?.reset();
                 file.value = [];
             });
