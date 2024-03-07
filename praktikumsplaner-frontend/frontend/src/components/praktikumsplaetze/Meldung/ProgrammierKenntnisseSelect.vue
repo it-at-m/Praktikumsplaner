@@ -7,6 +7,7 @@
         item-value="value"
         item-title="name"
         variant="outlined"
+        :clearable="!isRequired"
     >
     </v-select>
 </template>

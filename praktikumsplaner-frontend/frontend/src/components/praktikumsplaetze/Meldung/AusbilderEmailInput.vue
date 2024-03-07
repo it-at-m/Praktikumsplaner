@@ -4,6 +4,7 @@
         :label="conditionalRequiredLabel"
         :rules="conditionalRequiredRules"
         variant="outlined"
+        :clearable="!isRequired"
     ></v-text-field>
 </template>
 
