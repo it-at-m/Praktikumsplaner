@@ -1,9 +1,7 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
 
-import { useSecurity } from "@/composables/security";
 import { ROUTES_HOME } from "@/constants";
-import { initializeUserStore } from "@/userStoreInitializer";
 import AccessDeniedView from "@/views/AccessDeniedView.vue";
 import assignView from "@/views/AssignView.vue";
 import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";
@@ -25,7 +23,7 @@ const routes = [
         name: "nachwuchskraefte",
         component: NachwuchskraefteView,
         meta: {
-            requiresRole: ["ROLE_AUSBILDER"],
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
         },
     },
     {
@@ -33,7 +31,7 @@ const routes = [
         name: "meldezeitraum",
         component: Meldezeitraeume,
         meta: {
-            requiresRole: ["ROLE_AUSBILDER"],
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
         },
     },
     {
@@ -41,7 +39,7 @@ const routes = [
         name: "praktikumsplätze",
         component: PraktikumsplaetzeView,
         meta: {
-            requiresRole: ["ROLE_AUSBILDER"],
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
         },
     },
     {
@@ -49,7 +47,7 @@ const routes = [
         name: "MeldungAusbildung",
         component: MeldungAusbildung,
         meta: {
-            requiresRole: ["ROLE_AUSBILDER"],
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
         },
     },
     {
@@ -57,7 +55,7 @@ const routes = [
         name: "MeldungStudium",
         component: MeldungStudium,
         meta: {
-            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
+            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
         },
     },
     {
@@ -79,22 +77,6 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
-});
-
-router.beforeEach(async (to, from, next) => {
-    await initializeUserStore();
-    const requiresRoles = (to.meta?.requiresRole as string[]) ?? undefined;
-    const security = useSecurity();
-    if (
-        requiresRoles !== undefined &&
-        security.checkForAnyRole(requiresRoles)
-    ) {
-        next();
-    } else if (requiresRoles !== undefined) {
-        next({ name: "AccessDenied" });
-    } else {
-        next();
-    }
 });
 
 export default router;

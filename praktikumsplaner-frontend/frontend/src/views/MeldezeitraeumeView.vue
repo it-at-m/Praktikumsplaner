@@ -73,10 +73,9 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
-import { UserService } from "@/api/UserService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import CreateMeldezeitraum from "@/components/meldezeitraeume/CreateMeldezeitraum.vue";
 import MeldezeitraumList from "@/components/meldezeitraeume/MeldezeitraumList.vue";
@@ -85,7 +84,6 @@ import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 
-const userService = new UserService();
 const userStore = useUserStore();
 
 const model = ref<boolean>(true);
@@ -93,21 +91,37 @@ const loading = ref<boolean>(false);
 const current = ref<Meldezeitraum[]>([]);
 const upcoming = ref<Meldezeitraum[]>([]);
 const passed = ref<Meldezeitraum[]>([]);
+const route = router.currentRoute.value;
 
 onMounted(() => {
     reloadMeldezeitraeume();
-    if (!useSecurity().isAusbildungsleitung()) {
-        router.push("/AccessDenied");
+
+    if (userStore.username !== undefined) {
+        redirectIfUnauthorized();
+    } else {
+        // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
+        watch(
+            () => userStore.roles,
+            () => {
+                redirectIfUnauthorized();
+            }
+        );
     }
 });
-onBeforeMount(() => {
-    userService.getPermissions().then((userinfo) => {
-        userStore.setUsername(userinfo.name);
-        if (userinfo.user_roles) {
-            userStore.setRoles(userinfo.user_roles);
-        }
-    });
-});
+
+function redirectIfUnauthorized() {
+    const requiresRoles =
+        route.meta.requiresRole != undefined
+            ? (route.meta.requiresRole as string[])
+            : undefined;
+    const security = useSecurity();
+    if (
+        requiresRoles !== undefined &&
+        !security.checkForAnyRole(requiresRoles)
+    ) {
+        router.push("/AccessDenied");
+    }
+}
 
 function reloadMeldezeitraeume() {
     MeldezeitraumService.getCurrentMeldezeitraum(loading).then((response) => {

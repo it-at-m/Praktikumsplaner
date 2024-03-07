@@ -54,7 +54,7 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 import NwkService from "@/api/NwkService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
@@ -64,7 +64,10 @@ import PraktikumsstellenListZuweisung from "@/components/assign/Praktikumsstelle
 import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import WarningDialog from "@/components/common/WarningDialog.vue";
+import { useSecurity } from "@/composables/security";
 import { useWarnings } from "@/composables/warningGenerator";
+import router from "@/router";
+import { useUserStore } from "@/stores/user";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Warning from "@/types/Warning";
@@ -82,6 +85,8 @@ const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
 );
 const startDownload = ref(false);
 const isExcelWarningDialog = ref(false);
+const route = router.currentRoute.value;
+const userStore = useUserStore();
 
 function collectWarnings() {
     const stellen: Praktikumsstelle[] = [];
@@ -131,9 +136,34 @@ function rejectedWarningDialog() {
 }
 
 onMounted(() => {
+    if (userStore.username !== undefined) {
+        redirectIfUnauthorized();
+    } else {
+        // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
+        watch(
+            () => userStore.roles,
+            () => {
+                redirectIfUnauthorized();
+            }
+        );
+    }
     getAllActiveNwks();
     getAllPraktikumsstellenInMostRecentMeldezeitraum();
 });
+
+function redirectIfUnauthorized() {
+    const requiresRoles =
+        route.meta.requiresRole != undefined
+            ? (route.meta.requiresRole as string[])
+            : undefined;
+    const security = useSecurity();
+    if (
+        requiresRoles !== undefined &&
+        !security.checkForAnyRole(requiresRoles)
+    ) {
+        router.push("/AccessDenied");
+    }
+}
 
 function getAllActiveNwks() {
     NwkService.getAllUnassignedNwks(loadingNwk).then((fetchedNwks) => {
