@@ -44,7 +44,12 @@
                     v-if="assignedNwk && !loading"
                     :color="getNwkColor(assignedNwk)"
                     variant="flat"
-                    >{{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
+                    class="chip"
+                >
+                    <span class="text-truncate chip-text">
+                        {{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
+                    </span>
+
                     <template #close>
                         <v-icon
                             icon="mdi-close-circle"
@@ -250,5 +255,27 @@ function getNwkColor(nwk: Nwk): string {
     position: absolute;
     bottom: 10px;
     right: 10px;
+}
+
+/*
+This code can be updated when the Firefox version is updated.
+In some browsers the pseudo-class :has() is not yet supported.  A possible implementation could look like this.
+
+.v-chip__content:has(> .chip-text) {
+    overflow: hidden;
+}
+ */
+@media only screen and (max-width: 1000px) {
+    .chip-text {
+        max-width: 10vw !important;
+    }
+}
+@media only screen and (max-width: 1900px) and (min-width: 1000px) {
+    .chip-text {
+        max-width: 15vw !important;
+    }
+}
+.chip-text {
+    max-width: 25vw;
 }
 </style>
