@@ -59,6 +59,16 @@
                 elevation="0"
                 @click.stop="show = !show"
             ></v-btn>
+            <ausbildungs-praktikumsstelle-update-dialog
+                v-if="isAusbildungsPraktikumsstelle"
+                v-model="praktikumsstelle"
+                :icon-only="true"
+            ></ausbildungs-praktikumsstelle-update-dialog>
+            <studiums-praktikumsstelle-update-dialog
+                v-else-if="isStudiumsPraktikumsstelle"
+                v-model="praktikumsstelle"
+                :icon-only="true"
+            ></studiums-praktikumsstelle-update-dialog>
             <v-expand-transition>
                 <div v-show="show">
                     <v-divider></v-divider>
@@ -90,10 +100,12 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
+import AusbildungsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/AusbildungsPraktikumsstelleUpdateDialog.vue";
+import StudiumsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/StudiumsPraktikumsstelleUpdateDialog.vue";
 import { useTextGenerator } from "@/composables/textGenerator";
 import { useWarnings } from "@/composables/warningGenerator";
 import emitter from "@/stores/eventBus";
@@ -101,10 +113,6 @@ import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
-
-const properties = defineProps<{
-    modelValue: Praktikumsstelle;
-}>();
 
 const generator = useTextGenerator();
 const warningsGenerator = useWarnings();
@@ -116,6 +124,20 @@ const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
 const unassignConfirmDialog = ref<boolean>(false);
 const warningDialog = ref<boolean>(false);
 const nwkToAssignUnassing = ref<Nwk>();
+
+const properties = defineProps<{
+    modelValue: Praktikumsstelle;
+}>();
+
+const emits = defineEmits<{
+    (e: "updated", praktikumsstelleToUpdate: Praktikumsstelle): void;
+}>();
+
+const praktikumsstelle = computed({
+    get: () => properties.modelValue,
+    set: (newValue) => emits("updated", newValue),
+});
+
 const warningDialogTitle = ref<string>(
     "Warnung. Wollen sie wirklich fortfahren?"
 );
@@ -123,6 +145,15 @@ const warningDialogText = ref<string>("");
 const assignedNwk = ref(properties.modelValue.assignedNwk);
 
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
+
+const isAusbildungsPraktikumsstelle = ref<boolean>(
+    PraktikumsstellenService.isAusbildunsPraktikumsstelle(
+        praktikumsstelle.value
+    )
+);
+const isStudiumsPraktikumsstelle = ref<boolean>(
+    PraktikumsstellenService.isStudiumsPraktikumsstelle(praktikumsstelle.value)
+);
 
 function getCardText(stelle: Praktikumsstelle): string {
     return generator.getPraktikumsstellenCardText(stelle);

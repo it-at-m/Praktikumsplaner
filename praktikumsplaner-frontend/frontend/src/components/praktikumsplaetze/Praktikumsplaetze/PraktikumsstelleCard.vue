@@ -59,15 +59,25 @@
                 >
                     <v-icon>mdi-delete</v-icon>
                 </v-btn>
+                <ausbildungs-praktikumsstelle-update-dialog
+                    v-if="isAusbildungsPraktikumsstelle"
+                    v-model="praktikumsstelle"
+                ></ausbildungs-praktikumsstelle-update-dialog>
+                <studiums-praktikumsstelle-update-dialog
+                    v-else-if="isStudiumsPraktikumsstelle"
+                    v-model="praktikumsstelle"
+                ></studiums-praktikumsstelle-update-dialog>
             </v-card-actions>
         </v-card>
     </v-container>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
+import AusbildungsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/AusbildungsPraktikumsstelleUpdateDialog.vue";
+import StudiumsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/StudiumsPraktikumsstelleUpdateDialog.vue";
 import { useTextGenerator } from "@/composables/textGenerator";
 import emitter from "@/stores/eventBus";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -75,6 +85,23 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 const properties = defineProps<{
     modelValue: Praktikumsstelle;
 }>();
+const emits = defineEmits<{
+    (e: "updated", praktikumsstelleToUpdate: Praktikumsstelle): void;
+}>();
+
+const praktikumsstelle = computed({
+    get: () => properties.modelValue,
+    set: (newValue) => emits("updated", newValue),
+});
+
+const isAusbildungsPraktikumsstelle = ref<boolean>(
+    PraktikumsstellenService.isAusbildunsPraktikumsstelle(
+        praktikumsstelle.value
+    )
+);
+const isStudiumsPraktikumsstelle = ref<boolean>(
+    PraktikumsstellenService.isStudiumsPraktikumsstelle(praktikumsstelle.value)
+);
 
 const warningDialog = ref<boolean>(false);
 const warningDialogTitle = ref("Stelle löschen?");
