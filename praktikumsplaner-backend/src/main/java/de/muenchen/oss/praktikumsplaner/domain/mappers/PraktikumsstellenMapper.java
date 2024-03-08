@@ -43,8 +43,9 @@ public interface PraktikumsstellenMapper {
     AusbildungsPraktikumsstelle toEntity(final CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto createAusbildungsPraktikumsstelleWithMeldezeitraumDto);
 
     @Mapping(target = "id", source = "id")
-    AusbildungsPraktikumsstelle toEntity(final UUID id, final CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelleDto);
+    AusbildungsPraktikumsstelle toEntity(final UUID id,
+            final CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelleDto);
 
-    @Mapping(target="id", source = "id")
+    @Mapping(target = "id", source = "id")
     StudiumsPraktikumsstelle toEntity(final UUID id, final CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelleDto);
 }

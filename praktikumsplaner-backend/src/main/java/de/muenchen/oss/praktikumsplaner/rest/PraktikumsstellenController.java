@@ -93,13 +93,15 @@ public class PraktikumsstellenController {
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PutMapping("/ausbildung/{praktikumsstellenId}")
-    public void updateAusbildungPraktikumsstelle(@PathVariable(name="praktikumsstellenId") UUID praktikumsstellenId, @RequestBody CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
+    public void updateAusbildungPraktikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
+            @RequestBody CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
         praktikumsstellenService.updateAusbildungsPraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PutMapping("/studium/{praktikumsstellenId}")
-    public void updateStudiumPraktikumsstelle(@PathVariable(name="praktikumsstellenId") UUID praktikumsstellenId, @RequestBody CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
+    public void updateStudiumPraktikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
+            @RequestBody CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
         praktikumsstellenService.updateStudiumsPraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
     }
 

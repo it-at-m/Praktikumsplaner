@@ -151,17 +151,19 @@ public class PraktikumsstellenService {
         }
     }
 
-    public void updateAusbildungsPraktikumsstelle(UUID praktikumsstellenId, CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto){
-        if(ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)){
+    public void updateAusbildungsPraktikumsstelle(UUID praktikumsstellenId,
+            CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
+        if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             ausbildungsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
-        }else{
+        } else {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }
-    public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto){
-        if(studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)){
+
+    public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
+        if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             studiumsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
-        }else{
+        } else {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }

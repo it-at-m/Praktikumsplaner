@@ -555,9 +555,10 @@ public class PraktikumsstellenServiceTest {
     @Test
     public void testUpdateStudiumPraktikumstelle() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelle = new CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto("GL13", "John Smith", "John@smith.com",
-            "Planung von Events", Dringlichkeit.ZWINGEND,"", Referat.RIT, "", false,
-            Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id(), null);
+        CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelle = new CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
+                "GL13", "John Smith", "John@smith.com",
+                "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, "", false,
+                Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id(), null);
 
         UUID uuid = UUID.randomUUID();
 
@@ -578,9 +579,10 @@ public class PraktikumsstellenServiceTest {
     @Test
     public void testUpdateStudiumPraktikumstelleWithoutExisting() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelle = new CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto("GL13", "John Smith", "John@smith.com",
-            "Planung von Events", Dringlichkeit.ZWINGEND,"", Referat.RIT, "", false,
-            Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id(), null);
+        CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelle = new CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
+                "GL13", "John Smith", "John@smith.com",
+                "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, "", false,
+                Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id(), null);
 
         UUID uuid = UUID.randomUUID();
 
@@ -593,9 +595,10 @@ public class PraktikumsstellenServiceTest {
     @Test
     public void testUpdateAusbildungsPraktikumstelle() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelle = new CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto("GL13", "John Smith", "John@smith.com",
-            "Planung von Events", Dringlichkeit.ZWINGEND,"", Referat.RIT, false, "",false,
-            Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, meldezeitraumDto.id(), null);
+        CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelle = new CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
+                "GL13", "John Smith", "John@smith.com",
+                "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, false, "", false,
+                Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, meldezeitraumDto.id(), null);
 
         UUID uuid = UUID.randomUUID();
 
@@ -616,9 +619,10 @@ public class PraktikumsstellenServiceTest {
     @Test
     public void testUpdateAusbildungsPraktikumstelleWithoutExisting() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelle = new CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto("GL13", "John Smith", "John@smith.com",
-            "Planung von Events", Dringlichkeit.ZWINGEND,"", Referat.RIT, false, "",false,
-            Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, meldezeitraumDto.id(), null);
+        CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelle = new CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
+                "GL13", "John Smith", "John@smith.com",
+                "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, false, "", false,
+                Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, meldezeitraumDto.id(), null);
 
         UUID uuid = UUID.randomUUID();
 
