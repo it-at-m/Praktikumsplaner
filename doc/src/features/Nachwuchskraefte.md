@@ -33,7 +33,7 @@ It is possible to upload an Excel file there.
 
 Non-Excel files or old-format Excel files (older than 2007) will produce errors after uploading.
 
-The Excel file has to be in <a href="../assets/Import_Standart.xlsx" download>this correct format</a>.
+The Excel file has to be in the correct format. Download an sample file <a href="../assets/Import_Standart.xlsx" download>here</a>.
 
 The first name (Vorname) has to be between 2 and 255 characters.
 
