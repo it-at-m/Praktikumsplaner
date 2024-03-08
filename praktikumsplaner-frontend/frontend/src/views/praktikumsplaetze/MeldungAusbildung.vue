@@ -161,7 +161,7 @@
                     </v-row>
                 </v-container>
                 <v-container
-                    v-if="isAusbildungsleitung"
+                    v-if="security.isAusbildungsleitung()"
                     class="box"
                 >
                     <v-row>
@@ -206,7 +206,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import MeldungService from "@/api/PraktikumsstellenService";
@@ -229,8 +229,9 @@ import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/Proj
 import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
 import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
-import { APP_SECURITY } from "@/constants";
+import { useSecurity } from "@/composables/security";
 import index from "@/router";
+import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -239,13 +240,9 @@ const requiredFieldSymbol = "*";
 
 const praktikumsstelle = ref<Praktikumsstelle>(new Praktikumsstelle());
 const loadingSite = ref<boolean>(true);
-const isAusbildungsleitung = computed(
-    () =>
-        userStore.getRoles.includes("ROLE_AUSBILDUNGSLEITUNG") ||
-        APP_SECURITY !== "true"
-);
 const loading = ref<boolean>(false);
 const userStore = useUserStore();
+const security = useSecurity();
 const form = ref<HTMLFormElement>();
 const meldezeitraeume = computed(() => {
     let list: Meldezeitraum[] = [];
@@ -261,6 +258,7 @@ const meldezeitraeume = computed(() => {
 const currentMeldezeitraum = ref<Meldezeitraum>();
 const upcomingMeldezeitraeume = ref<Meldezeitraum[]>([]);
 const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
+const route = router.currentRoute.value;
 
 onMounted(() => {
     MeldezeitraumService.getCurrentMeldezeitraum(loadingSite).then(
@@ -269,14 +267,40 @@ onMounted(() => {
         }
     );
 
-    if (isAusbildungsleitung.value) {
+    if (security.isAusbildungsleitung()) {
         getUpcomingMeldezeitraeume();
         getPassedMeldezeitraeume();
     }
+
+    if (userStore.username) {
+        redirectIfUnauthorized();
+    } else {
+        // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
+        watch(
+            () => userStore.roles,
+            () => {
+                redirectIfUnauthorized();
+            }
+        );
+    }
 });
 
+function redirectIfUnauthorized() {
+    const requiresRoles =
+        route.meta.requiresRole != undefined
+            ? (route.meta.requiresRole as string[])
+            : undefined;
+    const security = useSecurity();
+    if (
+        requiresRoles !== undefined &&
+        !security.checkForAnyRole(requiresRoles)
+    ) {
+        router.push("/AccessDenied");
+    }
+}
+
 function canStellenBeSubmitted() {
-    return isAusbildungsleitung.value || currentMeldezeitraum.value;
+    return security.isAusbildungsleitung() || currentMeldezeitraum.value;
 }
 
 function getUpcomingMeldezeitraeume() {
@@ -304,7 +328,7 @@ function uploadPraktikumsstelle() {
     form.value?.validate().then((validation: { valid: boolean }) => {
         if (!validation.valid) return;
 
-        if (isAusbildungsleitung.value) {
+        if (security.isAusbildungsleitung()) {
             MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
                 praktikumsstelle.value,
                 loading
