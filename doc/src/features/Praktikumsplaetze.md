@@ -128,6 +128,17 @@ A green notification appears if it was successful, if not a red error will appea
 ## Deletion
 It is possible to delete [Praktikumsstellen](../glossary.md#praktikumsstelle) in the overview of [Praktikumsstellen](../glossary.md#praktikumsstelle) by clicking the delete button, marked with a trash can.
 
+## Modify
+
+Already created [Praktikumsstellen](../glossary.md#praktikumsstelle) can be modified. By clicking the "Bearbeiten" button with the pencil icon on a [Praktikumsstellen](../glossary.md#praktikumsstelle) card in the [Praktikumsstellen](../glossary.md#praktikumsstelle) overview you can edit a [Praktikumsstelle](../glossary.md#praktikumsstelle) in the current [Meldezeitraum](../glossary.md#meldezeitraum).
+
+It is possible to modify [Praktikumsstellen](../glossary.md#praktikumsstelle) from the passed [Meldezeitraum](../glossary.md#meldezeitraum) by clicking the pencil icon in the assign overview.
+If a [Nwk](./../glossary.md#nwk) is assigned to a [Praktikumsstelle](../glossary.md#praktikumsstelle) the ability to modify the [Praktikumsstelle](../glossary.md#praktikumsstelle) is restricted to:
+
+- Instructor (Name, Email)
+- Work activities
+- Department
+
 ## Additional Information
 
 ### Mandatory information
