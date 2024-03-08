@@ -267,9 +267,9 @@ const praktikumsstelle = computed({
     set: (newValue) => emits("updated", newValue),
 });
 
-const hasAssignedNwk = ref<boolean>(
-    praktikumsstelle.value.assignedNwk !== undefined
-);
+const hasAssignedNwk = computed(() => {
+    return properties.modelValue.assignedNwk !== undefined;
+});
 
 function cancel() {
     visible.value = false;
