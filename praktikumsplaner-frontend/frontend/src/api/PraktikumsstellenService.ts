@@ -172,7 +172,7 @@ export default {
             });
     },
     deletePraktikumsstelle(stelle: Praktikumsstelle): Promise<void> {
-        if (isAusbildunsPraktikumsstelle(stelle)) {
+        if (this.isAusbildunsPraktikumsstelle(stelle)) {
             return fetch(
                 `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/${stelle.id}`,
                 FetchUtils.getDELETEConfig({})
@@ -183,7 +183,7 @@ export default {
                     level: Levels.SUCCESS,
                 });
             });
-        } else if (isStudiumsPraktikumsstelle(stelle)) {
+        } else if (this.isStudiumsPraktikumsstelle(stelle)) {
             return fetch(
                 `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/${stelle.id}`,
                 FetchUtils.getDELETEConfig({})
@@ -200,12 +200,60 @@ export default {
             );
         }
     },
+    updatePraktikumsstelle(
+        stelle: Praktikumsstelle,
+        loading: Ref<boolean> | undefined
+    ): Promise<void> {
+        if (this.isAusbildunsPraktikumsstelle(stelle)) {
+            if (loading !== undefined) {
+                loading.value = true;
+            }
+            return fetch(
+                `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/${stelle.id}`,
+                FetchUtils.getPUTConfig(stelle)
+            )
+                .then((response) => {
+                    FetchUtils.defaultResponseHandler(response);
+                    useSnackbarStore().showMessage({
+                        message: "☑ Praktikumsstelle erfolgreich bearbeitet",
+                        level: Levels.SUCCESS,
+                    });
+                })
+                .finally(() => {
+                    if (loading !== undefined) {
+                        loading.value = false;
+                    }
+                });
+        } else if (this.isStudiumsPraktikumsstelle(stelle)) {
+            if (loading !== undefined) {
+                loading.value = true;
+            }
+            return fetch(
+                `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium//${stelle.id}`,
+                FetchUtils.getPUTConfig(stelle)
+            )
+                .then((response) => {
+                    FetchUtils.defaultResponseHandler(response);
+                    useSnackbarStore().showMessage({
+                        message: "☑ Praktikumsstelle erfolgreich bearbeitet",
+                        level: Levels.SUCCESS,
+                    });
+                })
+                .finally(() => {
+                    if (loading !== undefined) {
+                        loading.value = false;
+                    }
+                });
+        } else {
+            throw new Error(
+                "Praktikumsstelle konnte nicht nach Typ kategorisiert werden."
+            );
+        }
+    },
+    isStudiumsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
+        return stelle.studiengang !== undefined;
+    },
+    isAusbildunsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
+        return stelle.ausbildungsrichtung !== undefined;
+    },
 };
-
-function isStudiumsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
-    return stelle.studiengang !== undefined;
-}
-
-function isAusbildunsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
-    return stelle.ausbildungsrichtung !== undefined;
-}
