@@ -37,18 +37,18 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 
-import cat1 from "@/assets/acess_denied_cats/cat1.jpg";
-import cat2 from "@/assets/acess_denied_cats/cat2.jpg";
-import cat3 from "@/assets/acess_denied_cats/cat3.jpg";
-import cat4 from "@/assets/acess_denied_cats/cat4.jpg";
-import cat5 from "@/assets/acess_denied_cats/cat5.jpg";
-import cat6 from "@/assets/acess_denied_cats/cat6.jpg";
-import cat7 from "@/assets/acess_denied_cats/cat7.jpg";
-import cat8 from "@/assets/acess_denied_cats/cat8.jpg";
-import cat9 from "@/assets/acess_denied_cats/cat9.jpg";
-import cat10 from "@/assets/acess_denied_cats/cat10.jpg";
-import cat11 from "@/assets/acess_denied_cats/cat11.jpg";
-import cat12 from "@/assets/acess_denied_cats/cat12.jpg";
+import cat1 from "@/assets/acess_denied_cats/cat1.png";
+import cat2 from "@/assets/acess_denied_cats/cat2.png";
+import cat3 from "@/assets/acess_denied_cats/cat3.png";
+import cat4 from "@/assets/acess_denied_cats/cat4.png";
+import cat5 from "@/assets/acess_denied_cats/cat5.png";
+import cat6 from "@/assets/acess_denied_cats/cat6.png";
+import cat7 from "@/assets/acess_denied_cats/cat7.png";
+import cat8 from "@/assets/acess_denied_cats/cat8.png";
+import cat9 from "@/assets/acess_denied_cats/cat9.png";
+import cat10 from "@/assets/acess_denied_cats/cat10.png";
+import cat11 from "@/assets/acess_denied_cats/cat11.png";
+import cat12 from "@/assets/acess_denied_cats/cat12.png";
 import PageTitle from "@/components/common/PageTitle.vue";
 
 const catImagePath = ref();
