@@ -8,6 +8,7 @@
         :rules="conditionalRequiredRules"
         variant="outlined"
         :clearable="!isRequired"
+        :disabled="disabled"
         @select="onClick"
     >
         <template #item="{ props, item }">
@@ -52,9 +53,11 @@ interface Properties {
     meldezeitraueme: Meldezeitraum[];
     isRequired: boolean;
     requiredSymbol?: string;
+    disabled?: boolean;
 }
 const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
+    disabled: false,
 });
 
 const emits = defineEmits<{
