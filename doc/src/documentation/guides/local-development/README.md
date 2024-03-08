@@ -50,7 +50,7 @@ An admin user and a test user are created by `init-keycloak`. You can change the
 #### configuration migration
 Realm, client user and other configuration should be done by the migration client. Its config files are located in
 `keycloak\migration`. The main file is `keycloak-changelog.yml`. It contains the list of migration files that
-should be applied. For more information check https://mayope.github.io/keycloakmigration/migrations/client/.
+should be applied. For more information check [here](https://mayope.github.io/keycloakmigration/migrations/client/).
 
 
 ## Local Development
