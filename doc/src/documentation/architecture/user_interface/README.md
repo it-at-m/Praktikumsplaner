@@ -7,7 +7,7 @@ Important aspects concerning the user interface will be documented here.
 
 ## User Feedback
 Every time the user interacts with the application in a way that the state changes,
-the user should be informed about the success of the interaction.
+the user should be informed about the success or failure of the interaction.
 Currently, this is done via a snackbar if the interaction was successful, and an error dialog
 if something went wrong. The error dialog displays the error message sent by the backend
 so the messages generated in the backend should be comprehensible and really point out what went wrong.
