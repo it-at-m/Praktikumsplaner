@@ -609,7 +609,7 @@ public class PraktikumsstellenServiceTest {
 
         verify(ausbildungsRepository, times(1)).existsById(uuid);
 
-        verify(ausbildungsRepository, times(1)).save(mapper.toEntity(uuid, ausbildungsPraktikumsstelle));
+        verify(ausbildungsRepository, times(2)).save(mapper.toEntity(uuid, ausbildungsPraktikumsstelle));
 
     }
 
