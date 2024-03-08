@@ -100,13 +100,13 @@ A selector for requesting a [Nwk](./../glossary.md#nwk) who can code.
 
 Options: `Ja`, `Nein`, `Egal`. Meaning `Yes`, `No`, `Doesn't matter`.
 
-### Örtliche Ausbilder*in
+### Örtliche Ausbilderin
 
-#### Name örtliche Ausbilder*in
+#### Name örtliche Ausbilderin
 
 Text field for the name of the person ([örtlicher Ausbilderin](./../glossary.md#ortliche-ausbilderin)) in the team responsible for the [Nwk](./../glossary.md#nwk)
 
-#### Kontakt E-Mail örtliche Ausbilder*in
+#### Kontakt E-Mail örtliche Ausbilderin
 
 Text field for the contact email of the [örtliche Ausbilderin](./../glossary.md#ortliche-ausbilderin) 
 
