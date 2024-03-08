@@ -262,13 +262,13 @@ const emits = defineEmits<{
     (e: "updated", praktikumsstelleToUpdate: Praktikumsstelle): void;
 }>();
 
+const hasAssignedNwk = computed(() => {
+    return properties.modelValue.assignedNwk != undefined;
+});
+
 const praktikumsstelle = computed({
     get: () => properties.modelValue,
     set: (newValue) => emits("updated", newValue),
-});
-
-const hasAssignedNwk = computed(() => {
-    return properties.modelValue.assignedNwk !== undefined;
 });
 
 function cancel() {

@@ -50,6 +50,16 @@
                             {{ getCardDetailText(properties.modelValue) }}
                         </p>
                     </v-card-text>
+                    <v-card-actions>
+                        <ausbildungs-praktikumsstelle-update-dialog
+                            v-if="isAusbildungsPraktikumsstelle"
+                            v-model="praktikumsstelle"
+                        ></ausbildungs-praktikumsstelle-update-dialog>
+                        <studiums-praktikumsstelle-update-dialog
+                            v-else-if="isStudiumsPraktikumsstelle"
+                            v-model="praktikumsstelle"
+                        ></studiums-praktikumsstelle-update-dialog>
+                    </v-card-actions>
                 </div>
             </v-expand-transition>
             <v-card-actions>
@@ -59,14 +69,6 @@
                 >
                     <v-icon>mdi-delete</v-icon>
                 </v-btn>
-                <ausbildungs-praktikumsstelle-update-dialog
-                    v-if="isAusbildungsPraktikumsstelle"
-                    v-model="praktikumsstelle"
-                ></ausbildungs-praktikumsstelle-update-dialog>
-                <studiums-praktikumsstelle-update-dialog
-                    v-else-if="isStudiumsPraktikumsstelle"
-                    v-model="praktikumsstelle"
-                ></studiums-praktikumsstelle-update-dialog>
             </v-card-actions>
         </v-card>
     </v-container>

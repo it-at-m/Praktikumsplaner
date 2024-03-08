@@ -266,7 +266,7 @@ const properties = withDefaults(defineProps<Properties>(), {
 });
 
 const hasAssignedNwk = computed(() => {
-    return properties.modelValue.assignedNwk !== undefined;
+    return properties.modelValue.assignedNwk != undefined;
 });
 
 const meldezeitraeume = ref<Meldezeitraum[]>([

@@ -64,16 +64,6 @@
                 elevation="0"
                 @click.stop="show = !show"
             ></v-btn>
-            <ausbildungs-praktikumsstelle-update-dialog
-                v-if="isAusbildungsPraktikumsstelle"
-                v-model="praktikumsstelle"
-                :icon-only="true"
-            ></ausbildungs-praktikumsstelle-update-dialog>
-            <studiums-praktikumsstelle-update-dialog
-                v-else-if="isStudiumsPraktikumsstelle"
-                v-model="praktikumsstelle"
-                :icon-only="true"
-            ></studiums-praktikumsstelle-update-dialog>
             <v-expand-transition>
                 <div v-show="show">
                     <v-divider></v-divider>
@@ -82,6 +72,18 @@
                             {{ getCardDetailText(properties.modelValue) }}
                         </p>
                     </v-card-text>
+                    <v-card-actions>
+                        <ausbildungs-praktikumsstelle-update-dialog
+                            v-if="isAusbildungsPraktikumsstelle"
+                            v-model="praktikumsstelle"
+                            :icon-only="true"
+                        ></ausbildungs-praktikumsstelle-update-dialog>
+                        <studiums-praktikumsstelle-update-dialog
+                            v-else-if="isStudiumsPraktikumsstelle"
+                            v-model="praktikumsstelle"
+                            :icon-only="true"
+                        ></studiums-praktikumsstelle-update-dialog>
+                    </v-card-actions>
                 </div>
             </v-expand-transition>
         </v-card>
