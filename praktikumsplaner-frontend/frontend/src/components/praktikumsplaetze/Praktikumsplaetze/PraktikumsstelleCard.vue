@@ -97,12 +97,10 @@ const praktikumsstelle = computed({
 });
 
 const isAusbildungsPraktikumsstelle = ref<boolean>(
-    PraktikumsstellenService.isAusbildunsPraktikumsstelle(
-        praktikumsstelle.value
-    )
+    praktikumsstelle.value.isAusbildunsPraktikumsstelle()
 );
 const isStudiumsPraktikumsstelle = ref<boolean>(
-    PraktikumsstellenService.isStudiumsPraktikumsstelle(praktikumsstelle.value)
+    praktikumsstelle.value.isStudiumsPraktikumsstelle()
 );
 
 const warningDialog = ref<boolean>(false);

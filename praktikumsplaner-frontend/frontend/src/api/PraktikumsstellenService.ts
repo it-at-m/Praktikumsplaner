@@ -172,7 +172,7 @@ export default {
             });
     },
     deletePraktikumsstelle(stelle: Praktikumsstelle): Promise<void> {
-        if (this.isAusbildunsPraktikumsstelle(stelle)) {
+        if (stelle.isAusbildunsPraktikumsstelle()) {
             return fetch(
                 `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/${stelle.id}`,
                 FetchUtils.getDELETEConfig({})
@@ -183,7 +183,7 @@ export default {
                     level: Levels.SUCCESS,
                 });
             });
-        } else if (this.isStudiumsPraktikumsstelle(stelle)) {
+        } else if (stelle.isStudiumsPraktikumsstelle()) {
             return fetch(
                 `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/${stelle.id}`,
                 FetchUtils.getDELETEConfig({})
@@ -204,7 +204,7 @@ export default {
         stelle: Praktikumsstelle,
         loading: Ref<boolean> | undefined
     ): Promise<void> {
-        if (this.isAusbildunsPraktikumsstelle(stelle)) {
+        if (stelle.isAusbildunsPraktikumsstelle()) {
             if (loading !== undefined) {
                 loading.value = true;
             }
@@ -224,7 +224,7 @@ export default {
                         loading.value = false;
                     }
                 });
-        } else if (this.isStudiumsPraktikumsstelle(stelle)) {
+        } else if (stelle.isStudiumsPraktikumsstelle()) {
             if (loading !== undefined) {
                 loading.value = true;
             }
@@ -250,10 +250,10 @@ export default {
             );
         }
     },
-    isStudiumsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
+    /*isStudiumsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
         return stelle.studiengang !== undefined;
     },
     isAusbildunsPraktikumsstelle(stelle: Praktikumsstelle): boolean {
         return stelle.ausbildungsrichtung !== undefined;
-    },
+    },*/
 };
