@@ -14,8 +14,10 @@ import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
@@ -546,6 +548,82 @@ public class PraktikumsstellenServiceTest {
 
         Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             service.deleteStudiumsPraktikumsstelle(studiumsPraktikumsstelle.getId());
+        });
+
+    }
+
+    @Test
+    public void testUpdateStudiumPraktikumstelle() {
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
+        CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelle = new CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto("GL13", "John Smith", "John@smith.com",
+            "Planung von Events", Dringlichkeit.ZWINGEND,"", Referat.RIT, "", false,
+            Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id(), null);
+
+        UUID uuid = UUID.randomUUID();
+
+        studiumsRepository.save(mapper.toEntity(uuid, studiumsPraktikumsstelle));
+
+        verify(studiumsRepository, times(1)).save(mapper.toEntity(uuid, studiumsPraktikumsstelle));
+
+        when(studiumsRepository.existsById(uuid)).thenReturn(true);
+
+        service.updateStudiumsPraktikumsstelle(uuid, studiumsPraktikumsstelle);
+
+        verify(studiumsRepository, times(1)).existsById(uuid);
+
+        verify(studiumsRepository, times(2)).save(mapper.toEntity(uuid, studiumsPraktikumsstelle));
+
+    }
+
+    @Test
+    public void testUpdateStudiumPraktikumstelleWithoutExisting() {
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
+        CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelle = new CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto("GL13", "John Smith", "John@smith.com",
+            "Planung von Events", Dringlichkeit.ZWINGEND,"", Referat.RIT, "", false,
+            Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id(), null);
+
+        UUID uuid = UUID.randomUUID();
+
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            service.updateStudiumsPraktikumsstelle(uuid, studiumsPraktikumsstelle);
+        });
+
+    }
+
+    @Test
+    public void testUpdateAusbildungsPraktikumstelle() {
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
+        CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelle = new CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto("GL13", "John Smith", "John@smith.com",
+            "Planung von Events", Dringlichkeit.ZWINGEND,"", Referat.RIT, false, "",false,
+            Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, meldezeitraumDto.id(), null);
+
+        UUID uuid = UUID.randomUUID();
+
+        ausbildungsRepository.save(mapper.toEntity(uuid, ausbildungsPraktikumsstelle));
+
+        verify(ausbildungsRepository, times(1)).save(mapper.toEntity(uuid, ausbildungsPraktikumsstelle));
+
+        when(ausbildungsRepository.existsById(uuid)).thenReturn(true);
+
+        service.updateAusbildungsPraktikumsstelle(uuid, ausbildungsPraktikumsstelle);
+
+        verify(ausbildungsRepository, times(1)).existsById(uuid);
+
+        verify(ausbildungsRepository, times(1)).save(mapper.toEntity(uuid, ausbildungsPraktikumsstelle));
+
+    }
+
+    @Test
+    public void testUpdateAusbildungsPraktikumstelleWithoutExisting() {
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
+        CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelle = new CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto("GL13", "John Smith", "John@smith.com",
+            "Planung von Events", Dringlichkeit.ZWINGEND,"", Referat.RIT, false, "",false,
+            Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, meldezeitraumDto.id(), null);
+
+        UUID uuid = UUID.randomUUID();
+
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            service.updateAusbildungsPraktikumsstelle(uuid, ausbildungsPraktikumsstelle);
         });
 
     }
