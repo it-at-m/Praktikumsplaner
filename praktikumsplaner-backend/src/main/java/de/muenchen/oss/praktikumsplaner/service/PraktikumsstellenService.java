@@ -5,8 +5,10 @@ import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
@@ -145,6 +147,21 @@ public class PraktikumsstellenService {
         if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             ausbildungsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
         } else {
+            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
+        }
+    }
+
+    public void updateAusbildungsPraktikumsstelle(UUID praktikumsstellenId, CreateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto){
+        if(ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)){
+            ausbildungsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
+        }else{
+            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
+        }
+    }
+    public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, CreateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto){
+        if(studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)){
+            studiumsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
+        }else{
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }
