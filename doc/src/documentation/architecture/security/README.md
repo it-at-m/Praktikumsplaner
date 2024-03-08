@@ -31,6 +31,6 @@ This composable has several methods:
 
 Those methods are used in `v-if` directives to control what is shown (rendered) to the user.
 As this is controlled on frontend side in the browser, users could possibly bypass this security
-so this is not to be meant to prevent users from doing things that are not allowed, but more a way
-to guide them in the application and only show them things they is allowed to do and not confuse
+so this is not meant to prevent users from doing things that are not allowed, but more a way
+to guide them in the application and only show them things they are allowed to do and not confuse
 them with many error messages due to missing privileges.
