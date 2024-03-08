@@ -53,7 +53,7 @@ a current [Nwk](./glossary.md#nwk) could work at in the future after finishing t
 
 ### Praktikumsstelle
 
-A [Praktikumsstelle](./glossary.md#praktikumsstelle) is an abstract concept that describes a position in a team where a [Nwk] (./glossary.md#nwk) can work and be educated.
+A [Praktikumsstelle](./glossary.md#praktikumsstelle) is an abstract concept that describes a position in a team where a [Nwk](./glossary.md#nwk) can work and be educated.
 
 ### Studentin
 Just the German translation of student, so someone studying at a university or similar institution,

@@ -1,7 +1,5 @@
 # Praktikumsplätze
 
-## Meldung örtl. Ausbilder
-
 On the main page, there is an option `Praktikumsplätze` in the navigation bar.
 This takes you to a new page.
 This page displays the [Praktikumsstellen](../glossary.md#praktikumsstelle) that have already been registered for the current [Meldezeitraum](../glossary.md#meldezeitraum). 
@@ -11,15 +9,32 @@ Individual [Dienststellengruppen](../glossary.md#dienststelle) can be expanded a
 The individual [Praktikumsstelle](../glossary.md#praktikumsstelle) can also be expanded again. 
 This means that all possible information on a [Praktikumsstelle](../glossary.md#praktikumsstelle) is displayed.
 
-Also on this page there is a button labeled `Hinzufügen`.
+
+## Submission örtliche Ausbilder
+
+On the page there is a button labeled `Hinzufügen`.
 Clicking this button will open a dialog.
 
 In this dialog, you can choose whether you want to report a [student](./../glossary.md#studentin) (`Studium`) or a [trainee](./../glossary.md#auszubildende) (`Ausbildung`).
 This will open a page with the corresponding form.
 
+## Submission örtliche Ausbildungsleitung
+If the user has the role for [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung)
+The user can use the button labeled `Hinzufügen`, to add a [Praktikumsstelle](../glossary.md#praktikumsstelle).
+Clicking this button will open a dialog.
+
+In this dialog, you can choose whether you want to report a [student](./../glossary.md#studentin) (`Studium`) or a [trainee](./../glossary.md#auszubildende) (`Ausbildung`).
+This will open a page with the corresponding form.
+
+As [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung) you have the option to add the
+[Praktikumsstelle](../glossary.md#praktikumsstelle) to a specific [Meldezeitraum](../glossary.md#meldezeitraum).
+Therefor the form has a mandatory selector for the [Meldezeitraum](../glossary.md#meldezeitraum).
+
 ## Using the Forms
 
 ### Stellenbeschreibung
+
+In this section the user can provide general information about the [Praktikumsstelle](../glossary.md#praktikumsstelle).
 
 #### Dienststelle
 
@@ -51,6 +66,9 @@ Text field for requesting a specific [Nwk](./../glossary.md#nwk)
 Text field for noting the operations performed by the team and what the [Nwk](./../glossary.md#nwk) will most likely be doing there.
 
 ### Nachwuchskraft
+
+This section asks the user to provide information about the [Nwk](../glossary.md#nwk) this
+[Praktikumsstelle](../glossary.md#praktikumsstelle) is designed for.
 
 #### Studium: Studiengang
 
@@ -107,14 +125,16 @@ This feature is only available for [örtliche Ausbildungsleitungen](./../glossar
 When clicking the `SPEICHERN` button, the data is sent.
 A green notification appears if it was successful, if not a red error will appear.
 
-## Mandatory information
-
-The mandatory information is marked with `*`
-
 ## Deletion
 It is possible to delete [Praktikumsstellen](../glossary.md#praktikumsstelle) in the overview of [Praktikumsstellen](../glossary.md#praktikumsstelle) by clicking the delete button, marked with a trash can.
 
-## Link between [Praktikumsstellen](../glossary.md#praktikumsstelle) and [Meldezeitraum](../glossary.md#meldezeitraum)
+## Additional Information
+
+### Mandatory information
+
+The mandatory information is marked with `*`
+
+### Link between [Praktikumsstellen](../glossary.md#praktikumsstelle) and [Meldezeitraum](../glossary.md#meldezeitraum)
 When a [Praktikumsstelle](../glossary.md#praktikumsstelle) is reported, it is verified that there is an active [Meldezeitraum](../glossary.md#meldezeitraum) at that moment.
 
 When there is an active [Meldezeitraum](../glossary.md#meldezeitraum), it will be assigned to that [Meldezeitraum](../glossary.md#meldezeitraum).

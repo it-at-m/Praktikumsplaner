@@ -33,6 +33,7 @@ module.exports = {
       "meta",
       { name: "apple-mobile-web-app-status-bar-style", content: "black" },
     ],
+    ['link', { rel: 'icon', href: 'logo.png' }]
   ],
   locales: {
     "/": {
@@ -49,6 +50,7 @@ module.exports = {
    */
   themeConfig: {
     repo: "https://github.com/it-at-m/praktikumsplaner",
+    logo: "/logo.png",
     editLinks: false,
     docsDir: "",
     editLinkText: "",
@@ -59,6 +61,10 @@ module.exports = {
         label: "English",
         ariaLabel: "Language",
         nav: [
+          {
+            text: "About",
+            link: "/about/",
+          },
           {
             text: "Features",
             link: "/features/",
@@ -72,26 +78,41 @@ module.exports = {
           "/documentation/": [
             {
               title: "Tools",
-              collapsable: false,
-              children: ["TOOLS.md"],
+              path: "TOOLS.md",
             },
             {
               title: "Configuration",
-              collapsable: false,
-              children: ["architecture/configuration"],
+              path: "architecture/configuration.md",
             },
             {
               title: "Architecture",
-              collapsable: false,
-              children: ["architecture/adrs", "architecture/security/", ],
+              collapsable: true,
+              children: ["architecture/adrs", "architecture/security/", "architecture/user_interface/", "architecture/colorpalette/"],
             },
             {
               title: "Guides",
-              collapsable: false,
+              collapsable: true,
               children: ["guides/technical-setup/", "guides/database-migration/", "guides/local-development/"],
             },
           ],
-          "/features/": [],
+          "/features/": [
+            {
+              title: 'Nachwuchskräfte',
+              path: 'Nachwuchskraefte.md',
+            },
+            {
+              title: 'Meldezeitraum',
+              path: 'meldezeitraum.md',
+            },
+            {
+              title: 'Praktikumsplätze',
+              path: 'Praktikumsplaetze.md',
+            },
+            {
+              title: 'Assignment',
+              path: 'Zuweisung.md',
+            }
+          ]
         },
       },
     },
