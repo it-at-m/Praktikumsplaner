@@ -6,11 +6,8 @@ It is intended to serve as a guide for developers and designers to ensure a cons
 The colors were selected with accessibility in mind. 
 It is ensured that text on colored backgrounds always provides sufficient contrast for good legibility.
 
-## Primary colors
-#005a9f
-
-## Secondary colors
-To Be Announced
+## Application colors
+We use [themes](https://vuetifyjs.com/en/features/theme/) from vuetify for the colors of the application.
 
 ## Specific colors
 
