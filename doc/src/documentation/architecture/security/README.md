@@ -14,7 +14,7 @@ The results of this process are listed under [features](#features-and-the-person
 
 - [Nachwuchskräfte](../../../features/Nachwuchskraefte.md) (örtliche Ausbildungsleitung)
 - [Meldezeitraum](../../../features/meldezeitraum.md) (örtliche Ausbildungsleitung)
-- [Submission örtl. Ausbilder](../../../features/Praktikumsplaetze.md#submission-örtliche-ausbilder) (örtliche Ausbilderin)
+- [Submission örtl. Ausbilderin](../../../features/Praktikumsplaetze.md#submission-örtliche-ausbilderin) (örtliche Ausbilderin)
 - [Submission örtl. Ausbildungsleitung](../../../features/Praktikumsplaetze.md#submission-örtliche-ausbildungsleitung) (örtliche Ausbildungsleitung)
 - [Assignment](../../../features/Zuweisung.md) (örtliche Ausbildungsleitung)
 
@@ -24,13 +24,13 @@ By default, security features are enabled in `production` and disabled in `devel
 
 On the frontend side, we have a `security composable`.
 This composable has several methods:
- - checkForRole(string): this method checks wether the logged-in user has the provided role
- - checkForAnyRole(string[]): this method checks wether the logged-in user has any of the provided roles
- - checkForAllRoles(string[]): this method checks wether the logged-in user has all provided  roles
- - isAusbildungsleitung(): This method is used for checking wether the logged-in user is a [Ausbildungsleitung](../../../glossary.md#ortliche-ausbildungsleitung)
+ - checkForRole(string): this method checks whether the logged-in user has the provided role
+ - checkForAnyRole(string[]): this method checks whether the logged-in user has any of the provided roles
+ - checkForAllRoles(string[]): this method checks whether the logged-in user has all provided  roles
+ - isAusbildungsleitung(): This method is used for checking whether the logged-in user is a [Ausbildungsleitung](../../../glossary.md#ortliche-ausbildungsleitung)
 
 Those methods are used in `v-if` directives to control what is shown (rendered) to the user.
-As this is controlled on frontend side in the browser a user could possibly bypass this security
-so this is not to be meant to prevent a user doing things is not allowed, but more a way
-to guide the user in the application and only show him things he is allowed to do and not confuse
-him with many error messages due to missing privileges.
+As this is controlled on frontend side in the browser, users could possibly bypass this security
+so this is not to be meant to prevent users from doing things that are not allowed, but more a way
+to guide them in the application and only show them things they is allowed to do and not confuse
+them with many error messages due to missing privileges.

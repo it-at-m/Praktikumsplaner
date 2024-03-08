@@ -42,7 +42,7 @@ The frontend and Backend are only started if docker compose is run with the prof
 If you want to develop locally it is sugessted to start docker compose without this profile
 and start those parts via your IDE.
 The `.env` files for the frontend and backend are used when these services are deployed.
-Ich you start them via your IDE they are not used.
+If you start them via your IDE they are not used.
 
 ### Keycloak
 An admin user and a test user are created by `init-keycloak`. You can change the configuration via the keycloak ui.

@@ -1,6 +1,6 @@
 # Get Started
 
-Welcome to the official documentation of PraktikumsPlaner! Whether you're a developer looking to contribute or a user aiming to integrate our project into your workflow, this guide will help you get started.
+Welcome to the official documentation of the Praktikumsplaner! Whether you're a developer looking to contribute or a user aiming to integrate our project into your workflow, this guide will help you get started.
 
 ## Overview
 
@@ -15,7 +15,7 @@ To get the most out of the Praktikumsplaner, we've organized this documentation 
 
 ## Getting Started
 
-1. **Installation:** Follow our [technical setup](/documentation/guides/technical-setup) to set up Praktikumsplaner on your system.
+1. **Installation:** Follow our [technical setup](/documentation/guides/technical-setup) to set up the Praktikumsplaner on your system.
 
 2. **Contribute:** Interested in contributing? Check out our [contributor's guide](/contribute/) for details on how you can make a difference.
 
