@@ -15,8 +15,4 @@ public interface StudiumsPraktikumsstellenRepository extends CrudRepository<Stud
 
     List<StudiumsPraktikumsstelle> findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(final UUID id);
 
-    @Modifying
-    @Query("update StudiumsPraktikumsstelle u set u.dienststelle = :dienststelle, u.email = :email, u.taetigkeiten = :taetigkeiten, u.oertlicheAusbilder = :ausbilder where u.id = :id")
-    void updateStudiumssPraktikumsstelleWithAssignedNwk(@Param(value = "id") UUID id, @Param(value = "dienststelle") String dienststelle, @Param(value = "ausbilder") String ausbilder, @Param(value = "taetigkeiten") String taetigkeit, @Param(value = "email") String email);
-
 }
