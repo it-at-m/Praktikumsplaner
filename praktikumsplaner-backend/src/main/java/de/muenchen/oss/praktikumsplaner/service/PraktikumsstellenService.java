@@ -155,6 +155,8 @@ public class PraktikumsstellenService {
         } else if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             ausbildungsPraktikumsstellenRepository.save(
                     praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
+        }else{
+            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }
 
@@ -164,6 +166,8 @@ public class PraktikumsstellenService {
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             studiumsPraktikumsstellenRepository.save(
                     praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
+        }else{
+            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }
 
