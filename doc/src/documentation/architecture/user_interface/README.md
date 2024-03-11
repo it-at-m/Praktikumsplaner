@@ -1,10 +1,6 @@
 # User interface
 Important aspects concerning the user interface will be documented here.
 
-- [User Feedback](#user-feedback)
-- [Loading Animations](#loading-animations)
-- [Form Validation](#form-validation)
-
 ## User Feedback
 Every time the user interacts with the application in a way that the state changes,
 the user should be informed about the success or failure of the interaction.
