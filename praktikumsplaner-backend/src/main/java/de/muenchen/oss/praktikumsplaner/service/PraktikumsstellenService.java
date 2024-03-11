@@ -154,7 +154,12 @@ public class PraktikumsstellenService {
     public void updateAusbildungsPraktikumsstelle(UUID praktikumsstellenId,
             AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
         if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
-            ausbildungsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
+            if(praktikumsstelleDto.assignedNwk() != null) {
+                ausbildungsPraktikumsstellenRepository.updateAusbildungsPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto.dienststelle(), praktikumsstelleDto.oertlicheAusbilder(), praktikumsstelleDto.taetigkeiten(), praktikumsstelleDto.email());
+            }else{
+                ausbildungsPraktikumsstellenRepository.save(
+                    praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
+            }
         } else {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
@@ -162,7 +167,12 @@ public class PraktikumsstellenService {
 
     public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
         if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
-            studiumsPraktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
+            if(praktikumsstelleDto.assignedNwk() != null) {
+                studiumsPraktikumsstellenRepository.updateStudiumssPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto.dienststelle(), praktikumsstelleDto.oertlicheAusbilder(), praktikumsstelleDto.taetigkeiten(), praktikumsstelleDto.email());
+            }else{
+                studiumsPraktikumsstellenRepository.save(
+                    praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
+            }
         } else {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
