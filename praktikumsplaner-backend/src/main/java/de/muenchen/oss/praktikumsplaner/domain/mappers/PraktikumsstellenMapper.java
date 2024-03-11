@@ -14,6 +14,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import java.util.UUID;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper
 public interface PraktikumsstellenMapper {
@@ -48,4 +49,28 @@ public interface PraktikumsstellenMapper {
 
     @Mapping(target = "id", source = "id")
     StudiumsPraktikumsstelle toEntity(final UUID id, final StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelleDto);
+
+    @Mapping(target = "dienststelle", source = "praktikumsstelleDto.dienststelle")
+    @Mapping(target = "oertlicheAusbilder", source = "praktikumsstelleDto.oertlicheAusbilder")
+    @Mapping(target = "email", source = "praktikumsstelleDto.email")
+    @Mapping(target = "taetigkeiten", source = "praktikumsstelleDto.taetigkeiten")
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "projektarbeit", ignore = true)
+    @Mapping(target = "ausbildungsjahr", ignore = true)
+    @Mapping(target = "ausbildungsrichtung", ignore = true)
+    AusbildungsPraktikumsstelle updateAusbildungsPraktikumsstelle(@MappingTarget final AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle,
+            final AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto);
+
+    @Mapping(target = "dienststelle", source = "praktikumsstelleDto.dienststelle")
+    @Mapping(target = "oertlicheAusbilder", source = "praktikumsstelleDto.oertlicheAusbilder")
+    @Mapping(target = "email", source = "praktikumsstelleDto.email")
+    @Mapping(target = "taetigkeiten", source = "praktikumsstelleDto.taetigkeiten")
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "studiensemester", ignore = true)
+    @Mapping(target = "studiengang", ignore = true)
+    StudiumsPraktikumsstelle updateStudiumsPraktikumsstelle(@MappingTarget final StudiumsPraktikumsstelle studiumsPraktikumsstelle,
+            final StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto);
+
 }
