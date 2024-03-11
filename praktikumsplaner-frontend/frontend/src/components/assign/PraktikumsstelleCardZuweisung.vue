@@ -154,10 +154,12 @@ const assignedNwk = ref(properties.modelValue.assignedNwk);
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
 
 const isAusbildungsPraktikumsstelle = ref<boolean>(
-    praktikumsstelle.value.isAusbildunsPraktikumsstelle()
+    PraktikumsstellenService.isAusbildungsPraktikumsstelle(
+        praktikumsstelle.value
+    )
 );
 const isStudiumsPraktikumsstelle = ref<boolean>(
-    praktikumsstelle.value.isStudiumsPraktikumsstelle()
+    PraktikumsstellenService.isStudiumsPraktikumsstelle(praktikumsstelle.value)
 );
 
 function getCardText(stelle: Praktikumsstelle): string {

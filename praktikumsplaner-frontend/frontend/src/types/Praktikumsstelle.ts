@@ -36,11 +36,4 @@ export default class Praktikumsstelle {
 
         public meldezeitraumID?: string
     ) {}
-    isStudiumsPraktikumsstelle(): boolean {
-        return this.studiengang !== undefined;
-    }
-
-    isAusbildunsPraktikumsstelle(): boolean {
-        return this.ausbildungsrichtung !== undefined;
-    }
 }
