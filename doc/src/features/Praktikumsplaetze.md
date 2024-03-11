@@ -10,8 +10,8 @@ The individual [Praktikumsstelle](../glossary.md#praktikumsstelle) can also be e
 This means that all possible information on a [Praktikumsstelle](../glossary.md#praktikumsstelle) is displayed.
 
 This page is only available for [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung) and [örtliche Ausbilderin](../glossary.md#ortliche-ausbilderin).
-The [Ausbildungsleitugn](../glossary.md#ortliche-ausbildungsleitung) can use all actions on the page.
-The [Ausbilderinnen](../glossary.md#ortliche-ausbilderin) can only use [submission](#submission-örtliche-ausbilderin).
+The [Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung) can use all actions on the page.
+The [Ausbilderinnen](../glossary.md#ortliche-ausbilderin) can only use [submission](#submission-ortliche-ausbilderin).
 They cannot see any other data or use other actions.
 
 
