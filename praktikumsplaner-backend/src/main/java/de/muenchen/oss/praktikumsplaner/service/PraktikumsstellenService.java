@@ -17,11 +17,8 @@ import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.UUID;
+
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -153,29 +150,38 @@ public class PraktikumsstellenService {
 
     public void updateAusbildungsPraktikumsstelle(UUID praktikumsstellenId,
             AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
-        if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
-            if(praktikumsstelleDto.assignedNwk() != null) {
-                ausbildungsPraktikumsstellenRepository.updateAusbildungsPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto.dienststelle(), praktikumsstelleDto.oertlicheAusbilder(), praktikumsstelleDto.taetigkeiten(), praktikumsstelleDto.email());
-            }else{
-                ausbildungsPraktikumsstellenRepository.save(
+        if (praktikumsstelleDto.assignedNwk() != null) {
+            updateAusbildungsPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto);
+        } else if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
+            ausbildungsPraktikumsstellenRepository.save(
                     praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
-            }
-        } else {
-            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }
 
     public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
-        if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
-            if(praktikumsstelleDto.assignedNwk() != null) {
-                studiumsPraktikumsstellenRepository.updateStudiumssPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto.dienststelle(), praktikumsstelleDto.oertlicheAusbilder(), praktikumsstelleDto.taetigkeiten(), praktikumsstelleDto.email());
-            }else{
-                studiumsPraktikumsstellenRepository.save(
+        if (praktikumsstelleDto.assignedNwk() != null) {
+            updateStudiumsPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto);
+        } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
+            studiumsPraktikumsstellenRepository.save(
                     praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
-            }
-        } else {
+        }
+    }
+
+    private void updateAusbildungsPraktikumsstelleWithAssignedNwk(UUID id, AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
+        Optional<AusbildungsPraktikumsstelle> ausbildungsPraktikumsstelle = ausbildungsPraktikumsstellenRepository.findById(id);
+        if (ausbildungsPraktikumsstelle.isEmpty()) {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
+        ausbildungsPraktikumsstellenRepository
+                .save(praktikumsstellenMapper.updateAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle.get(), praktikumsstelleDto));
+    }
+
+    private void updateStudiumsPraktikumsstelleWithAssignedNwk(UUID id, StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
+        Optional<StudiumsPraktikumsstelle> studiumsPraktikumsstelle = studiumsPraktikumsstellenRepository.findById(id);
+        if (studiumsPraktikumsstelle.isEmpty()) {
+            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
+        }
+        studiumsPraktikumsstellenRepository.save(praktikumsstellenMapper.updateStudiumsPraktikumsstelle(studiumsPraktikumsstelle.get(), praktikumsstelleDto));
     }
 
     private TreeMap<String, List<PraktikumsstelleDto>> getPraktikumsstellenGroupedByDienststelle(UUID meldezeitraumID) {
