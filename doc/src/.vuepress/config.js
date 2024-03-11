@@ -92,7 +92,7 @@ module.exports = {
             {
               title: "Guides",
               collapsable: true,
-              children: ["guides/technical-setup/", "guides/database-migration/", "guides/local-development/"],
+              children: ["guides/database-migration/", "guides/local-development/"],
             },
           ],
           "/features/": [
