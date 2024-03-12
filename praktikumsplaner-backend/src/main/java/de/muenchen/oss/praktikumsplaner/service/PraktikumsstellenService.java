@@ -165,7 +165,8 @@ public class PraktikumsstellenService {
         }
     }
 
-    private void updateAusbildungsPraktikumsstelleWithAssignedNwk(UUID id, UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
+    private void updateAusbildungsPraktikumsstelleWithAssignedNwk(UUID id,
+            UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
         Optional<AusbildungsPraktikumsstelle> ausbildungsPraktikumsstelleOptional = ausbildungsPraktikumsstellenRepository.findById(id);
         if (ausbildungsPraktikumsstelleOptional.isEmpty()) {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
