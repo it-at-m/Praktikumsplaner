@@ -1,6 +1,6 @@
 <template>
     <v-container
-        @drop="drop($event, modelValue)"
+        @drop="drop($event, praktikumsstelle)"
         @dragover.prevent
         @dragenter.prevent
     >
@@ -16,23 +16,23 @@
         >
             <v-card-title
                 >Stelle bei
-                {{ properties.modelValue.dienststelle }}</v-card-title
+                {{ properties.praktikumsstelle.dienststelle }}</v-card-title
             >
             <v-card-subtitle
-                v-if="properties.modelValue.namentlicheAnforderung"
+                v-if="properties.praktikumsstelle.namentlicheAnforderung"
             >
                 Namentliche Anforderung:
-                {{ properties.modelValue.namentlicheAnforderung }}
+                {{ properties.praktikumsstelle.namentlicheAnforderung }}
             </v-card-subtitle>
             <v-icon
-                v-if="properties.modelValue.planstelleVorhanden"
+                v-if="properties.praktikumsstelle.planstelleVorhanden"
                 size="x-large"
                 class="icon-top-right-position"
                 icon="mdi-account-star"
             ></v-icon>
             <v-card-text class="pt-0 mt-0 mb-0 pb-0">
                 <p style="white-space: pre-line">
-                    {{ getCardText(properties.modelValue) }}
+                    {{ getCardText(properties.praktikumsstelle) }}
                 </p></v-card-text
             >
             <v-col>
@@ -53,7 +53,7 @@
                     <template #close>
                         <v-icon
                             icon="mdi-close-circle"
-                            @click.stop="openConfirmationDialog(modelValue)"
+                            @click.stop="openConfirmationDialog(praktikumsstelle)"
                         />
                     </template> </v-chip
             ></v-col>
@@ -69,7 +69,7 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         <p style="white-space: pre-line">
-                            {{ getCardDetailText(properties.modelValue) }}
+                            {{ getCardDetailText(properties.praktikumsstelle) }}
                         </p>
                     </v-card-text>
                     <v-card-actions>
@@ -133,23 +133,23 @@ const warningDialog = ref<boolean>(false);
 const nwkToAssignUnassing = ref<Nwk>();
 
 const properties = defineProps<{
-    modelValue: Praktikumsstelle;
+    praktikumsstelle: Praktikumsstelle;
 }>();
 
 const emits = defineEmits<{
-    (e: "updated", praktikumsstelleToUpdate: Praktikumsstelle): void;
+    (e: "update:modelValue", praktikumsstelleToUpdate: Praktikumsstelle): void;
 }>();
 
 const praktikumsstelle = computed({
-    get: () => properties.modelValue,
-    set: (newValue) => emits("updated", newValue),
+    get: () => properties.praktikumsstelle,
+    set: (newValue) => emits("update:modelValue", newValue),
 });
 
 const warningDialogTitle = ref<string>(
     "Warnung. Wollen sie wirklich fortfahren?"
 );
 const warningDialogText = ref<string>("");
-const assignedNwk = ref(properties.modelValue.assignedNwk);
+const assignedNwk = ref(properties.praktikumsstelle.assignedNwk);
 
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
 
