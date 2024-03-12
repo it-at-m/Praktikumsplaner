@@ -26,7 +26,7 @@
                         >
                             <praktikumsstelle-card
                                 :key="praktikumsstelle.id"
-                                :model-value="praktikumsstelle"
+                                :praktikumsstelle="praktikumsstelle"
                             ></praktikumsstelle-card>
                         </v-list-item>
                     </v-list>
