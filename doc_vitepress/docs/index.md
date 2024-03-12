@@ -1,25 +1,17 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
-layout: home
-
-hero:
-  name: "praktikumsplaner-docs"
-  text: "Documentation of the Praktikumsplaner app"
-  tagline: My great project tagline
-  actions:
-    - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
-    - theme: alt
-      text: API Examples
-      link: /api-examples
-
+home: true
+heroImage: logo.png
+heroText: Praktikumsplaner
+tagline: The Praktikumsplaner offers a way to organize junior staff and their internships during their vocational training.
+actionText: Get started →
+actionLink: /getStarted/
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+- title: Nachwuchskräfte
+  details: View all Nwks and add new ones
+- title: Create Meldezeitraum
+  details: Create new Meldezeiträume in the application
+- title: Praktikumsplätze
+  details: Report Praktikumsstellen
+- title: Assignment 
+  details: Assign Nwks to Praktikumsstellen
 ---
-
