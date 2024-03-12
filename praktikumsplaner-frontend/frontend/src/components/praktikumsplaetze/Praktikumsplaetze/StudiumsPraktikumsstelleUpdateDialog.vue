@@ -239,6 +239,7 @@ import SemesterSelect from "@/components/praktikumsplaetze/Meldung/Studiensemest
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Zeitraum from "@/types/Zeitraum";
+import emitter from "@/stores/eventBus";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
@@ -298,7 +299,7 @@ function updatePraktikumsstelle() {
             praktikumsstelle.value,
             loading
         ).then(() => {
-            emits("updated", praktikumsstelle.value);
+            emitter.emit("praktikumsstelleUpdated");
         });
     });
 }
