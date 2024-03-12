@@ -42,7 +42,7 @@ The frontend and Backend are only started if docker compose is run with the prof
 If you want to develop locally it is sugessted to start docker compose without this profile
 and start those parts via your IDE.
 The `.env` files for the frontend and backend are used when these services are deployed.
-Ich you start them via your IDE they are not used.
+If you start them via your IDE they are not used.
 
 ### Keycloak
 An admin user and a test user are created by `init-keycloak`. You can change the configuration via the keycloak ui.
@@ -50,7 +50,7 @@ An admin user and a test user are created by `init-keycloak`. You can change the
 #### configuration migration
 Realm, client user and other configuration should be done by the migration client. Its config files are located in
 `keycloak\migration`. The main file is `keycloak-changelog.yml`. It contains the list of migration files that
-should be applied. For more information check https://mayope.github.io/keycloakmigration/migrations/client/.
+should be applied. For more information check [here](https://mayope.github.io/keycloakmigration/migrations/client/).
 
 
 ## Local Development

@@ -10,12 +10,12 @@ The internship planner helps to maintain a good overview in order to assign juni
 
 
 ![Process Diagramm](/Process.drawio.png)
-The overall process in which the Praktikumsplaner takes place. The area marked in blue is where the Praktikumsplaner provides direct support.
+<em>The overall process in which the Praktikumsplaner takes place. The area marked in blue is where the Praktikumsplaner provides direct support.</em>
 
 ---
 
 ![Screenshot of the assignment page of the Praktikumsplaners with sample data](/Screenshot_Praktikumsplaner.png)
-A screenshot of the assignment part of the application
+<em>A screenshot of the assignment part of the application</em>
 
 ## Technical details
 

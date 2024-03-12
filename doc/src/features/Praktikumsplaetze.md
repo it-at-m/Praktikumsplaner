@@ -10,7 +10,7 @@ The individual [Praktikumsstelle](../glossary.md#praktikumsstelle) can also be e
 This means that all possible information on a [Praktikumsstelle](../glossary.md#praktikumsstelle) is displayed.
 
 
-## Submission örtliche Ausbilder
+## Submission örtliche Ausbilderin
 
 On the page there is a button labeled `Hinzufügen`.
 Clicking this button will open a dialog.
@@ -20,7 +20,7 @@ This will open a page with the corresponding form.
 
 ## Submission örtliche Ausbildungsleitung
 If the user has the role for [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung)
-The user can use the button labeled `Hinzufügen`, to add a [Praktikumsstelle](../glossary.md#praktikumsstelle).
+On the page there is a button labeled `Hinzufügen`.
 Clicking this button will open a dialog.
 
 In this dialog, you can choose whether you want to report a [student](./../glossary.md#studentin) (`Studium`) or a [trainee](./../glossary.md#auszubildende) (`Ausbildung`).
@@ -100,13 +100,13 @@ A selector for requesting a [Nwk](./../glossary.md#nwk) who can code.
 
 Options: `Ja`, `Nein`, `Egal`. Meaning `Yes`, `No`, `Doesn't matter`.
 
-### Örtliche Ausbilder*in
+### Örtliche Ausbilderin
 
-#### Name örtliche Ausbilder*in
+#### Name örtliche Ausbilderin
 
 Text field for the name of the person ([örtlicher Ausbilderin](./../glossary.md#ortliche-ausbilderin)) in the team responsible for the [Nwk](./../glossary.md#nwk)
 
-#### Kontakt E-Mail örtliche Ausbilder*in
+#### Kontakt E-Mail örtliche Ausbilderin
 
 Text field for the contact email of the [örtliche Ausbilderin](./../glossary.md#ortliche-ausbilderin) 
 

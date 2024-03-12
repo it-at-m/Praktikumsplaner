@@ -15,7 +15,7 @@
 
 - [Praktikumsplätze](Praktikumsplaetze.md)
   - [Praktikumsplätze Overview](Praktikumsplaetze.md)
-  - [Submission Örtliche Ausbilder](Praktikumsplaetze.md#submission-ortliche-ausbilder)
+  - [Submission Örtliche Ausbilderin](Praktikumsplaetze.md#submission-ortliche-ausbilderin)
   - [Submission Örtliche Ausbildungsleitung](Praktikumsplaetze.md#submission-ortliche-ausbildungsleitung)
   - [Using Submission Forms](Praktikumsplaetze.md#using-the-forms)
   - [Praktikumsplätze Deletion](Praktikumsplaetze.md#deletion)

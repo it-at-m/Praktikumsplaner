@@ -11,7 +11,7 @@ Displayed Infos:
 - Major/training direction
 - year
 
-## Modify [Nwks](./../glossary.md#nwk)
+## Modifying [Nwks](./../glossary.md#nwk)
 
 Under each [Nwk](./../glossary.md#nwk) in the overview is a button labeled `Bearbeiten`.
 
@@ -33,7 +33,7 @@ It is possible to upload an Excel file there.
 
 Non-Excel files or old-format Excel files (older than 2007) will produce errors after uploading.
 
-The Excel file has to be in <a href="../assets/Import_Standart.xlsx" download>this correct format</a>.
+The Excel file has to be in the correct format. Download an sample file <a href="../assets/Import_Standart.xlsx" download>here</a>.
 
 The first name (Vorname) has to be between 2 and 255 characters.
 
@@ -63,7 +63,7 @@ The year (Jahrgang) has to be in this format: XX/XX Example: 20/24 for someone w
 
 The lecture days selector is used to select the lecture days of a [Nwks](./../glossary.md#nwk).
 
-## English days to German short notation
+## English weekdays to German short notation
 | English | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday |
 |---------|--------|---------|-----------|----------|--------|----------|
 | German  | Mo     | Di      | Mi        | Do       | Fr     | Sa       |
