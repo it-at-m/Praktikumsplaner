@@ -80,6 +80,12 @@
                     </v-fade-transition>
                 </router-view>
             </v-container>
+            <v-footer
+                class="customfooter"
+                app
+            >
+                Made with 💛 in Munich
+            </v-footer>
         </v-main>
     </v-app>
 </template>
@@ -125,5 +131,8 @@ onMounted(() => {
 .no-underline,
 .no-underline:hover {
     text-decoration: none;
+}
+.customfooter {
+    justify-content: center;
 }
 </style>
