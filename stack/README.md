@@ -4,6 +4,7 @@
   - require Keycloak for single sign on
   - Frontendservice that serves the UI
   - Backendservice that serves access to the data
+  - MailPit and MailDev for email testing and development
 - DBs:
   - Postgres for Keycloak
   - Postgres for backend-Service
