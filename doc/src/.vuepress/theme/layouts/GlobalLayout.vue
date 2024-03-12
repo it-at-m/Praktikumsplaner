@@ -6,7 +6,7 @@
         <NavLink :item="privacy"/>
         <NavLink :item="imprint"/>
         <div class="muc-footer">
-          Made with ❤️ in munich
+            Made with 💛 in Munich
         </div>
       </div>
     </div>
