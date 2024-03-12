@@ -1,14 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleWithMeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.*;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto;
 import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -94,14 +87,14 @@ public class PraktikumsstellenController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PutMapping("/ausbildung/{praktikumsstellenId}")
     public void updateAusbildungPraktikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
-            @RequestBody AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
+            @RequestBody UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
         praktikumsstellenService.updateAusbildungsPraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PutMapping("/studium/{praktikumsstellenId}")
     public void updateStudiumPraktikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
-            @RequestBody StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
+            @RequestBody UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
         praktikumsstellenService.updateStudiumsPraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
     }
 

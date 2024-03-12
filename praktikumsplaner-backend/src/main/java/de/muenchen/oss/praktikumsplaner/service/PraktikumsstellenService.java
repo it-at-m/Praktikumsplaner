@@ -143,7 +143,7 @@ public class PraktikumsstellenService {
     }
 
     public void updateAusbildungsPraktikumsstelle(UUID praktikumsstellenId,
-            AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
+            UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
         if (praktikumsstelleDto.assignedNwk() != null) {
             updateAusbildungsPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto);
         } else if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
@@ -154,7 +154,7 @@ public class PraktikumsstellenService {
         }
     }
 
-    public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
+    public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
         if (praktikumsstelleDto.assignedNwk() != null) {
             updateStudiumsPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto);
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
@@ -165,7 +165,7 @@ public class PraktikumsstellenService {
         }
     }
 
-    private void updateAusbildungsPraktikumsstelleWithAssignedNwk(UUID id, AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
+    private void updateAusbildungsPraktikumsstelleWithAssignedNwk(UUID id, UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
         Optional<AusbildungsPraktikumsstelle> ausbildungsPraktikumsstelleOptional = ausbildungsPraktikumsstellenRepository.findById(id);
         if (ausbildungsPraktikumsstelleOptional.isEmpty()) {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
@@ -190,7 +190,7 @@ public class PraktikumsstellenService {
                 .save(praktikumsstellenMapper.updateAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle, praktikumsstelleDto));
     }
 
-    private void updateStudiumsPraktikumsstelleWithAssignedNwk(UUID id, StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
+    private void updateStudiumsPraktikumsstelleWithAssignedNwk(UUID id, UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
         Optional<StudiumsPraktikumsstelle> studiumsPraktikumsstelleOptional = studiumsPraktikumsstellenRepository.findById(id);
         if (studiumsPraktikumsstelleOptional.isEmpty()) {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");

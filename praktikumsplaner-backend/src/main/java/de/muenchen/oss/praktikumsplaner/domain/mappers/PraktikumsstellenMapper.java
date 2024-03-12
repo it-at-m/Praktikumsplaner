@@ -2,15 +2,9 @@ package de.muenchen.oss.praktikumsplaner.domain.mappers;
 
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleWithMeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.*;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto;
+
 import java.util.UUID;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -45,10 +39,10 @@ public interface PraktikumsstellenMapper {
 
     @Mapping(target = "id", source = "id")
     AusbildungsPraktikumsstelle toEntity(final UUID id,
-            final AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelleDto);
+            final UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelleDto);
 
     @Mapping(target = "id", source = "id")
-    StudiumsPraktikumsstelle toEntity(final UUID id, final StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelleDto);
+    StudiumsPraktikumsstelle toEntity(final UUID id, final UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelleDto);
 
     @Mapping(target = "dienststelle", source = "praktikumsstelleDto.dienststelle")
     @Mapping(target = "oertlicheAusbilder", source = "praktikumsstelleDto.oertlicheAusbilder")
@@ -60,7 +54,7 @@ public interface PraktikumsstellenMapper {
     @Mapping(target = "ausbildungsjahr", ignore = true)
     @Mapping(target = "ausbildungsrichtung", ignore = true)
     AusbildungsPraktikumsstelle updateAusbildungsPraktikumsstelle(@MappingTarget final AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle,
-            final AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto);
+            final UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto);
 
     @Mapping(target = "dienststelle", source = "praktikumsstelleDto.dienststelle")
     @Mapping(target = "oertlicheAusbilder", source = "praktikumsstelleDto.oertlicheAusbilder")
@@ -71,6 +65,6 @@ public interface PraktikumsstellenMapper {
     @Mapping(target = "studiensemester", ignore = true)
     @Mapping(target = "studiengang", ignore = true)
     StudiumsPraktikumsstelle updateStudiumsPraktikumsstelle(@MappingTarget final StudiumsPraktikumsstelle studiumsPraktikumsstelle,
-            final StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto);
+            final UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto);
 
 }

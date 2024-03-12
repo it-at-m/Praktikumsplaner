@@ -4,10 +4,10 @@ import de.muenchen.oss.praktikumsplaner.MicroServiceApplication;
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.*;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
@@ -50,7 +50,7 @@ public class PraktikumsstellenServiceIntegrationTest {
     public void testUpdateStudiumsPraktikumsstelleWithoutAssignedNwk() {
 
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelle = new StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
+        UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelle = new UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
                 "GL13", "John Smith", "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, "", false,
                 Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id(), null);
@@ -60,7 +60,7 @@ public class PraktikumsstellenServiceIntegrationTest {
         StudiumsPraktikumsstelle actuallySavedPraktikumsstelle = studiumsPraktikumsstellenRepository
                 .save(praktikumsstellenMapper.toEntity(uuid, studiumsPraktikumsstelle));
 
-        StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto correctChangedStudiumsPraktikumsstelle = new StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
+        UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto correctChangedStudiumsPraktikumsstelle = new UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
                 "GL14", "Max Mustermann", "Max@Mustermann.com",
                 "Planung von Events, Test", Dringlichkeit.DRINGEND, "", Referat.RIT, "", true,
                 Set.of(Studiensemester.SEMESTER4), Studiengang.BSC, meldezeitraumDto.id(), null);
@@ -95,7 +95,7 @@ public class PraktikumsstellenServiceIntegrationTest {
 
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
 
-        StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelle = new StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
+        UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto studiumsPraktikumsstelle = new UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
                 "GL13", "John Smith", "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, "", false,
                 Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id(), testNwkDto);
@@ -103,12 +103,12 @@ public class PraktikumsstellenServiceIntegrationTest {
         StudiumsPraktikumsstelle actuallySavedPraktikumsstelle = studiumsPraktikumsstellenRepository
                 .save(praktikumsstellenMapper.toEntity(uuid, studiumsPraktikumsstelle));
 
-        StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto correctChangedStudiumsPraktikumsstelle = new StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
+        UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto correctChangedStudiumsPraktikumsstelle = new UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
                 "GL14", "Max Mustermann", "Max@Mustermann.com",
                 "Planung von Events, Test", Dringlichkeit.ZWINGEND, "", Referat.RIT, "", false,
                 Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id(), testNwkDto);
 
-        StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto incorrectChangedStudiumsPraktikumsstelle = new StudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
+        UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto incorrectChangedStudiumsPraktikumsstelle = new UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(
                 "GL15", "Bla Bla", "Blub@blub.blub",
                 "Planung von Events, Test Test", Dringlichkeit.DRINGEND, "", Referat.ITM, "", false,
                 Set.of(Studiensemester.SEMESTER2), Studiengang.BSC, meldezeitraumDto.id(), testNwkDto);
@@ -135,7 +135,7 @@ public class PraktikumsstellenServiceIntegrationTest {
     public void testUpdateAusbildungsPraktikumsstelleWithoutAssignedNwk() {
 
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelle = new AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
+        UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelle = new UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
                 "GL13", "John Smith", "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, false, "", false, Set.of(Ausbildungsjahr.JAHR1), Ausbildungsrichtung.FISI,
                 meldezeitraumDto.id(), null);
@@ -145,7 +145,7 @@ public class PraktikumsstellenServiceIntegrationTest {
         AusbildungsPraktikumsstelle actuallySavedPraktikumsstelle = ausbildungsPraktikumsstellenRepository
                 .save(praktikumsstellenMapper.toEntity(uuid, ausbildungsPraktikumsstelle));
 
-        AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto correctChangedAusbildungsPraktikumsstelle = new AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
+        UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto correctChangedAusbildungsPraktikumsstelle = new UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
                 "GL14", "John asdf", "John@asdf.com",
                 "Test", Dringlichkeit.ZWINGEND, "", Referat.RIT, true, "", false, Set.of(Ausbildungsjahr.JAHR1), Ausbildungsrichtung.FISI,
                 meldezeitraumDto.id(), null);
@@ -179,7 +179,7 @@ public class PraktikumsstellenServiceIntegrationTest {
         NwkDto testNwkDto = helper.createNwkDto(actuallySavedNwk);
 
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelle = new AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
+        UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto ausbildungsPraktikumsstelle = new UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
                 "GL13", "John Smith", "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, false, "", false, Set.of(Ausbildungsjahr.JAHR1), Ausbildungsrichtung.FISI,
                 meldezeitraumDto.id(), testNwkDto);
@@ -187,12 +187,12 @@ public class PraktikumsstellenServiceIntegrationTest {
         AusbildungsPraktikumsstelle actuallySavedPraktikumsstelle = ausbildungsPraktikumsstellenRepository
                 .save(praktikumsstellenMapper.toEntity(uuid, ausbildungsPraktikumsstelle));
 
-        AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto correctChangedAusbildungsPraktikumsstelle = new AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
+        UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto correctChangedAusbildungsPraktikumsstelle = new UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
                 "GL13", "John Smith", "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, false, "", false, Set.of(Ausbildungsjahr.JAHR1), Ausbildungsrichtung.FISI,
                 meldezeitraumDto.id(), testNwkDto);
 
-        AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto incorrectChangedAusbildungsPraktikumsstelle = new AusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
+        UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto incorrectChangedAusbildungsPraktikumsstelle = new UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto(
                 "GL15", "John Bla", "Bla@asdf.com",
                 "Planasd von Events", Dringlichkeit.NACHRANGIG, "", Referat.ITM, true, "", true, Set.of(Ausbildungsjahr.JAHR1, Ausbildungsjahr.JAHR2),
                 Ausbildungsrichtung.FISI, meldezeitraumDto.id(), testNwkDto);
