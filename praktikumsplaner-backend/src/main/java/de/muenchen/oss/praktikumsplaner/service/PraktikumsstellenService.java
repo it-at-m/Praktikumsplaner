@@ -149,7 +149,7 @@ public class PraktikumsstellenService {
         } else if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             ausbildungsPraktikumsstellenRepository.save(
                     praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
-        }else{
+        } else {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }
@@ -160,7 +160,7 @@ public class PraktikumsstellenService {
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             studiumsPraktikumsstellenRepository.save(
                     praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
-        }else{
+        } else {
             throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
         }
     }
@@ -174,7 +174,16 @@ public class PraktikumsstellenService {
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = ausbildungsPraktikumsstelleOptional.get();
 
         //Check if any field which is not supposed to change changed
-        if(ausbildungsPraktikumsstelle.getReferat() != praktikumsstelleDto.referat() || ausbildungsPraktikumsstelle.getDringlichkeit() != praktikumsstelleDto.dringlichkeit() || nwksAreEqual(nwkMapper.toDto(ausbildungsPraktikumsstelle.getAssignedNwk()), praktikumsstelleDto.assignedNwk()) || !Objects.equals(ausbildungsPraktikumsstelle.getNamentlicheAnforderung(), praktikumsstelleDto.namentlicheAnforderung()) || ausbildungsPraktikumsstelle.isPlanstelleVorhanden() != praktikumsstelleDto.planstelleVorhanden() || ausbildungsPraktikumsstelle.getMeldezeitraumID() != praktikumsstelleDto.meldezeitraumID() || ausbildungsPraktikumsstelle.isProjektarbeit() != praktikumsstelleDto.projektarbeit() || ausbildungsPraktikumsstelle.getProgrammierkenntnisse() != praktikumsstelleDto.programmierkenntnisse() || ausbildungsPraktikumsstelle.getAusbildungsjahr() != praktikumsstelleDto.ausbildungsjahr() || ausbildungsPraktikumsstelle.getAusbildungsrichtung() != praktikumsstelleDto.ausbildungsrichtung()){
+        if (ausbildungsPraktikumsstelle.getReferat() != praktikumsstelleDto.referat()
+                || ausbildungsPraktikumsstelle.getDringlichkeit() != praktikumsstelleDto.dringlichkeit()
+                || !nwksAreEqual(nwkMapper.toDto(ausbildungsPraktikumsstelle.getAssignedNwk()), praktikumsstelleDto.assignedNwk())
+                || !Objects.equals(ausbildungsPraktikumsstelle.getNamentlicheAnforderung(), praktikumsstelleDto.namentlicheAnforderung())
+                || ausbildungsPraktikumsstelle.isPlanstelleVorhanden() != praktikumsstelleDto.planstelleVorhanden()
+                || !ausbildungsPraktikumsstelle.getMeldezeitraumID().toString().equals(praktikumsstelleDto.meldezeitraumID().toString())
+                || ausbildungsPraktikumsstelle.isProjektarbeit() != praktikumsstelleDto.projektarbeit()
+                || !Objects.equals(ausbildungsPraktikumsstelle.getProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
+                || !ausbildungsPraktikumsstelle.getAusbildungsjahr().equals(praktikumsstelleDto.ausbildungsjahr())
+                || !ausbildungsPraktikumsstelle.getAusbildungsrichtung().equals(praktikumsstelleDto.ausbildungsrichtung())) {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
         ausbildungsPraktikumsstellenRepository
@@ -190,23 +199,30 @@ public class PraktikumsstellenService {
         StudiumsPraktikumsstelle studiumsPraktikumsstelle = studiumsPraktikumsstelleOptional.get();
 
         //Check if any field which is not supposed to change changed
-        if(studiumsPraktikumsstelle.getReferat() != praktikumsstelleDto.referat() || studiumsPraktikumsstelle.getDringlichkeit() != praktikumsstelleDto.dringlichkeit() || !nwksAreEqual(nwkMapper.toDto(studiumsPraktikumsstelle.getAssignedNwk()),praktikumsstelleDto.assignedNwk()) || !Objects.equals(studiumsPraktikumsstelle.getNamentlicheAnforderung(), praktikumsstelleDto.namentlicheAnforderung()) || studiumsPraktikumsstelle.isPlanstelleVorhanden() != praktikumsstelleDto.planstelleVorhanden() || !studiumsPraktikumsstelle.getMeldezeitraumID().equals(praktikumsstelleDto.meldezeitraumID()) || !Objects.equals(studiumsPraktikumsstelle.getProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse()) || !studiumsPraktikumsstelle.getStudiensemester().equals(praktikumsstelleDto.studiensemester()) || studiumsPraktikumsstelle.getStudiengang() != praktikumsstelleDto.studiengang()){
+        if (studiumsPraktikumsstelle.getReferat() != praktikumsstelleDto.referat()
+                || studiumsPraktikumsstelle.getDringlichkeit() != praktikumsstelleDto.dringlichkeit()
+                || !nwksAreEqual(nwkMapper.toDto(studiumsPraktikumsstelle.getAssignedNwk()), praktikumsstelleDto.assignedNwk())
+                || !Objects.equals(studiumsPraktikumsstelle.getNamentlicheAnforderung(), praktikumsstelleDto.namentlicheAnforderung())
+                || studiumsPraktikumsstelle.isPlanstelleVorhanden() != praktikumsstelleDto.planstelleVorhanden()
+                || !studiumsPraktikumsstelle.getMeldezeitraumID().toString().equals(praktikumsstelleDto.meldezeitraumID().toString())
+                || !Objects.equals(studiumsPraktikumsstelle.getProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
+                || !studiumsPraktikumsstelle.getStudiensemester().equals(praktikumsstelleDto.studiensemester())
+                || studiumsPraktikumsstelle.getStudiengang() != praktikumsstelleDto.studiengang()) {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
         studiumsPraktikumsstellenRepository.save(praktikumsstellenMapper.updateStudiumsPraktikumsstelle(studiumsPraktikumsstelle, praktikumsstelleDto));
     }
 
-    private boolean nwksAreEqual(NwkDto nwkDto, NwkDto nwkDtoToCompare){
+    private boolean nwksAreEqual(NwkDto nwkDto, NwkDto nwkDtoToCompare) {
         boolean returnValue = true;
 
-
-        if(nwkDto.active() != nwkDtoToCompare.active()) returnValue = false;
-        if(!nwkDto.id().equals(nwkDtoToCompare.id())) returnValue = false;
-        if(!Objects.equals(nwkDto.vorname(), nwkDtoToCompare.vorname())) returnValue = false;
-        if(!Objects.equals(nwkDto.nachname(), nwkDtoToCompare.nachname())) returnValue = false;
-        if(nwkDto.studiengang() != nwkDtoToCompare.studiengang()) returnValue = false;
-        if(nwkDto.ausbildungsrichtung() != nwkDtoToCompare.ausbildungsrichtung()) returnValue = false;
-        if(!Objects.equals(nwkDto.jahrgang(), nwkDtoToCompare.jahrgang())) returnValue = false;
+        if (nwkDto.active() != nwkDtoToCompare.active()) returnValue = false;
+        if (!nwkDto.id().equals(nwkDtoToCompare.id())) returnValue = false;
+        if (!Objects.equals(nwkDto.vorname(), nwkDtoToCompare.vorname())) returnValue = false;
+        if (!Objects.equals(nwkDto.nachname(), nwkDtoToCompare.nachname())) returnValue = false;
+        if (nwkDto.studiengang() != nwkDtoToCompare.studiengang()) returnValue = false;
+        if (nwkDto.ausbildungsrichtung() != nwkDtoToCompare.ausbildungsrichtung()) returnValue = false;
+        if (!Objects.equals(nwkDto.jahrgang(), nwkDtoToCompare.jahrgang())) returnValue = false;
 
         return returnValue;
     }
