@@ -3,15 +3,29 @@ package de.muenchen.oss.praktikumsplaner.service;
 import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.*;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleWithMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.TreeMap;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -69,14 +83,16 @@ public class PraktikumsstellenService {
                 praktikumsstelle.setAssignedNwk(assignedNwk);
                 ausbildungsPraktikumsstellenRepository.save(praktikumsstelle);
                 return praktikumsstellenMapper.toDto(praktikumsstelle);
-            } else throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
+            } else
+                throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
             StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
             if (praktikumsstelle.getAssignedNwk() == null) {
                 praktikumsstelle.setAssignedNwk(assignedNwk);
                 studiumsPraktikumsstellenRepository.save(praktikumsstelle);
                 return praktikumsstellenMapper.toDto(praktikumsstelle);
-            } else throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
+            } else
+                throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
         } else throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
     }
 
@@ -228,15 +244,15 @@ public class PraktikumsstellenService {
     }
 
     private boolean nwksAreEqual(NwkDto nwkDto, NwkDto nwkDtoToCompare) {
-        boolean returnValue = true;
+        boolean returnValue = nwkDto.active() == nwkDtoToCompare.active();
 
-        if (nwkDto.active() != nwkDtoToCompare.active()) returnValue = false;
         if (!nwkDto.id().equals(nwkDtoToCompare.id())) returnValue = false;
         if (!Objects.equals(nwkDto.vorname(), nwkDtoToCompare.vorname())) returnValue = false;
         if (!Objects.equals(nwkDto.nachname(), nwkDtoToCompare.nachname())) returnValue = false;
         if (nwkDto.studiengang() != nwkDtoToCompare.studiengang()) returnValue = false;
         if (nwkDto.ausbildungsrichtung() != nwkDtoToCompare.ausbildungsrichtung()) returnValue = false;
-        if (!Objects.equals(nwkDto.jahrgang(), nwkDtoToCompare.jahrgang())) returnValue = false;
+        if (!nwkDto.vorlesungstage().equals(nwkDtoToCompare.vorlesungstage()))
+            if (!Objects.equals(nwkDto.jahrgang(), nwkDtoToCompare.jahrgang())) returnValue = false;
 
         return returnValue;
     }
