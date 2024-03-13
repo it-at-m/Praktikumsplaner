@@ -2,3 +2,5 @@
 /praktikumsplaner-backend/test.mv.db
 /test.mv.db
 /test.trace.db
+/doc_vitepress/docs/.vitepress/cache/
+/doc_vitepress/node_modules/
