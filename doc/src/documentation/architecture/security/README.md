@@ -34,3 +34,8 @@ As this is controlled on frontend side in the browser, users could possibly bypa
 so this is not meant to prevent users from doing things that are not allowed, but more a way
 to guide them in the application and only show them things they are allowed to do and not confuse
 them with many error messages due to missing privileges.
+
+On the backend side we are using Spring security with the `@PreAuthorize` Annotation.
+In this Annotation we use the Spring Expression Language with the `hasRole()` function.
+We annotate our Controller Methods to control the access to out HTTP-Endpoints.
+So the real security is enforced in the backend and all the frontend security is about usability and user experience, not about security itself.

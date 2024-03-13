@@ -17,6 +17,9 @@ it will be marked with a special icon (mdi-account-star).
 Each [Praktikumsstellen](./../glossary.md#praktikumsstelle) can be expanded again by clicking on the arrow or the card itself to display more details with all the information about the position.  
 Both lists can be scrolled separately.
 
+This page and its actions are only available for [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung).
+
+
 ## Assign [Nwks](./../glossary.md#nwk) to [Praktikumsstellen](./../glossary.md#praktikumsstelle)
 
 To assign a [Nwk](./../glossary.md#nwk) to a [Praktikumsstelle](./../glossary.md#praktikumsstelle),

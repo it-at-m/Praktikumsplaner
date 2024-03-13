@@ -1,5 +1,7 @@
 # Meldezeitraum
 
+This page and its actions are only available for [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung).
+
 ## Meldezeitraum Overview
 The navigation drawer lists the page `Meldezeitraum` when clicking on this link the user is directed to a page
 where you can see all Meldezeiträume that have been created so far.

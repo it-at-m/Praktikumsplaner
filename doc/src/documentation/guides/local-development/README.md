@@ -1,6 +1,12 @@
 # Local Development
 This page should make it easier to start developing locally.
 
+## Prerequisites
+
+The following programs / tools must be installed:
+
+- Docker (to use the provided images)
+ 
 ## Stack folder
 The Repository contains a `stack` folder.
 In this stack folder you can find a docker compose file.
@@ -38,11 +44,53 @@ docker compose --profile backend up -d
 docker compose --profile frontend up -d
 ```
 
+```mermaid
+graph LR;
+
+subgraph Praktiumsplaner
+
+    subgraph Dockercontext
+        Frontend
+        Backend
+        DBBackend[DB-Backend]
+        Keycloak
+        DB-Keycloak
+        Init-Keycloak
+    
+        Frontend -->|fetch data| Backend
+        Backend --> |check permission| Keycloak
+        Backend -->|persisting| DBBackend
+        Frontend -->|authenticate| Keycloak
+        Keycloak -->|persisting| DB-Keycloak
+        Init-Keycloak -->|configures| Keycloak
+    end
+    
+ end
+ 
+ Browser -->|localhost:8080| Frontend
+```
+
+
 The frontend and Backend are only started if docker compose is run with the profile full.
 If you want to develop locally it is sugessted to start docker compose without this profile
 and start those parts via your IDE.
 The `.env` files for the frontend and backend are used when these services are deployed.
 If you start them via your IDE they are not used.
+
+**⚠ Note**
+
+The frontend will not start successfully at the first start.
+This is because the keycloak is not yet fully set up when the frontend is started.
+The setup of the keycloak is complete when the container `init-keycloak` is stopped again.
+The frontend can then be started afterward.
+
+As soon as all services except `init-*` have been started, the application can be accessed via http://localhost:8080.
+For authentication, use the user `testleitung` with the password `test`.
+
+**⚠ Proxy note**
+
+If a proxy is set up in the browser, please make sure that it does not resolve `kubernetes.docker.internal`.
+
 
 ### Keycloak
 An admin user and a test user are created by `init-keycloak`. You can change the configuration via the keycloak ui.
@@ -51,6 +99,31 @@ An admin user and a test user are created by `init-keycloak`. You can change the
 Realm, client user and other configuration should be done by the migration client. Its config files are located in
 `keycloak\migration`. The main file is `keycloak-changelog.yml`. It contains the list of migration files that
 should be applied. For more information check [here](https://mayope.github.io/keycloakmigration/migrations/client/).
+
+### Postgres
+#### Connection to Postgresql-DB in Docker
+
+```mermaid
+graph LR
+
+subgraph Praktiumsplaner
+
+    subgraph IDE
+        IDEBackend[Backend]
+    end
+
+    subgraph Dockercontext
+        DBBackend[DB Backend]
+    end
+
+    IDEBackend -->|localhost:5432| DBBackend
+    
+ end
+```
+
+There is a database for the backend in the infrastructure provided.
+The `db-postgres` profile must be used to connect the backend to it during development.
+It is configured so that a connection to the infrastructure is established by default.
 
 
 ## Local Development

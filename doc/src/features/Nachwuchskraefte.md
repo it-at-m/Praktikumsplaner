@@ -1,6 +1,7 @@
 # Nachwuchskräfte
 
 A navigation tab labeled `Nachwuchskräfte` makes it possible to view all active [Nwks](./../glossary.md#nwk) and import [Nwks](./../glossary.md#nwk) from an Excel file.
+This page and its actions are only available for [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung).
 
 ## [Nwk](./../glossary.md#nwk) Overview
 
@@ -43,7 +44,7 @@ The training direction or course of study (Studiengang) has to be one of these: 
 
 The year (Jahrgang) has to be in this format: XX/XX Example: 20/24 for someone who started training in 2020 and finishes in 2024.
 
-The lecture days (Vorlesungstage) have to be in the standard German short notation of Days ([see Table below](#english-days-to-german-short-notation)).
+The lecture days (Vorlesungstage) have to be in the standard German short notation of Days ([see Table below](#english-weekdays-to-german-short-notation)).
 The days can be chained together by plus signs, for example: Mo + Di + Mi.
 
 If the upload is successful, a green success message will appear. If it's not, a red error will appear.
