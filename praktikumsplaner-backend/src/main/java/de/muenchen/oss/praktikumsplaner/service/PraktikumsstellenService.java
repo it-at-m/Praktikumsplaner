@@ -41,34 +41,31 @@ public class PraktikumsstellenService {
     private final MeldezeitraumService meldezeitraumService;
     private final NwkRepository nwkRepository;
 
-    public StudiumsPraktikumsstelleDto saveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto) {
+    public StudiumsPraktikumsstelleDto normalizeAndSaveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto) {
         StudiumsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDto,
                 meldezeitraumService.getCurrentMeldezeitraum());
-        entityPraktikumsstelle.setDienststelle(normalizeDienststelle(entityPraktikumsstelle.getDienststelle()));
-        return praktikumsstellenMapper.toDto(studiumsPraktikumsstellenRepository.save(entityPraktikumsstelle));
+        return praktikumsstellenMapper.toDto(normalizeAndSaveStudiumsPraktikumsstelle(entityPraktikumsstelle));
     }
 
     public StudiumsPraktikumsstelleDto saveStudiumsPraktikumsstelleWithMeldezeitraum(
             final CreateStudiumsPraktikumsstelleWithMeldezeitraumDto createStudiumsPraktikumsstelleWithMeldezeitraumDto) {
         StudiumsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleWithMeldezeitraumDto);
-        entityPraktikumsstelle.setDienststelle(normalizeDienststelle(entityPraktikumsstelle.getDienststelle()));
-        return praktikumsstellenMapper.toDto(studiumsPraktikumsstellenRepository.save(entityPraktikumsstelle));
+        return praktikumsstellenMapper.toDto(normalizeAndSaveStudiumsPraktikumsstelle(entityPraktikumsstelle));
     }
 
-    public AusbildungsPraktikumsstelleDto saveAusbildungsPraktikumsstelle(final CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto) {
+    public AusbildungsPraktikumsstelleDto normalizeAndSaveAusbildungsPraktikumsstelle(
+            final CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto) {
         AusbildungsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDto,
                 meldezeitraumService.getCurrentMeldezeitraum());
-        entityPraktikumsstelle.setDienststelle(normalizeDienststelle(entityPraktikumsstelle.getDienststelle()));
         return praktikumsstellenMapper
-                .toDto(ausbildungsPraktikumsstellenRepository.save(entityPraktikumsstelle));
+                .toDto(normalizeAndSaveAusbildungsPraktikumsstelle(entityPraktikumsstelle));
     }
 
     public AusbildungsPraktikumsstelleDto saveAusbildungsPraktikumsstelleWithMeldezeitraum(
             final CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto createAusbildungsPraktikumsstelleWithMeldezeitraumDto) {
         AusbildungsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleWithMeldezeitraumDto);
-        entityPraktikumsstelle.setDienststelle(normalizeDienststelle(entityPraktikumsstelle.getDienststelle()));
         return praktikumsstellenMapper
-                .toDto(ausbildungsPraktikumsstellenRepository.save(entityPraktikumsstelle));
+                .toDto(normalizeAndSaveAusbildungsPraktikumsstelle(entityPraktikumsstelle));
     }
 
     public PraktikumsstelleDto assignNwk(UUID praktikumsstellenID, UUID nwkID) {
@@ -78,7 +75,7 @@ public class PraktikumsstellenService {
             AusbildungsPraktikumsstelle praktikumsstelle = ausbildungsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
             if (praktikumsstelle.getAssignedNwk() == null) {
                 praktikumsstelle.setAssignedNwk(assignedNwk);
-                ausbildungsPraktikumsstellenRepository.save(praktikumsstelle);
+                normalizeAndSaveAusbildungsPraktikumsstelle(praktikumsstelle);
                 return praktikumsstellenMapper.toDto(praktikumsstelle);
             } else
                 throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
@@ -86,7 +83,7 @@ public class PraktikumsstellenService {
             StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
             if (praktikumsstelle.getAssignedNwk() == null) {
                 praktikumsstelle.setAssignedNwk(assignedNwk);
-                studiumsPraktikumsstellenRepository.save(praktikumsstelle);
+                normalizeAndSaveStudiumsPraktikumsstelle(praktikumsstelle);
                 return praktikumsstellenMapper.toDto(praktikumsstelle);
             } else
                 throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
@@ -97,12 +94,12 @@ public class PraktikumsstellenService {
         if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             AusbildungsPraktikumsstelle praktikumsstelle = ausbildungsPraktikumsstellenRepository.findById(praktikumsstellenId).orElseThrow();
             praktikumsstelle.setAssignedNwk(null);
-            ausbildungsPraktikumsstellenRepository.save(praktikumsstelle);
+            normalizeAndSaveAusbildungsPraktikumsstelle(praktikumsstelle);
             return praktikumsstellenMapper.toDto(praktikumsstelle);
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenId).orElseThrow();
             praktikumsstelle.setAssignedNwk(null);
-            studiumsPraktikumsstellenRepository.save(praktikumsstelle);
+            normalizeAndSaveStudiumsPraktikumsstelle(praktikumsstelle);
             return praktikumsstellenMapper.toDto(praktikumsstelle);
         } else throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
     }
@@ -158,27 +155,25 @@ public class PraktikumsstellenService {
     public void updateAusbildungsPraktikumsstelle(UUID praktikumsstellenId,
             UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
         final AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto);
-        ausbildungsPraktikumsstelle.setDienststelle(normalizeDienststelle(ausbildungsPraktikumsstelle.getDienststelle()));
 
         final AusbildungsPraktikumsstelle praktikumsstelleToUpdate = findByIdOrThrowAusbildungspraktikumsstelle(praktikumsstellenId);
 
         if (praktikumsstelleToUpdate.getAssignedNwk() != null) {
             updateAusbildungsPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto);
         } else {
-            saveAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle);
+            normalizeAndSaveAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle);
         }
     }
 
     public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
         final StudiumsPraktikumsstelle studiumsPraktikumsstelle = praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto);
-        studiumsPraktikumsstelle.setDienststelle(normalizeDienststelle(studiumsPraktikumsstelle.getDienststelle()));
 
         final StudiumsPraktikumsstelle praktikumsstelleToUpdate = findByIdOrThrowStudiumpraktikumsstelle(praktikumsstellenId);
 
         if (praktikumsstelleToUpdate.getAssignedNwk() != null) {
             updateStudiumsPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto);
         } else {
-            saveStudiumsPraktikumsstelle(studiumsPraktikumsstelle);
+            normalizeAndSaveStudiumsPraktikumsstelle(studiumsPraktikumsstelle);
         }
     }
 
@@ -199,7 +194,7 @@ public class PraktikumsstellenService {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
         praktikumsstellenMapper.updateAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle, praktikumsstelleDto);
-        saveAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle);
+        normalizeAndSaveAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle);
     }
 
     private void updateStudiumsPraktikumsstelleWithAssignedNwk(UUID id, UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
@@ -218,7 +213,7 @@ public class PraktikumsstellenService {
         }
 
         praktikumsstellenMapper.updateStudiumsPraktikumsstelle(studiumsPraktikumsstelle, praktikumsstelleDto);
-        saveStudiumsPraktikumsstelle(studiumsPraktikumsstelle);
+        normalizeAndSaveStudiumsPraktikumsstelle(studiumsPraktikumsstelle);
     }
 
     private TreeMap<String, List<PraktikumsstelleDto>> getPraktikumsstellenGroupedByDienststelle(UUID meldezeitraumID) {
@@ -268,14 +263,14 @@ public class PraktikumsstellenService {
         throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
     }
 
-    private void saveAusbildungsPraktikumsstelle(AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle) {
+    private AusbildungsPraktikumsstelle normalizeAndSaveAusbildungsPraktikumsstelle(AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle) {
         ausbildungsPraktikumsstelle.setDienststelle(normalizeDienststelle(ausbildungsPraktikumsstelle.getDienststelle()));
-        ausbildungsPraktikumsstellenRepository.save(ausbildungsPraktikumsstelle);
+        return ausbildungsPraktikumsstellenRepository.save(ausbildungsPraktikumsstelle);
     }
 
-    private void saveStudiumsPraktikumsstelle(StudiumsPraktikumsstelle studiumsPraktikumsstelle) {
+    private StudiumsPraktikumsstelle normalizeAndSaveStudiumsPraktikumsstelle(StudiumsPraktikumsstelle studiumsPraktikumsstelle) {
         studiumsPraktikumsstelle.setDienststelle(normalizeDienststelle(studiumsPraktikumsstelle.getDienststelle()));
-        studiumsPraktikumsstellenRepository.save(studiumsPraktikumsstelle);
+        return studiumsPraktikumsstellenRepository.save(studiumsPraktikumsstelle);
     }
 
 }
