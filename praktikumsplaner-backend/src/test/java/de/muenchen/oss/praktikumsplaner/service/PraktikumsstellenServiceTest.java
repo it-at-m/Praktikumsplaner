@@ -104,7 +104,7 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toEntity(createDto, meldezeitraumDto)).thenReturn(studiumsPraktikumsstelle);
         when(meldezeitraumService.getCurrentMeldezeitraum()).thenReturn(meldezeitraumDto);
 
-        StudiumsPraktikumsstelleDto result = service.saveStudiumsPraktikumsstelle(createDto);
+        StudiumsPraktikumsstelleDto result = service.normalizeAndSaveStudiumsPraktikumsstelle(createDto);
 
         assertEquals(dto, result);
     }
@@ -146,7 +146,7 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(ausbildungsPraktikumsstelle)).thenReturn(dto);
         when(meldezeitraumService.getCurrentMeldezeitraum()).thenReturn(meldezeitraumDto);
 
-        AusbildungsPraktikumsstelleDto result = service.saveAusbildungsPraktikumsstelle(createDto);
+        AusbildungsPraktikumsstelleDto result = service.normalizeAndSaveAusbildungsPraktikumsstelle(createDto);
 
         assertEquals(dto, result);
     }
