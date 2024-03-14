@@ -11,5 +11,4 @@ public interface StudiumsPraktikumsstellenRepository extends CrudRepository<Stud
     List<StudiumsPraktikumsstelle> findAllByMeldezeitraumID(final UUID id);
 
     List<StudiumsPraktikumsstelle> findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(final UUID id);
-
 }
