@@ -168,7 +168,7 @@ public class PraktikumsstellenService {
         if (praktikumsstelleToUpdate.getAssignedNwk() != null) {
             updateAusbildungsPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto);
         } else {
-            ausbildungsPraktikumsstellenRepository.save(ausbildungsPraktikumsstelle);
+            saveAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle);
         }
     }
 
@@ -182,7 +182,7 @@ public class PraktikumsstellenService {
         if (praktikumsstelleToUpdate.getAssignedNwk() != null) {
             updateStudiumsPraktikumsstelleWithAssignedNwk(praktikumsstellenId, praktikumsstelleDto);
         } else {
-            studiumsPraktikumsstellenRepository.save(studiumsPraktikumsstelle);
+            saveStudiumsPraktikumsstelle(studiumsPraktikumsstelle);
         }
     }
 
@@ -204,8 +204,7 @@ public class PraktikumsstellenService {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
         praktikumsstellenMapper.updateAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle, praktikumsstelleDto);
-        ausbildungsPraktikumsstelle.setDienststelle(normalizeDienststelle(ausbildungsPraktikumsstelle.getDienststelle()));
-        ausbildungsPraktikumsstellenRepository.save(ausbildungsPraktikumsstelle);
+        saveAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle);
     }
 
     private void updateStudiumsPraktikumsstelleWithAssignedNwk(UUID id, UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
@@ -225,9 +224,7 @@ public class PraktikumsstellenService {
         }
 
         praktikumsstellenMapper.updateStudiumsPraktikumsstelle(studiumsPraktikumsstelle, praktikumsstelleDto);
-        studiumsPraktikumsstelle.setDienststelle(normalizeDienststelle(studiumsPraktikumsstelle.getDienststelle()));
-
-        studiumsPraktikumsstellenRepository.save(studiumsPraktikumsstelle);
+        saveStudiumsPraktikumsstelle(studiumsPraktikumsstelle);
     }
 
     private TreeMap<String, List<PraktikumsstelleDto>> getPraktikumsstellenGroupedByDienststelle(UUID meldezeitraumID) {
@@ -276,4 +273,15 @@ public class PraktikumsstellenService {
         }
         throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
     }
+
+    private void saveAusbildungsPraktikumsstelle(AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle) {
+        ausbildungsPraktikumsstelle.setDienststelle(normalizeDienststelle(ausbildungsPraktikumsstelle.getDienststelle()));
+        ausbildungsPraktikumsstellenRepository.save(ausbildungsPraktikumsstelle);
+    }
+
+    private void saveStudiumsPraktikumsstelle(StudiumsPraktikumsstelle studiumsPraktikumsstelle) {
+        studiumsPraktikumsstelle.setDienststelle(normalizeDienststelle(studiumsPraktikumsstelle.getDienststelle()));
+        studiumsPraktikumsstellenRepository.save(studiumsPraktikumsstelle);
+    }
+
 }
