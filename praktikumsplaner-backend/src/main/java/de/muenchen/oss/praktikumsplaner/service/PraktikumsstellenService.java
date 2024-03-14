@@ -11,8 +11,8 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstel
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
@@ -159,7 +159,7 @@ public class PraktikumsstellenService {
     }
 
     public void updateAusbildungsPraktikumsstelle(UUID praktikumsstellenId,
-            UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
+            UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
 
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto);
         ausbildungsPraktikumsstelle.setDienststelle(normalizeDienststelle(ausbildungsPraktikumsstelle.getDienststelle()));
@@ -173,7 +173,7 @@ public class PraktikumsstellenService {
         }
     }
 
-    public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
+    public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle = praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto);
         studiumsPraktikumsstelle.setDienststelle(normalizeDienststelle(studiumsPraktikumsstelle.getDienststelle()));
@@ -188,11 +188,7 @@ public class PraktikumsstellenService {
     }
 
     private void updateAusbildungsPraktikumsstelleWithAssignedNwk(UUID id,
-            UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
-        Optional<AusbildungsPraktikumsstelle> ausbildungsPraktikumsstelleOptional = ausbildungsPraktikumsstellenRepository.findById(id);
-        if (ausbildungsPraktikumsstelleOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
-        }
+            UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
 
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = ausbildungsPraktikumsstelleOptional.get();
 
@@ -215,11 +211,7 @@ public class PraktikumsstellenService {
         ausbildungsPraktikumsstellenRepository.save(updatedPraktikumsstelle);
     }
 
-    private void updateStudiumsPraktikumsstelleWithAssignedNwk(UUID id, UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
-        Optional<StudiumsPraktikumsstelle> studiumsPraktikumsstelleOptional = studiumsPraktikumsstellenRepository.findById(id);
-        if (studiumsPraktikumsstelleOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
-        }
+    private void updateStudiumsPraktikumsstelleWithAssignedNwk(UUID id, UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle = studiumsPraktikumsstelleOptional.get();
 

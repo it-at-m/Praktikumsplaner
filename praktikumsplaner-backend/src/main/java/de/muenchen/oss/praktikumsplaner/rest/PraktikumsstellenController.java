@@ -7,8 +7,8 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstel
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -94,14 +94,14 @@ public class PraktikumsstellenController {
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PutMapping("/ausbildung/{praktikumsstellenId}")
     public void updateAusbildungPraktikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
-            @RequestBody UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDto praktikumsstelleDto) {
+            @RequestBody UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
         praktikumsstellenService.updateAusbildungsPraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
     }
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PutMapping("/studium/{praktikumsstellenId}")
     public void updateStudiumPraktikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
-            @RequestBody UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto praktikumsstelleDto) {
+            @RequestBody UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
         praktikumsstellenService.updateStudiumsPraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
     }
 
