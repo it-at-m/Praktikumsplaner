@@ -37,9 +37,7 @@ public record UpdateAusbildungsPraktikumsstelleWithMeldezeitraumAndAssignedNWKDt
 
                                                                                   @NotNull Ausbildungsrichtung ausbildungsrichtung,
 
-                                                                                  @NotNull UUID meldezeitraumID,
+                                                                                  @NotNull UUID meldezeitraumID
 
-                                                                                  NwkDto assignedNwk
-
-                        ){
+) {
 }

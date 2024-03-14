@@ -35,8 +35,6 @@ public record UpdateStudiumsPraktikumsstelleWithMeldezeitraumAndAssignedNwkDto(@
 
                                                                                @NotNull Studiengang studiengang,
 
-                                                                               @NotNull UUID meldezeitraumID,
-
-                                                                               NwkDto assignedNwk
-                        ){
+                                                                               @NotNull UUID meldezeitraumID
+) {
 }
