@@ -1,6 +1,7 @@
 <template>
     <v-text-field
         v-model="stelle.dienststelle"
+        :disabled="disabled"
         :label="conditionalRequiredLabel"
         :rules="conditionalRequiredRules"
         variant="outlined"
@@ -20,9 +21,11 @@ interface Properties {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
+    disabled?: boolean;
 }
 const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
+    disabled: false,
 });
 
 const emits = defineEmits<{

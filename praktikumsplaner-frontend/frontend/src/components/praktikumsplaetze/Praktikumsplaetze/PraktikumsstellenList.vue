@@ -21,7 +21,7 @@
                             >
                                 <praktikumsstelle-card
                                     :key="praktikumsstelle.assignedNwk?.id"
-                                    :model-value="praktikumsstelle"
+                                    :praktikumsstelle="praktikumsstelle"
                                 ></praktikumsstelle-card>
                             </v-list-item>
                         </v-list>

@@ -81,6 +81,7 @@ import { useUserStore } from "@/stores/user";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Warning from "@/types/Warning";
+import emitter from "@/stores/eventBus";
 
 const warningsGenerator = useWarnings();
 
@@ -158,6 +159,10 @@ onMounted(() => {
         );
     }
     getAllActiveNwks();
+    getAllPraktikumsstellenInMostRecentMeldezeitraum();
+});
+
+emitter.on("praktikumsstelleUpdated", ()=>{
     getAllPraktikumsstellenInMostRecentMeldezeitraum();
 });
 

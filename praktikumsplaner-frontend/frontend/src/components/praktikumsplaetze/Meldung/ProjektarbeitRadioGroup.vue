@@ -4,6 +4,7 @@
         class="radios custom-label"
         inline
         :rules="conditionalRequiredRules"
+        :disabled="disabled"
     >
         <template #label>
             <span class="custom-label">{{ conditionalRequiredLabel }}:</span>
@@ -31,9 +32,11 @@ interface Properties {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
+    disabled?: boolean;
 }
 const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
+    disabled: false,
 });
 
 const emits = defineEmits<{

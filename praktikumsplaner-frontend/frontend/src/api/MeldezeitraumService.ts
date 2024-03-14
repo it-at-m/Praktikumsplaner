@@ -23,8 +23,12 @@ export default {
             }
         });
     },
-    getCurrentMeldezeitraum(loading: Ref<boolean>): Promise<Meldezeitraum[]> {
-        loading.value = true;
+    getCurrentMeldezeitraum(
+        loading: Ref<boolean> | undefined
+    ): Promise<Meldezeitraum[]> {
+        if (loading !== undefined) {
+            loading.value = true;
+        }
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=current`,
             FetchUtils.getGETConfig()
@@ -34,7 +38,9 @@ export default {
                 return response.json();
             })
             .finally(() => {
-                loading.value = false;
+                if (loading !== undefined) {
+                    loading.value = false;
+                }
             });
     },
     getUpcomingMeldezeitraueme(
@@ -77,14 +83,25 @@ export default {
                 }
             });
     },
-    getAllMeldezeitraeume(): Promise<Meldezeitraum[]> {
+    getAllMeldezeitraeume(
+        loading: Ref<boolean> | undefined
+    ): Promise<Meldezeitraum[]> {
+        if (loading !== undefined) {
+            loading.value = true;
+        }
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}`,
             FetchUtils.getGETConfig()
-        ).then((response) => {
-            FetchUtils.defaultResponseHandler(response);
-            return response.json();
-        });
+        )
+            .then((response) => {
+                FetchUtils.defaultResponseHandler(response);
+                return response.json();
+            })
+            .finally(() => {
+                if (loading !== undefined) {
+                    loading.value = false;
+                }
+            });
     },
     deleteMeldezeitraumById(
         id: string | undefined,

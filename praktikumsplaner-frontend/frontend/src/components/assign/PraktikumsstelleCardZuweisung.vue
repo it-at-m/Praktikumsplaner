@@ -1,6 +1,6 @@
 <template>
     <v-container
-        @drop="drop($event, modelValue)"
+        @drop="drop($event, praktikumsstelle)"
         @dragover.prevent
         @dragenter.prevent
     >
@@ -16,23 +16,23 @@
         >
             <v-card-title
                 >Stelle bei
-                {{ properties.modelValue.dienststelle }}</v-card-title
+                {{ properties.praktikumsstelle.dienststelle }}</v-card-title
             >
             <v-card-subtitle
-                v-if="properties.modelValue.namentlicheAnforderung"
+                v-if="properties.praktikumsstelle.namentlicheAnforderung"
             >
                 Namentliche Anforderung:
-                {{ properties.modelValue.namentlicheAnforderung }}
+                {{ properties.praktikumsstelle.namentlicheAnforderung }}
             </v-card-subtitle>
             <v-icon
-                v-if="properties.modelValue.planstelleVorhanden"
+                v-if="properties.praktikumsstelle.planstelleVorhanden"
                 size="x-large"
                 class="icon-top-right-position"
                 icon="mdi-account-star"
             ></v-icon>
             <v-card-text class="pt-0 mt-0 mb-0 pb-0">
                 <p style="white-space: pre-line">
-                    {{ getCardText(properties.modelValue) }}
+                    {{ getCardText(properties.praktikumsstelle) }}
                 </p></v-card-text
             >
             <v-col>
@@ -53,7 +53,7 @@
                     <template #close>
                         <v-icon
                             icon="mdi-close-circle"
-                            @click.stop="openConfirmationDialog(modelValue)"
+                            @click.stop="openConfirmationDialog(praktikumsstelle)"
                         />
                     </template> </v-chip
             ></v-col>
@@ -69,9 +69,21 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         <p style="white-space: pre-line">
-                            {{ getCardDetailText(properties.modelValue) }}
+                            {{ getCardDetailText(properties.praktikumsstelle) }}
                         </p>
                     </v-card-text>
+                    <v-card-actions>
+                        <ausbildungs-praktikumsstelle-update-dialog
+                            v-if="isAusbildungsPraktikumsstelle"
+                            v-model="praktikumsstelle"
+                            :icon-only="true"
+                        ></ausbildungs-praktikumsstelle-update-dialog>
+                        <studiums-praktikumsstelle-update-dialog
+                            v-else-if="isStudiumsPraktikumsstelle"
+                            v-model="praktikumsstelle"
+                            :icon-only="true"
+                        ></studiums-praktikumsstelle-update-dialog>
+                    </v-card-actions>
                 </div>
             </v-expand-transition>
         </v-card>
@@ -95,10 +107,12 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
+import AusbildungsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/AusbildungsPraktikumsstelleUpdateDialog.vue";
+import StudiumsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/StudiumsPraktikumsstelleUpdateDialog.vue";
 import { useTextGenerator } from "@/composables/textGenerator";
 import { useWarnings } from "@/composables/warningGenerator";
 import emitter from "@/stores/eventBus";
@@ -106,10 +120,6 @@ import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { findStudiengangColorByValue } from "@/types/Studiengang";
-
-const properties = defineProps<{
-    modelValue: Praktikumsstelle;
-}>();
 
 const generator = useTextGenerator();
 const warningsGenerator = useWarnings();
@@ -121,13 +131,36 @@ const unassignDialogTitle = ref<string>("Zuweisung aufheben?");
 const unassignConfirmDialog = ref<boolean>(false);
 const warningDialog = ref<boolean>(false);
 const nwkToAssignUnassing = ref<Nwk>();
+
+const properties = defineProps<{
+    praktikumsstelle: Praktikumsstelle;
+}>();
+
+const emits = defineEmits<{
+    (e: "update:modelValue", praktikumsstelleToUpdate: Praktikumsstelle): void;
+}>();
+
+const praktikumsstelle = computed({
+    get: () => properties.praktikumsstelle,
+    set: (newValue) => emits("update:modelValue", newValue),
+});
+
 const warningDialogTitle = ref<string>(
     "Warnung. Wollen sie wirklich fortfahren?"
 );
 const warningDialogText = ref<string>("");
-const assignedNwk = ref(properties.modelValue.assignedNwk);
+const assignedNwk = ref(properties.praktikumsstelle.assignedNwk);
 
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
+
+const isAusbildungsPraktikumsstelle = ref<boolean>(
+    PraktikumsstellenService.isAusbildungsPraktikumsstelle(
+        praktikumsstelle.value
+    )
+);
+const isStudiumsPraktikumsstelle = ref<boolean>(
+    PraktikumsstellenService.isStudiumsPraktikumsstelle(praktikumsstelle.value)
+);
 
 function getCardText(stelle: Praktikumsstelle): string {
     return generator.getPraktikumsstellenCardText(stelle);
