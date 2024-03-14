@@ -12,7 +12,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
@@ -37,7 +36,6 @@ import org.springframework.stereotype.Service;
 public class PraktikumsstellenService {
 
     private final PraktikumsstellenMapper praktikumsstellenMapper;
-    private final NwkMapper nwkMapper;
     private final StudiumsPraktikumsstellenRepository studiumsPraktikumsstellenRepository;
     private final AusbildungsPraktikumsstellenRepository ausbildungsPraktikumsstellenRepository;
     private final MeldezeitraumService meldezeitraumService;
@@ -159,7 +157,6 @@ public class PraktikumsstellenService {
 
     public void updateAusbildungsPraktikumsstelle(UUID praktikumsstellenId,
             UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
-
         final AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto);
         ausbildungsPraktikumsstelle.setDienststelle(normalizeDienststelle(ausbildungsPraktikumsstelle.getDienststelle()));
 
@@ -173,7 +170,6 @@ public class PraktikumsstellenService {
     }
 
     public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
-
         final StudiumsPraktikumsstelle studiumsPraktikumsstelle = praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto);
         studiumsPraktikumsstelle.setDienststelle(normalizeDienststelle(studiumsPraktikumsstelle.getDienststelle()));
 
@@ -188,7 +184,6 @@ public class PraktikumsstellenService {
 
     private void updateAusbildungsPraktikumsstelleWithAssignedNwk(UUID id,
             UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
-
         final AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = findByIdOrThrowAusbildungspraktikumsstelle(id);
 
         //Check if any field which is not supposed to change changed
@@ -208,7 +203,6 @@ public class PraktikumsstellenService {
     }
 
     private void updateStudiumsPraktikumsstelleWithAssignedNwk(UUID id, UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
-
         final StudiumsPraktikumsstelle studiumsPraktikumsstelle = findByIdOrThrowStudiumpraktikumsstelle(id);
 
         //Check if any field which is not supposed to change changed
