@@ -36,7 +36,7 @@
                             <v-row>
                                 <v-col>
                                     <dienststellen-input
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                     ></dienststellen-input>
@@ -44,7 +44,7 @@
                                 <v-col cols="2" />
                                 <v-col>
                                     <referat-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :disabled="hasAssignedNwk"
                                         :is-required="false"
                                     ></referat-select>
@@ -54,7 +54,7 @@
                             <v-row>
                                 <v-col>
                                     <dringlichkeit-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :disabled="hasAssignedNwk"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
@@ -65,7 +65,7 @@
                                 </v-col>
                                 <v-col>
                                     <namentliche-anforderung-input
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :disabled="hasAssignedNwk"
                                         :is-required="false"
                                     ></namentliche-anforderung-input>
@@ -77,7 +77,7 @@
                             <v-row>
                                 <v-col>
                                     <planstelle-radio-group
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :disabled="hasAssignedNwk"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
@@ -90,7 +90,7 @@
                             <v-row>
                                 <v-col>
                                     <taetigkeiten-input
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                     >
@@ -108,7 +108,7 @@
                             <v-row>
                                 <v-col>
                                     <studienrichtung-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :disabled="hasAssignedNwk"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
@@ -117,7 +117,7 @@
                                 <v-col cols="2" />
                                 <v-col>
                                     <semester-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :disabled="hasAssignedNwk"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
@@ -128,7 +128,7 @@
                             <v-row>
                                 <v-col>
                                     <programmier-kenntnisse-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :disabled="hasAssignedNwk"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
@@ -149,7 +149,7 @@
                             <v-row>
                                 <v-col>
                                     <ausbilder-input
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                     ></ausbilder-input>
@@ -157,7 +157,7 @@
                                 <v-col cols="2" />
                                 <v-col>
                                     <ausbilder-email-input
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                     ></ausbilder-email-input>
@@ -176,7 +176,7 @@
                             <v-row>
                                 <v-col>
                                     <meldezeitraum-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :disabled="hasAssignedNwk"
                                         :meldezeitraueme="meldezeitraeume"
                                         :is-required="true"
@@ -282,6 +282,10 @@ function closeDialog() {
 }
 
 function openDialog() {
+    praktikumsstelleToSubmit.value = JSON.parse(
+        JSON.stringify(properties.modelValue)
+    );
+
     MeldezeitraumService.getAllMeldezeitraeume(loading).then((zeitraume) => {
         meldezeitraeume.value = zeitraume;
         if (praktikumsstelle.value.meldezeitraumID == null) {
