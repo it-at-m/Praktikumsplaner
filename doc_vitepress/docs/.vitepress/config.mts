@@ -5,6 +5,7 @@ const title = "Praktikumsplaner";
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
+  base: "/Praktikumsplaner/",
   title: title,
   description: "Documentation of the Praktikumsplaner app",
   head: [
