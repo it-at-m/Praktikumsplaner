@@ -5,7 +5,7 @@
             :dialogtitle="warningDialogTitle"
             :dialogtext="warningDialogText"
             @no="resetWarningDialog"
-            @yes="delPraktikumsstelle(properties.modelValue)"
+            @yes="delPraktikumsstelle(properties.praktikumsstelle)"
         ></yes-no-dialog-without-activator>
         <v-card
             class="full-width-card card"
@@ -15,23 +15,23 @@
         >
             <v-card-title
                 >Stelle bei
-                {{ properties.modelValue.dienststelle }}</v-card-title
+                {{ properties.praktikumsstelle.dienststelle }}</v-card-title
             >
             <v-card-subtitle
-                v-if="properties.modelValue.namentlicheAnforderung"
+                v-if="properties.praktikumsstelle.namentlicheAnforderung"
             >
                 Namentliche Anforderung:
-                {{ properties.modelValue.namentlicheAnforderung }}
+                {{ properties.praktikumsstelle.namentlicheAnforderung }}
             </v-card-subtitle>
             <v-icon
-                v-if="properties.modelValue.planstelleVorhanden"
+                v-if="properties.praktikumsstelle.planstelleVorhanden"
                 size="x-large"
                 class="icon-top-right-position"
                 icon="mdi-account-star"
             ></v-icon>
             <v-card-text class="pt-0 mt-0 mb-0 pb-0">
                 <p style="white-space: pre-line">
-                    {{ getCardText(properties.modelValue) }}
+                    {{ getCardText(properties.praktikumsstelle) }}
                 </p></v-card-text
             >
             <v-col cols="12"></v-col>
@@ -47,9 +47,19 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         <p style="white-space: pre-line">
-                            {{ getCardDetailText(properties.modelValue) }}
+                            {{ getCardDetailText(properties.praktikumsstelle) }}
                         </p>
                     </v-card-text>
+                    <v-card-actions>
+                        <ausbildungs-praktikumsstelle-update-dialog
+                            v-if="isAusbildungsPraktikumsstelle"
+                            v-model="praktikumsstelle"
+                        ></ausbildungs-praktikumsstelle-update-dialog>
+                        <studiums-praktikumsstelle-update-dialog
+                            v-else-if="isStudiumsPraktikumsstelle"
+                            v-model="praktikumsstelle"
+                        ></studiums-praktikumsstelle-update-dialog>
+                    </v-card-actions>
                 </div>
             </v-expand-transition>
             <v-card-actions>
@@ -64,17 +74,36 @@
     </v-container>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
+import AusbildungsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/AusbildungsPraktikumsstelleUpdateDialog.vue";
+import StudiumsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/StudiumsPraktikumsstelleUpdateDialog.vue";
 import { useTextGenerator } from "@/composables/textGenerator";
 import emitter from "@/stores/eventBus";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const properties = defineProps<{
-    modelValue: Praktikumsstelle;
+    praktikumsstelle: Praktikumsstelle;
 }>();
+const emits = defineEmits<{
+    (e: "update:modelValue", praktikumsstelleToUpdate: Praktikumsstelle): void;
+}>();
+
+const praktikumsstelle = computed({
+    get: () => properties.praktikumsstelle,
+    set: (newValue) => emits("update:modelValue", newValue),
+});
+
+const isAusbildungsPraktikumsstelle = ref<boolean>(
+    PraktikumsstellenService.isAusbildungsPraktikumsstelle(
+        praktikumsstelle.value
+    )
+);
+const isStudiumsPraktikumsstelle = ref<boolean>(
+    PraktikumsstellenService.isStudiumsPraktikumsstelle(praktikumsstelle.value)
+);
 
 const warningDialog = ref<boolean>(false);
 const warningDialogTitle = ref("Stelle löschen?");

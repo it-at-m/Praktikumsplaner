@@ -33,4 +33,6 @@ public interface PraktikumsstelleDto {
     Referat referat();
 
     NwkDto assignedNwk();
+
+    UUID meldezeitraumID();
 }

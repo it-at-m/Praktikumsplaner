@@ -1,6 +1,7 @@
 <template>
     <v-select
         v-model="stelle.dringlichkeit"
+        :disabled="disabled"
         :label="conditionalRequiredLabel"
         :items="Dringlichkeit"
         item-value="value"
@@ -24,9 +25,11 @@ interface Properties {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
+    disabled?: boolean;
 }
 const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
+    disabled: false,
 });
 
 const emits = defineEmits<{

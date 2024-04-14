@@ -9,6 +9,7 @@
         item-value="value"
         :rules="conditionalRequiredRules"
         :clearable="!isRequired"
+        :disabled="disabled"
         @update:model-value="sortAusbildungsjahre"
     >
         <template #prepend-item>
@@ -53,9 +54,11 @@ interface Properties {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
+    disabled?: boolean;
 }
 const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
+    disabled: false,
 });
 
 const emits = defineEmits<{

@@ -134,6 +134,10 @@ onMounted(() => {
     }
 });
 
+emitter.on("praktikumsstelleUpdated", ()=>{
+    getAllPraktikumsstellenInCurrentMeldezeitraum();
+});
+
 function redirectIfUnauthorized() {
     const requiresRoles =
         route.meta.requiresRole != undefined

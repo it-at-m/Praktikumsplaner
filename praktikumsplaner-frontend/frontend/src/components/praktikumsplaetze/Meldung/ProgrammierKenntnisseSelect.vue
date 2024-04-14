@@ -8,6 +8,7 @@
         item-title="name"
         variant="outlined"
         :clearable="!isRequired"
+        :disabled="disabled"
     >
     </v-select>
 </template>
@@ -25,9 +26,11 @@ interface Properties {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
+    disabled?: boolean;
 }
 const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
+    disabled: false,
 });
 
 const emits = defineEmits<{
