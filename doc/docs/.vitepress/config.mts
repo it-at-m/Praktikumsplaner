@@ -52,6 +52,9 @@ export default withMermaid({
       provider: 'local'
     }
   },
+  ignoreDeadLinks: [
+    /^https?:\/\/localhost/
+  ],
   mermaidPlugin: {
     class: "mermaid my-class", // set additional css classes for parent container
   }
