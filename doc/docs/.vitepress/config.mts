@@ -9,7 +9,7 @@ export default withMermaid({
   title: title,
   description: "Documentation of the Praktikumsplaner app",
   head: [
-      ['link', { rel: 'icon', type: 'image/png', href: '/logo.png' } ]
+      ['link', { rel: 'icon', type: 'image/png', href: 'logo.png' } ]
   ],
   locales: {
     "/": {
