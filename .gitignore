@@ -5,3 +5,4 @@
 /doc/docs/.vitepress/cache/
 /doc/node_modules/
 /doc/doc.iml
+/doc/docs/.vitepress/dist/
