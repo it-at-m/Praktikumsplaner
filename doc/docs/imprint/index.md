@@ -1,4 +1,4 @@
-# Imprint
+# contact and imprint
 
 **IT@M <br>**
 Agnes Pockels Bogen 21 <br>

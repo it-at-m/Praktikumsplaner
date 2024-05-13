@@ -15,9 +15,9 @@ To get the most out of the Praktikumsplaner, we've organized this documentation 
 
 ## Getting Started
 
-1. **Installation:** Follow our [technical setup](/documentation/guides/technical-setup) to set up the Praktikumsplaner on your system.
+1. **Installation:** Follow our [technical setup](/documentation/guides/local-development/#local-development-1) to set up the Praktikumsplaner on your system.
 
-2. **Contribute:** Interested in contributing? Check out our [contributor's guide](/contribute/) for details on how you can make a difference.
+2. **Contribute:** Interested in contributing? Check out our [contributor's guide](/contribute) for details on how you can make a difference.
 
 3. **Support:** Need help? Open an [issue](https://github.com/it-at-m/Praktikumsplaner/issues/new/choose) to ask for assistance.
 
