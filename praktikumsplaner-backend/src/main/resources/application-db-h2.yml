@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:pp
+    username: sa
+  jpa:
+    database: h2
+  flyway:
+    locations: classpath:db/migration/h2
