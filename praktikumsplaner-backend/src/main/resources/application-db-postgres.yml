@@ -6,3 +6,5 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql
+  flyway:
+    locations: classpath:db/migration/postgres
