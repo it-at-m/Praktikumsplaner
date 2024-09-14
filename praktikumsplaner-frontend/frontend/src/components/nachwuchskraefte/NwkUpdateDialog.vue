@@ -92,7 +92,7 @@ const properties = defineProps<{
     nwk: Nwk;
 }>();
 
-const nwkToUpdate = ref<Nwk>(properties.nwk);
+const nwkToUpdate = ref<Nwk>(JSON.parse(JSON.stringify(properties.nwk)));
 
 const emits = defineEmits<{
     (e: "updated"): void;
