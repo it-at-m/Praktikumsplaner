@@ -37,7 +37,7 @@
                             <v-row>
                                 <v-col>
                                     <dienststellen-input
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                     ></dienststellen-input>
@@ -45,7 +45,7 @@
                                 <v-col cols="2" />
                                 <v-col>
                                     <referat-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="false"
                                         :disabled="hasAssignedNwk"
                                     ></referat-select>
@@ -55,7 +55,7 @@
                             <v-row>
                                 <v-col>
                                     <dringlichkeit-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                         :disabled="hasAssignedNwk"
@@ -66,7 +66,7 @@
                                 </v-col>
                                 <v-col>
                                     <namentliche-anforderung-input
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="false"
                                         :disabled="hasAssignedNwk"
                                     ></namentliche-anforderung-input>
@@ -78,7 +78,7 @@
                             <v-row>
                                 <v-col>
                                     <planstelle-radio-group
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :disabled="hasAssignedNwk"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
@@ -87,7 +87,7 @@
                                 <v-col cols="2" />
                                 <v-col>
                                     <projektarbeit-radio-group
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :disabled="hasAssignedNwk"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
@@ -100,7 +100,7 @@
                             <v-row>
                                 <v-col>
                                     <taetigkeiten-input
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                     >
@@ -118,7 +118,7 @@
                             <v-row>
                                 <v-col>
                                     <ausbildungsrichtung-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                         :disabled="hasAssignedNwk"
@@ -127,7 +127,7 @@
                                 <v-col cols="2" />
                                 <v-col>
                                     <ausbildungs-jahr-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                         :disabled="hasAssignedNwk"
@@ -138,7 +138,7 @@
                             <v-row>
                                 <v-col>
                                     <programmier-kenntnisse-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="false"
                                         :disabled="hasAssignedNwk"
                                     ></programmier-kenntnisse-select>
@@ -158,7 +158,7 @@
                             <v-row>
                                 <v-col>
                                     <ausbilder-input
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                     ></ausbilder-input>
@@ -166,7 +166,7 @@
                                 <v-col cols="2" />
                                 <v-col>
                                     <ausbilder-email-input
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
                                     ></ausbilder-email-input>
@@ -185,7 +185,7 @@
                             <v-row>
                                 <v-col>
                                     <meldezeitraum-select
-                                        v-model="praktikumsstelle"
+                                        v-model="praktikumsstelleToSubmit"
                                         :meldezeitraueme="meldezeitraeume"
                                         :is-required="true"
                                         :required-symbol="requiredFieldSymbol"
