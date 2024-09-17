@@ -37,8 +37,11 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
             val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
             val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), studiumsstelleTreeMapRef);
 
-            val studiengaenge = responseBody.values().stream().flatMap(Collection::stream).map(StudiumsPraktikumsstelleDto::studiengang)
-                    .filter(Objects::nonNull).toList();
+            val studiengaenge = responseBody.values().stream()
+                    .flatMap(Collection::stream)
+                    .map(StudiumsPraktikumsstelleDto::studiengang)
+                    .filter(Objects::nonNull)
+                    .toList();
 
             Assertions.assertThat(studiengaenge).containsOnly(Studiengang.values());
         }
@@ -51,8 +54,11 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
             val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
             val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), ausbildungsstelleTreeMapRef);
 
-            val studiengaenge = responseBody.values().stream().flatMap(Collection::stream).map(AusbildungsPraktikumsstelleDto::ausbildungsrichtung)
-                    .filter(Objects::nonNull).toList();
+            val studiengaenge = responseBody.values().stream()
+                    .flatMap(Collection::stream)
+                    .map(AusbildungsPraktikumsstelleDto::ausbildungsrichtung)
+                    .filter(Objects::nonNull)
+                    .toList();
 
             Assertions.assertThat(studiengaenge).containsOnly(Ausbildungsrichtung.values());
         }

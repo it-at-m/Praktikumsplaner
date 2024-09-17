@@ -28,9 +28,13 @@ class NwkControllerTestdataIntegrationTest extends AbstractTestdataIntegrationTe
             val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
             val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsString(), NwkDto[].class);
 
-            val ausbildungsrichtungen = Arrays.stream(responseBody).map(NwkDto::ausbildungsrichtung).filter(Objects::nonNull)
+            val ausbildungsrichtungen = Arrays.stream(responseBody)
+                    .map(NwkDto::ausbildungsrichtung)
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toSet());
-            val studiumsrichtungen = Arrays.stream(responseBody).map(NwkDto::studiengang).filter(Objects::nonNull)
+            val studiumsrichtungen = Arrays.stream(responseBody)
+                    .map(NwkDto::studiengang)
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toSet());
 
             Assertions.assertThat(ausbildungsrichtungen).containsOnly(Ausbildungsrichtung.values());
