@@ -24,7 +24,7 @@
         <hazelcast.version>5.3.6</hazelcast.version>
         <apache.commons.lang.version>3.17.0</apache.commons.lang.version>
         <jvm.options>-Dorg.conscrypt.native.workdir=$(pwd)</jvm.options>
-        <jacoco.version>0.8.7</jacoco.version>
+        <jacoco.version>0.8.12</jacoco.version>
     </properties>
 
 
