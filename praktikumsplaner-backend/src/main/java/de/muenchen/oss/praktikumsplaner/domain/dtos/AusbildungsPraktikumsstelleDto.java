@@ -14,32 +14,32 @@ import lombok.Builder;
 @Builder
 @AusbildungsAnnotation(ausbildungsrichtungGetMethod = "ausbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
 public record AusbildungsPraktikumsstelleDto(@NotNull UUID id,
-                                             @NotNull String dienststelle,
+        @NotNull String dienststelle,
 
-                                             @NotNull String oertlicheAusbilder,
+        @NotNull String oertlicheAusbilder,
 
-                                             @Email @NotNull String email,
+        @Email @NotNull String email,
 
-                                             @NotNull String taetigkeiten,
+        @NotNull String taetigkeiten,
 
-                                             @NotNull Dringlichkeit dringlichkeit,
+        @NotNull Dringlichkeit dringlichkeit,
 
-                                             String namentlicheAnforderung,
+        String namentlicheAnforderung,
 
-                                             Referat referat,
+        Referat referat,
 
-                                             boolean projektarbeit,
-                                             String programmierkenntnisse,
+        boolean projektarbeit,
+        String programmierkenntnisse,
 
-                                             boolean planstelleVorhanden,
+        boolean planstelleVorhanden,
 
-                                             @NotNull Set<Ausbildungsjahr> ausbildungsjahr,
+        @NotNull Set<Ausbildungsjahr> ausbildungsjahr,
 
-                                             @NotNull Ausbildungsrichtung ausbildungsrichtung,
+        @NotNull Ausbildungsrichtung ausbildungsrichtung,
 
-                                             NwkDto assignedNwk,
+        NwkDto assignedNwk,
 
-                                             UUID meldezeitraumID
+        UUID meldezeitraumID
 
-                        ) implements PraktikumsstelleDto {
+) implements PraktikumsstelleDto {
 }

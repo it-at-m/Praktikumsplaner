@@ -14,30 +14,29 @@ import lombok.Builder;
 @Builder
 @StudiumsAnnotation(studiengangGetMethod = "studiengang", message = "Keine korrekte Studiengang")
 public record StudiumsPraktikumsstelleDto(@NotNull UUID id,
-                                          @NotNull String dienststelle,
+        @NotNull String dienststelle,
 
-                                          @NotNull String oertlicheAusbilder,
+        @NotNull String oertlicheAusbilder,
 
-                                          @Email @NotNull String email,
+        @Email @NotNull String email,
 
-                                          @NotNull String taetigkeiten,
+        @NotNull String taetigkeiten,
 
-                                          @NotNull Dringlichkeit dringlichkeit,
+        @NotNull Dringlichkeit dringlichkeit,
 
-                                          String namentlicheAnforderung,
+        String namentlicheAnforderung,
 
-                                          Referat referat,
+        Referat referat,
 
-                                          @NotNull String programmierkenntnisse,
+        @NotNull String programmierkenntnisse,
 
-                                          boolean planstelleVorhanden,
+        boolean planstelleVorhanden,
 
-                                          @NotNull Set<Studiensemester> studiensemester,
+        @NotNull Set<Studiensemester> studiensemester,
 
-                                          @NotNull Studiengang studiengang,
+        @NotNull Studiengang studiengang,
 
-                                          NwkDto assignedNwk,
+        NwkDto assignedNwk,
 
-                                          UUID meldezeitraumID
-                        ) implements PraktikumsstelleDto {
+        UUID meldezeitraumID) implements PraktikumsstelleDto {
 }

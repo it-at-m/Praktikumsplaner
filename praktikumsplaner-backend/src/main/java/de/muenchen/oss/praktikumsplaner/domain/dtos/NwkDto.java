@@ -16,17 +16,17 @@ import lombok.Builder;
 @Builder
 @StudiengangOrAusbildungsrichtungConstraint(studiengangGetMethod = "studiengang", ausbildungsrichtungGetMethod = "ausbildungsrichtung")
 public record NwkDto(UUID id,
-                     @NotNull(message = "Der Vorname ist erforderlich") @Size(
-                             min = 2, max = 255, message = "Der Vorname darf nur zwischen {min} und {max} Zeichen lang sein"
-                     ) String vorname,
-                     @NotNull(message = "Der Nachname ist erforderlich") @Size(
-                             min = 2, max = 255, message = "Der Nachname darf nur zwischen {min} und {max} Zeichen lang sein"
-                     ) String nachname,
-                     Studiengang studiengang,
-                     Ausbildungsrichtung ausbildungsrichtung,
-                     @NotNull(message = "Der Jahrgang ist erforderlich") @Pattern(regexp = "\\d\\d/\\d\\d") String jahrgang,
-                     Set<DayOfWeek> vorlesungstage,
-                     boolean active) {
+        @NotNull(message = "Der Vorname ist erforderlich") @Size(
+                min = 2, max = 255, message = "Der Vorname darf nur zwischen {min} und {max} Zeichen lang sein"
+        ) String vorname,
+        @NotNull(message = "Der Nachname ist erforderlich") @Size(
+                min = 2, max = 255, message = "Der Nachname darf nur zwischen {min} und {max} Zeichen lang sein"
+        ) String nachname,
+        Studiengang studiengang,
+        Ausbildungsrichtung ausbildungsrichtung,
+        @NotNull(message = "Der Jahrgang ist erforderlich") @Pattern(regexp = "\\d\\d/\\d\\d") String jahrgang,
+        Set<DayOfWeek> vorlesungstage,
+        boolean active) {
 
     @Override
     public Set<DayOfWeek> vorlesungstage() {
