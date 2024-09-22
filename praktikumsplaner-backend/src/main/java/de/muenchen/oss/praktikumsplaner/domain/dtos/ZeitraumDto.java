@@ -8,5 +8,5 @@ import lombok.Builder;
 @Builder
 @StartDateBeforeEndDate(startDate = "startZeitpunkt", endDate = "endZeitpunkt", message = "Startdatum muss vor dem Enddatum liegen.")
 public record ZeitraumDto(@NotNull LocalDate startZeitpunkt,
-                          @NotNull LocalDate endZeitpunkt) {
+        @NotNull LocalDate endZeitpunkt) {
 }

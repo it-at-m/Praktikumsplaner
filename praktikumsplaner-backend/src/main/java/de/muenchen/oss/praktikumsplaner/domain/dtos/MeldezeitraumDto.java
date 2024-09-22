@@ -9,8 +9,6 @@ import lombok.Builder;
 @Builder
 public record MeldezeitraumDto(
         @NotNull UUID id,
-        @Size(max = 255, message = "Name für Zeitraum darf nicht länger als {max} Zeichen sein.")
-        @NotBlank
-        String zeitraumName,
-        ZeitraumDto zeitraum)
-{}
+        @Size(max = 255, message = "Name für Zeitraum darf nicht länger als {max} Zeichen sein.") @NotBlank String zeitraumName,
+        ZeitraumDto zeitraum) {
+}
