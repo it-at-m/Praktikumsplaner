@@ -21,6 +21,25 @@ To get the most out of the Praktikumsplaner, we've organized this documentation 
 
 3. **Support:** Need help? Open an [issue](https://github.com/it-at-m/Praktikumsplaner/issues/new/choose) to ask for assistance.
 
+## Try it
+
+### Requirements
+
+Verified with the following tools
+
+- maven 3.9
+- node 16.20
+- npm 8.19
+
+### Start required services
+
+- start backend service with embedded database by running `runLocalNoSecurity` script in `praktikumsplaner-backend`
+- start api gateway by running `runLocalNoSecurity` script in `praktikumsplaner-frontend/apigateway`
+- start the frontend by running `npm run serve` command in `praktikumsplaner-frontend/frontend` in a terminal
+  - open the frontend via printed url within a webbrowser  
+  ![Output of npm run serve](/outputOfNpmRunServe.png)  
+  *Output of `npm run serve`. Visit `http://127.0.0.1:8081/` to access the UI*
+
 ## Join the Community
 
 Become a part of the OpenSourceMunich community to stay up-to-date, share ideas, and collaborate with others.
