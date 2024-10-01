@@ -26,8 +26,9 @@ interface Properties {
     modelValue: Praktikumsstelle;
     isRequired: boolean;
     requiredSymbol?: string;
-    disabled: boolean;
+    disabled?: boolean;
 }
+
 const properties = withDefaults(defineProps<Properties>(), {
     requiredSymbol: "*",
     disabled: false,
