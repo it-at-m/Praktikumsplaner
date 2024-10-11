@@ -56,7 +56,7 @@ services:
     image: quay.io/keycloak/keycloak:26.0.0
     container_name: keycloak
     command:
-      - start-dev --http-relative-path /auth
+      - start-dev
     depends_on:
       - postgres-keycloak
     ports:
@@ -67,7 +67,7 @@ services:
       - keycloak
 
   init-keycloak:
-    image: klg71/keycloakmigration
+    image: klg71/keycloakmigration:0.2.69
     depends_on:
       - keycloak
     env_file:
