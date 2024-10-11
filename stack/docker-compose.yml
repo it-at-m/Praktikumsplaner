@@ -39,7 +39,7 @@ services:
       - keycloak
 
   postgres-backend:
-    image: postgres:13.2
+    image: postgres:17.0
     container_name: postgres-backend
     environment:
       POSTGRES_DB: praktikumsplaner
@@ -84,7 +84,7 @@ services:
       - keycloak
 
   postgres-keycloak:
-    image: postgres:13.2
+    image: postgres:17.0
     container_name: postgres-keycloak
     environment:
       POSTGRES_DB: keycloak
