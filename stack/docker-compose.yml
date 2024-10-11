@@ -53,7 +53,7 @@ services:
 
   # Keycloak (SSO)
   keycloak:
-    image: quay.io/keycloak/keycloak:25.0.6
+    image: quay.io/keycloak/keycloak:26.0.0
     container_name: keycloak
     command:
       - start-dev --http-relative-path /auth
