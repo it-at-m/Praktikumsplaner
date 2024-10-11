@@ -13,7 +13,7 @@
         "type-check": "vue-tsc --noEmit"
     },
     "dependencies": {
-        "@mdi/font": "7.3.67",
+        "@mdi/font": "7.4.47",
         "mitt": "^3.0.1",
         "moment": "^2.29.4",
         "pinia": "^2.1.7",
