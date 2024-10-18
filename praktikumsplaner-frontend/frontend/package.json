@@ -39,7 +39,7 @@
         "typescript": "^5.2.2",
         "unplugin-fonts": "^1.0.3",
         "vite": "^4.5.5",
-        "vite-plugin-vuetify": "^1.0.2",
+        "vite-plugin-vuetify": "^2.0.0",
         "vitest": "^2.0.0",
         "vue-tsc": "^2.0.0"
     }
