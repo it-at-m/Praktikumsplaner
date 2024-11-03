@@ -53,7 +53,7 @@ services:
 
   # Keycloak (SSO)
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0.0
+    image: quay.io/keycloak/keycloak:26.0.5
     container_name: keycloak
     command:
       - start-dev
@@ -67,7 +67,7 @@ services:
       - keycloak
 
   init-keycloak:
-    image: klg71/keycloakmigration:0.2.69
+    image: klg71/keycloakmigration:0.2.72
     depends_on:
       - keycloak
     env_file:
