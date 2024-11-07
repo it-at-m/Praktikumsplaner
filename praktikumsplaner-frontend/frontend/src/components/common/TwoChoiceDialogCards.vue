@@ -45,10 +45,8 @@
                                 {{ properties.choiceOneTitle }}
                             </v-card-title>
                             <v-card-subtitle class="mb-4">
-                                {{
-                                    properties.choiceOneSubtitle
-                                }}</v-card-subtitle
-                            >
+                                {{ properties.choiceOneSubtitle }}
+                            </v-card-subtitle>
                         </v-card>
                     </v-col>
                     <v-col cols="6">
@@ -103,8 +101,7 @@ const properties = defineProps<{
 }>();
 
 const emits = defineEmits<{
-    (e: "choiceOne"): void;
-    (e: "choiceTwo"): void;
+    (e: "choiceOne" | "choiceTwo"): void;
     (e: "update:modelValue", v: boolean): void;
 }>();
 
@@ -116,9 +113,11 @@ const visible = computed({
 function choiceOne(): void {
     emits("choiceOne");
 }
+
 function choiceTwo(): void {
     emits("choiceTwo");
 }
+
 function close(): void {
     visible.value = false;
 }

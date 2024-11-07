@@ -2,13 +2,13 @@ import mitt from "mitt";
 
 import Nwk from "@/types/Nwk";
 
-type Events = {
+interface Events {
     assignedNwk: Nwk;
     unassignedNwk: Nwk;
-    nwkCreated: void;
-    nwkDeleted: void;
-    praktikumsstelleUpdated: void;
-};
+    nwkCreated: unknown;
+    nwkDeleted: unknown;
+    praktikumsstelleUpdated: unknown;
+}
 
 const emitter = mitt<Events>();
 
