@@ -1,7 +1,14 @@
 import type { Ref } from "vue";
 
 import { Levels } from "@/api/Error";
-import FetchUtils from "@/api/FetchUtils";
+import {
+    defaultResponseHandler,
+    getDELETEConfig,
+    getGETConfig,
+    getPATCHConfig,
+    getPOSTConfig,
+    getPUTConfig,
+} from "@/api/FetchUtils";
 import { API_BASE, PRAKTIKUMSSTELLE_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -14,10 +21,10 @@ export default {
         loading.value = true;
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium`,
-            FetchUtils.getPOSTConfig(praktikumsstelle)
+            getPOSTConfig(praktikumsstelle)
         )
             .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 if (response.ok) {
                     useSnackbarStore().showMessage({
                         message: "☑ Praktikumsstelle erfolgreich gemeldet",
@@ -37,10 +44,10 @@ export default {
         loading.value = true;
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/ausbildungsleitung`,
-            FetchUtils.getPOSTConfig(praktikumsstelle)
+            getPOSTConfig(praktikumsstelle)
         )
             .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 if (response.ok) {
                     useSnackbarStore().showMessage({
                         message: "☑ Praktikumsstelle erfolgreich gemeldet",
@@ -60,7 +67,7 @@ export default {
         loading.value = true;
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung`,
-            FetchUtils.getPOSTConfig(praktikumsstelle)
+            getPOSTConfig(praktikumsstelle)
         )
             .then((response) => {
                 if (response.ok) {
@@ -70,7 +77,7 @@ export default {
                     });
                     return response.json();
                 } else {
-                    FetchUtils.defaultResponseHandler(response);
+                    defaultResponseHandler(response);
                 }
             })
             .finally(() => {
@@ -84,7 +91,7 @@ export default {
         loading.value = true;
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/ausbildungsleitung`,
-            FetchUtils.getPOSTConfig(praktikumsstelle)
+            getPOSTConfig(praktikumsstelle)
         )
             .then((response) => {
                 if (response.ok) {
@@ -94,7 +101,7 @@ export default {
                     });
                     return response.json();
                 } else {
-                    FetchUtils.defaultResponseHandler(response);
+                    defaultResponseHandler(response);
                 }
             })
             .finally(() => {
@@ -110,10 +117,10 @@ export default {
         }
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}?meldezeitraum=${meldezeitraum}`,
-            FetchUtils.getGETConfig()
+            getGETConfig()
         )
             .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 return response.json();
             })
             .finally(() => {
@@ -130,7 +137,7 @@ export default {
         loading.value = true;
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}?nwkId=${nwkId}`,
-            FetchUtils.getPATCHConfig({})
+            getPATCHConfig({})
         )
             .then((response) => {
                 if (response.ok) {
@@ -140,7 +147,7 @@ export default {
                     });
                     return response.json();
                 } else {
-                    FetchUtils.defaultResponseHandler(response);
+                    defaultResponseHandler(response);
                 }
             })
             .finally(() => {
@@ -154,7 +161,7 @@ export default {
         loading.value = true;
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${stellenId}`,
-            FetchUtils.getPATCHConfig({})
+            getPATCHConfig({})
         )
             .then((response) => {
                 if (response.ok) {
@@ -164,7 +171,7 @@ export default {
                     });
                     return response.json();
                 } else {
-                    FetchUtils.defaultResponseHandler(response);
+                    defaultResponseHandler(response);
                 }
             })
             .finally(() => {
@@ -175,9 +182,9 @@ export default {
         if (this.isAusbildungsPraktikumsstelle(stelle)) {
             return fetch(
                 `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/${stelle.id}`,
-                FetchUtils.getDELETEConfig({})
+                getDELETEConfig({})
             ).then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 useSnackbarStore().showMessage({
                     message: "☑ Praktikumsstelle erfolgreich gelöscht",
                     level: Levels.SUCCESS,
@@ -186,9 +193,9 @@ export default {
         } else if (this.isStudiumsPraktikumsstelle(stelle)) {
             return fetch(
                 `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/${stelle.id}`,
-                FetchUtils.getDELETEConfig({})
+                getDELETEConfig({})
             ).then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 useSnackbarStore().showMessage({
                     message: "☑ Praktikumsstelle erfolgreich gelöscht",
                     level: Levels.SUCCESS,
@@ -219,10 +226,10 @@ export default {
         }
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/${pathCategory}/${stelle.id}`,
-            FetchUtils.getPUTConfig(stelle)
+            getPUTConfig(stelle)
         )
             .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 useSnackbarStore().showMessage({
                     message: "☑ Praktikumsstelle erfolgreich bearbeitet",
                     level: Levels.SUCCESS,
