@@ -75,10 +75,8 @@ export function useWarnings() {
             stelle.studiensemester
         ) {
             const expectedSemesters: number[] = [];
-            for (let i = 0; i < stelle.studiensemester.length; i++) {
-                expectedSemesters.push(
-                    +stelle.studiensemester[i].substring(8, 9)
-                );
+            for (const semester of stelle.studiensemester) {
+                expectedSemesters.push(+semester.substring(8, 9));
             }
 
             const actualSemester = calculateSemester(nwk);
@@ -107,10 +105,8 @@ export function useWarnings() {
             stelle.ausbildungsjahr
         ) {
             const expectedLehrjahre: number[] = [];
-            for (let i = 0; i < stelle.ausbildungsjahr.length; i++) {
-                expectedLehrjahre.push(
-                    +stelle.ausbildungsjahr[i].substring(4, 5)
-                );
+            for (const ausbildungsjahr of stelle.ausbildungsjahr) {
+                expectedLehrjahre.push(+ausbildungsjahr.substring(4, 5));
             }
             const actualLehrjahr = calculateLehrjahr(nwk);
             if (!expectedLehrjahre.includes(actualLehrjahr)) {
