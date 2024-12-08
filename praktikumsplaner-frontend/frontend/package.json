@@ -13,11 +13,11 @@
         "type-check": "vue-tsc --noEmit"
     },
     "dependencies": {
+        "@fontsource/roboto": "5.1.0",
         "@mdi/font": "7.4.47",
         "mitt": "^3.0.1",
         "moment": "^2.29.4",
         "pinia": "^2.1.7",
-        "roboto-fontface": "^0.10.0",
         "vue": "^3.5.10",
       "vue-router": "^4.4.5",
       "vuetify": "^3.7.2"
