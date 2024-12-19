@@ -9,8 +9,8 @@
                 <v-btn
                     color="primary"
                     v-bind="props"
-                    >Meldezeitraum Anlegen</v-btn
-                >
+                    >Meldezeitraum Anlegen
+                </v-btn>
             </template>
             <v-card>
                 <v-card-title>Meldezeitraum Anlegen</v-card-title>
@@ -40,7 +40,7 @@
                     >
                         Zurück
                     </v-btn>
-                    <VSpacer></VSpacer>
+                    <v-spacer></v-spacer>
                     <v-btn
                         color="primary"
                         variant="elevated"
@@ -78,9 +78,10 @@ const zeitraumNameRules = [
     validationRules.notEmptyRule("Der Zeitraumname darf nicht leer sein."),
 ];
 
-const emits = defineEmits<{
-    (e: "meldezeitraumAdded", meldezeitraum: Meldezeitraum): void;
-}>();
+const emits =
+    defineEmits<
+        (e: "meldezeitraumAdded", meldezeitraum: Meldezeitraum) => void
+    >();
 
 function resetForm() {
     meldezeitraum.value = new Meldezeitraum("", new Zeitraum());

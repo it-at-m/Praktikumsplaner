@@ -27,9 +27,7 @@ const properties = defineProps<{
     value?: string;
 }>();
 
-const emits = defineEmits<{
-    (e: "input", v: string | undefined): void;
-}>();
+const emits = defineEmits<(e: "input", v: string | undefined) => void>();
 
 const dateField = ref();
 

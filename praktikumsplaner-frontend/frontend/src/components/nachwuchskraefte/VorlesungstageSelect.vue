@@ -32,9 +32,7 @@ const days = ref<Day[]>([
 const properties = defineProps<{
     modelValue: NwkCreate;
 }>();
-const emits = defineEmits<{
-    (e: "input", nwk: NwkCreate): void;
-}>();
+const emits = defineEmits<(e: "input", nwk: NwkCreate) => void>();
 
 const nwk = computed({
     get: () => properties.modelValue,

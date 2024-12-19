@@ -59,7 +59,7 @@
             @rejected="rejectedWarningDialog"
         />
         <query-praktikums-period-dialog
-            v-model:showDialog="showSendMailDialog"
+            v-model:show-dialog="showSendMailDialog"
         />
     </v-container>
 </template>
@@ -77,11 +77,11 @@ import WarningDialog from "@/components/common/WarningDialog.vue";
 import { useSecurity } from "@/composables/security";
 import { useWarnings } from "@/composables/warningGenerator";
 import router from "@/router";
+import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Warning from "@/types/Warning";
-import emitter from "@/stores/eventBus";
 
 const warningsGenerator = useWarnings();
 
@@ -162,7 +162,7 @@ onMounted(() => {
     getAllPraktikumsstellenInMostRecentMeldezeitraum();
 });
 
-emitter.on("praktikumsstelleUpdated", ()=>{
+emitter.on("praktikumsstelleUpdated", () => {
     getAllPraktikumsstellenInMostRecentMeldezeitraum();
 });
 

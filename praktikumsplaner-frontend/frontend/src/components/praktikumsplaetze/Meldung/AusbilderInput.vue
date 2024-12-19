@@ -28,9 +28,10 @@ const properties = withDefaults(defineProps<Properties>(), {
     disabled: false,
 });
 
-const emits = defineEmits<{
-    (e: "update:modelValue", oertlicheAusbilder: Praktikumsstelle): void;
-}>();
+const emits =
+    defineEmits<
+        (e: "update:modelValue", oertlicheAusbilder: Praktikumsstelle) => void
+    >();
 
 const label = "Name örtliche*r Ausbilder*in";
 const conditionalRequiredLabel = computed(() => {

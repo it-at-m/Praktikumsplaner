@@ -134,7 +134,7 @@ onMounted(() => {
     }
 });
 
-emitter.on("praktikumsstelleUpdated", ()=>{
+emitter.on("praktikumsstelleUpdated", () => {
     getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
 

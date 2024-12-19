@@ -26,9 +26,7 @@ const properties = defineProps<{
     modelValue: NwkCreate;
 }>();
 
-const emits = defineEmits<{
-    (e: "updated", v: NwkCreate): void;
-}>();
+const emits = defineEmits<(e: "updated", v: NwkCreate) => void>();
 
 const nwk = computed({
     get: () => properties.modelValue,

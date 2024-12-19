@@ -81,9 +81,10 @@ const properties = defineProps<{
     value: Meldezeitraum[];
 }>();
 
-const emits = defineEmits<{
-    (e: "deleted", meldezeitraum: Meldezeitraum | undefined): void;
-}>();
+const emits =
+    defineEmits<
+        (e: "deleted", meldezeitraum: Meldezeitraum | undefined) => void
+    >();
 
 function warnBeforeDelete(meldezeitraum: Meldezeitraum) {
     showDeleteWarningDialog.value = true;
