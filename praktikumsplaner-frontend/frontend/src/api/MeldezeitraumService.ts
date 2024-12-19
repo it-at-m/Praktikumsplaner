@@ -1,7 +1,12 @@
 import type { Ref } from "vue";
 
 import { Levels } from "@/api/Error";
-import FetchUtils from "@/api/FetchUtils";
+import {
+    defaultResponseHandler,
+    getDELETEConfigNoBody,
+    getGETConfig,
+    getPOSTConfig,
+} from "@/api/FetchUtils";
 import { API_BASE, MELDEZEITRAUM_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import Meldezeitraum from "@/types/Meldezeitraum";
@@ -10,7 +15,7 @@ export default {
     create(meldezeitraum: Meldezeitraum): Promise<Meldezeitraum> {
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}`,
-            FetchUtils.getPOSTConfig(meldezeitraum)
+            getPOSTConfig(meldezeitraum)
         ).then((response) => {
             if (response.ok) {
                 useSnackbarStore().showMessage({
@@ -19,7 +24,7 @@ export default {
                 });
                 return response.json();
             } else {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
             }
         });
     },
@@ -31,10 +36,10 @@ export default {
         }
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=current`,
-            FetchUtils.getGETConfig()
+            getGETConfig()
         )
             .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 return response.json();
             })
             .finally(() => {
@@ -51,10 +56,10 @@ export default {
         }
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=future`,
-            FetchUtils.getGETConfig()
+            getGETConfig()
         )
             .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 return response.json();
             })
             .finally(() => {
@@ -71,10 +76,10 @@ export default {
         }
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}?period=past`,
-            FetchUtils.getGETConfig()
+            getGETConfig()
         )
             .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 return response.json();
             })
             .finally(() => {
@@ -89,12 +94,9 @@ export default {
         if (loading !== undefined) {
             loading.value = true;
         }
-        return fetch(
-            `${API_BASE}${MELDEZEITRAUM_BASE}`,
-            FetchUtils.getGETConfig()
-        )
+        return fetch(`${API_BASE}${MELDEZEITRAUM_BASE}`, getGETConfig())
             .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 return response.json();
             })
             .finally(() => {
@@ -110,21 +112,21 @@ export default {
         loading.value = true;
         return fetch(
             `${API_BASE}${MELDEZEITRAUM_BASE}/${id}`,
-            FetchUtils.getDELETEConfigNoBody()
+            getDELETEConfigNoBody()
         )
             .then((response) => {
                 useSnackbarStore().showMessage({
                     message: "☑ Löschen erfolgreich.",
                     level: Levels.SUCCESS,
                 });
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
             })
             .catch((err) => {
                 useSnackbarStore().showMessage({
                     message: err.message,
                     level: Levels.ERROR,
                 });
-                FetchUtils.defaultResponseHandler(err);
+                defaultResponseHandler(err);
             })
             .finally(() => {
                 loading.value = false;

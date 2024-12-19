@@ -4,7 +4,7 @@
         max-width="500px"
     >
         <v-card>
-            <v-card-title> {{ currentWarning?.title }} </v-card-title>
+            <v-card-title> {{ currentWarning?.title }}</v-card-title>
             <v-card-text>
                 {{ currentWarning?.message }}
             </v-card-text>
@@ -14,14 +14,14 @@
                     color="primary"
                     variant="elevated"
                     @click="accept"
-                    >Akzeptieren</v-btn
-                >
+                    >Akzeptieren
+                </v-btn>
                 <v-btn
                     color="error"
                     variant="elevated"
                     @click="reject"
-                    >Ablehnen</v-btn
-                >
+                    >Ablehnen
+                </v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -32,10 +32,7 @@ import { computed, ref } from "vue";
 
 import Warning from "@/types/Warning";
 
-const emits = defineEmits<{
-    (e: "accepted"): void;
-    (e: "rejected"): void;
-}>();
+const emits = defineEmits<(e: "accepted" | "rejected") => void>();
 
 const properties = defineProps<{
     warnings: Warning[];

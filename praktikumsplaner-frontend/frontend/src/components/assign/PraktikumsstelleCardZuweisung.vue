@@ -16,8 +16,8 @@
         >
             <v-card-title
                 >Stelle bei
-                {{ properties.praktikumsstelle.dienststelle }}</v-card-title
-            >
+                {{ properties.praktikumsstelle.dienststelle }}
+            </v-card-title>
             <v-card-subtitle
                 v-if="properties.praktikumsstelle.namentlicheAnforderung"
             >
@@ -53,10 +53,13 @@
                     <template #close>
                         <v-icon
                             icon="mdi-close-circle"
-                            @click.stop="openConfirmationDialog(praktikumsstelle)"
+                            @click.stop="
+                                openConfirmationDialog(praktikumsstelle)
+                            "
                         />
-                    </template> </v-chip
-            ></v-col>
+                    </template>
+                </v-chip>
+            </v-col>
             <v-btn
                 :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
                 :class="{ 'custom-card-active': assignedNwk }"
@@ -136,9 +139,7 @@ const properties = defineProps<{
     praktikumsstelle: Praktikumsstelle;
 }>();
 
-const emits = defineEmits<{
-    (e: "update:modelValue", praktikumsstelleToUpdate: Praktikumsstelle): void;
-}>();
+const emits = defineEmits<(e: "update:modelValue", praktikumsstelleToUpdate: Praktikumsstelle) => void>();
 
 const praktikumsstelle = computed({
     get: () => properties.praktikumsstelle,
@@ -185,7 +186,7 @@ function drop(event: DragEvent, stelle: Praktikumsstelle) {
             draggedNwk.studiengang,
             draggedNwk.ausbildungsrichtung
         );
-    } catch (e) {
+    } catch {
         return;
     }
 
@@ -279,11 +280,13 @@ function getNwkColor(nwk: Nwk): string {
 .card {
     padding-right: 45px;
 }
+
 .icon-top-right-position {
     position: absolute;
     top: 20px;
     right: 20px;
 }
+
 .icon-bottom-right-position {
     position: absolute;
     bottom: 10px;
@@ -303,11 +306,13 @@ In some browsers the pseudo-class :has() is not yet supported.  A possible imple
         max-width: 10vw !important;
     }
 }
+
 @media only screen and (max-width: 1900px) and (min-width: 1000px) {
     .chip-text {
         max-width: 15vw !important;
     }
 }
+
 .chip-text {
     max-width: 25vw;
 }

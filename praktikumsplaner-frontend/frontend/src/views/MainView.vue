@@ -14,13 +14,13 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 
-import HealthService from "@/api/HealthService";
+import { checkHealth } from "@/api/HealthService";
 import { useSnackbarStore } from "@/stores/snackbar";
 
 const snackbarStore = useSnackbarStore();
 
 onMounted(() => {
-    HealthService.checkHealth().catch((error) => {
+    checkHealth().catch((error) => {
         snackbarStore.showMessage(error);
     });
 });

@@ -93,7 +93,7 @@
 <script setup lang="ts">
 import { onBeforeMount, onMounted, ref } from "vue";
 
-import InfoService from "@/api/InfoService";
+import { getInfo } from "@/api/InfoService";
 import { UserService } from "@/api/UserService";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import ErrorDialog from "@/components/TheUserErrorDialog.vue";
@@ -117,7 +117,7 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-    InfoService.getInfo().catch((error) => {
+    getInfo().catch((error) => {
         snackbarStore.showMessage(error);
     });
 });
@@ -128,10 +128,12 @@ onMounted(() => {
     font-size: 16px;
     padding-bottom: 1px;
 }
+
 .no-underline,
 .no-underline:hover {
     text-decoration: none;
 }
+
 .customfooter {
     justify-content: center;
 }

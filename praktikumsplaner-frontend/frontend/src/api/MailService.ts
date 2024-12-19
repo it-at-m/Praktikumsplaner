@@ -1,7 +1,7 @@
 import type { Ref } from "vue";
 
 import { Levels } from "@/api/Error";
-import FetchUtils from "@/api/FetchUtils";
+import { getPOSTConfig } from "@/api/FetchUtils";
 import { API_BASE, MAIL_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -9,15 +9,13 @@ import Zeitraum from "@/types/Zeitraum";
 
 export default {
     sendSuccessfulAssignedMails(
-        assignmentPeriods: {
-            [k: string]: Zeitraum;
-        },
+        assignmentPeriods: Record<string, Zeitraum>,
         loading: Ref<boolean>
     ): Promise<Praktikumsstelle[]> {
         loading.value = true;
         return fetch(
             `${API_BASE}${MAIL_BASE}/send?assignmentStatus=successful`,
-            FetchUtils.getPOSTConfig(assignmentPeriods)
+            getPOSTConfig(assignmentPeriods)
         )
             .then((response) => {
                 if (response.ok) {

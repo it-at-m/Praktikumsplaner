@@ -15,8 +15,8 @@
         >
             <v-card-title
                 >Stelle bei
-                {{ properties.praktikumsstelle.dienststelle }}</v-card-title
-            >
+                {{ properties.praktikumsstelle.dienststelle }}
+            </v-card-title>
             <v-card-subtitle
                 v-if="properties.praktikumsstelle.namentlicheAnforderung"
             >
@@ -87,9 +87,7 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 const properties = defineProps<{
     praktikumsstelle: Praktikumsstelle;
 }>();
-const emits = defineEmits<{
-    (e: "update:modelValue", praktikumsstelleToUpdate: Praktikumsstelle): void;
-}>();
+const emits = defineEmits<(e: "update:modelValue", praktikumsstelleToUpdate: Praktikumsstelle) => void>();
 
 const praktikumsstelle = computed({
     get: () => properties.praktikumsstelle,
@@ -123,7 +121,7 @@ function getCardDetailText(stelle: Praktikumsstelle): string {
 
 function delPraktikumsstelle(stelle: Praktikumsstelle) {
     resetWarningDialog();
-    PraktikumsstellenService.deletePraktikumsstelle(stelle!).then(() => {
+    PraktikumsstellenService.deletePraktikumsstelle(stelle).then(() => {
         emitter.emit("nwkDeleted");
     });
 }
@@ -131,6 +129,7 @@ function delPraktikumsstelle(stelle: Praktikumsstelle) {
 function openDialog() {
     warningDialog.value = true;
 }
+
 function resetWarningDialog() {
     warningDialog.value = false;
 }
@@ -145,6 +144,7 @@ function resetWarningDialog() {
     top: 20px;
     right: 20px;
 }
+
 .icon-bottom-right-position {
     position: absolute;
     bottom: 10px;

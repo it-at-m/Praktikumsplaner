@@ -24,10 +24,7 @@ const properties = defineProps<{
     startDownload: boolean;
 }>();
 
-const emits = defineEmits<{
-    (e: "click"): void;
-    (e: "exported"): void;
-}>();
+const emits = defineEmits<(e: "click" | "exported") => void>();
 
 watch(
     () => properties.startDownload,

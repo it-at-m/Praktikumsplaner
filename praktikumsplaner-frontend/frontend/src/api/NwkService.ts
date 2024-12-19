@@ -1,7 +1,12 @@
 import type { Ref } from "vue";
 
 import { Levels } from "@/api/Error";
-import FetchUtils from "@/api/FetchUtils";
+import {
+    defaultResponseHandler,
+    getGETConfig,
+    getPOSTConfig,
+    getPUTConfig,
+} from "@/api/FetchUtils";
 import { API_BASE, NWK_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import Nwk from "@/types/Nwk";
@@ -10,7 +15,7 @@ import NwkCreate from "@/types/NwkCreate";
 export default {
     saveNwk(nwk: NwkCreate, loading: Ref<boolean>): Promise<void> {
         loading.value = true;
-        return fetch(`${API_BASE}${NWK_BASE}`, FetchUtils.getPOSTConfig(nwk))
+        return fetch(`${API_BASE}${NWK_BASE}`, getPOSTConfig(nwk))
             .then((response) => {
                 if (response.ok) {
                     useSnackbarStore().showMessage({
@@ -18,7 +23,7 @@ export default {
                         level: Levels.SUCCESS,
                     });
                 } else {
-                    FetchUtils.defaultResponseHandler(response);
+                    defaultResponseHandler(response);
                 }
             })
             .finally(() => {
@@ -32,7 +37,7 @@ export default {
             return fetch(
                 `${API_BASE}${NWK_BASE}/import`,
                 // Base64 String starts after the comma
-                FetchUtils.getPOSTConfig(base64string.split(",")[1])
+                getPOSTConfig(base64string.split(",")[1])
             )
                 .then((response) => {
                     if (response.ok) {
@@ -41,7 +46,7 @@ export default {
                             level: Levels.SUCCESS,
                         });
                     } else {
-                        FetchUtils.defaultResponseHandler(response);
+                        defaultResponseHandler(response);
                     }
                 })
                 .finally(() => {
@@ -64,12 +69,9 @@ export default {
     },
     getAllActiveNwks(loading: Ref<boolean>): Promise<Nwk[]> {
         loading.value = true;
-        return fetch(
-            `${API_BASE}${NWK_BASE}?status=aktiv`,
-            FetchUtils.getGETConfig()
-        )
+        return fetch(`${API_BASE}${NWK_BASE}?status=aktiv`, getGETConfig())
             .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 return response.json();
             })
             .finally(() => {
@@ -80,12 +82,9 @@ export default {
         if (loading !== undefined) {
             loading.value = true;
         }
-        return fetch(
-            `${API_BASE}${NWK_BASE}?unassigned=true`,
-            FetchUtils.getGETConfig()
-        )
+        return fetch(`${API_BASE}${NWK_BASE}?unassigned=true`, getGETConfig())
             .then((response) => {
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
                 return response.json();
             })
             .finally(() => {
@@ -96,7 +95,7 @@ export default {
     },
     updateNwk(nwk: Nwk, loading: Ref<boolean>): Promise<void> {
         loading.value = true;
-        return fetch(`${API_BASE}${NWK_BASE}`, FetchUtils.getPUTConfig(nwk))
+        return fetch(`${API_BASE}${NWK_BASE}`, getPUTConfig(nwk))
             .then((response) => {
                 if (response.ok) {
                     useSnackbarStore().showMessage({
@@ -105,7 +104,7 @@ export default {
                         level: Levels.SUCCESS,
                     });
                 } else {
-                    FetchUtils.defaultResponseHandler(response);
+                    defaultResponseHandler(response);
                 }
             })
             .finally(() => {

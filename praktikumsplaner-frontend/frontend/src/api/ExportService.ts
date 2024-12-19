@@ -1,12 +1,12 @@
 import type { Ref } from "vue";
 
-import FetchUtils from "@/api/FetchUtils";
+import { defaultResponseHandler, getGETConfig } from "@/api/FetchUtils";
 import { API_BASE, EXPORT_BASE } from "@/constants";
 
 export default {
     downloadExcelFile(loading: Ref<boolean>): Promise<void> {
         loading.value = true;
-        return fetch(`${API_BASE}${EXPORT_BASE}`, FetchUtils.getGETConfig())
+        return fetch(`${API_BASE}${EXPORT_BASE}`, getGETConfig())
             .then((response) => {
                 response.text().then((base64) => {
                     fetch(
@@ -22,7 +22,7 @@ export default {
                         });
                     });
                 });
-                FetchUtils.defaultResponseHandler(response);
+                defaultResponseHandler(response);
             })
             .finally(() => {
                 loading.value = false;

@@ -46,8 +46,7 @@ const properties = defineProps<{
 }>();
 
 const emits = defineEmits<{
-    (e: "no"): void;
-    (e: "yes"): void;
+    (e: "no" | "yes"): void;
     (e: "input", v: boolean): void;
 }>();
 
@@ -59,6 +58,7 @@ const visible = computed({
 function no(): void {
     emits("no");
 }
+
 function yes(): void {
     emits("yes");
 }
