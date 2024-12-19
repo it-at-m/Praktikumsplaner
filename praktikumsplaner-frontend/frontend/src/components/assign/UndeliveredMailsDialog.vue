@@ -45,9 +45,8 @@ const properties = defineProps<{
     showUndeliveredMailsDialog: boolean;
 }>();
 
-const emit = defineEmits<{
-    (e: "update:showUndeliveredMailsDialog", b: boolean): void;
-}>();
+const emit =
+    defineEmits<(e: "update:showUndeliveredMailsDialog", b: boolean) => void>();
 
 function closeDialog(): void {
     emit("update:showUndeliveredMailsDialog", false);

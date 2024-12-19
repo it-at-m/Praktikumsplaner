@@ -260,9 +260,13 @@ const meldezeitraeume = ref<Meldezeitraum[]>([
     new Meldezeitraum("", new Zeitraum(), ""),
 ]);
 
-const emits = defineEmits<{
-    (e: "update:modelValue", praktikumsstelleToUpdate: Praktikumsstelle): void;
-}>();
+const emits =
+    defineEmits<
+        (
+            e: "update:modelValue",
+            praktikumsstelleToUpdate: Praktikumsstelle
+        ) => void
+    >();
 
 const hasAssignedNwk = computed(() => {
     return properties.modelValue.assignedNwk != undefined;

@@ -94,9 +94,7 @@ const properties = defineProps<{
 
 const nwkToUpdate = ref<Nwk>(properties.nwk);
 
-const emits = defineEmits<{
-    (e: "updated"): void;
-}>();
+const emits = defineEmits<(e: "updated") => void>();
 
 function cancel() {
     visible.value = false;

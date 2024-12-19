@@ -32,9 +32,10 @@ const properties = withDefaults(defineProps<Properties>(), {
     disabled: false,
 });
 
-const emits = defineEmits<{
-    (e: "update:modelValue", dringlichkeit: Praktikumsstelle): void;
-}>();
+const emits =
+    defineEmits<
+        (e: "update:modelValue", dringlichkeit: Praktikumsstelle) => void
+    >();
 
 const label = "Dringlichkeit";
 const conditionalRequiredLabel = computed(() => {
