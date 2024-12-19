@@ -1,15 +1,12 @@
 import mitt from "mitt";
 
-import Nwk from "@/types/Nwk";
+export type Eventtypes =
+    | "assignedNwk"
+    | "unassignedNwk"
+    | "nwkCreated"
+    | "nwkDeleted"
+    | "praktikumsstelleUpdated";
 
-interface Events {
-    assignedNwk: Nwk;
-    unassignedNwk: Nwk;
-    nwkCreated: unknown;
-    nwkDeleted: unknown;
-    praktikumsstelleUpdated: unknown;
-}
-
-const emitter = mitt<Events>();
+const emitter = mitt<Record<Eventtypes, unknown>>();
 
 export default emitter;

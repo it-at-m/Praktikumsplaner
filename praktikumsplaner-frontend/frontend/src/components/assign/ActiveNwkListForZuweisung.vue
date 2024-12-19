@@ -25,8 +25,8 @@
                     color="blue"
                     size="large"
                     class="mr-3"
-                    >mdi-information-outline</v-icon
-                >
+                    >mdi-information-outline
+                </v-icon>
                 <span>Es sind noch keine Nachwuchskräfte vorhanden.</span>
             </v-col>
         </v-row>
@@ -43,20 +43,23 @@ const properties = defineProps<{
     modelValue: Nwk[];
 }>();
 
-const emits = defineEmits<{
-    (e: "input", nwks: Nwk[]): void;
-}>();
+const emits = defineEmits<(e: "input", nwks: Nwk[]) => void>();
 
 const selectedNwks = ref<Nwk[]>([]);
 
+const assignedNwkEventHandler = (value: unknown) =>
+    value instanceof Nwk && removeNwkFromList(value);
+const unassignedNwkEventHandler = (value: unknown) =>
+    value instanceof Nwk && addNwkToList(value);
 onMounted(() => {
-    emitter.on("assignedNwk", removeNwkFromList);
-    emitter.on("unassignedNwk", addNwkToList);
+    emitter.on("assignedNwk", assignedNwkEventHandler);
+    emitter.on("unassignedNwk", unassignedNwkEventHandler);
 });
 onUnmounted(() => {
-    emitter.off("assignedNwk", removeNwkFromList);
-    emitter.off("unassignedNwk", addNwkToList);
+    emitter.off("assignedNwk", assignedNwkEventHandler);
+    emitter.off("unassignedNwk", unassignedNwkEventHandler);
 });
+
 function dragStart(event: DragEvent, nwk: Nwk) {
     event.dataTransfer?.setData("application/json", JSON.stringify(nwk));
 }
