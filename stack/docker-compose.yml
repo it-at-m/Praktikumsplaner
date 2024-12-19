@@ -39,7 +39,7 @@ services:
       - keycloak
 
   postgres-backend:
-    image: postgres:17.0
+    image: postgres:17.2
     container_name: postgres-backend
     environment:
       POSTGRES_DB: praktikumsplaner
@@ -53,7 +53,7 @@ services:
 
   # Keycloak (SSO)
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0.5
+    image: quay.io/keycloak/keycloak:26.0.7
     container_name: keycloak
     command:
       - start-dev
@@ -67,7 +67,7 @@ services:
       - keycloak
 
   init-keycloak:
-    image: klg71/keycloakmigration:0.2.72
+    image: klg71/keycloakmigration:0.2.74
     depends_on:
       - keycloak
     env_file:
@@ -84,7 +84,7 @@ services:
       - keycloak
 
   postgres-keycloak:
-    image: postgres:17.0
+    image: postgres:17.2
     container_name: postgres-keycloak
     environment:
       POSTGRES_DB: keycloak
@@ -97,7 +97,7 @@ services:
   ## Tools
 
   postgres-pg-admin:
-    image: dpage/pgadmin4:8.12
+    image: dpage/pgadmin4:8.14
     container_name: postgres-pg-admin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@a.de

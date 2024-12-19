@@ -22,12 +22,12 @@
         <logstash.encoder>8.0</logstash.encoder>
         <apache.commons.collections4>4.4</apache.commons.collections4>
         <apache.commons.csv>1.12.0</apache.commons.csv>
-        <apache.commons.io>2.17.0</apache.commons.io>
+        <apache.commons.io>2.18.0</apache.commons.io>
         <apache.commons.lang3>3.17.0</apache.commons.lang3>
-        <apache.commons.text>1.12.0</apache.commons.text>
+        <apache.commons.text>1.13.0</apache.commons.text>
         <apache.commons.validator>1.9.0</apache.commons.validator>
         <!-- SonarQube -->
-        <sonar.scanner.version>4.0.0.4121</sonar.scanner.version>
+        <sonar.scanner.version>5.0.0.4389</sonar.scanner.version>
         <!-- TestCoverage -->
         <jacoco.version>0.8.12</jacoco.version>
         <!-- Plugins -->
@@ -37,8 +37,8 @@
         <!-- Version muss mit der in den spring-boot-dependencies bereitgestellten Lombok-Version übereinstimmen -->
         <org.projectlombok.lombok.version>1.18.30</org.projectlombok.lombok.version>
         <org.projectlombok.mapstructbinding.version>0.2.0</org.projectlombok.mapstructbinding.version>
-        <org.mapstruct.version>1.6.2</org.mapstruct.version>
-        <org.apache.poi.version>5.2.2</org.apache.poi.version>
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
+        <org.apache.poi.version>5.3.0</org.apache.poi.version>
     </properties>
 
 
@@ -456,7 +456,7 @@
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>10.20.0</version>
+                        <version>10.21.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
