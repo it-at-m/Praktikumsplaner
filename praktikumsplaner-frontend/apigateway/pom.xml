@@ -22,7 +22,7 @@
         <logstash.encoder.version>8.0</logstash.encoder.version>
          <!-- Die Version von Hazelcast muss der Hazelcastversion in den spring-boot-dependencies entsprechen -->
         <hazelcast.version>5.3.6</hazelcast.version>
-        <apache.commons.lang.version>3.17.0</apache.commons.lang.version>
+        <apache.commons.lang.version>3.18.0</apache.commons.lang.version>
         <jvm.options>-Dorg.conscrypt.native.workdir=$(pwd)</jvm.options>
         <jacoco.version>0.8.12</jacoco.version>
     </properties>
