@@ -2,7 +2,7 @@ name: praktikumsplaner
 services:
   pp-frontend:
     container_name: frontend
-    image: ghcr.io/it-at-m/Praktikumsplaner/praktikumsplaner-frontend:latest
+    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest
     depends_on:
       - keycloak
     ports:
@@ -22,7 +22,7 @@ services:
 
   pp-backend:
     container_name: backend
-    image: ghcr.io/it-at-m/Praktikumsplaner/praktikumsplaner-backend:latest
+    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-backend:latest
     ports:
       - "8083:8083"
     profiles:
