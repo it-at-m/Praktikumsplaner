@@ -46,7 +46,6 @@
         <p2.mirror>download.eclipse.org</p2.mirror>
     </properties>
 
-
     <dependencyManagement>
         <dependencies>
             <dependency>
