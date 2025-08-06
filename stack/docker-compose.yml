@@ -4,7 +4,8 @@ services:
     container_name: frontend
     image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest
     depends_on:
-      - keycloak
+      init-keycloak:
+        condition: service_completed_successfully
     ports:
       - "8080:8082"
     profiles:
