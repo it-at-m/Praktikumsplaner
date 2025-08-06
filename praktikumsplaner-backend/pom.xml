@@ -68,7 +68,6 @@
         </dependencies>
     </dependencyManagement>
 
-
     <dependencies>
 
         <!-- Spring Boot -->
