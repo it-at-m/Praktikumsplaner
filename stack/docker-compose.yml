@@ -24,7 +24,7 @@ services:
     container_name: backend
     image: itatm/praktikumsplaner-backend:latest
     ports:
-      - "39146:39146"
+      - "8083:8083"
     profiles:
       - backend
       - full

@@ -63,12 +63,12 @@ app:
   gateway:
     routing:
       sso:
-        uri: http://kubernetes.docker.internal:8100/
+        uri: http://keycloak:8100/
       backend:
-        uri: http://localhost:39146/
+        uri: http://localhost:8083/
     security:
       keycloak:
-        issuer-uri: http://kubernetes.docker.internal:8100/auth/realms/${app.gateway.security.keycloak.realm}
+        issuer-uri: http://keycloak:8100/auth/realms/${app.gateway.security.keycloak.realm}
         realm: praktikumsplaner
         client:
           id: praktikumsplaner
