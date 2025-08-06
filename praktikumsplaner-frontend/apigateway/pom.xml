@@ -25,6 +25,11 @@
         <apache.commons.lang.version>3.17.0</apache.commons.lang.version>
         <jvm.options>-Dorg.conscrypt.native.workdir=$(pwd)</jvm.options>
         <jacoco.version>0.8.12</jacoco.version>
+
+        <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
+        <p2.username /> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.password /> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.mirror>download.eclipse.org</p2.mirror>
     </properties>
 
 
