@@ -43,4 +43,4 @@ jobs:
         with:
           context: ./praktikumsplaner-frontend
           push: true
-          tags: ${{ env.REGISTRY }}/it-at-m/Praktikumsplaner/praktikumsplaner-frontend:latest
+          tags: ${{ env.REGISTRY }}/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest
