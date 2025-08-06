@@ -15,7 +15,6 @@ services:
       - local-docker-frontend.env
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "kubernetes.docker.internal:host-gateway"
     networks:
       - internal
       - keycloak
@@ -33,7 +32,6 @@ services:
       - local-docker-backend.env
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "kubernetes.docker.internal:host-gateway"
     networks:
       - internal
       - keycloak
@@ -60,7 +58,7 @@ services:
     depends_on:
       - postgres-keycloak
     ports:
-      - 8100:8080
+      - 8100:8100
     env_file:
       - local-keycloak.env
     networks:
@@ -75,7 +73,7 @@ services:
     environment:
       ADMIN_USER: admin
       ADMIN_PASSWORD: change_me
-      BASEURL: http://keycloak:8080/auth # uses internal docker network to access the keycloak via its back channel port
+      BASEURL: http://keycloak:8100/auth # uses internal docker network to access the keycloak via its back channel port
       WAIT_FOR_KEYCLOAK: 'true'
       KEYCLOAK_CHANGELOG: /migration/keycloak-changelog.yml
     volumes:
