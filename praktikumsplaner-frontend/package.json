@@ -33,7 +33,7 @@
         "@vue/test-utils": "^2.4.6",
         "eslint": "^9.0.0",
         "eslint-plugin-vue": "^9.18.1",
-        "jsdom": "^25.0.0",
+        "jsdom": "^26.0.0",
         "prettier": "^3.0.3",
         "typescript": "^5.2.2",
         "unplugin-fonts": "^1.0.3",
