@@ -93,7 +93,7 @@ services:
 
   # Keycloak (SSO)
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0.7
+    image: quay.io/keycloak/keycloak:26.3.5
     container_name: keycloak
     command:
       - start-dev
