@@ -6,10 +6,10 @@ spring:
       ddl-auto: validate
       naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   mail:
-    host: localhost
-    port: 8225
-    username: pp-mail-user
-    password: pp-mail-password
+    host:
+    port:
+    username:
+    password:
     properties:
       mail:
         transport:
@@ -52,6 +52,6 @@ info.application.version: @project.version@
 app:
   db:
     postgres:
-      url: jdbc:postgresql://localhost:5432/praktikumsplaner
-      username: db-backend-user
-      password: db-backend-password
+      url:
+      username:
+      password:
