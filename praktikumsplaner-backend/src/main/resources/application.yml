@@ -1,5 +1,3 @@
-
-
 spring:
   application.name: @project.artifactId@
   banner.location: banner.txt
