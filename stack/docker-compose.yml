@@ -2,11 +2,12 @@ name: praktikumsplaner
 services:
   pp-frontend:
     container_name: frontend
-    image: itatm/praktikumsplaner-frontend:latest
+    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest
     depends_on:
-      - keycloak
+      init-keycloak:
+        condition: service_completed_successfully
     ports:
-      - "8080:8082"
+      - "8081:8080"
     profiles:
       - frontend
       - full
@@ -15,16 +16,15 @@ services:
       - local-docker-frontend.env
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "kubernetes.docker.internal:host-gateway"
     networks:
       - internal
       - keycloak
 
   pp-backend:
     container_name: backend
-    image: itatm/praktikumsplaner-backend:latest
+    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-backend:latest
     ports:
-      - "39146:39146"
+      - "8082:8082"
     profiles:
       - backend
       - full
@@ -33,13 +33,53 @@ services:
       - local-docker-backend.env
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "kubernetes.docker.internal:host-gateway"
     networks:
       - internal
       - keycloak
 
+  refarch-gateway:
+    image: ghcr.io/it-at-m/refarch/refarch-gateway:1.6.0@sha256:df27f73a72c42f15e7d37267b2b726e70cc917bcf8b03f0b275787715477acae
+    depends_on:
+      init-keycloak:
+        condition: service_completed_successfully
+    ports:
+      - "8083:8080"
+    environment:
+      - ALLOWED_ORIGINS_PUBLIC=http://localhost:*
+      - ALLOWED_ORIGINS_CLIENTS=http://localhost:*
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_ID=sso
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_URI=http://keycloak:8100/
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_PREDICATES_0=Path=/api/sso/userinfo
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_FILTERS_0=RewritePath=/api/sso/userinfo, /auth/realms/praktikumsplaner/protocol/openid-connect/userinfo
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_ID=backend
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_URI=http://host.docker.internal:8082/
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_PREDICATES_0=Path=/api/backend-service/**
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_FILTERS_0=RewritePath=/api/backend-service/(?<urlsegments>.*), /$\{urlsegments}
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_2_ID=frontend
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_2_URI=http://host.docker.internal:8081/
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_2_PREDICATES_0=Path=/**
+      - SPRING_PROFILES_ACTIVE=hazelcast-local
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://keycloak:8100/auth/realms/praktikumsplaner
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_SSO_ISSUERURI=$${spring.security.oauth2.resourceserver.jwt.issuer-uri}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_PROVIDER=sso
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_CLIENTID=praktikumsplaner
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_CLIENTSECRET=top-secret
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_SCOPE=profile, openid, roles
+    networks:
+      - keycloak
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck: &healthcheck
+      test: [ "CMD-SHELL", "curl http://localhost:8080/actuator/health/liveness" ]
+      interval: 30s
+      timeout: 60s
+      retries: 3
+      start_period: 60s
+    security_opt: &security_settings
+      - no-new-privileges:true
+
   postgres-backend:
-    image: postgres:17.2
+    image: postgres:17.6
     container_name: postgres-backend
     environment:
       POSTGRES_DB: praktikumsplaner
@@ -53,21 +93,21 @@ services:
 
   # Keycloak (SSO)
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0.7
+    image: quay.io/keycloak/keycloak:26.3.5
     container_name: keycloak
     command:
       - start-dev
     depends_on:
       - postgres-keycloak
     ports:
-      - 8100:8080
+      - "8100:8100"
     env_file:
       - local-keycloak.env
     networks:
       - keycloak
 
   init-keycloak:
-    image: klg71/keycloakmigration:0.2.74
+    image: klg71/keycloakmigration:0.2.106
     depends_on:
       - keycloak
     env_file:
@@ -75,7 +115,7 @@ services:
     environment:
       ADMIN_USER: admin
       ADMIN_PASSWORD: change_me
-      BASEURL: http://keycloak:8080/auth # uses internal docker network to access the keycloak via its back channel port
+      BASEURL: http://keycloak:8100/auth # uses internal docker network to access the keycloak via its back channel port
       WAIT_FOR_KEYCLOAK: 'true'
       KEYCLOAK_CHANGELOG: /migration/keycloak-changelog.yml
     volumes:
@@ -84,7 +124,7 @@ services:
       - keycloak
 
   postgres-keycloak:
-    image: postgres:17.2
+    image: postgres:17.6
     container_name: postgres-keycloak
     environment:
       POSTGRES_DB: keycloak
@@ -103,7 +143,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@a.de
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - 8101:80
+      - "8101:80"
     networks:
       - dbs
 
