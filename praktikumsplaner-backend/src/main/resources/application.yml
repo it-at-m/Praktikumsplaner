@@ -1,3 +1,5 @@
+
+
 spring:
   application.name: @project.artifactId@
   banner.location: banner.txt
@@ -55,3 +57,7 @@ app:
       url: jdbc:postgresql://localhost:5432/praktikumsplaner
       username: db-backend-user
       password: db-backend-password
+
+logging:
+  level:
+    de.muenchen.oss.praktikumsplaner.configuration.nfcconverter: info
