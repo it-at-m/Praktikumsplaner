@@ -20,7 +20,7 @@
         <spring.boot.version>3.5.6</spring.boot.version>
         <spring.cloud.version>2024.0.2</spring.cloud.version>
         <logstash.encoder>8.1</logstash.encoder>
-        <apache.commons.collections4>4.4</apache.commons.collections4>
+        <apache.commons.collections4>4.5.0</apache.commons.collections4>
         <apache.commons.csv>1.12.0</apache.commons.csv>
         <apache.commons.io>2.20.0</apache.commons.io>
         <apache.commons.lang3>3.19.0</apache.commons.lang3>
