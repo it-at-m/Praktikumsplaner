@@ -41,5 +41,8 @@
         "vite-plugin-vuetify": "^2.0.0",
         "vitest": "^3.2.4",
         "vue-tsc": "^2.0.0"
+    },
+    "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "*"
     }
 }
