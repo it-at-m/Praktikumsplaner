@@ -137,7 +137,7 @@ services:
   ## Tools
 
   postgres-pg-admin:
-    image: dpage/pgadmin4:8.14
+    image: dpage/pgadmin4:9.8
     container_name: postgres-pg-admin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@a.de
