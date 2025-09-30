@@ -89,7 +89,7 @@ For authentication, use the user `testleitung` with the password `test`.
 
 **⚠ Proxy note**
 
-If a proxy is set up in the browser, please make sure that it does not resolve `kubernetes.docker.internal`.
+If a proxy is set up in the browser, please make sure that it does not resolve `host.docker.internal`.
 
 
 ### Keycloak
