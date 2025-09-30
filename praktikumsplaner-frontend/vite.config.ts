@@ -37,6 +37,15 @@ export default defineConfig({
         extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
     },
     server: {
+        host: true,
         port: 8081,
+        proxy: {
+            "/api": "http://localhost:8083",
+            "/actuator": "http://localhost:8083",
+        },
+        allowedHosts: ["host.docker.internal"], // required to use frontend behind proxy (e.g. API Gateway)
+        headers: {
+            "x-frame-options": "SAMEORIGIN", // required to use devtools behind proxy (e.g. API Gateway)
+        },
     },
 });

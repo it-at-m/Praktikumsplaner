@@ -17,30 +17,34 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.boot.version>3.4.1</spring.boot.version>
-        <spring.cloud.version>2024.0.0</spring.cloud.version>
-        <logstash.encoder>8.0</logstash.encoder>
-        <apache.commons.collections4>4.4</apache.commons.collections4>
-        <apache.commons.csv>1.12.0</apache.commons.csv>
-        <apache.commons.io>2.18.0</apache.commons.io>
-        <apache.commons.lang3>3.17.0</apache.commons.lang3>
-        <apache.commons.text>1.13.0</apache.commons.text>
-        <apache.commons.validator>1.9.0</apache.commons.validator>
+        <spring.boot.version>3.5.6</spring.boot.version>
+        <spring.cloud.version>2024.0.2</spring.cloud.version>
+        <logstash.encoder>8.1</logstash.encoder>
+        <apache.commons.collections4>4.5.0</apache.commons.collections4>
+        <apache.commons.csv>1.14.1</apache.commons.csv>
+        <apache.commons.io>2.20.0</apache.commons.io>
+        <apache.commons.lang3>3.19.0</apache.commons.lang3>
+        <apache.commons.text>1.14.0</apache.commons.text>
+        <apache.commons.validator>1.10.0</apache.commons.validator>
         <!-- SonarQube -->
-        <sonar.scanner.version>5.0.0.4389</sonar.scanner.version>
+        <sonar.scanner.version>5.2.0.4988</sonar.scanner.version>
         <!-- TestCoverage -->
-        <jacoco.version>0.8.12</jacoco.version>
+        <jacoco.version>0.8.13</jacoco.version>
         <!-- Plugins -->
-        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
-        <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+        <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
         <maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
         <!-- Version muss mit der in den spring-boot-dependencies bereitgestellten Lombok-Version übereinstimmen -->
-        <org.projectlombok.lombok.version>1.18.30</org.projectlombok.lombok.version>
+        <org.projectlombok.lombok.version>1.18.42</org.projectlombok.lombok.version>
         <org.projectlombok.mapstructbinding.version>0.2.0</org.projectlombok.mapstructbinding.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
-        <org.apache.poi.version>5.3.0</org.apache.poi.version>
-    </properties>
+        <org.apache.poi.version>5.4.1</org.apache.poi.version>
 
+        <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
+        <p2.username /> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.password /> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.mirror>download.eclipse.org</p2.mirror>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -62,7 +66,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
     <dependencies>
 
@@ -408,7 +411,7 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>2.43.0</version>
+                <version>2.46.1</version>
                 <dependencies>
                     <dependency>
                         <groupId>de.muenchen.oss</groupId>
@@ -424,6 +427,12 @@
                         </includes>
                         <eclipse>
                             <file>itm-java-codeformat/java_codestyle_formatter.xml</file>
+                            <p2Mirrors>
+                                <p2Mirror>
+                                    <prefix>https://download.eclipse.org</prefix>
+                                    <url>https://${p2.username}:${p2.password}@${p2.mirror}</url>
+                                </p2Mirror>
+                            </p2Mirrors>
                         </eclipse>
                         <trimTrailingWhitespace/>
                         <endWithNewline/>
@@ -456,7 +465,7 @@
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>10.21.0</version>
+                        <version>10.26.1</version>
                     </dependency>
                 </dependencies>
             </plugin>

@@ -8,6 +8,9 @@ on:
     paths:
       - 'praktikumsplaner-backend/**'
 
+env:
+  REGISTRY: ghcr.io
+
 jobs:
   build-and-docker-push:
     runs-on: ubuntu-latest
@@ -31,12 +34,13 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_KEY }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
           context: ./praktikumsplaner-backend
           push: true
-          tags: itatm/praktikumsplaner-backend:latest
+          tags: ${{ env.REGISTRY }}/it-at-m/praktikumsplaner/praktikumsplaner-backend:latest

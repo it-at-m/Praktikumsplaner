@@ -6,14 +6,14 @@
         "security": "vite --mode developmentSecurity",
         "serve": "vite ",
         "build": "vite build && eslint . --fix && vue-tsc --noEmit",
-        "test:unit": "vitest run",
+        "test": "vitest run",
         "preview": "vite preview",
         "lint": "prettier . --check && eslint . && vue-tsc --noEmit --skipLibCheck",
         "fix": "prettier . --write && eslint . --fix",
         "type-check": "vue-tsc --noEmit"
     },
     "dependencies": {
-        "@fontsource/roboto": "5.1.0",
+        "@fontsource/roboto": "5.2.8",
         "@mdi/font": "7.4.47",
         "mitt": "^3.0.1",
         "moment": "^2.29.4",
