@@ -34,18 +34,19 @@
                 </v-row>
                 <v-row></v-row>
                 <v-skeleton-loader
-                    v-if="security.isAusbildungsleitung() && loadingUebersicht"
+                    v-if="loadingUebersicht"
                     type="image"
                 >
                 </v-skeleton-loader>
                 <v-row
-                    v-if="security.isAusbildungsleitung() && !loadingUebersicht"
+                    v-if="!loadingUebersicht"
                 >
                     <v-container
                         v-if="!mapIsEmpty"
                         class="box"
                     >
-                        <span> Übersicht aus dem aktuellen Meldezeitraum </span>
+                        <span > Übersicht aus dem aktuellen Meldezeitraum </span>
+                        <small v-if="security.isAusbilder()">(Nur eigene Plätze von örtl. Ausbilder*innen angezeigt)</small>
                         <praktikumsstellen-list
                             :praktikumsstellen-map="praktikumsstellenMap"
                         ></praktikumsstellen-list>
@@ -66,7 +67,12 @@
                                 >
                             </v-col>
                             <v-col class="d-flex align-center">
-                                <p>
+                                <p v-if="security.isAusbilder()">
+                                    Für Sie als Auslbilder*in wurden noch keine
+                                    Praktikumsstellen für den aktuellen Zeitraum
+                                    gemeldet.
+                                </p>
+                                <p v-else>
                                     Es wurden für den aktuellen Zeitraum noch
                                     keine Praktikumsstellen gemeldet.
                                 </p>
@@ -119,6 +125,7 @@ onMounted(() => {
             activeMeldezeitraum.value = zeitraueme.length > 0;
         }
     );
+
     getAllPraktikumsstellenInCurrentMeldezeitraum();
 
     if (userStore.username) {
@@ -167,13 +174,13 @@ function toStudium(): void {
 function getAllPraktikumsstellenInCurrentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
-        "current",
-        loadingSite
+        "current"
     ).then((fetchedStellen) => {
         for (const [key, value] of Object.entries(fetchedStellen)) {
             helperMap.set(key, value);
         }
         praktikumsstellenMap.value = helperMap;
+        loadingSite.value = false
     });
 }
 </script>

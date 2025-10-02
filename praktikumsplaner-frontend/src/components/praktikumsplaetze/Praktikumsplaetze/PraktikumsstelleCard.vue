@@ -50,7 +50,7 @@
                             {{ getCardDetailText(properties.praktikumsstelle) }}
                         </p>
                     </v-card-text>
-                    <v-card-actions>
+                    <v-card-actions v-if="security.isAusbildungsleitung()">
                         <ausbildungs-praktikumsstelle-update-dialog
                             v-if="isAusbildungsPraktikumsstelle"
                             v-model="praktikumsstelle"
@@ -62,7 +62,7 @@
                     </v-card-actions>
                 </div>
             </v-expand-transition>
-            <v-card-actions>
+            <v-card-actions v-if="security.isAusbildungsleitung()">
                 <v-btn
                     icon
                     @click.stop="openDialog()"
@@ -83,6 +83,7 @@ import StudiumsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze
 import { useTextGenerator } from "@/composables/textGenerator";
 import emitter from "@/stores/eventBus";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import {useSecurity} from "@/composables/security";
 
 const properties = defineProps<{
     praktikumsstelle: Praktikumsstelle;
@@ -116,6 +117,7 @@ const warningDialogText = ref(
 );
 const show = ref<boolean>(false);
 const generator = useTextGenerator();
+const security = useSecurity();
 
 function getCardText(stelle: Praktikumsstelle): string {
     return generator.getPraktikumsstellenCardText(stelle);

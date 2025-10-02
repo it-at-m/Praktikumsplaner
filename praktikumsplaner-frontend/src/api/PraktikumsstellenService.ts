@@ -109,12 +109,8 @@ export default {
             });
     },
     getAllPraktikumsstellenInSpecificMeldezeitraum(
-        meldezeitraum: string,
-        loading: Ref<boolean> | undefined
+        meldezeitraum: string
     ): Promise<Map<string, Praktikumsstelle[]>> {
-        if (loading !== undefined) {
-            loading.value = true;
-        }
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}?meldezeitraum=${meldezeitraum}`,
             getGETConfig()
@@ -123,11 +119,6 @@ export default {
                 defaultResponseHandler(response);
                 return response.json();
             })
-            .finally(() => {
-                if (loading !== undefined) {
-                    loading.value = false;
-                }
-            });
     },
     assignNwk(
         stellenId: string,

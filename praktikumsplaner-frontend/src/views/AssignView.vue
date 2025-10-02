@@ -189,13 +189,13 @@ function getAllActiveNwks() {
 function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
-        "most_recent",
-        loadingPraktikumsstellen
+        "most_recent"
     ).then((fetchedStellen) => {
         for (const [key, value] of Object.entries(fetchedStellen)) {
             helperMap.set(key, value);
         }
         praktikumsstellenMap.value = helperMap;
+        loadingPraktikumsstellen.value = false
     });
 }
 </script>

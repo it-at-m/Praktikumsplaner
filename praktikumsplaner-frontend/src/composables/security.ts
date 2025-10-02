@@ -27,10 +27,15 @@ export function useSecurity() {
         return checkForRole("ROLE_AUSBILDUNGSLEITUNG");
     }
 
+    function isAusbilder() {
+        return checkForRole("ROLE_AUSBILDER");
+    }
+
     return {
         checkForAnyRole,
         checkForAllRoles,
         isAusbildungsleitung,
+        isAusbilder,
         checkForRole,
     };
 }
