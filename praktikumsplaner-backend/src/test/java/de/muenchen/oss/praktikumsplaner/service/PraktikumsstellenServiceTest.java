@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,23 +34,28 @@ import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
+
+import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.UUID;
+import java.util.*;
+
+import de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 @ExtendWith(MockitoExtension.class)
 public class PraktikumsstellenServiceTest {
@@ -65,7 +71,21 @@ public class PraktikumsstellenServiceTest {
     private MeldezeitraumService meldezeitraumService;
     @Mock
     private NwkRepository nwkRepository;
+
     private final ServiceTestHelper helper = new ServiceTestHelper();
+
+    @BeforeEach
+    public void setUp() {
+        var jwt = new Jwt(
+                "token",
+                Instant.now(),
+                Instant.now().plusSeconds(1000),
+                Collections.singletonMap("typ", "JWT"),
+                Collections.singletonMap("email", "test@test.de"));
+        var authentication = new JwtAuthenticationToken(jwt, List.of(new SimpleGrantedAuthority("ROLE_" + AuthoritiesEnum.AUSBILDUNGSLEITUNG.name())));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 
     @Test
     public void testCreateStudiumsPraktikumsstelle() {
@@ -241,6 +261,7 @@ public class PraktikumsstellenServiceTest {
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((AusbildungsPraktikumsstelle) invocation.getArguments()[0]));
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
+
 
         TreeMap<String, List<PraktikumsstelleDto>> result = service.getAllInCurrentMeldezeitraumGroupedByDienststelle();
 
