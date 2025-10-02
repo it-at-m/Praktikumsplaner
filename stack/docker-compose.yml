@@ -79,7 +79,7 @@ services:
       - no-new-privileges:true
 
   postgres-backend:
-    image: postgres:17.6
+    image: postgres:18.0
     container_name: postgres-backend
     environment:
       POSTGRES_DB: praktikumsplaner
@@ -124,7 +124,7 @@ services:
       - keycloak
 
   postgres-keycloak:
-    image: postgres:17.6
+    image: postgres:18.0
     container_name: postgres-keycloak
     environment:
       POSTGRES_DB: keycloak
