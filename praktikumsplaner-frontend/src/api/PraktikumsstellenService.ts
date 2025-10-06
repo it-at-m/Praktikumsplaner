@@ -114,11 +114,10 @@ export default {
         return fetch(
             `${API_BASE}${PRAKTIKUMSSTELLE_BASE}?meldezeitraum=${meldezeitraum}`,
             getGETConfig()
-        )
-            .then((response) => {
-                defaultResponseHandler(response);
-                return response.json();
-            })
+        ).then((response) => {
+            defaultResponseHandler(response);
+            return response.json();
+        });
     },
     assignNwk(
         stellenId: string,

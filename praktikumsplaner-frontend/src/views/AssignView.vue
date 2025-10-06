@@ -195,7 +195,7 @@ function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
             helperMap.set(key, value);
         }
         praktikumsstellenMap.value = helperMap;
-        loadingPraktikumsstellen.value = false
+        loadingPraktikumsstellen.value = false;
     });
 }
 </script>

@@ -38,15 +38,16 @@
                     type="image"
                 >
                 </v-skeleton-loader>
-                <v-row
-                    v-if="!loadingUebersicht"
-                >
+                <v-row v-if="!loadingUebersicht">
                     <v-container
                         v-if="!mapIsEmpty"
                         class="box"
                     >
-                        <span > Übersicht aus dem aktuellen Meldezeitraum </span>
-                        <small v-if="security.isAusbilder()">(Nur eigene Plätze von örtl. Ausbilder*innen angezeigt)</small>
+                        <span> Übersicht aus dem aktuellen Meldezeitraum </span>
+                        <small v-if="security.isAusbilder()"
+                            >(Nur eigene Plätze von örtl. Ausbilder*innen
+                            angezeigt)</small
+                        >
                         <praktikumsstellen-list
                             :praktikumsstellen-map="praktikumsstellenMap"
                         ></praktikumsstellen-list>
@@ -180,7 +181,7 @@ function getAllPraktikumsstellenInCurrentMeldezeitraum() {
             helperMap.set(key, value);
         }
         praktikumsstellenMap.value = helperMap;
-        loadingSite.value = false
+        loadingSite.value = false;
     });
 }
 </script>
