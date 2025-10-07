@@ -4,6 +4,11 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,12 +16,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
-
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor

@@ -5,7 +5,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
 import java.lang.reflect.Method;
 
 public class StudiengangOrAusbildungsrichtungValidator implements ConstraintValidator<StudiengangOrAusbildungsrichtungConstraint, Object> {

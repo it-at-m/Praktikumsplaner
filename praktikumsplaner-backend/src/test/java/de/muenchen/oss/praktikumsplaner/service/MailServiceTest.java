@@ -1,5 +1,12 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
@@ -12,6 +19,12 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.mail.internet.MimeMessage;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,20 +35,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class MailServiceTest {
 

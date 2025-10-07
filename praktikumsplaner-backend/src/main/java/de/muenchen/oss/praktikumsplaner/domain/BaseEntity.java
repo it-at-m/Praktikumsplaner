@@ -4,10 +4,14 @@
  */
 package de.muenchen.oss.praktikumsplaner.domain;
 
+import static java.sql.Types.VARCHAR;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import java.io.Serializable;
+import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +19,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
-
-import java.io.Serializable;
-import java.util.UUID;
-
-import static java.sql.Types.VARCHAR;
 
 @MappedSuperclass
 @NoArgsConstructor

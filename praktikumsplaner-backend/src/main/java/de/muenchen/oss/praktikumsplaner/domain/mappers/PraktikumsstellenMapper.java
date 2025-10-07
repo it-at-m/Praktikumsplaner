@@ -11,11 +11,10 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto;
+import java.util.UUID;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-import java.util.UUID;
 
 @Mapper
 public interface PraktikumsstellenMapper {

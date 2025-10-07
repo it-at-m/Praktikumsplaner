@@ -1,16 +1,15 @@
 package de.muenchen.oss.praktikumsplaner.exception;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jakarta.validation.ValidationException;
+import java.io.IOException;
+import java.util.List;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GlobalExceptionHandlerTest {
 

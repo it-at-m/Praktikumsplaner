@@ -4,16 +4,15 @@
  */
 package de.muenchen.oss.praktikumsplaner.configuration.nfcconverter;
 
-import jakarta.servlet.http.Cookie;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import jakarta.servlet.http.Cookie;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 class NfcHelperTest {
 

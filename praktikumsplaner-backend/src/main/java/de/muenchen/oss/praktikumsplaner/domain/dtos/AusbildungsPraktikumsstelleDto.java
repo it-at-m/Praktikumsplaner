@@ -7,10 +7,9 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-
 import java.util.Set;
 import java.util.UUID;
+import lombok.Builder;
 
 @Builder
 @AusbildungsAnnotation(ausbildungsrichtungGetMethod = "ausbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")

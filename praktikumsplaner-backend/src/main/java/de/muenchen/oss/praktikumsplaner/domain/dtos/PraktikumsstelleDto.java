@@ -4,7 +4,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-
 import java.util.UUID;
 
 public interface PraktikumsstelleDto {

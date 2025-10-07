@@ -3,6 +3,8 @@ package de.muenchen.oss.praktikumsplaner.rest;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.service.NwkService;
+import java.io.IOException;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.io.IOException;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor

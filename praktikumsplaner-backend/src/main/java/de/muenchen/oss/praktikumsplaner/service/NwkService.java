@@ -5,14 +5,13 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 
 @AllArgsConstructor
 @Service

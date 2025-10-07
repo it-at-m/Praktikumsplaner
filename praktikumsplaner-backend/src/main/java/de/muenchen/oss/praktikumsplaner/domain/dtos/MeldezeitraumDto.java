@@ -3,9 +3,8 @@ package de.muenchen.oss.praktikumsplaner.domain.dtos;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
-
 import java.util.UUID;
+import lombok.Builder;
 
 @Builder
 public record MeldezeitraumDto(

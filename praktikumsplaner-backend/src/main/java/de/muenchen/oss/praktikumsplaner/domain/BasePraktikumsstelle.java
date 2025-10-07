@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.domain;
 
+import static java.sql.Types.VARCHAR;
+
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import jakarta.persistence.EnumType;
@@ -10,16 +12,13 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.JdbcTypeCode;
-
-import java.util.UUID;
-
-import static java.sql.Types.VARCHAR;
 
 @MappedSuperclass
 @NoArgsConstructor

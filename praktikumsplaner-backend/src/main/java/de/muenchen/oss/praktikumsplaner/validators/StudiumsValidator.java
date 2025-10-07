@@ -4,7 +4,6 @@ import de.muenchen.oss.praktikumsplaner.annotations.StudiumsAnnotation;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
 import java.lang.reflect.Method;
 
 public class StudiumsValidator implements ConstraintValidator<StudiumsAnnotation, Object> {

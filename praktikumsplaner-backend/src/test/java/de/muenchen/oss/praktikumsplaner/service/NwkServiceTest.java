@@ -1,5 +1,15 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
@@ -10,15 +20,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import jakarta.validation.ConstraintViolationException;
-import lombok.val;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -27,16 +28,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
+import lombok.val;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class NwkServiceTest {

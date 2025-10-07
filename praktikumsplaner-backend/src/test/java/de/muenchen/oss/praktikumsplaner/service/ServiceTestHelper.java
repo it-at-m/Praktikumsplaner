@@ -15,7 +15,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Set;
