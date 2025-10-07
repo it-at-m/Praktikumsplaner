@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref, watch} from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
@@ -98,10 +98,10 @@ import PageTitle from "@/components/common/PageTitle.vue";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
-import {useSecurity} from "@/composables/security";
+import { useSecurity } from "@/composables/security";
 import router from "@/router";
 import emitter from "@/stores/eventBus";
-import {useUserStore} from "@/stores/user";
+import { useUserStore } from "@/stores/user";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const userStore = useUserStore();
@@ -176,13 +176,16 @@ function getAllPraktikumsstellenInCurrentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
         "current"
-    ).then((fetchedStellen) => {
-        for (const [key, value] of Object.entries(fetchedStellen)) {
-            helperMap.set(key, value);
-        }
-        praktikumsstellenMap.value = helperMap;
-        loadingSite.value = false;
-    });
+    )
+        .then((fetchedStellen) => {
+            for (const [key, value] of Object.entries(fetchedStellen)) {
+                helperMap.set(key, value);
+            }
+            praktikumsstellenMap.value = helperMap;
+        })
+        .finally(() => {
+            loadingSite.value = false;
+        });
 }
 </script>
 <style>
