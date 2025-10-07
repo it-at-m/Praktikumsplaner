@@ -22,7 +22,18 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: http://keycloak:8100/auth/realms/${realm}/protocol/openid-connect/certs
+  mail:
+    host: localhost
+    port: 8225
+    username: pp-mail-user
+    password: pp-mail-password
 
+app:
+  db:
+    postgres:
+      url: jdbc:postgresql://localhost:5432/praktikumsplaner
+      username: db-backend-user
+      password: db-backend-password
 
 # Define the local keycloak realm here
 realm: praktikumsplaner

@@ -2,7 +2,7 @@ name: praktikumsplaner
 services:
   pp-frontend:
     container_name: frontend
-    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest
+    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest@sha256:7bc92800d0d9927b0464422993c0b8415ecac3364f0bc076cbc44a48647279ac
     depends_on:
       init-keycloak:
         condition: service_completed_successfully
@@ -22,7 +22,7 @@ services:
 
   pp-backend:
     container_name: backend
-    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-backend:latest
+    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-backend:latest@sha256:04595d7191ed93c8fe1fa15b90c46664a3ec48f67d39edfde144d4d7274b0b1b
     ports:
       - "8082:8082"
     profiles:
@@ -79,7 +79,7 @@ services:
       - no-new-privileges:true
 
   postgres-backend:
-    image: postgres:17.6
+    image: postgres:17.6@sha256:e6a4209d1a4893f2df3bdcde58f8926c3c929c4d51df90990ed1b36d83c1382a
     container_name: postgres-backend
     environment:
       POSTGRES_DB: praktikumsplaner
@@ -93,7 +93,7 @@ services:
 
   # Keycloak (SSO)
   keycloak:
-    image: quay.io/keycloak/keycloak:26.4.0
+    image: quay.io/keycloak/keycloak:26.4.0@sha256:5f3fb534cde6bf006d79f5912473e5d2c828c707cdfc52e16972803aca9d43dd
     container_name: keycloak
     command:
       - start-dev
@@ -107,7 +107,7 @@ services:
       - keycloak
 
   init-keycloak:
-    image: klg71/keycloakmigration:0.2.106
+    image: klg71/keycloakmigration:0.2.111@sha256:6fd84fd15813062bf2a9bb9492cb0f71d6d0d2b434b8fb68c8e7859a2e7aabfb
     depends_on:
       - keycloak
     env_file:
@@ -124,7 +124,7 @@ services:
       - keycloak
 
   postgres-keycloak:
-    image: postgres:17.6
+    image: postgres:17.6@sha256:e6a4209d1a4893f2df3bdcde58f8926c3c929c4d51df90990ed1b36d83c1382a
     container_name: postgres-keycloak
     environment:
       POSTGRES_DB: keycloak
@@ -137,7 +137,7 @@ services:
   ## Tools
 
   postgres-pg-admin:
-    image: dpage/pgadmin4:9.8
+    image: dpage/pgadmin4:9.8@sha256:d115bcd737940a6cfb61a54439d50de8b850e0782e2363102c9fa761f4022f49
     container_name: postgres-pg-admin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@a.de
@@ -148,7 +148,7 @@ services:
       - dbs
 
   mail-maildev:
-    image: maildev/maildev
+    image: maildev/maildev@sha256:180ef51f65eefebb0e7122d8308813c1fd7bff164bc440ce5a3c2feee167a810
     ports:
       - "8180:1080"
       - "8125:1025"
@@ -157,7 +157,7 @@ services:
       MAILDEV_INCOMING_PASS: pp-mail-password
 
   mail-mailpit:
-    image: axllent/mailpit
+    image: axllent/mailpit@sha256:b004cc0672d0692f097ba8ab9e5956ae08eeafee3d0a6bf2ab239750101ac538
     ports:
       - "8280:8025"
       - "8225:1025"
