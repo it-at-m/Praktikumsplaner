@@ -6,12 +6,13 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
+
 import java.time.DayOfWeek;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import lombok.Builder;
 
 @Builder
 @StudiengangOrAusbildungsrichtungConstraint(studiengangGetMethod = "studiengang", ausbildungsrichtungGetMethod = "ausbildungsrichtung")

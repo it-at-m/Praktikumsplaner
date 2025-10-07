@@ -3,6 +3,7 @@ package de.muenchen.oss.praktikumsplaner.domain.converter;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+
 import java.util.Set;
 
 @Converter

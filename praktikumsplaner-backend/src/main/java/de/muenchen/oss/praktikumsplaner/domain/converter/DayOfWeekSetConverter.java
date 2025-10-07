@@ -2,6 +2,7 @@ package de.muenchen.oss.praktikumsplaner.domain.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+
 import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.HashSet;

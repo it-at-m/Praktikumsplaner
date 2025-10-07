@@ -1,5 +1,25 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
+import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ValidationException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -9,25 +29,6 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
-import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ValidationException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class MeldezeitraumServiceTest {

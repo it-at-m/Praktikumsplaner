@@ -2,12 +2,13 @@ package de.muenchen.oss.praktikumsplaner.repository;
 
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import io.micrometer.common.lang.NonNull;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 public interface MeldezeitraumRepository extends CrudRepository<Meldezeitraum, UUID> {
     @Query("SELECT e FROM Meldezeitraum e WHERE :date >= e.startZeitpunkt AND :date <= e.endZeitpunkt")

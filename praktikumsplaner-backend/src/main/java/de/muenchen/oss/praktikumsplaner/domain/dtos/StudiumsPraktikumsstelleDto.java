@@ -7,9 +7,10 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+
 import java.util.Set;
 import java.util.UUID;
-import lombok.Builder;
 
 @Builder
 @StudiumsAnnotation(studiengangGetMethod = "studiengang", message = "Keine korrekte Studiengang")

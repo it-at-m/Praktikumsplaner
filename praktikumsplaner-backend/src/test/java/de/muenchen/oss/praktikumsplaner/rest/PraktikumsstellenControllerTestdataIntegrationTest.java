@@ -1,16 +1,10 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.TreeMap;
 import lombok.val;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;
@@ -18,6 +12,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.TreeMap;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdataIntegrationTest {
 
