@@ -9,21 +9,21 @@ import jakarta.servlet.ServletInputStream;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 
 /**
- * ServletInputStream, der von einem Puffer ließt.
+ * ServletInputStream, which reads from a buffer.
  */
 public class NfcServletInputStream extends ServletInputStream {
 
     private final ByteArrayInputStream buffer;
 
     public NfcServletInputStream(final ByteArrayInputStream buffer) {
+        super();
         this.buffer = buffer;
     }
 
     @Override
-    public int read() throws IOException {
+    public int read() {
         return buffer.read();
     }
 
@@ -39,7 +39,7 @@ public class NfcServletInputStream extends ServletInputStream {
 
     @Override
     public void setReadListener(final ReadListener listener) {
-        throw new NotImplementedException("Not implemented.");
+        throw new NotImplementedException("Not implemented");
     }
 
 }

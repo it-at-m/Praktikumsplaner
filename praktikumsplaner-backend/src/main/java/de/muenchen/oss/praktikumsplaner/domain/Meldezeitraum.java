@@ -24,13 +24,9 @@ import java.time.LocalDate;
 @StartDateBeforeEndDate(startDate = "getStartZeitpunkt", endDate = "getEndZeitpunkt", message = "Startdatum muss vor dem Enddatum liegen.")
 public class Meldezeitraum extends BaseEntity {
 
-    @Size(max = 255, message = "Name für Zeitraum darf nicht länger als {max} Zeichen sein.")
-    @NotBlank
-    private String zeitraumName;
+    @Size(max = 255, message = "Name für Zeitraum darf nicht länger als {max} Zeichen sein.") @NotBlank private String zeitraumName;
 
-    @NotNull
-    private LocalDate startZeitpunkt;
+    @NotNull private LocalDate startZeitpunkt;
 
-    @NotNull
-    private LocalDate endZeitpunkt;
+    @NotNull private LocalDate endZeitpunkt;
 }

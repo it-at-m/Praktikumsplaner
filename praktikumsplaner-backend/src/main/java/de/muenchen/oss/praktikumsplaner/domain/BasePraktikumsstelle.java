@@ -29,35 +29,23 @@ import static java.sql.Types.VARCHAR;
 @EqualsAndHashCode(callSuper = true)
 public abstract class BasePraktikumsstelle extends BaseEntity {
 
-    @NotNull
-    @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein")
-    private String dienststelle;
+    @NotNull @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein") private String dienststelle;
 
-    @NotNull
-    @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein")
-    private String oertlicheAusbilder;
+    @NotNull @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein") private String oertlicheAusbilder;
 
-    @NotNull
-    @Email
-    @Size(max = 255, message = "Die Email darf nur {max} Zeichen lang sein")
-    private String email;
+    @NotNull @Email @Size(max = 255, message = "Die Email darf nur {max} Zeichen lang sein") private String email;
 
-    @NotNull
-    @Size(max = 5000, message = "Die Tätigkeiten dürfen nur {max} Zeichen lang sein")
-    private String taetigkeiten;
+    @NotNull @Size(max = 5000, message = "Die Tätigkeiten dürfen nur {max} Zeichen lang sein") private String taetigkeiten;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
+    @NotNull @Enumerated(EnumType.STRING)
     private Dringlichkeit dringlichkeit;
 
-    @Size(max = 255, message = "Die angeforderte Nachwuchskraft darf nur {max} Zeichen lang sein")
-    private String namentlicheAnforderung;
+    @Size(max = 255, message = "Die angeforderte Nachwuchskraft darf nur {max} Zeichen lang sein") private String namentlicheAnforderung;
 
     @Enumerated(EnumType.STRING)
     private Referat referat;
 
-    @NotNull
-    @JdbcTypeCode(VARCHAR)
+    @NotNull @JdbcTypeCode(VARCHAR)
     private UUID meldezeitraumID;
 
     @ManyToOne

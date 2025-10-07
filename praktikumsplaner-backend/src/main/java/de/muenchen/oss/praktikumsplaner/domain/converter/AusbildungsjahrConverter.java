@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Converter
 public class AusbildungsjahrConverter implements AttributeConverter<Set<Ausbildungsjahr>, String> {
-    private static final String comma = ",";
+    private static final String COMMA = ",";
 
     @Override
     public String convertToDatabaseColumn(final Set<Ausbildungsjahr> attribute) {
@@ -17,7 +17,7 @@ public class AusbildungsjahrConverter implements AttributeConverter<Set<Ausbildu
         }
         return attribute.stream()
                 .map(Ausbildungsjahr::name)
-                .collect(java.util.stream.Collectors.joining(comma));
+                .collect(java.util.stream.Collectors.joining(COMMA));
     }
 
     @Override
@@ -25,7 +25,7 @@ public class AusbildungsjahrConverter implements AttributeConverter<Set<Ausbildu
         if (dbData == null || dbData.trim().isEmpty()) {
             return java.util.Collections.emptySet();
         }
-        return java.util.Arrays.stream(dbData.split(comma))
+        return java.util.Arrays.stream(dbData.split(COMMA))
                 .map(String::trim)
                 .map(Ausbildungsjahr::valueOf)
                 .collect(java.util.stream.Collectors.toSet());

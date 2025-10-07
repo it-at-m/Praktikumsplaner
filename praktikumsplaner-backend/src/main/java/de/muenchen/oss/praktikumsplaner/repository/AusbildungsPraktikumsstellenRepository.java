@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface AusbildungsPraktikumsstellenRepository extends CrudRepository<AusbildungsPraktikumsstelle, UUID> {
-    List<AusbildungsPraktikumsstelle> findAllByMeldezeitraumID(final UUID id);
+    List<AusbildungsPraktikumsstelle> findAllByMeldezeitraumID(UUID id);
 
-    List<AusbildungsPraktikumsstelle> findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(final UUID id);
+    List<AusbildungsPraktikumsstelle> findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(UUID id);
 }

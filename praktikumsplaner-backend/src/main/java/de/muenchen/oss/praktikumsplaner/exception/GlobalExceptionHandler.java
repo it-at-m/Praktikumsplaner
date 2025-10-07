@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ExcelImportException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public String ExcelImportException(final ExcelImportException ex) {
+    public String excelImportException(final ExcelImportException ex) {
         final StringBuilder formattedExceptionInfos = new StringBuilder();
         for (ExcelImportException.ExcelImportExceptionInfo exceptionInfo : ex.getExceptionInfos()) {
             formattedExceptionInfos.append("Zeile: ").append(exceptionInfo.getRow() + 1).append(" - ")
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public String IllegalArgumentException(final IllegalArgumentException ex) {
+    public String illegalArgumentException(final IllegalArgumentException ex) {
         return ex.getMessage();
     }
 

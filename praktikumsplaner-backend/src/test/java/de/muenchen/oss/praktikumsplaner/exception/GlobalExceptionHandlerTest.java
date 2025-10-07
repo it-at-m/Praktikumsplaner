@@ -27,7 +27,7 @@ public class GlobalExceptionHandlerTest {
     public void testExcelImportException() {
         ExcelImportException.ExcelImportExceptionInfo exceptionInfo = new ExcelImportException.ExcelImportExceptionInfo(1, "ColumnName", "InvalidValue");
         ExcelImportException excelImportException = new ExcelImportException(List.of(exceptionInfo));
-        String response = handler.ExcelImportException(excelImportException);
+        String response = handler.excelImportException(excelImportException);
         String formattedExceptionInfos = "Zeile: " + (exceptionInfo.getRow() + 1) + " - Spalte: " + exceptionInfo.getColumName() + " - Fehler: "
                 + exceptionInfo.getValue() + "\n";
         assertEquals(formattedExceptionInfos, response);
@@ -43,7 +43,7 @@ public class GlobalExceptionHandlerTest {
     @Test
     public void testIllegalArgumentException() {
         IllegalArgumentException ex = new IllegalArgumentException("Fehlermeldung");
-        String response = handler.IllegalArgumentException(ex);
+        String response = handler.illegalArgumentException(ex);
         assertEquals("Fehlermeldung", response);
     }
 

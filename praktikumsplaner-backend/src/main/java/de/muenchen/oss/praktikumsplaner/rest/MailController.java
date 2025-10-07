@@ -23,7 +23,7 @@ public class MailController {
 
     private final MailService mailService;
 
-    private final String SUCCESSFUL_ASSIGNMENT = "successful";
+    private final static String SUCCESSFUL_ASSIGNMENT = "successful";
 
     @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping("/send")

@@ -44,7 +44,7 @@ public class ExcelImportService {
     private static final int VORLESUNGSTAGE_COLUM = 4;
     private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
 
-    private static final Logger logger = LoggerFactory.getLogger(ExcelImportService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelImportService.class);
 
     public List<CreateNwkDto> excelToNwkDtoList(final String base64String) throws IOException {
         try (InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
@@ -66,7 +66,7 @@ public class ExcelImportService {
                 importExceptionInfoList.addAll(ex.getExceptionInfos());
             }
             if (createNwkDto == null || isCreateNwkDtoEmpty(createNwkDto)) {
-                logger.error("NWK ist leer.");
+                LOGGER.error("NWK ist leer.");
                 continue;
             }
             validator.validate(createNwkDto).forEach(violation -> {
@@ -87,12 +87,12 @@ public class ExcelImportService {
             });
 
             createNwkDtos.add(createNwkDto);
-            logger.error("NWK wurde geaddet.");
+            LOGGER.error("NWK wurde geaddet.");
         }
-        logger.error(importExceptionInfoList.toString());
+        LOGGER.error(importExceptionInfoList.toString());
         if (!importExceptionInfoList.isEmpty())
             throw new ExcelImportException(importExceptionInfoList);
-        logger.error("NWKS: " + createNwkDtos.toString());
+        LOGGER.error("NWKS: " + createNwkDtos.toString());
         return createNwkDtos;
     }
 
@@ -112,21 +112,21 @@ public class ExcelImportService {
             case VORNAME_COLUM -> createNwkDtoBuilder.vorname(cellValue);
             case STUDIENGANG_COLUM -> {
                 try {
-                    logger.error("Column Value: " + cellValue);
+                    LOGGER.error("Column Value: " + cellValue);
                     if (isBlank(cellValue)) {
-                        logger.error("leere Zelle.");
+                        LOGGER.error("leere Zelle.");
                         createNwkDtoBuilder.studiengang(null);
                         createNwkDtoBuilder.ausbildungsrichtung(null);
                     } else {
                         createNwkDtoBuilder.studiengang(Studiengang.valueOf(cellValue));
                         createNwkDtoBuilder.ausbildungsrichtung(null);
-                        logger.error("Studiengang: " + cellValue);
+                        LOGGER.error("Studiengang: " + cellValue);
                     }
                 } catch (IllegalArgumentException ex) {
                     try {
                         createNwkDtoBuilder.ausbildungsrichtung(Ausbildungsrichtung.valueOf(cellValue));
                         createNwkDtoBuilder.studiengang(null);
-                        logger.error("Ausbildungsrichtung: " + cellValue);
+                        LOGGER.error("Ausbildungsrichtung: " + cellValue);
                     } catch (IllegalArgumentException ex2) {
                         throw new ExcelImportException(
                                 List.of(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "studiengang", ex.getMessage()),
@@ -147,7 +147,7 @@ public class ExcelImportService {
             }
             }
         }
-        logger.error("NWK wird gebuildet.");
+        LOGGER.error("NWK wird gebuildet.");
         return createNwkDtoBuilder.build();
     }
 

@@ -29,6 +29,8 @@ public class StudiengangOrAusbildungsrichtungValidator implements ConstraintVali
             final Studiengang studiengang = (Studiengang) studiengangGetter.invoke(obj);
 
             return (studiengang == null) != (ausbildungsrichtung == null);
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             return false;
         }

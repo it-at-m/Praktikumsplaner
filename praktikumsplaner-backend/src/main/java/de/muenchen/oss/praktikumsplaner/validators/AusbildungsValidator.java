@@ -28,6 +28,8 @@ public class AusbildungsValidator implements ConstraintValidator<AusbildungsAnno
 
             return ausbildungsrichtung == Ausbildungsrichtung.FISI;
 
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             return false;
         }

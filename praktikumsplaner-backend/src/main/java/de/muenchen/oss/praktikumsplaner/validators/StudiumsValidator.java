@@ -27,7 +27,8 @@ public class StudiumsValidator implements ConstraintValidator<StudiumsAnnotation
             final Studiengang studiengang = (Studiengang) studiengangGetter.invoke(object);
 
             return studiengang == Studiengang.BSC || studiengang == Studiengang.VI || studiengang == Studiengang.BWI;
-
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             return false;
         }

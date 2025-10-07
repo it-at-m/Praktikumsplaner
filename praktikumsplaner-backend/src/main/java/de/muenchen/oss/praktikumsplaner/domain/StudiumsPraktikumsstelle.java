@@ -28,15 +28,12 @@ import java.util.Set;
 @StudiumsAnnotation(studiengangGetMethod = "getStudiengang", message = "Keine korrekte Studiengang")
 public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
 
-    @NotNull
-    private String programmierkenntnisse;
+    @NotNull private String programmierkenntnisse;
 
-    @NotNull
-    @Convert(converter = StudiensemesterConverter.class)
+    @NotNull @Convert(converter = StudiensemesterConverter.class)
     private Set<Studiensemester> studiensemester;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
+    @NotNull @Enumerated(EnumType.STRING)
     private Studiengang studiengang;
 
 }

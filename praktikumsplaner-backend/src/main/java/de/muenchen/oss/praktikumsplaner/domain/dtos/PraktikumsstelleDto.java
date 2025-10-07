@@ -8,24 +8,17 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 public interface PraktikumsstelleDto {
-    @NotNull
-    UUID id();
+    @NotNull UUID id();
 
-    @NotNull
-    String dienststelle();
+    @NotNull String dienststelle();
 
-    @NotNull
-    String oertlicheAusbilder();
+    @NotNull String oertlicheAusbilder();
 
-    @Email
-    @NotNull
-    String email();
+    @Email @NotNull String email();
 
-    @NotNull
-    String taetigkeiten();
+    @NotNull String taetigkeiten();
 
-    @NotNull
-    Dringlichkeit dringlichkeit();
+    @NotNull Dringlichkeit dringlichkeit();
 
     boolean planstelleVorhanden();
 
