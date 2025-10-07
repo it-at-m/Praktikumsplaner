@@ -237,14 +237,15 @@ public class PraktikumsstellenService {
                         Collectors.toList()));
     }
 
-    private TreeMap<String, List<PraktikumsstelleDto>> filterPraktikumsstellenWhenAusbilder(TreeMap<String, List<PraktikumsstelleDto>> stellen){
+    private TreeMap<String, List<PraktikumsstelleDto>> filterPraktikumsstellenWhenAusbilder(TreeMap<String, List<PraktikumsstelleDto>> stellen) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         var isAusbilder = authentication.getAuthorities()
                 .stream()
-                .anyMatch(authority -> "ROLE_AUSBILDER".equals(authority.getAuthority()));;
+                .anyMatch(authority -> "ROLE_AUSBILDER".equals(authority.getAuthority()));
+        ;
 
-        if(isAusbilder){
+        if (isAusbilder) {
             String email;
             if (authentication instanceof JwtAuthenticationToken jwtAuth) {
                 email = jwtAuth.getToken().getClaimAsString("email");
@@ -257,15 +258,13 @@ public class PraktikumsstellenService {
                             entry.getKey(),
                             entry.getValue().stream()
                                     .filter(dto -> email.equals(dto.email()))
-                                    .collect(Collectors.toList())
-                    ))
+                                    .collect(Collectors.toList())))
                     .filter(entry -> !entry.getValue().isEmpty()) // Remove entries with empty lists
                     .collect(Collectors.toMap(
                             Map.Entry::getKey,
                             Map.Entry::getValue,
                             (a, b) -> b,
-                            TreeMap::new
-                    ));
+                            TreeMap::new));
 
         } else {
             return stellen;

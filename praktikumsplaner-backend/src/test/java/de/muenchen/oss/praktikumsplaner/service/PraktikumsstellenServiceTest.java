@@ -306,7 +306,6 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-
         TreeMap<String, List<PraktikumsstelleDto>> result = service.getAllInCurrentMeldezeitraumGroupedByDienststelle();
 
         assertNotNull(result);
@@ -362,7 +361,6 @@ public class PraktikumsstellenServiceTest {
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((AusbildungsPraktikumsstelle) invocation.getArguments()[0]));
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
-
 
         TreeMap<String, List<PraktikumsstelleDto>> result = service.getAllInCurrentMeldezeitraumGroupedByDienststelle();
 
