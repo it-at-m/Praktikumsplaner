@@ -1,3 +1,5 @@
-FROM registry.access.redhat.com/ubi8/openjdk-17:latest@sha256:272abfaba6da62ef5ff19a60348b3e2d3a6b3985bfb3dd94e2fdc34fa236cafa
+# For documentation see https://jboss-container-images.github.io/openjdk/
+FROM registry.access.redhat.com/ubi9/openjdk-21-runtime:1.23-6.1758133907@sha256:26acabfda6160ef348ceebba38e6616c43bf98a18800bf6afc20913556389c06
 
-COPY target/*.jar /deployments/spring-boot-application.jar
+# Copy runnable jar to deployments
+COPY target/*.jar /deployments/application.jar
