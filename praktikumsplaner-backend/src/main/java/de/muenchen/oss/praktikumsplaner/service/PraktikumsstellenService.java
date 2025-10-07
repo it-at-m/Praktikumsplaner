@@ -261,7 +261,7 @@ public class PraktikumsstellenService {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing email claim in JWT token");
                 }
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing JWT Token");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Expected JWT authentication");
             }
 
             return stellen.entrySet().stream()
