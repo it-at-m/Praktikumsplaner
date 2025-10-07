@@ -244,11 +244,14 @@ public class PraktikumsstellenService {
 
     private TreeMap<String, List<PraktikumsstelleDto>> filterPraktikumsstellenWhenAusbilder(TreeMap<String, List<PraktikumsstelleDto>> stellen) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        
+        if (authentication == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No authentication found");
+        }
 
         var isAusbilder = authentication.getAuthorities()
                 .stream()
                 .anyMatch(authority -> "ROLE_AUSBILDER".equals(authority.getAuthority()));
-        ;
 
         if (isAusbilder) {
             String email;
