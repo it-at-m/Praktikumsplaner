@@ -52,6 +52,10 @@ info.application.version: @project.version@
 app:
   db:
     postgres:
-      url:
-      username:
-      password:
+      url: 
+      username: 
+      password: 
+
+logging:
+  level:
+    de.muenchen.oss.praktikumsplaner.configuration.nfcconverter: info
