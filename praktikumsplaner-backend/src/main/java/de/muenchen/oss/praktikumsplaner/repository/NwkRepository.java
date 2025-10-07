@@ -23,5 +23,5 @@ public interface NwkRepository extends CrudRepository<Nwk, UUID> {
                 "ap.assignedNwk IS NOT null) AND n.id NOT IN " +
                 "(SELECT sp.assignedNwk.id FROM StudiumsPraktikumsstelle sp WHERE sp.meldezeitraumID=:meldezeitraumId AND  sp.assignedNwk IS NOT null) AND n.active = true order by n.nachname"
     )
-    List<Nwk> findAllUnassignedInSpecificMeldzeitraum(@Param("meldezeitraumId") final UUID meldezeitraumId);
+    List<Nwk> findAllUnassignedInSpecificMeldzeitraum(@Param("meldezeitraumId") UUID meldezeitraumId);
 }

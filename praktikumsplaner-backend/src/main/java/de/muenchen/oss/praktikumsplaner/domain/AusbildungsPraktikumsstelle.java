@@ -31,11 +31,9 @@ public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
     private String programmierkenntnisse;
 
-    @NotNull
-    @Convert(converter = AusbildungsjahrConverter.class)
+    @NotNull @Convert(converter = AusbildungsjahrConverter.class)
     private Set<Ausbildungsjahr> ausbildungsjahr;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
+    @NotNull @Enumerated(EnumType.STRING)
     private Ausbildungsrichtung ausbildungsrichtung;
 }

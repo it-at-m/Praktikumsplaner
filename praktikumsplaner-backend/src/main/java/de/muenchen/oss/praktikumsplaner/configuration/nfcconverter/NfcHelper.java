@@ -4,6 +4,8 @@
  */
 package de.muenchen.oss.praktikumsplaner.configuration.nfcconverter;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressMatchType;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import java.text.Normalizer;
@@ -19,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
 
 /**
- * Hilfsklasse für das NFC-Normalisieren
+ * Utility class for NFC normalization
  *
  * @see Normalizer
  */
@@ -28,10 +30,10 @@ import org.apache.commons.collections4.map.CaseInsensitiveMap;
 public class NfcHelper {
 
     /**
-     * Konvertieren eines String in die kanonische Unicode-Normalform (NFC)
+     * Converting a string to the canonical Unicode normal form (NFC)
      *
-     * @param in Eingabe-String
-     * @return Normalisierter String.
+     * @param in Input string
+     * @return Normalized string
      * @see Normalizer#normalize(CharSequence, Normalizer.Form)
      */
     public static String nfcConverter(final String in) {
@@ -49,10 +51,10 @@ public class NfcHelper {
     }
 
     /**
-     * Konvertieren eines {@link StringBuffer}-Inhalts in die kanonische Unicode-Normalform (NFC)
+     * Converting {@link StringBuffer} content to canonical Unicode normal form (NFC)
      *
-     * @param in Eingabe
-     * @return Normalisierter Inhalt.
+     * @param in Input buffer
+     * @return Normalized buffer
      * @see #nfcConverter(String)
      * @see Normalizer#normalize(CharSequence, Normalizer.Form)
      */
@@ -61,29 +63,29 @@ public class NfcHelper {
     }
 
     /**
-     * Konvertieren eines Array von Strings in die kanonische Unicode-Normalform (NFC)
+     * Converting an array of strings into the canonical Unicode normal form (NFC)
      *
-     * @param original Eingabe-Array
-     * @return Array mit normalisierten Inhalt.
+     * @param original Input array
+     * @return Array with normalized strings
      * @see #nfcConverter(String)
      * @see Normalizer#normalize(CharSequence, Normalizer.Form)
      */
-    public static String[] nfcConverter(final String[] original) {
+    public static String[] nfcConverter(final String... original) {
         return Arrays.stream(original)
                 .map(NfcHelper::nfcConverter)
                 .toArray(String[]::new);
     }
 
     /**
-     * Konvertieren einer {@link Map} von Strings in die kanonische Unicode-Normalform (NFC).
+     * Converting a {@link Map} of strings into the canonical Unicode normal form (NFC).
      *
-     * @param original Eingabe-Map
-     * @return Map mit normalisierten Inhalt.
+     * @param original Input map
+     * @return Map with normalized content
      * @see #nfcConverter(String)
      * @see Normalizer#normalize(CharSequence, Normalizer.Form)
      */
     public static Map<String, String[]> nfcConverter(final Map<String, String[]> original) {
-        final HashMap<String, String[]> nfcConverted = new HashMap<>(original.size());
+        final Map<String, String[]> nfcConverted = new HashMap<>(original.size());
         original.forEach((nfdKey, nfdValueArray) -> nfcConverted.put(
                 nfcConverter(nfdKey),
                 nfcConverter(nfdValueArray)));
@@ -91,34 +93,42 @@ public class NfcHelper {
     }
 
     /**
-     * Konvertieren eines {@link Cookie}s in die kanonische Unicode-Normalform (NFC).
+     * Converting a {@link Cookie} to the canonical Unicode normal form (NFC).
      *
-     * @param original Cookie
-     * @return Cookie mit normalisierten Inhalt.
+     * @param original Input cookie
+     * @return Cookie with normalized content
      * @see #nfcConverter(String)
      * @see Normalizer#normalize(CharSequence, Normalizer.Form)
      */
-    public static Cookie nfcConverter(Cookie original) {
-        final Cookie nfcCookie = new Cookie(NfcHelper.nfcConverter(original.getName()), NfcHelper.nfcConverter(original.getValue()));
-        nfcCookie.setComment(NfcHelper.nfcConverter(original.getComment()));
+    @SuppressFBWarnings(
+            value = { "HTTPONLY_COOKIE", "INSECURE_COOKIE" },
+            justification = "conversion only alters string based types, other attributes are copied from the original cookie",
+            matchType = SuppressMatchType.EXACT
+    )
+    public static Cookie nfcConverter(final Cookie original) {
+        final Cookie nfcCookie = new Cookie(nfcConverter(original.getName()), nfcConverter(original.getValue()));
+        nfcCookie.setHttpOnly(original.isHttpOnly());
+        nfcCookie.setSecure(original.getSecure());
+        nfcCookie.setMaxAge(original.getMaxAge());
+        nfcCookie.getAttributes().forEach((key, value) -> nfcCookie.setAttribute(nfcConverter(key), nfcConverter(value)));
         if (original.getDomain() != null) {
-            nfcCookie.setDomain(NfcHelper.nfcConverter(original.getDomain()));
+            nfcCookie.setDomain(nfcConverter(original.getDomain()));
         }
-        nfcCookie.setPath(NfcHelper.nfcConverter(original.getPath()));
+        nfcCookie.setPath(nfcConverter(original.getPath()));
         return nfcCookie;
     }
 
     /**
-     * Konvertieren eines Arrays von {@link Cookie}s in die kanonische Unicode-Normalform (NFC).
+     * Converting an array of {@link Cookie}s to canonical Unicode normal form (NFC).
      *
-     * @param original Cookies
-     * @return Cookies mit normalisierten Inhalt.
+     * @param original Input array of cookies
+     * @return Array with normalized cookies
      * @see #nfcConverter(String)
      * @see Normalizer#normalize(CharSequence, Normalizer.Form)
      */
-    public static Cookie[] nfcConverter(final Cookie[] original) {
+    public static Cookie[] nfcConverter(final Cookie... original) {
         if (original == null) {
-            return null;
+            return new Cookie[0];
         }
         return Arrays.stream(original)
                 .map(NfcHelper::nfcConverter)
@@ -126,19 +136,18 @@ public class NfcHelper {
     }
 
     /**
-     * Konvertieren der Header eines {@link HttpServletRequest} von Strings in die kanonische
-     * Unicode-Normalform (NFC).
+     * Converting the headers of a {@link HttpServletRequest} from strings to the canonical Unicode
+     * normal form (NFC).
      *
-     * @param originalRequest Der {@link HttpServletRequest} zur Extraktion und Konvertierung der
-     *            Header.
-     * @return Map mit normalisierten Inhalt.
+     * @param originalRequest The {@link HttpServletRequest} for extracting and converting the headers.
+     * @return Map with normalized content.
      * @see #nfcConverter(String)
      * @see Normalizer#normalize(CharSequence, Normalizer.Form)
      */
     public static Map<String, List<String>> nfcConverterForHeadersFromOriginalRequest(final HttpServletRequest originalRequest) {
         final Map<String, List<String>> converted = new CaseInsensitiveMap<>();
         Collections.list(originalRequest.getHeaderNames()).forEach(nfdHeaderName -> {
-            final String nfcHeaderName = NfcHelper.nfcConverter(nfdHeaderName);
+            final String nfcHeaderName = nfcConverter(nfdHeaderName);
             final List<String> nfcHeaderEntries = Collections.list(originalRequest.getHeaders(nfdHeaderName)).stream()
                     .map(NfcHelper::nfcConverter)
                     .collect(Collectors.toList());

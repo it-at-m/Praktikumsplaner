@@ -22,12 +22,12 @@ public class NwkService {
     private final ExcelImportService excelImportService;
     private final MeldezeitraumService meldezeitraumService;
 
-    private static final Logger logger = LoggerFactory.getLogger(NwkService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NwkService.class);
 
     public NwkDto saveNwk(final CreateNwkDto createNwkDto) {
-        logger.error("saveNwk: " + createNwkDto);
+        LOGGER.error("saveNwk: " + createNwkDto);
         Nwk nwk = nwkMapper.toEntity(createNwkDto, true);
-        logger.error("saveNwkEnitity: " + nwk);
+        LOGGER.error("saveNwkEnitity: " + nwk);
         return nwkMapper.toDto(nwkRepository.save(nwkMapper.toEntity(createNwkDto, true)));
     }
 

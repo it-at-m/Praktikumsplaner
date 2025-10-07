@@ -1,14 +1,13 @@
 package de.muenchen.oss.praktikumsplaner.validators;
 
-import de.muenchen.oss.praktikumsplaner.annotations.StudiumsAnnotation;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.EnumSet;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import de.muenchen.oss.praktikumsplaner.annotations.StudiumsAnnotation;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import java.util.EnumSet;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class StudiumsValidatorTest {
 

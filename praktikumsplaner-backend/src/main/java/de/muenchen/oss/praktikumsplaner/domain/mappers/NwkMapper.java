@@ -8,12 +8,12 @@ import org.mapstruct.Mapping;
 
 @Mapper
 public interface NwkMapper {
-    NwkDto toDto(final Nwk nwk);
+    NwkDto toDto(Nwk nwk);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "isActive", target = "active")
     @Mapping(source = "createNwkDto.ausbildungsrichtung", target = "ausbildungsrichtung")
-    Nwk toEntity(final CreateNwkDto createNwkDto, final boolean isActive);
+    Nwk toEntity(CreateNwkDto createNwkDto, boolean isActive);
 
-    Nwk toEntity(final NwkDto nwkDto);
+    Nwk toEntity(NwkDto nwkDto);
 }

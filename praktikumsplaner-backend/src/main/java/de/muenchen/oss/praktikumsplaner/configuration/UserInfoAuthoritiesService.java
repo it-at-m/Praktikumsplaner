@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -88,7 +87,8 @@ public class UserInfoAuthoritiesService {
                     Map.class).getBody();
 
             log.debug("Response from user-info Endpoint: {}", map);
-            if (map.containsKey(CLAIM_AUTHORITIES)) {
+
+            if (map != null && map.containsKey(CLAIM_AUTHORITIES)) {
                 authorities = asAuthorities(map.get(CLAIM_AUTHORITIES));
             }
             log.debug("Resolved Authorities (from /userinfo Endpoint): {}", authorities);
@@ -104,8 +104,7 @@ public class UserInfoAuthoritiesService {
 
     private static List<SimpleGrantedAuthority> asAuthorities(Object object) {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        if (object instanceof Collection) {
-            Collection<?> collection = (Collection<?>) object;
+        if (object instanceof Collection<?> collection) {
             object = collection.toArray(new Object[0]);
         }
         if (ObjectUtils.isArray(object)) {
@@ -113,7 +112,7 @@ public class UserInfoAuthoritiesService {
                     Stream.of(((Object[]) object))
                             .map(Object::toString)
                             .map(SimpleGrantedAuthority::new)
-                            .collect(Collectors.toList()));
+                            .toList());
         }
         return authorities;
     }

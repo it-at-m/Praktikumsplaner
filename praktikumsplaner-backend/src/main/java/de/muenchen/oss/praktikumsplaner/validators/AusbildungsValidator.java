@@ -22,11 +22,22 @@ public class AusbildungsValidator implements ConstraintValidator<AusbildungsAnno
                 return true;
             }
 
-            final Method ausbildungsrichtungGetter = object.getClass().getMethod(ausbildungsrichtungField);
-            final Ausbildungsrichtung ausbildungsrichtung = (Ausbildungsrichtung) ausbildungsrichtungGetter.invoke(object);
+            final Method getter = object.getClass().getMethod(ausbildungsrichtungField);
+            final Object value = getter.invoke(object);
 
-            return ausbildungsrichtung == Ausbildungsrichtung.FISI;
+            // Null is valid (optional: handle differently if required)
+            if (value == null) {
+                return true;
+            }
 
+            // Explicit type check before casting
+            if (value instanceof Ausbildungsrichtung) {
+                return value == Ausbildungsrichtung.FISI;
+            } else {
+                return false; // or throw, if this is unexpected logic-wise
+            }
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             return false;
         }

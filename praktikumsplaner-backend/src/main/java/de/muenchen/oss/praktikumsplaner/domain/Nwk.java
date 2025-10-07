@@ -33,13 +33,9 @@ import lombok.ToString;
  */
 public class Nwk extends BaseEntity {
 
-    @NotNull(message = "Der Vorname ist erforderlich")
-    @Size(min = 2, max = 255, message = "Der Vorname darf nur zwischen {min} und {max} Zeichen lang sein")
-    private String vorname;
+    @NotNull(message = "Der Vorname ist erforderlich") @Size(min = 2, max = 255, message = "Der Vorname darf nur zwischen {min} und {max} Zeichen lang sein") private String vorname;
 
-    @NotNull(message = "Der Nachname ist erforderlich")
-    @Size(min = 2, max = 255, message = "Der Nachname darf nur zwischen {min} und {max} Zeichen lang sein")
-    private String nachname;
+    @NotNull(message = "Der Nachname ist erforderlich") @Size(min = 2, max = 255, message = "Der Nachname darf nur zwischen {min} und {max} Zeichen lang sein") private String nachname;
 
     @Enumerated(EnumType.STRING)
     private Studiengang studiengang;
@@ -47,9 +43,7 @@ public class Nwk extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Ausbildungsrichtung ausbildungsrichtung;
 
-    @NotNull(message = "Der Jahrgang ist erforderlich")
-    @Pattern(regexp = "\\d\\d/\\d\\d")
-    private String jahrgang;
+    @NotNull(message = "Der Jahrgang ist erforderlich") @Pattern(regexp = "\\d\\d/\\d\\d") private String jahrgang;
 
     @Convert(converter = DayOfWeekSetConverter.class)
     private Set<DayOfWeek> vorlesungstage;

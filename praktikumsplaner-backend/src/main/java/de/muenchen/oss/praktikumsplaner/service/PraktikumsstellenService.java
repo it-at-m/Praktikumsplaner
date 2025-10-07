@@ -20,6 +20,7 @@ import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepo
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -29,7 +30,12 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 @Service
@@ -128,12 +134,12 @@ public class PraktikumsstellenService {
 
     public TreeMap<String, List<PraktikumsstelleDto>> getAllInCurrentMeldezeitraumGroupedByDienststelle() {
         final UUID currentMeldezeitraumID = meldezeitraumService.getCurrentMeldezeitraum().id();
-        return getPraktikumsstellenGroupedByDienststelle(currentMeldezeitraumID);
+        return filterPraktikumsstellenWhenAusbilder(getPraktikumsstellenGroupedByDienststelle(currentMeldezeitraumID));
     }
 
     public TreeMap<String, List<PraktikumsstelleDto>> getRecentPraktikumsstellenGroupedByDienststelle() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
-        return getPraktikumsstellenGroupedByDienststelle(lastMeldezeitraumID);
+        return filterPraktikumsstellenWhenAusbilder(getPraktikumsstellenGroupedByDienststelle(lastMeldezeitraumID));
     }
 
     public void deleteStudiumsPraktikumsstelle(UUID praktikumsstellenId) {
@@ -233,6 +239,46 @@ public class PraktikumsstellenService {
                         praktikumsstelle -> getHauptabteilung(praktikumsstelle.dienststelle()),
                         TreeMap::new,
                         Collectors.toList()));
+    }
+
+    private TreeMap<String, List<PraktikumsstelleDto>> filterPraktikumsstellenWhenAusbilder(TreeMap<String, List<PraktikumsstelleDto>> stellen) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No authentication found");
+        }
+
+        var isAusbilder = authentication.getAuthorities()
+                .stream()
+                .anyMatch(authority -> "ROLE_AUSBILDER".equals(authority.getAuthority()));
+
+        if (isAusbilder) {
+            String email;
+            if (authentication instanceof JwtAuthenticationToken jwtAuth) {
+                email = jwtAuth.getToken().getClaimAsString("email");
+                if (email == null || email.isEmpty()) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing email claim in JWT token");
+                }
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Expected JWT authentication");
+            }
+
+            return stellen.entrySet().stream()
+                    .map(entry -> Map.entry(
+                            entry.getKey(),
+                            entry.getValue().stream()
+                                    .filter(dto -> email.equals(dto.email()))
+                                    .collect(Collectors.toList())))
+                    .filter(entry -> !entry.getValue().isEmpty()) // Remove entries with empty lists
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            Map.Entry::getValue,
+                            (a, b) -> b,
+                            TreeMap::new));
+
+        } else {
+            return stellen;
+        }
     }
 
     private String getHauptabteilung(final String dienststelle) {

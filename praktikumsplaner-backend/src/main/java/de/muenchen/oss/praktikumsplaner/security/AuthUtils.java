@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
  * @author michael.prankl
  *
  */
-public class AuthUtils {
+public final class AuthUtils {
 
     public static final String NAME_UNAUTHENTICATED_USER = "unauthenticated";
 

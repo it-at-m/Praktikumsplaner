@@ -13,15 +13,15 @@ import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
@@ -33,15 +33,19 @@ import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
+import de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -50,6 +54,10 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 @ExtendWith(MockitoExtension.class)
 public class PraktikumsstellenServiceTest {
@@ -65,7 +73,15 @@ public class PraktikumsstellenServiceTest {
     private MeldezeitraumService meldezeitraumService;
     @Mock
     private NwkRepository nwkRepository;
+
     private final ServiceTestHelper helper = new ServiceTestHelper();
+
+    @BeforeEach
+    public void setUp() {
+        var authentication = getJwtAuthenticationToken(AuthoritiesEnum.AUSBILDUNGSLEITUNG);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 
     @Test
     public void testCreateStudiumsPraktikumsstelle() {
@@ -205,6 +221,56 @@ public class PraktikumsstellenServiceTest {
     }
 
     @Test
+    public void testGetAllPraktiumsstellenInMostRecentPassedMeldezeitraumForAusbilder() {
+        var authentication = getJwtAuthenticationToken(AuthoritiesEnum.AUSBILDER);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = helper.createAusbildungsPraktikumsstelleEntity("KM81", "Max Musterfrau", "max@musterfrau.de",
+                "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
+                Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, false, meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 = helper.createAusbildungsPraktikumsstelleEntity("KM22", "Erika Mustermann",
+                "test@test.de",
+                "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.RIT,
+                Set.of(Ausbildungsjahr.JAHR3), Ausbildungsrichtung.FISI, true, meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+        List<AusbildungsPraktikumsstelle> ausbildungsList = Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
+
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle1 = helper.createStudiumsPraktikumsstelleEntity("KM83", "Test Tester", "test@test.de",
+                "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM,
+                Set.of(Studiensemester.SEMESTER5), Studiengang.BSC, "true", meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle2 = helper.createStudiumsPraktikumsstelleEntity("InnoLab", "Test Testerin", "test@tester.de",
+                "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM,
+                Set.of(Studiensemester.SEMESTER5), Studiengang.BWI, "false", meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle3 = helper.createStudiumsPraktikumsstelleEntity("GL13", "John Smith", "John@smith.com",
+                "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT,
+                Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, "true", meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+        List<StudiumsPraktikumsstelle> studiumsList = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3);
+
+        when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDto);
+
+        when(ausbildungsRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(ausbildungsList);
+        when(studiumsRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(studiumsList);
+
+        when(mapper.toDto(any(AusbildungsPraktikumsstelle.class)))
+                .thenAnswer(invocation -> helper.createPraktikumsstelleDto((AusbildungsPraktikumsstelle) invocation.getArguments()[0]));
+        when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
+                .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
+
+        TreeMap<String, List<PraktikumsstelleDto>> result = service.getRecentPraktikumsstellenGroupedByDienststelle();
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+
+        assertEquals(1, result.get("KM2").size());
+        assertEquals(1, result.get("KM8").size());
+    }
+
+    @Test
     public void testGetAllPraktiumsstellenInCurrentMeldezeitraum() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().plusDays(1), "letzte woche bis morgen");
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = helper.createAusbildungsPraktikumsstelleEntity("KM81", "Max Musterfrau", "max@musterfrau.de",
@@ -255,6 +321,56 @@ public class PraktikumsstellenServiceTest {
         assertEquals(1, result.get("KM2").size());
         assertEquals(1, result.get("InnoLab").size());
         assertEquals(1, result.get("GL1").size());
+    }
+
+    @Test
+    public void testGetAllPraktiumsstellenInCurrentMeldezeitraumForAusbilder() {
+        var authentication = getJwtAuthenticationToken(AuthoritiesEnum.AUSBILDER);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().plusDays(1), "letzte woche bis morgen");
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle1 = helper.createAusbildungsPraktikumsstelleEntity("KM81", "Max Musterfrau", "max@musterfrau.de",
+                "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
+                Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, false, meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+        AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle2 = helper.createAusbildungsPraktikumsstelleEntity("KM22", "Erika Mustermann",
+                "test@test.de",
+                "Einarbeitung für Übernahme", Dringlichkeit.DRINGEND, Referat.RIT,
+                Set.of(Ausbildungsjahr.JAHR3), Ausbildungsrichtung.FISI, true, meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+        List<AusbildungsPraktikumsstelle> ausbildungsList = Arrays.asList(ausbildungsPraktikumsstelle1, ausbildungsPraktikumsstelle2);
+
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle1 = helper.createStudiumsPraktikumsstelleEntity("KM83", "Test Tester", "test@test.de",
+                "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM,
+                Set.of(Studiensemester.SEMESTER5), Studiengang.BSC, "true", meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle2 = helper.createStudiumsPraktikumsstelleEntity("InnoLab", "Test Testerin", "test@testerin.de",
+                "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM,
+                Set.of(Studiensemester.SEMESTER5), Studiengang.BWI, "false", meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+        StudiumsPraktikumsstelle studiumsPraktikumsstelle3 = helper.createStudiumsPraktikumsstelleEntity("GL13", "John Smith", "John@smith.com",
+                "Planung von Events", Dringlichkeit.ZWINGEND, Referat.RIT,
+                Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, "true", meldezeitraumDto.id(),
+                helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
+        List<StudiumsPraktikumsstelle> studiumsList = Arrays.asList(studiumsPraktikumsstelle1, studiumsPraktikumsstelle2, studiumsPraktikumsstelle3);
+
+        when(meldezeitraumService.getCurrentMeldezeitraum()).thenReturn(meldezeitraumDto);
+
+        when(ausbildungsRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(ausbildungsList);
+        when(studiumsRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(studiumsList);
+
+        when(mapper.toDto(any(AusbildungsPraktikumsstelle.class)))
+                .thenAnswer(invocation -> helper.createPraktikumsstelleDto((AusbildungsPraktikumsstelle) invocation.getArguments()[0]));
+        when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
+                .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
+
+        TreeMap<String, List<PraktikumsstelleDto>> result = service.getAllInCurrentMeldezeitraumGroupedByDienststelle();
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+
+        assertEquals(1, result.get("KM8").size());
+        assertEquals(1, result.get("KM2").size());
     }
 
     @Test
@@ -724,5 +840,15 @@ public class PraktikumsstellenServiceTest {
             service.updateStudiumsPraktikumsstelle(studiumsPraktikumsstelle.getId(), updateStudiumsPraktikumsstelleWithMeldezeitraumDto);
         });
 
+    }
+
+    private static JwtAuthenticationToken getJwtAuthenticationToken(AuthoritiesEnum role) {
+        var jwt = new Jwt(
+                "token",
+                Instant.now(),
+                Instant.now().plusSeconds(1000),
+                Collections.singletonMap("typ", "JWT"),
+                Collections.singletonMap("email", "test@test.de"));
+        return new JwtAuthenticationToken(jwt, List.of(new SimpleGrantedAuthority("ROLE_" + role.name())));
     }
 }

@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Converter
 public class StudiensemesterConverter implements AttributeConverter<Set<Studiensemester>, String> {
-    private static final String comma = ",";
+    private static final String COMMA = ",";
 
     @Override
     public String convertToDatabaseColumn(final Set<Studiensemester> attribute) {
@@ -16,7 +16,7 @@ public class StudiensemesterConverter implements AttributeConverter<Set<Studiens
         }
         return attribute.stream()
                 .map(Studiensemester::name)
-                .collect(java.util.stream.Collectors.joining(comma));
+                .collect(java.util.stream.Collectors.joining(COMMA));
     }
 
     @Override
@@ -24,7 +24,7 @@ public class StudiensemesterConverter implements AttributeConverter<Set<Studiens
         if (dbData == null || dbData.trim().isEmpty()) {
             return java.util.Collections.emptySet();
         }
-        return java.util.Arrays.stream(dbData.split(comma))
+        return java.util.Arrays.stream(dbData.split(COMMA))
                 .map(String::trim)
                 .map(Studiensemester::valueOf)
                 .collect(java.util.stream.Collectors.toSet());

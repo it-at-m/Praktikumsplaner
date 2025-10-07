@@ -4,6 +4,8 @@
  */
 package de.muenchen.oss.praktikumsplaner.configuration.nfcconverter;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressMatchType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.Cookie;
@@ -14,18 +16,18 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.io.IOUtils;
 
 /**
- * Wrapper für HttpServletRequest, der NFC-Konvertierung durchführt.
+ * Wrapper for HttpServletRequest that performs NFC conversion.
  *
  * @see java.text.Normalizer
  */
@@ -38,15 +40,8 @@ public class NfcRequest extends HttpServletRequestWrapper implements HttpServlet
 
     private Map<String, List<String>> headers;
 
-    @SuppressWarnings("unused")
-    private Set<String> contentTypes;
-
-    public NfcRequest(final HttpServletRequest request, final Set<String> contentTypes) {
+    public NfcRequest(final HttpServletRequest request) {
         super(request);
-        this.params = null;
-        this.cookies = null;
-        this.headers = null;
-        this.contentTypes = contentTypes;
     }
 
     private void convert() {
@@ -61,14 +56,14 @@ public class NfcRequest extends HttpServletRequestWrapper implements HttpServlet
     @Override
     public Cookie[] getCookies() {
         convert();
-        return this.cookies;
+        return Arrays.copyOf(this.cookies, this.cookies.length);
     }
 
     @Override
     public String getHeader(final String name) {
         convert();
         final List<String> values = headers.get(NfcHelper.nfcConverter(name));
-        return (values == null) ? null : values.get(0);
+        return (values == null) ? null : values.getFirst();
     }
 
     @Override
@@ -138,7 +133,7 @@ public class NfcRequest extends HttpServletRequestWrapper implements HttpServlet
      * Only the username is converted to nfc. Password won't be touched!
      */
     @Override
-    public void login(String username, String password) throws ServletException {
+    public void login(final String username, final String password) throws ServletException {
         getOriginalRequest().login(NfcHelper.nfcConverter(username), password);
     }
 
@@ -152,7 +147,7 @@ public class NfcRequest extends HttpServletRequestWrapper implements HttpServlet
     @Override
     public Map<String, String[]> getParameterMap() {
         convert();
-        return this.params;
+        return Map.copyOf(this.params);
     }
 
     @Override
@@ -190,13 +185,14 @@ public class NfcRequest extends HttpServletRequestWrapper implements HttpServlet
         return getOriginalRequest().getParts();
     }
 
+    @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING", matchType = SuppressMatchType.EXACT)
     @Override
     public ServletInputStream getInputStream() throws IOException {
 
         final String encoding = getOriginalRequest().getCharacterEncoding();
 
-        String content = null;
-        try (final InputStream is = getOriginalRequest().getInputStream()) {
+        final String content;
+        try (InputStream is = getOriginalRequest().getInputStream()) {
             content = new String(IOUtils.toByteArray(is), encoding);
         }
 

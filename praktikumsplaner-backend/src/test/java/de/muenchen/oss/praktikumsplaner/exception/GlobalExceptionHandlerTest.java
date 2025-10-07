@@ -1,17 +1,15 @@
 package de.muenchen.oss.praktikumsplaner.exception;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jakarta.validation.ValidationException;
+import java.io.IOException;
+import java.util.List;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GlobalExceptionHandlerTest {
 
@@ -28,7 +26,7 @@ public class GlobalExceptionHandlerTest {
     public void testExcelImportException() {
         ExcelImportException.ExcelImportExceptionInfo exceptionInfo = new ExcelImportException.ExcelImportExceptionInfo(1, "ColumnName", "InvalidValue");
         ExcelImportException excelImportException = new ExcelImportException(List.of(exceptionInfo));
-        String response = handler.ExcelImportException(excelImportException);
+        String response = handler.excelImportException(excelImportException);
         String formattedExceptionInfos = "Zeile: " + (exceptionInfo.getRow() + 1) + " - Spalte: " + exceptionInfo.getColumName() + " - Fehler: "
                 + exceptionInfo.getValue() + "\n";
         assertEquals(formattedExceptionInfos, response);
@@ -44,7 +42,7 @@ public class GlobalExceptionHandlerTest {
     @Test
     public void testIllegalArgumentException() {
         IllegalArgumentException ex = new IllegalArgumentException("Fehlermeldung");
-        String response = handler.IllegalArgumentException(ex);
+        String response = handler.illegalArgumentException(ex);
         assertEquals("Fehlermeldung", response);
     }
 

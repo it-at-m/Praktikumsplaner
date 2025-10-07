@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AusbildungsPraktikumsstellenRepository extends CrudRepository<AusbildungsPraktikumsstelle, UUID> {
-    List<AusbildungsPraktikumsstelle> findAllByMeldezeitraumID(final UUID id);
+    List<AusbildungsPraktikumsstelle> findAllByMeldezeitraumID(UUID id);
 
-    List<AusbildungsPraktikumsstelle> findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(final UUID id);
+    List<AusbildungsPraktikumsstelle> findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(UUID id);
 }
