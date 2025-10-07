@@ -69,7 +69,7 @@
                             </v-col>
                             <v-col class="d-flex align-center">
                                 <p v-if="security.isAusbilder()">
-                                    Für Sie als Auslbilder*in wurden noch keine
+                                    Für Sie als Ausbilder*in wurden noch keine
                                     Praktikumsstellen für den aktuellen Zeitraum
                                     gemeldet.
                                 </p>
@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
@@ -98,10 +98,10 @@ import PageTitle from "@/components/common/PageTitle.vue";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
-import { useSecurity } from "@/composables/security";
+import {useSecurity} from "@/composables/security";
 import router from "@/router";
 import emitter from "@/stores/eventBus";
-import { useUserStore } from "@/stores/user";
+import {useUserStore} from "@/stores/user";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const userStore = useUserStore();
