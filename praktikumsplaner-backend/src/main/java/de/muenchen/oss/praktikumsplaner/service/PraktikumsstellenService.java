@@ -239,8 +239,11 @@ public class PraktikumsstellenService {
             String email;
             if (authentication instanceof JwtAuthenticationToken jwtAuth) {
                 email = jwtAuth.getToken().getClaimAsString("email");
+                if (email == null || email.isEmpty()) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing email claim in JWT token");
+                }
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing Mail in JWT Token");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing JWT Token");
             }
 
             return stellen.entrySet().stream()
