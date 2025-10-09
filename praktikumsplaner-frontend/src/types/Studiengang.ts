@@ -24,7 +24,7 @@ export const Studiengang = [
         name: "Diplom - Verwaltungswirt*in (QE3)",
         value: "QE3",
         color: "indigo-lighten-3",
-    }
+    },
 ] as const;
 
 export function findStudiengangColorByValue(value: string): string {

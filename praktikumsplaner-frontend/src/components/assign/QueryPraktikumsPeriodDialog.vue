@@ -60,7 +60,10 @@
                                 <v-col cols="12">
                                     <v-container class="v-container-single-box">
                                         <v-col>
-                                            <h4>Öffentliches Recht - Bachelor of Laws (LL.B.)</h4>
+                                            <h4>
+                                                Öffentliches Recht - Bachelor of
+                                                Laws (LL.B.)
+                                            </h4>
                                         </v-col>
                                         <zeitraum-picker
                                             :value="llb"
@@ -71,7 +74,11 @@
                                 <v-col cols="12">
                                     <v-container class="v-container-single-box">
                                         <v-col>
-                                            <h4>Betriebswirtschaftslehre mit Schwerpunkt Public Management (Puma)</h4>
+                                            <h4>
+                                                Betriebswirtschaftslehre mit
+                                                Schwerpunkt Public Management
+                                                (Puma)
+                                            </h4>
                                         </v-col>
                                         <zeitraum-picker
                                             :value="puma"
@@ -82,7 +89,10 @@
                                 <v-col cols="12">
                                     <v-container class="v-container-single-box">
                                         <v-col>
-                                            <h4>Diplom - Verwaltungswirt*in (QE3)</h4>
+                                            <h4>
+                                                Diplom - Verwaltungswirt*in
+                                                (QE3)
+                                            </h4>
                                         </v-col>
                                         <zeitraum-picker
                                             :value="qe3"
@@ -118,7 +128,10 @@
                                 <v-col cols="12">
                                     <v-container class="v-container-single-box">
                                         <v-col>
-                                            <h4>Kauffrau und Kaufmann für Büromanagement (KfB)</h4>
+                                            <h4>
+                                                Kauffrau und Kaufmann für
+                                                Büromanagement (KfB)
+                                            </h4>
                                         </v-col>
                                         <zeitraum-picker
                                             :value="kfb"
@@ -129,7 +142,10 @@
                                 <v-col cols="12">
                                     <v-container class="v-container-single-box">
                                         <v-col>
-                                            <h4>Verwaltungsfachangestellte*r (VFAK)</h4>
+                                            <h4>
+                                                Verwaltungsfachangestellte*r
+                                                (VFAK)
+                                            </h4>
                                         </v-col>
                                         <zeitraum-picker
                                             :value="vfak"
