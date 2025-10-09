@@ -24,7 +24,7 @@ A specific color was assigned for each [Studiengang](../../../glossary.md#studen
 ### Colors of [Ausbildungsrichtung](../../../glossary.md#auszubildende)
 A specific color was assigned for each [Ausbildungsrichtung](../../../glossary.md#auszubildende):
 
-- Fachinformatiker Systemintegration (FISI): light-blue-lighten-4 | #B3E5FC
+- Fachinformatiker Systemintegration (FISI): light-blue-lighten-3 | #B3E5FC
 - Verwaltungswirt*in (QE2): teal-lighten-3 | #80CBC4
 - Kauffrau und Kaufmann für Büromanagement (KfB): lime-lighten-3 | #E6EE9C
 - Verwaltungsfachangestellte*r (VFAK): orange-lighten-3 | #FFCC80
