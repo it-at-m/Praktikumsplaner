@@ -46,7 +46,7 @@ public class AsyncMailSender {
 
         mimeMessageHelper.setTo(to);
         mimeMessageHelper.setFrom(from);
-        if(StringUtils.hasText(replyTo)) {
+        if (StringUtils.hasText(replyTo)) {
             mimeMessageHelper.setReplyTo(replyTo);
         }
         mimeMessageHelper.setSubject(subject);
