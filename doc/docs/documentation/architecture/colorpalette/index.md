@@ -19,7 +19,7 @@ A specific color was assigned for each [Studiengang](../../../glossary.md#studen
 - Verwaltungsinformatik (VI): deep-purple-lighten-4 | #D1C4E9
 - Öffentliches Recht - Bachelor of Laws (LL.B.): blue-lighten-3 | #90CAF9
 - Betriebswirtschaftslehre mit Schwerpunkt Public Management (Puma): red-lighten-3 | #EF9A9A
-- Diplom - Verwaltungswirt*in (QE3): indigo-lighten-3 | #9FA8DA
+  
 
 ### Colors of [Ausbildungsrichtung](../../../glossary.md#auszubildende)
 A specific color was assigned for each [Ausbildungsrichtung](../../../glossary.md#auszubildende):
