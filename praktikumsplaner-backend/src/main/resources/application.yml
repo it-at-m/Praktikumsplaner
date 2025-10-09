@@ -50,6 +50,8 @@ info.application.name: @project.artifactId@
 info.application.version: @project.version@
 
 app:
+  mail:
+    reply-to:
   db:
     postgres:
       url: 

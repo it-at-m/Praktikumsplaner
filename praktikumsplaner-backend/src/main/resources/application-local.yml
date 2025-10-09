@@ -29,6 +29,9 @@ spring:
     password: pp-mail-password
 
 app:
+  mail:
+    from: "bot@test.de"
+    reply-to: "testleitung@test.de"
   db:
     postgres:
       url: jdbc:postgresql://localhost:5432/praktikumsplaner

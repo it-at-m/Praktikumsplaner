@@ -2,52 +2,49 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class MailService {
 
     private final ITemplateEngine templateEngine;
-
-    private final JavaMailSender mailSender;
 
     private final PraktikumsstellenService praktikumsstellenService;
 
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    @Value("${spring.mail.username}")
-    private String from;
+    private final AsyncMailSender mailSender;
 
     /*
-     * @return List of all Praktikumsstellen where the mail could not be sent
+     * Send Mails to all Assigned Praktikumsplätze.
+     * Aggregates all failed deliveries.
      */
     public List<PraktikumsstelleDto> sendMailsToAssignedPraktikumsplaetze(final Map<String, ZeitraumDto> assignmentPeriods) {
-        List<PraktikumsstelleDto> faultyStellen = new ArrayList<>();
-        praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum().forEach(
-                stelle -> {
-                    try {
-                        sendSingleMail(stelle.email(), "Praktikumsplatz zugeteilt",
-                                buildMailBody("successfulAssignmentMail", buildMailData(stelle, assignmentPeriods)));
-                    } catch (MessagingException e) {
-                        faultyStellen.add(stelle);
-                    }
-                });
+        List<CompletableFuture<PraktikumsstelleDto>> futures = new ArrayList<>();
 
-        return faultyStellen;
+        for (PraktikumsstelleDto stelle : praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum()) {
+            String mailBody = buildMailBody("successfulAssignmentMail", buildMailData(stelle, assignmentPeriods));
+            futures.add(mailSender.sendSingleMailAsync(stelle, mailBody));
+        }
+
+        // Await completion and collect failed sendings
+        return futures.stream()
+                .map(CompletableFuture::join)
+                .filter(Objects::nonNull)
+                .toList();
     }
 
     private String buildMailBody(final String templateName, final Map<String, String> data) {
@@ -55,18 +52,6 @@ public class MailService {
         context.setVariables(Collections.unmodifiableMap(data));
 
         return templateEngine.process(templateName, context);
-    }
-
-    private void sendSingleMail(final String to, final String subject, final String body) throws MessagingException {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "utf-8");
-
-        mimeMessageHelper.setTo(to);
-        mimeMessageHelper.setFrom(from);
-        mimeMessageHelper.setSubject(subject);
-        mimeMessageHelper.setText(body, true);
-
-        mailSender.send(mimeMessage);
     }
 
     private Map<String, String> buildMailData(final PraktikumsstelleDto praktikumsstelleDto, final Map<String, ZeitraumDto> assignmentPeriods) {
