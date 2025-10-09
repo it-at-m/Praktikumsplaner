@@ -22,13 +22,23 @@ export default {
                     });
                     return [];
                 } else if (response.status === 207) {
-                    return response.json().then((praktikumsplaetze) => {
-                        useSnackbarStore().showMessage({
-                            message: "Fehler beim Versenden einiger Mails.",
-                            level: Levels.ERROR,
+                    return response
+                        .json()
+                        .then((praktikumsplaetze) => {
+                            useSnackbarStore().showMessage({
+                                message: "Fehler beim Versenden einiger Mails.",
+                                level: Levels.ERROR,
+                            });
+                            return praktikumsplaetze; // Liste der betroffenen Praktikumsplätze zurückgeben
+                        })
+                        .catch((parseError) => {
+                            useSnackbarStore().showMessage({
+                                message:
+                                    "Fehler beim Verarbeiten der Antwort vom Server.",
+                                level: Levels.ERROR,
+                            });
+                            throw parseError;
                         });
-                        return praktikumsplaetze; // Liste der betroffenen Praktikumsplätze zurückgeben
-                    });
                 } else {
                     throw Error(
                         "Ein unbekannter Fehler ist aufgetreten. Bitte an den Service Desk melden."
