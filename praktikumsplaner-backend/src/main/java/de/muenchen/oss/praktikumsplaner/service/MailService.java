@@ -36,8 +36,13 @@ public class MailService {
         List<CompletableFuture<PraktikumsstelleDto>> futures = new ArrayList<>();
 
         for (PraktikumsstelleDto stelle : praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum()) {
-            String mailBody = buildMailBody("successfulAssignmentMail", buildMailData(stelle, assignmentPeriods));
-            futures.add(mailSender.sendSingleMailAsync(stelle, mailBody));
+            try {
+                String mailBody = buildMailBody("successfulAssignmentMail", buildMailData(stelle, assignmentPeriods));
+                futures.add(mailSender.sendSingleMailAsync(stelle, mailBody));
+            } catch (Exception e) {
+                log.warn("Skipping mail for dienststelle={} due to missing period or template error", stelle.dienststelle(), e);
+                futures.add(CompletableFuture.completedFuture(stelle));
+            }
         }
 
         // Await completion and collect failed sendings

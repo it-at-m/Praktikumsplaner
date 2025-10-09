@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -19,14 +20,14 @@ public class AsyncMailSender {
 
     private final JavaMailSender mailSender;
 
-    @Value("${app.mail.from}")
+    @Value("${app.mail.from:${spring.mail.username:}}")
     private String from;
 
-    @Value("${app.mail.reply-to}")
+    @Value("${app.mail.reply-to:}")
     private String replyTo;
 
     /*
-     * Send a Mail Ansync
+     * Send a Mail Async
      */
     @Async
     public CompletableFuture<PraktikumsstelleDto> sendSingleMailAsync(final PraktikumsstelleDto stelle, final String mailBody) {
@@ -45,7 +46,9 @@ public class AsyncMailSender {
 
         mimeMessageHelper.setTo(to);
         mimeMessageHelper.setFrom(from);
-        mimeMessageHelper.setReplyTo(replyTo);
+        if(StringUtils.hasText(replyTo)) {
+            mimeMessageHelper.setReplyTo(replyTo);
+        }
         mimeMessageHelper.setSubject(subject);
         mimeMessageHelper.setText(body, true);
 

@@ -51,6 +51,7 @@ info.application.version: @project.version@
 
 app:
   mail:
+    from:
     reply-to:
   db:
     postgres:
