@@ -4,9 +4,9 @@ values
     -- starting the current year
     -- VI
     (  '00000000-0000-0000-0000-000000000001', 'James', 'Smith', 'VI',  concat(concat(to_char(current_date, 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, null),
-    (  '00000000-0000-0000-0000-000000000002', 'John', 'Smith', 'VI',  concat(concat(to_char(current_date, 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, null),
-    (  '00000000-0000-0000-0000-000000000003', 'Linda', 'Miller', 'VI',  concat(concat(to_char(current_date, 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, null),
-    (  '00000000-0000-0000-0000-000000000004', 'Dorothy', 'Wilson', 'VI',  concat(concat(to_char(current_date, 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, null),
+    (  '00000000-0000-0000-0000-000000000002', 'John', 'Smith', 'LLB',  concat(concat(to_char(current_date, 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, null),
+    (  '00000000-0000-0000-0000-000000000003', 'Linda', 'Miller', 'PUMA',  concat(concat(to_char(current_date, 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, null),
+    (  '00000000-0000-0000-0000-000000000004', 'Dorothy', 'Wilson', 'QE3',  concat(concat(to_char(current_date, 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, null),
     (  '00000000-0000-0000-0000-000000000005', 'Kyle', 'Bryant', 'VI',  concat(concat(to_char(current_date, 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,false, null),
     -- BSC
     (  '00000000-0000-0000-0001-000000000001', 'Michelle', 'Jackson', 'BSC',  concat(concat(to_char(current_date, 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, null),
@@ -64,9 +64,9 @@ values
     -- Ausbildung
     -- starting the current year
     (  '00000000-0001-0000-0000-000000000001', 'Earl', 'Perry', null,  concat(concat(to_char(dateadd(YEAR, 0, current_date), 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, 'FISI'),
-    (  '00000000-0001-0000-0000-000000000002', 'Paula', 'Butler', null,  concat(concat(to_char(dateadd(YEAR, 0, current_date), 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, 'FISI'),
-    (  '00000000-0001-0000-0000-000000000003', 'Diana', 'Barnes', null,  concat(concat(to_char(dateadd(YEAR, 0, current_date), 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, 'FISI'),
-    (  '00000000-0001-0000-0000-000000000004', 'Antonio', 'Fisher', null,  concat(concat(to_char(dateadd(YEAR, 0, current_date), 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, 'FISI'),
+    (  '00000000-0001-0000-0000-000000000002', 'Paula', 'Butler', null,  concat(concat(to_char(dateadd(YEAR, 0, current_date), 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, 'QE2'),
+    (  '00000000-0001-0000-0000-000000000003', 'Diana', 'Barnes', null,  concat(concat(to_char(dateadd(YEAR, 0, current_date), 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, 'KFB'),
+    (  '00000000-0001-0000-0000-000000000004', 'Antonio', 'Fisher', null,  concat(concat(to_char(dateadd(YEAR, 0, current_date), 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,true, 'VFAK'),
     (  '00000000-0001-0000-0000-000000000005', 'Elaine', 'Stevens', null,  concat(concat(to_char(dateadd(YEAR, 0, current_date), 'YY'), '/'), to_char(dateadd(YEAR, 3, current_date), 'YY')), null,false, 'FISI'),
 
     -- starting the year before

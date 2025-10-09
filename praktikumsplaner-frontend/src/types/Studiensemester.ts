@@ -5,6 +5,9 @@ export const Studiensemester = [
         zeitraumBSC: "Februar - Mitte März",
         zeitraumBWI: "01.09 - 28.02",
         zeitraumVI: "Februar - März",
+        zeitraumLLB: "01.09 - 28.02",
+        zeitraumPUMA: "01.09 - 28.02",
+        zeitraumQE3: "Nicht in ausgewähltem Semester verfügbar",
     },
     {
         name: "2. Semester",
@@ -12,6 +15,9 @@ export const Studiensemester = [
         zeitraumBSC: "Juli - Ende September",
         zeitraumBWI: "01.03 - 01.09",
         zeitraumVI: "Nicht in ausgewähltem Semester verfügbar",
+        zeitraumLLB: "01.03 - 01.09",
+        zeitraumPUMA: "01.03 - 01.09",
+        zeitraumQE3: "Mai - August",
     },
     {
         name: "3. Semester",
@@ -19,6 +25,9 @@ export const Studiensemester = [
         zeitraumBSC: "Februar - Mitte März",
         zeitraumBWI: "01.09 - 28.02",
         zeitraumVI: "Februar - März",
+        zeitraumLLB: "01.09 - 28.02",
+        zeitraumPUMA: "01.09 - 28.02",
+        zeitraumQE3: "Dezember - April",
     },
     {
         name: "4. Semester",
@@ -26,6 +35,9 @@ export const Studiensemester = [
         zeitraumBSC: "Juli - Mitte März (Praxissemester)",
         zeitraumBWI: "01.03 - 01.09",
         zeitraumVI: "Oktober - März",
+        zeitraumLLB: "01.03 - 01.09",
+        zeitraumPUMA: "01.03 - 01.09",
+        zeitraumQE3: "Nicht in ausgewähltem Semester verfügbar",
     },
     {
         name: "5. Semester",
@@ -33,6 +45,9 @@ export const Studiensemester = [
         zeitraumBSC: "Juli - Mitte März (Praxissemester)",
         zeitraumBWI: "01.09 - 30.06",
         zeitraumVI: "Oktober - März",
+        zeitraumLLB: "01.09 - 30.06",
+        zeitraumPUMA: "01.09 - 30.06",
+        zeitraumQE3: "September - November",
     },
     {
         name: "6. Semester",
@@ -40,6 +55,9 @@ export const Studiensemester = [
         zeitraumBSC: "Juli - Ende September",
         zeitraumBWI: "01.09 - 30.06",
         zeitraumVI: "Nicht in ausgewähltem Semester verfügbar",
+        zeitraumLLB: "01.09 - 30.06",
+        zeitraumPUMA: "01.09 - 30.06",
+        zeitraumQE3: "Juli - September",
     },
 ] as const;
 export function valueToNameStudiensemester(value: string): string {

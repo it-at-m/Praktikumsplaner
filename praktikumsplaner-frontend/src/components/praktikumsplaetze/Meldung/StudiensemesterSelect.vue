@@ -46,6 +46,21 @@
                 >
                     {{ item.raw.zeitraumVI }}
                 </v-list-item-subtitle>
+                <v-list-item-subtitle
+                    v-else-if="praktikumsstelle.studiengang === 'LLB'"
+                >
+                    {{ item.raw.zeitraumLLB }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle
+                    v-else-if="praktikumsstelle.studiengang === 'PUMA'"
+                >
+                    {{ item.raw.zeitraumPUMA }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle
+                    v-else-if="praktikumsstelle.studiengang === 'QE3'"
+                >
+                    {{ item.raw.zeitraumQE3 }}
+                </v-list-item-subtitle>
             </v-list-item>
         </template>
     </v-select>

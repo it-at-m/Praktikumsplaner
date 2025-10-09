@@ -1,6 +1,5 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
-import de.muenchen.oss.praktikumsplaner.annotations.AusbildungsAnnotation;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
@@ -12,7 +11,6 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-@AusbildungsAnnotation(ausbildungsrichtungGetMethod = "ausbildungsrichtung", message = "Keine korrekte Ausbildungsrichtung")
 public record AusbildungsPraktikumsstelleDto(@NotNull UUID id,
         @NotNull String dienststelle,
 

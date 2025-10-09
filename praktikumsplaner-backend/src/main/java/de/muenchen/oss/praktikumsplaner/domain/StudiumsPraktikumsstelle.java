@@ -1,6 +1,5 @@
 package de.muenchen.oss.praktikumsplaner.domain;
 
-import de.muenchen.oss.praktikumsplaner.annotations.StudiumsAnnotation;
 import de.muenchen.oss.praktikumsplaner.domain.converter.StudiensemesterConverter;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
@@ -24,7 +23,6 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@StudiumsAnnotation(studiengangGetMethod = "getStudiengang", message = "Keine korrekte Studiengang")
 public class StudiumsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull private String programmierkenntnisse;

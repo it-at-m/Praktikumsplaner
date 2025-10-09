@@ -60,6 +60,39 @@
                                 <v-col cols="12">
                                     <v-container class="v-container-single-box">
                                         <v-col>
+                                            <h4>Öffentliches Recht - Bachelor of Laws (LL.B.)</h4>
+                                        </v-col>
+                                        <zeitraum-picker
+                                            :value="llb"
+                                            label="Zuweisungszeitraum"
+                                        ></zeitraum-picker>
+                                    </v-container>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-container class="v-container-single-box">
+                                        <v-col>
+                                            <h4>Betriebswirtschaftslehre mit Schwerpunkt Public Management (Puma)</h4>
+                                        </v-col>
+                                        <zeitraum-picker
+                                            :value="puma"
+                                            label="Zuweisungszeitraum"
+                                        ></zeitraum-picker>
+                                    </v-container>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-container class="v-container-single-box">
+                                        <v-col>
+                                            <h4>Diplom - Verwaltungswirt*in (QE3)</h4>
+                                        </v-col>
+                                        <zeitraum-picker
+                                            :value="qe3"
+                                            label="Zuweisungszeitraum"
+                                        ></zeitraum-picker>
+                                    </v-container>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-container class="v-container-single-box">
+                                        <v-col>
                                             <h4>
                                                 Fachinformatiker für
                                                 Systemintegration (FISI)
@@ -67,6 +100,39 @@
                                         </v-col>
                                         <zeitraum-picker
                                             :value="fisi"
+                                            label="Zuweisungszeitraum"
+                                        ></zeitraum-picker>
+                                    </v-container>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-container class="v-container-single-box">
+                                        <v-col>
+                                            <h4>Verwaltungswirt*in (QE2)</h4>
+                                        </v-col>
+                                        <zeitraum-picker
+                                            :value="qe2"
+                                            label="Zuweisungszeitraum"
+                                        ></zeitraum-picker>
+                                    </v-container>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-container class="v-container-single-box">
+                                        <v-col>
+                                            <h4>Kauffrau und Kaufmann für Büromanagement (KfB)</h4>
+                                        </v-col>
+                                        <zeitraum-picker
+                                            :value="kfb"
+                                            label="Zuweisungszeitraum"
+                                        ></zeitraum-picker>
+                                    </v-container>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-container class="v-container-single-box">
+                                        <v-col>
+                                            <h4>Verwaltungsfachangestellte*r (VFAK)</h4>
+                                        </v-col>
+                                        <zeitraum-picker
+                                            :value="vfak"
                                             label="Zuweisungszeitraum"
                                         ></zeitraum-picker>
                                     </v-container>
@@ -136,10 +202,19 @@ const showUndeliveredMailsDialog = ref<boolean>(false);
 
 const faultyStellen = ref<Praktikumsstelle[]>([]);
 
+//Studium
 const bsc = ref<Zeitraum>(new Zeitraum());
 const vi = ref<Zeitraum>(new Zeitraum());
 const bwi = ref<Zeitraum>(new Zeitraum());
+const llb = ref<Zeitraum>(new Zeitraum());
+const puma = ref<Zeitraum>(new Zeitraum());
+const qe3 = ref<Zeitraum>(new Zeitraum());
+
+//Ausbildung
 const fisi = ref<Zeitraum>(new Zeitraum());
+const qe2 = ref<Zeitraum>(new Zeitraum());
+const kfb = ref<Zeitraum>(new Zeitraum());
+const vfak = ref<Zeitraum>(new Zeitraum());
 
 const properties = defineProps<{
     showDialog: boolean;
@@ -165,10 +240,19 @@ function openConfirmationDialog() {
 
 function sendMails(): void {
     const assignmentPeriods = new Map<string, Zeitraum>();
+    //Studium
     assignmentPeriods.set("BSC", bsc.value);
     assignmentPeriods.set("VI", vi.value);
     assignmentPeriods.set("BWI", bwi.value);
+    assignmentPeriods.set("LLB", llb.value);
+    assignmentPeriods.set("PUMA", puma.value);
+    assignmentPeriods.set("QE3", qe3.value);
+
+    //Ausbildung
     assignmentPeriods.set("FISI", fisi.value);
+    assignmentPeriods.set("QE2", qe2.value);
+    assignmentPeriods.set("KFB", kfb.value);
+    assignmentPeriods.set("VFAK", vfak.value);
 
     const assignmentPeriodsObj = Object.fromEntries(assignmentPeriods);
 

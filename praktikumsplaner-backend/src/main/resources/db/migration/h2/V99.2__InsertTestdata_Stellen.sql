@@ -15,15 +15,15 @@ values
 
     ( '00000000-0000-0000-0000-000000000004', 'KM 822', 'Bobbie Valdez', 'Bobbie.valdez@localhost.de',
       'diverse Aufgaben', 'NACHRANGIG', null, 'ITM', 'ja',
-      'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000001', null),
+      'SEMESTER3,SEMESTER4', 'LLB', '00000000-0000-0000-0000-000000000001', null),
 
     ( '00000000-0000-0000-0000-000000000005', 'KM 822', 'Sonia Guerrero', 'sonia.guerrero@localhost.de',
       'diverse Aufgaben', 'DRINGEND', null, 'ITM', 'ja',
-      'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000001', null),
+      'SEMESTER3,SEMESTER4', 'PUMA', '00000000-0000-0000-0000-000000000001', null),
 
     ( '00000000-0000-0000-0000-000000000006', 'KM 822', 'Alberto Burton', 'alberto.burton@localhost.de',
       'diverse Aufgaben', 'DRINGEND', null, 'ITM', 'ja',
-      'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000001', null),
+      'SEMESTER3,SEMESTER4', 'QE3', '00000000-0000-0000-0000-000000000001', null),
 
     ( '00000000-0000-0000-0000-000000000007', 'KM 12', 'Brett Hoffman', 'brett.hoffman@localhost.de',
       'diverse Aufgaben', 'NACHRANGIG', null, 'ITM', 'ja',
@@ -56,15 +56,15 @@ values
 
     ( '00000000-0000-0000-0001-000000000004', 'KM 822', 'Bobbie Valdez', 'Bobbie.valdez@localhost.de',
       'diverse Aufgaben', 'NACHRANGIG', null, 'ITM', 'ja',
-      'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000005', null),
+      'SEMESTER3,SEMESTER4', 'LLB', '00000000-0000-0000-0000-000000000005', null),
 
     ( '00000000-0000-0000-0001-000000000005', 'KM 822', 'Sonia Guerrero', 'sonia.guerrero@localhost.de',
       'diverse Aufgaben', 'DRINGEND', null, 'ITM', 'ja',
-      'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000005', null),
+      'SEMESTER3,SEMESTER4', 'PUMA', '00000000-0000-0000-0000-000000000005', null),
 
     ( '00000000-0000-0000-0001-000000000006', 'KM 822', 'Alberto Burton', 'alberto.burton@localhost.de',
       'diverse Aufgaben', 'DRINGEND', null, 'ITM', 'ja',
-      'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000005', null),
+      'SEMESTER3,SEMESTER4', 'QE3', '00000000-0000-0000-0000-000000000005', null),
 
     ( '00000000-0000-0000-0001-000000000007', 'KM 12', 'Brett Hoffman', 'brett.hoffman@localhost.de',
       'diverse Aufgaben', 'NACHRANGIG', null, 'ITM', 'ja',
@@ -92,11 +92,15 @@ values
 
     ( '00000000-0000-0000-0000-000000000012', 'KM 31', 'Charles Gibson', 'charles.gibson@localhost.de',
       'Projektunterstützung', 'DRINGEND', 'Diana Barnes', 'ITM', false,
-      'JAHR2', 'FISI', '00000000-0000-0000-0000-000000000001', null, 'true'),
+      'JAHR2', 'QE2', '00000000-0000-0000-0000-000000000001', null, 'true'),
 
     ( '00000000-0000-0000-0000-000000000013', 'KM 32', 'Robert Smith', 'robert.smith@localhost.de',
       'Projektunterstützung', 'DRINGEND', null, 'ITM', true,
-      'JAHR2,JAHR3', 'FISI', '00000000-0000-0000-0000-000000000001', null, 'false'),
+      'JAHR2,JAHR3', 'KFB', '00000000-0000-0000-0000-000000000001', null, 'false'),
+
+    ( '00000000-0000-0000-0000-000000000014', 'KM 22', 'Hans Smith', 'Hans.smith@localhost.de',
+      'Projektunterstützung', 'DRINGEND', null, 'ITM', true,
+      'JAHR2,JAHR3', 'VFAK', '00000000-0000-0000-0000-000000000001', null, 'false'),
 
     -- previous zeitraum
     ( '00000000-0000-0000-0001-000000000011', 'KM 31', 'Shannon Chavez', 'shannon.chavez@localhost.de',
@@ -105,9 +109,13 @@ values
 
     ( '00000000-0000-0000-0001-000000000012', 'KM 31', 'Charles Gibson', 'charles.gibson@localhost.de',
       'Projektunterstützung', 'DRINGEND', 'Lillian Henderson', 'ITM', false,
-      'JAHR2', 'FISI', '00000000-0000-0000-0000-000000000005', null, 'true'),
+      'JAHR2', 'QE2', '00000000-0000-0000-0000-000000000005', null, 'true'),
 
     ( '00000000-0000-0000-0001-000000000013', 'KM 32', 'Robert Smith', 'robert.smith@localhost.de',
       'Projektunterstützung', 'DRINGEND', null, 'ITM', true,
-      'JAHR2,JAHR3', 'FISI', '00000000-0000-0000-0000-000000000005', null, 'false')
+      'JAHR2,JAHR3', 'KFB', '00000000-0000-0000-0000-000000000005', null, 'false'),
+
+    ( '00000000-0000-0000-0001-000000000014', 'KM 22', 'Hans Smith', 'hans.smith@localhost.de',
+      'Projektunterstützung', 'DRINGEND', null, 'ITM', true,
+      'JAHR2,JAHR3', 'VFAK', '00000000-0000-0000-0000-000000000005', null, 'false')
 ;
