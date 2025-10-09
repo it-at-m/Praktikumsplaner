@@ -32,7 +32,7 @@ public class AsyncMailSender {
     @Async
     public CompletableFuture<PraktikumsstelleDto> sendSingleMailAsync(final PraktikumsstelleDto stelle, final String mailBody) {
         try {
-            log.debug("Start Mail-Send for {} at {}", stelle.assignedNwk(), stelle.dienststelle());
+            log.debug("Start Mail-Send for Praktikumsstelle id={}, dienststelle={}", stelle.id(), stelle.dienststelle());
             sendSingleMail(stelle.email(), "Praktikumsplatz zugeteilt", mailBody);
             return CompletableFuture.completedFuture(null); // null for success, could also use Optional
         } catch (Exception e) {
