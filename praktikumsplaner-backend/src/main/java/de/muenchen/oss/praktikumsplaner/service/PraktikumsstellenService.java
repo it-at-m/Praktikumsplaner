@@ -241,12 +241,13 @@ public class PraktikumsstellenService {
             TreeMap<String, List<PraktikumsstelleDto>> abteilungsStellenMap) {
 
         if (AuthUtils.isAusbilder()) {
+            var usermail = AuthUtils.getMailFromUser();
 
             return abteilungsStellenMap.entrySet().stream()
                     .map(entry -> Map.entry(
                             entry.getKey(),
                             entry.getValue().stream()
-                                    .filter(dto -> AuthUtils.getMailFromUser().equals(dto.email()))
+                                    .filter(dto -> usermail.equals(dto.email()))
                                     .collect(Collectors.toList())))
                     .filter(entry -> !entry.getValue().isEmpty())
                     .collect(Collectors.toMap(
