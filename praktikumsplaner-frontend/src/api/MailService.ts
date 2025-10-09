@@ -32,7 +32,9 @@ export default {
                             return praktikumsplaetze; // Liste der betroffenen Praktikumsplätze zurückgeben
                         })
                         .catch(() => {
-                            throw Error("Fehler beim Verarbeiten der Antwort vom Server.");
+                            throw Error(
+                                "Fehler beim Verarbeiten der Antwort vom Server."
+                            );
                         });
                 } else {
                     throw Error(
