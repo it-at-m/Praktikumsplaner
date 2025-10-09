@@ -31,13 +31,8 @@ export default {
                             });
                             return praktikumsplaetze; // Liste der betroffenen Praktikumsplätze zurückgeben
                         })
-                        .catch((parseError) => {
-                            useSnackbarStore().showMessage({
-                                message:
-                                    "Fehler beim Verarbeiten der Antwort vom Server.",
-                                level: Levels.ERROR,
-                            });
-                            throw parseError;
+                        .catch(() => {
+                            throw Error("Fehler beim Verarbeiten der Antwort vom Server.");
                         });
                 } else {
                     throw Error(
