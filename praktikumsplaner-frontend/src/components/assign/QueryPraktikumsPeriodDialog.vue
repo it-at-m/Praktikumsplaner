@@ -98,12 +98,6 @@
                                             @no="closeConfirmDialog"
                                             @yes="sendMails"
                                         ></yes-no-dialog>
-                                        <undelivered-mails-dialog
-                                            :faulty-stellen="faultyStellen"
-                                            :show-undelivered-mails-dialog="
-                                                showUndeliveredMailsDialog
-                                            "
-                                        ></undelivered-mails-dialog>
                                     </v-col>
                                 </v-row>
                             </v-card-actions>
@@ -112,6 +106,10 @@
                 </v-card>
             </v-form>
         </v-dialog>
+        <undelivered-mails-dialog
+            v-model:show-undelivered-mails-dialog="showUndeliveredMailsDialog"
+            :faulty-stellen="faultyStellen"
+        ></undelivered-mails-dialog>
         <progress-circular-overlay
             :loading="loading"
         ></progress-circular-overlay>
@@ -172,12 +170,15 @@ function sendMails(): void {
 
     const assignmentPeriodsObj = Object.fromEntries(assignmentPeriods);
 
-    MailService.sendSuccessfulAssignedMails(assignmentPeriodsObj, loading).then(
-        (fetchedStellen) => {
+    loading.value = true;
+    MailService.sendSuccessfulAssignedMails(assignmentPeriodsObj)
+        .then((fetchedStellen) => {
             faultyStellen.value = fetchedStellen;
-        }
-    );
-    checkIfUndeliveredMails();
+        })
+        .finally(() => {
+            checkIfUndeliveredMails();
+            loading.value = false;
+        });
     closeSendMailDialog();
     closeConfirmDialog();
 }

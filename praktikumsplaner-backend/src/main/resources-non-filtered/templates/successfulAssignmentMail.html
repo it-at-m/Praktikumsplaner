@@ -23,27 +23,35 @@
 <body>
 <div class="content">
     <p>Hallo <span th:text="${ausbilder}">Ausbilder Name</span>,</p>
-    <p>herzlichen Dank dafür, dass du und dein Team Nachwuchskräfte ausbildet.</p>
-    <p>Anbei erhältst du die Dienstantrittsanzeige von <span th:text="${nachwuchskraftName}">Nachwuchskraft Name</span>.</p>
-    <p>Der Dienstantritt findet am <span th:text="${startDatum}">StartDatum</span> um 8.00 Uhr am Agnes-Pockels-Bogen 21 (Konferenzraum im Erdgeschoss) statt. Wir bitten dich oder deine Kolleg*innen, die NWK ab 08:45 Uhr dort abzuholen.</p>
-    <p>Sollte die NWK Urlaub haben, werden wir oder die NWK euch vorher erneut informieren.</p>
-    <p>Die NWK wird voraussichtlich bis zum <span th:text="${endDatum}">EndDatum</span> dir zugewiesen.</p>
-    <p>Da Homeoffice nun zu unserem Arbeitsalltag gehört, ist uns bewusst, dass die NWK auch während ihrer Ausbildung von zu Hause aus arbeiten und betreut werden.</p>
-    <p>Die Nachwuchskräfte sind alle mit Token ausgestattet - es ist sinnvoll, einen täglichen Austausch mit der NWK im Homeoffice zu vereinbaren.</p>
 
-    <p>Wir bitten dich bzw. deine Führungskraft, folgendes Ticket schnellstmöglich zu bearbeiten, sodass die NWK an ihrem ersten Tag die notwendigen Zugriffe erhält.</p>
-    <p>Für jeden Praktikumsplatz ist verbindlich ein örtlicher Ausbildungsplan zu erstellen. Diese Vorlage findest du in coSys unter dem Suchbegriff "Ausbildungsplan". Eine ausführliche Anleitung findest du hier.</p>
-    <p>Alle Informationen rund um die Ausbildung sind auch im Arbeitsraum "Ausbildung im IT-Referat" zu finden sein.</p>
-    <p>Tipps und Tricks zur Betreuung von NWK im Homeoffice findest du in WILMA.</p>
-    <p>Solltest du Fragen, Anregungen und/oder Probleme haben, bitten wir dich einfach mit uns per Mail, Telefon oder in Webex Kontakt aufzunehmen.</p>
+    <p>wir bedanken uns ausdrücklich, dass du dich dazu bereit erklärt hast, im nächsten Praktikumsabschnitt Nachwuchskräfte zu betreuen und uns dabei unterstützt, ein qualitativ hochwertiges Praktikum im IT-Referat zu gewährleisten.</p>
+    <p>Anbei erhältst du die vorläufige Information über die Zuweisung der Nachwuchskraft <span th:text="${nachwuchskraftName}">Nachwuchskraft Name</span>.</p>
+    <p><b>Weitere Details zur Nachwuchskraft erhältst du mit der Zusendung des Zuweisungsschreibens im Laufe der nächsten Wochen.</b></p>
+
+    <p><u>Dienstantritt:</u></p>
+    <p>Der Dienstantritt erfolgt für die Nachwuchskraft grundsätzlich am <b>Wochentag, den <span th:text="${startDatum}">StartDatum</span></b>.</p>
+    <p>Im Rahmen der Dienstantrittsveranstaltungen werden die Nachwuchskräfte zunächst von den örtlichen Ausbildungsleitungen empfangen. Die Örtlichkeit und Uhrzeit der Veranstaltung wird noch bekannt gegeben.</p>
+
+    <p><u>Kontaktaufnahme NWK:</u></p>
+    <p>Sobald die Nachwuchskräfte über ihre neuen Praktikumsplätze informiert wurden und du mit der Nachwuchskraft Kontakt aufnehmen kannst, werden wir dich gesondert in Kenntnis setzen.</p>
+    <p>Wir bitten daher, von einer vorherigen Kontaktaufnahme abzusehen.</p>
+
+    <p>Wir bitten um Verständnis, dass wir nicht jeden Wunsch (z.B. gewünschte Ausbildungs- oder Studienrichtung) berücksichtigen konnten. Sollte hierzu Gesprächsbedarf bestehen, bitten wir euch frühzeitig mit uns Kontakt aufzunehmen.</p>
+
+    <p>Weitere Informationen rund um die Ausbildung sind auch im Arbeitsraum <a href="https://wilma.muenchen.de/workspaces/ausbildung-im-it-referat/apps/content/ueberblick">Ausbildung im IT-Referat</a> oder im Personalservice-Portal zu finden.</p>
+
+
+    <p>Bei Fragen stehen wir jederzeit gerne zur Verfügung.</p>
+
 
     <div class="signature">
         Viele Grüße<br>
-        Örtliche Ausbildungsleitung, Team GL12
+        Örtliche Ausbildungsleitungen im IT-Referat
     </div>
     <div class="footer">
         #GernperDU
     </div>
+
 </div>
 </body>
 </html>

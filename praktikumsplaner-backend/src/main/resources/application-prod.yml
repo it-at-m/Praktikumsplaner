@@ -15,7 +15,7 @@ spring:
     database: H2
 
     # Logging for database operation
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true

@@ -27,7 +27,6 @@ import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -38,9 +37,6 @@ import org.thymeleaf.context.Context;
 
 public class MailServiceTest {
 
-    @InjectMocks
-    private MailService mailService;
-
     @Mock
     private JavaMailSender mailSender;
 
@@ -50,10 +46,17 @@ public class MailServiceTest {
     @Mock
     private PraktikumsstellenService praktikumsstellenService;
 
+    private MailService mailService;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        ReflectionTestUtils.setField(mailService, "from", "testSender");
+        AsyncMailSender asyncMailSender = new AsyncMailSender(mailSender);
+        mailService = new MailService(templateEngine, praktikumsstellenService, asyncMailSender);
+
+        // Set fields via reflection
+        ReflectionTestUtils.setField(asyncMailSender, "from", "testSender");
+        ReflectionTestUtils.setField(asyncMailSender, "replyTo", "testReply");
     }
 
     @Test

@@ -17,7 +17,8 @@
                     <h4>Stelle bei {{ stelle.dienststelle }}</h4>
                     <p>
                         Ausbilder*in: {{ stelle.email }} (Zugewiesene NWK:
-                        {{ stelle.assignedNwk }})
+                        {{ stelle.assignedNwk?.vorname }}
+                        {{ stelle.assignedNwk?.nachname }})
                     </p>
                 </div>
                 <v-divider class="bg-grey" />
