@@ -45,13 +45,13 @@ public class ExcelExportServiceTest {
         try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
                 Base64.getDecoder().decode(service.getBase64EncodedExcelFile())))) {
 
-            XSSFSheet ausbildungsSheet = workbook.getSheetAt(0);
-            XSSFSheet studiumsSheet = workbook.getSheetAt(1);
+            XSSFSheet ausbildungsSheet = workbook.getSheetAt(ExcelExportService.AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX);
+            XSSFSheet studiumsSheet = workbook.getSheetAt(ExcelExportService.STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX);
 
             List<AusbildungsPraktikumsstelleDto> ausbildungsPraktikumsstellen = getTestListOfAusbildungsPraktikumsstelleDto();
 
             assertNotNull(workbook);
-            assertEquals(2, workbook.getNumberOfSheets());
+            assertEquals(4, workbook.getNumberOfSheets());
             assertEquals(ausbildungsPraktikumsstellen.get(0).referat().name(), ausbildungsSheet.getRow(3).getCell(0).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.get(0).dienststelle(), ausbildungsSheet.getRow(3).getCell(1).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.get(0).oertlicheAusbilder(), ausbildungsSheet.getRow(3).getCell(2).getStringCellValue());

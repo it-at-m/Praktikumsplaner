@@ -19,18 +19,28 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class ExcelExportService {
     private final PraktikumsstellenService praktikumsstellenService;
-    private static final int AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX = 0;
-    private static final int STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX = 1;
+
+    /*
+     *  The template has 4 sheets:
+     *  0. Drop-Down (hidden)
+     *  1. Ausbildung (QE2)
+     *  2. Studium (QE3)
+     *  3. Legende
+     */
+    public static final int AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX = 1;
+    public static final int STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX = 2;
 
     @Value("${app.export.oertl-ausbildungsleitung-name:")
     private String oertlAusbildungsleitungName;
@@ -60,6 +70,7 @@ public class ExcelExportService {
 
     private XSSFWorkbook fillTemplatePraktikumsstellen() throws IOException {
         XSSFWorkbook workbook = getTemplateExcelFile();
+        workbook.setMissingCellPolicy(Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
         XSSFSheet ausbildungsSheet = workbook.getSheetAt(AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX);
         XSSFSheet studiumsSheet = workbook.getSheetAt(STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX);
         Pair<List<AusbildungsPraktikumsstelleDto>, List<StudiumsPraktikumsstelleDto>> sortedPraktikumsstellen = preparePraktikumsstellen();
