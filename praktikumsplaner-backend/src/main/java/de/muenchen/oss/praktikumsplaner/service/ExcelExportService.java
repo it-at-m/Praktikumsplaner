@@ -42,8 +42,7 @@ public class ExcelExportService {
             .boxed()
             .collect(Collectors.toMap(
                     i -> (char) ('A' + i),
-                    i -> i
-            ));
+                    i -> i));
 
     public String getBase64EncodedExcelFile() throws IOException {
         XSSFWorkbook workbook = fillTemplatePraktikumsstellen();
@@ -185,7 +184,7 @@ public class ExcelExportService {
     private static String getWuensche(PraktikumsstelleDto praktikumsstelle) {
         var wuensche = new StringJoiner(", ");
 
-        if(StringUtils.hasText(praktikumsstelle.namentlicheAnforderung())){
+        if (StringUtils.hasText(praktikumsstelle.namentlicheAnforderung())) {
             wuensche.add("Namentliche Anforderung: " + praktikumsstelle.namentlicheAnforderung());
         }
 
@@ -221,9 +220,9 @@ public class ExcelExportService {
                 .collect(Collectors.toCollection(ArrayList::new));
         for (Studiensemester semester : studiensemesterSortedList) {
             switch (semester) {
-                case SEMESTER1, SEMESTER2 -> returnString.add("vorrangig 1. Jahr");
-                case SEMESTER3, SEMESTER4 -> returnString.add("vorrangig 2. Jahr");
-                case SEMESTER5, SEMESTER6 -> returnString.add("vorrangig 3. Jahr");
+            case SEMESTER1, SEMESTER2 -> returnString.add("vorrangig 1. Jahr");
+            case SEMESTER3, SEMESTER4 -> returnString.add("vorrangig 2. Jahr");
+            case SEMESTER5, SEMESTER6 -> returnString.add("vorrangig 3. Jahr");
             }
         }
         return returnString.toString();
