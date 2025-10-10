@@ -2,7 +2,7 @@ export const Ausbildungsjahr = [
     {
         name: "1. Lehrjahr",
         value: "JAHR1",
-        zeitraumFISI: "01.03.-31.08.",
+        zeitraumFISI: "01.03 - 31.08",
         zeitraumQE2: "November - Januar oder März - Juni",
         zeitraumKFB: "01.09 - 28.02 oder 01.03 - 31.08",
         zeitraumVFAK: "01.09 - 28.02 oder 01.03 - 31.08",
