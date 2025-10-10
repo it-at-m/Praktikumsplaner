@@ -17,8 +17,14 @@ A specific color was assigned for each [Studiengang](../../../glossary.md#studen
 - Informatik (B.Sc.): green-lighten-3 | #A5D6A7 
 - Wirtschaftsinformatik (BWI): pink-lighten-4 | #F8BBD0
 - Verwaltungsinformatik (VI): deep-purple-lighten-4 | #D1C4E9
+- Öffentliches Recht - Bachelor of Laws (LL.B.): blue-lighten-3 | #90CAF9
+- Betriebswirtschaftslehre mit Schwerpunkt Public Management (Puma): red-lighten-3 | #EF9A9A
+
 
 ### Colors of [Ausbildungsrichtung](../../../glossary.md#auszubildende)
 A specific color was assigned for each [Ausbildungsrichtung](../../../glossary.md#auszubildende):
 
-- Fachinformatiker Systemintegration (FISI): light-blue-lighten-4 | #B3E5FC
+- Fachinformatiker Systemintegration (FISI): light-blue-lighten-3 | #B3E5FC
+- Verwaltungswirt*in (QE2): teal-lighten-3 | #80CBC4
+- Kauffrau und Kaufmann für Büromanagement (KfB): lime-lighten-3 | #E6EE9C
+- Verwaltungsfachangestellte*r (VFAK): orange-lighten-3 | #FFCC80

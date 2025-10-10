@@ -48,6 +48,10 @@ public class ExcelImportServiceTest {
         createNwkDtos.add(CreateNwkDto.builder().build());
         createNwkDtos.add(CreateNwkDto.builder().build());
         createNwkDtos.add(CreateNwkDto.builder().build());
+        createNwkDtos.add(CreateNwkDto.builder().build());
+        createNwkDtos.add(CreateNwkDto.builder().build());
+        createNwkDtos.add(CreateNwkDto.builder().build());
+        createNwkDtos.add(CreateNwkDto.builder().build());
 
         List<CreateNwkDto> resultList = service.excelToNwkDtoList(base64EncodedExcelMultipleNwk);
 

@@ -1,6 +1,5 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
-import de.muenchen.oss.praktikumsplaner.annotations.StudiumsAnnotation;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
@@ -11,7 +10,6 @@ import java.util.Set;
 import lombok.Builder;
 
 @Builder
-@StudiumsAnnotation(studiengangGetMethod = "studiengang", message = "Keine korrekte Studiengang")
 public record CreateStudiumsPraktikumsstelleDto(@NotNull String dienststelle,
 
         @NotNull String oertlicheAusbilder,

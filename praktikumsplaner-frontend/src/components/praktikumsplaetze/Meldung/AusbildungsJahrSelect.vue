@@ -37,6 +37,21 @@
                 >
                     {{ item.raw.zeitraumFISI }}
                 </v-list-item-subtitle>
+                <v-list-item-subtitle
+                    v-else-if="praktikumsstelle.ausbildungsrichtung === 'QE2'"
+                >
+                    {{ item.raw.zeitraumQE2 }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle
+                    v-else-if="praktikumsstelle.ausbildungsrichtung === 'KFB'"
+                >
+                    {{ item.raw.zeitraumKFB }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle
+                    v-else-if="praktikumsstelle.ausbildungsrichtung === 'VFAK'"
+                >
+                    {{ item.raw.zeitraumVFAK }}
+                </v-list-item-subtitle>
             </v-list-item>
         </template>
     </v-select>

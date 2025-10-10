@@ -4,7 +4,7 @@ create table nwk
         primary key,
     vorname             varchar(255)         not null,
     nachname            varchar(255)         not null,
-    studiengang         varchar(3),
+    studiengang         varchar(4),
     jahrgang            varchar(5)           not null,
     vorlesungstage      varchar(255),
     active              boolean default true not null,
@@ -62,7 +62,7 @@ create table studiumspraktikumsstelle
     referat                varchar(3),
     programmierkenntnisse  varchar(5)            not null,
     studiensemester        varchar(255)          not null,
-    studiengang            varchar(3)            not null,
+    studiengang            varchar(4)            not null,
     meldezeitraumid        varchar(36)           not null
         constraint studiumspraktikumsstelle_meldezeitraum_fkey_cascade
             references meldezeitraum

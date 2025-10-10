@@ -10,6 +10,21 @@ export const Studiengang = [
         value: "VI",
         color: "deep-purple-lighten-4",
     },
+    {
+        name: "Öffentliches Recht - Bachelor of Laws (LL.B.)",
+        value: "LLB",
+        color: "blue-lighten-3",
+    },
+    {
+        name: "Betriebswirtschaftslehre mit Schwerpunkt Public Management (Puma)",
+        value: "PUMA",
+        color: "red-lighten-3",
+    },
+    {
+        name: "Diplom - Verwaltungswirt*in (QE3)",
+        value: "QE3",
+        color: "indigo-lighten-3",
+    },
 ] as const;
 
 export function findStudiengangColorByValue(value: string): string {
