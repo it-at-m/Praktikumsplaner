@@ -18,7 +18,6 @@ import java.util.Set;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -33,11 +32,11 @@ public class ExcelExportService {
     private final PraktikumsstellenService praktikumsstellenService;
 
     /*
-     *  The template has 4 sheets:
-     *  0. Drop-Down (hidden)
-     *  1. Ausbildung (QE2)
-     *  2. Studium (QE3)
-     *  3. Legende
+     * The template has 4 sheets:
+     * 0. Drop-Down (hidden)
+     * 1. Ausbildung (QE2)
+     * 2. Studium (QE3)
+     * 3. Legende
      */
     public static final int AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX = 1;
     public static final int STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX = 2;
