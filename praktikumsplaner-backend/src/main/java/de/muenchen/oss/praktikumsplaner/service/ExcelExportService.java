@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static org.apache.poi.ss.util.CellReference.convertColStringToIndex;
+
 import com.nimbusds.jose.util.Pair;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
@@ -13,11 +15,9 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -47,12 +47,6 @@ public class ExcelExportService {
     @Value("${app.export.dienststelle-adresse:}")
     private String dienstelleAdresse;
 
-    private static final Map<Character, Integer> COLUMN_MAP = IntStream.range(0, 26)
-            .boxed()
-            .collect(Collectors.toMap(
-                    i -> (char) ('A' + i),
-                    i -> i));
-
     public String getBase64EncodedExcelFile() throws IOException {
         XSSFWorkbook workbook = fillTemplatePraktikumsstellen();
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -80,6 +74,7 @@ public class ExcelExportService {
         return workbook;
     }
 
+    //Ignore Duplicate Code with fillStudiumspraktikumsstellen as Mapping is not always the same
     @SuppressWarnings("CPD-START")
     private void fillAusbildungspraktikumsstellen(final List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen,
             final XSSFSheet ausbildungsSheet) {
@@ -87,23 +82,23 @@ public class ExcelExportService {
             AusbildungsPraktikumsstelleDto praktikumsstelle = assignedAusbildungspraktikumsstellen.get(i);
             Row row = getRow(ausbildungsSheet, i);
 
-            row.getCell(COLUMN_MAP.get('A')).setCellValue(praktikumsstelle.referat().name());
-            row.getCell(COLUMN_MAP.get('B')).setCellValue(this.oertlAusbildungsleitungName);
-            row.getCell(COLUMN_MAP.get('C')).setCellValue(praktikumsstelle.dienststelle());
-            // row.getCell(ROW_MAP.get('D')).setCellValue(---);
-            row.getCell(COLUMN_MAP.get('E')).setCellValue(this.dienstelleAdresse);
-            row.getCell(COLUMN_MAP.get('F')).setCellValue(praktikumsstelle.oertlicheAusbilder());
-            row.getCell(COLUMN_MAP.get('G')).setCellValue(praktikumsstelle.email());
-            row.getCell(COLUMN_MAP.get('H')).setCellValue(praktikumsstelle.taetigkeiten());
-            row.getCell(COLUMN_MAP.get('I')).setCellValue(getWuensche(praktikumsstelle));
-            // row.getCell(ROW_MAP.get('J')).setCellValue(---);
-            row.getCell(COLUMN_MAP.get('K')).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
-            row.getCell(COLUMN_MAP.get('L')).setCellValue(praktikumsstelle.dringlichkeit().name());
-            row.getCell(COLUMN_MAP.get('M')).setCellValue(ausbildungsjahrToStringConverter(praktikumsstelle.ausbildungsjahr()));
-            row.getCell(COLUMN_MAP.get('N')).setCellValue(praktikumsstelle.ausbildungsrichtung().name());
-            row.getCell(COLUMN_MAP.get('O')).setCellValue(praktikumsstelle.assignedNwk().nachname());
-            row.getCell(COLUMN_MAP.get('P')).setCellValue(praktikumsstelle.assignedNwk().vorname());
-            row.getCell(COLUMN_MAP.get('Q')).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
+            row.getCell(convertColStringToIndex("A")).setCellValue(praktikumsstelle.referat().name());
+            row.getCell(convertColStringToIndex("B")).setCellValue(this.oertlAusbildungsleitungName);
+            row.getCell(convertColStringToIndex("C")).setCellValue(praktikumsstelle.dienststelle());
+            // row.getCell(ROW_MAP.get("D")).setCellValue(---);
+            row.getCell(convertColStringToIndex("E")).setCellValue(this.dienstelleAdresse);
+            row.getCell(convertColStringToIndex("F")).setCellValue(praktikumsstelle.oertlicheAusbilder());
+            row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
+            row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
+            row.getCell(convertColStringToIndex("I")).setCellValue(getWuensche(praktikumsstelle));
+            // row.getCell(ROW_MAP.get("J")).setCellValue(---);
+            row.getCell(convertColStringToIndex("K")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
+            row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.dringlichkeit().name());
+            row.getCell(convertColStringToIndex("M")).setCellValue(ausbildungsjahrToStringConverter(praktikumsstelle.ausbildungsjahr()));
+            row.getCell(convertColStringToIndex("N")).setCellValue(praktikumsstelle.ausbildungsrichtung().name());
+            row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.assignedNwk().nachname());
+            row.getCell(convertColStringToIndex("P")).setCellValue(praktikumsstelle.assignedNwk().vorname());
+            row.getCell(convertColStringToIndex("Q")).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
         }
     }
 
@@ -112,24 +107,24 @@ public class ExcelExportService {
             StudiumsPraktikumsstelleDto praktikumsstelle = assignedStudiumspraktikumsstellen.get(i);
             Row row = getRow(studiumsSheet, i);
 
-            row.getCell(COLUMN_MAP.get('A')).setCellValue(praktikumsstelle.referat().name());
-            row.getCell(COLUMN_MAP.get('B')).setCellValue(this.oertlAusbildungsleitungName);
-            row.getCell(COLUMN_MAP.get('C')).setCellValue(praktikumsstelle.dienststelle());
-            // row.getCell(ROW_MAP.get('D')).setCellValue(---);
-            row.getCell(COLUMN_MAP.get('E')).setCellValue(this.dienstelleAdresse);
-            row.getCell(COLUMN_MAP.get('F')).setCellValue(praktikumsstelle.oertlicheAusbilder());
-            row.getCell(COLUMN_MAP.get('G')).setCellValue(praktikumsstelle.email());
-            row.getCell(COLUMN_MAP.get('H')).setCellValue(praktikumsstelle.taetigkeiten());
-            row.getCell(COLUMN_MAP.get('I')).setCellValue(getWuensche(praktikumsstelle));
-            // row.getCell(ROW_MAP.get('J')).setCellValue(---);
-            row.getCell(COLUMN_MAP.get('K')).setCellValue(mapProgrammierkenntnisse(praktikumsstelle.programmierkenntnisse()));
-            row.getCell(COLUMN_MAP.get('L')).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
-            row.getCell(COLUMN_MAP.get('M')).setCellValue(praktikumsstelle.dringlichkeit().name());
-            row.getCell(COLUMN_MAP.get('N')).setCellValue(studiensemesterToStringConverter(praktikumsstelle.studiensemester()));
-            row.getCell(COLUMN_MAP.get('O')).setCellValue(praktikumsstelle.studiengang().name());
-            row.getCell(COLUMN_MAP.get('P')).setCellValue(praktikumsstelle.assignedNwk().nachname());
-            row.getCell(COLUMN_MAP.get('Q')).setCellValue(praktikumsstelle.assignedNwk().vorname());
-            row.getCell(COLUMN_MAP.get('R')).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
+            row.getCell(convertColStringToIndex("A")).setCellValue(praktikumsstelle.referat().name());
+            row.getCell(convertColStringToIndex("B")).setCellValue(this.oertlAusbildungsleitungName);
+            row.getCell(convertColStringToIndex("C")).setCellValue(praktikumsstelle.dienststelle());
+            // row.getCell(ROW_MAP.get("D")).setCellValue(---);
+            row.getCell(convertColStringToIndex("E")).setCellValue(this.dienstelleAdresse);
+            row.getCell(convertColStringToIndex("F")).setCellValue(praktikumsstelle.oertlicheAusbilder());
+            row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
+            row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
+            row.getCell(convertColStringToIndex("I")).setCellValue(getWuensche(praktikumsstelle));
+            // row.getCell(ROW_MAP.get("J")).setCellValue(---);
+            row.getCell(convertColStringToIndex("K")).setCellValue(mapProgrammierkenntnisse(praktikumsstelle.programmierkenntnisse()));
+            row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
+            row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
+            row.getCell(convertColStringToIndex("N")).setCellValue(studiensemesterToStringConverter(praktikumsstelle.studiensemester()));
+            row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.studiengang().name());
+            row.getCell(convertColStringToIndex("P")).setCellValue(praktikumsstelle.assignedNwk().nachname());
+            row.getCell(convertColStringToIndex("Q")).setCellValue(praktikumsstelle.assignedNwk().vorname());
+            row.getCell(convertColStringToIndex("R")).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
         }
     }
 
@@ -217,12 +212,7 @@ public class ExcelExportService {
     }
 
     private static String mapProgrammierkenntnisse(final String programmierkenntnisse) {
-        if (!StringUtils.hasText(programmierkenntnisse)) return "Nein";
-        if (Boolean.parseBoolean(programmierkenntnisse.trim())) {
-            return "Ja";
-        } else {
-            return "Nein";
-        }
+        return (StringUtils.hasText(programmierkenntnisse) && Boolean.parseBoolean(programmierkenntnisse.trim())) ? "Ja" : "Nein";
     }
 
     private static String ausbildungsjahrToStringConverter(final Set<Ausbildungsjahr> ausbildungsjahr) {
