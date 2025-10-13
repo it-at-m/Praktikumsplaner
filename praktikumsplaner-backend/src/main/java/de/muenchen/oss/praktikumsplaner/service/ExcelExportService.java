@@ -117,7 +117,7 @@ public class ExcelExportService {
             studiumsSheet.getRow(i + 3).getCell(ROW_MAP.get('H')).setCellValue(praktikumsstelle.taetigkeiten());
             studiumsSheet.getRow(i + 3).getCell(ROW_MAP.get('I')).setCellValue(getWuensche(praktikumsstelle));
             // studiumsSheet.getRow(i + 3).getCell(ROW_MAP.get('J')).setCellValue(---);
-            studiumsSheet.getRow(i + 3).getCell(ROW_MAP.get('K')).setCellValue(praktikumsstelle.programmierkenntnisse());
+            studiumsSheet.getRow(i + 3).getCell(ROW_MAP.get('K')).setCellValue(mapProgrammierkenntnisse(praktikumsstelle.programmierkenntnisse()));
             studiumsSheet.getRow(i + 3).getCell(ROW_MAP.get('L')).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             studiumsSheet.getRow(i + 3).getCell(ROW_MAP.get('M')).setCellValue(praktikumsstelle.dringlichkeit().name());
             studiumsSheet.getRow(i + 3).getCell(ROW_MAP.get('N')).setCellValue(studiensemesterToStringConverter(praktikumsstelle.studiensemester()));
@@ -207,6 +207,15 @@ public class ExcelExportService {
         if (!StringUtils.hasText(programmierkenntnisse)) return;
         if (Boolean.parseBoolean(programmierkenntnisse.trim())) {
             wuensche.add("Programmierkenntnisse von Vorteil");
+        }
+    }
+
+    private static String mapProgrammierkenntnisse(final String programmierkenntnisse) {
+        if (!StringUtils.hasText(programmierkenntnisse)) return "Nein";
+        if (Boolean.parseBoolean(programmierkenntnisse.trim())) {
+            return "Ja";
+        } else {
+            return "Nein";
         }
     }
 
