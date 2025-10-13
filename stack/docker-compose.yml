@@ -157,7 +157,7 @@ services:
       MAILDEV_INCOMING_PASS: pp-mail-password
 
   mail-mailpit:
-    image: axllent/mailpit@sha256:b004cc0672d0692f097ba8ab9e5956ae08eeafee3d0a6bf2ab239750101ac538
+    image: axllent/mailpit@sha256:b1f1be18af530d939a11ee8820b379e0c88eeec204d904bfad68862adced3a5a
     ports:
       - "8280:8025"
       - "8225:1025"
