@@ -159,6 +159,13 @@
                         </v-col>
                         <v-col cols="1" />
                     </v-row>
+                    <v-row>
+                        <v-col>
+                            <ausbilder-erw-fuehrungszeugnis-checkbox
+                                v-model="praktikumsstelle"
+                            ></ausbilder-erw-fuehrungszeugnis-checkbox>
+                        </v-col>
+                    </v-row>
                 </v-container>
                 <v-container
                     v-if="security.isAusbildungsleitung()"
@@ -213,6 +220,7 @@ import MeldungService from "@/api/PraktikumsstellenService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
+import AusbilderErwFuehrungszeugnisCheckbox from "@/components/praktikumsplaetze/Meldung/AusbilderErwFuehrungszeugnisCheckbox.vue";
 import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
 import AusbildungsJahrSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsJahrSelect.vue";
 import AusbildungsrichtungSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsrichtungSelect.vue";

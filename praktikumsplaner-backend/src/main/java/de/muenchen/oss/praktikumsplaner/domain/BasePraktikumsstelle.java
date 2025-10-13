@@ -32,6 +32,8 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @NotNull @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein") private String oertlicheAusbilder;
 
+    private boolean erwFuehrungszeugnisVorhanden;
+
     @NotNull @Email @Size(max = 255, message = "Die Email darf nur {max} Zeichen lang sein") private String email;
 
     @NotNull @Size(max = 5000, message = "Die Tätigkeiten dürfen nur {max} Zeichen lang sein") private String taetigkeiten;

@@ -6,6 +6,8 @@ export default class Praktikumsstelle {
 
         public oertlicheAusbilder?: string,
 
+        public erwFuehrungszeugnisVorhanden?: boolean,
+
         public email?: string,
 
         public taetigkeiten?: string,

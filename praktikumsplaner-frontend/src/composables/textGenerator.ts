@@ -49,9 +49,13 @@ export function useTextGenerator() {
                 (stelle.projektarbeit ? "Ja" : "Nein") +
                 "\n";
         }
+
         cardText +=
             "Ausbilder*in: " +
             stelle.oertlicheAusbilder +
+            "\n" +
+            "Erw. Führungszeugnis: " +
+            (stelle.erwFuehrungszeugnisVorhanden ? "Ja" : "Nein") +
             "\n" +
             "Mailadresse Ausbilder*in: " +
             stelle.email +

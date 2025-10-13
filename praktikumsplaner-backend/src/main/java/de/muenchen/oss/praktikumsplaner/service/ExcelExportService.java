@@ -1,5 +1,14 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr.JAHR1;
+import static de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr.JAHR2;
+import static de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr.JAHR3;
+import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER1;
+import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER2;
+import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER3;
+import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER4;
+import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER5;
+import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER6;
 import static org.apache.poi.ss.util.CellReference.convertColStringToIndex;
 
 import com.nimbusds.jose.util.Pair;
@@ -13,11 +22,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -46,6 +53,9 @@ public class ExcelExportService {
 
     @Value("${app.export.dienststelle-adresse:}")
     private String dienstelleAdresse;
+
+    @Value("${app.export.default-referat:}")
+    private String defaultReferat;
 
     public String getBase64EncodedExcelFile() throws IOException {
         XSSFWorkbook workbook = fillTemplatePraktikumsstellen();
@@ -82,7 +92,7 @@ public class ExcelExportService {
             AusbildungsPraktikumsstelleDto praktikumsstelle = assignedAusbildungspraktikumsstellen.get(i);
             Row row = getRow(ausbildungsSheet, i);
 
-            row.getCell(convertColStringToIndex("A")).setCellValue(praktikumsstelle.referat().name());
+            row.getCell(convertColStringToIndex("A")).setCellValue(praktikumsstelle.referat() != null ? praktikumsstelle.referat().name() : defaultReferat);
             row.getCell(convertColStringToIndex("B")).setCellValue(this.oertlAusbildungsleitungName);
             row.getCell(convertColStringToIndex("C")).setCellValue(praktikumsstelle.dienststelle());
             // row.getCell(convertColStringToIndex"D")).setCellValue(---);
@@ -91,7 +101,7 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
             row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
             row.getCell(convertColStringToIndex("I")).setCellValue(getWuensche(praktikumsstelle));
-            // row.getCell(convertColStringToIndex"J")).setCellValue(---);
+            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? "Ja" : "Nein");
             row.getCell(convertColStringToIndex("K")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.dringlichkeit().name());
             row.getCell(convertColStringToIndex("M")).setCellValue(ausbildungsjahrToStringConverter(praktikumsstelle.ausbildungsjahr()));
@@ -107,7 +117,7 @@ public class ExcelExportService {
             StudiumsPraktikumsstelleDto praktikumsstelle = assignedStudiumspraktikumsstellen.get(i);
             Row row = getRow(studiumsSheet, i);
 
-            row.getCell(convertColStringToIndex("A")).setCellValue(praktikumsstelle.referat().name());
+            row.getCell(convertColStringToIndex("A")).setCellValue(praktikumsstelle.referat() != null ? praktikumsstelle.referat().name() : defaultReferat);
             row.getCell(convertColStringToIndex("B")).setCellValue(this.oertlAusbildungsleitungName);
             row.getCell(convertColStringToIndex("C")).setCellValue(praktikumsstelle.dienststelle());
             // row.getCell(convertColStringToIndex"D")).setCellValue(---);
@@ -116,7 +126,7 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
             row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
             row.getCell(convertColStringToIndex("I")).setCellValue(getWuensche(praktikumsstelle));
-            // row.getCell(convertColStringToIndex"J")).setCellValue(---);
+            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? "Ja" : "Nein");
             row.getCell(convertColStringToIndex("K")).setCellValue(mapProgrammierkenntnisse(praktikumsstelle.programmierkenntnisse()));
             row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
@@ -164,11 +174,13 @@ public class ExcelExportService {
                 .referat(praktikumsstelle.referat())
                 .dienststelle(praktikumsstelle.dienststelle())
                 .oertlicheAusbilder(praktikumsstelle.oertlicheAusbilder())
+                .email(praktikumsstelle.email())
+                .erwFuehrungszeugnisVorhanden(praktikumsstelle.erwFuehrungszeugnisVorhanden())
                 .taetigkeiten(praktikumsstelle.taetigkeiten())
                 .namentlicheAnforderung(praktikumsstelle.namentlicheAnforderung())
                 .programmierkenntnisse(praktikumsstelle.programmierkenntnisse())
                 .dringlichkeit(praktikumsstelle.dringlichkeit())
-                .ausbildungsjahr(Set.of(Ausbildungsjahr.JAHR1, Ausbildungsjahr.JAHR2, Ausbildungsjahr.JAHR3))
+                .ausbildungsjahr(Set.of(JAHR1, JAHR2, JAHR3))
                 .ausbildungsrichtung(praktikumsstelle.assignedNwk().ausbildungsrichtung())
                 .planstelleVorhanden(praktikumsstelle.planstelleVorhanden())
                 .assignedNwk(praktikumsstelle.assignedNwk())
@@ -180,12 +192,14 @@ public class ExcelExportService {
                 .referat(praktikumsstelle.referat())
                 .dienststelle(praktikumsstelle.dienststelle())
                 .oertlicheAusbilder(praktikumsstelle.oertlicheAusbilder())
+                .email(praktikumsstelle.email())
+                .erwFuehrungszeugnisVorhanden(praktikumsstelle.erwFuehrungszeugnisVorhanden())
                 .taetigkeiten(praktikumsstelle.taetigkeiten())
                 .namentlicheAnforderung(praktikumsstelle.namentlicheAnforderung())
                 .programmierkenntnisse(praktikumsstelle.programmierkenntnisse())
                 .dringlichkeit(praktikumsstelle.dringlichkeit())
-                .studiensemester(Set.of(Studiensemester.SEMESTER1, Studiensemester.SEMESTER2, Studiensemester.SEMESTER3,
-                        Studiensemester.SEMESTER4, Studiensemester.SEMESTER5, Studiensemester.SEMESTER6))
+                .studiensemester(Set.of(SEMESTER1, SEMESTER2, SEMESTER3,
+                        SEMESTER4, SEMESTER5, SEMESTER6))
                 .studiengang(praktikumsstelle.assignedNwk().studiengang())
                 .planstelleVorhanden(praktikumsstelle.planstelleVorhanden())
                 .assignedNwk(praktikumsstelle.assignedNwk())
@@ -216,31 +230,33 @@ public class ExcelExportService {
     }
 
     private static String ausbildungsjahrToStringConverter(final Set<Ausbildungsjahr> ausbildungsjahr) {
-        StringJoiner returnString = new StringJoiner(", ");
-        List<Ausbildungsjahr> ausbildungsjahrSortedList = ausbildungsjahr.stream().sorted(Comparator.comparingInt(Ausbildungsjahr::ordinal))
-                .collect(Collectors.toCollection(ArrayList::new));
-        for (Ausbildungsjahr jahr : ausbildungsjahrSortedList) {
-            switch (jahr) {
-            case JAHR1 -> returnString.add("vorrangig 1. Jahr");
-            case JAHR2 -> returnString.add("vorrangig 2. Jahr");
-            case JAHR3 -> returnString.add("vorrangig 3. Jahr");
-            }
-        }
-        return returnString.toString();
+
+        if (ausbildungsjahr.containsAll(List.of(JAHR1, JAHR2, JAHR3)))
+            return "";
+
+        if (ausbildungsjahr.contains(JAHR3))
+            return "vorrangig 3. Jahr";
+        if (ausbildungsjahr.contains(JAHR2))
+            return "vorrangig 2. Jahr";
+        if (ausbildungsjahr.contains(JAHR1))
+            return "vorrangig 1. Jahr";
+
+        return "";
     }
 
     private static String studiensemesterToStringConverter(final Set<Studiensemester> studiensemester) {
-        StringJoiner returnString = new StringJoiner(", ");
-        List<Studiensemester> studiensemesterSortedList = studiensemester.stream().sorted(Comparator.comparingInt(Studiensemester::ordinal))
-                .collect(Collectors.toCollection(ArrayList::new));
-        for (Studiensemester semester : studiensemesterSortedList) {
-            switch (semester) {
-            case SEMESTER1, SEMESTER2 -> returnString.add("vorrangig 1. Jahr");
-            case SEMESTER3, SEMESTER4 -> returnString.add("vorrangig 2. Jahr");
-            case SEMESTER5, SEMESTER6 -> returnString.add("vorrangig 3. Jahr");
-            }
-        }
-        return returnString.toString();
+
+        if (studiensemester.containsAll(List.of(SEMESTER1, SEMESTER2, SEMESTER3, SEMESTER4, SEMESTER5, SEMESTER6)))
+            return "";
+
+        if (studiensemester.contains(SEMESTER5) || studiensemester.contains(SEMESTER6))
+            return "vorrangig 3. Jahr";
+        if (studiensemester.contains(SEMESTER3) || studiensemester.contains(SEMESTER4))
+            return "vorrangig 2. Jahr";
+        if (studiensemester.contains(SEMESTER1) || studiensemester.contains(SEMESTER2))
+            return "vorrangig 1. Jahr";
+
+        return "";
     }
 
     private static Row getRow(XSSFSheet sheet, int i) {
