@@ -53,6 +53,9 @@ app:
   mail:
     from:
     reply-to:
+  export:
+    oertl-ausbildungsleitung-name:
+    dienststelle-adresse:
   db:
     postgres:
       url: 
