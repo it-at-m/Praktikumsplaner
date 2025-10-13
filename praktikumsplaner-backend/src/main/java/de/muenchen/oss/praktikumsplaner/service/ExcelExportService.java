@@ -41,10 +41,10 @@ public class ExcelExportService {
     public static final int AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX = 1;
     public static final int STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX = 2;
 
-    @Value("${app.export.oertl-ausbildungsleitung-name:")
+    @Value("${app.export.oertl-ausbildungsleitung-name:}")
     private String oertlAusbildungsleitungName;
 
-    @Value("${app.export.dienstelle-adresse:")
+    @Value("${app.export.dienstelle-adresse:}")
     private String dienstelleAdresse;
 
     private static final Map<Character, Integer> ROW_MAP = IntStream.range(0, 26)
