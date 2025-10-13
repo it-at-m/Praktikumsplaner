@@ -44,7 +44,7 @@ public class ExcelExportService {
     @Value("${app.export.oertl-ausbildungsleitung-name:}")
     private String oertlAusbildungsleitungName;
 
-    @Value("${app.export.dienstelle-adresse:}")
+    @Value("${app.export.dienststelle-adresse:}")
     private String dienstelleAdresse;
 
     private static final Map<Character, Integer> ROW_MAP = IntStream.range(0, 26)
@@ -204,8 +204,8 @@ public class ExcelExportService {
     }
 
     private static void addProgrammierkenntnisseWunsch(StringJoiner wuensche, final String programmierkenntnisse) {
-        if (programmierkenntnisse == null) return;
-        if (programmierkenntnisse.equals("true")) {
+        if (!StringUtils.hasText(programmierkenntnisse)) return;
+        if (Boolean.parseBoolean(programmierkenntnisse.trim())) {
             wuensche.add("Programmierkenntnisse von Vorteil");
         }
     }
