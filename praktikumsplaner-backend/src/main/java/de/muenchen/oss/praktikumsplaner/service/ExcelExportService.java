@@ -101,14 +101,15 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
             row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
             row.getCell(convertColStringToIndex("I")).setCellValue(getWuensche(praktikumsstelle));
-            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? "Ja" : "Nein");
-            row.getCell(convertColStringToIndex("K")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
-            row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.dringlichkeit().name());
-            row.getCell(convertColStringToIndex("M")).setCellValue(ausbildungsjahrToStringConverter(praktikumsstelle.ausbildungsjahr()));
-            row.getCell(convertColStringToIndex("N")).setCellValue(praktikumsstelle.ausbildungsrichtung().name());
-            row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.assignedNwk().nachname());
-            row.getCell(convertColStringToIndex("P")).setCellValue(praktikumsstelle.assignedNwk().vorname());
-            row.getCell(convertColStringToIndex("Q")).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
+            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.projektarbeit() ? "Ja" : "Nein");
+            row.getCell(convertColStringToIndex("K")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? "Ja" : "Nein");
+            row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
+            row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
+            row.getCell(convertColStringToIndex("N")).setCellValue(ausbildungsjahrToStringConverter(praktikumsstelle.ausbildungsjahr()));
+            row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.ausbildungsrichtung().name());
+            row.getCell(convertColStringToIndex("P")).setCellValue(praktikumsstelle.assignedNwk().nachname());
+            row.getCell(convertColStringToIndex("Q")).setCellValue(praktikumsstelle.assignedNwk().vorname());
+            row.getCell(convertColStringToIndex("R")).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
         }
     }
 
