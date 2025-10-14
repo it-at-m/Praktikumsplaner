@@ -117,7 +117,7 @@ Text field for the contact email of the [örtliche Ausbilderin](./../glossary.md
 
 #### Erweitertes Führungszeugnis örtliche Ausbilderin
 
-A checkbox for cases where the [örtliche Ausbilderin](./../glossary.md#ortliche-ausbilderin) has an 
+A checkbox for cases where the [örtliche Ausbilderin](./../glossary.md#ortliche-ausbilderin) has an
 extended certificate of good conduct (Erweitertes Führungszeugnis) for supervising underage trainees.
 
 ### Meldezeitraums Auswahl
