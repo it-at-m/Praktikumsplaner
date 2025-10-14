@@ -61,13 +61,14 @@ public class ExcelExportServiceTest {
             assertEquals(ausbildungsPraktikumsstellen.get(0).taetigkeiten(), ausbildungsSheet.getRow(3).getCell(7).getStringCellValue());
             assertThat(ausbildungsSheet.getRow(3).getCell(8).getStringCellValue(), not(containsString("Programmierkenntnisse von Vorteil")));
             assertThat(ausbildungsSheet.getRow(3).getCell(8).getStringCellValue(), not(containsString("Namentliche Anforderung:")));
-            assertEquals("vorrangig 1. Jahr", ausbildungsSheet.getRow(3).getCell(12).getStringCellValue());
-            assertEquals(ausbildungsPraktikumsstellen.get(0).dringlichkeit().name(), ausbildungsSheet.getRow(3).getCell(11).getStringCellValue());
-            assertEquals(ausbildungsPraktikumsstellen.get(0).ausbildungsrichtung().name(), ausbildungsSheet.getRow(3).getCell(13).getStringCellValue());
-            assertEquals("Praktikumsplatz", ausbildungsSheet.getRow(3).getCell(10).getStringCellValue());
-            assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().nachname(), ausbildungsSheet.getRow(3).getCell(14).getStringCellValue());
-            assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().vorname(), ausbildungsSheet.getRow(3).getCell(15).getStringCellValue());
-            assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().jahrgang(), ausbildungsSheet.getRow(3).getCell(16).getStringCellValue());
+            assertEquals("Nein", ausbildungsSheet.getRow(3).getCell(9).getStringCellValue());
+            assertEquals("vorrangig 1. Jahr", ausbildungsSheet.getRow(3).getCell(13).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).dringlichkeit().name(), ausbildungsSheet.getRow(3).getCell(12).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).ausbildungsrichtung().name(), ausbildungsSheet.getRow(3).getCell(14).getStringCellValue());
+            assertEquals("Praktikumsplatz", ausbildungsSheet.getRow(3).getCell(11).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().nachname(), ausbildungsSheet.getRow(3).getCell(15).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().vorname(), ausbildungsSheet.getRow(3).getCell(16).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().jahrgang(), ausbildungsSheet.getRow(3).getCell(17).getStringCellValue());
 
             List<StudiumsPraktikumsstelleDto> studiumsPraktikumsstellen = getTestListOfStudiumsPraktikumsstelleDto();
 
