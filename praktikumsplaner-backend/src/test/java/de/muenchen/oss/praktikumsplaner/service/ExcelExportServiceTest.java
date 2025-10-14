@@ -69,6 +69,7 @@ public class ExcelExportServiceTest {
             assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().nachname(), ausbildungsSheet.getRow(3).getCell(15).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().vorname(), ausbildungsSheet.getRow(3).getCell(16).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.get(0).assignedNwk().jahrgang(), ausbildungsSheet.getRow(3).getCell(17).getStringCellValue());
+            assertEquals("Ja", ausbildungsSheet.getRow(4).getCell(9).getStringCellValue());
 
             List<StudiumsPraktikumsstelleDto> studiumsPraktikumsstellen = getTestListOfStudiumsPraktikumsstelleDto();
 
