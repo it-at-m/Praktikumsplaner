@@ -16,6 +16,8 @@ public record AusbildungsPraktikumsstelleDto(@NotNull UUID id,
 
         @NotNull String oertlicheAusbilder,
 
+        boolean erwFuehrungszeugnisVorhanden,
+
         @Email @NotNull String email,
 
         @NotNull String taetigkeiten,

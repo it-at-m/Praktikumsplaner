@@ -672,7 +672,7 @@ public class PraktikumsstellenServiceTest {
     public void testUpdateStudiumPraktikumstelle() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto studiumsPraktikumsstelle = new UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto(
-                "GL13", "John Smith", "John@smith.com",
+                "GL13", "John Smith", false, "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, "", false,
                 Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id());
 
@@ -698,7 +698,7 @@ public class PraktikumsstellenServiceTest {
     public void testUpdateStudiumPraktikumstelleWithoutExisting() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto studiumsPraktikumsstelle = new UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto(
-                "GL13", "John Smith", "John@smith.com",
+                "GL13", "John Smith", false, "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, "", false,
                 Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, meldezeitraumDto.id());
 
@@ -714,7 +714,7 @@ public class PraktikumsstellenServiceTest {
     public void testUpdateAusbildungsPraktikumstelle() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto ausbildungsPraktikumsstelle = new UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto(
-                "GL13", "John Smith", "John@smith.com",
+                "GL13", "John Smith", false, "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, false, "", false,
                 Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, meldezeitraumDto.id());
 
@@ -740,7 +740,7 @@ public class PraktikumsstellenServiceTest {
     public void testUpdateAusbildungsPraktikumstelleWithoutExisting() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto ausbildungsPraktikumsstelle = new UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto(
-                "GL13", "John Smith", "John@smith.com",
+                "GL13", "John Smith", false, "John@smith.com",
                 "Planung von Events", Dringlichkeit.ZWINGEND, "", Referat.RIT, false, "", false,
                 Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, meldezeitraumDto.id());
 
@@ -761,7 +761,7 @@ public class PraktikumsstellenServiceTest {
                 false, meldezeitraumDto.id(), nwk);
         ausbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDto.id());
         UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto updateAusbildungsPraktikumsstelleWithMeldezeitraumDto = new UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto(
-                "TESTTEST", "Ausbilder", "ausbilder@email.ausbilder", "Taetigkeiten", Dringlichkeit.ZWINGEND, null, Referat.ITM, false, null, false,
+                "TESTTEST", "Ausbilder", false, "ausbilder@email.ausbilder", "Taetigkeiten", Dringlichkeit.ZWINGEND, null, Referat.ITM, false, null, false,
                 Set.of(Ausbildungsjahr.JAHR1), Ausbildungsrichtung.FISI, meldezeitraumDto.id());
 
         when(ausbildungsRepository.findById(ausbildungsPraktikumsstelle.getId())).thenReturn(Optional.of(ausbildungsPraktikumsstelle));
@@ -786,7 +786,7 @@ public class PraktikumsstellenServiceTest {
                 false, meldezeitraumDto.id(), nwk);
         ausbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDto.id());
         UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto updateAusbildungsPraktikumsstelleWithMeldezeitraumDto = new UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto(
-                "TESTTEST", "Ausbilder", "ausbilder@email.ausbilder", "Taetigkeiten", Dringlichkeit.DRINGEND, null, Referat.ITM, false, null, false,
+                "TESTTEST", "Ausbilder", false, "ausbilder@email.ausbilder", "Taetigkeiten", Dringlichkeit.DRINGEND, null, Referat.ITM, false, null, false,
                 Set.of(Ausbildungsjahr.JAHR1), Ausbildungsrichtung.FISI, meldezeitraumDto.id());
 
         when(ausbildungsRepository.findById(ausbildungsPraktikumsstelle.getId())).thenReturn(Optional.of(ausbildungsPraktikumsstelle));
@@ -806,7 +806,7 @@ public class PraktikumsstellenServiceTest {
                 null, meldezeitraumDto.id(), nwk);
         studiumsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDto.id());
         UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto updateStudiumsPraktikumsstelleWithMeldezeitraumDto = new UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto(
-                "TESTTEST", "Ausbilder", "ausbilder@email.ausbilder", "Taetigkeiten", Dringlichkeit.ZWINGEND, null, Referat.ITM, null, false,
+                "TESTTEST", "Ausbilder", false, "ausbilder@email.ausbilder", "Taetigkeiten", Dringlichkeit.ZWINGEND, null, Referat.ITM, null, false,
                 Set.of(Studiensemester.SEMESTER1), Studiengang.BSC, meldezeitraumDto.id());
 
         when(studiumsRepository.findById(studiumsPraktikumsstelle.getId())).thenReturn(Optional.of(studiumsPraktikumsstelle));
@@ -831,7 +831,7 @@ public class PraktikumsstellenServiceTest {
                 null, meldezeitraumDto.id(), nwk);
 
         UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto updateStudiumsPraktikumsstelleWithMeldezeitraumDto = new UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto(
-                "TESTTEST", "Ausbilder", "ausbilder@email.ausbilder", "Taetigkeiten", Dringlichkeit.DRINGEND, null, Referat.ITM, null, false,
+                "TESTTEST", "Ausbilder", false, "ausbilder@email.ausbilder", "Taetigkeiten", Dringlichkeit.DRINGEND, null, Referat.ITM, null, false,
                 Set.of(Studiensemester.SEMESTER1), Studiengang.BSC, meldezeitraumDto.id());
 
         when(studiumsRepository.findById(studiumsPraktikumsstelle.getId())).thenReturn(Optional.of(studiumsPraktikumsstelle));

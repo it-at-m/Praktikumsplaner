@@ -15,6 +15,8 @@ public record UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto(@NotNull String
 
         @NotNull String oertlicheAusbilder,
 
+        boolean erwFuehrungszeugnisVorhanden,
+
         @Email @NotNull String email,
 
         @NotNull String taetigkeiten,

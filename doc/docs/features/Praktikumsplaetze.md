@@ -115,6 +115,11 @@ Text field for the name of the person ([örtlicher Ausbilderin](./../glossary.md
 
 Text field for the contact email of the [örtliche Ausbilderin](./../glossary.md#ortliche-ausbilderin) 
 
+#### Erweitertes Führungszeugnis örtliche Ausbilderin
+
+A checkbox for cases where the [örtliche Ausbilderin](./../glossary.md#ortliche-ausbilderin) has an
+extended certificate of good conduct (Erweitertes Führungszeugnis) for supervising underage trainees.
+
 ### Meldezeitraums Auswahl
 
 This field lets you choose the [Meldezeitraum](./../glossary.md#meldezeitraum) to assign the [Praktikumsstelle](./../glossary.md#praktikumsstelle) to.

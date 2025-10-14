@@ -14,6 +14,8 @@ public record CreateAusbildungsPraktikumsstelleDto(@NotNull String dienststelle,
 
         @NotNull String oertlicheAusbilder,
 
+        boolean erwFuehrungszeugnisVorhanden,
+
         @Email @NotNull String email,
 
         @NotNull String taetigkeiten,
