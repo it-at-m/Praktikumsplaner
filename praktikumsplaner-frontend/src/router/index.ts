@@ -23,7 +23,7 @@ const routes = [
         name: "nachwuchskraefte",
         component: NachwuchskraefteView,
         meta: {
-            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
+            requiresRole: ["AUSBILDUNGSLEITUNG"],
         },
     },
     {
@@ -31,7 +31,7 @@ const routes = [
         name: "meldezeitraum",
         component: Meldezeitraeume,
         meta: {
-            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
+            requiresRole: ["AUSBILDUNGSLEITUNG"],
         },
     },
     {
@@ -39,7 +39,7 @@ const routes = [
         name: "praktikumsplätze",
         component: PraktikumsplaetzeView,
         meta: {
-            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+            requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
         },
     },
     {
@@ -47,7 +47,7 @@ const routes = [
         name: "MeldungAusbildung",
         component: MeldungAusbildung,
         meta: {
-            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+            requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
         },
     },
     {
@@ -55,7 +55,7 @@ const routes = [
         name: "MeldungStudium",
         component: MeldungStudium,
         meta: {
-            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG", "ROLE_AUSBILDER"],
+            requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
         },
     },
     {
@@ -63,7 +63,7 @@ const routes = [
         name: "Zuweisung",
         component: assignView,
         meta: {
-            requiresRole: ["ROLE_AUSBILDUNGSLEITUNG"],
+            requiresRole: ["AUSBILDUNGSLEITUNG"],
         },
     },
     {

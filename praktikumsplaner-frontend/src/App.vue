@@ -56,8 +56,8 @@
                 <v-list-item
                     v-if="
                         security.checkForAnyRole([
-                            'ROLE_AUSBILDER',
-                            'ROLE_AUSBILDUNGSLEITUNG',
+                            'AUSBILDER',
+                            'AUSBILDUNGSLEITUNG',
                         ])
                     "
                     :to="{ path: '/praktikumsplaetze' }"
@@ -110,8 +110,19 @@ const security = useSecurity();
 onBeforeMount(() => {
     userService.getPermissions().then((userinfo) => {
         userStore.setUsername(userinfo.name);
-        if (userinfo.user_roles) {
-            userStore.setRoles(userinfo.user_roles);
+
+        // Find the matching resource starting with "praktikumsplaner"
+        const resourceAccess = userinfo.resource_access ?? {};
+        const praktikumsplanerKey = Object.keys(resourceAccess)
+            .find(key => key.startsWith("praktikumsplaner"));
+
+        // Extract the roles
+        const praktikumsplanRoles = praktikumsplanerKey
+            ? resourceAccess[praktikumsplanerKey].roles ?? []
+            : [];
+
+        if (praktikumsplanRoles.length > 0) {
+            userStore.setRoles(praktikumsplanRoles);
         }
     });
 });

@@ -2,8 +2,6 @@ id: change test users
 author: LuisEinig
 realm: ${SSO_REALM}
 changes:
-  - deleteUser:
-      name: testuser
   - addUser:
       name: testleitung
       lastName: lastName

@@ -19,3 +19,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/certs
+
