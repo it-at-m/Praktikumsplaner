@@ -113,12 +113,13 @@ onBeforeMount(() => {
 
         // Find the matching resource starting with "praktikumsplaner"
         const resourceAccess = userinfo.resource_access ?? {};
-        const praktikumsplanerKey = Object.keys(resourceAccess)
-            .find(key => key.startsWith("praktikumsplaner"));
+        const praktikumsplanerKey = Object.keys(resourceAccess).find((key) =>
+            key.startsWith("praktikumsplaner")
+        );
 
         // Extract the roles
         const praktikumsplanRoles = praktikumsplanerKey
-            ? resourceAccess[praktikumsplanerKey].roles ?? []
+            ? (resourceAccess[praktikumsplanerKey].roles ?? [])
             : [];
 
         if (praktikumsplanRoles.length > 0) {
