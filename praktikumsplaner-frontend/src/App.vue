@@ -123,7 +123,9 @@ onBeforeMount(() => {
             : [];
 
         if (praktikumsplanRoles.length > 0) {
-            userStore.setRoles(praktikumsplanRoles);
+            userStore.setRoles(
+                praktikumsplanRoles.map((role) => role.toUpperCase())
+            );
         }
     });
 });
