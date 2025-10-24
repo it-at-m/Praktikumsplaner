@@ -19,6 +19,8 @@ public final class TestConstants {
 
     public static final String SPRING_NO_SECURITY_PROFILE = "no-security";
 
+    public static final String TESTCONTAINERS_POSTGRES_IMAGE = "postgres:17.4-alpine3.21";
+
     @NoArgsConstructor
     @Getter
     @Setter

@@ -13,7 +13,6 @@ spring:
   h2.console.enabled: true
   jpa:
     database: H2
-
     # Logging for database operation
     show-sql: true
     properties:
@@ -23,14 +22,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: https://ssodev.muenchen.de/auth/realms/${realm}/protocol/openid-connect/certs
+          jwk-set-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/certs
 
 
-# Define the keycloak development realm here
-realm: <YOUR_DEV_REALM>
-
-security:
-  # possible values: none, all, changing (With changing, only changing requests such as POST, PUT, DELETE are logged)
-  logging.requests: all
-  oauth2:
-    resource.user-info-uri: https://ssodev.muenchen.de/auth/realms/${realm}/protocol/openid-connect/userinfo
+refarch:
+  security:
+    logging-mode: all

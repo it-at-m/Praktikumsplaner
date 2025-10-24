@@ -1,8 +1,4 @@
-/*
- * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
- * der Landeshauptstadt München, 2023
- */
-package de.muenchen.oss.praktikumsplaner.configuration.nfcconverter;
+package de.muenchen.oss.praktikumsplaner.configuration.filter.nfcconverter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -13,5 +13,11 @@ export default interface UserInfo {
 
     name: string;
 
-    user_roles?: string[];
+    // Key isn't fix and depends on client config on sso
+    resource_access?: Record<
+        string,
+        {
+            roles: string[];
+        }
+    >;
 }

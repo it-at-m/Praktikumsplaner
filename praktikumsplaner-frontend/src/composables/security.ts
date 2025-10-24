@@ -24,11 +24,11 @@ export function useSecurity() {
     }
 
     function isAusbildungsleitung() {
-        return checkForRole("ROLE_AUSBILDUNGSLEITUNG");
+        return checkForRole("AUSBILDUNGSLEITUNG");
     }
 
     function isAusbilder() {
-        return checkForRole("ROLE_AUSBILDER");
+        return checkForRole("AUSBILDER");
     }
 
     return {
