@@ -64,6 +64,7 @@
                     </router-link>
                 </v-col>
                 <v-col
+                    v-if="security.checkForAnyRole(['AUSBILDER', 'AUSBILDUNGSLEITUNG'])"
                     cols="3"
                     class="mb-4"
                 >
