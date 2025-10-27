@@ -8,7 +8,7 @@
                     cols="3"
                     class="d-flex align-center justify-start"
                 >
-                    <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+                    <v-app-bar-nav-icon @click.stop="toggleDrawer" />
                     <router-link to="/">
                         <img
                             height="50"
@@ -107,17 +107,19 @@ const snackbarStore = useSnackbarStore();
 const userService = new UserService();
 const security = useSecurity();
 
+const toggleDrawer = () => {
+    drawer.value = !drawer.value;
+};
+
 onBeforeMount(() => {
     userService.getPermissions().then((userinfo) => {
         userStore.setUsername(userinfo.name);
 
-        // Find the matching resource starting with "praktikumsplaner"
         const resourceAccess = userinfo.resource_access ?? {};
         const praktikumsplanerKey = Object.keys(resourceAccess).find((key) =>
             key.startsWith("praktikumsplaner")
         );
 
-        // Extract the roles
         const praktikumsplanRoles = praktikumsplanerKey
             ? (resourceAccess[praktikumsplanerKey].roles ?? [])
             : [];
