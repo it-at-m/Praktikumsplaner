@@ -40,7 +40,7 @@ The first name (Vorname) has to be between 2 and 255 characters.
 
 The last name (Nachname) has to be between 2 and 255 characters.
 
-The training direction or course of study (Studiengang) has to be one of these: 
+The training direction or course of study (Studiengang) has to be one of these:
 
 * **Ausbildung:** FISI, QE2, KFB, VFAK
 * **Studiengang:** BSC, BWI, VI, LLB, PUMA, QE3
