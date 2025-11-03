@@ -60,7 +60,7 @@ import emitter from "@/stores/eventBus";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
-const file = ref<File[]>();
+const file = ref<File | null>(null);
 const form = ref<HTMLFormElement>();
 const excelFormat =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -81,13 +81,13 @@ function uploadFile() {
     form.value?.validate().then((validation: { valid: boolean }) => {
         if (!validation.valid || !file.value) return;
         visible.value = false;
-        NwkService.uploadExcelFile(file.value[0], loading)
+        NwkService.uploadExcelFile(file.value, loading)
             .then(() => {
                 emitter.emit("nwkCreated");
             })
             .finally(() => {
                 form.value?.reset();
-                file.value = [];
+                file.value = null;
             });
     });
 }

@@ -153,26 +153,28 @@ public class ExcelImportService {
     private Set<DayOfWeek> extractVorlesungstage(final String vorlesungstageString) {
         return Arrays.stream(vorlesungstageString.split(SPLIT_VORLESUNGSTAGE_REGEX))
                 .map(String::trim)
+                .map(String::toUpperCase)
                 .filter(vorlesungstagAsString -> !vorlesungstagAsString.isEmpty())
                 .map(this::mapToDayOfWeek)
                 .collect(Collectors.toSet());
     }
 
     private DayOfWeek mapToDayOfWeek(final String vorlesungstagString) {
+
         switch (vorlesungstagString) {
-        case "Mo" -> {
+        case "MO" -> {
             return DayOfWeek.MONDAY;
         }
-        case "Di" -> {
+        case "DI" -> {
             return DayOfWeek.TUESDAY;
         }
-        case "Mi" -> {
+        case "MI" -> {
             return DayOfWeek.WEDNESDAY;
         }
-        case "Do" -> {
+        case "DO" -> {
             return DayOfWeek.THURSDAY;
         }
-        case "Fr" -> {
+        case "FR" -> {
             return DayOfWeek.FRIDAY;
         }
         }
