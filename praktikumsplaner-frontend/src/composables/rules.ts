@@ -1,21 +1,14 @@
 export function useRules() {
     function fileTypeRule(acceptedType: string, errorMessage: string) {
-        return (fileList: File[] | null | undefined) => {
-            if (!fileList || fileList.length === 0) {
-                return true;
-            }
-            const file = fileList[0];
+        return (file: File | null | undefined) => {
             if (!file) return true;
             return file.type === acceptedType || errorMessage;
         };
     }
 
     function fileRequiredRule(message = "Eine Datei ist erforderlich.") {
-        return (value: File[] | null | undefined) => {
-            return (
-                (value !== null && value !== undefined && value.length > 0) ||
-                message
-            );
+        return (value: File | null | undefined) => {
+            return (value !== null && value !== undefined) || message;
         };
     }
 

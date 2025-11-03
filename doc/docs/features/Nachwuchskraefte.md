@@ -40,7 +40,10 @@ The first name (Vorname) has to be between 2 and 255 characters.
 
 The last name (Nachname) has to be between 2 and 255 characters.
 
-The training direction or course of study (Studiengang) has to be one of these: BSC, BWI, VI, or FISI.
+The training direction or course of study (Studiengang) has to be one of these:
+
+* **Ausbildung:** FISI, QE2, KFB, VFAK
+* **Studiengang:** BSC, BWI, VI, LLB, PUMA, QE3
 
 The year (Jahrgang) has to be in this format: XX/XX Example: 20/24 for someone who started training in 2020 and finishes in 2024.
 
