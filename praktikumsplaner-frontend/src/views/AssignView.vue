@@ -37,7 +37,7 @@
                 />
             </v-col>
         </v-row>
-        <v-row>
+        <v-row v-if="!loadingNwk && !loadingPraktikumsstellen">
             <v-spacer></v-spacer>
             <v-btn
                 prepend-icon="mdi-mail"
@@ -190,12 +190,13 @@ function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
     const helperMap = new Map<string, Praktikumsstelle[]>();
     PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
         "most_recent"
-    ).then((fetchedStellen) => {
-        for (const [key, value] of Object.entries(fetchedStellen)) {
-            helperMap.set(key, value);
-        }
-        praktikumsstellenMap.value = helperMap;
-        loadingPraktikumsstellen.value = false;
-    });
+    )
+        .then((fetchedStellen) => {
+            for (const [key, value] of Object.entries(fetchedStellen)) {
+                helperMap.set(key, value);
+            }
+            praktikumsstellenMap.value = helperMap;
+        })
+        .finally(() => (loadingPraktikumsstellen.value = false));
 }
 </script>
