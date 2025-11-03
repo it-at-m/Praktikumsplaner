@@ -45,7 +45,7 @@ app:
 sso:
   url: http://keycloak:8100
   realm: praktikumsplaner
-  client: praktikumsplaner
+  clientid: praktikumsplaner
 
 refarch:
   security:

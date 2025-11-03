@@ -97,7 +97,7 @@ app:
 
 refarch:
   security:
-    client-id: ${sso.client}
+    client-id: ${sso.clientid}
     user-info-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
 
 logging:
