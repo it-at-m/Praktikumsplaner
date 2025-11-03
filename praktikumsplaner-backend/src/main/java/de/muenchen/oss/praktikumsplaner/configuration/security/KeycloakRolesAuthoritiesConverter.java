@@ -34,13 +34,17 @@ public class KeycloakRolesAuthoritiesConverter implements Converter<Jwt, Collect
 
     private Collection<? extends GrantedAuthority> extractRoles(final Jwt jwt) {
         return Optional.ofNullable(jwt.getClaimAsMap(CLAIM_NAME))
-                .map(resourceAccess -> resourceAccess.get(securityProperties.getClientId()))
+                .flatMap(resourceAccess -> resourceAccess.entrySet().stream()
+                        .filter(entry -> entry.getKey().startsWith(securityProperties.getClientId()))
+                        .findFirst()
+                        .map(Map.Entry::getValue))
                 .filter(client -> client instanceof Map)
                 .map(client -> (Map<String, Object>) client)
                 .map(client -> client.get("roles"))
                 .filter(roles -> roles instanceof Collection)
                 .map(roles -> (Collection<String>) roles)
                 .map(roles -> roles.stream()
+                        .map(String::toUpperCase)
                         .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                         .collect(Collectors.toSet()))
                 .orElse(Collections.emptySet());

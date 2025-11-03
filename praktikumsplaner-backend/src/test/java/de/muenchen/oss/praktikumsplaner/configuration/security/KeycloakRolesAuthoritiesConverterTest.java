@@ -25,7 +25,7 @@ class KeycloakRolesAuthoritiesConverterTest {
     private static final String TEST_CLIENT = "test-client";
     private static final String RESOURCE_ACCESS_CLAIM = "resource_access";
 
-    @Mock
+    @Mock(strictness = Mock.Strictness.LENIENT)
     private SecurityProperties securityProperties;
     @InjectMocks
     private KeycloakRolesAuthoritiesConverter converter;
@@ -49,8 +49,8 @@ class KeycloakRolesAuthoritiesConverterTest {
         // Assert
         assert authorities != null;
         assertEquals(2, authorities.size());
-        assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_admin")));
-        assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_user")));
+        assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")));
+        assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
     @Test
@@ -89,7 +89,9 @@ class KeycloakRolesAuthoritiesConverterTest {
     @Test
     void testConvert_NullClaims() {
         // Setup
+        final Map<String, Object> resourceAccessClaim = new HashMap<>();
         final Jwt jwt = mock(Jwt.class);
+        when(jwt.getClaimAsMap(RESOURCE_ACCESS_CLAIM)).thenReturn(resourceAccessClaim);
 
         // Call
         final Collection<GrantedAuthority> authorities = converter.convert(jwt);
