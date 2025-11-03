@@ -25,18 +25,16 @@ class KeycloakRolesAuthoritiesConverterTest {
     private static final String TEST_CLIENT = "test-client";
     private static final String RESOURCE_ACCESS_CLAIM = "resource_access";
 
-    @Mock(strictness = Mock.Strictness.LENIENT)
+    @Mock
     private SecurityProperties securityProperties;
     @InjectMocks
     private KeycloakRolesAuthoritiesConverter converter;
 
-    @BeforeEach
-    void setUp() {
-        when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
-    }
 
     @Test
     void testConvert_WithRoles() {
+        when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
+
         // Setup
         final Map<String, Object> resourceAccessClaim = new HashMap<>();
         resourceAccessClaim.put(TEST_CLIENT, Map.of("roles", List.of("admin", "user")));
@@ -55,6 +53,8 @@ class KeycloakRolesAuthoritiesConverterTest {
 
     @Test
     void testConvert_WithoutRoles() {
+        when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
+
         // Setup
         final Map<String, Object> claims = new HashMap<>();
         claims.put(RESOURCE_ACCESS_CLAIM, Map.of(
@@ -72,6 +72,8 @@ class KeycloakRolesAuthoritiesConverterTest {
 
     @Test
     void testConvert_ClientNotInResourceAccess() {
+        when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
+
         // Setup
         final Map<String, Object> resourceAccessClaim = new HashMap<>();
         resourceAccessClaim.put("other-client", Map.of("roles", List.of("admin")));
@@ -89,9 +91,8 @@ class KeycloakRolesAuthoritiesConverterTest {
     @Test
     void testConvert_NullClaims() {
         // Setup
-        final Map<String, Object> resourceAccessClaim = new HashMap<>();
         final Jwt jwt = mock(Jwt.class);
-        when(jwt.getClaimAsMap(RESOURCE_ACCESS_CLAIM)).thenReturn(resourceAccessClaim);
+        when(jwt.getClaimAsMap(RESOURCE_ACCESS_CLAIM)).thenReturn(null);
 
         // Call
         final Collection<GrantedAuthority> authorities = converter.convert(jwt);
