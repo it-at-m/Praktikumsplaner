@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,13 +29,10 @@ class KeycloakRolesAuthoritiesConverterTest {
     @InjectMocks
     private KeycloakRolesAuthoritiesConverter converter;
 
-    @BeforeEach
-    void setUp() {
-        when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
-    }
-
     @Test
     void testConvert_WithRoles() {
+        when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
+
         // Setup
         final Map<String, Object> resourceAccessClaim = new HashMap<>();
         resourceAccessClaim.put(TEST_CLIENT, Map.of("roles", List.of("admin", "user")));
@@ -49,12 +45,14 @@ class KeycloakRolesAuthoritiesConverterTest {
         // Assert
         assert authorities != null;
         assertEquals(2, authorities.size());
-        assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_admin")));
-        assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_user")));
+        assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")));
+        assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
     @Test
     void testConvert_WithoutRoles() {
+        when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
+
         // Setup
         final Map<String, Object> claims = new HashMap<>();
         claims.put(RESOURCE_ACCESS_CLAIM, Map.of(
@@ -72,6 +70,8 @@ class KeycloakRolesAuthoritiesConverterTest {
 
     @Test
     void testConvert_ClientNotInResourceAccess() {
+        when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
+
         // Setup
         final Map<String, Object> resourceAccessClaim = new HashMap<>();
         resourceAccessClaim.put("other-client", Map.of("roles", List.of("admin")));
@@ -90,6 +90,7 @@ class KeycloakRolesAuthoritiesConverterTest {
     void testConvert_NullClaims() {
         // Setup
         final Jwt jwt = mock(Jwt.class);
+        when(jwt.getClaimAsMap(RESOURCE_ACCESS_CLAIM)).thenReturn(null);
 
         // Call
         final Collection<GrantedAuthority> authorities = converter.convert(jwt);
