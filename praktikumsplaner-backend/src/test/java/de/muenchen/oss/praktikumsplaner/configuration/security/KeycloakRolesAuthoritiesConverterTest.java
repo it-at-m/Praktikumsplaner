@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,7 +28,6 @@ class KeycloakRolesAuthoritiesConverterTest {
     private SecurityProperties securityProperties;
     @InjectMocks
     private KeycloakRolesAuthoritiesConverter converter;
-
 
     @Test
     void testConvert_WithRoles() {
