@@ -20,7 +20,7 @@ public class AsyncMailSender {
 
     private final JavaMailSender mailSender;
 
-    @Value("${app.mail.from:${spring.mail.username:}}")
+    @Value("${spring.mail.username}")
     private String from;
 
     @Value("${app.mail.reply-to:}")
@@ -36,6 +36,7 @@ public class AsyncMailSender {
             sendSingleMail(stelle.email(), "Praktikumsplatz zugeteilt", mailBody);
             return CompletableFuture.completedFuture(null); // null for success, could also use Optional
         } catch (Exception e) {
+            log.debug("Error on Mail-Send: {}", e.getMessage());
             return CompletableFuture.completedFuture(stelle); // return failed stelle
         }
     }

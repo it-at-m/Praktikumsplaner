@@ -31,7 +31,6 @@ spring:
 
 app:
   mail:
-    from: "bot@test.de"
     reply-to: "testleitung@test.de"
   db:
     postgres:
