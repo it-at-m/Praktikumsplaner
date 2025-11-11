@@ -36,7 +36,7 @@ public class AsyncMailSender {
             sendSingleMail(stelle.email(), "Praktikumsplatz zugeteilt", mailBody);
             return CompletableFuture.completedFuture(null); // null for success, could also use Optional
         } catch (Exception e) {
-            log.debug("Error on Mail-Send: {}", e.getMessage());
+            log.error("Error on Mail-Send for Praktikumsstelle id={}, dienststelle={}", stelle.id(), stelle.dienststelle(), e);
             return CompletableFuture.completedFuture(stelle); // return failed stelle
         }
     }
