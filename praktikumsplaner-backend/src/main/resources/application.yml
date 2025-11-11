@@ -84,7 +84,6 @@ springdoc:
 
 app:
   mail:
-    from:
     reply-to:
   export:
     oertl-ausbildungsleitung-name:
