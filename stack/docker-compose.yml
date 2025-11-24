@@ -107,7 +107,7 @@ services:
       - keycloak
 
   init-keycloak:
-    image: klg71/keycloakmigration:0.2.111@sha256:6fd84fd15813062bf2a9bb9492cb0f71d6d0d2b434b8fb68c8e7859a2e7aabfb
+    image: klg71/keycloakmigration:0.2.121@sha256:aaa3d3fc9715b24f52707df6e6d0dc1672194c9246447be1666e68b40868e463
     depends_on:
       - keycloak
     env_file:
