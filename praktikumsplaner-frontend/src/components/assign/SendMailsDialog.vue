@@ -43,7 +43,6 @@ const computedShowDialog = computed(() => {
 const emit = defineEmits(["update:showDialog"]);
 
 function sendMails(): void {
-
     loading.value = true;
     MailService.sendSuccessfulAssignedMails()
         .then((fetchedStellen) => {
@@ -56,7 +55,6 @@ function sendMails(): void {
     closeConfirmDialog();
 }
 
-
 function closeConfirmDialog(): void {
     emit("update:showDialog", false);
     confirmSendMailDialog.value = false;
@@ -68,6 +66,4 @@ function checkIfUndeliveredMails() {
     }
 }
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

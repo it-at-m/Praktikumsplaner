@@ -3,7 +3,6 @@ import { getPOSTConfig } from "@/api/FetchUtils";
 import { API_BASE, MAIL_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import Zeitraum from "@/types/Zeitraum";
 
 export default {
     sendSuccessfulAssignedMails(): Promise<Praktikumsstelle[]> {

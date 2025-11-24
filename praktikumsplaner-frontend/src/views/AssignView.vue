@@ -58,9 +58,7 @@
             @accepted="acceptedWarningDialog"
             @rejected="rejectedWarningDialog"
         />
-        <send-mails-dialog
-            v-model:show-dialog="showSendMailDialog"
-        />
+        <send-mails-dialog v-model:show-dialog="showSendMailDialog" />
     </v-container>
 </template>
 <script setup lang="ts">
