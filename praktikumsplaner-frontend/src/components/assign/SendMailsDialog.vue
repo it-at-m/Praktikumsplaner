@@ -27,7 +27,6 @@ import YesNoDialog from "@/components/common/YesNoDialog.vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const loading = ref<boolean>(false);
-const confirmSendMailDialog = ref<boolean>(false);
 const showUndeliveredMailsDialog = ref<boolean>(false);
 
 const faultyStellen = ref<Praktikumsstelle[]>([]);
@@ -57,7 +56,6 @@ function sendMails(): void {
 
 function closeConfirmDialog(): void {
     emit("update:showDialog", false);
-    confirmSendMailDialog.value = false;
 }
 
 function checkIfUndeliveredMails() {
