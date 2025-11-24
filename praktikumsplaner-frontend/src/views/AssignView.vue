@@ -58,9 +58,7 @@
             @accepted="acceptedWarningDialog"
             @rejected="rejectedWarningDialog"
         />
-        <query-praktikums-period-dialog
-            v-model:show-dialog="showSendMailDialog"
-        />
+        <send-mails-dialog v-model:show-dialog="showSendMailDialog" />
     </v-container>
 </template>
 <script setup lang="ts">
@@ -71,7 +69,7 @@ import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import ActiveNwkListForZuweisung from "@/components/assign/ActiveNwkListForZuweisung.vue";
 import ExcelExport from "@/components/assign/ExcelExport.vue";
 import PraktikumsstellenListZuweisung from "@/components/assign/PraktikumsstellenListZuweisung.vue";
-import QueryPraktikumsPeriodDialog from "@/components/assign/QueryPraktikumsPeriodDialog.vue";
+import SendMailsDialog from "@/components/assign/SendMailsDialog.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import WarningDialog from "@/components/common/WarningDialog.vue";
 import { useSecurity } from "@/composables/security";

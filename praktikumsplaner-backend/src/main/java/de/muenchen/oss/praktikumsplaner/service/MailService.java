@@ -1,7 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,15 +31,15 @@ public class MailService {
      * Send Mails to all Assigned Praktikumsplätze.
      * Aggregates all failed deliveries.
      */
-    public List<PraktikumsstelleDto> sendMailsToAssignedPraktikumsplaetze(final Map<String, ZeitraumDto> assignmentPeriods) {
+    public List<PraktikumsstelleDto> sendMailsToAssignedPraktikumsplaetze() {
         List<CompletableFuture<PraktikumsstelleDto>> futures = new ArrayList<>();
 
         for (PraktikumsstelleDto stelle : praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum()) {
             try {
-                String mailBody = buildMailBody("successfulAssignmentMail", buildMailData(stelle, assignmentPeriods));
+                String mailBody = buildMailBody("successfulAssignmentMail", buildMailData(stelle));
                 futures.add(mailSender.sendSingleMailAsync(stelle, mailBody));
             } catch (Exception e) {
-                log.warn("Skipping mail for dienststelle={} due to missing period or template error", stelle.dienststelle(), e);
+                log.warn("Skipping mail for dienststelle={} due to template error", stelle.dienststelle(), e);
                 futures.add(CompletableFuture.completedFuture(stelle));
             }
         }
@@ -59,15 +58,15 @@ public class MailService {
         return templateEngine.process(templateName, context);
     }
 
-    private Map<String, String> buildMailData(final PraktikumsstelleDto praktikumsstelleDto, final Map<String, ZeitraumDto> assignmentPeriods) {
-        String studiengangOderAusbildungsrichtungKey = praktikumsstelleDto.assignedNwk().studiengang() != null
-                ? praktikumsstelleDto.assignedNwk().studiengang().toString()
-                : praktikumsstelleDto.assignedNwk().ausbildungsrichtung().toString();
+    private Map<String, String> buildMailData(final PraktikumsstelleDto praktikumsstelleDto) {
+        String studiengangOderAusbildungsrichtung = praktikumsstelleDto.assignedNwk().studiengang() != null
+                ? praktikumsstelleDto.assignedNwk().studiengang().getLongName()
+                : praktikumsstelleDto.assignedNwk().ausbildungsrichtung().getLongName();
 
         return Map.of(
                 "ausbilder", praktikumsstelleDto.oertlicheAusbilder(),
                 "nachwuchskraftName", praktikumsstelleDto.assignedNwk().vorname() + " " + praktikumsstelleDto.assignedNwk().nachname(),
-                "startDatum", assignmentPeriods.get(studiengangOderAusbildungsrichtungKey).startZeitpunkt().format(dateTimeFormatter),
-                "endDatum", assignmentPeriods.get(studiengangOderAusbildungsrichtungKey).endZeitpunkt().format(dateTimeFormatter));
+                "jahrgang", praktikumsstelleDto.assignedNwk().jahrgang(),
+                "studiengangOderAusbildungsrichtung", studiengangOderAusbildungsrichtung);
     }
 }

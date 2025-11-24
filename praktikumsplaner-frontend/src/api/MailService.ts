@@ -3,15 +3,12 @@ import { getPOSTConfig } from "@/api/FetchUtils";
 import { API_BASE, MAIL_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import Zeitraum from "@/types/Zeitraum";
 
 export default {
-    sendSuccessfulAssignedMails(
-        assignmentPeriods: Record<string, Zeitraum>
-    ): Promise<Praktikumsstelle[]> {
+    sendSuccessfulAssignedMails(): Promise<Praktikumsstelle[]> {
         return fetch(
             `${API_BASE}${MAIL_BASE}/send?assignmentStatus=successful`,
-            getPOSTConfig(assignmentPeriods)
+            getPOSTConfig(undefined)
         )
             .then((response) => {
                 if (response.status === 200) {
