@@ -39,7 +39,7 @@ public class MailService {
                 String mailBody = buildMailBody("successfulAssignmentMail", buildMailData(stelle));
                 futures.add(mailSender.sendSingleMailAsync(stelle, mailBody));
             } catch (Exception e) {
-                log.warn("Skipping mail for dienststelle={} due to  template error", stelle.dienststelle(), e);
+                log.warn("Skipping mail for dienststelle={} due to template error", stelle.dienststelle(), e);
                 futures.add(CompletableFuture.completedFuture(stelle));
             }
         }
