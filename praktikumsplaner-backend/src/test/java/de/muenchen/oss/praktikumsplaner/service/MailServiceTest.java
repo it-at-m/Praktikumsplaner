@@ -11,7 +11,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleD
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
@@ -19,10 +18,8 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.mail.internet.MimeMessage;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,9 +63,9 @@ public class MailServiceTest {
         when(mailSender.createMimeMessage()).thenReturn(mockMimeMessage);
         when(templateEngine.process(anyString(), any(Context.class))).thenReturn("Mock-Mail-Body");
 
-        NwkDto assignedNwk1 = createNwkDto("Max", "Mustermann", Studiengang.BSC, null);
-        NwkDto assignedNwk2 = createNwkDto("Erika", "Musterfrau", Studiengang.BWI, null);
-        NwkDto assignedNwk3 = createNwkDto("John", "Smith", null, Ausbildungsrichtung.FISI);
+        NwkDto assignedNwk1 = createNwkDto("Max", "Mustermann", Studiengang.BSC, null, "19/25");
+        NwkDto assignedNwk2 = createNwkDto("Erika", "Musterfrau", Studiengang.BWI, null, "23/27");
+        NwkDto assignedNwk3 = createNwkDto("John", "Smith", null, Ausbildungsrichtung.FISI, "25/29");
 
         List<PraktikumsstelleDto> allPraktikumsstellen = new ArrayList<>();
 
@@ -89,10 +86,7 @@ public class MailServiceTest {
         when(praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum()).thenReturn(allPraktikumsstellen);
 
         // Act
-        List<PraktikumsstelleDto> result = mailService.sendMailsToAssignedPraktikumsplaetze(Map.of(
-                "BSC", ZeitraumDto.builder().startZeitpunkt(LocalDate.now()).endZeitpunkt(LocalDate.now().plusDays(20)).build(),
-                "BWI", ZeitraumDto.builder().startZeitpunkt(LocalDate.now()).endZeitpunkt(LocalDate.now().plusDays(20)).build(),
-                "FISI", ZeitraumDto.builder().startZeitpunkt(LocalDate.now()).endZeitpunkt(LocalDate.now().plusDays(20)).build()));
+        List<PraktikumsstelleDto> result = mailService.sendMailsToAssignedPraktikumsplaetze();
 
         // Assert
         assertEquals(0, result.size());
@@ -117,8 +111,8 @@ public class MailServiceTest {
     }
 
     private NwkDto createNwkDto(
-            final String vorname, final String nachname, final Studiengang studiengang, final Ausbildungsrichtung ausbildungsrichtung) {
+            final String vorname, final String nachname, final Studiengang studiengang, final Ausbildungsrichtung ausbildungsrichtung, String jahrgang) {
         return NwkDto.builder().id(UUID.randomUUID()).vorname(vorname).nachname(nachname).studiengang(studiengang)
-                .ausbildungsrichtung(ausbildungsrichtung).build();
+                .ausbildungsrichtung(ausbildungsrichtung).jahrgang(jahrgang).build();
     }
 }

@@ -1,10 +1,20 @@
 package de.muenchen.oss.praktikumsplaner.domain.enums;
 
 public enum Studiengang {
-    BSC,
-    BWI,
-    VI,
-    LLB,
-    PUMA,
-    QE3
+    BSC("Bachelor of Science - Informatik"),
+    BWI("Wirtschaftsinformatik kommunal"),
+    VI("Diplomverwaltungsinformatiker*in"),
+    LLB("Bachelor of Laws"),
+    PUMA("BWL mit Schwerpunkt Public Management"),
+    QE3("Diplomverwaltungswirt*in");
+
+    private final String longName;
+
+    Studiengang(String longName) {
+        this.longName = longName;
+    }
+
+    public String getLongName() {
+        return longName;
+    }
 }

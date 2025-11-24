@@ -25,12 +25,14 @@
     <p>Hallo <span th:text="${ausbilder}">Ausbilder Name</span>,</p>
 
     <p>wir bedanken uns ausdrücklich, dass du dich dazu bereit erklärt hast, im nächsten Praktikumsabschnitt Nachwuchskräfte zu betreuen und uns dabei unterstützt, ein qualitativ hochwertiges Praktikum im IT-Referat zu gewährleisten.</p>
-    <p>Anbei erhältst du die vorläufige Information über die Zuweisung der Nachwuchskraft <span th:text="${nachwuchskraftName}">Nachwuchskraft Name</span>.</p>
-    <p><b>Weitere Details zur Nachwuchskraft erhältst du mit der Zusendung des Zuweisungsschreibens im Laufe der nächsten Wochen.</b></p>
-
-    <p><u>Dienstantritt:</u></p>
-    <p>Der Dienstantritt erfolgt für die Nachwuchskraft grundsätzlich am <b>Wochentag, den <span th:text="${startDatum}">StartDatum</span></b>.</p>
-    <p>Im Rahmen der Dienstantrittsveranstaltungen werden die Nachwuchskräfte zunächst von den örtlichen Ausbildungsleitungen empfangen. Die Örtlichkeit und Uhrzeit der Veranstaltung wird noch bekannt gegeben.</p>
+    <p>
+        Anbei erhältst du die vorläufige Information zur zugewiesenen Nachwuchskraft:<br>
+        <br>
+        <b>Name:</b> <span th:text="${nachwuchskraftName}">Nachwuchskraft Name</span><br>
+        <b>Ausbildungs-/Studienrichtung:</b> <span th:text="${studiengangOderAusbildungsrichtung}">Ausbildungs Richtung/Studiengang</span><br>
+        <b>Jahrgang:</b> <span th:text="${jahrgang}">Jahrgang</span><br>
+    </p>
+    <p><b>Weitere Details zur Nachwuchskraft und der Zuweisung erhältst du mit der Zusendung des Zuweisungsschreibens im Laufe der nächsten Wochen.</b></p>
 
     <p><u>Kontaktaufnahme NWK:</u></p>
     <p>Sobald die Nachwuchskräfte über ihre neuen Praktikumsplätze informiert wurden und du mit der Nachwuchskraft Kontakt aufnehmen kannst, werden wir dich gesondert in Kenntnis setzen.</p>

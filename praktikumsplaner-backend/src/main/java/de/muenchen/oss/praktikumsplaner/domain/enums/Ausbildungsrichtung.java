@@ -1,8 +1,18 @@
 package de.muenchen.oss.praktikumsplaner.domain.enums;
 
 public enum Ausbildungsrichtung {
-    FISI,
-    QE2,
-    KFB,
-    VFAK
+    FISI("Fachinformatiker*in für Systemintegration"),
+    QE2("Verwaltungswirt*in"),
+    KFB("Kaufleute für Büromanagement"),
+    VFAK("Verwaltungsfachangestellte*r kommual");
+
+    private final String longName;
+
+    Ausbildungsrichtung(String longName) {
+        this.longName = longName;
+    }
+
+    public String getLongName() {
+        return longName;
+    }
 }
