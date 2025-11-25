@@ -79,7 +79,7 @@ services:
       - no-new-privileges:true
 
   postgres-backend:
-    image: postgres:17.6@sha256:e6a4209d1a4893f2df3bdcde58f8926c3c929c4d51df90990ed1b36d83c1382a
+    image: postgres:17.6@sha256:00bc86618629af00d2937fdc5a5d63db3ff8450acf52f0636ec813c7f4902929
     container_name: postgres-backend
     environment:
       POSTGRES_DB: praktikumsplaner
@@ -124,7 +124,7 @@ services:
       - keycloak
 
   postgres-keycloak:
-    image: postgres:17.6@sha256:e6a4209d1a4893f2df3bdcde58f8926c3c929c4d51df90990ed1b36d83c1382a
+    image: postgres:17.6@sha256:00bc86618629af00d2937fdc5a5d63db3ff8450acf52f0636ec813c7f4902929
     container_name: postgres-keycloak
     environment:
       POSTGRES_DB: keycloak
