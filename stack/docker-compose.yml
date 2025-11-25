@@ -22,7 +22,7 @@ services:
 
   pp-backend:
     container_name: backend
-    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-backend:latest@sha256:ef7fccdeca2594a32e599a53a422b1612ba7bc7b5a5fb773fc1575098d405ae1
+    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-backend:latest@sha256:7b4e33d85ce6a150f193ea5684fa9c8cb148f1d30ee68215b829f813943aae35
     ports:
       - "8082:8082"
     profiles:
