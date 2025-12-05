@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static de.muenchen.oss.praktikumsplaner.TestUtils.getJwtAuthenticationToken;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,11 +35,9 @@ import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenR
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -54,10 +53,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 @ExtendWith(MockitoExtension.class)
 public class PraktikumsstellenServiceTest {
@@ -842,13 +838,4 @@ public class PraktikumsstellenServiceTest {
 
     }
 
-    private static JwtAuthenticationToken getJwtAuthenticationToken(AuthoritiesEnum role) {
-        var jwt = new Jwt(
-                "token",
-                Instant.now(),
-                Instant.now().plusSeconds(1000),
-                Collections.singletonMap("typ", "JWT"),
-                Collections.singletonMap("email", "test@test.de"));
-        return new JwtAuthenticationToken(jwt, List.of(new SimpleGrantedAuthority("ROLE_" + role.name())));
-    }
 }
