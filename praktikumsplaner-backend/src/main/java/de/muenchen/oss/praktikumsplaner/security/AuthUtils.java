@@ -75,9 +75,9 @@ public final class AuthUtils {
 
     /**
      * Prüft ob der User aus dem vorliegenden Spring Security Context via
-     * {@link SecurityContextHolder} ein AUSBILDER ist.
+     * {@link SecurityContextHolder} ein AUSBILDUNGSLEITUNG ist.
      *
-     * @return Mail-Adresse
+     * @return true wenn User die Rolle AUSBILDUNGSLEITUNG hat, sonst false
      */
     public static boolean isAusbildungsleitung() {
         return getAuthentication().getAuthorities()
