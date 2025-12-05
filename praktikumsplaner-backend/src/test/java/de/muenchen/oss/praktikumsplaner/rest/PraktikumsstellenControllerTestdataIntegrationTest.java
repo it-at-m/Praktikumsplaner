@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import static de.muenchen.oss.praktikumsplaner.TestUtils.getJwtAuthenticationToken;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -7,19 +8,35 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleD
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.TreeMap;
 import lombok.val;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdataIntegrationTest {
+
+    @BeforeEach
+    public void setUp() {
+        var authentication = getJwtAuthenticationToken(AuthoritiesEnum.AUSBILDUNGSLEITUNG);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        SecurityContextHolder.clearContext();
+    }
 
     @Nested
     class GetAllPraktiumsstellenInSpecificMeldezeitraum {

@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -130,12 +131,12 @@ public class PraktikumsstellenService {
 
     public TreeMap<String, List<PraktikumsstelleDto>> getAllInCurrentMeldezeitraumGroupedByDienststelle() {
         final UUID currentMeldezeitraumID = meldezeitraumService.getCurrentMeldezeitraum().id();
-        return filterPraktikumsstellenForCurrentAusbilder(getPraktikumsstellenGroupedByDienststelle(currentMeldezeitraumID));
+        return filterPraktikumsstellenForCurrentRole(getPraktikumsstellenGroupedByDienststelle(currentMeldezeitraumID));
     }
 
     public TreeMap<String, List<PraktikumsstelleDto>> getRecentPraktikumsstellenGroupedByDienststelle() {
         UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
-        return filterPraktikumsstellenForCurrentAusbilder(getPraktikumsstellenGroupedByDienststelle(lastMeldezeitraumID));
+        return filterPraktikumsstellenForCurrentRole(getPraktikumsstellenGroupedByDienststelle(lastMeldezeitraumID));
     }
 
     public void deleteStudiumsPraktikumsstelle(UUID praktikumsstellenId) {
@@ -237,8 +238,12 @@ public class PraktikumsstellenService {
                         Collectors.toList()));
     }
 
-    private TreeMap<String, List<PraktikumsstelleDto>> filterPraktikumsstellenForCurrentAusbilder(
+    private TreeMap<String, List<PraktikumsstelleDto>> filterPraktikumsstellenForCurrentRole(
             TreeMap<String, List<PraktikumsstelleDto>> abteilungsStellenMap) {
+
+        if (AuthUtils.isAusbildungsleitung()) {
+            return abteilungsStellenMap;
+        }
 
         if (AuthUtils.isAusbilder()) {
             var usermail = AuthUtils.getMailFromUser();
@@ -256,9 +261,9 @@ public class PraktikumsstellenService {
                             (a, b) -> b,
                             TreeMap::new));
 
-        } else {
-            return abteilungsStellenMap;
         }
+
+        throw new AuthorizationDeniedException("Zugriffsrolle fehlt");
     }
 
     private String getHauptabteilung(final String dienststelle) {

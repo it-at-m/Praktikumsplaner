@@ -44,7 +44,7 @@
                         class="box"
                     >
                         <span> Übersicht aus dem aktuellen Meldezeitraum </span>
-                        <small v-if="security.isAusbilder()"
+                        <small v-if="!security.isAusbildungsleitung() && security.isAusbilder()"
                             >(Nur eigene Plätze von örtl. Ausbilder*innen
                             angezeigt)</small
                         >
@@ -68,7 +68,7 @@
                                 >
                             </v-col>
                             <v-col class="d-flex align-center">
-                                <p v-if="security.isAusbilder()">
+                                <p v-if="!security.isAusbildungsleitung() && security.isAusbilder()">
                                     Für Sie als Ausbilder*in wurden noch keine
                                     Praktikumsstellen für den aktuellen Zeitraum
                                     gemeldet.
