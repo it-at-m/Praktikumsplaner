@@ -13,7 +13,7 @@
         "type-check": "vue-tsc --noEmit"
     },
     "dependencies": {
-        "@fontsource/roboto": "5.2.8",
+        "@fontsource/roboto": "5.2.9",
         "@mdi/font": "7.4.47",
         "mitt": "3.0.1",
         "moment": "2.30.1",
