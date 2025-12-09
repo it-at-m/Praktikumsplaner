@@ -20,7 +20,7 @@
         "pinia": "3.0.4",
         "vue": "3.5.25",
         "vue-router": "4.6.3",
-        "vuetify": "3.10.11"
+        "vuetify": "3.10.12"
     },
     "devDependencies": {
         "@babel/types": "7.28.5",
