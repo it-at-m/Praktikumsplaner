@@ -2,7 +2,7 @@ name: praktikumsplaner
 services:
   pp-frontend:
     container_name: frontend
-    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest@sha256:0c163ac92c82e343433ec2f3f396032461dba3bee3af5c72a76c9b9f011f1ad9
+    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest@sha256:f4ce85ef47345fe0c7286bc90ebdc0c6caa68bc74fbb9190ec46ec43ab81853d
     depends_on:
       init-keycloak:
         condition: service_completed_successfully
