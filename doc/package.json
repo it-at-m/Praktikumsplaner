@@ -6,7 +6,7 @@
   },
   "devDependencies": {
     "@mdi/font": "7.4.47",
-    "mermaid": "11.12.2",
+    "mermaid": "11.12.3",
     "vitepress": "1.6.4",
     "vitepress-plugin-mermaid": "2.0.17"
   },
