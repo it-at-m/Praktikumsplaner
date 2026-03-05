@@ -1,31 +1,27 @@
 spring:
-  application.name: @project.artifactId@
-  banner.location: banner.txt
+  main:
+    banner-mode: console
+  application:
+    name: "@project.artifactId@"
+    group: "@project.groupId@"
+    version: "@project.version@"
+  data:
+    web:
+      pageable:
+        serialization-mode: via_dto
   jpa:
     hibernate:
+      # schema is managed by Flyway, only validate
       ddl-auto: validate
-      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-  mail:
-    host:
-    port:
-    username:
-    password:
-    properties:
-      mail:
-        transport:
-          protocol: smtp
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    open-in-view: false # Disable OSIV
+  flyway:
+    locations:
+      - classpath:db/migration/schema
 
 server:
-  shutdown: "graceful"
-  port: 8080
   error:
-    include-exception: false
-    include-stacktrace: never
     whitelabel:
       enabled: false
 
@@ -63,16 +59,6 @@ management:
     readinessstate:
       enabled: true
 
-info:
-  application:
-    name: ${spring.application.name}
-    version: ${spring.application.version}
-    group: ${spring.application.group}
-    description: "@project.description@"
-  build:
-    java.version: "@java.version@"
-    spring-cloud.version: "@spring-cloud-dependencies.version@"
-
 springdoc:
   show-actuator: true
   # Disable swagger-ui as default
@@ -81,23 +67,6 @@ springdoc:
   api-docs:
     version: openapi_3_0
     enabled: false
-
-app:
-  mail:
-    reply-to:
-  export:
-    oertl-ausbildungsleitung-name:
-    dienststelle-adresse:
-  db:
-    postgres:
-      url: 
-      username: 
-      password: 
-
-refarch:
-  security:
-    client-id: ${sso.clientid}
-    user-info-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
 
 logging:
   level:
@@ -114,3 +83,13 @@ logging:
       add:
         application_name: ${spring.application.name}
         application_group: ${spring.application.group}
+
+info:
+  application:
+    name: ${spring.application.name}
+    version: ${spring.application.version}
+    group: ${spring.application.group}
+    description: "@project.description@"
+  build:
+    java.version: "@java.version@"
+    spring-cloud.version: "@spring-cloud-dependencies.version@"
