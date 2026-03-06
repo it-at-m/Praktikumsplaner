@@ -1,22 +1,22 @@
 # Nachwuchskräfte
 
-A navigation tab labeled `Nachwuchskräfte` makes it possible to view all active [Nwks](./../glossary.md#nwk) and import [Nwks](./../glossary.md#nwk) from an Excel file.
+A navigation tab labeled `Nachwuchskräfte` makes it possible to view all active [Nwks](../glossary.mdwk) and import [Nwks](../glossary.mdwk) from an Excel file.
 This page and its actions are only available for [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung).
 
-## [Nwk](./../glossary.md#nwk) Overview
+## [Nwk](../glossary.mdwk) Overview
 
-In the grey Box labeled `Übersicht`, you can see all active [Nwks](./../glossary.md#nwk).
+In the grey Box labeled `Übersicht`, you can see all active [Nwks](../glossary.mdwk).
 Active means that they have not yet finished their training.
 Displayed Infos:
 - Name
 - Major/training direction
 - year
 
-## Modifying [Nwks](./../glossary.md#nwk)
+## Modifying [Nwks](../glossary.mdwk)
 
-Under each [Nwk](./../glossary.md#nwk) in the overview is a button labeled `Bearbeiten`.
+Under each [Nwk](../glossary.mdwk) in the overview is a button labeled `Bearbeiten`.
 
-Clicking it will open a dialog with the [Nwk](./../glossary.md#nwk)'s information.
+Clicking it will open a dialog with the [Nwk](../glossary.mdwk)'s information.
 
 It is possible to change the name, year and major/training direction.
 
@@ -52,10 +52,10 @@ The days can be chained together by plus signs, for example: Mo + Di + Mi.
 
 If the upload is successful, a green success message will appear. If it's not, a red error will appear.
 
-## Manually creating [Nwks](./../glossary.md#nwk)
+## Manually creating [Nwks](../glossary.mdwk)
 In the top right of the site is a blue upload button labeled `Erstellen`.
 
-It is possible to create a [Nwks](./../glossary.md#nwk) manually there.
+It is possible to create a [Nwks](../glossary.mdwk) manually there.
 
 The first name (Vorname) has to be between 2 and 255 characters.
 
@@ -65,7 +65,7 @@ There are two selectors to select either the training direction or course of stu
 
 The year (Jahrgang) has to be in this format: XX/XX Example: 20/24 for someone who started training in 2020 and finishes in 2024.
 
-The lecture days selector is used to select the lecture days of a [Nwks](./../glossary.md#nwk).
+The lecture days selector is used to select the lecture days of a [Nwks](../glossary.mdwk).
 
 ## English weekdays to German short notation
 | English | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday |

@@ -20,7 +20,7 @@ They cannot see any other data or use other actions.
 On the page there is a button labeled `Hinzufügen`.
 Clicking this button will open a dialog.
 
-In this dialog, you can choose whether you want to report a [student](./../glossary.md#studentin) (`Studium`) or a [trainee](./../glossary.md#auszubildende) (`Ausbildung`).
+In this dialog, you can choose whether you want to report a [student](../glossary.mdtudentin) (`Studium`) or a [trainee](../glossary.mduszubildende) (`Ausbildung`).
 This will open a page with the corresponding form.
 
 ## Submission örtliche Ausbildungsleitung
@@ -28,7 +28,7 @@ If the user has the role for [örtliche Ausbildungsleitung](../glossary.md#ortli
 On the page there is a button labeled `Hinzufügen`.
 Clicking this button will open a dialog.
 
-In this dialog, you can choose whether you want to report a [student](./../glossary.md#studentin) (`Studium`) or a [trainee](./../glossary.md#auszubildende) (`Ausbildung`).
+In this dialog, you can choose whether you want to report a [student](../glossary.mdtudentin) (`Studium`) or a [trainee](../glossary.mduszubildende) (`Ausbildung`).
 This will open a page with the corresponding form.
 
 As [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung) you have the option to add the
@@ -56,19 +56,19 @@ Meaning `Urgent`, `Important`, and `Not important`.
 
 #### Planstelle
 
-Radio button `Yes/No` selector for whether the [Praktikumsstelle](./../glossary.md#praktikumsstelle) is a [Planstelle](./../glossary.md#planstelle)
+Radio button `Yes/No` selector for whether the [Praktikumsstelle](../glossary.mdraktikumsstelle) is a [Planstelle](../glossary.mdlanstelle)
 
 #### Ausbildung: Projektarbeit
 
-A classic `Yes/No` selector for letting the [örtliche Ausbildungsleitung](./../glossary.md#ortliche-ausbildungsleitung) know that the [trainee](./../glossary.md#auszubildende) is able to do their final year project there
+A classic `Yes/No` selector for letting the [örtliche Ausbildungsleitung](../glossary.mdrtliche-ausbildungsleitung) know that the [trainee](../glossary.mduszubildende) is able to do their final year project there
 
 #### Namentliche Anforderung
 
-Text field for requesting a specific [Nwk](./../glossary.md#nwk)
+Text field for requesting a specific [Nwk](../glossary.mdwk)
 
 #### Tätigkeiten
 
-Text field for noting the operations performed by the team and what the [Nwk](./../glossary.md#nwk) will most likely be doing there.
+Text field for noting the operations performed by the team and what the [Nwk](../glossary.mdwk) will most likely be doing there.
 
 ### Nachwuchskraft
 
@@ -101,7 +101,7 @@ an estimated timeframe for the assignment is shown per year of training.
 
 #### Programmierkenntnisse
 
-A selector for requesting a [Nwk](./../glossary.md#nwk) who can code.
+A selector for requesting a [Nwk](../glossary.mdwk) who can code.
 
 Options: `Ja`, `Nein`, `Egal`. Meaning `Yes`, `No`, `Doesn't matter`.
 
@@ -109,26 +109,26 @@ Options: `Ja`, `Nein`, `Egal`. Meaning `Yes`, `No`, `Doesn't matter`.
 
 #### Name örtliche Ausbilderin
 
-Text field for the name of the person ([örtlicher Ausbilderin](./../glossary.md#ortliche-ausbilderin)) in the team responsible for the [Nwk](./../glossary.md#nwk)
+Text field for the name of the person ([örtlicher Ausbilderin](../glossary.mdrtliche-ausbilderin)) in the team responsible for the [Nwk](../glossary.mdwk)
 
 #### Kontakt E-Mail örtliche Ausbilderin
 
-Text field for the contact email of the [örtliche Ausbilderin](./../glossary.md#ortliche-ausbilderin) 
+Text field for the contact email of the [örtliche Ausbilderin](../glossary.mdrtliche-ausbilderin) 
 
 #### Erweitertes Führungszeugnis örtliche Ausbilderin
 
-A checkbox for cases where the [örtliche Ausbilderin](./../glossary.md#ortliche-ausbilderin) has an
+A checkbox for cases where the [örtliche Ausbilderin](../glossary.mdrtliche-ausbilderin) has an
 extended certificate of good conduct (Erweitertes Führungszeugnis) for supervising underage trainees.
 
 ### Meldezeitraums Auswahl
 
-This field lets you choose the [Meldezeitraum](./../glossary.md#meldezeitraum) to assign the [Praktikumsstelle](./../glossary.md#praktikumsstelle) to.
-The current [Meldezeitraum](./../glossary.md#meldezeitraum) is the top option,
-followed by the upcoming [Meldezeitraum](./../glossary.md#meldezeitraum) and
-then all the previous [Meldezeitraum](./../glossary.md#meldezeitraum).
-The upcoming and passed [Meldezeiträume](./../glossary.md#meldezeitraum) are sorted by date closest to the current date.
+This field lets you choose the [Meldezeitraum](../glossary.mdeldezeitraum) to assign the [Praktikumsstelle](../glossary.mdraktikumsstelle) to.
+The current [Meldezeitraum](../glossary.mdeldezeitraum) is the top option,
+followed by the upcoming [Meldezeitraum](../glossary.mdeldezeitraum) and
+then all the previous [Meldezeitraum](../glossary.mdeldezeitraum).
+The upcoming and passed [Meldezeiträume](../glossary.mdeldezeitraum) are sorted by date closest to the current date.
 
-This feature is only available for [örtliche Ausbildungsleitungen](./../glossary.md#ortliche-ausbildungsleitung).
+This feature is only available for [örtliche Ausbildungsleitungen](../glossary.mdrtliche-ausbildungsleitung).
 
 ### Sending
 
@@ -139,13 +139,13 @@ A green notification appears if it was successful, if not a red error will appea
 ## Edition
 It is possible to update [Praktikumsstellen](../glossary.md#praktikumsstelle) in the overview of [Praktikumsstellen](../glossary.md#praktikumsstelle) by clicking the `Bearbeiten` button, marked with a pencil.
 
-This feature is only available for [örtliche Ausbildungsleitungen](./../glossary.md#ortliche-ausbildungsleitung).
+This feature is only available for [örtliche Ausbildungsleitungen](../glossary.mdrtliche-ausbildungsleitung).
 
 
 ## Deletion
 It is possible to delete [Praktikumsstellen](../glossary.md#praktikumsstelle) in the overview of [Praktikumsstellen](../glossary.md#praktikumsstelle) by clicking the delete button, marked with a trash can.
 
-This feature is only available for [örtliche Ausbildungsleitungen](./../glossary.md#ortliche-ausbildungsleitung).
+This feature is only available for [örtliche Ausbildungsleitungen](../glossary.mdrtliche-ausbildungsleitung).
 ## Additional Information
 
 ### Mandatory information
