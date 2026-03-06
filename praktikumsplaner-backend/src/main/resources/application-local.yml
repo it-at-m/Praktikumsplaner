@@ -64,5 +64,5 @@ sso:
 refarch:
   security:
     logging-mode: all
-    client-id: ${sso.clientid}
+    client-id: ${sso.client}
     user-info-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
