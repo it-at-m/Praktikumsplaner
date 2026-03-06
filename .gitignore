@@ -1,13 +1,30 @@
-/.idea/
-/praktikumsplaner-backend/test.mv.db
-/test.mv.db
-/test.trace.db
-/doc/docs/.vitepress/cache/
-/doc/node_modules/
-/doc/doc.iml
-/doc/docs/.vitepress/dist/
+# ========= Frontend specific ==========
+route-map.d.ts
 
-# Covers Maven specific
+# =============== Java =================
+# Compiled class file
+*.class
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+
+# =============== Maven ================
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -17,85 +34,13 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-!/.mvn/wrapper/maven-wrapper.jar
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
 
-# Covers Eclipse specific:
-.settings/
-.classpath
-.project
-
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
-.idea
-*.iml
-
-# Covers Netbeans:
-**/nbproject/private/
-**/nbproject/Makefile-*.mk
-**/nbproject/Package-*.bash
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
-
-# Visual Studio Code specific
-.vscode/
-*.coverage
-*.coveragexml
-*_i.c
-*_p.c
-*_i.h
-*.ilk
-*.meta
-*.obj
-*.pch
-*.pdb
-*.pgc
-*.pgd
-*.rsp
-*.sbr
-*.tlb
-*.tli
-*.tlh
-*.tmp
-*.tmp_proj
-*.vspscc
-*.vssscc
-.builds
-*.pidb
-*.svclog
-*.scc
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-*.userprefs
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-bld/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
-
-.DS_Store
+# ================ Node ===============
 node_modules
-/dist
-
-# local env files
-.env.local
-.env.*.local
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
+dist/
+.vite
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -116,12 +61,6 @@ coverage
 # nyc test coverage
 .nyc_output
 
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# Bower dependency directory (https://bower.io/)
-bower_components
-
 # node-waf configuration
 .lock-wscript
 
@@ -129,7 +68,6 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -137,18 +75,13 @@ typings/
 
 # TypeScript cache
 *.tsbuildinfo
+cache/
 
 # Optional npm cache directory
 .npm
 
 # Optional eslint cache
 .eslintcache
-
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
@@ -159,10 +92,6 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.test
-
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
@@ -171,26 +100,96 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
-# Comment in the public line in if your project uses Gatsby and *not* Next.js
-# https://nextjs.org/blog/next-9-1#public-directory-support
-# public
 
 # vuepress build output
 .vuepress/dist
 
-# Serverless directories
-.serverless/
+# ================ Other =============
+# macOS
+.DS_Store
 
-# FuseBox cache
-.fusebox/
+# Environment files
+.env.local
+.env.*.local
 
-# DynamoDB Local files
-.dynamodb/
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs
 
-# TernJS port file
-.tern-port
+# ============== IDE specific settings ================
 
+### Eclipse
+# Covers Eclipse, based on https://www.toptal.com/developers/gitignore/api/eclipse , stripped to relevant java based rules
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.classpath
+.loadpath
+.recommenders
+.project
+# External tool builders
+.externalToolBuilders/
+# Locally stored "Eclipse launch configurations"
+*.launch
+# Java annotation processor (APT)
+.factorypath
+# STS (Spring Tool Suite)
+.springBeans
+# Code Recommenders
+.recommenders/
+# Annotation Processing
+.apt_generated/
+.apt_generated_test/
+
+# Spring Boot Tooling
+.sts4-cache/
+
+# PMD Plugin
+.pmd
+.ruleset
+### End of Eclipse
+
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
+.idea
+*.iml
+
+# Covers Netbeans:
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# Covers VSCode
+.vscode/*
+!.vscode/tasks.json
+*.code-workspace
+.history/
+
+# Covers other editors
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ========== RefArch specific  ==========
+# =============== Stack =================
+/stack/pgadmin/data/*
+!/stack/keycloak/plugins/*.jar
+!/stack/pgadmin/data/info.txt
