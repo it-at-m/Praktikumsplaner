@@ -8,7 +8,7 @@
     <groupId>de.muenchen.oss.praktikumsplaner</groupId>
     <artifactId>praktikumsplaner-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>praktikumsplaner_backend</name>
+    <name>praktikumsplaner-backend</name>
 
 
     <properties>
