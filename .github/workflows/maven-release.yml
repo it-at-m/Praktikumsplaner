@@ -64,4 +64,4 @@ jobs:
         with:
           artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
           tag-name: "praktikumsplaner-backend-${{ github.event.inputs.releaseVersion }}"
-          artifact-path: ${{ github.event.inputs.app-path }}/target/*.jar
+          artifact-path: praktikumsplaner-backend/target/*.jar
