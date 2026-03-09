@@ -104,4 +104,27 @@ VALUES
     ('00000000-0000-0002-0002-000000000004', 'Alan', 'Powell', 'BWI',
      CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '2 years', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '1 year', 'YY')), 'WEDNESDAY,THURSDAY,FRIDAY', TRUE, NULL),
     ('00000000-0000-0002-0002-000000000005', 'Tom', 'Olson', 'BWI',
-     CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '2 years', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '1 year', 'YY')), 'WEDNESDAY,THURSDAY,FRIDAY', FALSE, NULL);
+     CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '2 years', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '1 year', 'YY')), 'WEDNESDAY,THURSDAY,FRIDAY', FALSE, NULL),
+    
+    -- Ausbildung
+    -- starting the current year
+    (  '00000000-0001-0000-0000-000000000001', 'Earl', 'Perry', null,  CONCAT(TO_CHAR(CURRENT_DATE, 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '3 years', 'YY')), null,true, 'FISI'),
+    (  '00000000-0001-0000-0000-000000000002', 'Paula', 'Butler', null,  CONCAT(TO_CHAR(CURRENT_DATE, 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '3 years', 'YY')), null,true, 'QE2'),
+    (  '00000000-0001-0000-0000-000000000003', 'Diana', 'Barnes', null,  CONCAT(TO_CHAR(CURRENT_DATE, 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '3 years', 'YY')), null,true, 'KFB'),
+    (  '00000000-0001-0000-0000-000000000004', 'Antonio', 'Fisher', null,  CONCAT(TO_CHAR(CURRENT_DATE, 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '3 years', 'YY')), null,true, 'VFAK'),
+    (  '00000000-0001-0000-0000-000000000005', 'Elaine', 'Stevens', null,  CONCAT(TO_CHAR(CURRENT_DATE, 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '3 years', 'YY')), null,false, 'FISI'),
+    
+    -- starting the year before
+    (  '00000000-0001-0001-0000-000000000001', 'Lillian', 'Henderson', null,  CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '1 year', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '2 years', 'YY')), null,true, 'FISI'),
+    (  '00000000-0001-0001-0000-000000000002', 'Bryan', 'Coleman', null,  CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '1 year', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '2 years', 'YY')), null,true, 'FISI'),
+    (  '00000000-0001-0001-0000-000000000003', 'Robin', 'Simmons', null,  CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '1 year', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '2 years', 'YY')), null,true, 'FISI'),
+    (  '00000000-0001-0001-0000-000000000004', 'Luis', 'Patterson', null,  CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '1 year', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '2 years', 'YY')), null,true, 'FISI'),
+    (  '00000000-0001-0001-0000-000000000005', 'Charlotte', 'Stevens', null,  CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '1 year', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '2 years', 'YY')), null,false, 'FISI'),
+    
+    -- starting the two years before
+    (  '00000000-0001-0002-0000-000000000001', 'Crystal', 'Jordan', null,  CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '2 years', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '1 year', 'YY')), null,true, 'FISI'),
+    (  '00000000-0001-0002-0000-000000000002', 'Gladys', 'Reynolds', null,  CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '2 years', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '1 year', 'YY')), null,true, 'FISI'),
+    (  '00000000-0001-0002-0000-000000000003', 'Nathan', 'Hamilton', null,  CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '2 years', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '1 year', 'YY')), null,true, 'FISI'),
+    (  '00000000-0001-0002-0000-000000000004', 'Florence', 'Graham', null,  CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '2 years', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '1 year', 'YY')), null,true, 'FISI'),
+    (  '00000000-0001-0002-0000-000000000005', 'Joel', 'Tucker', null,  CONCAT(TO_CHAR(CURRENT_DATE - INTERVAL '2 years', 'YY'), '/', TO_CHAR(CURRENT_DATE + INTERVAL '1 year', 'YY')), null,false, 'FISI')
+;
