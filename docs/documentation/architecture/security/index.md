@@ -6,8 +6,8 @@ The results of this process are listed under [features](#features-and-the-person
 
 ## Personas
 
-- [örtliche Ausbildungsleitung](../../../glossary.md#ortliche-ausbildungsleitung)
-- [örtliche Ausbilderin](../../../glossary.md#ortliche-ausbilderin)
+- [örtliche Ausbildungsleitung](../../../glossary.md#örtliche-ausbildungsleitung)
+- [örtliche Ausbilderin](../../../glossary.md#örtliche-ausbilderin)
 - [Nwk](../../../glossary.md#nwk)
 
 ## Features and the Personas that can use it
@@ -19,15 +19,17 @@ The results of this process are listed under [features](#features-and-the-person
 - [Assignment](../../../features/Zuweisung.md) (örtliche Ausbildungsleitung)
 
 ## Technical Implementation
+
 On the frontend side, the security features are controlled by the `VITE_APP_SECURITY` in the `.env` files.
 By default, security features are enabled in `production` and disabled in `development`.
 
 On the frontend side, we have a `security composable`.
 This composable has several methods:
- - checkForRole(string): this method checks whether the logged-in user has the provided role
- - checkForAnyRole(string[]): this method checks whether the logged-in user has any of the provided roles
- - checkForAllRoles(string[]): this method checks whether the logged-in user has all provided  roles
- - isAusbildungsleitung(): This method is used for checking whether the logged-in user is a [Ausbildungsleitung](../../../glossary.md#ortliche-ausbildungsleitung)
+
+- checkForRole(string): this method checks whether the logged-in user has the provided role
+- checkForAnyRole(string[]): this method checks whether the logged-in user has any of the provided roles
+- checkForAllRoles(string[]): this method checks whether the logged-in user has all provided roles
+- isAusbildungsleitung(): This method is used for checking whether the logged-in user is a [Ausbildungsleitung](../../../glossary.md#örtliche-ausbildungsleitung)
 
 Those methods are used in `v-if` directives to control what is shown (rendered) to the user.
 As this is controlled on frontend side in the browser, users could possibly bypass this security

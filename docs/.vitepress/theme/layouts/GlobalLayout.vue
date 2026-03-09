@@ -1,6 +1,6 @@
 <script setup>
-import DefaultTheme from "vitepress/theme";
 import VPLink from "vitepress/dist/client/theme-default/components/VPLink.vue";
+import DefaultTheme from "vitepress/theme";
 
 const { Layout } = DefaultTheme;
 </script>

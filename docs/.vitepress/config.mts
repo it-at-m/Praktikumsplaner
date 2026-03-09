@@ -1,5 +1,7 @@
-import {type DefaultTheme, defineConfig} from 'vitepress'
-import { withMermaid } from "vitepress-plugin-mermaid"
+import type { DefaultTheme } from "vitepress";
+
+import { defineConfig } from "vitepress";
+import { withMermaid } from "vitepress-plugin-mermaid";
 
 const title = "Praktikumsplaner";
 
@@ -8,15 +10,13 @@ export default withMermaid({
   base: "/Praktikumsplaner/",
   title: title,
   description: "Documentation of the Praktikumsplaner app",
-  head: [
-      ['link', { rel: 'icon', type: 'image/png', href: 'logo.png' } ]
-  ],
+  head: [["link", { rel: "icon", type: "image/png", href: "logo.png" }]],
   locales: {
     "/": {
       lang: "en-US",
       title: title,
-      description: ""
-    }
+      description: "",
+    },
   },
   themeConfig: {
     logo: { src: "/logo.png" },
@@ -38,54 +38,61 @@ export default withMermaid({
     ],
 
     sidebar: {
-      "/documentation/": { base: "/documentation/", items: sidebarDocumentation() },
-      "/features/": { base: "/features/", items: sidebarFeatures() }
+      "/documentation/": {
+        base: "/documentation/",
+        items: sidebarDocumentation(),
+      },
+      "/features/": { base: "/features/", items: sidebarFeatures() },
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/it-at-m/praktikumsplaner' }
+      { icon: "github", link: "https://github.com/it-at-m/praktikumsplaner" },
     ],
 
     lastUpdated: true,
 
     search: {
-      provider: 'local'
-    }
+      provider: "local",
+    },
   },
-  ignoreDeadLinks: [
-    /^https?:\/\/localhost/
-  ],
+  ignoreDeadLinks: [/^https?:\/\/localhost/],
   mermaidPlugin: {
     class: "mermaid my-class", // set additional css classes for parent container
-  }
-})
+  },
+});
 
 function sidebarDocumentation(): DefaultTheme.SidebarItem[] {
   return [
     {
       text: "Tools",
-      link: "TOOLS.md"
-    }, {
+      link: "TOOLS.md",
+    },
+    {
       text: "Configuration",
-      link: "architecture/configuration.md"
-    }, {
+      link: "architecture/configuration.md",
+    },
+    {
       text: "Architecture",
       collapsed: true,
       items: [
-        { text: "Architecture Decision Records (ADRs)", link: "architecture/adrs" },
+        {
+          text: "Architecture Decision Records (ADRs)",
+          link: "architecture/adrs",
+        },
         { text: "Security concept", link: "architecture/security/" },
         { text: "User interface", link: "architecture/user_interface/" },
-        { text: "Color Palette", link: "architecture/colorpalette/" }
-      ]
-    }, {
+        { text: "Color Palette", link: "architecture/colorpalette/" },
+      ],
+    },
+    {
       text: "Guides",
       collapsed: true,
       items: [
-        {text: "Database Migration", link: "guides/database-migration/" },
-        {text: "Local Development", link: "guides/local-development/" }
-      ]
-    }
-  ]
+        { text: "Database Migration", link: "guides/database-migration/" },
+        { text: "Local Development", link: "guides/local-development/" },
+      ],
+    },
+  ];
 }
 
 function sidebarFeatures(): DefaultTheme.SidebarItem[] {
@@ -93,6 +100,6 @@ function sidebarFeatures(): DefaultTheme.SidebarItem[] {
     { text: "Nachwuchskräfte", link: "Nachwuchskraefte.md" },
     { text: "Meldezeitraum", link: "meldezeitraum.md" },
     { text: "Praktikumsplätze", link: "Praktikumsplaetze.md" },
-    { text: "Assignment", link: "Zuweisung.md" }
-  ]
+    { text: "Assignment", link: "Zuweisung.md" },
+  ];
 }

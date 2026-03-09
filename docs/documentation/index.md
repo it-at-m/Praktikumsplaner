@@ -1,6 +1,6 @@
 # Introduction
 
-*TBD* 
+TBD
 
 ## Tooling
 

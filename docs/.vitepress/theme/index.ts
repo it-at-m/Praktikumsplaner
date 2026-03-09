@@ -1,9 +1,10 @@
 // .vitepress/theme/index.ts
 import type { Theme } from "vitepress";
+
 import DefaultTheme from "vitepress/theme";
-import GlobalLayout from "./layouts/GlobalLayout.vue";
 
 import status from "../components/adr/status.vue";
+import GlobalLayout from "./layouts/GlobalLayout.vue";
 
 export default {
   extends: DefaultTheme,

@@ -1,13 +1,13 @@
-The __Praktikumsplaner__ offers a way to organize junior staff and their internships during their vocational training.
+# Praktikumsplaner
 
----
+The **Praktikumsplaner** offers a way to organize junior staff and their internships during their vocational training.
+
 ## About the project
 
 The Praktikumsplaner, a project launched in collaboration between the Competence Center of Software Engineering (CCSE) and the InnovationLab, aims to support the training management in the allocation of junior staff.
 It offers trainers the opportunity to report their available internships to the training management.
 They can then use the application to assign junior staff to the reported internships using drag-and-drop functionality.
 The internship planner helps to maintain a good overview in order to assign junior staff to the most suitable positions.
-
 
 ![Process Diagramm](/Process.drawio.png)
 <em>The overall process in which the Praktikumsplaner takes place. The area marked in blue is where the Praktikumsplaner provides direct support.</em>

@@ -1,8 +1,9 @@
 # Meldezeitraum
 
-This page and its actions are only available for [örtliche Ausbildungsleitung](../glossary.md#ortliche-ausbildungsleitung).
+This page and its actions are only available for [örtliche Ausbildungsleitung](../glossary.md#örtliche-ausbildungsleitung).
 
 ## Meldezeitraum Overview
+
 The navigation drawer lists the page `Meldezeitraum` when clicking on this link the user is directed to a page
 where you can see all Meldezeiträume that have been created so far.
 They are displayed in three different lists.
@@ -12,6 +13,7 @@ The third list shows all [Meldezeiträume](../glossary.md#meldezeitraum) that ha
 If any of the lists is empty, a message will be displayed instead.
 
 ## Create a Meldezeitraum
+
 On the page `Meldezeitraum` it is possible to create a [Meldezeitraum](../glossary.md#meldezeitraum).
 
 After clicking, a dialog opens up where the user can enter a name to identify the [Meldezeitraum](../glossary.md#meldezeitraum) and select a Startzeitpunkt (Startdate) and an Endzeitpunkt (Enddate).
@@ -21,6 +23,7 @@ When clicking on `Speichern`, the application tries to save the [Meldezeitraum](
 Otherwise, an error message will be displayed.
 
 ## Delete a Meldezeitraum
+
 On the page `Meldezeitraum` it is possible to delete a [Meldezeitraum](../glossary.md#meldezeitraum).
 
 After clicking on the trash icon, a dialog opens up where the user can confirm the deletion of the [Meldezeitraum](../glossary.md#meldezeitraum).

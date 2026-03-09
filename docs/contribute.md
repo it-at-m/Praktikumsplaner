@@ -14,4 +14,4 @@ star! Thanks again!
 5. Push to the Branch (`git push origin feature/AmazingFeature`)
 6. Open a Pull Request
 
-More about this [here](https://github.com/it-at-m/Praktikumsplaner/blob/dev/CODE_OF_CONDUCT.md).
+More about this in [the CODE_OF_CONDUCT](https://github.com/it-at-m/Praktikumsplaner/blob/dev/CODE_OF_CONDUCT.md).

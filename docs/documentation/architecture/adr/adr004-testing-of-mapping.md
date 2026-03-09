@@ -22,6 +22,7 @@ it is defined that all fields in the target object are considered for mapping.
 If a field is not part of the mapping declaration, an error should occur.
 
 ### Todo
+
 - Add compiler argument at `maven-compile-plugin`: `-Amapstruct.unmappedTargetPolicy=ERROR`
 - Ignore target properties when mapping if they are not fillable by the source object:
   `@Mapping(target="ignorableProp", ignore=true)`
