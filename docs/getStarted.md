@@ -8,16 +8,16 @@ Praktikumsplaner is designed to organize junior staff and their internships duri
 
 To get the most out of the Praktikumsplaner, we've organized this documentation into several key sections:
 
-- **[About](./about):** Learn more about the project's background and goals behind it.
-- **[Features](./features):** Explore the full list of features and capabilities of Praktikumsplaner.
-- **[Technical Documentation](./documentation):** Dive deep into technical details, including setup, configuration, and architectural decisions.
+- **[About](./about/index.md):** Learn more about the project's background and goals behind it.
+- **[Features](./features/index.md):** Explore the full list of features and capabilities of Praktikumsplaner.
+- **[Technical Documentation](./documentation/index.md):** Dive deep into technical details, including setup, configuration, and architectural decisions.
 - **[GitHub Repository](https://github.com/it-at-m/Praktikumsplaner):** Access the source code, contribute, and track issues.
 
 ## Getting Started
 
 1. **Installation:** Follow our [technical setup](./documentation/guides/local-development/index.md#local-development-1) to set up the Praktikumsplaner on your system.
 
-2. **Contribute:** Interested in contributing? Check out our [contributor's guide](/docs/contribute.md) for details on how you can make a difference.
+2. **Contribute:** Interested in contributing? Check out our [contributor's guide](./contribute.md) for details on how you can make a difference.
 
 3. **Support:** Need help? Open an [issue](https://github.com/it-at-m/Praktikumsplaner/issues/new/choose) to ask for assistance.
 
