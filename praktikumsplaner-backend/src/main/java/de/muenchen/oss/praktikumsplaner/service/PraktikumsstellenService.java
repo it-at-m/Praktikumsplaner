@@ -21,6 +21,7 @@ import de.muenchen.oss.praktikumsplaner.security.AuthUtils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -36,8 +37,10 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
+@SuppressWarnings("PMD.CouplingBetweenObjects")
 public class PraktikumsstellenService {
 
+    public static final String PRAKTIKUMSSTELLE_NOT_FOUND = "Praktikumsstelle nicht gefunden.";
     private final PraktikumsstellenMapper praktikumsstellenMapper;
     private final StudiumsPraktikumsstellenRepository studiumsPraktikumsstellenRepository;
     private final AusbildungsPraktikumsstellenRepository ausbildungsPraktikumsstellenRepository;
@@ -45,20 +48,20 @@ public class PraktikumsstellenService {
     private final NwkRepository nwkRepository;
 
     public StudiumsPraktikumsstelleDto normalizeAndSaveStudiumsPraktikumsstelle(final CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto) {
-        StudiumsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDto,
+        final StudiumsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleDto,
                 meldezeitraumService.getCurrentMeldezeitraum());
         return praktikumsstellenMapper.toDto(normalizeAndSaveStudiumsPraktikumsstelle(entityPraktikumsstelle));
     }
 
     public StudiumsPraktikumsstelleDto saveStudiumsPraktikumsstelleWithMeldezeitraum(
             final CreateStudiumsPraktikumsstelleWithMeldezeitraumDto createStudiumsPraktikumsstelleWithMeldezeitraumDto) {
-        StudiumsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleWithMeldezeitraumDto);
+        final StudiumsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createStudiumsPraktikumsstelleWithMeldezeitraumDto);
         return praktikumsstellenMapper.toDto(normalizeAndSaveStudiumsPraktikumsstelle(entityPraktikumsstelle));
     }
 
     public AusbildungsPraktikumsstelleDto normalizeAndSaveAusbildungsPraktikumsstelle(
             final CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto) {
-        AusbildungsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDto,
+        final AusbildungsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleDto,
                 meldezeitraumService.getCurrentMeldezeitraum());
         return praktikumsstellenMapper
                 .toDto(normalizeAndSaveAusbildungsPraktikumsstelle(entityPraktikumsstelle));
@@ -66,49 +69,51 @@ public class PraktikumsstellenService {
 
     public AusbildungsPraktikumsstelleDto saveAusbildungsPraktikumsstelleWithMeldezeitraum(
             final CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto createAusbildungsPraktikumsstelleWithMeldezeitraumDto) {
-        AusbildungsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleWithMeldezeitraumDto);
+        final AusbildungsPraktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createAusbildungsPraktikumsstelleWithMeldezeitraumDto);
         return praktikumsstellenMapper
                 .toDto(normalizeAndSaveAusbildungsPraktikumsstelle(entityPraktikumsstelle));
     }
 
-    public PraktikumsstelleDto assignNwk(UUID praktikumsstellenID, UUID nwkID) {
-        Nwk assignedNwk = nwkRepository.findById(nwkID).orElseThrow();
+    public PraktikumsstelleDto assignNwk(final UUID praktikumsstellenID, final UUID nwkID) {
+        final Nwk assignedNwk = nwkRepository.findById(nwkID).orElseThrow();
 
         if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
-            AusbildungsPraktikumsstelle praktikumsstelle = ausbildungsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
+            final AusbildungsPraktikumsstelle praktikumsstelle = ausbildungsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
             if (praktikumsstelle.getAssignedNwk() == null) {
                 praktikumsstelle.setAssignedNwk(assignedNwk);
                 normalizeAndSaveAusbildungsPraktikumsstelle(praktikumsstelle);
                 return praktikumsstellenMapper.toDto(praktikumsstelle);
-            } else
-                throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
+            }
+            throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenID)) {
-            StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
+            final StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenID).orElseThrow();
             if (praktikumsstelle.getAssignedNwk() == null) {
                 praktikumsstelle.setAssignedNwk(assignedNwk);
                 normalizeAndSaveStudiumsPraktikumsstelle(praktikumsstelle);
                 return praktikumsstellenMapper.toDto(praktikumsstelle);
-            } else
-                throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
-        } else throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
+            }
+            throw new ResourceConflictException("Praktikumsstelle hat bereits eine zugewiesenen Nachwuchskraft.");
+        }
+        throw new ResourceNotFoundException(PRAKTIKUMSSTELLE_NOT_FOUND);
     }
 
-    public PraktikumsstelleDto unassignNwk(UUID praktikumsstellenId) {
+    public PraktikumsstelleDto unassignNwk(final UUID praktikumsstellenId) {
         if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
-            AusbildungsPraktikumsstelle praktikumsstelle = ausbildungsPraktikumsstellenRepository.findById(praktikumsstellenId).orElseThrow();
+            final AusbildungsPraktikumsstelle praktikumsstelle = ausbildungsPraktikumsstellenRepository.findById(praktikumsstellenId).orElseThrow();
             praktikumsstelle.setAssignedNwk(null);
             normalizeAndSaveAusbildungsPraktikumsstelle(praktikumsstelle);
             return praktikumsstellenMapper.toDto(praktikumsstelle);
         } else if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
-            StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenId).orElseThrow();
+            final StudiumsPraktikumsstelle praktikumsstelle = studiumsPraktikumsstellenRepository.findById(praktikumsstellenId).orElseThrow();
             praktikumsstelle.setAssignedNwk(null);
             normalizeAndSaveStudiumsPraktikumsstelle(praktikumsstelle);
             return praktikumsstellenMapper.toDto(praktikumsstelle);
-        } else throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
+        }
+        throw new ResourceNotFoundException(PRAKTIKUMSSTELLE_NOT_FOUND);
     }
 
     public List<PraktikumsstelleDto> getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum() {
-        List<PraktikumsstelleDto> combinedList = new ArrayList<>();
+        final List<PraktikumsstelleDto> combinedList = new ArrayList<>();
         combinedList.addAll(getAllAssignedAusbildungspraktikumsstellenInMostRecentPassedMeldezeitraum());
         combinedList.addAll(getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum());
 
@@ -129,34 +134,34 @@ public class PraktikumsstellenService {
                 .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream().map(praktikumsstellenMapper::toDto).toList();
     }
 
-    public TreeMap<String, List<PraktikumsstelleDto>> getAllInCurrentMeldezeitraumGroupedByDienststelle() {
+    public Map<String, List<PraktikumsstelleDto>> getAllInCurrentMeldezeitraumGroupedByDienststelle() {
         final UUID currentMeldezeitraumID = meldezeitraumService.getCurrentMeldezeitraum().id();
         return filterPraktikumsstellenForCurrentRole(getPraktikumsstellenGroupedByDienststelle(currentMeldezeitraumID));
     }
 
-    public TreeMap<String, List<PraktikumsstelleDto>> getRecentPraktikumsstellenGroupedByDienststelle() {
-        UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
+    public Map<String, List<PraktikumsstelleDto>> getRecentPraktikumsstellenGroupedByDienststelle() {
+        final UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
         return filterPraktikumsstellenForCurrentRole(getPraktikumsstellenGroupedByDienststelle(lastMeldezeitraumID));
     }
 
-    public void deleteStudiumsPraktikumsstelle(UUID praktikumsstellenId) {
+    public void deleteStudiumsPraktikumsstelle(final UUID praktikumsstellenId) {
         if (studiumsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             studiumsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
         } else {
-            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
+            throw new ResourceNotFoundException(PRAKTIKUMSSTELLE_NOT_FOUND);
         }
     }
 
-    public void deleteAusbildungsPraktikumsstelle(UUID praktikumsstellenId) {
+    public void deleteAusbildungsPraktikumsstelle(final UUID praktikumsstellenId) {
         if (ausbildungsPraktikumsstellenRepository.existsById(praktikumsstellenId)) {
             ausbildungsPraktikumsstellenRepository.deleteById(praktikumsstellenId);
         } else {
-            throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
+            throw new ResourceNotFoundException(PRAKTIKUMSSTELLE_NOT_FOUND);
         }
     }
 
-    public void updateAusbildungsPraktikumsstelle(UUID praktikumsstellenId,
-            UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
+    public void updateAusbildungsPraktikumsstelle(final UUID praktikumsstellenId,
+            final UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
         final AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto);
 
         final AusbildungsPraktikumsstelle praktikumsstelleToUpdate = findByIdOrThrowAusbildungspraktikumsstelle(praktikumsstellenId);
@@ -168,7 +173,7 @@ public class PraktikumsstellenService {
         }
     }
 
-    public void updateStudiumsPraktikumsstelle(UUID praktikumsstellenId, UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
+    public void updateStudiumsPraktikumsstelle(final UUID praktikumsstellenId, final UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
         final StudiumsPraktikumsstelle studiumsPraktikumsstelle = praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto);
 
         final StudiumsPraktikumsstelle praktikumsstelleToUpdate = findByIdOrThrowStudiumpraktikumsstelle(praktikumsstellenId);
@@ -180,8 +185,9 @@ public class PraktikumsstellenService {
         }
     }
 
-    private void updateAusbildungsPraktikumsstelleWithAssignedNwk(UUID id,
-            UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
+    @SuppressWarnings("PMD.CyclomaticComplexity")
+    private void updateAusbildungsPraktikumsstelleWithAssignedNwk(final UUID id,
+            final UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
         final AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = findByIdOrThrowAusbildungspraktikumsstelle(id);
 
         //Check if any field which is not supposed to change changed
@@ -200,7 +206,8 @@ public class PraktikumsstellenService {
         normalizeAndSaveAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle);
     }
 
-    private void updateStudiumsPraktikumsstelleWithAssignedNwk(UUID id, UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
+    @SuppressWarnings("PMD.CyclomaticComplexity")
+    private void updateStudiumsPraktikumsstelleWithAssignedNwk(final UUID id, final UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
         final StudiumsPraktikumsstelle studiumsPraktikumsstelle = findByIdOrThrowStudiumpraktikumsstelle(id);
 
         //Check if any field which is not supposed to change changed
@@ -219,14 +226,15 @@ public class PraktikumsstellenService {
         normalizeAndSaveStudiumsPraktikumsstelle(studiumsPraktikumsstelle);
     }
 
-    private TreeMap<String, List<PraktikumsstelleDto>> getPraktikumsstellenGroupedByDienststelle(UUID meldezeitraumID) {
-        List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID).stream()
+    private Map<String, List<PraktikumsstelleDto>> getPraktikumsstellenGroupedByDienststelle(final UUID meldezeitraumID) {
+        final List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID)
+                .stream()
                 .map(praktikumsstellenMapper::toDto).toList();
 
-        List<StudiumsPraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID).stream()
+        final List<StudiumsPraktikumsstelleDto> studiumsListDto = studiumsPraktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID).stream()
                 .map(praktikumsstellenMapper::toDto).toList();
 
-        List<PraktikumsstelleDto> combinedList = new ArrayList<>();
+        final List<PraktikumsstelleDto> combinedList = new ArrayList<>();
         combinedList.addAll(ausbildungsListDto);
         combinedList.addAll(studiumsListDto);
         combinedList.sort(Comparator.comparing(PraktikumsstelleDto::dienststelle));
@@ -238,15 +246,15 @@ public class PraktikumsstellenService {
                         Collectors.toList()));
     }
 
-    private TreeMap<String, List<PraktikumsstelleDto>> filterPraktikumsstellenForCurrentRole(
-            TreeMap<String, List<PraktikumsstelleDto>> abteilungsStellenMap) {
+    private Map<String, List<PraktikumsstelleDto>> filterPraktikumsstellenForCurrentRole(
+            final Map<String, List<PraktikumsstelleDto>> abteilungsStellenMap) {
 
         if (AuthUtils.isAusbildungsleitung()) {
             return abteilungsStellenMap;
         }
 
         if (AuthUtils.isAusbilder()) {
-            var usermail = AuthUtils.getMailFromUser();
+            final String usermail = AuthUtils.getMailFromUser();
 
             return abteilungsStellenMap.entrySet().stream()
                     .map(entry -> Map.entry(
@@ -267,7 +275,7 @@ public class PraktikumsstellenService {
     }
 
     private String getHauptabteilung(final String dienststelle) {
-        Matcher matcher = Pattern.compile("\\d").matcher(dienststelle);
+        final Matcher matcher = Pattern.compile("\\d").matcher(dienststelle);
         if (matcher.find()) {
             return dienststelle.substring(0, matcher.start() + 1);
         }
@@ -275,31 +283,31 @@ public class PraktikumsstellenService {
     }
 
     private String normalizeDienststelle(final String dienststelle) {
-        return dienststelle.toUpperCase().trim().replaceAll("ITM|IT@M|RIT|-", "");
+        return dienststelle.toUpperCase(Locale.GERMAN).trim().replaceAll("ITM|IT@M|RIT|-", "");
     }
 
-    private AusbildungsPraktikumsstelle findByIdOrThrowAusbildungspraktikumsstelle(UUID praktikumsstellenId) {
+    private AusbildungsPraktikumsstelle findByIdOrThrowAusbildungspraktikumsstelle(final UUID praktikumsstellenId) {
         final Optional<AusbildungsPraktikumsstelle> ausbildungsPraktikumsstelleOptional = ausbildungsPraktikumsstellenRepository.findById(praktikumsstellenId);
         if (ausbildungsPraktikumsstelleOptional.isPresent()) {
             return ausbildungsPraktikumsstelleOptional.get();
         }
-        throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
+        throw new ResourceNotFoundException(PRAKTIKUMSSTELLE_NOT_FOUND);
     }
 
-    private StudiumsPraktikumsstelle findByIdOrThrowStudiumpraktikumsstelle(UUID praktikumsstellenId) {
+    private StudiumsPraktikumsstelle findByIdOrThrowStudiumpraktikumsstelle(final UUID praktikumsstellenId) {
         final Optional<StudiumsPraktikumsstelle> studiumsPraktikumsstelleOptional = studiumsPraktikumsstellenRepository.findById(praktikumsstellenId);
         if (studiumsPraktikumsstelleOptional.isPresent()) {
             return studiumsPraktikumsstelleOptional.get();
         }
-        throw new ResourceNotFoundException("Praktikumsstelle nicht gefunden.");
+        throw new ResourceNotFoundException(PRAKTIKUMSSTELLE_NOT_FOUND);
     }
 
-    private AusbildungsPraktikumsstelle normalizeAndSaveAusbildungsPraktikumsstelle(AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle) {
+    private AusbildungsPraktikumsstelle normalizeAndSaveAusbildungsPraktikumsstelle(final AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle) {
         ausbildungsPraktikumsstelle.setDienststelle(normalizeDienststelle(ausbildungsPraktikumsstelle.getDienststelle()));
         return ausbildungsPraktikumsstellenRepository.save(ausbildungsPraktikumsstelle);
     }
 
-    private StudiumsPraktikumsstelle normalizeAndSaveStudiumsPraktikumsstelle(StudiumsPraktikumsstelle studiumsPraktikumsstelle) {
+    private StudiumsPraktikumsstelle normalizeAndSaveStudiumsPraktikumsstelle(final StudiumsPraktikumsstelle studiumsPraktikumsstelle) {
         studiumsPraktikumsstelle.setDienststelle(normalizeDienststelle(studiumsPraktikumsstelle.getDienststelle()));
         return studiumsPraktikumsstellenRepository.save(studiumsPraktikumsstelle);
     }

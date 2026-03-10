@@ -17,7 +17,7 @@ public class ExportController {
 
     private final ExcelExportService excelExportService;
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public String getExcelFileAsBase64() throws IOException {

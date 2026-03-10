@@ -27,9 +27,10 @@ public class ExcelImportServiceTest {
     private final String base64EncodedExcelNwkInvalidData;
 
     public ExcelImportServiceTest() throws IOException {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        service = new ExcelImportService(validator);
+        try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+            Validator validator = factory.getValidator();
+            service = new ExcelImportService(validator);
+        }
         base64EncodedExcelMultipleNwk = Base64.getEncoder().encodeToString(Objects
                 .requireNonNull(this.getClass().getResourceAsStream("ExcelMultipleNwk.xlsx")).readAllBytes());
         base64EncodedExcelNwkInvalidData = Base64.getEncoder().encodeToString(Objects
@@ -56,7 +57,7 @@ public class ExcelImportServiceTest {
         List<CreateNwkDto> resultList = service.excelToNwkDtoList(base64EncodedExcelMultipleNwk);
 
         assertEquals(createNwkDtos.size(), resultList.size());
-        assertEquals(createNwkDtos.get(0), resultList.get(0));
+        assertEquals(createNwkDtos.getFirst(), resultList.getFirst());
     }
 
     @Test
@@ -64,10 +65,10 @@ public class ExcelImportServiceTest {
 
         var violations = assertThrows(ExcelImportException.class, () -> service.excelToNwkDtoList(base64EncodedExcelNwkInvalidData)).getExceptionInfos();
 
-        assertEquals(4, violations.stream().filter(e -> e.getColumName().equals("nachname")).count());
-        assertEquals(6, violations.stream().filter(e -> e.getColumName().equals("vorname")).count());
-        assertEquals(6, violations.stream().filter(e -> e.getColumName().equals("studiengang")).count());
-        assertEquals(5, violations.stream().filter(e -> e.getColumName().equals("jahrgang")).count());
-        assertEquals(2, violations.stream().filter(e -> e.getColumName().equals("vorlesungstage")).count());
+        assertEquals(4, violations.stream().filter(e -> e.columName().equals("nachname")).count());
+        assertEquals(6, violations.stream().filter(e -> e.columName().equals("vorname")).count());
+        assertEquals(6, violations.stream().filter(e -> e.columName().equals("studiengang")).count());
+        assertEquals(5, violations.stream().filter(e -> e.columName().equals("jahrgang")).count());
+        assertEquals(2, violations.stream().filter(e -> e.columName().equals("vorlesungstage")).count());
     }
 }

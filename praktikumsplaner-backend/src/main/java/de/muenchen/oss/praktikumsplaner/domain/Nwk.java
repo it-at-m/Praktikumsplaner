@@ -28,6 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @StudiengangOrAusbildungsrichtungConstraint(studiengangGetMethod = "getStudiengang", ausbildungsrichtungGetMethod = "getAusbildungsrichtung")
+@SuppressWarnings({ "PMD.MissingSerialVersionUID", "PMD.ShortClassName" })
 /*
  * Nwk is short for Nachwuchskraft (young talent)
  */

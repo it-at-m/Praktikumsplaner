@@ -23,6 +23,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("PMD.MissingSerialVersionUID")
 public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
     private boolean projektarbeit;

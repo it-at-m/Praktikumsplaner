@@ -28,9 +28,12 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor
 public class MeldezeitraumController {
 
+    public static final String PERIOD_CURRENT = "current";
+    public static final String PERIOD_PAST = "past";
+    public static final String PERIOD_FUTURE = "future";
     private final MeldezeitraumService meldezeitraumService;
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MeldezeitraumDto createMeldezeitraum(final @Valid @RequestBody
@@ -39,17 +42,17 @@ public class MeldezeitraumController {
     }
 
     @GetMapping
-    public List<MeldezeitraumDto> getMeldezeitraeume(@RequestParam(name = "period", required = false) String period) {
-        if (period != null && period.equalsIgnoreCase("current")) {
+    public List<MeldezeitraumDto> getMeldezeitraeume(@RequestParam(name = "period", required = false) final String period) {
+        if (PERIOD_CURRENT.equalsIgnoreCase(period)) {
             try {
-                MeldezeitraumDto meldezeitraumDto = meldezeitraumService.getCurrentMeldezeitraum();
+                final MeldezeitraumDto meldezeitraumDto = meldezeitraumService.getCurrentMeldezeitraum();
                 return List.of(meldezeitraumDto);
             } catch (ValidationException ve) {
                 return new ArrayList<>();
             }
-        } else if (period != null && period.equalsIgnoreCase("past")) {
+        } else if (PERIOD_PAST.equalsIgnoreCase(period)) {
             return meldezeitraumService.getPassedMeldezeitraeume();
-        } else if (period != null && period.equalsIgnoreCase("future")) {
+        } else if (PERIOD_FUTURE.equalsIgnoreCase(period)) {
             return meldezeitraumService.getUpcomingMeldezeitraeume();
         } else if (period != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wert '" + period + "' für Parameter 'period' ist nicht unterstützt.");
@@ -59,8 +62,8 @@ public class MeldezeitraumController {
 
     @DeleteMapping(path = "/{id}")
     @Transactional
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
-    public void deleteMeldezeitraum(@PathVariable(name = "id") UUID id) {
+    @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    public void deleteMeldezeitraum(@PathVariable(name = "id") final UUID id) {
         meldezeitraumService.deleteMeldezeitraumById(id);
     }
 }

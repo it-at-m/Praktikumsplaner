@@ -51,7 +51,7 @@ public final class AuthUtils {
     public static String getMailFromUser() {
 
         if (getAuthentication() instanceof JwtAuthenticationToken jwtAuth) {
-            String email = jwtAuth.getToken().getClaimAsString("email");
+            final String email = jwtAuth.getToken().getClaimAsString("email");
             if (email == null || email.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing email claim in JWT token");
             }
@@ -86,7 +86,7 @@ public final class AuthUtils {
     }
 
     private static Authentication getAuthentication() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No authentication found");

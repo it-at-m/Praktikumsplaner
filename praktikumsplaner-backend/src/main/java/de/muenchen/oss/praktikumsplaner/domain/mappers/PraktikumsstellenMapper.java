@@ -18,38 +18,41 @@ import org.mapstruct.MappingTarget;
 
 @Mapper
 public interface PraktikumsstellenMapper {
-    @Mapping(target = "assignedNwk", source = "studiumsPraktikumsstelle.assignedNwk")
+
+    String ASSIGNED_NWK = "assignedNwk";
+
+    @Mapping(target = ASSIGNED_NWK, source = "studiumsPraktikumsstelle.assignedNwk")
     StudiumsPraktikumsstelleDto toDto(StudiumsPraktikumsstelle studiumsPraktikumsstelle);
 
-    @Mapping(target = "assignedNwk", source = "ausbildungsPraktikumsstelle.assignedNwk")
+    @Mapping(target = ASSIGNED_NWK, source = "ausbildungsPraktikumsstelle.assignedNwk")
     AusbildungsPraktikumsstelleDto toDto(AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "meldezeitraumDto.id", target = "meldezeitraumID")
-    @Mapping(target = "assignedNwk", ignore = true)
+    @Mapping(target = ASSIGNED_NWK, ignore = true)
     StudiumsPraktikumsstelle toEntity(CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto, MeldezeitraumDto meldezeitraumDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "meldezeitraumDto.id", target = "meldezeitraumID")
-    @Mapping(target = "assignedNwk", ignore = true)
+    @Mapping(target = ASSIGNED_NWK, ignore = true)
     AusbildungsPraktikumsstelle toEntity(CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto,
             MeldezeitraumDto meldezeitraumDto);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "assignedNwk", ignore = true)
+    @Mapping(target = ASSIGNED_NWK, ignore = true)
     StudiumsPraktikumsstelle toEntity(CreateStudiumsPraktikumsstelleWithMeldezeitraumDto createStudiumsPraktikumsstelleWithMeldezeitraumDto);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "assignedNwk", ignore = true)
+    @Mapping(target = ASSIGNED_NWK, ignore = true)
     AusbildungsPraktikumsstelle toEntity(CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto createAusbildungsPraktikumsstelleWithMeldezeitraumDto);
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "assignedNwk", ignore = true)
+    @Mapping(target = ASSIGNED_NWK, ignore = true)
     AusbildungsPraktikumsstelle toEntity(UUID id,
             UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto ausbildungsPraktikumsstelleDto);
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "assignedNwk", ignore = true)
+    @Mapping(target = ASSIGNED_NWK, ignore = true)
     StudiumsPraktikumsstelle toEntity(UUID id, UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto studiumsPraktikumsstelleDto);
 
     @Mapping(target = "dienststelle", source = "praktikumsstelleDto.dienststelle")
@@ -60,7 +63,7 @@ public interface PraktikumsstellenMapper {
     @Mapping(target = "projektarbeit", ignore = true)
     @Mapping(target = "ausbildungsjahr", ignore = true)
     @Mapping(target = "ausbildungsrichtung", ignore = true)
-    @Mapping(target = "assignedNwk", ignore = true)
+    @Mapping(target = ASSIGNED_NWK, ignore = true)
     void updateAusbildungsPraktikumsstelle(@MappingTarget AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle,
             UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto);
 
@@ -71,7 +74,7 @@ public interface PraktikumsstellenMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "studiensemester", ignore = true)
     @Mapping(target = "studiengang", ignore = true)
-    @Mapping(target = "assignedNwk", ignore = true)
+    @Mapping(target = ASSIGNED_NWK, ignore = true)
     void updateStudiumsPraktikumsstelle(@MappingTarget StudiumsPraktikumsstelle studiumsPraktikumsstelle,
             UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto);
 

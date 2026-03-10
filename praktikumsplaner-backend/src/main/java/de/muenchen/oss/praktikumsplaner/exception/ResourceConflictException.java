@@ -1,7 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.exception;
 
+@SuppressWarnings("PMD.MissingSerialVersionUID")
 public class ResourceConflictException extends RuntimeException {
-    public ResourceConflictException(String message) {
+    public ResourceConflictException(final String message) {
         super(message);
     }
 }

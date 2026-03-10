@@ -20,13 +20,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/nachwuchskraft")
+@RequestMapping("/nachwuchskraft")
 public class NwkController {
     private final NwkService nwkService;
 
     private static final String ACTIVE_STATUS = "aktiv";
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PostMapping("/import")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveNwkExcel(@RequestBody final String base64String) throws IOException {
@@ -40,7 +40,7 @@ public class NwkController {
         nwkService.saveNwk(createNwkDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     public List<NwkDto> getNwks(@RequestParam(name = "status", required = false) final String status,
             @RequestParam(name = "unassigned", required = false) final String unassigned) {
@@ -50,22 +50,20 @@ public class NwkController {
             }
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter nicht unterstützt.");
         }
-        if (unassigned != null) {
-            if (Boolean.TRUE.toString().equals(unassigned)) {
-                return nwkService.findAllUnassignedNwksInCurrentMeldezeitraum();
-            }
+        if (Boolean.TRUE.toString().equals(unassigned)) {
+            return nwkService.findAllUnassignedNwksInCurrentMeldezeitraum();
         }
         return nwkService.findAllNwks();
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @PutMapping
     public void updateNwk(@RequestBody final NwkDto nwkDto) {
-        if (!nwkService.nwkExistsById(nwkDto.id())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Nachwuchskraft mit der ID " + nwkDto.id() + " existiert nicht.");
-        } else {
+        if (nwkService.nwkExistsById(nwkDto.id())) {
             nwkService.saveNwk(nwkDto);
+
         }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Nachwuchskraft mit der ID " + nwkDto.id() + " existiert nicht.");
     }
 }

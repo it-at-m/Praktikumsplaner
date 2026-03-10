@@ -39,9 +39,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -201,14 +201,14 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        TreeMap<String, List<PraktikumsstelleDto>> result = service.getRecentPraktikumsstellenGroupedByDienststelle();
+        Map<String, List<PraktikumsstelleDto>> result = service.getRecentPraktikumsstellenGroupedByDienststelle();
 
         assertNotNull(result);
         assertEquals(4, result.size());
-        assertEquals("GL1", result.firstKey());
+        assertTrue(result.containsKey("GL1"));
         assertTrue(result.containsKey("KM2"));
         assertTrue(result.containsKey("InnoLab"));
-        assertEquals("KM8", result.lastKey());
+        assertTrue(result.containsKey("KM8"));
 
         assertEquals(2, result.get("KM8").size());
         assertEquals(1, result.get("KM2").size());
@@ -257,7 +257,7 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        TreeMap<String, List<PraktikumsstelleDto>> result = service.getRecentPraktikumsstellenGroupedByDienststelle();
+        Map<String, List<PraktikumsstelleDto>> result = service.getRecentPraktikumsstellenGroupedByDienststelle();
 
         assertNotNull(result);
         assertEquals(2, result.size());
@@ -304,14 +304,14 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        TreeMap<String, List<PraktikumsstelleDto>> result = service.getAllInCurrentMeldezeitraumGroupedByDienststelle();
+        Map<String, List<PraktikumsstelleDto>> result = service.getAllInCurrentMeldezeitraumGroupedByDienststelle();
 
         assertNotNull(result);
         assertEquals(4, result.size());
-        assertEquals("GL1", result.firstKey());
+        assertTrue(result.containsKey("GL1"));
         assertTrue(result.containsKey("KM2"));
         assertTrue(result.containsKey("InnoLab"));
-        assertEquals("KM8", result.lastKey());
+        assertTrue(result.containsKey("KM8"));
 
         assertEquals(2, result.get("KM8").size());
         assertEquals(1, result.get("KM2").size());
@@ -360,7 +360,7 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        TreeMap<String, List<PraktikumsstelleDto>> result = service.getAllInCurrentMeldezeitraumGroupedByDienststelle();
+        Map<String, List<PraktikumsstelleDto>> result = service.getAllInCurrentMeldezeitraumGroupedByDienststelle();
 
         assertNotNull(result);
         assertEquals(2, result.size());
@@ -622,9 +622,7 @@ public class PraktikumsstellenServiceTest {
                 Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, false, meldezeitraumDto.id(),
                 helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
 
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            service.deleteAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle.getId());
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.deleteAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle.getId()));
 
     }
 
@@ -658,9 +656,7 @@ public class PraktikumsstellenServiceTest {
                 Set.of(Studiensemester.SEMESTER3), Studiengang.BWI, "true", meldezeitraumDto.id(),
                 helper.createNwkEntity("TestNwk", "TestNwk", null, null, null, null, false));
 
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            service.deleteStudiumsPraktikumsstelle(studiumsPraktikumsstelle.getId());
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.deleteStudiumsPraktikumsstelle(studiumsPraktikumsstelle.getId()));
 
     }
 
@@ -700,9 +696,7 @@ public class PraktikumsstellenServiceTest {
 
         UUID uuid = UUID.randomUUID();
 
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            service.updateStudiumsPraktikumsstelle(uuid, studiumsPraktikumsstelle);
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.updateStudiumsPraktikumsstelle(uuid, studiumsPraktikumsstelle));
 
     }
 
@@ -742,9 +736,7 @@ public class PraktikumsstellenServiceTest {
 
         UUID uuid = UUID.randomUUID();
 
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            service.updateAusbildungsPraktikumsstelle(uuid, ausbildungsPraktikumsstelle);
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> service.updateAusbildungsPraktikumsstelle(uuid, ausbildungsPraktikumsstelle));
 
     }
 
@@ -762,9 +754,8 @@ public class PraktikumsstellenServiceTest {
 
         when(ausbildungsRepository.findById(ausbildungsPraktikumsstelle.getId())).thenReturn(Optional.of(ausbildungsPraktikumsstelle));
 
-        Assertions.assertDoesNotThrow(() -> {
-            service.updateAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle.getId(), updateAusbildungsPraktikumsstelleWithMeldezeitraumDto);
-        });
+        Assertions.assertDoesNotThrow(
+                () -> service.updateAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle.getId(), updateAusbildungsPraktikumsstelleWithMeldezeitraumDto));
 
         ausbildungsPraktikumsstelle.setDienststelle(updateAusbildungsPraktikumsstelleWithMeldezeitraumDto.dienststelle());
 
@@ -787,9 +778,8 @@ public class PraktikumsstellenServiceTest {
 
         when(ausbildungsRepository.findById(ausbildungsPraktikumsstelle.getId())).thenReturn(Optional.of(ausbildungsPraktikumsstelle));
 
-        Assertions.assertThrows(ResourceConflictException.class, () -> {
-            service.updateAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle.getId(), updateAusbildungsPraktikumsstelleWithMeldezeitraumDto);
-        });
+        Assertions.assertThrows(ResourceConflictException.class,
+                () -> service.updateAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle.getId(), updateAusbildungsPraktikumsstelleWithMeldezeitraumDto));
 
     }
 
@@ -807,9 +797,8 @@ public class PraktikumsstellenServiceTest {
 
         when(studiumsRepository.findById(studiumsPraktikumsstelle.getId())).thenReturn(Optional.of(studiumsPraktikumsstelle));
 
-        Assertions.assertDoesNotThrow(() -> {
-            service.updateStudiumsPraktikumsstelle(studiumsPraktikumsstelle.getId(), updateStudiumsPraktikumsstelleWithMeldezeitraumDto);
-        });
+        Assertions.assertDoesNotThrow(
+                () -> service.updateStudiumsPraktikumsstelle(studiumsPraktikumsstelle.getId(), updateStudiumsPraktikumsstelleWithMeldezeitraumDto));
 
         studiumsPraktikumsstelle.setDienststelle(updateStudiumsPraktikumsstelleWithMeldezeitraumDto.dienststelle());
 
@@ -832,9 +821,8 @@ public class PraktikumsstellenServiceTest {
 
         when(studiumsRepository.findById(studiumsPraktikumsstelle.getId())).thenReturn(Optional.of(studiumsPraktikumsstelle));
 
-        Assertions.assertThrows(ResourceConflictException.class, () -> {
-            service.updateStudiumsPraktikumsstelle(studiumsPraktikumsstelle.getId(), updateStudiumsPraktikumsstelleWithMeldezeitraumDto);
-        });
+        Assertions.assertThrows(ResourceConflictException.class,
+                () -> service.updateStudiumsPraktikumsstelle(studiumsPraktikumsstelle.getId(), updateStudiumsPraktikumsstelleWithMeldezeitraumDto));
 
     }
 

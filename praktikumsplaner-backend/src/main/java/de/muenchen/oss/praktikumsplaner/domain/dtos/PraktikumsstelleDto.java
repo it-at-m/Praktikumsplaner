@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 public interface PraktikumsstelleDto {
+    @SuppressWarnings("PMD.ShortMethodName")
     @NotNull UUID id();
 
     @NotNull String dienststelle();

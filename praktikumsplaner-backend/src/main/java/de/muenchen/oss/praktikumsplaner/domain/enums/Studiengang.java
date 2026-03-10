@@ -1,5 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.domain.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Studiengang {
     BSC("Bachelor of Science - Informatik"),
     BWI("Wirtschaftsinformatik kommunal"),
@@ -10,11 +13,8 @@ public enum Studiengang {
 
     private final String longName;
 
-    Studiengang(String longName) {
+    Studiengang(final String longName) {
         this.longName = longName;
     }
 
-    public String getLongName() {
-        return longName;
-    }
 }

@@ -13,13 +13,13 @@ public class StudiengangOrAusbildungsrichtungValidator implements ConstraintVali
     private String studiengangField;
 
     @Override
-    public void initialize(StudiengangOrAusbildungsrichtungConstraint constraintAnnotation) {
+    public void initialize(final StudiengangOrAusbildungsrichtungConstraint constraintAnnotation) {
         this.ausbildungsrichtungField = constraintAnnotation.ausbildungsrichtungGetMethod();
         this.studiengangField = constraintAnnotation.studiengangGetMethod();
     }
 
     @Override
-    public boolean isValid(Object obj, ConstraintValidatorContext context) {
+    public boolean isValid(final Object obj, final ConstraintValidatorContext context) {
         try {
             final Method ausbildungsrichtungGetter = obj.getClass().getMethod(ausbildungsrichtungField);
             final Ausbildungsrichtung ausbildungsrichtung = (Ausbildungsrichtung) ausbildungsrichtungGetter.invoke(obj);
