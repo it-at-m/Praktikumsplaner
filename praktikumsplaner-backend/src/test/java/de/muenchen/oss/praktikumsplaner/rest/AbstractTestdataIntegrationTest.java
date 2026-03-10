@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import static de.muenchen.oss.praktikumsplaner.TestConstants.SPRING_TEST_PROFILE;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.muenchen.oss.praktikumsplaner.MicroServiceApplication;
 import de.muenchen.oss.praktikumsplaner.TestConstants;
@@ -11,8 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
-
-import static de.muenchen.oss.praktikumsplaner.TestConstants.SPRING_TEST_PROFILE;
 
 @SpringBootTest(classes = MicroServiceApplication.class)
 @ActiveProfiles({ SPRING_TEST_PROFILE, TestConstants.SPRING_NO_SECURITY_PROFILE })
