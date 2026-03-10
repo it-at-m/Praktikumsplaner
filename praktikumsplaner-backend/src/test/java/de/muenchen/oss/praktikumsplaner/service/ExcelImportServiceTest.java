@@ -27,7 +27,7 @@ public class ExcelImportServiceTest {
     private final String base64EncodedExcelNwkInvalidData;
 
     public ExcelImportServiceTest() throws IOException {
-        try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
             Validator validator = factory.getValidator();
             service = new ExcelImportService(validator);
         }
