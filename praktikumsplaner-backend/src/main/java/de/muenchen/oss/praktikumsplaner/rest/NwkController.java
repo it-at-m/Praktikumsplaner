@@ -61,9 +61,9 @@ public class NwkController {
     public void updateNwk(@RequestBody final NwkDto nwkDto) {
         if (nwkService.nwkExistsById(nwkDto.id())) {
             nwkService.saveNwk(nwkDto);
-
+            return;
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Nachwuchskraft mit der ID " + nwkDto.id() + " existiert nicht.");
+                "Nachwuchskraft mit der ID %s existiert nicht.".formatted(nwkDto.id()));
     }
 }

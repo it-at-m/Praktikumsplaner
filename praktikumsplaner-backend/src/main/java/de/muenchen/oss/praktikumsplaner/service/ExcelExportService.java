@@ -36,7 +36,9 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 @Service
 public class ExcelExportService {
+    public static final String YES = "Ja";
     public static final String NO = "Nein";
+
     private final PraktikumsstellenService praktikumsstellenService;
 
     /*
@@ -105,8 +107,8 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
             row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
             row.getCell(convertColStringToIndex("I")).setCellValue(getWuensche(praktikumsstelle));
-            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.projektarbeit() ? "Ja" : NO);
-            row.getCell(convertColStringToIndex("K")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? "Ja" : NO);
+            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.projektarbeit() ? YES : NO);
+            row.getCell(convertColStringToIndex("K")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? YES : NO);
             row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
             row.getCell(convertColStringToIndex("N")).setCellValue(ausbildungsjahrToStringConverter(praktikumsstelle.ausbildungsjahr()));
@@ -131,7 +133,7 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
             row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
             row.getCell(convertColStringToIndex("I")).setCellValue(getWuensche(praktikumsstelle));
-            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? "Ja" : NO);
+            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? YES : NO);
             row.getCell(convertColStringToIndex("K")).setCellValue(mapProgrammierkenntnisse(praktikumsstelle.programmierkenntnisse()));
             row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
@@ -233,7 +235,7 @@ public class ExcelExportService {
     }
 
     private static String mapProgrammierkenntnisse(final String programmierkenntnisse) {
-        return (StringUtils.hasText(programmierkenntnisse) && Boolean.parseBoolean(programmierkenntnisse.trim())) ? "Ja" : NO;
+        return (StringUtils.hasText(programmierkenntnisse) && Boolean.parseBoolean(programmierkenntnisse.trim())) ? YES : NO;
     }
 
     private static String ausbildungsjahrToStringConverter(final Set<Ausbildungsjahr> ausbildungsjahr) {
