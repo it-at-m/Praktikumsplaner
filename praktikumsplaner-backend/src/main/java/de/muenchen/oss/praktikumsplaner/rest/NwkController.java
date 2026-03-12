@@ -43,14 +43,14 @@ public class NwkController {
     @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
     @GetMapping
     public List<NwkDto> getNwks(@RequestParam(name = "status", required = false) final String status,
-            @RequestParam(name = "unassigned", required = false) final String unassigned) {
+            @RequestParam(name = "unassigned", required = false) final boolean unassigned) {
         if (status != null) {
             if (ACTIVE_STATUS.equals(status)) {
                 return nwkService.findAllActiveNwks();
             }
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter nicht unterstützt.");
         }
-        if (Boolean.TRUE.toString().equals(unassigned)) {
+        if (unassigned) {
             return nwkService.findAllUnassignedNwksInCurrentMeldezeitraum();
         }
         return nwkService.findAllNwks();
