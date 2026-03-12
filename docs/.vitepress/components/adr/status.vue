@@ -1,15 +1,16 @@
 <template>
   <div style="margin-top: 4px">
-    <span
-      ><svg
+    <span>
+      <svg
         height="24px"
         viewBox="0 0 24 24"
       >
         <path
           :d="svgPath"
           :fill="svgFillColor"
-        ></path></svg
-    ></span>
+        />
+      </svg>
+    </span>
     <span class="statusText">{{ statusI18nText }}</span>
   </div>
 </template>
