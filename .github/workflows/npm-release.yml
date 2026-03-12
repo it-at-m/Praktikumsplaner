@@ -15,7 +15,7 @@ on:
         type: choice
         description: "Select the node service to release"
         required: true
-        default: refarch-frontend
+        default: praktikumsplaner-frontend
         options:
           - praktikumsplaner-frontend
 
