@@ -11,6 +11,12 @@ on:
         description: "Version to use for new local working copy (e.g., 1.2.4-SNAPSHOT)"
         required: true
         default: 0.0.2-SNAPSHOT
+      app-path:
+        type: choice
+        description: Service-Name
+        required: true
+        options:
+          - praktikumsplaner-backend
 
 jobs:
   release-maven:
@@ -27,7 +33,7 @@ jobs:
       - id: maven-release-step
         uses: it-at-m/lhm_actions/action-templates/actions/action-maven-release@e012d3bda6f9d5511415e2d885f32826049284a4 # v1.0.23
         with:
-          app-path: "praktikumsplaner-backend"
+          app-path: ${{ github.event.inputs.app-path }}
           releaseVersion: ${{ github.event.inputs.releaseVersion }}
           developmentVersion: ${{ github.event.inputs.developmentVersion }}
           use-pr: 'true'
@@ -44,8 +50,8 @@ jobs:
     steps:
       - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@e012d3bda6f9d5511415e2d885f32826049284a4 # v1.0.23
         with:
-          path: "praktikumsplaner-backend"
-          image-name: "praktikumsplaner-backend"
+          path: ${{ github.event.inputs.app-path }}
+          image-name: ${{ github.event.inputs.app-path }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
           registry-username: ${{ github.actor }}
@@ -63,5 +69,5 @@ jobs:
         uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@e012d3bda6f9d5511415e2d885f32826049284a4 # v1.0.23
         with:
           artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
-          tag-name: "praktikumsplaner-backend-${{ github.event.inputs.releaseVersion }}"
-          artifact-path: praktikumsplaner-backend/target/*.jar
+          tag-name: ${{ inputs.app-path }}-${{ github.event.inputs.releaseVersion }}
+          artifact-path: ${{ github.event.inputs.app-path }}/target/*.jar
