@@ -13,7 +13,7 @@ so the messages generated in the backend should be comprehensible and really poi
 ## Loading Animations
 
 Every time a user has to wait for the completion of a request sent to the backend, a loading animation should be displayed.
-The application distinguishes between two scenarios. Retreiving data from the backend and providing data to the backend.
+The application distinguishes between two scenarios. Retrieving data from the backend and providing data to the backend.
 For the first scenario [skeleton loaders](#skeleton-loader) are used, for the second scenario a [circular loader](#circular-loader) is used.
 
 ### Skeleton Loader
