@@ -1,12 +1,12 @@
 <template>
-    <v-text-field
-        v-model="stelle.email"
-        :label="conditionalRequiredLabel"
-        :rules="conditionalRequiredRules"
-        variant="outlined"
-        :clearable="!isRequired"
-        :disabled="disabled"
-    ></v-text-field>
+  <v-text-field
+    v-model="stelle.email"
+    :label="conditionalRequiredLabel"
+    :rules="conditionalRequiredRules"
+    variant="outlined"
+    :clearable="!isRequired"
+    :disabled="disabled"
+  ></v-text-field>
 </template>
 
 <script setup lang="ts">
@@ -18,47 +18,47 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 const validationRules = useRules();
 
 interface Properties {
-    modelValue: Praktikumsstelle;
-    isRequired: boolean;
-    requiredSymbol?: string;
-    disabled?: boolean;
+  modelValue: Praktikumsstelle;
+  isRequired: boolean;
+  requiredSymbol?: string;
+  disabled?: boolean;
 }
 const properties = withDefaults(defineProps<Properties>(), {
-    requiredSymbol: "*",
-    disabled: false,
+  requiredSymbol: "*",
+  disabled: false,
 });
 
 const emits =
-    defineEmits<(e: "update:modelValue", email: Praktikumsstelle) => void>();
+  defineEmits<(e: "update:modelValue", email: Praktikumsstelle) => void>();
 
 const label = "E-mail örtliche*r Ausbilder*in";
 const conditionalRequiredLabel = computed(() => {
-    return properties.isRequired ? label + properties.requiredSymbol : label;
+  return properties.isRequired ? label + properties.requiredSymbol : label;
 });
 
 const emailRule = [
-    validationRules.notEmptyRule("Darf nicht leer sein."),
-    validationRules.regexRule(
-        /^[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,63}\.[A-Za-z]{1,63}$/,
-        "Keine gültige Email."
-    ),
-    validationRules.maxLengthRule(
-        255,
-        "Die Email darf nicht länger als 255 Zeichen sein."
-    ),
+  validationRules.notEmptyRule("Darf nicht leer sein."),
+  validationRules.regexRule(
+    /^[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,63}\.[A-Za-z]{1,63}$/,
+    "Keine gültige Email."
+  ),
+  validationRules.maxLengthRule(
+    255,
+    "Die Email darf nicht länger als 255 Zeichen sein."
+  ),
 ];
 const conditionalRequiredRules = computed(() => {
-    return properties.isRequired ? emailRule : undefined;
+  return properties.isRequired ? emailRule : undefined;
 });
 
 const stelle = computed({
-    // getter
-    get() {
-        return properties.modelValue;
-    },
-    // setter
-    set(newValue) {
-        emits("update:modelValue", newValue);
-    },
+  // getter
+  get() {
+    return properties.modelValue;
+  },
+  // setter
+  set(newValue) {
+    emits("update:modelValue", newValue);
+  },
 });
 </script>

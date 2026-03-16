@@ -3,30 +3,30 @@ import { defineStore } from "pinia";
 import { Levels } from "@/api/Error";
 
 export interface SnackbarState {
-    message: string | undefined;
-    level: Levels;
-    show: boolean;
+  message: string | undefined;
+  level: Levels;
+  show: boolean;
 }
 
 export const useSnackbarStore = defineStore("snackbar", {
-    state: (): SnackbarState => ({
-        message: undefined,
-        level: Levels.INFO,
-        show: false,
-    }),
-    getters: {},
-    actions: {
-        showMessage(message: {
-            message?: string;
-            level?: Levels;
-            show?: boolean;
-        }): void {
-            this.message = message.message;
-            this.level = message.level ? message.level : Levels.INFO;
-            this.show = true;
-        },
-        updateShow(show: boolean): void {
-            this.show = show;
-        },
+  state: (): SnackbarState => ({
+    message: undefined,
+    level: Levels.INFO,
+    show: false,
+  }),
+  getters: {},
+  actions: {
+    showMessage(message: {
+      message?: string;
+      level?: Levels;
+      show?: boolean;
+    }): void {
+      this.message = message.message;
+      this.level = message.level ? message.level : Levels.INFO;
+      this.show = true;
     },
+    updateShow(show: boolean): void {
+      this.show = show;
+    },
+  },
 });
