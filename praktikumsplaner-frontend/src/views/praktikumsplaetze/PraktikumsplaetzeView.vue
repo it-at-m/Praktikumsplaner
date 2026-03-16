@@ -1,101 +1,95 @@
 <template>
-    <v-container>
-        <page-title
-            back-button-url="/"
-            page-header-text="Praktikumsplätze"
-        ></page-title>
-        <v-container v-if="loadingSite">
-            <v-row>
-                <v-col cols="10"></v-col>
-                <v-col cols="2">
-                    <v-skeleton-loader type="button"> </v-skeleton-loader>
-                </v-col>
-            </v-row>
-        </v-container>
-        <v-container v-else>
-            <div v-if="canStellenBeSubmitted()">
-                <v-row>
-                    <v-col cols="10"></v-col>
-                    <v-col cols="2">
-                        <two-choice-dialog-cards
-                            v-model="twoChoiceDialogVisible"
-                            buttontext="Hinzufügen"
-                            icontext="mdi-plus"
-                            dialogtitle="Praktikumsplatz melden"
-                            dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
-                            choice-one-title="Studium"
-                            choice-one-subtitle="Praktikumsplatz für Studierende "
-                            choice-two-title="Ausbildung"
-                            choice-two-subtitle="Praktikumsplatz für Auszubildende"
-                            @choice-one="toStudium"
-                            @choice-two="toAusbildung"
-                        ></two-choice-dialog-cards>
-                    </v-col>
-                </v-row>
-                <v-row></v-row>
-                <v-skeleton-loader
-                    v-if="loadingUebersicht"
-                    type="image"
-                >
-                </v-skeleton-loader>
-                <v-row v-if="!loadingUebersicht">
-                    <v-container
-                        v-if="!mapIsEmpty"
-                        class="box"
-                    >
-                        <span> Übersicht aus dem aktuellen Meldezeitraum </span>
-                        <small
-                            v-if="
-                                !security.isAusbildungsleitung() &&
-                                security.isAusbilder()
-                            "
-                            >(Nur eigene Plätze von örtl. Ausbilder*innen
-                            angezeigt)</small
-                        >
-                        <praktikumsstellen-list
-                            :praktikumsstellen-map="praktikumsstellenMap"
-                        ></praktikumsstellen-list>
-                    </v-container>
-                    <v-container
-                        v-else
-                        class="box"
-                    >
-                        <v-row class="align-center">
-                            <v-col
-                                cols="auto"
-                                class="d-flex align-center"
-                            >
-                                <v-icon
-                                    color="blue"
-                                    size="large"
-                                    >mdi-information-outline</v-icon
-                                >
-                            </v-col>
-                            <v-col class="d-flex align-center">
-                                <p
-                                    v-if="
-                                        !security.isAusbildungsleitung() &&
-                                        security.isAusbilder()
-                                    "
-                                >
-                                    Für Sie als Ausbilder*in wurden noch keine
-                                    Praktikumsstellen für den aktuellen Zeitraum
-                                    gemeldet.
-                                </p>
-                                <p v-else>
-                                    Es wurden für den aktuellen Zeitraum noch
-                                    keine Praktikumsstellen gemeldet.
-                                </p>
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </v-row>
-            </div>
-            <div v-else>
-                <kein-meldezeitraum-message></kein-meldezeitraum-message>
-            </div>
-        </v-container>
+  <v-container>
+    <page-title
+      back-button-url="/"
+      page-header-text="Praktikumsplätze"
+    ></page-title>
+    <v-container v-if="loadingSite">
+      <v-row>
+        <v-col cols="10"></v-col>
+        <v-col cols="2">
+          <v-skeleton-loader type="button"> </v-skeleton-loader>
+        </v-col>
+      </v-row>
     </v-container>
+    <v-container v-else>
+      <div v-if="canStellenBeSubmitted()">
+        <v-row>
+          <v-col cols="10"></v-col>
+          <v-col cols="2">
+            <two-choice-dialog-cards
+              v-model="twoChoiceDialogVisible"
+              buttontext="Hinzufügen"
+              icontext="mdi-plus"
+              dialogtitle="Praktikumsplatz melden"
+              dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
+              choice-one-title="Studium"
+              choice-one-subtitle="Praktikumsplatz für Studierende "
+              choice-two-title="Ausbildung"
+              choice-two-subtitle="Praktikumsplatz für Auszubildende"
+              @choice-one="toStudium"
+              @choice-two="toAusbildung"
+            ></two-choice-dialog-cards>
+          </v-col>
+        </v-row>
+        <v-row></v-row>
+        <v-skeleton-loader
+          v-if="loadingUebersicht"
+          type="image"
+        >
+        </v-skeleton-loader>
+        <v-row v-if="!loadingUebersicht">
+          <v-container
+            v-if="!mapIsEmpty"
+            class="box"
+          >
+            <span> Übersicht aus dem aktuellen Meldezeitraum </span>
+            <small
+              v-if="!security.isAusbildungsleitung() && security.isAusbilder()"
+              >(Nur eigene Plätze von örtl. Ausbilder*innen angezeigt)</small
+            >
+            <praktikumsstellen-list
+              :praktikumsstellen-map="praktikumsstellenMap"
+            ></praktikumsstellen-list>
+          </v-container>
+          <v-container
+            v-else
+            class="box"
+          >
+            <v-row class="align-center">
+              <v-col
+                cols="auto"
+                class="d-flex align-center"
+              >
+                <v-icon
+                  color="blue"
+                  size="large"
+                  >mdi-information-outline</v-icon
+                >
+              </v-col>
+              <v-col class="d-flex align-center">
+                <p
+                  v-if="
+                    !security.isAusbildungsleitung() && security.isAusbilder()
+                  "
+                >
+                  Für Sie als Ausbilder*in wurden noch keine Praktikumsstellen
+                  für den aktuellen Zeitraum gemeldet.
+                </p>
+                <p v-else>
+                  Es wurden für den aktuellen Zeitraum noch keine
+                  Praktikumsstellen gemeldet.
+                </p>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-row>
+      </div>
+      <div v-else>
+        <kein-meldezeitraum-message></kein-meldezeitraum-message>
+      </div>
+    </v-container>
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -120,86 +114,83 @@ const loadingSite = ref<boolean>(true);
 const security = useSecurity();
 const twoChoiceDialogVisible = ref<boolean>(false);
 const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
-    new Map<string, Praktikumsstelle[]>()
+  new Map<string, Praktikumsstelle[]>()
 );
 
 const mapIsEmpty = computed(() => {
-    return praktikumsstellenMap.value.size <= 0 || false;
+  return praktikumsstellenMap.value.size <= 0 || false;
 });
 const route = router.currentRoute.value;
 
 onMounted(() => {
-    loadingUebersicht.value = true;
-    MeldezeitraumService.getCurrentMeldezeitraum(loadingUebersicht).then(
-        (zeitraueme) => {
-            activeMeldezeitraum.value = zeitraueme.length > 0;
-        }
-    );
-
-    getAllPraktikumsstellenInCurrentMeldezeitraum();
-
-    if (userStore.username) {
-        redirectIfUnauthorized();
-    } else {
-        // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
-        watch(
-            () => userStore.roles,
-            () => {
-                redirectIfUnauthorized();
-            }
-        );
+  loadingUebersicht.value = true;
+  MeldezeitraumService.getCurrentMeldezeitraum(loadingUebersicht).then(
+    (zeitraueme) => {
+      activeMeldezeitraum.value = zeitraueme.length > 0;
     }
+  );
+
+  getAllPraktikumsstellenInCurrentMeldezeitraum();
+
+  if (userStore.username) {
+    redirectIfUnauthorized();
+  } else {
+    // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
+    watch(
+      () => userStore.roles,
+      () => {
+        redirectIfUnauthorized();
+      }
+    );
+  }
 });
 
 emitter.on("praktikumsstelleUpdated", () => {
-    getAllPraktikumsstellenInCurrentMeldezeitraum();
+  getAllPraktikumsstellenInCurrentMeldezeitraum();
 });
 
 function redirectIfUnauthorized() {
-    const requiresRoles =
-        route.meta.requiresRole != undefined
-            ? (route.meta.requiresRole as string[])
-            : undefined;
-    const security = useSecurity();
-    if (
-        requiresRoles !== undefined &&
-        !security.checkForAnyRole(requiresRoles)
-    ) {
-        router.push("/AccessDenied");
-    }
+  const requiresRoles =
+    route.meta.requiresRole != undefined
+      ? (route.meta.requiresRole as string[])
+      : undefined;
+  const security = useSecurity();
+  if (requiresRoles !== undefined && !security.checkForAnyRole(requiresRoles)) {
+    router.push("/AccessDenied");
+  }
 }
 
 emitter.on("nwkDeleted", getAllPraktikumsstellenInCurrentMeldezeitraum);
 
 function canStellenBeSubmitted() {
-    return security.isAusbildungsleitung() || activeMeldezeitraum.value;
+  return security.isAusbildungsleitung() || activeMeldezeitraum.value;
 }
 function toAusbildung(): void {
-    router.push("/praktikumsplaetze/meldungAusbildung");
+  router.push("/praktikumsplaetze/meldungAusbildung");
 }
 function toStudium(): void {
-    router.push("/praktikumsplaetze/meldungStudium");
+  router.push("/praktikumsplaetze/meldungStudium");
 }
 
 function getAllPraktikumsstellenInCurrentMeldezeitraum() {
-    const helperMap = new Map<string, Praktikumsstelle[]>();
-    PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
-        "current"
-    )
-        .then((fetchedStellen) => {
-            for (const [key, value] of Object.entries(fetchedStellen)) {
-                helperMap.set(key, value);
-            }
-            praktikumsstellenMap.value = helperMap;
-        })
-        .finally(() => {
-            loadingSite.value = false;
-        });
+  const helperMap = new Map<string, Praktikumsstelle[]>();
+  PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
+    "current"
+  )
+    .then((fetchedStellen) => {
+      for (const [key, value] of Object.entries(fetchedStellen)) {
+        helperMap.set(key, value);
+      }
+      praktikumsstellenMap.value = helperMap;
+    })
+    .finally(() => {
+      loadingSite.value = false;
+    });
 }
 </script>
 <style>
 .box {
-    margin: 1%;
-    border: 2px solid #0000001a;
+  margin: 1%;
+  border: 2px solid #0000001a;
 }
 </style>

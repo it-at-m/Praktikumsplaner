@@ -1,16 +1,14 @@
 <template>
-    <div>
-        <v-btn
-            color="primary"
-            prepend-icon="mdi-tray-arrow-down"
-            @click="clickExport"
-        >
-            Exportieren
-        </v-btn>
-        <progress-circular-overlay
-            :loading="loading"
-        ></progress-circular-overlay>
-    </div>
+  <div>
+    <v-btn
+      color="primary"
+      prepend-icon="mdi-tray-arrow-down"
+      @click="clickExport"
+    >
+      Exportieren
+    </v-btn>
+    <progress-circular-overlay :loading="loading"></progress-circular-overlay>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -21,27 +19,27 @@ import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay
 
 const loading = ref<boolean>(false);
 const properties = defineProps<{
-    startDownload: boolean;
+  startDownload: boolean;
 }>();
 
 const emits = defineEmits<(e: "click" | "exported") => void>();
 
 watch(
-    () => properties.startDownload,
-    () => {
-        if (properties.startDownload) {
-            downloadExcel();
-            emits("exported");
-        }
+  () => properties.startDownload,
+  () => {
+    if (properties.startDownload) {
+      downloadExcel();
+      emits("exported");
     }
+  }
 );
 
 function clickExport() {
-    emits("click");
+  emits("click");
 }
 
 function downloadExcel() {
-    ExportService.downloadExcelFile(loading);
+  ExportService.downloadExcelFile(loading);
 }
 </script>
 

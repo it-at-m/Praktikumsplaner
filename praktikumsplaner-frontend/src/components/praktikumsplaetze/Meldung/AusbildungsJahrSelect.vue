@@ -1,60 +1,59 @@
 <template>
-    <v-select
-        v-model="praktikumsstelle.ausbildungsjahr"
-        :items="Ausbildungsjahr"
-        :label="conditionalRequiredLabel"
-        multiple
-        variant="outlined"
-        item-title="name"
-        item-value="value"
-        :rules="conditionalRequiredRules"
-        :clearable="!isRequired"
-        :disabled="disabled"
-        @update:model-value="sortAusbildungsjahre"
-    >
-        <template #prepend-item>
-            <v-list-item
-                title="Egal"
-                @click="selectAllAusbildungsjahre"
-            >
-                <template #prepend>
-                    <v-checkbox-btn
-                        color="primary"
-                        :indeterminate="
-                            someAusbildungsjahreSelected &&
-                            !allAusbildungsjahreSelected
-                        "
-                        :model-value="allAusbildungsjahreSelected"
-                    ></v-checkbox-btn>
-                </template>
-            </v-list-item>
-            <v-divider class="mt-2"></v-divider>
+  <v-select
+    v-model="praktikumsstelle.ausbildungsjahr"
+    :items="Ausbildungsjahr"
+    :label="conditionalRequiredLabel"
+    multiple
+    variant="outlined"
+    item-title="name"
+    item-value="value"
+    :rules="conditionalRequiredRules"
+    :clearable="!isRequired"
+    :disabled="disabled"
+    @update:model-value="sortAusbildungsjahre"
+  >
+    <template #prepend-item>
+      <v-list-item
+        title="Egal"
+        @click="selectAllAusbildungsjahre"
+      >
+        <template #prepend>
+          <v-checkbox-btn
+            color="primary"
+            :indeterminate="
+              someAusbildungsjahreSelected && !allAusbildungsjahreSelected
+            "
+            :model-value="allAusbildungsjahreSelected"
+          ></v-checkbox-btn>
         </template>
-        <template #item="{ item, props }">
-            <v-list-item v-bind="props">
-                <v-list-item-subtitle
-                    v-if="praktikumsstelle.ausbildungsrichtung === 'FISI'"
-                >
-                    {{ item.raw.zeitraumFISI }}
-                </v-list-item-subtitle>
-                <v-list-item-subtitle
-                    v-else-if="praktikumsstelle.ausbildungsrichtung === 'QE2'"
-                >
-                    {{ item.raw.zeitraumQE2 }}
-                </v-list-item-subtitle>
-                <v-list-item-subtitle
-                    v-else-if="praktikumsstelle.ausbildungsrichtung === 'KFB'"
-                >
-                    {{ item.raw.zeitraumKFB }}
-                </v-list-item-subtitle>
-                <v-list-item-subtitle
-                    v-else-if="praktikumsstelle.ausbildungsrichtung === 'VFAK'"
-                >
-                    {{ item.raw.zeitraumVFAK }}
-                </v-list-item-subtitle>
-            </v-list-item>
-        </template>
-    </v-select>
+      </v-list-item>
+      <v-divider class="mt-2"></v-divider>
+    </template>
+    <template #item="{ item, props }">
+      <v-list-item v-bind="props">
+        <v-list-item-subtitle
+          v-if="praktikumsstelle.ausbildungsrichtung === 'FISI'"
+        >
+          {{ item.raw.zeitraumFISI }}
+        </v-list-item-subtitle>
+        <v-list-item-subtitle
+          v-else-if="praktikumsstelle.ausbildungsrichtung === 'QE2'"
+        >
+          {{ item.raw.zeitraumQE2 }}
+        </v-list-item-subtitle>
+        <v-list-item-subtitle
+          v-else-if="praktikumsstelle.ausbildungsrichtung === 'KFB'"
+        >
+          {{ item.raw.zeitraumKFB }}
+        </v-list-item-subtitle>
+        <v-list-item-subtitle
+          v-else-if="praktikumsstelle.ausbildungsrichtung === 'VFAK'"
+        >
+          {{ item.raw.zeitraumVFAK }}
+        </v-list-item-subtitle>
+      </v-list-item>
+    </template>
+  </v-select>
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
@@ -66,68 +65,67 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 const validationRules = useRules();
 
 interface Properties {
-    modelValue: Praktikumsstelle;
-    isRequired: boolean;
-    requiredSymbol?: string;
-    disabled?: boolean;
+  modelValue: Praktikumsstelle;
+  isRequired: boolean;
+  requiredSymbol?: string;
+  disabled?: boolean;
 }
 const properties = withDefaults(defineProps<Properties>(), {
-    requiredSymbol: "*",
-    disabled: false,
+  requiredSymbol: "*",
+  disabled: false,
 });
 
 const emits =
-    defineEmits<(e: "update:modelValue", stelle: Praktikumsstelle) => void>();
+  defineEmits<(e: "update:modelValue", stelle: Praktikumsstelle) => void>();
 
 const label = "Ausbildungsjahr";
 const conditionalRequiredLabel = computed(() => {
-    return properties.isRequired ? label + properties.requiredSymbol : label;
+  return properties.isRequired ? label + properties.requiredSymbol : label;
 });
 
 const praktikumsstelle = computed({
-    // getter
-    get() {
-        return properties.modelValue;
-    },
-    // setter
-    set(newValue) {
-        emits("update:modelValue", newValue);
-    },
+  // getter
+  get() {
+    return properties.modelValue;
+  },
+  // setter
+  set(newValue) {
+    emits("update:modelValue", newValue);
+  },
 });
 
 const requiredArrayRule = [
-    validationRules.notEmptyArrayRule("Darf nicht leer sein."),
+  validationRules.notEmptyArrayRule("Darf nicht leer sein."),
 ];
 const conditionalRequiredRules = computed(() => {
-    return properties.isRequired ? requiredArrayRule : undefined;
+  return properties.isRequired ? requiredArrayRule : undefined;
 });
 
 const allAusbildungsjahreSelected = computed(() => {
-    return (
-        praktikumsstelle.value.ausbildungsjahr?.length ===
-        Ausbildungsjahr.length
-    );
+  return (
+    praktikumsstelle.value.ausbildungsjahr?.length === Ausbildungsjahr.length
+  );
 });
 
 const someAusbildungsjahreSelected = computed(() => {
-    return (
-        praktikumsstelle.value.ausbildungsjahr?.length !== 0 &&
-        praktikumsstelle.value.ausbildungsjahr?.length !== undefined &&
-        !allAusbildungsjahreSelected.value
-    );
+  return (
+    praktikumsstelle.value.ausbildungsjahr?.length !== 0 &&
+    praktikumsstelle.value.ausbildungsjahr?.length !== undefined &&
+    !allAusbildungsjahreSelected.value
+  );
 });
 
 function selectAllAusbildungsjahre() {
-    if (allAusbildungsjahreSelected.value) {
-        praktikumsstelle.value.ausbildungsjahr = [];
-    } else {
-        praktikumsstelle.value.ausbildungsjahr = Ausbildungsjahr.map(
-            (ausbildungsjahr) => ausbildungsjahr.value
-        );
-    }
+  if (allAusbildungsjahreSelected.value) {
+    praktikumsstelle.value.ausbildungsjahr = [];
+  } else {
+    praktikumsstelle.value.ausbildungsjahr = Ausbildungsjahr.map(
+      (ausbildungsjahr) => ausbildungsjahr.value
+    );
+  }
 }
 
 function sortAusbildungsjahre() {
-    praktikumsstelle.value.ausbildungsjahr?.sort((a, b) => a.localeCompare(b));
+  praktikumsstelle.value.ausbildungsjahr?.sort((a, b) => a.localeCompare(b));
 }
 </script>

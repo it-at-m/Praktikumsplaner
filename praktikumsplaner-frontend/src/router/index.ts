@@ -12,71 +12,78 @@ import Main from "../views/MainView.vue";
 import Meldezeitraeume from "../views/MeldezeitraeumeView.vue";
 
 const routes = [
-    {
-        path: "/",
-        name: ROUTES_HOME,
-        component: Main,
-        meta: {},
+  {
+    path: "/",
+    name: ROUTES_HOME,
+    component: Main,
+    meta: {},
+  },
+  {
+    path: "/nachwuchskraefte",
+    name: "nachwuchskraefte",
+    component: NachwuchskraefteView,
+    meta: {
+      requiresRole: ["AUSBILDUNGSLEITUNG"],
     },
-    {
-        path: "/nachwuchskraefte",
-        name: "nachwuchskraefte",
-        component: NachwuchskraefteView,
-        meta: {
-            requiresRole: ["AUSBILDUNGSLEITUNG"],
-        },
+  },
+  {
+    path: "/meldezeitraum",
+    name: "meldezeitraum",
+    component: Meldezeitraeume,
+    meta: {
+      requiresRole: ["AUSBILDUNGSLEITUNG"],
     },
-    {
-        path: "/meldezeitraum",
-        name: "meldezeitraum",
-        component: Meldezeitraeume,
-        meta: {
-            requiresRole: ["AUSBILDUNGSLEITUNG"],
-        },
+  },
+  {
+    path: "/praktikumsplaetze",
+    name: "praktikumsplätze",
+    component: PraktikumsplaetzeView,
+    meta: {
+      requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
     },
-    {
-        path: "/praktikumsplaetze",
-        name: "praktikumsplätze",
-        component: PraktikumsplaetzeView,
-        meta: {
-            requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
-        },
+  },
+  {
+    path: "/praktikumsplaetze/meldungAusbildung",
+    name: "MeldungAusbildung",
+    component: MeldungAusbildung,
+    meta: {
+      requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
     },
-    {
-        path: "/praktikumsplaetze/meldungAusbildung",
-        name: "MeldungAusbildung",
-        component: MeldungAusbildung,
-        meta: {
-            requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
-        },
+  },
+  {
+    path: "/praktikumsplaetze/meldungStudium",
+    name: "MeldungStudium",
+    component: MeldungStudium,
+    meta: {
+      requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
     },
-    {
-        path: "/praktikumsplaetze/meldungStudium",
-        name: "MeldungStudium",
-        component: MeldungStudium,
-        meta: {
-            requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
-        },
+  },
+  {
+    path: "/zuweisung",
+    name: "Zuweisung",
+    component: assignView,
+    meta: {
+      requiresRole: ["AUSBILDUNGSLEITUNG"],
     },
-    {
-        path: "/zuweisung",
-        name: "Zuweisung",
-        component: assignView,
-        meta: {
-            requiresRole: ["AUSBILDUNGSLEITUNG"],
-        },
-    },
-    {
-        path: "/accessDenied",
-        name: "AccessDenied",
-        component: AccessDeniedView,
-    },
-    { path: "/:catchAll(.*)*", redirect: "/" }, // CatchAll route
+  },
+  {
+    path: "/accessDenied",
+    name: "AccessDenied",
+    component: AccessDeniedView,
+  },
+  { path: "/:catchAll(.*)*", redirect: "/" }, // CatchAll route
 ];
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes,
+  history: createWebHistory(),
+  routes,
+  scrollBehavior() {
+    return {
+      top: 0,
+      left: 0,
+    };
+  },
 });
 
 export default router;
+
