@@ -8,8 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
  * {@link org.springframework.stereotype.Service} classes in the method security annotations
  * (e.g. {@link PreAuthorize}).
  */
-@SuppressWarnings("PMD.DataClass")
-public class Authorities {
+public final class Authorities {
     public static final String HAS_ROLE_NWK = "hasRole('NWK')";
     public static final String HAS_ROLE_AUSBILDUNGSLEITUNG = "hasRole('AUSBILDUNGSLEITUNG')";
     public static final String HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER = "hasAnyRole('AUSBILDUNGSLEITUNG', 'AUSBILDER')";
