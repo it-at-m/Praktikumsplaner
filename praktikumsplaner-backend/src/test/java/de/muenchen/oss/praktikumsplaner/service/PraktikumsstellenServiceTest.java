@@ -34,7 +34,7 @@ import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
 import de.muenchen.oss.praktikumsplaner.repository.AusbildungsPraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import de.muenchen.oss.praktikumsplaner.repository.StudiumsPraktikumsstellenRepository;
-import de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum;
+import de.muenchen.oss.praktikumsplaner.security.Authorities;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,7 +74,7 @@ public class PraktikumsstellenServiceTest {
 
     @BeforeEach
     public void setUp() {
-        var authentication = getJwtAuthenticationToken(AuthoritiesEnum.AUSBILDUNGSLEITUNG);
+        var authentication = getJwtAuthenticationToken(Authorities.AuthoritiesEnum.AUSBILDUNGSLEITUNG);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
@@ -218,7 +218,7 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testGetAllPraktiumsstellenInMostRecentPassedMeldezeitraumForAusbilder() {
-        var authentication = getJwtAuthenticationToken(AuthoritiesEnum.AUSBILDER);
+        var authentication = getJwtAuthenticationToken(Authorities.AuthoritiesEnum.AUSBILDER);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
@@ -321,7 +321,7 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testGetAllPraktiumsstellenInCurrentMeldezeitraumForAusbilder() {
-        var authentication = getJwtAuthenticationToken(AuthoritiesEnum.AUSBILDER);
+        var authentication = getJwtAuthenticationToken(Authorities.AuthoritiesEnum.AUSBILDER);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().plusDays(1), "letzte woche bis morgen");

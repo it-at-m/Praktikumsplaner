@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ROLE_AUSBILDUNGSLEITUNG;
+
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.service.MeldezeitraumService;
@@ -33,7 +35,7 @@ public class MeldezeitraumController {
     public static final String PERIOD_FUTURE = "future";
     private final MeldezeitraumService meldezeitraumService;
 
-    @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MeldezeitraumDto createMeldezeitraum(final @Valid @RequestBody
@@ -62,7 +64,7 @@ public class MeldezeitraumController {
 
     @DeleteMapping(path = "/{id}")
     @Transactional
-    @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     public void deleteMeldezeitraum(@PathVariable(name = "id") final UUID id) {
         meldezeitraumService.deleteMeldezeitraumById(id);
     }

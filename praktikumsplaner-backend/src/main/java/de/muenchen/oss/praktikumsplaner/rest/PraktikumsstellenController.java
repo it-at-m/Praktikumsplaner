@@ -1,5 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER;
+import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ROLE_AUSBILDUNGSLEITUNG;
+
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
@@ -38,11 +41,9 @@ public class PraktikumsstellenController {
     public static final String PRAKTIKUMSSTELLEN_ID = "praktikumsstellenId";
     public static final String MELDEZEITRAUM_CURRENT = "current";
     public static final String MELDEZEITRAUM_MOST_RECENT = "most_recent";
-    public static final String HAS_ROLE_NWK = "hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).NWK.name())";
-    public static final String HAS_ROLE_AUSBILDUNGSLEITUNG = "hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())";
     private final PraktikumsstellenService praktikumsstellenService;
 
-    @PreAuthorize("!" + HAS_ROLE_NWK)
+    @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
     @PostMapping("/studium")
     @ResponseStatus(HttpStatus.CREATED)
     public StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelle(final @Valid @RequestBody
@@ -58,7 +59,7 @@ public class PraktikumsstellenController {
         return praktikumsstellenService.saveStudiumsPraktikumsstelleWithMeldezeitraum(createStudiumsPraktikumsstelleWithMeldezeitraumDto);
     }
 
-    @PreAuthorize("!" + HAS_ROLE_NWK)
+    @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
     @PostMapping("/ausbildung")
     @ResponseStatus(HttpStatus.CREATED)
     public AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelle(final @Valid @RequestBody
@@ -74,9 +75,7 @@ public class PraktikumsstellenController {
         return praktikumsstellenService.saveAusbildungsPraktikumsstelleWithMeldezeitraum(createAusbildungsPraktikumsstelleWithMeldezeitraumDto);
     }
 
-    @PreAuthorize(
-        "hasAnyRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name(),T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDER.name())"
-    )
+    @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
     @GetMapping
     public Map<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInSpecificMeldezeitraum(
             @RequestParam(name = "meldezeitraum", required = false) final String meldezeitraum) {

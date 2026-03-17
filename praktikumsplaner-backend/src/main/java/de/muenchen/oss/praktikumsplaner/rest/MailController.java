@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ROLE_AUSBILDUNGSLEITUNG;
+
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.service.MailService;
 import java.util.List;
@@ -21,7 +23,7 @@ public class MailController {
 
     private static final String SUCCESSFUL_ASSIGNMENT = "successful";
 
-    @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PostMapping("/send")
     public ResponseEntity<?> sendMailsToAusbilderinnen(@RequestParam(name = "assignmentStatus") final String assignmentStatus) {
         if (SUCCESSFUL_ASSIGNMENT.equals(assignmentStatus)) {

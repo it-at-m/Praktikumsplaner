@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ROLE_AUSBILDUNGSLEITUNG;
+
 import de.muenchen.oss.praktikumsplaner.service.ExcelExportService;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,7 @@ public class ExportController {
 
     private final ExcelExportService excelExportService;
 
-    @PreAuthorize("hasRole(T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public String getExcelFileAsBase64() throws IOException {

@@ -65,24 +65,24 @@ public final class AuthUtils {
      * Prüft ob der User aus dem vorliegenden Spring Security Context via
      * {@link SecurityContextHolder} ein AUSBILDER ist.
      *
-     * @return Mail-Adresse
+     * @return true, wenn User die Rolle AUSBILDER hat, sonst false
      */
     public static boolean isAusbilder() {
         return getAuthentication().getAuthorities()
                 .stream()
-                .anyMatch(authority -> ("ROLE_" + AuthoritiesEnum.AUSBILDER.name()).equals(authority.getAuthority()));
+                .anyMatch(authority -> ("ROLE_" + Authorities.AuthoritiesEnum.AUSBILDER.name()).equals(authority.getAuthority()));
     }
 
     /**
      * Prüft ob der User aus dem vorliegenden Spring Security Context via
      * {@link SecurityContextHolder} ein AUSBILDUNGSLEITUNG ist.
      *
-     * @return true wenn User die Rolle AUSBILDUNGSLEITUNG hat, sonst false
+     * @return true, wenn User die Rolle AUSBILDUNGSLEITUNG hat, sonst false
      */
     public static boolean isAusbildungsleitung() {
         return getAuthentication().getAuthorities()
                 .stream()
-                .anyMatch(authority -> ("ROLE_" + AuthoritiesEnum.AUSBILDUNGSLEITUNG.name()).equals(authority.getAuthority()));
+                .anyMatch(authority -> ("ROLE_" + Authorities.AuthoritiesEnum.AUSBILDUNGSLEITUNG.name()).equals(authority.getAuthority()));
     }
 
     private static Authentication getAuthentication() {

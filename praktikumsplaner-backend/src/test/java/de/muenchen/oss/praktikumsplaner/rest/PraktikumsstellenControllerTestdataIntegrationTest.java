@@ -8,7 +8,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleD
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
-import de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum;
+import de.muenchen.oss.praktikumsplaner.security.Authorities;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +28,7 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
 
     @BeforeEach
     public void setUp() {
-        var authentication = getJwtAuthenticationToken(AuthoritiesEnum.AUSBILDUNGSLEITUNG);
+        var authentication = getJwtAuthenticationToken(Authorities.AuthoritiesEnum.AUSBILDUNGSLEITUNG);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
