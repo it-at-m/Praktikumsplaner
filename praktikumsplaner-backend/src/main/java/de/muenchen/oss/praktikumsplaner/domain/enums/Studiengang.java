@@ -8,7 +8,7 @@ public enum Studiengang {
     BWI("Wirtschaftsinformatik kommunal"),
     VI("Diplomverwaltungsinformatiker*in"),
     LLB("Bachelor of Laws"),
-    PUMA("Public Management/Public Sector"),
+    PUMA("BWL mit Schwerpunkt Public Management"),
     QE3("Diplomverwaltungswirt*in");
 
     private final String longName;
