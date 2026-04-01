@@ -18,7 +18,7 @@ A specific color was assigned for each [Studiengang](../../../glossary.md#studen
 - Wirtschaftsinformatik (BWI): pink-lighten-4 | #F8BBD0
 - Verwaltungsinformatik (VI): deep-purple-lighten-4 | #D1C4E9
 - Öffentliches Recht - Bachelor of Laws (LL.B.): blue-lighten-3 | #90CAF9
-- Betriebswirtschaftslehre mit Schwerpunkt Public Management (Puma): red-lighten-3 | #EF9A9A
+- Public Management (Puma)/Public Sector (PS): red-lighten-3 | #EF9A9A
 
 
 ### Colors of [Ausbildungsrichtung](../../../glossary.md#auszubildende)
