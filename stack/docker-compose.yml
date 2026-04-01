@@ -1,7 +1,9 @@
 name: praktikumsplaner
 services:
+  #
+  # Praktikumsplaner Services
+  #
   pp-frontend:
-    container_name: frontend
     image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest@sha256:f4ce85ef47345fe0c7286bc90ebdc0c6caa68bc74fbb9190ec46ec43ab81853d
     depends_on:
       init-keycloak:
@@ -12,8 +14,6 @@ services:
       - frontend
       - full
     pull_policy: always
-    env_file:
-      - local-docker-frontend.env
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
@@ -21,7 +21,6 @@ services:
       - keycloak
 
   pp-backend:
-    container_name: backend
     image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-backend:latest@sha256:4c6c88de9b2906e0930f37bc0ac8d5666a8c6f3013442af81b4cb9490f8a9089
     ports:
       - "8082:8082"
@@ -29,14 +28,116 @@ services:
       - backend
       - full
     pull_policy: always
-    env_file:
-      - local-docker-backend.env
+    environment:
+      - APP_DB_POSTGRES_URL=jdbc:postgresql://postgres:5432/praktikumsplaner
+      - SPRING_PROFILES_ACTIVE=local
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
       - internal
       - keycloak
 
+  #
+  # Database
+  #
+  postgres:
+    image: postgres:17.6@sha256:00bc86618629af00d2937fdc5a5d63db3ff8450acf52f0636ec813c7f4902929
+    environment:
+      POSTGRES_DB: praktikumsplaner
+      POSTGRES_USER: db-backend-user
+      POSTGRES_PASSWORD: db-backend-password
+    ports:
+      - "5432:5432"
+    networks:
+      - internal
+      - dbs
+    healthcheck: &healthcheck
+      test: ["CMD-SHELL", "pg_isready -d postgres -U admin"]
+      interval: 30s
+      timeout: 60s
+      retries: 3
+      start_period: 60s
+    security_opt: &security_settings
+      - no-new-privileges:true
+
+  pg-admin:
+    image: dpage/pgadmin4:9.12.0@sha256:10137f33be7ed61e47f56004493710cb5b80ba7fb0ca01758855e242f1f284a7
+    depends_on:
+      - postgres
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+      - PGADMIN_REPLACE_SERVERS_ON_STARTUP=True
+      - PGADMIN_DISABLE_POSTFIX=True
+      - PGADMIN_LISTEN_PORT=5050
+      - PGADMIN_CONFIG_UPGRADE_CHECK_ENABLED=False
+    ports:
+      - "5050:5050"
+    networks:
+      - dbs
+    healthcheck:
+      <<: *healthcheck
+      test: ["CMD", "wget", "-O", "-", "http://localhost:5050/misc/ping"]
+    security_opt: *security_settings
+    volumes:
+      - './pgadmin/servers.json:/pgadmin4/servers.json:ro'
+      - './pgadmin/preferences.json:/pgadmin4/preferences.json:ro'
+      - './pgadmin/pgpass:/tmp/pgpass.mounted:ro'
+      - './pgadmin/data:/tmp/data'
+    entrypoint: >
+      /bin/sh -c "
+        cp -f /tmp/pgpass.mounted /tmp/pgpass;
+        chmod 600 /tmp/pgpass;
+        /entrypoint.sh
+      "
+
+  #
+  # Keycloak
+  #
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.2.5@sha256:4883630ef9db14031cde3e60700c9a9a8eaf1b5c24db1589d6a2d43de38ba2a9
+    command:
+      - start-dev
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_HEALTH_ENABLED=true
+      - KC_HTTP_PORT=8100
+      - KC_HTTP_RELATIVE_PATH=/auth
+    ports:
+      - "8100:8100"
+    networks:
+      - keycloak
+    healthcheck:
+      <<: *healthcheck
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/9000;echo -e 'GET /health/ready HTTP/1.1\r\nhost: http://localhost\r\nConnection: close\r\n\r\n' >&3;if [ $? -eq 0 ]; then exit 0;else exit 1;fi;"]
+    security_opt: *security_settings
+
+  init-keycloak:
+    image: klg71/keycloakmigration:0.2.125@sha256:a326d3e50e2a35b70a3cf3a5d33288af9bcba27fef89146a2107622583e34231
+    depends_on:
+      - keycloak
+    environment:
+      ADMIN_USER: admin
+      ADMIN_PASSWORD: admin
+      BASEURL: http://keycloak:8100/auth
+      WAIT_FOR_KEYCLOAK: 'true'
+      FAIL_ON_UNDEFINED_VARIABLES: 'true'
+      KEYCLOAK_CHANGELOG: /migration/keycloak-changelog.yml
+      SSO_REALM: praktikumsplaner
+      SSO_CLIENT_ID: praktikumsplaner
+      SSO_CLIENT_SECRET: top-secret
+    volumes:
+      - './keycloak/migration:/migration'
+    networks:
+      - keycloak
+    security_opt: *security_settings
+
+  #
+  # Gateway
+  #
   refarch-gateway:
     image: ghcr.io/it-at-m/refarch/refarch-gateway:1.7.0@sha256:3f82ab83c212ca53c9c2b606cfe29291f21525eac86fece215d0e1c6ca51273f
     depends_on:
@@ -69,98 +170,19 @@ services:
       - keycloak
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    healthcheck: &healthcheck
+    healthcheck:
+      <<: *healthcheck
       test: [ "CMD-SHELL", "curl http://localhost:8080/actuator/health/liveness" ]
-      interval: 30s
-      timeout: 60s
-      retries: 3
-      start_period: 60s
-    security_opt: &security_settings
-      - no-new-privileges:true
+    security_opt: *security_settings
 
-  postgres-backend:
-    image: postgres:17.6@sha256:00bc86618629af00d2937fdc5a5d63db3ff8450acf52f0636ec813c7f4902929
-    container_name: postgres-backend
-    environment:
-      POSTGRES_DB: praktikumsplaner
-      POSTGRES_USER: db-backend-user
-      POSTGRES_PASSWORD: db-backend-password
-    ports:
-      - "5432:5432"
-    networks:
-      - internal
-      - dbs
-
-  # Keycloak (SSO)
-  keycloak:
-    image: quay.io/keycloak/keycloak:26.4.0@sha256:5f3fb534cde6bf006d79f5912473e5d2c828c707cdfc52e16972803aca9d43dd
-    container_name: keycloak
-    command:
-      - start-dev
-    depends_on:
-      - postgres-keycloak
-    ports:
-      - "8100:8100"
-    env_file:
-      - local-keycloak.env
-    networks:
-      - keycloak
-
-  init-keycloak:
-    image: klg71/keycloakmigration:0.2.124@sha256:8da8f5321805d4f734116931f2824d0f89173adbbd317160fa5713479b75acc7
-    depends_on:
-      - keycloak
-    env_file:
-      - local-docker-keycloak.env
-    environment:
-      ADMIN_USER: admin
-      ADMIN_PASSWORD: change_me
-      BASEURL: http://keycloak:8100/auth # uses internal docker network to access the keycloak via its back channel port
-      WAIT_FOR_KEYCLOAK: 'true'
-      KEYCLOAK_CHANGELOG: /migration/keycloak-changelog.yml
-    volumes:
-      - './keycloak/migration:/migration'
-    networks:
-      - keycloak
-
-  postgres-keycloak:
-    image: postgres:17.6@sha256:00bc86618629af00d2937fdc5a5d63db3ff8450acf52f0636ec813c7f4902929
-    container_name: postgres-keycloak
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak-user
-      POSTGRES_PASSWORD: keycloak-secret
-    networks:
-      - keycloak
-      - dbs
-
-  ## Tools
-
-  postgres-pg-admin:
-    image: dpage/pgadmin4:9.11@sha256:50700ac17936d0227f9e3e4bb086a91efb67064debc4b4737c35545bf1564088
-    container_name: postgres-pg-admin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@a.de
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "8101:80"
-    networks:
-      - dbs
-
-  mail-maildev:
-    image: maildev/maildev@sha256:180ef51f65eefebb0e7122d8308813c1fd7bff164bc440ce5a3c2feee167a810
-    ports:
-      - "8180:1080"
-      - "8125:1025"
-    environment:
-      MAILDEV_INCOMING_USER: pp-mail-user
-      MAILDEV_INCOMING_PASS: pp-mail-password
-
+  #
+  # Mail
+  #
   mail-mailpit:
-    image: axllent/mailpit@sha256:c076638db1e15662150be4fb62b8a6e96ef6ba5bde90c838a0239225854830f7
+    image: axllent/mailpit:v1.29.2@sha256:030f06031ce5c60913ac9363da1ab0d4be6fd2a78147dd0e1ca0fcac665d6b34
     ports:
-      - "8280:8025"
-      - "8225:1025"
+      - "8025:8025"
+      - "1025:1025"
     environment:
       MP_SMTP_AUTH: "pp-mail-user:pp-mail-password"
       MP_SMTP_AUTH_ALLOW_INSECURE: true

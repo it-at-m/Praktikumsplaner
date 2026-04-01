@@ -1,7 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,8 +22,6 @@ public class MailService {
 
     private final PraktikumsstellenService praktikumsstellenService;
 
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
     private final AsyncMailSender mailSender;
 
     /*
@@ -32,13 +29,13 @@ public class MailService {
      * Aggregates all failed deliveries.
      */
     public List<PraktikumsstelleDto> sendMailsToAssignedPraktikumsplaetze() {
-        List<CompletableFuture<PraktikumsstelleDto>> futures = new ArrayList<>();
+        final List<CompletableFuture<PraktikumsstelleDto>> futures = new ArrayList<>();
 
-        for (PraktikumsstelleDto stelle : praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum()) {
+        for (final PraktikumsstelleDto stelle : praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum()) {
             try {
-                String mailBody = buildMailBody("successfulAssignmentMail", buildMailData(stelle));
+                final String mailBody = buildMailBody("successfulAssignmentMail", buildMailData(stelle));
                 futures.add(mailSender.sendSingleMailAsync(stelle, mailBody));
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 log.warn("Skipping mail for dienststelle={} due to template error", stelle.dienststelle(), e);
                 futures.add(CompletableFuture.completedFuture(stelle));
             }
@@ -52,14 +49,14 @@ public class MailService {
     }
 
     private String buildMailBody(final String templateName, final Map<String, String> data) {
-        Context context = new Context();
+        final Context context = new Context();
         context.setVariables(Collections.unmodifiableMap(data));
 
         return templateEngine.process(templateName, context);
     }
 
     private Map<String, String> buildMailData(final PraktikumsstelleDto praktikumsstelleDto) {
-        String studiengangOderAusbildungsrichtung = praktikumsstelleDto.assignedNwk().studiengang() != null
+        final String studiengangOderAusbildungsrichtung = praktikumsstelleDto.assignedNwk().studiengang() != null
                 ? praktikumsstelleDto.assignedNwk().studiengang().getLongName()
                 : praktikumsstelleDto.assignedNwk().ausbildungsrichtung().getLongName();
 

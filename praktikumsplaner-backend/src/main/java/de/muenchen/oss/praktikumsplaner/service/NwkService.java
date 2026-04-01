@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class NwkService {
 
     private final NwkMapper nwkMapper;
@@ -22,12 +22,10 @@ public class NwkService {
     private final ExcelImportService excelImportService;
     private final MeldezeitraumService meldezeitraumService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NwkService.class);
-
     public NwkDto saveNwk(final CreateNwkDto createNwkDto) {
-        LOGGER.error("saveNwk: " + createNwkDto);
-        Nwk nwk = nwkMapper.toEntity(createNwkDto, true);
-        LOGGER.error("saveNwkEnitity: " + nwk);
+        log.error("saveNwk: {}", createNwkDto);
+        final Nwk nwk = nwkMapper.toEntity(createNwkDto, true);
+        log.error("saveNwkEnitity: {}", nwk);
         return nwkMapper.toDto(nwkRepository.save(nwkMapper.toEntity(createNwkDto, true)));
     }
 

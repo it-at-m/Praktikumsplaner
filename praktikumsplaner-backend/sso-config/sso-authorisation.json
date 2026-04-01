@@ -1,9 +1,0 @@
-{
-    "allowRemoteResourceManagement": false,
-    "policyEnforcementMode": "ENFORCING",
-    "resources": [
-    ],
-    "policies": [
-    ],
-    "scopes": []
-}

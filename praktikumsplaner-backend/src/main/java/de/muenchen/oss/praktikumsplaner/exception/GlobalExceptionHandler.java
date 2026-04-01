@@ -28,10 +28,10 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public String excelImportException(final ExcelImportException ex) {
         final StringBuilder formattedExceptionInfos = new StringBuilder();
-        for (ExcelImportException.ExcelImportExceptionInfo exceptionInfo : ex.getExceptionInfos()) {
-            formattedExceptionInfos.append("Zeile: ").append(exceptionInfo.getRow() + 1).append(" - ")
-                    .append("Spalte: ").append(exceptionInfo.getColumName()).append(" - ")
-                    .append("Fehler: ").append(exceptionInfo.getValue()).append("\n");
+        for (final ExcelImportException.ExcelImportExceptionInfo exceptionInfo : ex.getExceptionInfos()) {
+            formattedExceptionInfos.append("Zeile: ").append(exceptionInfo.row() + 1).append(" - ")
+                    .append("Spalte: ").append(exceptionInfo.columName()).append(" - ")
+                    .append("Fehler: ").append(exceptionInfo.value()).append("\n");
         }
         return formattedExceptionInfos.toString();
     }
@@ -54,19 +54,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleNotFoundException(ResourceNotFoundException ex) {
+    public ResponseEntity<String> handleNotFoundException(final ResourceNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ExceptionHandler(NoSuchElementException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException ex) {
+    public ResponseEntity<String> handleNoSuchElementException(final NoSuchElementException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ExceptionHandler(ResourceConflictException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<String> handleConflictException(ResourceConflictException ex) {
+    public ResponseEntity<String> handleConflictException(final ResourceConflictException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }

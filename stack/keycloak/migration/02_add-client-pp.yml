@@ -32,7 +32,7 @@ changes:
         "userinfo.token.claim": "true"
         "id.token.claim": "false"
         "access.token.claim": "true"
-        "claim.name": "resource_access.${client_id}.roles"
+        "claim.name": "resource_access.$${client_id}.roles"
         "jsonType.label": "String"
 
   # !!! very import must have. Without that default scope u dont have access to userinfo-endpoint

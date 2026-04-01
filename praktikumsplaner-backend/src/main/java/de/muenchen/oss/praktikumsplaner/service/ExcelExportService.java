@@ -36,6 +36,9 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 @Service
 public class ExcelExportService {
+    public static final String YES = "Ja";
+    public static final String NO = "Nein";
+
     private final PraktikumsstellenService praktikumsstellenService;
 
     /*
@@ -58,27 +61,30 @@ public class ExcelExportService {
     private String defaultReferat;
 
     public String getBase64EncodedExcelFile() throws IOException {
-        XSSFWorkbook workbook = fillTemplatePraktikumsstellen();
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        workbook.write(bytes);
-        return Base64.getEncoder().encodeToString(bytes.toByteArray());
+        try (XSSFWorkbook workbook = fillTemplatePraktikumsstellen();
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream()) {
+            workbook.write(bytes);
+            return Base64.getEncoder().encodeToString(bytes.toByteArray());
+        }
     }
 
     private XSSFWorkbook getTemplateExcelFile() throws IOException {
         try (InputStream stream = getClass().getResourceAsStream("/templates/ITM_IT_POR.xlsx")) {
-            if (stream == null) throw new IOException("ExcelExport Vorlage nicht gefunden.");
+            if (stream == null) {
+                throw new IOException("ExcelExport Vorlage nicht gefunden.");
+            }
             return new XSSFWorkbook(stream);
         }
     }
 
     private XSSFWorkbook fillTemplatePraktikumsstellen() throws IOException {
-        XSSFWorkbook workbook = getTemplateExcelFile();
+        final XSSFWorkbook workbook = getTemplateExcelFile();
         workbook.setMissingCellPolicy(Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-        XSSFSheet ausbildungsSheet = workbook.getSheetAt(AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX);
-        XSSFSheet studiumsSheet = workbook.getSheetAt(STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX);
-        Pair<List<AusbildungsPraktikumsstelleDto>, List<StudiumsPraktikumsstelleDto>> sortedPraktikumsstellen = preparePraktikumsstellen();
-        List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen = sortedPraktikumsstellen.getLeft();
-        List<StudiumsPraktikumsstelleDto> assignedStudiumspraktikumsstellen = sortedPraktikumsstellen.getRight();
+        final XSSFSheet ausbildungsSheet = workbook.getSheetAt(AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX);
+        final XSSFSheet studiumsSheet = workbook.getSheetAt(STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX);
+        final Pair<List<AusbildungsPraktikumsstelleDto>, List<StudiumsPraktikumsstelleDto>> sortedPraktikumsstellen = preparePraktikumsstellen();
+        final List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen = sortedPraktikumsstellen.getLeft();
+        final List<StudiumsPraktikumsstelleDto> assignedStudiumspraktikumsstellen = sortedPraktikumsstellen.getRight();
         fillAusbildungspraktikumsstellen(assignedAusbildungspraktikumsstellen, ausbildungsSheet);
         fillStudiumspraktikumsstellen(assignedStudiumspraktikumsstellen, studiumsSheet);
         return workbook;
@@ -89,8 +95,8 @@ public class ExcelExportService {
     private void fillAusbildungspraktikumsstellen(final List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen,
             final XSSFSheet ausbildungsSheet) {
         for (int i = 0; i < assignedAusbildungspraktikumsstellen.size(); i++) {
-            AusbildungsPraktikumsstelleDto praktikumsstelle = assignedAusbildungspraktikumsstellen.get(i);
-            Row row = getRow(ausbildungsSheet, i);
+            final AusbildungsPraktikumsstelleDto praktikumsstelle = assignedAusbildungspraktikumsstellen.get(i);
+            final Row row = getRow(ausbildungsSheet, i);
 
             row.getCell(convertColStringToIndex("A")).setCellValue(praktikumsstelle.referat() != null ? praktikumsstelle.referat().name() : defaultReferat);
             row.getCell(convertColStringToIndex("B")).setCellValue(this.oertlAusbildungsleitungName);
@@ -101,8 +107,8 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
             row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
             row.getCell(convertColStringToIndex("I")).setCellValue(getWuensche(praktikumsstelle));
-            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.projektarbeit() ? "Ja" : "Nein");
-            row.getCell(convertColStringToIndex("K")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? "Ja" : "Nein");
+            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.projektarbeit() ? YES : NO);
+            row.getCell(convertColStringToIndex("K")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? YES : NO);
             row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
             row.getCell(convertColStringToIndex("N")).setCellValue(ausbildungsjahrToStringConverter(praktikumsstelle.ausbildungsjahr()));
@@ -115,8 +121,8 @@ public class ExcelExportService {
 
     private void fillStudiumspraktikumsstellen(final List<StudiumsPraktikumsstelleDto> assignedStudiumspraktikumsstellen, final XSSFSheet studiumsSheet) {
         for (int i = 0; i < assignedStudiumspraktikumsstellen.size(); i++) {
-            StudiumsPraktikumsstelleDto praktikumsstelle = assignedStudiumspraktikumsstellen.get(i);
-            Row row = getRow(studiumsSheet, i);
+            final StudiumsPraktikumsstelleDto praktikumsstelle = assignedStudiumspraktikumsstellen.get(i);
+            final Row row = getRow(studiumsSheet, i);
 
             row.getCell(convertColStringToIndex("A")).setCellValue(praktikumsstelle.referat() != null ? praktikumsstelle.referat().name() : defaultReferat);
             row.getCell(convertColStringToIndex("B")).setCellValue(this.oertlAusbildungsleitungName);
@@ -127,7 +133,7 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
             row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
             row.getCell(convertColStringToIndex("I")).setCellValue(getWuensche(praktikumsstelle));
-            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? "Ja" : "Nein");
+            row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? YES : NO);
             row.getCell(convertColStringToIndex("K")).setCellValue(mapProgrammierkenntnisse(praktikumsstelle.programmierkenntnisse()));
             row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
@@ -146,12 +152,12 @@ public class ExcelExportService {
      */
     @SuppressWarnings("CPD-END")
     private Pair<List<AusbildungsPraktikumsstelleDto>, List<StudiumsPraktikumsstelleDto>> preparePraktikumsstellen() {
-        List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen = new ArrayList<>(praktikumsstellenService
+        final List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen = new ArrayList<>(praktikumsstellenService
                 .getAllAssignedAusbildungspraktikumsstellenInMostRecentPassedMeldezeitraum());
-        List<StudiumsPraktikumsstelleDto> assignedStudiumspraktikumsstellen = new ArrayList<>(praktikumsstellenService
+        final List<StudiumsPraktikumsstelleDto> assignedStudiumspraktikumsstellen = new ArrayList<>(praktikumsstellenService
                 .getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum());
-        List<AusbildungsPraktikumsstelleDto> toDeleteAusbildungspraktikumsstellen = new ArrayList<>();
-        List<StudiumsPraktikumsstelleDto> toDeleteStudiumspraktikumsstellen = new ArrayList<>();
+        final List<AusbildungsPraktikumsstelleDto> toDeleteAusbildungspraktikumsstellen = new ArrayList<>();
+        final List<StudiumsPraktikumsstelleDto> toDeleteStudiumspraktikumsstellen = new ArrayList<>();
 
         assignedAusbildungspraktikumsstellen.stream().filter(praktikumsstelle -> praktikumsstelle.assignedNwk().ausbildungsrichtung() == null)
                 .forEach(praktikumsstelle -> {
@@ -207,8 +213,8 @@ public class ExcelExportService {
                 .build();
     }
 
-    private static String getWuensche(PraktikumsstelleDto praktikumsstelle) {
-        var wuensche = new StringJoiner(", ");
+    private static String getWuensche(final PraktikumsstelleDto praktikumsstelle) {
+        final StringJoiner wuensche = new StringJoiner(", ");
 
         if (StringUtils.hasText(praktikumsstelle.namentlicheAnforderung())) {
             wuensche.add("Namentliche Anforderung: " + praktikumsstelle.namentlicheAnforderung());
@@ -219,48 +225,58 @@ public class ExcelExportService {
         return wuensche.toString();
     }
 
-    private static void addProgrammierkenntnisseWunsch(StringJoiner wuensche, final String programmierkenntnisse) {
-        if (!StringUtils.hasText(programmierkenntnisse)) return;
+    private static void addProgrammierkenntnisseWunsch(final StringJoiner wuensche, final String programmierkenntnisse) {
+        if (!StringUtils.hasText(programmierkenntnisse)) {
+            return;
+        }
         if (Boolean.parseBoolean(programmierkenntnisse.trim())) {
             wuensche.add("Programmierkenntnisse von Vorteil");
         }
     }
 
     private static String mapProgrammierkenntnisse(final String programmierkenntnisse) {
-        return (StringUtils.hasText(programmierkenntnisse) && Boolean.parseBoolean(programmierkenntnisse.trim())) ? "Ja" : "Nein";
+        return (StringUtils.hasText(programmierkenntnisse) && Boolean.parseBoolean(programmierkenntnisse.trim())) ? YES : NO;
     }
 
     private static String ausbildungsjahrToStringConverter(final Set<Ausbildungsjahr> ausbildungsjahr) {
 
-        if (ausbildungsjahr.containsAll(List.of(JAHR1, JAHR2, JAHR3)))
+        if (ausbildungsjahr.containsAll(List.of(JAHR1, JAHR2, JAHR3))) {
             return "";
+        }
 
-        if (ausbildungsjahr.contains(JAHR3))
+        if (ausbildungsjahr.contains(JAHR3)) {
             return "vorrangig 3. Jahr";
-        if (ausbildungsjahr.contains(JAHR2))
+        }
+        if (ausbildungsjahr.contains(JAHR2)) {
             return "vorrangig 2. Jahr";
-        if (ausbildungsjahr.contains(JAHR1))
+        }
+        if (ausbildungsjahr.contains(JAHR1)) {
             return "vorrangig 1. Jahr";
+        }
 
         return "";
     }
 
     private static String studiensemesterToStringConverter(final Set<Studiensemester> studiensemester) {
 
-        if (studiensemester.containsAll(List.of(SEMESTER1, SEMESTER2, SEMESTER3, SEMESTER4, SEMESTER5, SEMESTER6)))
+        if (studiensemester.containsAll(List.of(SEMESTER1, SEMESTER2, SEMESTER3, SEMESTER4, SEMESTER5, SEMESTER6))) {
             return "";
+        }
 
-        if (studiensemester.contains(SEMESTER5) || studiensemester.contains(SEMESTER6))
+        if (studiensemester.contains(SEMESTER5) || studiensemester.contains(SEMESTER6)) {
             return "vorrangig 3. Jahr";
-        if (studiensemester.contains(SEMESTER3) || studiensemester.contains(SEMESTER4))
+        }
+        if (studiensemester.contains(SEMESTER3) || studiensemester.contains(SEMESTER4)) {
             return "vorrangig 2. Jahr";
-        if (studiensemester.contains(SEMESTER1) || studiensemester.contains(SEMESTER2))
+        }
+        if (studiensemester.contains(SEMESTER1) || studiensemester.contains(SEMESTER2)) {
             return "vorrangig 1. Jahr";
+        }
 
         return "";
     }
 
-    private static Row getRow(XSSFSheet sheet, int i) {
+    private static Row getRow(final XSSFSheet sheet, final int i) {
         Row row = sheet.getRow(i + 3);
         if (row == null) {
             row = sheet.createRow(i + 3);

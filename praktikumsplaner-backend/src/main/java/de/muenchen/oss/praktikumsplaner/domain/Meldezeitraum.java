@@ -21,6 +21,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @StartDateBeforeEndDate(startDate = "getStartZeitpunkt", endDate = "getEndZeitpunkt", message = "Startdatum muss vor dem Enddatum liegen.")
+@SuppressWarnings("PMD.MissingSerialVersionUID")
 public class Meldezeitraum extends BaseEntity {
 
     @Size(max = 255, message = "Name für Zeitraum darf nicht länger als {max} Zeichen sein.") @NotBlank private String zeitraumName;
