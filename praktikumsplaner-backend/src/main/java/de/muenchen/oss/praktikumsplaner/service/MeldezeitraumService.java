@@ -24,10 +24,12 @@ public class MeldezeitraumService {
         return meldezeitraumMapper.toDto(meldezeitraumRepository.save(meldezeitraumMapper.toEntity(meldezeitraumCreateDto)));
     }
 
-    public MeldezeitraumDto getCurrentMeldezeitraum() throws ValidationException {
-        Meldezeitraum currentMeldezeitraum = meldezeitraumRepository
+    public MeldezeitraumDto getCurrentMeldezeitraum() {
+        final Meldezeitraum currentMeldezeitraum = meldezeitraumRepository
                 .findMeldezeitraumByDateInRange(LocalDate.now());
-        if (currentMeldezeitraum == null) throw new ValidationException("Kein aktiver Meldezeitraum.");
+        if (currentMeldezeitraum == null) {
+            throw new ValidationException("Kein aktiver Meldezeitraum.");
+        }
         return meldezeitraumMapper.toDto(currentMeldezeitraum);
     }
 
@@ -49,18 +51,18 @@ public class MeldezeitraumService {
     }
 
     public MeldezeitraumDto getMostRecentPassedMeldezeitraum() {
-        List<Meldezeitraum> passedZeitraueme = meldezeitraumRepository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now());
+        final List<Meldezeitraum> passedZeitraueme = meldezeitraumRepository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now());
         if (passedZeitraueme.isEmpty()) {
             throw new EntityNotFoundException("Kein vergangener Meldezeitraum gefunden.");
         }
-        return meldezeitraumMapper.toDto(passedZeitraueme.get(0));
+        return meldezeitraumMapper.toDto(passedZeitraueme.getFirst());
     }
 
     public List<MeldezeitraumDto> getAllMeldezeitraeume() {
         return meldezeitraumRepository.findAll().stream().map(meldezeitraumMapper::toDto).toList();
     }
 
-    public void deleteMeldezeitraumById(UUID id) {
+    public void deleteMeldezeitraumById(final UUID id) {
         meldezeitraumRepository.deleteById(id);
     }
 }

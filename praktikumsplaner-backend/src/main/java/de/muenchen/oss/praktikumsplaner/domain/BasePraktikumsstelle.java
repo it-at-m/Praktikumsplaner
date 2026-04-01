@@ -26,6 +26,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("PMD.MissingSerialVersionUID")
 public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @NotNull @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein") private String dienststelle;

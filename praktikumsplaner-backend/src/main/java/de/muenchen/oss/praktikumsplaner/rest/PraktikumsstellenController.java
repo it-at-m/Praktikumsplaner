@@ -1,5 +1,8 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER;
+import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ROLE_AUSBILDUNGSLEITUNG;
+
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
@@ -12,7 +15,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstel
 import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,12 +35,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/praktikumsstellen")
+@RequestMapping("/praktikumsstellen")
 public class PraktikumsstellenController {
 
+    public static final String PRAKTIKUMSSTELLEN_ID = "praktikumsstellenId";
+    public static final String MELDEZEITRAUM_CURRENT = "current";
+    public static final String MELDEZEITRAUM_MOST_RECENT = "most_recent";
     private final PraktikumsstellenService praktikumsstellenService;
 
-    @PreAuthorize("!hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).NWK.name())")
+    @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
     @PostMapping("/studium")
     @ResponseStatus(HttpStatus.CREATED)
     public StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelle(final @Valid @RequestBody
@@ -45,7 +51,7 @@ public class PraktikumsstellenController {
         return praktikumsstellenService.normalizeAndSaveStudiumsPraktikumsstelle(createStudiumsPraktikumsstelleDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PostMapping("/studium/ausbildungsleitung")
     @ResponseStatus(HttpStatus.CREATED)
     public StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleWithMeldezeitraum(final @Valid @RequestBody
@@ -53,7 +59,7 @@ public class PraktikumsstellenController {
         return praktikumsstellenService.saveStudiumsPraktikumsstelleWithMeldezeitraum(createStudiumsPraktikumsstelleWithMeldezeitraumDto);
     }
 
-    @PreAuthorize("!hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).NWK.name())")
+    @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
     @PostMapping("/ausbildung")
     @ResponseStatus(HttpStatus.CREATED)
     public AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelle(final @Valid @RequestBody
@@ -61,7 +67,7 @@ public class PraktikumsstellenController {
         return praktikumsstellenService.normalizeAndSaveAusbildungsPraktikumsstelle(createAusbildungsPraktikumsstelleDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PostMapping("/ausbildung/ausbildungsleitung")
     @ResponseStatus(HttpStatus.CREATED)
     public AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleWithMeldezeitraum(final @Valid @RequestBody
@@ -69,53 +75,51 @@ public class PraktikumsstellenController {
         return praktikumsstellenService.saveAusbildungsPraktikumsstelleWithMeldezeitraum(createAusbildungsPraktikumsstelleWithMeldezeitraumDto);
     }
 
-    @PreAuthorize(
-        "hasAnyRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name(),'ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDER.name())"
-    )
+    @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
     @GetMapping
-    public TreeMap<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInSpecificMeldezeitraum(
-            @RequestParam(name = "meldezeitraum", required = false) String meldezeitraum) {
-        if (meldezeitraum.equals("current")) {
+    public Map<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInSpecificMeldezeitraum(
+            @RequestParam(name = "meldezeitraum", required = false) final String meldezeitraum) {
+        if (MELDEZEITRAUM_CURRENT.equals(meldezeitraum)) {
             return praktikumsstellenService.getAllInCurrentMeldezeitraumGroupedByDienststelle();
-        } else if (meldezeitraum.equals("most_recent")) {
+        } else if (MELDEZEITRAUM_MOST_RECENT.equals(meldezeitraum)) {
             return praktikumsstellenService.getRecentPraktikumsstellenGroupedByDienststelle();
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wert '" + meldezeitraum + "' für Parameter 'meldezeitraum' ist nicht unterstützt.");
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PatchMapping("/{praktikumsstellenId}")
-    public PraktikumsstelleDto assignNwk(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
-            @RequestParam(name = "nwkId", required = false) UUID nwkId) {
+    public PraktikumsstelleDto assignNwk(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId,
+            @RequestParam(name = "nwkId", required = false) final UUID nwkId) {
         if (nwkId == null) {
             return praktikumsstellenService.unassignNwk(praktikumsstellenId);
         }
         return praktikumsstellenService.assignNwk(praktikumsstellenId, nwkId);
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PutMapping("/ausbildung/{praktikumsstellenId}")
-    public void updateAusbildungPraktikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
-            @RequestBody UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
+    public void updateAusbildungPraktikumsstelle(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId,
+            @RequestBody final UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
         praktikumsstellenService.updateAusbildungsPraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PutMapping("/studium/{praktikumsstellenId}")
-    public void updateStudiumPraktikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId,
-            @RequestBody UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
+    public void updateStudiumPraktikumsstelle(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId,
+            @RequestBody final UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
         praktikumsstellenService.updateStudiumsPraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @DeleteMapping("/studium/{praktikumsstellenId}")
-    public void deleteStudiumPratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId) {
+    public void deleteStudiumPratkikumsstelle(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId) {
         praktikumsstellenService.deleteStudiumsPraktikumsstelle(praktikumsstellenId);
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @DeleteMapping("/ausbildung/{praktikumsstellenId}")
-    public void deleteAusbildungPratkikumsstelle(@PathVariable(name = "praktikumsstellenId") UUID praktikumsstellenId) {
+    public void deleteAusbildungPratkikumsstelle(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId) {
         praktikumsstellenService.deleteAusbildungsPraktikumsstelle(praktikumsstellenId);
     }
 }

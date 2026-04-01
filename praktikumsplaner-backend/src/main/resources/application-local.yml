@@ -2,50 +2,67 @@ server:
   port: 8082
 spring:
   # Spring JPA
-  datasource:
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-    url: jdbc:h2:mem:ppdb
-
-  h2.console.enabled: true
   jpa:
-    database: H2
-
     # Logging for database operation
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/praktikumsplaner
+    username: db-backend-user
+    password: db-backend-password
+  flyway:
+    locations:
+      - classpath:db/migration/schema
+      - classpath:db/migration/testdata
   security:
     oauth2:
       resourceserver:
         jwt:
           jwk-set-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/certs
-
   mail:
     host: localhost
-    port: 8225
+    port: 1025
     username: pp-mail-user
     password: pp-mail-password
 
-app:
-  mail:
-    reply-to: "testleitung@test.de"
-  db:
-    postgres:
-      url: jdbc:postgresql://localhost:5432/praktikumsplaner
-      username: db-backend-user
-      password: db-backend-password
+management:
+  endpoints:
+    access:
+      default: unrestricted # Required for local debugging via JMX+RMI, additionally might have to set -Djava.rmi.server.hostname=localhost as JVM arguments
+  endpoint:
+    health:
+      show-details: always
 
-# Define the local keycloak realm here
+# Enable swagger-ui
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true
+
+logging:
+  include-application-group: false # disabled because application group is only relevant when deployed
+  structured:
+    format:
+      console: # set to empty to disable structured logging locally
+  level:
+    root: INFO
+    de.muenchen.oss.praktikumsplaner: DEBUG
+    org.springframework.cache: TRACE
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+
 # Define the local keycloak configuration here
 # Deduplication-only property
 sso:
   url: http://keycloak:8100
   realm: praktikumsplaner
-  clientid: praktikumsplaner
+  client: praktikumsplaner
 
 refarch:
   security:
     logging-mode: all
+    client-id: ${sso.client}
+    user-info-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
