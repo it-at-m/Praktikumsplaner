@@ -58,7 +58,7 @@ const dienststelleRule = [
         "Die Dienststelle darf nicht länger als 10 Zeichen sein."
     ),
     validationRules.regexRule(
-        /^[A-Z]{3,4}-[A-Za-z\d]+$/,
+        /^[A-Z]{3,4}-[A-Za-z\d-]+$/,
         "Die Dienstelle muss der Kurzform entsprechen (z.B. ITM-DKL123)"
     ),
     ownDienststelleRule,
