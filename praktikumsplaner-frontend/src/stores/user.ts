@@ -15,7 +15,7 @@ export const useUserStore = defineStore("user", {
     getters: {
         getRoles(): string[] {
             return this.roles;
-        }
+        },
     },
     actions: {
         setUsername(payload: string): void {
