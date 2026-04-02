@@ -247,7 +247,9 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 const requiredFieldSymbol = "*";
 
 const userStore = useUserStore();
-const praktikumsstelle = ref<Praktikumsstelle>(new Praktikumsstelle(userStore.department));
+const praktikumsstelle = ref<Praktikumsstelle>(
+    new Praktikumsstelle(userStore.department)
+);
 const loadingSite = ref<boolean>(true);
 const loading = ref<boolean>(false);
 const security = useSecurity();
