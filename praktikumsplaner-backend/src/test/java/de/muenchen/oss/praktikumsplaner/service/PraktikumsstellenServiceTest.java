@@ -43,6 +43,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.time.Instant;
+import java.util.Collections;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,6 +56,9 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 @ExtendWith(MockitoExtension.class)
 public class PraktikumsstellenServiceTest {
@@ -218,7 +223,13 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testGetAllPraktiumsstellenInMostRecentPassedMeldezeitraumForAusbilder() {
-        var authentication = getJwtAuthenticationToken(Authorities.AuthoritiesEnum.AUSBILDER);
+        var jwt = new Jwt(
+                "token",
+                Instant.now(),
+                Instant.now().plusSeconds(1000),
+                Collections.singletonMap("typ", "JWT"),
+                Map.of("email", "test@test.de", "department", "KM"));
+        var authentication = new JwtAuthenticationToken(jwt, List.of(new SimpleGrantedAuthority("ROLE_AUSBILDER")));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
@@ -263,7 +274,7 @@ public class PraktikumsstellenServiceTest {
         assertEquals(2, result.size());
 
         assertEquals(1, result.get("KM2").size());
-        assertEquals(1, result.get("KM8").size());
+        assertEquals(2, result.get("KM8").size());
     }
 
     @Test
@@ -321,7 +332,13 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testGetAllPraktiumsstellenInCurrentMeldezeitraumForAusbilder() {
-        var authentication = getJwtAuthenticationToken(Authorities.AuthoritiesEnum.AUSBILDER);
+        var jwt = new Jwt(
+                "token",
+                Instant.now(),
+                Instant.now().plusSeconds(1000),
+                Collections.singletonMap("typ", "JWT"),
+                Map.of("email", "test@test.de", "department", "KM"));
+        var authentication = new JwtAuthenticationToken(jwt, List.of(new SimpleGrantedAuthority("ROLE_AUSBILDER")));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().plusDays(1), "letzte woche bis morgen");
@@ -365,7 +382,7 @@ public class PraktikumsstellenServiceTest {
         assertNotNull(result);
         assertEquals(2, result.size());
 
-        assertEquals(1, result.get("KM8").size());
+        assertEquals(2, result.get("KM8").size());
         assertEquals(1, result.get("KM2").size());
     }
 

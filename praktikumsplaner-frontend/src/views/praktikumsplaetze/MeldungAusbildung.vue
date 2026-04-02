@@ -246,10 +246,10 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const requiredFieldSymbol = "*";
 
-const praktikumsstelle = ref<Praktikumsstelle>(new Praktikumsstelle());
+const userStore = useUserStore();
+const praktikumsstelle = ref<Praktikumsstelle>(new Praktikumsstelle(userStore.department));
 const loadingSite = ref<boolean>(true);
 const loading = ref<boolean>(false);
-const userStore = useUserStore();
 const security = useSecurity();
 const form = ref<HTMLFormElement>();
 const meldezeitraeume = computed(() => {

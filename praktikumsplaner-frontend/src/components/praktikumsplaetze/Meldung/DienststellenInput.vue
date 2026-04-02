@@ -13,9 +13,13 @@
 import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
+import { useSecurity } from "@/composables/security";
+import { useUserStore } from "@/stores/user";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
+const userStore = useUserStore();
+const security = useSecurity();
 
 interface Properties {
     modelValue: Praktikumsstelle;
@@ -38,12 +42,26 @@ const conditionalRequiredLabel = computed(() => {
     return properties.isRequired ? label + properties.requiredSymbol : label;
 });
 
+const ownDienststelleRule = (value: string | null | undefined) => {
+    if (security.isAusbildungsleitung()) {
+        return true;
+    }
+    return (
+        value?.startsWith(userStore.department || "") ||
+        `Die Praktikumsstelle muss unterhalb der eigenen Dienststelle ('${userStore.department}') angesiedelt sein`
+    );
+};
 const dienststelleRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.maxLengthRule(
         10,
         "Die Dienststelle darf nicht länger als 10 Zeichen sein."
     ),
+    validationRules.regexRule(
+        /^[A-Z]{3,4}-[A-Za-z\d]+$/,
+        "Die Dienstelle muss der Kurzform entsprechen (z.B. ITM-DKL123)"
+    ),
+    ownDienststelleRule,
 ];
 const conditionalRequiredRules = computed(() => {
     return properties.isRequired ? dienststelleRule : undefined;

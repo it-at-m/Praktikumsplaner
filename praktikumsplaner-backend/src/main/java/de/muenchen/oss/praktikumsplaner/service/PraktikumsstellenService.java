@@ -255,12 +255,18 @@ public class PraktikumsstellenService {
 
         if (AuthUtils.isAusbilder()) {
             final String usermail = AuthUtils.getMailFromUser();
+            final String userDepartment = AuthUtils.getDepartmentFromUser();
 
             return abteilungsStellenMap.entrySet().stream()
                     .map(entry -> Map.entry(
                             entry.getKey(),
                             entry.getValue().stream()
-                                    .filter(dto -> usermail.equals(dto.email()))
+                                    .filter(dto -> {
+                                        if (usermail.equals(dto.email())) {
+                                            return true;
+                                        }
+                                        return dto.dienststelle().startsWith(userDepartment);
+                                    })
                                     .collect(Collectors.toList())))
                     .filter(entry -> !entry.getValue().isEmpty())
                     .collect(Collectors.toMap(

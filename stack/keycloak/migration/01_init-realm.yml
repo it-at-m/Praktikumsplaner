@@ -4,9 +4,11 @@ changes:
   - addRealm:
       name: ${SSO_REALM}
 
+
   - updateRealm:
       id: ${SSO_REALM}
       displayName: Local Realm
+      unmanagedAttributePolicy: "ENABLED"
 
   - addGroup:
       realm: ${SSO_REALM}
