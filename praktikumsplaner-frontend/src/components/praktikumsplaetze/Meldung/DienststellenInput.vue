@@ -52,7 +52,7 @@ const dienststelleRule = [
     ),
     validationRules.regexRule(
         /^[A-Z]{3,4}-[A-Za-z\d-]+$/,
-        "Die Dienstelle muss der Kurzform entsprechen (z.B. ITM-DKL123)"
+        "Die Dienststelle muss der Kurzform entsprechen (z.B. ITM-DKL123)"
     ),
 ];
 const conditionalRequiredRules = computed(() => {

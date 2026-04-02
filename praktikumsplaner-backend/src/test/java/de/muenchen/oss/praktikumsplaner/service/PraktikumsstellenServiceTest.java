@@ -90,7 +90,7 @@ public class PraktikumsstellenServiceTest {
 
         StudiumsPraktikumsstelle studiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
         studiumsPraktikumsstelle.setId(UUID.randomUUID());
-        studiumsPraktikumsstelle.setDienststelle("Testdienststelle");
+        studiumsPraktikumsstelle.setDienststelle("TEST-001");
         studiumsPraktikumsstelle.setOertlicheAusbilder("TestoertlicheAusbilder");
         studiumsPraktikumsstelle.setEmail("test@test.de");
         studiumsPraktikumsstelle.setTaetigkeiten("Testtätigkeiten");
@@ -103,14 +103,14 @@ public class PraktikumsstellenServiceTest {
         studiumsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDto.id());
 
         CreateStudiumsPraktikumsstelleDto createDto = CreateStudiumsPraktikumsstelleDto.builder()
-                .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
+                .dienststelle("TEST-001").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).programmierkenntnisse("true")
                 .studiensemester(Set.of(Studiensemester.SEMESTER1)).studiengang(Studiengang.BSC).build();
 
         StudiumsPraktikumsstelleDto dto = StudiumsPraktikumsstelleDto.builder().id(studiumsPraktikumsstelle.getId())
-                .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
+                .dienststelle("TEST-001").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).programmierkenntnisse("true")
@@ -132,7 +132,7 @@ public class PraktikumsstellenServiceTest {
 
         AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
         ausbildungsPraktikumsstelle.setId(UUID.randomUUID());
-        ausbildungsPraktikumsstelle.setDienststelle("Testdienststelle");
+        ausbildungsPraktikumsstelle.setDienststelle("TEST-001");
         ausbildungsPraktikumsstelle.setOertlicheAusbilder("TestoertlicheAusbilder");
         ausbildungsPraktikumsstelle.setEmail("test@test.de");
         ausbildungsPraktikumsstelle.setTaetigkeiten("Testtätigkeiten");
@@ -145,14 +145,14 @@ public class PraktikumsstellenServiceTest {
         ausbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraumDto.id());
 
         CreateAusbildungsPraktikumsstelleDto createDto = CreateAusbildungsPraktikumsstelleDto.builder()
-                .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
+                .dienststelle("TEST-001").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).projektarbeit(true)
                 .ausbildungsjahr(Set.of(Ausbildungsjahr.JAHR1)).ausbildungsrichtung(Ausbildungsrichtung.FISI).build();
 
         AusbildungsPraktikumsstelleDto dto = AusbildungsPraktikumsstelleDto.builder().id(ausbildungsPraktikumsstelle.getId())
-                .dienststelle("Testdienststelle").oertlicheAusbilder("TestoertlicheAusbilder")
+                .dienststelle("TEST-001").oertlicheAusbilder("TestoertlicheAusbilder")
                 .email("test@test.de").taetigkeiten("Testtätigkeiten")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG).namentlicheAnforderung("TestnamentlicheAnforderung")
                 .referat(Referat.ITM).projektarbeit(true)
