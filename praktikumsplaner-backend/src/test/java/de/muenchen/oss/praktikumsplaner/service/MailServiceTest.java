@@ -77,7 +77,7 @@ public class MailServiceTest {
         StudiumsPraktikumsstelleDto studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelleDto("ITM-KM83", "Test Tester", "test@tester.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM,
                 Set.of(Studiensemester.SEMESTER5), Studiengang.BSC, assignedNwk2);
-        StudiumsPraktikumsstelleDto studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelleDto("InnoLab", "Test Testerin", "test@testerin.de",
+        StudiumsPraktikumsstelleDto studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelleDto("ITM-DKL-IL", "Test Testerin", "test@testerin.de",
                 "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM,
                 Set.of(Studiensemester.SEMESTER5), Studiengang.BWI, assignedNwk1);
         allPraktikumsstellen.add(studiumsPraktikumsstelle1);
