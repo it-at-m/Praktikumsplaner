@@ -21,7 +21,6 @@ import de.muenchen.oss.praktikumsplaner.security.AuthUtils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -263,12 +262,8 @@ public class PraktikumsstellenService {
                     .map(entry -> Map.entry(
                             entry.getKey(),
                             entry.getValue().stream()
-                                    .filter(dto -> {
-                                        if (usermail.equals(dto.email())) {
-                                            return true;
-                                        }
-                                        return dto.dienststelle().startsWith(userDepartment);
-                                    })
+                                    .filter(dto -> usermail.equals(dto.email()) ||
+                                            dto.dienststelle().startsWith(userDepartment))
                                     .collect(Collectors.toList())))
                     .filter(entry -> !entry.getValue().isEmpty())
                     .collect(Collectors.toMap(

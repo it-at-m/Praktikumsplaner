@@ -63,7 +63,7 @@ public final class AuthUtils {
 
     /**
      * Extracts the users department from the Spring Security Context.
-     * 
+     *
      * @return the department of the user.
      */
     public static String getDepartmentFromUser() {
