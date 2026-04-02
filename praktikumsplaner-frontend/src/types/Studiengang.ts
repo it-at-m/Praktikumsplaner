@@ -16,7 +16,7 @@ export const Studiengang = [
         color: "blue-lighten-3",
     },
     {
-        name: "Betriebswirtschaftslehre mit Schwerpunkt Public Management (Puma)",
+        name: "Public Management (Puma)/Public Sector (PS)",
         value: "PUMA",
         color: "red-lighten-3",
     },
