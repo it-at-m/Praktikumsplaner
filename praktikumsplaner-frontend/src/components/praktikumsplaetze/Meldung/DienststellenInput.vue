@@ -3,6 +3,8 @@
         v-model="stelle.dienststelle"
         :disabled="disabled"
         :label="conditionalRequiredLabel"
+        persistent-hint
+        :hint="hint()"
         :rules="conditionalRequiredRules"
         variant="outlined"
         :clearable="!isRequired"
@@ -42,15 +44,6 @@ const conditionalRequiredLabel = computed(() => {
     return properties.isRequired ? label + properties.requiredSymbol : label;
 });
 
-const ownDienststelleRule = (value: string | null | undefined) => {
-    if (security.isAusbildungsleitung()) {
-        return true;
-    }
-    return (
-        value?.startsWith(userStore.department || "") ||
-        `Die Praktikumsstelle muss unterhalb der eigenen Dienststelle ('${userStore.department}') angesiedelt sein`
-    );
-};
 const dienststelleRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     validationRules.maxLengthRule(
@@ -61,12 +54,24 @@ const dienststelleRule = [
         /^[A-Z]{3,4}-[A-Za-z\d-]+$/,
         "Die Dienstelle muss der Kurzform entsprechen (z.B. ITM-DKL123)"
     ),
-    ownDienststelleRule,
 ];
 const conditionalRequiredRules = computed(() => {
     return properties.isRequired ? dienststelleRule : undefined;
 });
 
+const hint = () => {
+    if (security.isAusbildungsleitung()) {
+        return "";
+    }
+    if (
+        !properties.modelValue.dienststelle?.startsWith(
+            userStore.department || ""
+        )
+    ) {
+        return `Die Praktikumsstelle sollte unterhalb der eigenen Dienststelle ('${userStore.department}') angesiedelt sein`;
+    }
+    return "";
+};
 const stelle = computed({
     // getter
     get() {
