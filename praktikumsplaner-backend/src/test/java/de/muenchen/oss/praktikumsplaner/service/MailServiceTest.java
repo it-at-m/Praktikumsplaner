@@ -69,15 +69,15 @@ public class MailServiceTest {
 
         List<PraktikumsstelleDto> allPraktikumsstellen = new ArrayList<>();
 
-        AusbildungsPraktikumsstelleDto ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelleDto("KM81", "Max Musterfrau", "max@musterfrau.de",
+        AusbildungsPraktikumsstelleDto ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelleDto("ITM-KM81", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND, Referat.ITM,
                 Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, assignedNwk3);
         allPraktikumsstellen.add(ausbildungsPraktikumsstelle1);
 
-        StudiumsPraktikumsstelleDto studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelleDto("KM83", "Test Tester", "test@tester.de",
+        StudiumsPraktikumsstelleDto studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelleDto("ITM-KM83", "Test Tester", "test@tester.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM,
                 Set.of(Studiensemester.SEMESTER5), Studiengang.BSC, assignedNwk2);
-        StudiumsPraktikumsstelleDto studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelleDto("InnoLab", "Test Testerin", "test@testerin.de",
+        StudiumsPraktikumsstelleDto studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelleDto("ITM-DKL-IL", "Test Testerin", "test@testerin.de",
                 "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG, Referat.ITM,
                 Set.of(Studiensemester.SEMESTER5), Studiengang.BWI, assignedNwk1);
         allPraktikumsstellen.add(studiumsPraktikumsstelle1);

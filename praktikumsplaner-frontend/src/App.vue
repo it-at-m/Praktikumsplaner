@@ -114,6 +114,7 @@ const toggleDrawer = () => {
 onBeforeMount(() => {
     userService.getPermissions().then((userinfo) => {
         userStore.setUsername(userinfo.name);
+        userStore.setDepartment(userinfo.department);
 
         const resourceAccess = userinfo.resource_access ?? {};
         const praktikumsplanerKey = Object.keys(resourceAccess).find((key) =>
