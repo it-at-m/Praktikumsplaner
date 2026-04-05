@@ -9,4 +9,4 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: it-at-m/lhm_actions/action-templates/actions/action-dependency-review@e012d3bda6f9d5511415e2d885f32826049284a4 # v1.0.23
+      - uses: it-at-m/lhm_actions/action-templates/actions/action-dependency-review@94f7e40aa557a2790abfa98a9cc9186d260b94f8 # v1.0.27
