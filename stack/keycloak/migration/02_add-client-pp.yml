@@ -10,8 +10,7 @@ changes:
         - http://*
         - https://*
 
-  # maps user attribute user_name to a claim user_name
-
+  # maps user attribute department to a claim department
   - addClientUserAttributeMapper:
       clientId: ${SSO_CLIENT_ID}
       name: department

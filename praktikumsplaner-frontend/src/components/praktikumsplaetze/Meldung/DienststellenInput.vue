@@ -59,7 +59,7 @@ const conditionalRequiredRules = computed(() => {
     return properties.isRequired ? dienststelleRule : undefined;
 });
 
-const hint = () => {
+const hint = computed(() => {
     if (security.isAusbildungsleitung()) {
         return "";
     }
@@ -71,7 +71,7 @@ const hint = () => {
         return `Die Praktikumsstelle sollte unterhalb der eigenen Dienststelle ('${userStore.department}') angesiedelt sein`;
     }
     return "";
-};
+});
 const stelle = computed({
     // getter
     get() {
