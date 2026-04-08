@@ -224,13 +224,7 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testGetAllPraktiumsstellenInMostRecentPassedMeldezeitraumForAusbilder() {
-        var jwt = new Jwt(
-                "token",
-                Instant.now(),
-                Instant.now().plusSeconds(1000),
-                Collections.singletonMap("typ", "JWT"),
-                Map.of("email", "test@test.de", "department", "ITM-SLP3"));
-        var authentication = new JwtAuthenticationToken(jwt, List.of(new SimpleGrantedAuthority("ROLE_AUSBILDER")));
+        var authentication = getJwtAuthenticationToken(Authorities.AuthoritiesEnum.AUSBILDER);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
@@ -335,13 +329,7 @@ public class PraktikumsstellenServiceTest {
 
     @Test
     public void testGetAllPraktiumsstellenInCurrentMeldezeitraumForAusbilder() {
-        var jwt = new Jwt(
-                "token",
-                Instant.now(),
-                Instant.now().plusSeconds(1000),
-                Collections.singletonMap("typ", "JWT"),
-                Map.of("email", "test@test.de", "department", "ITM-SLP3"));
-        var authentication = new JwtAuthenticationToken(jwt, List.of(new SimpleGrantedAuthority("ROLE_AUSBILDER")));
+        var authentication = getJwtAuthenticationToken(Authorities.AuthoritiesEnum.AUSBILDER);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().plusDays(1), "letzte woche bis morgen");
