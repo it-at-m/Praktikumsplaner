@@ -4,7 +4,7 @@
         :disabled="disabled"
         :label="conditionalRequiredLabel"
         persistent-hint
-        :hint="hint()"
+        :hint="hint"
         :rules="conditionalRequiredRules"
         variant="outlined"
         :clearable="!isRequired"
