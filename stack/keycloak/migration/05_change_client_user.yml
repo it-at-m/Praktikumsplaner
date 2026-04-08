@@ -13,7 +13,7 @@ changes:
         - group1
       attributes:
         department:
-          - ITM-KM8
+          - ITM-BO12
       clientRoles:
         - client: ${SSO_CLIENT_ID}
           role: AUSBILDUNGSLEITUNG
@@ -31,7 +31,7 @@ changes:
         - group1
       attributes:
         department:
-          - ITM-KM8
+          - ITM-SLP3
       clientRoles:
         - client: ${SSO_CLIENT_ID}
           role: AUSBILDER
@@ -49,7 +49,7 @@ changes:
         - group1
       attributes:
         department:
-          - ITM-KM8
+          - ITM-SLP3
       clientRoles:
         - client: ${SSO_CLIENT_ID}
           role: NWK
