@@ -285,7 +285,6 @@ public class ExcelExportService {
         return row;
     }
 
-
     private static String getReferatFromDienststelle(final PraktikumsstelleDto praktikumsstelle) {
         if (praktikumsstelle.dienststelle() == null || praktikumsstelle.dienststelle().isBlank()) {
             return "";

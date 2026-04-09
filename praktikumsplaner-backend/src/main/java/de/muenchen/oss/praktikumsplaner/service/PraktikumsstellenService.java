@@ -200,7 +200,7 @@ public class PraktikumsstellenService {
                 || !Objects.equals(ausbildungsPraktikumsstelle.getProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
                 || !ausbildungsPraktikumsstelle.getAusbildungsjahr().equals(praktikumsstelleDto.ausbildungsjahr())
                 || !ausbildungsPraktikumsstelle.getAusbildungsrichtung().equals(praktikumsstelleDto.ausbildungsrichtung())
-                || !ausbildungsPraktikumsstelle.getWuensche().equals(praktikumsstelleDto.wuensche())
+                || !Objects.equals(ausbildungsPraktikumsstelle.getWuensche(), praktikumsstelleDto.wuensche())
                 || ausbildungsPraktikumsstelle.isMinderjaehrigMoeglich() != praktikumsstelleDto.minderjaehrigMoeglich()) {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
@@ -220,7 +220,7 @@ public class PraktikumsstellenService {
                 || !Objects.equals(studiumsPraktikumsstelle.getProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
                 || !studiumsPraktikumsstelle.getStudiensemester().equals(praktikumsstelleDto.studiensemester())
                 || studiumsPraktikumsstelle.getStudiengang() != praktikumsstelleDto.studiengang()
-                || !studiumsPraktikumsstelle.getWuensche().equals(praktikumsstelleDto.wuensche())) {
+                || !Objects.equals(studiumsPraktikumsstelle.getWuensche(), praktikumsstelleDto.wuensche())) {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
 

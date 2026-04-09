@@ -12,7 +12,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import java.time.DayOfWeek;
@@ -56,27 +55,28 @@ public class ServiceTestHelper {
     }
 
     public AusbildungsPraktikumsstelle createAusbildungsPraktikumsstelleEntity(
-            final String dienststelle, final String ausbilder, final String email, final String taetigkeiten,
-            final Dringlichkeit dringlichkeit, final Referat referat, final Set<Ausbildungsjahr> ausbildungsjahr,
-            final Ausbildungsrichtung ausbildungsrichtung, final boolean projektarbeit, final UUID meldezeitraumId, final Nwk assignedNwk) {
+            final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final String wuensche,
+            final Dringlichkeit dringlichkeit, final Set<Ausbildungsjahr> ausbildungsjahr, final Ausbildungsrichtung ausbildungsrichtung,
+            final boolean projektarbeit, final boolean minderjaehrigMoeglich, final UUID meldezeitraumId, final Nwk assignedNwk) {
         AusbildungsPraktikumsstelle newAusbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
         newAusbildungsPraktikumsstelle.setId(UUID.randomUUID());
         newAusbildungsPraktikumsstelle.setDienststelle(dienststelle);
         newAusbildungsPraktikumsstelle.setOertlicheAusbilder(ausbilder);
         newAusbildungsPraktikumsstelle.setEmail(email);
         newAusbildungsPraktikumsstelle.setTaetigkeiten(taetigkeiten);
+        newAusbildungsPraktikumsstelle.setWuensche(wuensche);
         newAusbildungsPraktikumsstelle.setDringlichkeit(dringlichkeit);
-        newAusbildungsPraktikumsstelle.setReferat(referat);
         newAusbildungsPraktikumsstelle.setAusbildungsjahr(ausbildungsjahr);
         newAusbildungsPraktikumsstelle.setAusbildungsrichtung(ausbildungsrichtung);
         newAusbildungsPraktikumsstelle.setProjektarbeit(projektarbeit);
         newAusbildungsPraktikumsstelle.setAssignedNwk(assignedNwk);
+        newAusbildungsPraktikumsstelle.setMinderjaehrigMoeglich(minderjaehrigMoeglich);
         return newAusbildungsPraktikumsstelle;
     }
 
     public StudiumsPraktikumsstelle createStudiumsPraktikumsstelleEntity(
-            final String dienststelle, final String ausbilder, final String email, final String taetigkeiten,
-            final Dringlichkeit dringlichkeit, final Referat referat, final Set<Studiensemester> semester,
+            final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final String wuensche,
+            final Dringlichkeit dringlichkeit, final Set<Studiensemester> semester,
             final Studiengang studiengang, final String programmierkenntnisse, final UUID meldezeitraumId, final Nwk assignedNwk) {
         StudiumsPraktikumsstelle newStudiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
         newStudiumsPraktikumsstelle.setId(UUID.randomUUID());
@@ -84,8 +84,8 @@ public class ServiceTestHelper {
         newStudiumsPraktikumsstelle.setOertlicheAusbilder(ausbilder);
         newStudiumsPraktikumsstelle.setEmail(email);
         newStudiumsPraktikumsstelle.setTaetigkeiten(taetigkeiten);
+        newStudiumsPraktikumsstelle.setWuensche(wuensche);
         newStudiumsPraktikumsstelle.setDringlichkeit(dringlichkeit);
-        newStudiumsPraktikumsstelle.setReferat(referat);
         newStudiumsPraktikumsstelle.setStudiensemester(semester);
         newStudiumsPraktikumsstelle.setProgrammierkenntnisse(programmierkenntnisse);
         newStudiumsPraktikumsstelle.setStudiengang(studiengang);
@@ -99,14 +99,15 @@ public class ServiceTestHelper {
                 .oertlicheAusbilder(stelle.getOertlicheAusbilder())
                 .email(stelle.getEmail())
                 .taetigkeiten(stelle.getTaetigkeiten())
+                .wuensche(stelle.getWuensche())
                 .dringlichkeit(stelle.getDringlichkeit())
                 .namentlicheAnforderung(stelle.getNamentlicheAnforderung())
-                .referat(stelle.getReferat())
                 .projektarbeit(stelle.isProjektarbeit())
                 .ausbildungsjahr(stelle.getAusbildungsjahr())
                 .ausbildungsrichtung(stelle.getAusbildungsrichtung())
                 .assignedNwk(createNwkDto(stelle.getAssignedNwk()))
                 .planstelleVorhanden(stelle.isPlanstelleVorhanden())
+                .minderjaehrigMoeglich(stelle.isMinderjaehrigMoeglich())
                 .build();
     }
 
@@ -116,9 +117,9 @@ public class ServiceTestHelper {
                 .oertlicheAusbilder(stelle.getOertlicheAusbilder())
                 .email(stelle.getEmail())
                 .taetigkeiten(stelle.getTaetigkeiten())
+                .wuensche(stelle.getWuensche())
                 .dringlichkeit(stelle.getDringlichkeit())
                 .namentlicheAnforderung(stelle.getNamentlicheAnforderung())
-                .referat(stelle.getReferat())
                 .programmierkenntnisse(stelle.getProgrammierkenntnisse())
                 .studiensemester(stelle.getStudiensemester())
                 .studiengang(stelle.getStudiengang())
