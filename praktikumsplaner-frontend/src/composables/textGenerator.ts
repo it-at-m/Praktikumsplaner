@@ -2,7 +2,6 @@ import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { valueToNameStudiensemester } from "@/types/Studiensemester";
 
-
 export function useTextGenerator() {
     function getPraktikumsstellenCardText(
         stelle: Praktikumsstelle | undefined | null
@@ -69,8 +68,7 @@ export function useTextGenerator() {
             stelle.taetigkeiten +
             "\n";
         if (stelle.wuensche) {
-            cardText += "Wünsche: " +
-                stelle.wuensche.split(/\n+ */).join(", ")
+            cardText += "Wünsche: " + stelle.wuensche.split(/\n+ */).join(", ");
         }
         return cardText;
     }

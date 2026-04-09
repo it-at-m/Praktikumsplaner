@@ -11,7 +11,8 @@
             </v-icon>
         </template>
         <span>
-            Hierfür ist ggf. die Anforderung eines erweiterten Führungszeugnisses erforderlich.
+            Hierfür ist ggf. die Anforderung eines erweiterten
+            Führungszeugnisses erforderlich.
         </span>
     </v-tooltip>
 </template>

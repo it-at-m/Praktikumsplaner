@@ -38,6 +38,6 @@ export default class Praktikumsstelle {
 
         public meldezeitraumID?: string,
 
-        public minderjaehrigMoeglich?: boolean,
+        public minderjaehrigMoeglich?: boolean
     ) {}
 }

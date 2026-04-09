@@ -30,9 +30,7 @@ const properties = withDefaults(defineProps<Properties>(), {
 });
 
 const emits =
-    defineEmits<
-        (e: "update:modelValue", model: Praktikumsstelle) => void
-    >();
+    defineEmits<(e: "update:modelValue", model: Praktikumsstelle) => void>();
 
 const label = "Wünsche";
 const conditionalRequiredLabel = computed(() => {

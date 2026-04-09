@@ -126,7 +126,10 @@
                     </v-row>
                     <v-row>
                         <v-col cols="11">
-                            <wuensche-input v-model="praktikumsstelle" :is-required="false"></wuensche-input>
+                            <wuensche-input
+                                v-model="praktikumsstelle"
+                                :is-required="false"
+                            ></wuensche-input>
                         </v-col>
                         <v-col>
                             <wuensche-tooltip></wuensche-tooltip>
@@ -244,14 +247,14 @@ import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/Projekt
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
 import VolljaehrigRadioGroup from "@/components/praktikumsplaetze/Meldung/VolljaehrigRadioGroup.vue";
 import VolljaehrigTooltip from "@/components/praktikumsplaetze/Meldung/VolljaehrigTooltip.vue";
+import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
+import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
 import { useSecurity } from "@/composables/security";
 import index from "@/router";
 import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
-import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
 
 const requiredFieldSymbol = "*";
 
