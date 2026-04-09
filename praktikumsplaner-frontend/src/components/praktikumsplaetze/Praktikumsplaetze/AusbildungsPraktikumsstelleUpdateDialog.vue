@@ -142,7 +142,7 @@
                                         :disabled="hasAssignedNwk"
                                     ></wuensche-input>
                                 </v-col>
-                                <v-col>
+                                <v-col cols="1">
                                     <wuensche-tooltip></wuensche-tooltip>
                                 </v-col>
                             </v-row>

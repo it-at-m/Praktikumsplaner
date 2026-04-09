@@ -40,12 +40,12 @@ const lengthRule = validationRules.maxLengthRule(
     5000,
     "Wünsche dürfen nicht länger als 5000 Zeichen sein."
 );
-const taetigkeitenRule = [
+const requiredRules = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
     lengthRule,
 ];
 const conditionalRequiredRules = computed(() => {
-    return properties.isRequired ? taetigkeitenRule : [lengthRule];
+    return properties.isRequired ? requiredRules : [lengthRule];
 });
 
 const stelle = computed({

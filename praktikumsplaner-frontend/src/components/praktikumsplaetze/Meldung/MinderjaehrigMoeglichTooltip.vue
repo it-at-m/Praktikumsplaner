@@ -6,9 +6,8 @@
                 color="blue"
                 size="large"
                 v-bind="props"
-            >
-                mdi-information
-            </v-icon>
+                icon="mdi-information"
+            />
         </template>
         <span>
             Hierfür ist ggf. die Anforderung eines erweiterten
@@ -16,4 +15,3 @@
         </span>
     </v-tooltip>
 </template>
-<script setup lang="ts"></script>
