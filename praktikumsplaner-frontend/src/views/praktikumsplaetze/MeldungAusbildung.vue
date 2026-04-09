@@ -31,17 +31,13 @@
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col>
+                        <v-col cols="5">
                             <dienststellen-input
                                 v-model="praktikumsstelle"
                                 :is-required="true"
                                 :required-symbol="requiredFieldSymbol"
                             ></dienststellen-input>
                         </v-col>
-                        <v-col cols="2" />
-                        <v-col>
-                        </v-col>
-                        <v-col cols="1" />
                     </v-row>
                     <v-row>
                         <v-col>
@@ -51,7 +47,7 @@
                                 :required-symbol="requiredFieldSymbol"
                             ></dringlichkeit-select>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col cols="1">
                             <dringlichkeit-tooltip></dringlichkeit-tooltip>
                         </v-col>
                         <v-col>
@@ -72,7 +68,7 @@
                                 :required-symbol="requiredFieldSymbol"
                             ></planstelle-radio-group>
                         </v-col>
-                        <v-col cols="2" />
+                        <v-col cols="1" />
                         <v-col>
                             <projektarbeit-radio-group
                                 v-model="praktikumsstelle"
@@ -110,7 +106,7 @@
                                 :required-symbol="requiredFieldSymbol"
                             ></ausbildungsrichtung-select>
                         </v-col>
-                        <v-col cols="2" />
+                        <v-col cols="1" />
                         <v-col>
                             <ausbildungs-jahr-select
                                 v-model="praktikumsstelle"
@@ -121,14 +117,20 @@
                         <v-col cols="1" />
                     </v-row>
                     <v-row>
-                        <v-col>
+                        <v-col cols="5">
                             <programmier-kenntnisse-select
                                 v-model="praktikumsstelle"
                                 :is-required="false"
                             ></programmier-kenntnisse-select>
                         </v-col>
-                        <v-col />
-                        <v-col cols="3" />
+                    </v-row>
+                    <v-row>
+                        <v-col cols="11">
+                            <wuensche-input v-model="praktikumsstelle" :is-required="false"></wuensche-input>
+                        </v-col>
+                        <v-col>
+                            <wuensche-tooltip></wuensche-tooltip>
+                        </v-col>
                     </v-row>
                 </v-container>
                 <v-container class="box">
@@ -145,7 +147,7 @@
                                 :required-symbol="requiredFieldSymbol"
                             ></ausbilder-input>
                         </v-col>
-                        <v-col cols="2" />
+                        <v-col cols="1" />
                         <v-col>
                             <ausbilder-email-input
                                 v-model="praktikumsstelle"
@@ -161,6 +163,17 @@
                                 v-model="praktikumsstelle"
                             ></ausbilder-erw-fuehrungszeugnis-checkbox>
                         </v-col>
+                        <v-col cols="1" />
+                        <v-col>
+                            <volljaehrig-radio-group
+                                v-model="praktikumsstelle"
+                                :is-required="true"
+                                :required-symbol="requiredFieldSymbol"
+                            ></volljaehrig-radio-group>
+                        </v-col>
+                        <v-col cols="1">
+                            <volljaehrig-tooltip></volljaehrig-tooltip>
+                        </v-col>
                     </v-row>
                 </v-container>
                 <v-container
@@ -173,7 +186,7 @@
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col>
+                        <v-col cols="5">
                             <meldezeitraum-select
                                 v-model="praktikumsstelle"
                                 :meldezeitraueme="meldezeitraeume"
@@ -181,9 +194,6 @@
                                 :required-symbol="requiredFieldSymbol"
                             ></meldezeitraum-select>
                         </v-col>
-                        <v-col cols="2" />
-                        <v-col> </v-col>
-                        <v-col cols="1" />
                     </v-row>
                 </v-container>
                 <v-container>
@@ -232,12 +242,16 @@ import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/
 import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/ProjektarbeitRadioGroup.vue";
 import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
+import VolljaehrigRadioGroup from "@/components/praktikumsplaetze/Meldung/VolljaehrigRadioGroup.vue";
+import VolljaehrigTooltip from "@/components/praktikumsplaetze/Meldung/VolljaehrigTooltip.vue";
 import { useSecurity } from "@/composables/security";
 import index from "@/router";
 import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
+import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
 
 const requiredFieldSymbol = "*";
 

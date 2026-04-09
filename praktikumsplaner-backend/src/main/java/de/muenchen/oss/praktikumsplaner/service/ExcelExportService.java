@@ -113,6 +113,7 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("P")).setCellValue(praktikumsstelle.assignedNwk().nachname());
             row.getCell(convertColStringToIndex("Q")).setCellValue(praktikumsstelle.assignedNwk().vorname());
             row.getCell(convertColStringToIndex("R")).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
+            row.getCell(convertColStringToIndex("S")).setCellValue(praktikumsstelle.minderjaehrigMoeglich() ? YES : NO);
         }
     }
 
@@ -139,6 +140,7 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("P")).setCellValue(praktikumsstelle.assignedNwk().nachname());
             row.getCell(convertColStringToIndex("Q")).setCellValue(praktikumsstelle.assignedNwk().vorname());
             row.getCell(convertColStringToIndex("R")).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
+            row.getCell(convertColStringToIndex("S")).setCellValue(NO);
         }
     }
 
@@ -216,6 +218,10 @@ public class ExcelExportService {
         }
 
         addProgrammierkenntnisseWunsch(wuensche, praktikumsstelle.programmierkenntnisse());
+
+        if (StringUtils.hasText(praktikumsstelle.wuensche())) {
+            wuensche.add(String.join(", ", praktikumsstelle.wuensche().split("\n+ *")));
+        }
 
         return wuensche.toString();
     }

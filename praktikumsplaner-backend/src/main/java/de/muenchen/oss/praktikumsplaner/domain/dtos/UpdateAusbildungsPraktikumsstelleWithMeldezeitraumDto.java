@@ -28,13 +28,17 @@ public record UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto(@NotNull Str
 
         String programmierkenntnisse,
 
+        String wuensche,
+
         boolean planstelleVorhanden,
 
         @NotNull Set<Ausbildungsjahr> ausbildungsjahr,
 
         @NotNull Ausbildungsrichtung ausbildungsrichtung,
 
-        @NotNull UUID meldezeitraumID
+        @NotNull UUID meldezeitraumID,
+
+        boolean minderjaehrigMoeglich
 
 ) {
 }

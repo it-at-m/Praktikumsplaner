@@ -52,4 +52,6 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
     private Nwk assignedNwk;
 
     private boolean planstelleVorhanden;
+
+    @Size(max = 5000, message = "Die Wünsche dürfen nur {max} Zeichen lang sein") private String wuensche;
 }

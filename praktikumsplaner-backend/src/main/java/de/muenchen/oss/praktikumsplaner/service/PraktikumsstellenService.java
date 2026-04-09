@@ -199,7 +199,9 @@ public class PraktikumsstellenService {
                 || ausbildungsPraktikumsstelle.isProjektarbeit() != praktikumsstelleDto.projektarbeit()
                 || !Objects.equals(ausbildungsPraktikumsstelle.getProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
                 || !ausbildungsPraktikumsstelle.getAusbildungsjahr().equals(praktikumsstelleDto.ausbildungsjahr())
-                || !ausbildungsPraktikumsstelle.getAusbildungsrichtung().equals(praktikumsstelleDto.ausbildungsrichtung())) {
+                || !ausbildungsPraktikumsstelle.getAusbildungsrichtung().equals(praktikumsstelleDto.ausbildungsrichtung())
+                || !ausbildungsPraktikumsstelle.getWuensche().equals(praktikumsstelleDto.wuensche())
+                || ausbildungsPraktikumsstelle.isMinderjaehrigMoeglich() != praktikumsstelleDto.minderjaehrigMoeglich()) {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
         praktikumsstellenMapper.updateAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle, praktikumsstelleDto);
@@ -217,7 +219,8 @@ public class PraktikumsstellenService {
                 || !studiumsPraktikumsstelle.getMeldezeitraumID().toString().equals(praktikumsstelleDto.meldezeitraumID().toString())
                 || !Objects.equals(studiumsPraktikumsstelle.getProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
                 || !studiumsPraktikumsstelle.getStudiensemester().equals(praktikumsstelleDto.studiensemester())
-                || studiumsPraktikumsstelle.getStudiengang() != praktikumsstelleDto.studiengang()) {
+                || studiumsPraktikumsstelle.getStudiengang() != praktikumsstelleDto.studiengang()
+                || !studiumsPraktikumsstelle.getWuensche().equals(praktikumsstelleDto.wuensche())) {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
 

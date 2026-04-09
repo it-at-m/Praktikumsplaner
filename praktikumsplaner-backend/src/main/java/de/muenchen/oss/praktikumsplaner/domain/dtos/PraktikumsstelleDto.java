@@ -27,6 +27,8 @@ public interface PraktikumsstelleDto {
 
     String programmierkenntnisse();
 
+    String wuensche();
+
     NwkDto assignedNwk();
 
     UUID meldezeitraumID();

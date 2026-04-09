@@ -29,6 +29,8 @@ public record AusbildungsPraktikumsstelleDto(@NotNull UUID id,
 
         String programmierkenntnisse,
 
+        String wuensche,
+
         boolean planstelleVorhanden,
 
         @NotNull Set<Ausbildungsjahr> ausbildungsjahr,
@@ -37,7 +39,9 @@ public record AusbildungsPraktikumsstelleDto(@NotNull UUID id,
 
         NwkDto assignedNwk,
 
-        UUID meldezeitraumID
+        UUID meldezeitraumID,
+
+        boolean minderjaehrigMoeglich
 
 ) implements PraktikumsstelleDto {
 }

@@ -26,6 +26,8 @@ public record UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto(@NotNull String
 
         @NotNull String programmierkenntnisse,
 
+        String wuensche,
+
         boolean planstelleVorhanden,
 
         @NotNull Set<Studiensemester> studiensemester,

@@ -27,11 +27,13 @@ public record CreateAusbildungsPraktikumsstelleDto(@NotNull String dienststelle,
 
         String programmierkenntnisse,
 
+        String wuensche,
+
         boolean planstelleVorhanden,
 
         @NotNull Set<Ausbildungsjahr> ausbildungsjahr,
 
-        @NotNull Ausbildungsrichtung ausbildungsrichtung
+        @NotNull Ausbildungsrichtung ausbildungsrichtung,
 
-) {
+        boolean minderjaehrigMoeglich) {
 }

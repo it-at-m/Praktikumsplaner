@@ -35,4 +35,6 @@ public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull @Enumerated(EnumType.STRING)
     private Ausbildungsrichtung ausbildungsrichtung;
+
+    private boolean minderjaehrigMoeglich;
 }

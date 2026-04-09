@@ -32,17 +32,13 @@
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col>
+                        <v-col cols="5">
                             <dienststellen-input
                                 v-model="praktikumsstelle"
                                 :is-required="true"
                                 :required-symbol="requiredFieldSymbol"
                             ></dienststellen-input>
                         </v-col>
-                        <v-col cols="2" />
-                        <v-col>
-                        </v-col>
-                        <v-col cols="1" />
                     </v-row>
                     <v-row>
                         <v-col>
@@ -52,7 +48,7 @@
                                 :required-symbol="requiredFieldSymbol"
                             ></dringlichkeit-select>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col cols="1">
                             <dringlichkeit-tooltip></dringlichkeit-tooltip>
                         </v-col>
                         <v-col>
@@ -66,16 +62,13 @@
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col>
+                        <v-col cols="5">
                             <planstelle-radio-group
                                 v-model="praktikumsstelle"
                                 :is-required="true"
                                 :required-symbol="requiredFieldSymbol"
                             ></planstelle-radio-group>
                         </v-col>
-                        <v-col cols="2" />
-                        <v-col> </v-col>
-                        <v-col cols="1" />
                     </v-row>
                     <v-row>
                         <v-col>
@@ -103,7 +96,7 @@
                                 :required-symbol="requiredFieldSymbol"
                             ></studienrichtung-select>
                         </v-col>
-                        <v-col cols="2" />
+                        <v-col cols="1" />
                         <v-col>
                             <semester-select
                                 v-model="praktikumsstelle"
@@ -114,15 +107,13 @@
                         <v-col cols="1" />
                     </v-row>
                     <v-row>
-                        <v-col>
+                        <v-col cols="5">
                             <programmier-kenntnisse-select
                                 v-model="praktikumsstelle"
                                 :is-required="true"
                                 :required-symbol="requiredFieldSymbol"
                             ></programmier-kenntnisse-select>
                         </v-col>
-                        <v-col />
-                        <v-col cols="3" />
                     </v-row>
                 </v-container>
                 <v-container class="box">
@@ -139,7 +130,7 @@
                                 :required-symbol="requiredFieldSymbol"
                             ></ausbilder-input>
                         </v-col>
-                        <v-col cols="2" />
+                        <v-col cols="1" />
                         <v-col>
                             <ausbilder-email-input
                                 v-model="praktikumsstelle"
@@ -167,7 +158,7 @@
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col>
+                        <v-col cols="5">
                             <meldezeitraum-select
                                 v-model="praktikumsstelle"
                                 :meldezeitraueme="meldezeitraeume"
@@ -175,9 +166,6 @@
                                 :required-symbol="requiredFieldSymbol"
                             ></meldezeitraum-select>
                         </v-col>
-                        <v-col cols="2" />
-                        <v-col> </v-col>
-                        <v-col cols="1" />
                     </v-row>
                 </v-container>
                 <v-container>

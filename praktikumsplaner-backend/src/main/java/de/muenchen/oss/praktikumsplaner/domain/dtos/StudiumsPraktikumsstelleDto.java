@@ -27,6 +27,8 @@ public record StudiumsPraktikumsstelleDto(@NotNull UUID id,
 
         @NotNull String programmierkenntnisse,
 
+        String wuensche,
+
         boolean planstelleVorhanden,
 
         @NotNull Set<Studiensemester> studiensemester,
