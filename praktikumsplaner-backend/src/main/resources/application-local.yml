@@ -66,3 +66,10 @@ refarch:
     logging-mode: all
     client-id: ${sso.client}
     user-info-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
+
+app:
+  mail:
+    reply-to: "testleitung@test.de"
+  export:
+    oertl-ausbildungsleitung-name: öAL Test
+    dienststelle-adresse: Agnes-Pockels-Bogen 33, 80992 München
