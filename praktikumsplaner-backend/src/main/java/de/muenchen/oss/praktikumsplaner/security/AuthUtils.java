@@ -62,6 +62,23 @@ public final class AuthUtils {
     }
 
     /**
+     * Extracts the users department from the Spring Security Context.
+     *
+     * @return the department of the user.
+     */
+    public static String getDepartmentFromUser() {
+        if (getAuthentication() instanceof JwtAuthenticationToken jwtAuth) {
+            final String department = jwtAuth.getToken().getClaimAsString("department");
+            if (department == null || department.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing department claim in JWT token");
+            }
+            return department;
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Expected JWT authentication");
+        }
+    }
+
+    /**
      * Prüft ob der User aus dem vorliegenden Spring Security Context via
      * {@link SecurityContextHolder} ein AUSBILDER ist.
      *
@@ -93,5 +110,4 @@ public final class AuthUtils {
         }
         return authentication;
     }
-
 }

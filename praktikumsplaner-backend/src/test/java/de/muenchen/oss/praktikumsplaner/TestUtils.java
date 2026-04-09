@@ -4,6 +4,7 @@ import de.muenchen.oss.praktikumsplaner.security.Authorities;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -16,7 +17,7 @@ public class TestUtils {
                 Instant.now(),
                 Instant.now().plusSeconds(1000),
                 Collections.singletonMap("typ", "JWT"),
-                Collections.singletonMap("email", "test@test.de"));
+                Map.of("email", "test@test.de", "department", "ITM-SLP3"));
         return new JwtAuthenticationToken(jwt, List.of(new SimpleGrantedAuthority("ROLE_" + role.name())));
     }
 }

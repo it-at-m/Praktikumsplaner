@@ -12,8 +12,8 @@ changes:
       groups:
         - group1
       attributes:
-        user_name:
-          - ausbildungsleitung.test
+        department:
+          - ITM-BO12
       clientRoles:
         - client: ${SSO_CLIENT_ID}
           role: AUSBILDUNGSLEITUNG
@@ -30,8 +30,8 @@ changes:
       groups:
         - group1
       attributes:
-        user_name:
-          - test.ausbilder
+        department:
+          - ITM-SLP3
       clientRoles:
         - client: ${SSO_CLIENT_ID}
           role: AUSBILDER
@@ -48,8 +48,8 @@ changes:
       groups:
         - group1
       attributes:
-        user_name:
-          - test.nwk
+        department:
+          - ITM-SLP3
       clientRoles:
         - client: ${SSO_CLIENT_ID}
           role: NWK

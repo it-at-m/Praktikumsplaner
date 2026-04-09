@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
 import lombok.EqualsAndHashCode;
@@ -29,7 +30,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 @SuppressWarnings("PMD.MissingSerialVersionUID")
 public abstract class BasePraktikumsstelle extends BaseEntity {
 
-    @NotNull @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein") private String dienststelle;
+    @NotNull @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein") @Pattern(regexp = "^[A-Z]{3,4}-[A-Za-z\\d-]+$") private String dienststelle;
 
     @NotNull @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein") private String oertlicheAusbilder;
 

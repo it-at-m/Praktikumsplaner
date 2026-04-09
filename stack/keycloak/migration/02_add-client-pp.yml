@@ -10,12 +10,12 @@ changes:
         - http://*
         - https://*
 
-    # maps user attribute user_name to a claim user_name
+  # maps user attribute department to a claim department
   - addClientUserAttributeMapper:
       clientId: ${SSO_CLIENT_ID}
-      name: user_name
-      userAttribute: user_name
-      claimName: user_name
+      name: department
+      userAttribute: department
+      claimName: department
       addToUserInfo: true
       addToAccessToken: true
 
@@ -34,13 +34,3 @@ changes:
         "access.token.claim": "true"
         "claim.name": "resource_access.$${client_id}.roles"
         "jsonType.label": "String"
-
-  # !!! very import must have. Without that default scope u dont have access to userinfo-endpoint
-  # which means the frontend ist unuseable
-  - assignDefaultClientScope:
-      clientId: ${SSO_CLIENT_ID}
-      clientScopeName: openid
-
-  - assignDefaultClientScope:
-      clientId: ${SSO_CLIENT_ID}
-      clientScopeName: roles
