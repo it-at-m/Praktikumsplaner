@@ -79,7 +79,7 @@ public class ExcelExportServiceTest {
             assertEquals(studiumsPraktikumsstellen.getFirst().taetigkeiten(), studiumsSheet.getRow(3).getCell(7).getStringCellValue());
             assertThat(studiumsSheet.getRow(3).getCell(8).getStringCellValue(), not(containsString("Namentliche Anforderung:")));
             assertThat(studiumsSheet.getRow(3).getCell(8).getStringCellValue(), containsString("Programmierkenntnisse von Vorteil"));
-            assertThat(ausbildungsSheet.getRow(3).getCell(8).getStringCellValue(), containsString("Wuensche 1"));
+            assertThat(studiumsSheet.getRow(3).getCell(8).getStringCellValue(), containsString("Wuensche 3"));
             assertEquals("Ja", studiumsSheet.getRow(3).getCell(10).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().dringlichkeit().name(), studiumsSheet.getRow(3).getCell(12).getStringCellValue());
             assertEquals("vorrangig 1. Jahr", studiumsSheet.getRow(3).getCell(13).getStringCellValue());

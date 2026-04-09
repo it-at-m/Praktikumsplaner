@@ -168,14 +168,14 @@
                         </v-col>
                         <v-col cols="1" />
                         <v-col>
-                            <volljaehrig-radio-group
+                            <minderjaehrig-moeglich-radio-group
                                 v-model="praktikumsstelle"
                                 :is-required="true"
                                 :required-symbol="requiredFieldSymbol"
-                            ></volljaehrig-radio-group>
+                            ></minderjaehrig-moeglich-radio-group>
                         </v-col>
                         <v-col cols="1">
-                            <volljaehrig-tooltip></volljaehrig-tooltip>
+                            <minderjaehrig-moeglich-tooltip></minderjaehrig-moeglich-tooltip>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -238,6 +238,8 @@ import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/Dringlic
 import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
+import MinderjaehrigMoeglichRadioGroup from "@/components/praktikumsplaetze/Meldung/MinderjaehrigMoeglichRadioGroup.vue";
+import MinderjaehrigMoeglichTooltip from "@/components/praktikumsplaetze/Meldung/MinderjaehrigMoeglichTooltip.vue";
 import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
 import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
 import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
@@ -245,8 +247,6 @@ import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/
 import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/ProjektarbeitRadioGroup.vue";
 import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
-import VolljaehrigRadioGroup from "@/components/praktikumsplaetze/Meldung/VolljaehrigRadioGroup.vue";
-import VolljaehrigTooltip from "@/components/praktikumsplaetze/Meldung/VolljaehrigTooltip.vue";
 import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
 import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
 import { useSecurity } from "@/composables/security";

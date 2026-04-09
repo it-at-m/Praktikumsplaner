@@ -115,6 +115,17 @@
                             ></programmier-kenntnisse-select>
                         </v-col>
                     </v-row>
+                    <v-row>
+                        <v-col cols="11">
+                            <wuensche-input
+                                v-model="praktikumsstelle"
+                                :is-required="false"
+                            ></wuensche-input>
+                        </v-col>
+                        <v-col>
+                            <wuensche-tooltip></wuensche-tooltip>
+                        </v-col>
+                    </v-row>
                 </v-container>
                 <v-container class="box">
                     <v-row>
@@ -212,6 +223,8 @@ import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/
 import StudienrichtungSelect from "@/components/praktikumsplaetze/Meldung/StudienrichtungSelect.vue";
 import SemesterSelect from "@/components/praktikumsplaetze/Meldung/StudiensemesterSelect.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
+import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
+import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
 import { useSecurity } from "@/composables/security";
 import router from "@/router";
 import { useUserStore } from "@/stores/user";

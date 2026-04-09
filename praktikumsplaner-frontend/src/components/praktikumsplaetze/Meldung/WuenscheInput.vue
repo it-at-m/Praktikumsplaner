@@ -36,16 +36,16 @@ const label = "Wünsche";
 const conditionalRequiredLabel = computed(() => {
     return properties.isRequired ? label + properties.requiredSymbol : label;
 });
-
+const lengthRule = validationRules.maxLengthRule(
+    5000,
+    "Wünsche dürfen nicht länger als 5000 Zeichen sein."
+);
 const taetigkeitenRule = [
     validationRules.notEmptyRule("Darf nicht leer sein."),
-    validationRules.maxLengthRule(
-        5000,
-        "Wünsche dürfen nicht länger als 5000 Zeichen sein."
-    ),
+    lengthRule,
 ];
 const conditionalRequiredRules = computed(() => {
-    return properties.isRequired ? taetigkeitenRule : undefined;
+    return properties.isRequired ? taetigkeitenRule : lengthRule;
 });
 
 const stelle = computed({

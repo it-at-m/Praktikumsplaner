@@ -71,6 +71,7 @@ public class ServiceTestHelper {
         newAusbildungsPraktikumsstelle.setProjektarbeit(projektarbeit);
         newAusbildungsPraktikumsstelle.setAssignedNwk(assignedNwk);
         newAusbildungsPraktikumsstelle.setMinderjaehrigMoeglich(minderjaehrigMoeglich);
+        newAusbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraumId);
         return newAusbildungsPraktikumsstelle;
     }
 
@@ -90,6 +91,7 @@ public class ServiceTestHelper {
         newStudiumsPraktikumsstelle.setProgrammierkenntnisse(programmierkenntnisse);
         newStudiumsPraktikumsstelle.setStudiengang(studiengang);
         newStudiumsPraktikumsstelle.setAssignedNwk(assignedNwk);
+        newStudiumsPraktikumsstelle.setMeldezeitraumID(meldezeitraumId);
         return newStudiumsPraktikumsstelle;
     }
 
