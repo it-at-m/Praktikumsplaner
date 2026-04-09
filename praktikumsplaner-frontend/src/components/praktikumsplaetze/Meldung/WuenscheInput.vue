@@ -45,7 +45,7 @@ const taetigkeitenRule = [
     lengthRule,
 ];
 const conditionalRequiredRules = computed(() => {
-    return properties.isRequired ? taetigkeitenRule : lengthRule;
+    return properties.isRequired ? taetigkeitenRule : [lengthRule];
 });
 
 const stelle = computed({
