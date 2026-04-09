@@ -57,9 +57,6 @@ public class ExcelExportService {
     @Value("${app.export.dienststelle-adresse:}")
     private String dienstelleAdresse;
 
-    @Value("${app.export.default-referat:}")
-    private String defaultReferat;
-
     public String getBase64EncodedExcelFile() throws IOException {
         try (XSSFWorkbook workbook = fillTemplatePraktikumsstellen();
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream()) {
@@ -98,7 +95,7 @@ public class ExcelExportService {
             final AusbildungsPraktikumsstelleDto praktikumsstelle = assignedAusbildungspraktikumsstellen.get(i);
             final Row row = getRow(ausbildungsSheet, i);
 
-            row.getCell(convertColStringToIndex("A")).setCellValue(praktikumsstelle.referat() != null ? praktikumsstelle.referat().name() : defaultReferat);
+            row.getCell(convertColStringToIndex("A")).setCellValue(getReferatFromDienststelle(praktikumsstelle));
             row.getCell(convertColStringToIndex("B")).setCellValue(this.oertlAusbildungsleitungName);
             row.getCell(convertColStringToIndex("C")).setCellValue(praktikumsstelle.dienststelle());
             // row.getCell(convertColStringToIndex"D")).setCellValue(---);
@@ -124,7 +121,7 @@ public class ExcelExportService {
             final StudiumsPraktikumsstelleDto praktikumsstelle = assignedStudiumspraktikumsstellen.get(i);
             final Row row = getRow(studiumsSheet, i);
 
-            row.getCell(convertColStringToIndex("A")).setCellValue(praktikumsstelle.referat() != null ? praktikumsstelle.referat().name() : defaultReferat);
+            row.getCell(convertColStringToIndex("A")).setCellValue(getReferatFromDienststelle(praktikumsstelle));
             row.getCell(convertColStringToIndex("B")).setCellValue(this.oertlAusbildungsleitungName);
             row.getCell(convertColStringToIndex("C")).setCellValue(praktikumsstelle.dienststelle());
             // row.getCell(convertColStringToIndex"D")).setCellValue(---);
@@ -178,7 +175,6 @@ public class ExcelExportService {
 
     private static AusbildungsPraktikumsstelleDto turnStudiumsIntoAusbildungspraktikumsstelle(final StudiumsPraktikumsstelleDto praktikumsstelle) {
         return AusbildungsPraktikumsstelleDto.builder()
-                .referat(praktikumsstelle.referat())
                 .dienststelle(praktikumsstelle.dienststelle())
                 .oertlicheAusbilder(praktikumsstelle.oertlicheAusbilder())
                 .email(praktikumsstelle.email())
@@ -196,7 +192,6 @@ public class ExcelExportService {
 
     private static StudiumsPraktikumsstelleDto turnAusbildungsIntoStudiumspraktikumsstelle(final AusbildungsPraktikumsstelleDto praktikumsstelle) {
         return StudiumsPraktikumsstelleDto.builder()
-                .referat(praktikumsstelle.referat())
                 .dienststelle(praktikumsstelle.dienststelle())
                 .oertlicheAusbilder(praktikumsstelle.oertlicheAusbilder())
                 .email(praktikumsstelle.email())
@@ -282,5 +277,13 @@ public class ExcelExportService {
             row = sheet.createRow(i + 3);
         }
         return row;
+    }
+
+
+    private static String getReferatFromDienststelle(final PraktikumsstelleDto praktikumsstelle) {
+        if (praktikumsstelle.dienststelle() == null || praktikumsstelle.dienststelle().isBlank()) {
+            return "";
+        }
+        return praktikumsstelle.dienststelle().split("-")[0];
     }
 }

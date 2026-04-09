@@ -3,7 +3,6 @@ package de.muenchen.oss.praktikumsplaner.domain.dtos;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import java.util.Set;
@@ -23,8 +22,6 @@ public record CreateAusbildungsPraktikumsstelleDto(@NotNull String dienststelle,
         @NotNull Dringlichkeit dringlichkeit,
 
         String namentlicheAnforderung,
-
-        Referat referat,
 
         boolean projektarbeit,
 

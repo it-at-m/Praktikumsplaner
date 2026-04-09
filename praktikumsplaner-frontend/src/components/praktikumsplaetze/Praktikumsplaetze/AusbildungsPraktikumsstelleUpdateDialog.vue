@@ -44,11 +44,6 @@
                                 </v-col>
                                 <v-col cols="2" />
                                 <v-col>
-                                    <referat-select
-                                        v-model="praktikumsstelle"
-                                        :is-required="false"
-                                        :disabled="hasAssignedNwk"
-                                    ></referat-select>
                                 </v-col>
                                 <v-col cols="1" />
                             </v-row>
@@ -253,7 +248,6 @@ import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/Planste
 import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/ProgrammierKenntnisseSelect.vue";
 import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/ProjektarbeitRadioGroup.vue";
 import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
-import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
 import emitter from "@/stores/eventBus";
 import Meldezeitraum from "@/types/Meldezeitraum";

@@ -41,10 +41,6 @@
                         </v-col>
                         <v-col cols="2" />
                         <v-col>
-                            <referat-select
-                                v-model="praktikumsstelle"
-                                :is-required="false"
-                            ></referat-select>
                         </v-col>
                         <v-col cols="1" />
                     </v-row>
@@ -225,7 +221,6 @@ import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/
 import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
 import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
 import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/ProgrammierKenntnisseSelect.vue";
-import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
 import StudienrichtungSelect from "@/components/praktikumsplaetze/Meldung/StudienrichtungSelect.vue";
 import SemesterSelect from "@/components/praktikumsplaetze/Meldung/StudiensemesterSelect.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
