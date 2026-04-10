@@ -17,7 +17,7 @@
 
     <name>praktikumsplaner-backend</name>
     <description>Backend service of the Praktikumsplaner</description>
-    <url>scm:git:https://github.com/it-at-m/Praktikumsplaner.git</url>
+    <url>https://github.com/it-at-m/Praktikumsplaner</url>
     <licenses>
         <license>
             <name>MIT</name>
