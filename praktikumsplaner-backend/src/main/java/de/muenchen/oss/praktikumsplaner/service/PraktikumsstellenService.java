@@ -192,15 +192,16 @@ public class PraktikumsstellenService {
         final AusbildungsPraktikumsstelle ausbildungsPraktikumsstelle = findByIdOrThrowAusbildungspraktikumsstelle(id);
 
         //Check if any field which is not supposed to change changed
-        if (ausbildungsPraktikumsstelle.getReferat() != praktikumsstelleDto.referat()
-                || ausbildungsPraktikumsstelle.getDringlichkeit() != praktikumsstelleDto.dringlichkeit()
+        if (ausbildungsPraktikumsstelle.getDringlichkeit() != praktikumsstelleDto.dringlichkeit()
                 || !Objects.equals(ausbildungsPraktikumsstelle.getNamentlicheAnforderung(), praktikumsstelleDto.namentlicheAnforderung())
                 || ausbildungsPraktikumsstelle.isPlanstelleVorhanden() != praktikumsstelleDto.planstelleVorhanden()
                 || !ausbildungsPraktikumsstelle.getMeldezeitraumID().toString().equals(praktikumsstelleDto.meldezeitraumID().toString())
                 || ausbildungsPraktikumsstelle.isProjektarbeit() != praktikumsstelleDto.projektarbeit()
                 || !Objects.equals(ausbildungsPraktikumsstelle.getProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
                 || !ausbildungsPraktikumsstelle.getAusbildungsjahr().equals(praktikumsstelleDto.ausbildungsjahr())
-                || !ausbildungsPraktikumsstelle.getAusbildungsrichtung().equals(praktikumsstelleDto.ausbildungsrichtung())) {
+                || !ausbildungsPraktikumsstelle.getAusbildungsrichtung().equals(praktikumsstelleDto.ausbildungsrichtung())
+                || !Objects.equals(ausbildungsPraktikumsstelle.getWuensche(), praktikumsstelleDto.wuensche())
+                || ausbildungsPraktikumsstelle.isMinderjaehrigMoeglich() != praktikumsstelleDto.minderjaehrigMoeglich()) {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
         praktikumsstellenMapper.updateAusbildungsPraktikumsstelle(ausbildungsPraktikumsstelle, praktikumsstelleDto);
@@ -212,14 +213,14 @@ public class PraktikumsstellenService {
         final StudiumsPraktikumsstelle studiumsPraktikumsstelle = findByIdOrThrowStudiumpraktikumsstelle(id);
 
         //Check if any field which is not supposed to change changed
-        if (studiumsPraktikumsstelle.getReferat() != praktikumsstelleDto.referat()
-                || studiumsPraktikumsstelle.getDringlichkeit() != praktikumsstelleDto.dringlichkeit()
+        if (studiumsPraktikumsstelle.getDringlichkeit() != praktikumsstelleDto.dringlichkeit()
                 || !Objects.equals(studiumsPraktikumsstelle.getNamentlicheAnforderung(), praktikumsstelleDto.namentlicheAnforderung())
                 || studiumsPraktikumsstelle.isPlanstelleVorhanden() != praktikumsstelleDto.planstelleVorhanden()
                 || !studiumsPraktikumsstelle.getMeldezeitraumID().toString().equals(praktikumsstelleDto.meldezeitraumID().toString())
                 || !Objects.equals(studiumsPraktikumsstelle.getProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
                 || !studiumsPraktikumsstelle.getStudiensemester().equals(praktikumsstelleDto.studiensemester())
-                || studiumsPraktikumsstelle.getStudiengang() != praktikumsstelleDto.studiengang()) {
+                || studiumsPraktikumsstelle.getStudiengang() != praktikumsstelleDto.studiengang()
+                || !Objects.equals(studiumsPraktikumsstelle.getWuensche(), praktikumsstelleDto.wuensche())) {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
 

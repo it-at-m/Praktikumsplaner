@@ -3,7 +3,6 @@ package de.muenchen.oss.praktikumsplaner.domain;
 import static java.sql.Types.VARCHAR;
 
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
@@ -45,9 +44,6 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @Size(max = 255, message = "Die angeforderte Nachwuchskraft darf nur {max} Zeichen lang sein") private String namentlicheAnforderung;
 
-    @Enumerated(EnumType.STRING)
-    private Referat referat;
-
     @NotNull @JdbcTypeCode(VARCHAR)
     private UUID meldezeitraumID;
 
@@ -56,4 +52,6 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
     private Nwk assignedNwk;
 
     private boolean planstelleVorhanden;
+
+    @Size(max = 5000, message = "Die Wünsche dürfen nur {max} Zeichen lang sein") private String wuensche;
 }

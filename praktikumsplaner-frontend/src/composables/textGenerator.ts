@@ -48,20 +48,28 @@ export function useTextGenerator() {
                 "Projektarbeit: " +
                 (stelle.projektarbeit ? "Ja" : "Nein") +
                 "\n";
+            cardText +=
+                "Betreuung minderjähriger NWK Möglich? " +
+                (stelle.minderjaehrigMoeglich ? "Ja" : "Nein") +
+                "\n";
         }
 
         cardText +=
             "Ausbilder*in: " +
             stelle.oertlicheAusbilder +
             "\n" +
-            "Erw. Führungszeugnis: " +
-            (stelle.erwFuehrungszeugnisVorhanden ? "Ja" : "Nein") +
-            "\n" +
             "Mailadresse Ausbilder*in: " +
             stelle.email +
             "\n" +
+            "Erw. Führungszeugnis: " +
+            (stelle.erwFuehrungszeugnisVorhanden ? "Ja" : "Nein") +
+            "\n" +
             "Tätigkeiten: " +
-            stelle.taetigkeiten;
+            stelle.taetigkeiten +
+            "\n";
+        if (stelle.wuensche) {
+            cardText += "Wünsche: " + stelle.wuensche.split(/\n+ */).join(", ");
+        }
         return cardText;
     }
 

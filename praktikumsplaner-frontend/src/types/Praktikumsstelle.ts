@@ -28,7 +28,7 @@ export default class Praktikumsstelle {
 
         public studiengang?: string,
 
-        public referat?: string,
+        public wuensche?: string,
 
         public namentlicheAnforderung?: string,
 
@@ -36,6 +36,8 @@ export default class Praktikumsstelle {
 
         public assignedNwk?: Nwk,
 
-        public meldezeitraumID?: string
+        public meldezeitraumID?: string,
+
+        public minderjaehrigMoeglich?: boolean
     ) {}
 }
