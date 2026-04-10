@@ -1,6 +1,6 @@
 {
     "name": "praktikumsplaner-frontend-frontend",
-    "version": "0.1.0",
+    "version": "0.28.0",
     "private": true,
     "scripts": {
         "security": "vite --mode developmentSecurity",
