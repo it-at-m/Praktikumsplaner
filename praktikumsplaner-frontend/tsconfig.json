@@ -1,39 +1,14 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "target": "ESNext",
-        "useDefineForClassFields": true,
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "strict": true,
-        "jsx": "preserve",
-        "jsxImportSource": "vue",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "esModuleInterop": true,
-        "lib": ["ESNext", "DOM"],
-        "verbatimModuleSyntax": true,
-        "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true,
-        "noEmit": true,
-        "paths": {
-            "@/*": ["src/*"]
-        },
-        "types": ["vite/client"]
-    },
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.d.ts",
-        "src/**/*.tsx",
-        "src/**/*.vue",
-        "tests/**/*.ts",
-        "tests/**/*.tsx"
-    ],
+    "files": [],
     "references": [
         {
             "path": "./tsconfig.node.json"
+        },
+        {
+            "path": "./tsconfig.app.json"
+        },
+        {
+            "path": "./tsconfig.vitest.json"
         }
-    ],
-    "types": ["unplugin-fonts/client"],
-    "exclude": ["node_modules", "dist"]
+    ]
 }
