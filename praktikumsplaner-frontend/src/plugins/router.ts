@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { routes as fileBasedRoutes, handleHotUpdate } from "vue-router/auto-routes";
-
-
+import {
+  routes as fileBasedRoutes,
+  handleHotUpdate,
+} from "vue-router/auto-routes";
 
 import { ROUTES_HOME } from "@/constants";
 import AccessDeniedView from "@/views/AccessDeniedView.vue";
@@ -12,7 +13,6 @@ import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.
 import MeldungAusbildung from "@/views/praktikumsplaetze/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/praktikumsplaetze/MeldungStudium.vue";
 import PraktikumsplaetzeView from "@/views/praktikumsplaetze/PraktikumsplaetzeView.vue";
-
 
 const routes = [
   ...fileBasedRoutes,

@@ -1,58 +1,58 @@
 <template>
-    <div>
-        <v-dialog
-            v-model="visible"
-            persistent
-            width="600"
-        >
-            <template #activator="{ props }">
-                <v-btn
-                    color="primary"
-                    v-bind="props"
-                    >Meldezeitraum Anlegen
-                </v-btn>
-            </template>
-            <v-card>
-                <v-card-title>Meldezeitraum Anlegen</v-card-title>
-                <v-card-text>
-                    <v-col>
-                        <v-form ref="form">
-                            <v-text-field
-                                v-model="meldezeitraum.zeitraumName"
-                                label="Zeitraumname"
-                                :rules="zeitraumNameRules"
-                                variant="outlined"
-                                class="mb-3"
-                            ></v-text-field>
-                            <zeitraum-picker
-                                :value="meldezeitraum.zeitraum"
-                                :label="'Meldezeitraum'"
-                            ></zeitraum-picker>
-                        </v-form>
-                    </v-col>
-                </v-card-text>
-                <v-card-actions>
-                    <v-btn
-                        variant="outlined"
-                        color="primary"
-                        class="ml-7 mb-2"
-                        @click="clickAbbrechen()"
-                    >
-                        Zurück
-                    </v-btn>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                        color="primary"
-                        variant="elevated"
-                        class="mr-7 mb-2"
-                        @click="clickSpeichern()"
-                    >
-                        Speichern
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </div>
+  <div>
+    <v-dialog
+      v-model="visible"
+      persistent
+      width="600"
+    >
+      <template #activator="{ props }">
+        <v-btn
+          color="primary"
+          v-bind="props"
+          >Meldezeitraum Anlegen
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>Meldezeitraum Anlegen</v-card-title>
+        <v-card-text>
+          <v-col>
+            <v-form ref="form">
+              <v-text-field
+                v-model="meldezeitraum.zeitraumName"
+                label="Zeitraumname"
+                :rules="zeitraumNameRules"
+                variant="outlined"
+                class="mb-3"
+              ></v-text-field>
+              <zeitraum-picker
+                :value="meldezeitraum.zeitraum"
+                :label="'Meldezeitraum'"
+              ></zeitraum-picker>
+            </v-form>
+          </v-col>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn
+            variant="outlined"
+            color="primary"
+            class="ml-7 mb-2"
+            @click="clickAbbrechen()"
+          >
+            Zurück
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            variant="elevated"
+            class="mr-7 mb-2"
+            @click="clickSpeichern()"
+          >
+            Speichern
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -71,39 +71,39 @@ const maxLength = 255;
 const validationRules = useRules();
 
 const zeitraumNameRules = [
-    validationRules.maxLengthRule(
-        maxLength,
-        "Der Name darf maximal " + maxLength + " Zeichen lang sein."
-    ),
-    validationRules.notEmptyRule("Der Zeitraumname darf nicht leer sein."),
+  validationRules.maxLengthRule(
+    maxLength,
+    "Der Name darf maximal " + maxLength + " Zeichen lang sein."
+  ),
+  validationRules.notEmptyRule("Der Zeitraumname darf nicht leer sein."),
 ];
 
 const emits =
-    defineEmits<
-        (e: "meldezeitraumAdded", meldezeitraum: Meldezeitraum) => void
-    >();
+  defineEmits<
+    (e: "meldezeitraumAdded", meldezeitraum: Meldezeitraum) => void
+  >();
 
 function resetForm() {
-    meldezeitraum.value = new Meldezeitraum("", new Zeitraum());
-    form.value?.resetValidation();
+  meldezeitraum.value = new Meldezeitraum("", new Zeitraum());
+  form.value?.resetValidation();
 }
 
 function clickSpeichern() {
-    form.value?.validate().then((validation: { valid: boolean }) => {
-        if (validation.valid) {
-            MeldezeitraumService.create(meldezeitraum.value)
-                .then(() => {
-                    emits("meldezeitraumAdded", meldezeitraum.value);
-                })
-                .finally(() => {
-                    clickAbbrechen();
-                });
-        }
-    });
+  form.value?.validate().then((validation: { valid: boolean }) => {
+    if (validation.valid) {
+      MeldezeitraumService.create(meldezeitraum.value)
+        .then(() => {
+          emits("meldezeitraumAdded", meldezeitraum.value);
+        })
+        .finally(() => {
+          clickAbbrechen();
+        });
+    }
+  });
 }
 
 function clickAbbrechen() {
-    resetForm();
-    visible.value = false;
+  resetForm();
+  visible.value = false;
 }
 </script>

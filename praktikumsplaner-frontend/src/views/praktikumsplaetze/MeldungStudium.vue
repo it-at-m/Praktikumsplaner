@@ -1,204 +1,202 @@
 <template>
-    <v-container>
-        <page-title
-            back-button-url="/praktikumsplaetze"
-            page-header-text="Praktikumsplatz für Studierende"
-        ></page-title>
-        <v-container v-if="loadingSite">
-            <v-skeleton-loader type="image"> </v-skeleton-loader>
-            <v-spacer />
-            <v-skeleton-loader type="image"> </v-skeleton-loader>
-            <v-spacer />
-            <v-skeleton-loader type="image"> </v-skeleton-loader>
-            <v-spacer />
-            <v-row>
-                <v-col cols="10" />
-                <v-col>
-                    <v-skeleton-loader type="button"> </v-skeleton-loader>
-                </v-col>
-            </v-row>
-        </v-container>
-        <v-container v-else>
-            <div v-if="!activeMeldezeitraum"></div>
-            <v-form
-                v-if="canStellenBeSubmitted()"
-                ref="form"
-                lazy-validation
-            >
-                <v-container class="box">
-                    <v-row>
-                        <v-col>
-                            <span class="text-h6">Stellenbeschreibung</span>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="5">
-                            <dienststellen-input
-                                v-model="praktikumsstelle"
-                                :is-required="true"
-                                :required-symbol="requiredFieldSymbol"
-                            ></dienststellen-input>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col>
-                            <dringlichkeit-select
-                                v-model="praktikumsstelle"
-                                :is-required="true"
-                                :required-symbol="requiredFieldSymbol"
-                            ></dringlichkeit-select>
-                        </v-col>
-                        <v-col cols="1">
-                            <dringlichkeit-tooltip></dringlichkeit-tooltip>
-                        </v-col>
-                        <v-col>
-                            <namentliche-anforderung-input
-                                v-model="praktikumsstelle"
-                                :is-required="false"
-                            ></namentliche-anforderung-input>
-                        </v-col>
-                        <v-col cols="1">
-                            <namentliche-anforderung-tooltip></namentliche-anforderung-tooltip>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="5">
-                            <planstelle-radio-group
-                                v-model="praktikumsstelle"
-                                :is-required="true"
-                                :required-symbol="requiredFieldSymbol"
-                            ></planstelle-radio-group>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col>
-                            <taetigkeiten-input
-                                v-model="praktikumsstelle"
-                                :is-required="true"
-                                :required-symbol="requiredFieldSymbol"
-                            >
-                            </taetigkeiten-input>
-                        </v-col>
-                        <v-col cols="1" />
-                    </v-row>
-                </v-container>
-                <v-container class="box">
-                    <v-row>
-                        <v-col>
-                            <span class="text-h6">Nachwuchskraft</span>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col>
-                            <studienrichtung-select
-                                v-model="praktikumsstelle"
-                                :is-required="true"
-                                :required-symbol="requiredFieldSymbol"
-                            ></studienrichtung-select>
-                        </v-col>
-                        <v-col cols="1" />
-                        <v-col>
-                            <semester-select
-                                v-model="praktikumsstelle"
-                                :is-required="true"
-                                :required-symbol="requiredFieldSymbol"
-                            ></semester-select>
-                        </v-col>
-                        <v-col cols="1" />
-                    </v-row>
-                    <v-row>
-                        <v-col cols="5">
-                            <programmier-kenntnisse-select
-                                v-model="praktikumsstelle"
-                                :is-required="true"
-                                :required-symbol="requiredFieldSymbol"
-                            ></programmier-kenntnisse-select>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="11">
-                            <wuensche-input
-                                v-model="praktikumsstelle"
-                                :is-required="false"
-                            ></wuensche-input>
-                        </v-col>
-                        <v-col>
-                            <wuensche-tooltip></wuensche-tooltip>
-                        </v-col>
-                    </v-row>
-                </v-container>
-                <v-container class="box">
-                    <v-row>
-                        <v-col>
-                            <span class="text-h6">örtliche*r Ausbilder*in</span>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col>
-                            <ausbilder-input
-                                v-model="praktikumsstelle"
-                                :is-required="true"
-                                :required-symbol="requiredFieldSymbol"
-                            ></ausbilder-input>
-                        </v-col>
-                        <v-col cols="1" />
-                        <v-col>
-                            <ausbilder-email-input
-                                v-model="praktikumsstelle"
-                                :is-required="true"
-                                :required-symbol="requiredFieldSymbol"
-                            ></ausbilder-email-input>
-                        </v-col>
-                        <v-col cols="1" />
-                    </v-row>
-                    <v-row>
-                        <v-col>
-                            <ausbilder-erw-fuehrungszeugnis-checkbox
-                                v-model="praktikumsstelle"
-                            ></ausbilder-erw-fuehrungszeugnis-checkbox>
-                        </v-col>
-                    </v-row>
-                </v-container>
-                <v-container
-                    v-if="security.isAusbildungsleitung()"
-                    class="box"
-                >
-                    <v-row>
-                        <v-col>
-                            <span class="text-h6">Meldezeitraum Auswahl</span>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="5">
-                            <meldezeitraum-select
-                                v-model="praktikumsstelle"
-                                :meldezeitraueme="meldezeitraeume"
-                                :is-required="true"
-                                :required-symbol="requiredFieldSymbol"
-                            ></meldezeitraum-select>
-                        </v-col>
-                    </v-row>
-                </v-container>
-                <v-container>
-                    <v-row>
-                        <v-col cols="10" />
-                        <v-col>
-                            <v-btn
-                                color="primary"
-                                @click="uploadPraktikumsstelle"
-                            >
-                                speichern
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </v-form>
-            <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
-        </v-container>
-        <progress-circular-overlay
-            :loading="loading"
-        ></progress-circular-overlay>
+  <v-container>
+    <page-title
+      back-button-url="/praktikumsplaetze"
+      page-header-text="Praktikumsplatz für Studierende"
+    ></page-title>
+    <v-container v-if="loadingSite">
+      <v-skeleton-loader type="image"> </v-skeleton-loader>
+      <v-spacer />
+      <v-skeleton-loader type="image"> </v-skeleton-loader>
+      <v-spacer />
+      <v-skeleton-loader type="image"> </v-skeleton-loader>
+      <v-spacer />
+      <v-row>
+        <v-col cols="10" />
+        <v-col>
+          <v-skeleton-loader type="button"> </v-skeleton-loader>
+        </v-col>
+      </v-row>
     </v-container>
+    <v-container v-else>
+      <div v-if="!activeMeldezeitraum"></div>
+      <v-form
+        v-if="canStellenBeSubmitted()"
+        ref="form"
+        lazy-validation
+      >
+        <v-container class="box">
+          <v-row>
+            <v-col>
+              <span class="text-h6">Stellenbeschreibung</span>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="5">
+              <dienststellen-input
+                v-model="praktikumsstelle"
+                :is-required="true"
+                :required-symbol="requiredFieldSymbol"
+              ></dienststellen-input>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <dringlichkeit-select
+                v-model="praktikumsstelle"
+                :is-required="true"
+                :required-symbol="requiredFieldSymbol"
+              ></dringlichkeit-select>
+            </v-col>
+            <v-col cols="1">
+              <dringlichkeit-tooltip></dringlichkeit-tooltip>
+            </v-col>
+            <v-col>
+              <namentliche-anforderung-input
+                v-model="praktikumsstelle"
+                :is-required="false"
+              ></namentliche-anforderung-input>
+            </v-col>
+            <v-col cols="1">
+              <namentliche-anforderung-tooltip></namentliche-anforderung-tooltip>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="5">
+              <planstelle-radio-group
+                v-model="praktikumsstelle"
+                :is-required="true"
+                :required-symbol="requiredFieldSymbol"
+              ></planstelle-radio-group>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <taetigkeiten-input
+                v-model="praktikumsstelle"
+                :is-required="true"
+                :required-symbol="requiredFieldSymbol"
+              >
+              </taetigkeiten-input>
+            </v-col>
+            <v-col cols="1" />
+          </v-row>
+        </v-container>
+        <v-container class="box">
+          <v-row>
+            <v-col>
+              <span class="text-h6">Nachwuchskraft</span>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <studienrichtung-select
+                v-model="praktikumsstelle"
+                :is-required="true"
+                :required-symbol="requiredFieldSymbol"
+              ></studienrichtung-select>
+            </v-col>
+            <v-col cols="1" />
+            <v-col>
+              <semester-select
+                v-model="praktikumsstelle"
+                :is-required="true"
+                :required-symbol="requiredFieldSymbol"
+              ></semester-select>
+            </v-col>
+            <v-col cols="1" />
+          </v-row>
+          <v-row>
+            <v-col cols="5">
+              <programmier-kenntnisse-select
+                v-model="praktikumsstelle"
+                :is-required="true"
+                :required-symbol="requiredFieldSymbol"
+              ></programmier-kenntnisse-select>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="11">
+              <wuensche-input
+                v-model="praktikumsstelle"
+                :is-required="false"
+              ></wuensche-input>
+            </v-col>
+            <v-col>
+              <wuensche-tooltip></wuensche-tooltip>
+            </v-col>
+          </v-row>
+        </v-container>
+        <v-container class="box">
+          <v-row>
+            <v-col>
+              <span class="text-h6">örtliche*r Ausbilder*in</span>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <ausbilder-input
+                v-model="praktikumsstelle"
+                :is-required="true"
+                :required-symbol="requiredFieldSymbol"
+              ></ausbilder-input>
+            </v-col>
+            <v-col cols="1" />
+            <v-col>
+              <ausbilder-email-input
+                v-model="praktikumsstelle"
+                :is-required="true"
+                :required-symbol="requiredFieldSymbol"
+              ></ausbilder-email-input>
+            </v-col>
+            <v-col cols="1" />
+          </v-row>
+          <v-row>
+            <v-col>
+              <ausbilder-erw-fuehrungszeugnis-checkbox
+                v-model="praktikumsstelle"
+              ></ausbilder-erw-fuehrungszeugnis-checkbox>
+            </v-col>
+          </v-row>
+        </v-container>
+        <v-container
+          v-if="security.isAusbildungsleitung()"
+          class="box"
+        >
+          <v-row>
+            <v-col>
+              <span class="text-h6">Meldezeitraum Auswahl</span>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="5">
+              <meldezeitraum-select
+                v-model="praktikumsstelle"
+                :meldezeitraueme="meldezeitraeume"
+                :is-required="true"
+                :required-symbol="requiredFieldSymbol"
+              ></meldezeitraum-select>
+            </v-col>
+          </v-row>
+        </v-container>
+        <v-container>
+          <v-row>
+            <v-col cols="10" />
+            <v-col>
+              <v-btn
+                color="primary"
+                @click="uploadPraktikumsstelle"
+              >
+                speichern
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
+      <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
+    </v-container>
+    <progress-circular-overlay :loading="loading"></progress-circular-overlay>
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -237,7 +235,7 @@ const activeMeldezeitraum = ref<boolean>(false);
 
 const userStore = useUserStore();
 const praktikumsstelle = ref<Praktikumsstelle>(
-    new Praktikumsstelle(userStore.department)
+  new Praktikumsstelle(userStore.department)
 );
 const loadingSite = ref<boolean>(true);
 
@@ -245,15 +243,15 @@ const loading = ref<boolean>(false);
 const security = useSecurity();
 const form = ref<HTMLFormElement>();
 const meldezeitraeume = computed(() => {
-    let list: Meldezeitraum[] = [];
-    if (currentMeldezeitraum.value) {
-        list = [currentMeldezeitraum.value];
-    }
-    return [
-        ...list,
-        ...upcomingMeldezeitraeume.value,
-        ...passedMeldezeitraeume.value,
-    ];
+  let list: Meldezeitraum[] = [];
+  if (currentMeldezeitraum.value) {
+    list = [currentMeldezeitraum.value];
+  }
+  return [
+    ...list,
+    ...upcomingMeldezeitraeume.value,
+    ...passedMeldezeitraeume.value,
+  ];
 });
 const currentMeldezeitraum = ref<Meldezeitraum>();
 const upcomingMeldezeitraeume = ref<Meldezeitraum[]>([]);
@@ -261,96 +259,93 @@ const passedMeldezeitraeume = ref<Meldezeitraum[]>([]);
 const route = router.currentRoute.value;
 
 onMounted(() => {
-    MeldezeitraumService.getCurrentMeldezeitraum(loadingSite)
-        .then((zeitraueme) => {
-            currentMeldezeitraum.value = zeitraueme[0];
-        })
-        .finally(() => {
-            loadingSite.value = false;
-        });
+  MeldezeitraumService.getCurrentMeldezeitraum(loadingSite)
+    .then((zeitraueme) => {
+      currentMeldezeitraum.value = zeitraueme[0];
+    })
+    .finally(() => {
+      loadingSite.value = false;
+    });
 
-    if (security.isAusbildungsleitung()) {
-        getUpcomingMeldezeitraeume();
-        getPassedMeldezeitraeume();
-    }
+  if (security.isAusbildungsleitung()) {
+    getUpcomingMeldezeitraeume();
+    getPassedMeldezeitraeume();
+  }
 
-    if (userStore.username) {
+  if (userStore.username) {
+    redirectIfUnauthorized();
+  } else {
+    // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
+    watch(
+      () => userStore.roles,
+      () => {
         redirectIfUnauthorized();
-    } else {
-        // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
-        watch(
-            () => userStore.roles,
-            () => {
-                redirectIfUnauthorized();
-            }
-        );
-    }
+      }
+    );
+  }
 });
 
 function redirectIfUnauthorized() {
-    const requiresRoles =
-        route.meta.requiresRole != undefined
-            ? (route.meta.requiresRole as string[])
-            : undefined;
-    const security = useSecurity();
-    if (
-        requiresRoles !== undefined &&
-        !security.checkForAnyRole(requiresRoles)
-    ) {
-        router.push("/AccessDenied");
-    }
+  const requiresRoles =
+    route.meta.requiresRole != undefined
+      ? (route.meta.requiresRole as string[])
+      : undefined;
+  const security = useSecurity();
+  if (requiresRoles !== undefined && !security.checkForAnyRole(requiresRoles)) {
+    router.push("/AccessDenied");
+  }
 }
 
 function canStellenBeSubmitted() {
-    return security.isAusbildungsleitung() || currentMeldezeitraum.value;
+  return security.isAusbildungsleitung() || currentMeldezeitraum.value;
 }
 
 function getUpcomingMeldezeitraeume() {
-    MeldezeitraumService.getUpcomingMeldezeitraueme(undefined).then(
-        (zeitraeume) => {
-            upcomingMeldezeitraeume.value = zeitraeume;
-        }
-    );
+  MeldezeitraumService.getUpcomingMeldezeitraueme(undefined).then(
+    (zeitraeume) => {
+      upcomingMeldezeitraeume.value = zeitraeume;
+    }
+  );
 }
 
 function getPassedMeldezeitraeume() {
-    MeldezeitraumService.getPassedMeldezeitraueme(undefined).then(
-        (zeitraeume) => {
-            passedMeldezeitraeume.value = zeitraeume;
-        }
-    );
+  MeldezeitraumService.getPassedMeldezeitraueme(undefined).then(
+    (zeitraeume) => {
+      passedMeldezeitraeume.value = zeitraeume;
+    }
+  );
 }
 
 function resetForm() {
-    form.value?.reset();
-    router.push("/praktikumsplaetze");
+  form.value?.reset();
+  router.push("/praktikumsplaetze");
 }
 
 function uploadPraktikumsstelle() {
-    form.value?.validate().then((validation: { valid: boolean }) => {
-        if (!validation.valid) return;
-        if (security.isAusbildungsleitung()) {
-            MeldungService.uploadStudiumsPraktikumsstelleWithMeldezeitraum(
-                praktikumsstelle.value,
-                loading
-            ).finally(() => {
-                resetForm();
-            });
-        } else {
-            MeldungService.uploadStudiumsPraktikumsstelle(
-                praktikumsstelle.value,
-                loading
-            ).finally(() => {
-                resetForm();
-            });
-        }
-    });
+  form.value?.validate().then((validation: { valid: boolean }) => {
+    if (!validation.valid) return;
+    if (security.isAusbildungsleitung()) {
+      MeldungService.uploadStudiumsPraktikumsstelleWithMeldezeitraum(
+        praktikumsstelle.value,
+        loading
+      ).finally(() => {
+        resetForm();
+      });
+    } else {
+      MeldungService.uploadStudiumsPraktikumsstelle(
+        praktikumsstelle.value,
+        loading
+      ).finally(() => {
+        resetForm();
+      });
+    }
+  });
 }
 </script>
 <style>
 .box {
-    margin: 3%;
-    border: 2px solid #0000001a;
-    border-radius: 5px;
+  margin: 3%;
+  border: 2px solid #0000001a;
+  border-radius: 5px;
 }
 </style>
