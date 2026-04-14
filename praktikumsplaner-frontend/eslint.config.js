@@ -35,6 +35,7 @@ export default defineConfigWithVueTs(
       "@intlify/vue-i18n/no-missing-keys-in-other-locales": ["error"],
       "@intlify/vue-i18n/no-unknown-locale": ["error"],
       "@intlify/vue-i18n/no-unused-keys": ["error"],
+      "@intlify/vue-i18n/no-raw-text": "off", // TODO (TEMPORARY ONLY)
     },
     settings: {
       "vue-i18n": {
