@@ -11,7 +11,7 @@
 
     <groupId>de.muenchen.oss.praktikumsplaner</groupId>
     <artifactId>praktikumsplaner-backend</artifactId>
-    <version>0.30.0-SNAPSHOT</version>
+    <version>0.29.1</version>
 
     <name>praktikumsplaner-backend</name>
     <description>Backend service of the Praktikumsplaner</description>
@@ -27,7 +27,7 @@
         <url>https://github.com/it-at-m/Praktikumsplaner.git</url>
         <connection>scm:git:https://github.com/it-at-m/Praktikumsplaner.git</connection>
         <developerConnection>scm:git:https://github.com/it-at-m/Praktikumsplaner.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>praktikumsplaner-backend-0.29.1</tag>
     </scm>
     <developers>
         <developer>
