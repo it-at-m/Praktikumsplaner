@@ -25,6 +25,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -240,41 +241,30 @@ public class ExcelExportService {
     }
 
     private static String ausbildungsjahrToStringConverter(final Set<Ausbildungsjahr> ausbildungsjahr) {
-
-        if (ausbildungsjahr.containsAll(List.of(JAHR1, JAHR2, JAHR3))) {
+        if (ausbildungsjahr.containsAll(List.of(Ausbildungsjahr.values()))) {
             return "";
         }
 
-        if (ausbildungsjahr.contains(JAHR3)) {
-            return "vorrangig 3. Jahr";
-        }
-        if (ausbildungsjahr.contains(JAHR2)) {
-            return "vorrangig 2. Jahr";
-        }
-        if (ausbildungsjahr.contains(JAHR1)) {
-            return "vorrangig 1. Jahr";
-        }
-
-        return "";
+        return "vorrangig %s Lehrjahr".formatted(ausbildungsjahr.stream().map(i -> switch (i) {
+        case JAHR1 -> "1.";
+        case JAHR2 -> "2.";
+        case JAHR3 -> "3.";
+        }).sorted().collect(Collectors.joining(", ")));
     }
 
     private static String studiensemesterToStringConverter(final Set<Studiensemester> studiensemester) {
-
-        if (studiensemester.containsAll(List.of(SEMESTER1, SEMESTER2, SEMESTER3, SEMESTER4, SEMESTER5, SEMESTER6))) {
+        if (studiensemester.containsAll(List.of(Studiensemester.values()))) {
             return "";
         }
 
-        if (studiensemester.contains(SEMESTER5) || studiensemester.contains(SEMESTER6)) {
-            return "vorrangig 3. Jahr";
-        }
-        if (studiensemester.contains(SEMESTER3) || studiensemester.contains(SEMESTER4)) {
-            return "vorrangig 2. Jahr";
-        }
-        if (studiensemester.contains(SEMESTER1) || studiensemester.contains(SEMESTER2)) {
-            return "vorrangig 1. Jahr";
-        }
-
-        return "";
+        return "vorrangig %s Semester".formatted(studiensemester.stream().map(i -> switch (i) {
+        case SEMESTER1 -> "1.";
+        case SEMESTER2 -> "2.";
+        case SEMESTER3 -> "3.";
+        case SEMESTER4 -> "4.";
+        case SEMESTER5 -> "5.";
+        case SEMESTER6 -> "6.";
+        }).sorted().collect(Collectors.joining(", ")));
     }
 
     private static Row getRow(final XSSFSheet sheet, final int i) {
