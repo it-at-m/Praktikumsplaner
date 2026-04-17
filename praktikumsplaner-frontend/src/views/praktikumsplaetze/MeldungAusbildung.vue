@@ -236,8 +236,8 @@ import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/Projekt
 import ReferatSelect from "@/components/praktikumsplaetze/Meldung/ReferatSelect.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
 import { useSecurity } from "@/composables/security";
-import index from "@/router";
-import router from "@/router";
+import index from "@/plugins/router.ts";
+import router from "@/plugins/router.ts";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";

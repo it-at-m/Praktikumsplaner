@@ -228,7 +228,7 @@ import StudienrichtungSelect from "@/components/praktikumsplaetze/Meldung/Studie
 import SemesterSelect from "@/components/praktikumsplaetze/Meldung/StudiensemesterSelect.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
 import { useSecurity } from "@/composables/security";
-import router from "@/router";
+import router from "@/plugins/router.ts";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";

@@ -1,7 +1,7 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
 
-import { ROUTES_HOME } from "@/constants";
+import { ROUTES_HOME } from "@/constants.ts";
 import AccessDeniedView from "@/views/AccessDeniedView.vue";
 import assignView from "@/views/AssignView.vue";
 import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";

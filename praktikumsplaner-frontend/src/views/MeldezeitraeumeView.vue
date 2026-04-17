@@ -80,7 +80,7 @@ import PageTitle from "@/components/common/PageTitle.vue";
 import CreateMeldezeitraum from "@/components/meldezeitraeume/CreateMeldezeitraum.vue";
 import MeldezeitraumList from "@/components/meldezeitraeume/MeldezeitraumList.vue";
 import { useSecurity } from "@/composables/security";
-import router from "@/router";
+import router from "@/plugins/router.ts";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 

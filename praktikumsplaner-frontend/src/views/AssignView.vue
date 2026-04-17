@@ -74,7 +74,7 @@ import PageTitle from "@/components/common/PageTitle.vue";
 import WarningDialog from "@/components/common/WarningDialog.vue";
 import { useSecurity } from "@/composables/security";
 import { useWarnings } from "@/composables/warningGenerator";
-import router from "@/router";
+import router from "@/plugins/router.ts";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import Nwk from "@/types/Nwk";
