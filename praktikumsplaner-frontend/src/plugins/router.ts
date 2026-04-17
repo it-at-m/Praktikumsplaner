@@ -1,17 +1,18 @@
-// Composables
 import { createRouter, createWebHistory } from "vue-router";
+import { routes as fileBasedRoutes } from "vue-router/auto-routes";
 
-import { ROUTES_HOME } from "@/constants.ts";
+import { ROUTES_HOME } from "@/constants";
 import AccessDeniedView from "@/views/AccessDeniedView.vue";
 import assignView from "@/views/AssignView.vue";
+import Main from "@/views/MainView.vue";
+import Meldezeitraeume from "@/views/MeldezeitraeumeView.vue";
 import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";
 import MeldungAusbildung from "@/views/praktikumsplaetze/MeldungAusbildung.vue";
 import MeldungStudium from "@/views/praktikumsplaetze/MeldungStudium.vue";
 import PraktikumsplaetzeView from "@/views/praktikumsplaetze/PraktikumsplaetzeView.vue";
-import Main from "../views/MainView.vue";
-import Meldezeitraeume from "../views/MeldezeitraeumeView.vue";
 
 const routes = [
+  ...fileBasedRoutes,
   {
     path: "/",
     name: ROUTES_HOME,

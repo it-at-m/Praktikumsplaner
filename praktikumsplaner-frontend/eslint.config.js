@@ -12,7 +12,7 @@ import { globalIgnores } from "eslint/config";
 export default defineConfigWithVueTs(
   ESLint.defaultConfig,
   jsEslintConfig.configs.recommended,
-  vueEslintConfig.configs["flat/essential"],
+  vueEslintConfig.configs["flat/recommended-error"],
   vueTsConfigs.strict,
   vueTsConfigs.stylistic,
   vueI18nEslintConfig.configs.recommended,
@@ -30,12 +30,12 @@ export default defineConfigWithVueTs(
         { registeredComponentsOnly: false },
       ],
       // Enforce i18n best practices manually as no stylistic ruleset exists yet
-      // "@intlify/vue-i18n/key-format-style": ["error"], // enforce camelCase for message keys
-      // "@intlify/vue-i18n/no-duplicate-keys-in-locale": ["error"],
-      // "@intlify/vue-i18n/no-missing-keys-in-other-locales": ["error"],
-      // "@intlify/vue-i18n/no-unknown-locale": ["error"],
-      // "@intlify/vue-i18n/no-unused-keys": ["error"],
-      "@intlify/vue-i18n/no-raw-text": "off",
+      "@intlify/vue-i18n/key-format-style": ["error"], // enforce camelCase for message keys
+      "@intlify/vue-i18n/no-duplicate-keys-in-locale": ["error"],
+      "@intlify/vue-i18n/no-missing-keys-in-other-locales": ["error"],
+      "@intlify/vue-i18n/no-unknown-locale": ["error"],
+      "@intlify/vue-i18n/no-unused-keys": ["error"],
+      "@intlify/vue-i18n/no-raw-text": "off", // TODO (TEMPORARY ONLY)
     },
     settings: {
       "vue-i18n": {

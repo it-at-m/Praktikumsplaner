@@ -7,12 +7,22 @@ import UnpluginFonts from "unplugin-fonts/vite";
 import { defineConfig } from "vite";
 import vueDevTools from "vite-plugin-vue-devtools";
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
+import VueRouter from "vue-router/vite";
+
+import { EncodeBracketsPlugin, extendRoute } from "./encode-brackets-plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const isDevelopment = mode === "development";
   return {
     plugins: [
+      VueRouter({
+        routesFolder: {
+          src: "src/routes",
+        },
+        dts: "./route-map.d.ts",
+        ...(isDevelopment && { extendRoute }),
+      }),
       vue({
         template: { transformAssetUrls },
         features: {
@@ -21,12 +31,16 @@ export default defineConfig(({ mode }) => {
       }),
       vuetify(),
       UnpluginFonts({
+        inlineFontFace: true,
         fontsource: {
           families: [
             {
               name: "Roboto",
               weights: [100, 300, 400, 500, 700, 900],
               subset: "latin",
+              fallback: {
+                category: "sans-serif",
+              },
             },
           ],
         },
@@ -38,6 +52,10 @@ export default defineConfig(({ mode }) => {
           "./src/locales/*.json"
         ),
       }),
+      {
+        ...EncodeBracketsPlugin(),
+        apply: "serve", // Ensures plugin is only applied during serve, see https://vite.dev/guide/using-plugins#conditional-application
+      },
     ],
     server: {
       host: true,
