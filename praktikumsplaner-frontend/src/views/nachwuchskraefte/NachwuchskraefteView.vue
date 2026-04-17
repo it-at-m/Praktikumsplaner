@@ -29,7 +29,7 @@ import ActiveNwkList from "@/components/nachwuchskraefte/ActiveNwkList.vue";
 import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
 import { useSecurity } from "@/composables/security";
-import router from "@/router";
+import router from "@/plugins/router";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();

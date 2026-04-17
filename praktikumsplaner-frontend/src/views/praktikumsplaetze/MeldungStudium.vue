@@ -224,7 +224,7 @@ import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/Taetigkeit
 import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
 import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
 import { useSecurity } from "@/composables/security";
-import router from "@/router";
+import router from "@/plugins/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
