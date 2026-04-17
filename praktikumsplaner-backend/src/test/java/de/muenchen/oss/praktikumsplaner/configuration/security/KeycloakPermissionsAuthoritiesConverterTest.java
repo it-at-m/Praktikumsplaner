@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.configuration.security;
 
+import static de.muenchen.oss.praktikumsplaner.TestConstants.SPRING_TEST_PROFILE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -10,14 +11,19 @@ import static org.mockito.Mockito.when;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.Cache;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -25,39 +31,49 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestTemplate;
 
-@Deprecated
+@SpringBootTest(classes = { SecurityProperties.class })
 @ExtendWith(MockitoExtension.class)
-class UserInfoAuthoritiesConverterTest {
+@EnableConfigurationProperties(SecurityProperties.class)
+@ActiveProfiles(profiles = { SPRING_TEST_PROFILE })
+class KeycloakPermissionsAuthoritiesConverterTest {
     private static final String TEST_SUBJECT = "test-subject";
     private static final String TEST_TOKEN_VALUE = "test-token";
-    private static final String USER_INFO_URI = "http://localhost/userinfo";
+    private static final String PERMISSIONS_URI = "http://localhost/permissions";
     private static final String ROLE_USER = "ROLE_USER";
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
 
+    @Autowired
+    private SecurityProperties securityProperties;
     @Mock
     private RestTemplate restTemplate;
     @Mock
     private Cache cache;
-    private UserInfoAuthoritiesConverter converter;
+    private KeycloakPermissionsAuthoritiesConverter converter;
 
     @BeforeEach
     void setUp() {
-        converter = new UserInfoAuthoritiesConverter(USER_INFO_URI, restTemplate, cache);
+        converter = new KeycloakPermissionsAuthoritiesConverter(securityProperties, restTemplate, cache);
     }
 
     @Test
-    void testConvert_WithAuthorities() {
+    void givenNoRoles_thenConvert() {
         // Setup
         final Jwt jwt = mock(Jwt.class);
         when(jwt.getSubject()).thenReturn(TEST_SUBJECT);
         when(jwt.getTokenValue()).thenReturn(TEST_TOKEN_VALUE);
 
-        final Map<String, Object> responseMap = new HashMap<>();
-        responseMap.put("authorities", new String[] { ROLE_USER, ROLE_ADMIN });
-        when(restTemplate.exchange(eq(USER_INFO_URI), eq(HttpMethod.GET), any(HttpEntity.class), eq(Map.class)))
-                .thenReturn(new ResponseEntity<>(responseMap, HttpStatus.OK));
+        final List<Map<String, String>> response = List.of(
+                Map.of(
+                        "rsid", UUID.randomUUID().toString(),
+                        "rsname", ROLE_USER),
+                Map.of(
+                        "rsid", UUID.randomUUID().toString(),
+                        "rsname", ROLE_ADMIN));
+        when(restTemplate.exchange(eq(PERMISSIONS_URI), eq(HttpMethod.POST), any(HttpEntity.class), any(ParameterizedTypeReference.class)))
+                .thenReturn(new ResponseEntity<>(response, HttpStatus.OK));
 
         // Call
         final Collection<GrantedAuthority> authorities = converter.convert(jwt);
@@ -70,15 +86,15 @@ class UserInfoAuthoritiesConverterTest {
     }
 
     @Test
-    void testConvert_NoAuthorities() {
+    void givenNoAuthorities_thenConvert() {
         // Setup
         final Jwt jwt = mock(Jwt.class);
         when(jwt.getSubject()).thenReturn(TEST_SUBJECT);
         when(jwt.getTokenValue()).thenReturn(TEST_TOKEN_VALUE);
 
-        final Map<String, Object> responseMap = new HashMap<>();
-        when(restTemplate.exchange(eq(USER_INFO_URI), eq(HttpMethod.GET), any(HttpEntity.class), eq(Map.class)))
-                .thenReturn(new ResponseEntity<>(responseMap, HttpStatus.OK));
+        final List<Map<String, String>> response = List.of();
+        when(restTemplate.exchange(eq(PERMISSIONS_URI), eq(HttpMethod.POST), any(HttpEntity.class), any(ParameterizedTypeReference.class)))
+                .thenReturn(new ResponseEntity<>(response, HttpStatus.OK));
 
         // Call
         final Collection<GrantedAuthority> authorities = converter.convert(jwt);
@@ -89,7 +105,7 @@ class UserInfoAuthoritiesConverterTest {
     }
 
     @Test
-    void testConvert_CacheHit() {
+    void givenCacheHit_thenConvert() {
         // Setup
         final Jwt jwt = mock(Jwt.class);
         when(jwt.getSubject()).thenReturn(TEST_SUBJECT);

@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,10 +30,13 @@ class KeycloakRolesAuthoritiesConverterTest {
     @InjectMocks
     private KeycloakRolesAuthoritiesConverter converter;
 
-    @Test
-    void testConvert_WithRoles() {
+    @BeforeEach
+    void setUp() {
         when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
+    }
 
+    @Test
+    void givenRoles_thenConvert() {
         // Setup
         final Map<String, Object> resourceAccessClaim = new HashMap<>();
         resourceAccessClaim.put(TEST_CLIENT, Map.of("roles", List.of("admin", "user")));
@@ -50,9 +54,7 @@ class KeycloakRolesAuthoritiesConverterTest {
     }
 
     @Test
-    void testConvert_WithoutRoles() {
-        when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
-
+    void givenNoRoles_thenConvert() {
         // Setup
         final Map<String, Object> claims = new HashMap<>();
         claims.put(RESOURCE_ACCESS_CLAIM, Map.of(
@@ -69,9 +71,7 @@ class KeycloakRolesAuthoritiesConverterTest {
     }
 
     @Test
-    void testConvert_ClientNotInResourceAccess() {
-        when(securityProperties.getClientId()).thenReturn(TEST_CLIENT);
-
+    void givenClientNotInResourceAccess_thenConvert() {
         // Setup
         final Map<String, Object> resourceAccessClaim = new HashMap<>();
         resourceAccessClaim.put("other-client", Map.of("roles", List.of("admin")));
@@ -87,10 +87,9 @@ class KeycloakRolesAuthoritiesConverterTest {
     }
 
     @Test
-    void testConvert_NullClaims() {
+    void givenNullClaims_thenConvert() {
         // Setup
         final Jwt jwt = mock(Jwt.class);
-        when(jwt.getClaimAsMap(RESOURCE_ACCESS_CLAIM)).thenReturn(null);
 
         // Call
         final Collection<GrantedAuthority> authorities = converter.convert(jwt);
