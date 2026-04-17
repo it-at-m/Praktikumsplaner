@@ -12,9 +12,9 @@
   - head-branch: [ '^dep', '-dependency-' ]
 "Type: Security":
   - head-branch: [ '^sec', '-security-' ]
-"Template: Backend":
+"Component: Backend":
   - changed-files:
     - any-glob-to-any-file: ['praktikumsplaner-backend/**']
-"Template: Frontend":
+"Component: Frontend":
   - changed-files:
       - any-glob-to-any-file: ['praktikumsplaner-frontend/**']
