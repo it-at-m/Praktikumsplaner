@@ -17,4 +17,4 @@
     - any-glob-to-any-file: ['praktikumsplaner-backend/**']
 "Component: Frontend":
   - changed-files:
-      - any-glob-to-any-file: ['praktikumsplaner-frontend/**']
+    - any-glob-to-any-file: ['praktikumsplaner-frontend/**']

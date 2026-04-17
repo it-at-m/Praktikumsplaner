@@ -43,7 +43,7 @@ changelog:
       exclude:
         labels:
           - "Component: Frontend"
-            
+
     # Frontend
     - title: Frontend - 💥 Breaking Changes
       labels:
