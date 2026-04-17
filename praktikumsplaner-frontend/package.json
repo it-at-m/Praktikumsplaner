@@ -12,6 +12,7 @@
     "dev": "vite",
     "test": "vitest run",
     "build": "vue-tsc --build --noCheck && vite build && npm run post-build",
+    "post-build": "cyclonedx-npm --omit dev --omit optional --output-reproducible -o dist/application.cdx.json",
     "preview": "vite preview",
     "lint": "prettier . --check --cache && eslint . --cache --concurrency auto && vue-tsc --build --noEmit",
     "fix": "prettier . --write --cache && eslint . --fix --cache --concurrency auto",

@@ -201,7 +201,7 @@ export default {
     stelle: Praktikumsstelle,
     loading: Ref<boolean> | undefined
   ): Promise<void> {
-    let pathCategory = "";
+    let pathCategory;
     if (this.isAusbildungsPraktikumsstelle(stelle)) {
       pathCategory = "ausbildung";
     } else if (this.isStudiumsPraktikumsstelle(stelle)) {
