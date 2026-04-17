@@ -27,8 +27,8 @@ public class GlobalExceptionHandlerTest {
         ExcelImportException.ExcelImportExceptionInfo exceptionInfo = new ExcelImportException.ExcelImportExceptionInfo(1, "ColumnName", "InvalidValue");
         ExcelImportException excelImportException = new ExcelImportException(List.of(exceptionInfo));
         String response = handler.excelImportException(excelImportException);
-        String formattedExceptionInfos = "Zeile: " + (exceptionInfo.getRow() + 1) + " - Spalte: " + exceptionInfo.getColumName() + " - Fehler: "
-                + exceptionInfo.getValue() + "\n";
+        String formattedExceptionInfos = "Zeile: " + (exceptionInfo.row() + 1) + " - Spalte: " + exceptionInfo.columName() + " - Fehler: "
+                + exceptionInfo.value() + "\n";
         assertEquals(formattedExceptionInfos, response);
     }
 

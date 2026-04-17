@@ -24,5 +24,6 @@ public interface MeldezeitraumRepository extends CrudRepository<Meldezeitraum, U
      */
     List<Meldezeitraum> findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate date);
 
+    @Override
     @NonNull List<Meldezeitraum> findAll();
 }

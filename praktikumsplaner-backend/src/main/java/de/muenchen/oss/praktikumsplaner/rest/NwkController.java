@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ROLE_AUSBILDUNGSLEITUNG;
+
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.service.NwkService;
@@ -20,52 +22,50 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/nachwuchskraft")
+@RequestMapping("/nachwuchskraft")
 public class NwkController {
     private final NwkService nwkService;
 
     private static final String ACTIVE_STATUS = "aktiv";
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PostMapping("/import")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveNwkExcel(@RequestBody final String base64String) throws IOException {
         nwkService.importNwk(base64String);
     }
 
-    @PreAuthorize("hasRole('ROLE_'+T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveNwk(@RequestBody final CreateNwkDto createNwkDto) {
         nwkService.saveNwk(createNwkDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @GetMapping
     public List<NwkDto> getNwks(@RequestParam(name = "status", required = false) final String status,
-            @RequestParam(name = "unassigned", required = false) final String unassigned) {
+            @RequestParam(name = "unassigned", required = false) final boolean unassigned) {
         if (status != null) {
             if (ACTIVE_STATUS.equals(status)) {
                 return nwkService.findAllActiveNwks();
             }
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status-Parameter nicht unterstützt.");
         }
-        if (unassigned != null) {
-            if (Boolean.TRUE.toString().equals(unassigned)) {
-                return nwkService.findAllUnassignedNwksInCurrentMeldezeitraum();
-            }
+        if (unassigned) {
+            return nwkService.findAllUnassignedNwksInCurrentMeldezeitraum();
         }
         return nwkService.findAllNwks();
     }
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PutMapping
     public void updateNwk(@RequestBody final NwkDto nwkDto) {
-        if (!nwkService.nwkExistsById(nwkDto.id())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Nachwuchskraft mit der ID " + nwkDto.id() + " existiert nicht.");
-        } else {
+        if (nwkService.nwkExistsById(nwkDto.id())) {
             nwkService.saveNwk(nwkDto);
+            return;
         }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Nachwuchskraft mit der ID %s existiert nicht.".formatted(nwkDto.id()));
     }
 }

@@ -1,5 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.rest;
 
+import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ROLE_AUSBILDUNGSLEITUNG;
+
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.service.MailService;
 import java.util.List;
@@ -21,16 +23,17 @@ public class MailController {
 
     private static final String SUCCESSFUL_ASSIGNMENT = "successful";
 
-    @PreAuthorize("hasRole('ROLE_' + T(de.muenchen.oss.praktikumsplaner.security.AuthoritiesEnum).AUSBILDUNGSLEITUNG.name())")
+    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @PostMapping("/send")
     public ResponseEntity<?> sendMailsToAusbilderinnen(@RequestParam(name = "assignmentStatus") final String assignmentStatus) {
-        if (assignmentStatus.equals(SUCCESSFUL_ASSIGNMENT)) {
+        if (SUCCESSFUL_ASSIGNMENT.equals(assignmentStatus)) {
             final List<PraktikumsstelleDto> faultyStellen = mailService.sendMailsToAssignedPraktikumsplaetze();
 
             if (faultyStellen.isEmpty()) {
                 return ResponseEntity.ok().build();
-            } else
+            } else {
                 return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(faultyStellen);
+            }
         } else {
             throw new IllegalArgumentException("AssignmentStatus-Parameter nicht unterstützt.");
         }

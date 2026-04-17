@@ -42,8 +42,8 @@ public class AsyncMailSender {
     }
 
     private void sendSingleMail(final String to, final String subject, final String body) throws MessagingException {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "utf-8");
+        final MimeMessage mimeMessage = mailSender.createMimeMessage();
+        final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "utf-8");
 
         mimeMessageHelper.setTo(to);
         mimeMessageHelper.setFrom(from);

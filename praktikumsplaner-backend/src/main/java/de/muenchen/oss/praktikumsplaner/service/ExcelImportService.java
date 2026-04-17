@@ -20,17 +20,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ExcelImportService {
     private final Validator validator;
     private final DataFormatter dataFormatter = new DataFormatter();
@@ -43,21 +43,21 @@ public class ExcelImportService {
     private static final int VORLESUNGSTAGE_COLUM = 4;
     private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelImportService.class);
-
     public List<CreateNwkDto> excelToNwkDtoList(final String base64String) throws IOException {
         try (InputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(base64String));
-                final XSSFWorkbook workbook = new XSSFWorkbook(stream)) {
+                XSSFWorkbook workbook = new XSSFWorkbook(stream)) {
             final XSSFSheet sheet = workbook.getSheetAt(FIRST_SHEET);
             return getAllNwkFromSheet(sheet);
         }
     }
 
     private List<CreateNwkDto> getAllNwkFromSheet(final XSSFSheet sheet) {
-        List<CreateNwkDto> createNwkDtos = new ArrayList<>();
-        List<ExcelImportException.ExcelImportExceptionInfo> importExceptionInfoList = new ArrayList<>();
-        for (Row row : sheet) {
-            if (row.getRowNum() == FIRST_ROW) continue;
+        final List<CreateNwkDto> createNwkDtos = new ArrayList<>();
+        final List<ExcelImportException.ExcelImportExceptionInfo> importExceptionInfoList = new ArrayList<>();
+        for (final Row row : sheet) {
+            if (row.getRowNum() == FIRST_ROW) {
+                continue;
+            }
             CreateNwkDto createNwkDto = null;
             try {
                 createNwkDto = getNwkDtoFromRow(row);
@@ -65,12 +65,12 @@ public class ExcelImportService {
                 importExceptionInfoList.addAll(ex.getExceptionInfos());
             }
             if (createNwkDto == null || isCreateNwkDtoEmpty(createNwkDto)) {
-                LOGGER.error("NWK ist leer.");
+                log.error("NWK ist leer.");
                 continue;
             }
             validator.validate(createNwkDto).forEach(violation -> {
-                Class<?> annotationType = violation.getConstraintDescriptor().getAnnotation().annotationType();
-                String propertyPath;
+                final Class<?> annotationType = violation.getConstraintDescriptor().getAnnotation().annotationType();
+                final String propertyPath;
                 // Checks which annotation triggered the violation and sets the propertyPath accordingly
                 if (annotationType.equals(StudiengangOrAusbildungsrichtungConstraint.class)) {
                     propertyPath = "studiengang";
@@ -86,58 +86,37 @@ public class ExcelImportService {
             });
 
             createNwkDtos.add(createNwkDto);
-            LOGGER.error("NWK wurde geaddet.");
+            log.error("NWK wurde geaddet.");
         }
-        LOGGER.error(importExceptionInfoList.toString());
-        if (!importExceptionInfoList.isEmpty())
+        log.error(importExceptionInfoList.toString());
+        if (!importExceptionInfoList.isEmpty()) {
             throw new ExcelImportException(importExceptionInfoList);
-        LOGGER.error("NWKS: " + createNwkDtos.toString());
+        }
+        log.error("NWKS: {}", createNwkDtos);
         return createNwkDtos;
     }
 
     private boolean isCreateNwkDtoEmpty(final CreateNwkDto createNwkDto) {
         return StringUtils.isEmpty(createNwkDto.vorname())
                 && StringUtils.isEmpty(createNwkDto.nachname())
-                && (createNwkDto.studiengang() == null && createNwkDto.ausbildungsrichtung() == null)
+                && createNwkDto.studiengang() == null && createNwkDto.ausbildungsrichtung() == null
                 && StringUtils.isEmpty(createNwkDto.jahrgang());
     }
 
+    @SuppressWarnings("PMD.PreserveStackTrace")
     private CreateNwkDto getNwkDtoFromRow(final Row row) {
-        CreateNwkDto.CreateNwkDtoBuilder createNwkDtoBuilder = CreateNwkDto.builder();
-        for (Cell cell : row) {
+        final CreateNwkDto.CreateNwkDtoBuilder createNwkDtoBuilder = CreateNwkDto.builder();
+        for (final Cell cell : row) {
             final String cellValue = dataFormatter.formatCellValue(cell);
             switch (cell.getColumnIndex()) {
             case NACHNAME_COLUM -> createNwkDtoBuilder.nachname(cellValue);
             case VORNAME_COLUM -> createNwkDtoBuilder.vorname(cellValue);
-            case STUDIENGANG_COLUM -> {
-                try {
-                    LOGGER.error("Column Value: " + cellValue);
-                    if (isBlank(cellValue)) {
-                        LOGGER.error("leere Zelle.");
-                        createNwkDtoBuilder.studiengang(null);
-                        createNwkDtoBuilder.ausbildungsrichtung(null);
-                    } else {
-                        createNwkDtoBuilder.studiengang(Studiengang.valueOf(cellValue));
-                        createNwkDtoBuilder.ausbildungsrichtung(null);
-                        LOGGER.error("Studiengang: " + cellValue);
-                    }
-                } catch (IllegalArgumentException ex) {
-                    try {
-                        createNwkDtoBuilder.ausbildungsrichtung(Ausbildungsrichtung.valueOf(cellValue));
-                        createNwkDtoBuilder.studiengang(null);
-                        LOGGER.error("Ausbildungsrichtung: " + cellValue);
-                    } catch (IllegalArgumentException ex2) {
-                        throw new ExcelImportException(
-                                List.of(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "studiengang", ex.getMessage()),
-                                        new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "ausbildungsrichtung", ex2.getMessage())));
-                    }
-                }
-            }
+            case STUDIENGANG_COLUM -> handleStudiengangColumn(row, cellValue, createNwkDtoBuilder);
             case JAHRGANG_COLUM -> createNwkDtoBuilder.jahrgang(cellValue);
             case VORLESUNGSTAGE_COLUM -> {
                 try {
                     createNwkDtoBuilder.vorlesungstage(extractVorlesungstage(cellValue));
-                } catch (IllegalArgumentException ex) {
+                } catch (final IllegalArgumentException ex) {
                     throw new ExcelImportException(
                             List.of(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "vorlesungstage", ex.getMessage())));
                 }
@@ -146,8 +125,34 @@ public class ExcelImportService {
             }
             }
         }
-        LOGGER.error("NWK wird gebuildet.");
+        log.error("NWK wird gebuildet.");
         return createNwkDtoBuilder.build();
+    }
+
+    @SuppressWarnings("PMD.PreserveStackTrace")
+    private static void handleStudiengangColumn(final Row row, final String cellValue, final CreateNwkDto.CreateNwkDtoBuilder createNwkDtoBuilder) {
+        try {
+            log.error("Column Value: {}", cellValue);
+            if (isBlank(cellValue)) {
+                log.error("leere Zelle.");
+                createNwkDtoBuilder.studiengang(null);
+                createNwkDtoBuilder.ausbildungsrichtung(null);
+            } else {
+                createNwkDtoBuilder.studiengang(Studiengang.valueOf(cellValue));
+                createNwkDtoBuilder.ausbildungsrichtung(null);
+                log.error("Studiengang: {}", cellValue);
+            }
+        } catch (final IllegalArgumentException ex) {
+            try {
+                createNwkDtoBuilder.ausbildungsrichtung(Ausbildungsrichtung.valueOf(cellValue));
+                createNwkDtoBuilder.studiengang(null);
+                log.error("Ausbildungsrichtung: {}", cellValue);
+            } catch (final IllegalArgumentException ex2) {
+                throw new ExcelImportException(
+                        List.of(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "studiengang", ex.getMessage()),
+                                new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "ausbildungsrichtung", ex2.getMessage())));
+            }
+        }
     }
 
     private Set<DayOfWeek> extractVorlesungstage(final String vorlesungstageString) {
@@ -160,24 +165,13 @@ public class ExcelImportService {
     }
 
     private DayOfWeek mapToDayOfWeek(final String vorlesungstagString) {
-
-        switch (vorlesungstagString) {
-        case "MO" -> {
-            return DayOfWeek.MONDAY;
-        }
-        case "DI" -> {
-            return DayOfWeek.TUESDAY;
-        }
-        case "MI" -> {
-            return DayOfWeek.WEDNESDAY;
-        }
-        case "DO" -> {
-            return DayOfWeek.THURSDAY;
-        }
-        case "FR" -> {
-            return DayOfWeek.FRIDAY;
-        }
-        }
-        throw new IllegalArgumentException(vorlesungstagString);
+        return switch (vorlesungstagString) {
+        case "MO" -> DayOfWeek.MONDAY;
+        case "DI" -> DayOfWeek.TUESDAY;
+        case "MI" -> DayOfWeek.WEDNESDAY;
+        case "DO" -> DayOfWeek.THURSDAY;
+        case "FR" -> DayOfWeek.FRIDAY;
+        default -> throw new IllegalArgumentException(vorlesungstagString);
+        };
     }
 }

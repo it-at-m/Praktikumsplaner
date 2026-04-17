@@ -1,7 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.validation.constraints.Email;
@@ -25,9 +24,9 @@ public record CreateStudiumsPraktikumsstelleWithMeldezeitraumDto(@NotNull String
 
         String namentlicheAnforderung,
 
-        Referat referat,
-
         @NotNull String programmierkenntnisse,
+
+        String wuensche,
 
         boolean planstelleVorhanden,
 

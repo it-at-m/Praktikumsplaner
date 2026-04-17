@@ -4,7 +4,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import java.time.DayOfWeek;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,7 +25,7 @@ public class DayOfWeekSetConverter implements AttributeConverter<Set<DayOfWeek>,
     @Override
     public Set<DayOfWeek> convertToEntityAttribute(final String dbData) {
         if (dbData == null || dbData.trim().isEmpty()) {
-            return new HashSet<>();
+            return EnumSet.noneOf(DayOfWeek.class);
         }
         return Arrays.stream(dbData.split(COMMA))
                 .map(String::trim)

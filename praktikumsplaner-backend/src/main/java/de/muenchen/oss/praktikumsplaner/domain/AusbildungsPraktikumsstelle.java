@@ -23,6 +23,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("PMD.MissingSerialVersionUID")
 public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
     private boolean projektarbeit;
@@ -34,4 +35,6 @@ public class AusbildungsPraktikumsstelle extends BasePraktikumsstelle {
 
     @NotNull @Enumerated(EnumType.STRING)
     private Ausbildungsrichtung ausbildungsrichtung;
+
+    private boolean minderjaehrigMoeglich;
 }

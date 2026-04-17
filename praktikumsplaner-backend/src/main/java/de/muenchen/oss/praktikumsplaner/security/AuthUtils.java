@@ -1,7 +1,3 @@
-/*
- * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
- * der Landeshauptstadt München, 2023
- */
 package de.muenchen.oss.praktikumsplaner.security;
 
 import org.springframework.http.HttpStatus;
@@ -12,25 +8,22 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.server.ResponseStatusException;
 
 /**
- * Utilities zu Authentifizierungsdaten.
- *
- * @author michael.prankl
- *
+ * Utilities for authentication data.
  */
 public final class AuthUtils {
 
     public static final String NAME_UNAUTHENTICATED_USER = "unauthenticated";
 
-    private static final String TOKEN_USER_NAME = "user_name";
+    private static final String TOKEN_USER_NAME = "preferred_username";
 
     private AuthUtils() {
     }
 
     /**
-     * Extrahiert den Usernamen aus dem vorliegenden Spring Security Context via
+     * Extracts the username from the existing Spring Security Context via
      * {@link SecurityContextHolder}.
      *
-     * @return der Username
+     * @return the username or an "unauthenticated" if no {@link Authentication} exists
      */
     public static String getUsername() {
         if (getAuthentication() instanceof JwtAuthenticationToken jwtAuth) {
@@ -51,7 +44,7 @@ public final class AuthUtils {
     public static String getMailFromUser() {
 
         if (getAuthentication() instanceof JwtAuthenticationToken jwtAuth) {
-            String email = jwtAuth.getToken().getClaimAsString("email");
+            final String email = jwtAuth.getToken().getClaimAsString("email");
             if (email == null || email.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing email claim in JWT token");
             }
@@ -62,36 +55,52 @@ public final class AuthUtils {
     }
 
     /**
+     * Extracts the users department from the Spring Security Context.
+     *
+     * @return the department of the user.
+     */
+    public static String getDepartmentFromUser() {
+        if (getAuthentication() instanceof JwtAuthenticationToken jwtAuth) {
+            final String department = jwtAuth.getToken().getClaimAsString("department");
+            if (department == null || department.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing department claim in JWT token");
+            }
+            return department;
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Expected JWT authentication");
+        }
+    }
+
+    /**
      * Prüft ob der User aus dem vorliegenden Spring Security Context via
      * {@link SecurityContextHolder} ein AUSBILDER ist.
      *
-     * @return Mail-Adresse
+     * @return true, wenn User die Rolle AUSBILDER hat, sonst false
      */
     public static boolean isAusbilder() {
         return getAuthentication().getAuthorities()
                 .stream()
-                .anyMatch(authority -> ("ROLE_" + AuthoritiesEnum.AUSBILDER.name()).equals(authority.getAuthority()));
+                .anyMatch(authority -> ("ROLE_" + Authorities.AuthoritiesEnum.AUSBILDER.name()).equals(authority.getAuthority()));
     }
 
     /**
      * Prüft ob der User aus dem vorliegenden Spring Security Context via
      * {@link SecurityContextHolder} ein AUSBILDUNGSLEITUNG ist.
      *
-     * @return true wenn User die Rolle AUSBILDUNGSLEITUNG hat, sonst false
+     * @return true, wenn User die Rolle AUSBILDUNGSLEITUNG hat, sonst false
      */
     public static boolean isAusbildungsleitung() {
         return getAuthentication().getAuthorities()
                 .stream()
-                .anyMatch(authority -> ("ROLE_" + AuthoritiesEnum.AUSBILDUNGSLEITUNG.name()).equals(authority.getAuthority()));
+                .anyMatch(authority -> ("ROLE_" + Authorities.AuthoritiesEnum.AUSBILDUNGSLEITUNG.name()).equals(authority.getAuthority()));
     }
 
     private static Authentication getAuthentication() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No authentication found");
         }
         return authentication;
     }
-
 }

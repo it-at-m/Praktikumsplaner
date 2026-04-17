@@ -1,12 +1,12 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 public interface PraktikumsstelleDto {
+    @SuppressWarnings("PMD.ShortMethodName")
     @NotNull UUID id();
 
     @NotNull String dienststelle();
@@ -25,9 +25,9 @@ public interface PraktikumsstelleDto {
 
     String namentlicheAnforderung();
 
-    Referat referat();
-
     String programmierkenntnisse();
+
+    String wuensche();
 
     NwkDto assignedNwk();
 

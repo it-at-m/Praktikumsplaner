@@ -1,22 +1,17 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
   flyway:
-    enabled: false
+    locations:
+      - classpath:db/migration/schema
+      - classpath:db/migration/testdata
   mail:
-    port: 8225
+    host: localhost
+    port: 1025
+    username: pp-mail-user
+    password: pp-mail-password
 
 refarch:
   security:
     # possible values: none, all, changing (With changing, only changing requests such as POST, PUT, DELETE are logged)
-    # Currently only dummy values, will later be changed for testing security.
-    user-info-uri: NotNeeded
     logging-mode: all
-
+    client-id: test-client
+    permissions-uri: http://localhost/permissions

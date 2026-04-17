@@ -3,7 +3,6 @@ package de.muenchen.oss.praktikumsplaner.domain;
 import static java.sql.Types.VARCHAR;
 
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Referat;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
@@ -11,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
 import lombok.EqualsAndHashCode;
@@ -26,9 +26,10 @@ import org.hibernate.annotations.JdbcTypeCode;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("PMD.MissingSerialVersionUID")
 public abstract class BasePraktikumsstelle extends BaseEntity {
 
-    @NotNull @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein") private String dienststelle;
+    @NotNull @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein") @Pattern(regexp = "^[A-Z]{3,4}-[A-Za-z\\d-]+$") private String dienststelle;
 
     @NotNull @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein") private String oertlicheAusbilder;
 
@@ -43,9 +44,6 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @Size(max = 255, message = "Die angeforderte Nachwuchskraft darf nur {max} Zeichen lang sein") private String namentlicheAnforderung;
 
-    @Enumerated(EnumType.STRING)
-    private Referat referat;
-
     @NotNull @JdbcTypeCode(VARCHAR)
     private UUID meldezeitraumID;
 
@@ -54,4 +52,6 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
     private Nwk assignedNwk;
 
     private boolean planstelleVorhanden;
+
+    @Size(max = 5000, message = "Die Wünsche dürfen nur {max} Zeichen lang sein") private String wuensche;
 }

@@ -1,41 +1,43 @@
 import Nwk from "@/types/Nwk";
 
 export default class Praktikumsstelle {
-  constructor(
-    public dienststelle?: string,
+    constructor(
+        public dienststelle?: string,
 
-    public oertlicheAusbilder?: string,
+        public oertlicheAusbilder?: string,
 
-    public erwFuehrungszeugnisVorhanden?: boolean,
+        public erwFuehrungszeugnisVorhanden?: boolean,
 
-    public email?: string,
+        public email?: string,
 
-    public taetigkeiten?: string,
+        public taetigkeiten?: string,
 
-    public dringlichkeit?: string,
+        public dringlichkeit?: string,
 
-    public projektarbeit?: boolean,
+        public projektarbeit?: boolean,
 
-    public programmierkenntnisse?: string,
+        public programmierkenntnisse?: string,
 
-    public planstelleVorhanden?: boolean,
+        public planstelleVorhanden?: boolean,
 
-    public ausbildungsjahr?: string[],
+        public ausbildungsjahr?: string[],
 
-    public studiensemester?: string[],
+        public studiensemester?: string[],
 
-    public ausbildungsrichtung?: string,
+        public ausbildungsrichtung?: string,
 
-    public studiengang?: string,
+        public studiengang?: string,
 
-    public referat?: string,
+        public wuensche?: string,
 
-    public namentlicheAnforderung?: string,
+        public namentlicheAnforderung?: string,
 
-    public id?: string,
+        public id?: string,
 
-    public assignedNwk?: Nwk,
+        public assignedNwk?: Nwk,
 
-    public meldezeitraumID?: string
-  ) {}
+        public meldezeitraumID?: string,
+
+        public minderjaehrigMoeglich?: boolean
+    ) {}
 }
