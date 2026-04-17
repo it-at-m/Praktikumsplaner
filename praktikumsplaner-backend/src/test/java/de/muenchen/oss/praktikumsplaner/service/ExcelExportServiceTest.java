@@ -61,7 +61,7 @@ public class ExcelExportServiceTest {
             assertThat(ausbildungsSheet.getRow(3).getCell(8).getStringCellValue(), not(containsString("Namentliche Anforderung:")));
             assertThat(ausbildungsSheet.getRow(3).getCell(8).getStringCellValue(), containsString("Wuensche 1"));
             assertEquals("Nein", ausbildungsSheet.getRow(3).getCell(9).getStringCellValue());
-            assertEquals("vorrangig 1. Jahr", ausbildungsSheet.getRow(3).getCell(13).getStringCellValue());
+            assertEquals("vorrangig 2., 3. Lehrjahr", ausbildungsSheet.getRow(3).getCell(13).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.getFirst().dringlichkeit().name(), ausbildungsSheet.getRow(3).getCell(12).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.getFirst().ausbildungsrichtung().name(), ausbildungsSheet.getRow(3).getCell(14).getStringCellValue());
             assertEquals("Praktikumsplatz", ausbildungsSheet.getRow(3).getCell(11).getStringCellValue());
@@ -82,7 +82,7 @@ public class ExcelExportServiceTest {
             assertThat(studiumsSheet.getRow(3).getCell(8).getStringCellValue(), containsString("Wuensche 3"));
             assertEquals("Ja", studiumsSheet.getRow(3).getCell(10).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().dringlichkeit().name(), studiumsSheet.getRow(3).getCell(12).getStringCellValue());
-            assertEquals("vorrangig 1. Jahr", studiumsSheet.getRow(3).getCell(13).getStringCellValue());
+            assertEquals("vorrangig 4., 5. Semester", studiumsSheet.getRow(3).getCell(13).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().studiengang().name(), studiumsSheet.getRow(3).getCell(14).getStringCellValue());
             assertEquals("Praktikumsplatz", studiumsSheet.getRow(3).getCell(11).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().assignedNwk().nachname(), studiumsSheet.getRow(3).getCell(15).getStringCellValue());
@@ -127,7 +127,7 @@ public class ExcelExportServiceTest {
     private List<AusbildungsPraktikumsstelleDto> getTestListOfAusbildungsPraktikumsstelleDto() {
         return List.of(
                 helper.createPraktikumsstelleDto(helper.createAusbildungsPraktikumsstelleEntity("ITM-DS1", "Ausbilder 1", "a@b.c", "Taetigkeiten 1",
-                        "Wuensche 1", Dringlichkeit.DRINGEND, Set.of(Ausbildungsjahr.JAHR1), Ausbildungsrichtung.FISI, false, true, null,
+                        "Wuensche 1", Dringlichkeit.DRINGEND, Set.of(Ausbildungsjahr.JAHR2, Ausbildungsjahr.JAHR3), Ausbildungsrichtung.FISI, false, true, null,
                         helper.createNwkEntity("Vorname 1", "Nachname 1", null, Ausbildungsrichtung.FISI, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createAusbildungsPraktikumsstelleEntity("ITM-DS2", "Ausbilder 2", "a@b.c", "Taetigkeiten 2",
                         null, Dringlichkeit.DRINGEND, Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, true, false, null,
@@ -137,7 +137,7 @@ public class ExcelExportServiceTest {
     private List<StudiumsPraktikumsstelleDto> getTestListOfStudiumsPraktikumsstelleDto() {
         return List.of(
                 helper.createPraktikumsstelleDto(helper.createStudiumsPraktikumsstelleEntity("ITM-DS3", "Ausbilder 3", "a@b.c", "Taetigkeiten 3",
-                        "Wuensche 3", Dringlichkeit.DRINGEND, Set.of(Studiensemester.SEMESTER1), Studiengang.BWI, "true", null,
+                        "Wuensche 3", Dringlichkeit.DRINGEND, Set.of(Studiensemester.SEMESTER5, Studiensemester.SEMESTER4), Studiengang.BWI, "true", null,
                         helper.createNwkEntity("Vorname 3", "Nachname 3", Studiengang.BSC, null, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createStudiumsPraktikumsstelleEntity("ITM-DS4", "Ausbilder 4", "a@b.c", "Taetigkeiten 4",
                         null, Dringlichkeit.ZWINGEND, Set.of(Studiensemester.SEMESTER2), Studiengang.VI, "false", null,
