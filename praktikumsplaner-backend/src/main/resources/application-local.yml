@@ -65,7 +65,7 @@ refarch:
   security:
     logging-mode: all
     client-id: ${sso.client}
-    user-info-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
+    permissions-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/token
 
 app:
   mail:
