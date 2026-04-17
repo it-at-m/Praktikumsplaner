@@ -18,8 +18,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+@Testcontainers
 @SpringBootTest(
         classes = { MicroServiceApplication.class },
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
@@ -27,6 +30,7 @@ import org.testcontainers.utility.DockerImageName;
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 class CacheControlFilterTest {
 
+    @Container
     @ServiceConnection
     @SuppressWarnings("unused")
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
@@ -40,7 +44,7 @@ class CacheControlFilterTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    void testForCacheControlHeadersForEntityEndpoint() {
+    void givenApiCall_thenCacheControlHeadersPresent() {
         final ResponseEntity<String> response = testRestTemplate.exchange(ENTITY_ENDPOINT_URL, HttpMethod.GET, null, String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.getHeaders().containsKey(HttpHeaders.CACHE_CONTROL));

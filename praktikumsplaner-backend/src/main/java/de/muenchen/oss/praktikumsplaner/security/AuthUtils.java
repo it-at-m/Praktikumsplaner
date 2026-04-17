@@ -1,7 +1,3 @@
-/*
- * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
- * der Landeshauptstadt München, 2023
- */
 package de.muenchen.oss.praktikumsplaner.security;
 
 import org.springframework.http.HttpStatus;
@@ -12,25 +8,22 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.server.ResponseStatusException;
 
 /**
- * Utilities zu Authentifizierungsdaten.
- *
- * @author michael.prankl
- *
+ * Utilities for authentication data.
  */
 public final class AuthUtils {
 
     public static final String NAME_UNAUTHENTICATED_USER = "unauthenticated";
 
-    private static final String TOKEN_USER_NAME = "user_name";
+    private static final String TOKEN_USER_NAME = "preferred_username";
 
     private AuthUtils() {
     }
 
     /**
-     * Extrahiert den Usernamen aus dem vorliegenden Spring Security Context via
+     * Extracts the username from the existing Spring Security Context via
      * {@link SecurityContextHolder}.
      *
-     * @return der Username
+     * @return the username or an "unauthenticated" if no {@link Authentication} exists
      */
     public static String getUsername() {
         if (getAuthentication() instanceof JwtAuthenticationToken jwtAuth) {
