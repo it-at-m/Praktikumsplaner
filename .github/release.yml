@@ -1,0 +1,112 @@
+changelog:
+  categories:
+    # Backend
+    - title: Backend - 💥 Breaking Changes
+      labels:
+        - BREAKING
+      exclude:
+        labels:
+          - "Component: Frontend"
+    - title: Backend - 🎉 New Features
+      labels:
+        - "Type: Feature"
+      exclude:
+        labels:
+          - "Component: Frontend"
+    - title: Backend - 🐞 Bug Fixes
+      labels:
+        - "Type: Bug"
+      exclude:
+        labels:
+          - "Component: Frontend"
+    - title: Backend - 🔨 Maintenance
+      labels:
+        - "Type: Maintenance"
+      exclude:
+        labels:
+          - "Component: Frontend"
+    - title: Backend - 📔 Documentation
+      labels:
+        - "Type: Documentation"
+      exclude:
+        labels:
+          - "Component: Frontend"
+    - title: Backend - ⬆️ Dependency Upgrades
+      labels:
+        - "Type: Dependency"
+      exclude:
+        labels:
+          - "Component: Frontend"
+    - title: Backend - 🔒️ Security
+      labels:
+        - "Type: Security"
+      exclude:
+        labels:
+          - "Component: Frontend"
+
+    # Frontend
+    - title: Frontend - 💥 Breaking Changes
+      labels:
+        - BREAKING
+      exclude:
+        labels:
+          - "Component: Backend"
+    - title: Frontend - 🎉 New Features
+      labels:
+        - "Type: Feature"
+      exclude:
+        labels:
+          - "Component: Backend"
+    - title: Frontend - 🐞 Bug Fixes
+      labels:
+        - "Type: Bug"
+      exclude:
+        labels:
+          - "Component: Backend"
+    - title: Frontend - 🔨 Maintenance
+      labels:
+        - "Type: Maintenance"
+      exclude:
+        labels:
+          - "Component: Backend"
+    - title: Frontend - 📔 Documentation
+      labels:
+        - "Type: Documentation"
+      exclude:
+        labels:
+          - "Component: Backend"
+    - title: Frontend - ⬆️ Dependency Upgrades
+      labels:
+        - "Type: Dependency"
+      exclude:
+        labels:
+          - "Component: Backend"
+    - title: Frontend - 🔒️ Security
+      labels:
+        - "Type: Security"
+      exclude:
+        labels:
+          - "Component: Backend"
+
+    # Catch the rest
+    - title: 💥 Breaking Changes
+      labels:
+        - BREAKING
+    - title: 🎉 New Features
+      labels:
+        - "Type: Feature"
+    - title: 🐞 Bug Fixes
+      labels:
+        - "Type: Bug"
+    - title: 🔨 Maintenance
+      labels:
+        - "Type: Maintenance"
+    - title: 📔 Documentation
+      labels:
+        - "Type: Documentation"
+    - title: ⬆️ Dependency Upgrades
+      labels:
+        - "Type: Dependency"
+    - title: 🔒️ Security
+      labels:
+        - "Type: Security"

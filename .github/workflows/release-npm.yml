@@ -1,4 +1,5 @@
-name: Release NPM
+# Workflow to release NPM-based artifacts
+name: release-npm
 
 on:
   workflow_dispatch:
@@ -16,37 +17,35 @@ on:
         description: "Select the node service to release"
         required: true
         default: praktikumsplaner-frontend
-        options:
+        options: # Add or modify paths according to your project structure
           - praktikumsplaner-frontend
 
 jobs:
-  release:
-    name: release
+  release-npm-artifact:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
+      contents: write
+      pull-requests: write # can be removed if use-pr is 'false'
+      #id-token: write # required when publishing with `npm publish --provenance`
     outputs:
-      ARTIFACT_NAME: ${{ steps.node.outputs.artifact-name }}
-      ARTIFACT_VERSION: ${{ steps.npm_release.outputs.ARTIFACT_VERSION }}
+      ARTIFACT_NAME: ${{ steps.build.outputs.artifact-name }}
+      ARTIFACT_VERSION: ${{ steps.release-npm-artifact.outputs.ARTIFACT_VERSION }}
     steps:
-      - id: npm_release
+      - id: release-npm-artifact
         uses: it-at-m/lhm_actions/action-templates/actions/action-npm-release@94f7e40aa557a2790abfa98a9cc9186d260b94f8 # v1.0.27
         with:
           app-path: ${{ inputs.app-path }}
-          node-version: '24'
+          node-version: "24"
           releaseVersion: ${{ inputs.release-version }}
-          use-pr: 'true'
-      - id: node
+          use-pr: "true"
+      - id: build
         uses: it-at-m/lhm_actions/action-templates/actions/action-npm-build@94f7e40aa557a2790abfa98a9cc9186d260b94f8 # v1.0.27
         with:
           app-path: ${{ inputs.app-path }}
-          node-version: '24'
+          node-version: "24"
 
-  build-image:
-    needs: release
+  release-npm-image:
+    needs: release-npm-artifact
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -55,21 +54,20 @@ jobs:
         with:
           path: ${{ inputs.app-path }}
           image-name: ${{ inputs.app-path }}
-          artifact-name: ${{ needs.release.outputs.ARTIFACT_NAME }}
+          artifact-name: ${{ needs.release-npm-artifact.outputs.ARTIFACT_NAME }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           registry-username: ${{ github.actor }}
           image-tags: |
-            type=semver,pattern={{version}},value=${{ needs.release.outputs.ARTIFACT_VERSION }}
+            type=semver,pattern={{version}},value=${{ needs.release-npm-artifact.outputs.ARTIFACT_VERSION }}
             type=raw,value=latest
 
-  create-github-release:
-    needs: release
+  release-npm-github:
+    needs: release-npm-artifact
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Create GitHub Release
-        uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@94f7e40aa557a2790abfa98a9cc9186d260b94f8 # v1.0.27
+      - uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@94f7e40aa557a2790abfa98a9cc9186d260b94f8 # v1.0.27
         with:
-          artifact-name: ${{ needs.release.outputs.ARTIFACT_NAME }}
-          tag-name: ${{ inputs.app-path }}-${{ needs.release.outputs.ARTIFACT_VERSION }}
+          artifact-name: ${{ needs.release-npm-artifact.outputs.ARTIFACT_NAME }}
+          tag-name: ${{ inputs.app-path }}-${{ needs.release-npm-artifact.outputs.ARTIFACT_VERSION }}
