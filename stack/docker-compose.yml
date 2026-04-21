@@ -184,7 +184,7 @@ services:
       - "8025:8025"
       - "1025:1025"
     environment:
-      MP_SMTP_AUTH: "pp-mail-user:pp-mail-password"
+      MP_SMTP_AUTH: "pp-ausbildungs-leitung@example.com:pp-mail-password"
       MP_SMTP_AUTH_ALLOW_INSECURE: true
 
 networks:
