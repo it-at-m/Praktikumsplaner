@@ -6,7 +6,7 @@ spring:
   mail:
     host: localhost
     port: 1025
-    username: pp-mail-user
+    username: pp-ausbildungs-leitung@example.com
     password: pp-mail-password
 
 refarch:
