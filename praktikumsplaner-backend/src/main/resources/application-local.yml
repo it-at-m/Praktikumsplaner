@@ -70,6 +70,5 @@ refarch:
 app:
   mail:
     reply-to: "testleitung@test.de"
-  export:
-    oertl-ausbildungsleitung-name: öAL Test
-    dienststelle-adresse: Agnes-Pockels-Bogen 33, 80992 München
+  oertl-ausbildungsleitung-name: öAL Test
+  dienststelle-adresse: Agnes-Pockels-Bogen 33, 80992 München

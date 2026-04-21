@@ -12,6 +12,7 @@ import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEME
 import static org.apache.poi.ss.util.CellReference.convertColStringToIndex;
 
 import com.nimbusds.jose.util.Pair;
+import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
@@ -30,7 +31,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -41,6 +41,7 @@ public class ExcelExportService {
     public static final String NO = "Nein";
 
     private final PraktikumsstellenService praktikumsstellenService;
+    private final PraktikumsplanerProperties praktikumsplanerProperties;
 
     /*
      * The template has 4 sheets:
@@ -51,12 +52,6 @@ public class ExcelExportService {
      */
     public static final int AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX = 1;
     public static final int STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX = 2;
-
-    @Value("${app.export.oertl-ausbildungsleitung-name:}")
-    private String oertlAusbildungsleitungName;
-
-    @Value("${app.export.dienststelle-adresse:}")
-    private String dienstelleAdresse;
 
     public String getBase64EncodedExcelFile() throws IOException {
         try (XSSFWorkbook workbook = fillTemplatePraktikumsstellen();
@@ -97,10 +92,10 @@ public class ExcelExportService {
             final Row row = getRow(ausbildungsSheet, i);
 
             row.getCell(convertColStringToIndex("A")).setCellValue(getReferatFromDienststelle(praktikumsstelle));
-            row.getCell(convertColStringToIndex("B")).setCellValue(this.oertlAusbildungsleitungName);
+            row.getCell(convertColStringToIndex("B")).setCellValue(praktikumsplanerProperties.getOertlAusbildungsleitungName());
             row.getCell(convertColStringToIndex("C")).setCellValue(praktikumsstelle.dienststelle());
             // row.getCell(convertColStringToIndex"D")).setCellValue(---);
-            row.getCell(convertColStringToIndex("E")).setCellValue(this.dienstelleAdresse);
+            row.getCell(convertColStringToIndex("E")).setCellValue(praktikumsplanerProperties.getDienststelleAdresse());
             row.getCell(convertColStringToIndex("F")).setCellValue(praktikumsstelle.oertlicheAusbilder());
             row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
             row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
@@ -124,10 +119,10 @@ public class ExcelExportService {
             final Row row = getRow(studiumsSheet, i);
 
             row.getCell(convertColStringToIndex("A")).setCellValue(getReferatFromDienststelle(praktikumsstelle));
-            row.getCell(convertColStringToIndex("B")).setCellValue(this.oertlAusbildungsleitungName);
+            row.getCell(convertColStringToIndex("B")).setCellValue(praktikumsplanerProperties.getOertlAusbildungsleitungName());
             row.getCell(convertColStringToIndex("C")).setCellValue(praktikumsstelle.dienststelle());
             // row.getCell(convertColStringToIndex"D")).setCellValue(---);
-            row.getCell(convertColStringToIndex("E")).setCellValue(this.dienstelleAdresse);
+            row.getCell(convertColStringToIndex("E")).setCellValue(praktikumsplanerProperties.getDienststelleAdresse());
             row.getCell(convertColStringToIndex("F")).setCellValue(praktikumsstelle.oertlicheAusbilder());
             row.getCell(convertColStringToIndex("G")).setCellValue(praktikumsstelle.email());
             row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
