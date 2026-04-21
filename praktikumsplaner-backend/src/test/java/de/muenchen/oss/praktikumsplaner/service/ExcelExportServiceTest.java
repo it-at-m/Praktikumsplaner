@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static de.muenchen.oss.praktikumsplaner.TestConstants.SPRING_TEST_PROFILE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
@@ -7,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
+import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
@@ -23,16 +25,22 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+@SpringBootTest(classes = { PraktikumsplanerProperties.class, ExcelExportService.class })
+@EnableConfigurationProperties(PraktikumsplanerProperties.class)
+@ActiveProfiles(SPRING_TEST_PROFILE)
 @ExtendWith(MockitoExtension.class)
 public class ExcelExportServiceTest {
 
-    @InjectMocks
+    @Autowired
     private ExcelExportService service;
-    @Mock
+    @MockitoBean
     private PraktikumsstellenService praktikumsstellenService;
 
     private final ServiceTestHelper helper = new ServiceTestHelper();

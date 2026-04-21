@@ -15,3 +15,7 @@ refarch:
     logging-mode: all
     client-id: test-client
     permissions-uri: http://localhost/permissions
+
+app:
+  dienststelle-adresse: dienststellen Adresse
+  oertl-ausbildungsleitung-name: oertlAL
