@@ -60,6 +60,6 @@ export const Studiensemester = [
     zeitraumQE3: "Nicht in ausgewähltem Semester verfügbar",
   },
 ] as const;
-export function valueToNameStudiensemester(value: string): string {
+export function valueToNameStudiensemester(value: string | undefined): string {
   return Studiensemester.find((s) => s.value === value)?.name || "";
 }

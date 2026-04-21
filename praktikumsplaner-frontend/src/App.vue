@@ -117,7 +117,7 @@ onBeforeMount(() => {
     );
 
     const praktikumsplanRoles = praktikumsplanerKey
-      ? (resourceAccess[praktikumsplanerKey].roles ?? [])
+      ? (resourceAccess[praktikumsplanerKey]?.roles ?? [])
       : [];
 
     if (praktikumsplanRoles.length > 0) {

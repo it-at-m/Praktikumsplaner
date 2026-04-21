@@ -25,6 +25,6 @@ export const Ausbildungsjahr = [
   },
 ] as const;
 
-export function valueToNameAusbildungsjahr(value: string): string {
+export function valueToNameAusbildungsjahr(value: string | undefined): string {
   return Ausbildungsjahr.find((a) => a.value === value)?.name || "";
 }

@@ -278,7 +278,7 @@ function openDialog() {
     if (praktikumsstelle.value.meldezeitraumID == null) {
       MeldezeitraumService.getCurrentMeldezeitraum(undefined).then(
         (zeitraum) => {
-          praktikumsstelle.value.meldezeitraumID = zeitraum[0].id;
+          praktikumsstelle.value.meldezeitraumID = zeitraum[0]?.id;
         }
       );
     }
