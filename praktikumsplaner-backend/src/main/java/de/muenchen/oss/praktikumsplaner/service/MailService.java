@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,10 +20,9 @@ import org.thymeleaf.context.Context;
 public class MailService {
 
     private final ITemplateEngine templateEngine;
-
     private final PraktikumsstellenService praktikumsstellenService;
-
     private final AsyncMailSender mailSender;
+    private final PraktikumsplanerProperties praktikumsplanerProperties;
 
     /*
      * Send Mails to all Assigned Praktikumsplätze.
@@ -64,6 +64,7 @@ public class MailService {
                 "ausbilder", praktikumsstelleDto.oertlicheAusbilder(),
                 "nachwuchskraftName", praktikumsstelleDto.assignedNwk().vorname() + " " + praktikumsstelleDto.assignedNwk().nachname(),
                 "jahrgang", praktikumsstelleDto.assignedNwk().jahrgang(),
-                "studiengangOderAusbildungsrichtung", studiengangOderAusbildungsrichtung);
+                "studiengangOderAusbildungsrichtung", studiengangOderAusbildungsrichtung,
+                "ausbildungsleitungNamen", praktikumsplanerProperties.getOertlAusbildungsleitungName());
     }
 }
