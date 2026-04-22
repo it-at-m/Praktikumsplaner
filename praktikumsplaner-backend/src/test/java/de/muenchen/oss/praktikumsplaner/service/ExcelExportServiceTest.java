@@ -62,7 +62,9 @@ public class ExcelExportServiceTest {
             assertNotNull(workbook);
             assertEquals(4, workbook.getNumberOfSheets());
             assertEquals("ITM", ausbildungsSheet.getRow(3).getCell(0).getStringCellValue());
+            assertEquals("oertlAL", ausbildungsSheet.getRow(3).getCell(1).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.getFirst().dienststelle(), ausbildungsSheet.getRow(3).getCell(2).getStringCellValue());
+            assertEquals("dienststellen Adresse", ausbildungsSheet.getRow(3).getCell(4).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.getFirst().oertlicheAusbilder(), ausbildungsSheet.getRow(3).getCell(5).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.getFirst().taetigkeiten(), ausbildungsSheet.getRow(3).getCell(7).getStringCellValue());
             assertThat(ausbildungsSheet.getRow(3).getCell(8).getStringCellValue(), not(containsString("Programmierkenntnisse von Vorteil")));
@@ -82,7 +84,9 @@ public class ExcelExportServiceTest {
             List<StudiumsPraktikumsstelleDto> studiumsPraktikumsstellen = getTestListOfStudiumsPraktikumsstelleDto();
 
             assertEquals("ITM", studiumsSheet.getRow(3).getCell(0).getStringCellValue());
+            assertEquals("oertlAL", ausbildungsSheet.getRow(3).getCell(1).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().dienststelle(), studiumsSheet.getRow(3).getCell(2).getStringCellValue());
+            assertEquals("dienststellen Adresse", ausbildungsSheet.getRow(3).getCell(4).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().oertlicheAusbilder(), studiumsSheet.getRow(3).getCell(5).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().taetigkeiten(), studiumsSheet.getRow(3).getCell(7).getStringCellValue());
             assertThat(studiumsSheet.getRow(3).getCell(8).getStringCellValue(), not(containsString("Namentliche Anforderung:")));
