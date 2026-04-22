@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import static de.muenchen.oss.praktikumsplaner.TestConstants.SPRING_TEST_PROFILE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -7,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
@@ -23,23 +25,33 @@ import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
+@SpringBootTest(classes = { PraktikumsplanerProperties.class })
+@EnableConfigurationProperties(PraktikumsplanerProperties.class)
+@ActiveProfiles(SPRING_TEST_PROFILE)
 public class MailServiceTest {
 
-    @Mock
+    @Autowired
+    private PraktikumsplanerProperties praktikumsplanerProperties;
+
+    @MockitoBean
     private JavaMailSender mailSender;
 
-    @Mock
+    @MockitoBean
     private ITemplateEngine templateEngine;
 
-    @Mock
+    @MockitoBean
     private PraktikumsstellenService praktikumsstellenService;
 
     private MailService mailService;
@@ -48,7 +60,7 @@ public class MailServiceTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         AsyncMailSender asyncMailSender = new AsyncMailSender(mailSender);
-        mailService = new MailService(templateEngine, praktikumsstellenService, asyncMailSender);
+        mailService = new MailService(templateEngine, praktikumsstellenService, asyncMailSender, praktikumsplanerProperties);
 
         // Set fields via reflection
         ReflectionTestUtils.setField(asyncMailSender, "from", "testSender");
