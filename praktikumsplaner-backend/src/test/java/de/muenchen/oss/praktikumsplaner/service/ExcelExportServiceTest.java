@@ -84,9 +84,9 @@ public class ExcelExportServiceTest {
             List<StudiumsPraktikumsstelleDto> studiumsPraktikumsstellen = getTestListOfStudiumsPraktikumsstelleDto();
 
             assertEquals("ITM", studiumsSheet.getRow(3).getCell(0).getStringCellValue());
-            assertEquals("oertlAL", ausbildungsSheet.getRow(3).getCell(1).getStringCellValue());
+            assertEquals("oertlAL", studiumsSheet.getRow(3).getCell(1).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().dienststelle(), studiumsSheet.getRow(3).getCell(2).getStringCellValue());
-            assertEquals("dienststellen Adresse", ausbildungsSheet.getRow(3).getCell(4).getStringCellValue());
+            assertEquals("dienststellen Adresse", studiumsSheet.getRow(3).getCell(4).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().oertlicheAusbilder(), studiumsSheet.getRow(3).getCell(5).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().taetigkeiten(), studiumsSheet.getRow(3).getCell(7).getStringCellValue());
             assertThat(studiumsSheet.getRow(3).getCell(8).getStringCellValue(), not(containsString("Namentliche Anforderung:")));
