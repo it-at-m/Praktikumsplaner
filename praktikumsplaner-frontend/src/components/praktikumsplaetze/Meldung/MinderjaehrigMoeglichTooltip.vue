@@ -6,7 +6,7 @@
         color="blue"
         size="large"
         v-bind="props"
-        icon="mdi-information"
+        :icon="mdiInformation"
       />
     </template>
     <span>
@@ -15,3 +15,7 @@
     </span>
   </v-tooltip>
 </template>
+
+<script setup lang="ts">
+import { mdiInformation } from "@mdi/js";
+</script>

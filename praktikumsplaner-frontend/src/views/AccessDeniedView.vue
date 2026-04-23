@@ -12,8 +12,8 @@
         <v-icon
           size="large"
           color="red"
-          >mdi-alert-octagon</v-icon
-        >
+          :icon="mdiAlertOctagon"
+        />
       </v-col>
       <v-col>
         <h1>Zugriff verweigert</h1>
@@ -35,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiAlertOctagon } from "@mdi/js";
 import { onMounted, ref } from "vue";
 
 import cat1 from "@/assets/acess_denied_cats/cat1.png";

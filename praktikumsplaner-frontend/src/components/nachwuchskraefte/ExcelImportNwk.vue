@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn
-      prepend-icon="mdi-tray-arrow-up"
+      :prepend-icon="mdiTrayArrowUp"
       color="primary"
       @click="visible = true"
     >
@@ -23,7 +23,7 @@
               :accept="excelFormat"
               :rules="rules"
               label="Datei auswählen"
-              prepend-icon="mdi-tray-arrow-up"
+              :prepend-icon="mdiTrayArrowUp"
             ></v-file-input>
           </v-card-text>
           <v-card-actions>
@@ -51,6 +51,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiTrayArrowUp } from "@mdi/js";
 import { ref } from "vue";
 
 import NwkService from "@/api/NwkService";

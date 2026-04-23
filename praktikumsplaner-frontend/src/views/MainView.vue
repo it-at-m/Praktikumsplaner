@@ -30,9 +30,8 @@
                 <v-icon
                   color="primary"
                   size="100"
-                >
-                  mdi-account-plus
-                </v-icon>
+                  :icon="mdiAccountPlus"
+                />
               </v-card-text>
             </v-card>
           </router-link>
@@ -52,9 +51,8 @@
                 <v-icon
                   color="primary"
                   size="100"
-                >
-                  mdi-calendar-plus
-                </v-icon>
+                  :icon="mdiCalendarPlus"
+                />
               </v-card-text>
             </v-card>
           </router-link>
@@ -74,9 +72,8 @@
                 <v-icon
                   color="primary"
                   size="100"
-                >
-                  mdi-account-arrow-right
-                </v-icon>
+                  :icon="mdiAccountArrowRight"
+                />
               </v-card-text>
             </v-card>
           </router-link>
@@ -96,9 +93,8 @@
                 <v-icon
                   color="primary"
                   size="100"
-                >
-                  mdi-account-check
-                </v-icon>
+                  :icon="mdiAccountCheck"
+                />
               </v-card-text>
             </v-card>
           </router-link>
@@ -125,6 +121,12 @@
 </template>
 
 <script setup lang="ts">
+import {
+  mdiAccountArrowRight,
+  mdiAccountCheck,
+  mdiAccountPlus,
+  mdiCalendarPlus,
+} from "@mdi/js";
 import { onMounted } from "vue";
 
 import { checkHealth } from "@/api/HealthService";

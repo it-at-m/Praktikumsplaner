@@ -20,7 +20,7 @@
             <two-choice-dialog-cards
               v-model="twoChoiceDialogVisible"
               buttontext="Hinzufügen"
-              icontext="mdi-plus"
+              :icon="mdiPlus"
               dialogtitle="Praktikumsplatz melden"
               dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
               choice-one-title="Studium"
@@ -29,7 +29,7 @@
               choice-two-subtitle="Praktikumsplatz für Auszubildende"
               @choice-one="toStudium"
               @choice-two="toAusbildung"
-            ></two-choice-dialog-cards>
+            />
           </v-col>
         </v-row>
         <v-row></v-row>
@@ -64,8 +64,8 @@
                 <v-icon
                   color="blue"
                   size="large"
-                  >mdi-information-outline</v-icon
-                >
+                  :icon="mdiInformationOutline"
+                />
               </v-col>
               <v-col class="d-flex align-center">
                 <p
@@ -93,6 +93,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiInformationOutline, mdiPlus } from "@mdi/js";
 import { computed, onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";

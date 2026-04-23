@@ -5,10 +5,10 @@
     width="800"
   >
     <template #activator="{ props }">
-      <template v-if="properties.icontext">
+      <template v-if="properties.icon">
         <v-btn
           color="primary"
-          :prepend-icon="properties.icontext"
+          :prepend-icon="properties.icon"
           v-bind="props"
         >
           {{ buttontext }}
@@ -87,7 +87,7 @@ import { computed } from "vue";
 
 const properties = defineProps<{
   buttontext: string;
-  icontext?: string;
+  icon?: string;
   dialogtitle: string;
   dialogsubtitle: string;
   choiceOneTitle: string;

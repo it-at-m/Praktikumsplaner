@@ -43,8 +43,8 @@
           <v-icon
             color="blue"
             size="large"
-            >mdi-information-outline</v-icon
-          >
+            :icon="mdiInformationOutline"
+          />
         </v-col>
         <v-col class="d-flex align-center">
           <p>Es sind noch keine Nachwuchskräfte vorhanden.</p>
@@ -55,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiInformationOutline } from "@mdi/js";
 import { onMounted, onUnmounted, ref } from "vue";
 
 import NwkService from "@/api/NwkService";

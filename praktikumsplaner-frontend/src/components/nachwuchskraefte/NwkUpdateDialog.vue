@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn
-      prepend-icon="mdi-pencil-outline"
+      :prepend-icon="mdiPencilOutline"
       color="primary"
       variant="outlined"
       @click="visible = true"
@@ -70,6 +70,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiPencilOutline } from "@mdi/js";
 import { ref } from "vue";
 
 import NwkService from "@/api/NwkService";

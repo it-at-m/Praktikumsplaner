@@ -2,7 +2,7 @@
   <v-row class="PageHeader">
     <v-btn
       :to="{ path: backButtonUrl }"
-      icon="mdi-arrow-left"
+      :icon="mdiArrowLeft"
       elevation="0"
     >
     </v-btn>
@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import { mdiArrowLeft } from "@mdi/js";
+
 const properties = defineProps<{
   pageHeaderText: string;
   backButtonUrl: string;

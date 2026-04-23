@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import { mdiInformationOutline } from "@mdi/js";
+</script>
 <template>
   <v-row class="align-center">
     <v-col
@@ -7,8 +10,8 @@
       <v-icon
         color="blue"
         size="large"
-        >mdi-information-outline</v-icon
-      >
+        :icon="mdiInformationOutline"
+      />
     </v-col>
     <v-col class="d-flex align-center">
       <p class="mt-5">

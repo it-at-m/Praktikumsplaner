@@ -6,9 +6,8 @@
         class="mt-3"
         size="large"
         v-bind="props"
-      >
-        mdi-information
-      </v-icon>
+        :icon="mdiInformation"
+      />
     </template>
     <span
       >Bei Anforderung einer bestimmten NWK für die Stelle, hier den
@@ -16,3 +15,7 @@
     >
   </v-tooltip>
 </template>
+
+<script setup lang="ts">
+import { mdiInformation } from "@mdi/js";
+</script>

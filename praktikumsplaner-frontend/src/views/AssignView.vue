@@ -40,7 +40,7 @@
     <v-row v-if="!loadingNwk && !loadingPraktikumsstellen">
       <v-spacer></v-spacer>
       <v-btn
-        prepend-icon="mdi-mail"
+        :prepend-icon="mdiMail"
         color="primary"
         class="mr-4"
         @click="openMailWarningDialog"
@@ -62,6 +62,7 @@
   </v-container>
 </template>
 <script setup lang="ts">
+import { mdiMail } from "@mdi/js";
 import { onMounted, ref, watch } from "vue";
 
 import NwkService from "@/api/NwkService";

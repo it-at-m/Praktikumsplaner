@@ -2,7 +2,7 @@
   <div>
     <v-btn
       color="primary"
-      prepend-icon="mdi-tray-arrow-down"
+      :prepend-icon="mdiTrayArrowDown"
       @click="clickExport"
     >
       Exportieren
@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiTrayArrowDown } from "@mdi/js";
 import { ref, watch } from "vue";
 
 import ExportService from "@/api/ExportService";

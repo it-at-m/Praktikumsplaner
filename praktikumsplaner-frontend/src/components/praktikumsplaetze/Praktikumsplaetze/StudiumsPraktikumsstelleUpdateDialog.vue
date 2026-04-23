@@ -2,7 +2,7 @@
   <div>
     <v-btn
       v-if="!iconOnly"
-      prepend-icon="mdi-pencil-outline"
+      :prepend-icon="mdiPencilOutline"
       color="primary"
       variant="outlined"
       @click.stop="openDialog()"
@@ -10,7 +10,7 @@
     </v-btn>
     <v-btn
       v-else
-      icon="mdi-pencil"
+      :icon="mdiPencil"
       variant="text"
       @click.stop="openDialog()"
     ></v-btn>
@@ -211,6 +211,7 @@
 <script setup lang="ts">
 import type Praktikumsstelle from "@/types/Praktikumsstelle";
 
+import { mdiPencil, mdiPencilOutline } from "@mdi/js";
 import { computed, ref } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";

@@ -25,14 +25,15 @@
           color="blue"
           size="large"
           class="mr-3"
-          >mdi-information-outline
-        </v-icon>
+          :icon="mdiInformationOutline"
+        />
         <span>Es sind noch keine Nachwuchskräfte vorhanden.</span>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script setup lang="ts">
+import { mdiInformationOutline } from "@mdi/js";
 import { onMounted, onUnmounted, ref } from "vue";
 
 import NwkCard from "@/components/assign/NwkCard.vue";

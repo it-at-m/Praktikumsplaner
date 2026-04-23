@@ -6,9 +6,8 @@
         color="blue"
         size="large"
         v-bind="props"
-      >
-        mdi-information
-      </v-icon>
+        :icon="mdiInformation"
+      />
     </template>
     <span
       >Die Dringlichkeit gibt an, wie hoch priorisiert der Praktikumsplatz zu
@@ -16,4 +15,7 @@
     >
   </v-tooltip>
 </template>
-<script setup lang="ts"></script>
+
+<script setup lang="ts">
+import { mdiInformation } from "@mdi/js";
+</script>

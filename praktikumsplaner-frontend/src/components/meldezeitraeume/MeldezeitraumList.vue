@@ -16,14 +16,14 @@
               <slot name="card-title-icon"></slot>
             </v-list-item-title>
             <v-list-item-subtitle>
-              <v-icon>mdi-calendar-start</v-icon>
+              <v-icon :icon="mdiCalendarStart" />
               {{
                 useFormatter().formatDateFromString(
                   meldezeitraum.zeitraum.startZeitpunkt
                 )
               }}
 
-              <v-icon>mdi-calendar-end</v-icon>
+              <v-icon :icon="mdiCalendarEnd" />
               {{
                 useFormatter().formatDateFromString(
                   meldezeitraum.zeitraum.endZeitpunkt
@@ -33,7 +33,7 @@
             <template #append>
               <v-btn
                 variant="text"
-                icon="mdi-delete"
+                :icon="mdiDelete"
                 @click="warnBeforeDelete(meldezeitraum)"
               >
               </v-btn>
@@ -59,6 +59,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiCalendarEnd, mdiCalendarStart, mdiDelete } from "@mdi/js";
 import { ref } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";

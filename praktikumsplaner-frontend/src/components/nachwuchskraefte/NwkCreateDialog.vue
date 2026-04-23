@@ -10,7 +10,7 @@
           color="primary"
           v-bind="props"
         >
-          <v-icon>mdi-plus</v-icon>
+          <v-icon :icon="mdiPlus" />
           Erstellen
         </v-btn>
       </template>
@@ -76,6 +76,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiPlus } from "@mdi/js";
 import { ref } from "vue";
 
 import NwkService from "@/api/NwkService";

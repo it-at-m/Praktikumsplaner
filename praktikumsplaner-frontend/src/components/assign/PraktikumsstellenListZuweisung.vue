@@ -45,8 +45,8 @@
           color="blue"
           size="large"
           class="mr-3"
-          >mdi-information-outline</v-icon
-        >
+          :icon="mdiInformationOutline"
+        />
         <span
           >Für den vergangenen Meldezeitraum sind keine Praktikumsstellen
           vorhanden.</span
@@ -56,6 +56,8 @@
   </v-container>
 </template>
 <script setup lang="ts">
+import { mdiInformationOutline } from "@mdi/js";
+
 import PraktikumsstelleCard from "@/components/assign/PraktikumsstelleCardZuweisung.vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 

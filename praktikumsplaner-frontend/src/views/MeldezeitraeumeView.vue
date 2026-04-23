@@ -28,7 +28,7 @@
             @deleted="reloadMeldezeitraeume"
           >
             <template #card-title-icon>
-              <v-icon>mdi-star</v-icon>
+              <v-icon :icon="mdiStar" />
             </template>
             <template #notfoundmessage>
               <p>Kein aktueller Meldezeitraum gefunden.</p>
@@ -73,6 +73,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiStar } from "@mdi/js";
 import { onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";

@@ -28,7 +28,7 @@
         v-if="properties.praktikumsstelle.planstelleVorhanden"
         size="x-large"
         class="icon-top-right-position"
-        icon="mdi-account-star"
+        :icon="mdiAccountStar"
       ></v-icon>
       <v-card-text class="pt-0 mt-0 mb-0 pb-0">
         <p style="white-space: pre-line">
@@ -52,14 +52,14 @@
 
           <template #close>
             <v-icon
-              icon="mdi-close-circle"
+              :icon="mdiCloseCircle"
               @click.stop="openConfirmationDialog(praktikumsstelle)"
             />
           </template>
         </v-chip>
       </v-col>
       <v-btn
-        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+        :icon="show ? mdiChevronUp : mdiChevronDown"
         :class="{ 'custom-card-active': assignedNwk }"
         class="icon-bottom-right-position"
         elevation="0"
@@ -108,6 +108,12 @@
   </v-container>
 </template>
 <script setup lang="ts">
+import {
+  mdiAccountStar,
+  mdiChevronDown,
+  mdiChevronUp,
+  mdiCloseCircle,
+} from "@mdi/js";
 import { computed, ref } from "vue";
 
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
