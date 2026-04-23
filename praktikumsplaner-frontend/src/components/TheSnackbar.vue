@@ -41,7 +41,7 @@ watch(
   () => {
     backgroundColor.value = snackbarStore.level;
     if (backgroundColor.value === "error") {
-      timeout.value = 0;
+      timeout.value = -1;
       btnTextColor.value = "errorBtnText";
     } else if (backgroundColor.value === "warning") {
       timeout.value = defaultTimeout;
