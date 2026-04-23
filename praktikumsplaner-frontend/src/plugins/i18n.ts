@@ -41,13 +41,12 @@ const datetimeFormats = {
       second: "2-digit",
     },
   },
-};
+} as const;
 
 export default createI18n<[MessageSchema], Locales>({
   legacy: false,
   locale: "de",
   fallbackLocale: "de",
   messages,
-  // @ts-expect-error false positive for type mismatch (no tsc compilation error)
   datetimeFormats,
 });

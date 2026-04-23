@@ -3,7 +3,7 @@
     id="snackbar"
     v-model="show"
     :color="backgroundColor"
-    :close-delay="timeout"
+    :timeout="timeout"
   >
     <v-row class="snackbarContent">
       <v-col class="message"> {{ message }}</v-col>
