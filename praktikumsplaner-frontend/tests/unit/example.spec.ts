@@ -10,29 +10,29 @@ import TheSnackbar from "@/components/TheSnackbar.vue";
 const pinia = createPinia();
 
 describe("TheSnackbar.vue", () => {
-    let vuetify: ReturnType<typeof createVuetify>;
+  let vuetify: ReturnType<typeof createVuetify>;
 
-    beforeAll(() => {
-        createPinia();
-        createVuetify();
+  beforeAll(() => {
+    createPinia();
+    createVuetify();
+  });
+
+  beforeEach(() => {
+    vuetify = createVuetify({
+      components,
+      directives,
+    });
+  });
+
+  it("renders props.message when passed", () => {
+    const message = "Hello_World";
+    const wrapper = shallowMount(TheSnackbar, {
+      global: {
+        plugins: [pinia, vuetify],
+      },
+      props: { message: message },
     });
 
-    beforeEach(() => {
-        vuetify = createVuetify({
-            components,
-            directives,
-        });
-    });
-
-    it("renders props.message when passed", () => {
-        const message = "Hello_World";
-        const wrapper = shallowMount(TheSnackbar, {
-            global: {
-                plugins: [pinia, vuetify],
-            },
-            props: { message: message },
-        });
-
-        expect(wrapper.html()).toContain(message);
-    });
+    expect(wrapper.html()).toContain(message);
+  });
 });

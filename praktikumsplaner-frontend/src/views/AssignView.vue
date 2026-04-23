@@ -1,67 +1,68 @@
 <template>
-    <v-container>
-        <page-title
-            back-button-url="/"
-            page-header-text="Zuweisung"
-        ></page-title>
-        <v-row>
-            <v-col
-                cols="5"
-                class="overflow-y-auto"
-                style="max-height: 70vh"
-            >
-                <v-skeleton-loader
-                    v-if="loadingNwk"
-                    type="image"
-                ></v-skeleton-loader>
-                <active-nwk-list-for-zuweisung
-                    v-else
-                    v-model="nwks"
-                    class="overflow-y-auto"
-                />
-            </v-col>
-            <v-divider vertical />
-            <v-col
-                cols="6"
-                class="overflow-y-auto"
-                style="max-height: 70vh"
-            >
-                <v-skeleton-loader
-                    v-if="loadingPraktikumsstellen"
-                    type="image"
-                ></v-skeleton-loader>
-                <praktikumsstellen-list-zuweisung
-                    v-else
-                    :praktikumsstellen-map="praktikumsstellenMap"
-                    class="overflow-y-auto"
-                />
-            </v-col>
-        </v-row>
-        <v-row v-if="!loadingNwk && !loadingPraktikumsstellen">
-            <v-spacer></v-spacer>
-            <v-btn
-                prepend-icon="mdi-mail"
-                color="primary"
-                class="mr-4"
-                @click="openMailWarningDialog"
-                >Mails senden</v-btn
-            >
-            <excel-export
-                :start-download="startDownload"
-                @click="openExcelWarnings"
-                @exported="exported"
-            ></excel-export>
-        </v-row>
-        <warning-dialog
-            :visible="showWarningDialog"
-            :warnings="warnings"
-            @accepted="acceptedWarningDialog"
-            @rejected="rejectedWarningDialog"
+  <v-container>
+    <page-title
+      back-button-url="/"
+      page-header-text="Zuweisung"
+    ></page-title>
+    <v-row>
+      <v-col
+        cols="5"
+        class="overflow-y-auto"
+        style="max-height: 70vh"
+      >
+        <v-skeleton-loader
+          v-if="loadingNwk"
+          type="image"
+        ></v-skeleton-loader>
+        <active-nwk-list-for-zuweisung
+          v-else
+          v-model="nwks"
+          class="overflow-y-auto"
         />
-        <send-mails-dialog v-model:show-dialog="showSendMailDialog" />
-    </v-container>
+      </v-col>
+      <v-divider vertical />
+      <v-col
+        cols="6"
+        class="overflow-y-auto"
+        style="max-height: 70vh"
+      >
+        <v-skeleton-loader
+          v-if="loadingPraktikumsstellen"
+          type="image"
+        ></v-skeleton-loader>
+        <praktikumsstellen-list-zuweisung
+          v-else
+          :praktikumsstellen-map="praktikumsstellenMap"
+          class="overflow-y-auto"
+        />
+      </v-col>
+    </v-row>
+    <v-row v-if="!loadingNwk && !loadingPraktikumsstellen">
+      <v-spacer></v-spacer>
+      <v-btn
+        :prepend-icon="mdiMail"
+        color="primary"
+        class="mr-4"
+        @click="openMailWarningDialog"
+        >Mails senden</v-btn
+      >
+      <excel-export
+        :start-download="startDownload"
+        @click="openExcelWarnings"
+        @exported="exported"
+      ></excel-export>
+    </v-row>
+    <warning-dialog
+      :visible="showWarningDialog"
+      :warnings="warnings"
+      @accepted="acceptedWarningDialog"
+      @rejected="rejectedWarningDialog"
+    />
+    <send-mails-dialog v-model:show-dialog="showSendMailDialog" />
+  </v-container>
 </template>
 <script setup lang="ts">
+import { mdiMail } from "@mdi/js";
 import { onMounted, ref, watch } from "vue";
 
 import NwkService from "@/api/NwkService";
@@ -74,7 +75,7 @@ import PageTitle from "@/components/common/PageTitle.vue";
 import WarningDialog from "@/components/common/WarningDialog.vue";
 import { useSecurity } from "@/composables/security";
 import { useWarnings } from "@/composables/warningGenerator";
-import router from "@/router";
+import router from "@/plugins/router";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import Nwk from "@/types/Nwk";
@@ -90,7 +91,7 @@ const showWarningDialog = ref(false);
 const warnings = ref<Warning[]>([]);
 const nwks = ref<Nwk[]>([]);
 const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
-    new Map<string, Praktikumsstelle[]>()
+  new Map<string, Praktikumsstelle[]>()
 );
 const startDownload = ref(false);
 const isExcelWarningDialog = ref(false);
@@ -98,103 +99,100 @@ const route = router.currentRoute.value;
 const userStore = useUserStore();
 
 function collectWarnings() {
-    const stellen: Praktikumsstelle[] = [];
-    for (const value of praktikumsstellenMap.value.values()) {
-        for (const stelle of value) {
-            stellen.push(stelle);
-        }
+  const stellen: Praktikumsstelle[] = [];
+  for (const value of praktikumsstellenMap.value.values()) {
+    for (const stelle of value) {
+      stellen.push(stelle);
     }
+  }
 
-    warnings.value = warningsGenerator.getAfterAssignmentWarnings(
-        stellen,
-        nwks.value
-    );
+  warnings.value = warningsGenerator.getAfterAssignmentWarnings(
+    stellen,
+    nwks.value
+  );
 }
 
 function exported() {
-    startDownload.value = false;
+  startDownload.value = false;
 }
 
 function openMailWarningDialog() {
-    collectWarnings();
-    showWarningDialog.value = true;
-    isExcelWarningDialog.value = false;
+  collectWarnings();
+  showWarningDialog.value = true;
+  isExcelWarningDialog.value = false;
 }
 
 function openExcelWarnings() {
-    collectWarnings();
-    showWarningDialog.value = true;
-    isExcelWarningDialog.value = true;
+  collectWarnings();
+  showWarningDialog.value = true;
+  isExcelWarningDialog.value = true;
 }
 
 function openQueryPraktikumsPeriodDialog() {
-    showSendMailDialog.value = true;
+  showSendMailDialog.value = true;
 }
 
 function acceptedWarningDialog() {
-    if (isExcelWarningDialog.value) {
-        startDownload.value = true;
-    } else {
-        openQueryPraktikumsPeriodDialog();
-    }
-    showWarningDialog.value = false;
+  if (isExcelWarningDialog.value) {
+    startDownload.value = true;
+  } else {
+    openQueryPraktikumsPeriodDialog();
+  }
+  showWarningDialog.value = false;
 }
 
 function rejectedWarningDialog() {
-    showWarningDialog.value = false;
+  showWarningDialog.value = false;
 }
 
 onMounted(() => {
-    if (userStore.username) {
+  if (userStore.username) {
+    redirectIfUnauthorized();
+  } else {
+    // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
+    watch(
+      () => userStore.roles,
+      () => {
         redirectIfUnauthorized();
-    } else {
-        // This Watcher is responsible for redirecting the user to the AccessDenied view if his roles do not suffice
-        watch(
-            () => userStore.roles,
-            () => {
-                redirectIfUnauthorized();
-            }
-        );
-    }
-    getAllActiveNwks();
-    getAllPraktikumsstellenInMostRecentMeldezeitraum();
+      }
+    );
+  }
+  getAllActiveNwks();
+  getAllPraktikumsstellenInMostRecentMeldezeitraum();
 });
 
 emitter.on("praktikumsstelleUpdated", () => {
-    getAllPraktikumsstellenInMostRecentMeldezeitraum();
+  getAllPraktikumsstellenInMostRecentMeldezeitraum();
 });
 
 function redirectIfUnauthorized() {
-    const requiresRoles =
-        route.meta.requiresRole != undefined
-            ? (route.meta.requiresRole as string[])
-            : undefined;
-    const security = useSecurity();
-    if (
-        requiresRoles !== undefined &&
-        !security.checkForAnyRole(requiresRoles)
-    ) {
-        router.push("/AccessDenied");
-    }
+  const requiresRoles =
+    route.meta.requiresRole != undefined
+      ? (route.meta.requiresRole as string[])
+      : undefined;
+  const security = useSecurity();
+  if (requiresRoles !== undefined && !security.checkForAnyRole(requiresRoles)) {
+    router.push("/AccessDenied");
+  }
 }
 
 function getAllActiveNwks() {
-    NwkService.getAllUnassignedNwks(loadingNwk).then((fetchedNwks) => {
-        nwks.value = [...fetchedNwks];
-    });
+  NwkService.getAllUnassignedNwks(loadingNwk).then((fetchedNwks) => {
+    nwks.value = [...fetchedNwks];
+  });
 }
 
 function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
-    const helperMap = new Map<string, Praktikumsstelle[]>();
-    PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
-        "most_recent"
-    )
-        .then((fetchedStellen) => {
-            for (const [key, value] of Object.entries(fetchedStellen)) {
-                helperMap.set(key, value);
-            }
-            praktikumsstellenMap.value = helperMap;
-        })
-        .finally(() => (loadingPraktikumsstellen.value = false));
+  const helperMap = new Map<string, Praktikumsstelle[]>();
+  PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
+    "most_recent"
+  )
+    .then((fetchedStellen) => {
+      for (const [key, value] of Object.entries(fetchedStellen)) {
+        helperMap.set(key, value);
+      }
+      praktikumsstellenMap.value = helperMap;
+    })
+    .finally(() => (loadingPraktikumsstellen.value = false));
 }
 </script>
