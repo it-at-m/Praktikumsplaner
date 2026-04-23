@@ -1,3 +1,5 @@
+import type { DateTimeOptions } from "vue-i18n";
+
 import { createI18n } from "vue-i18n";
 import { de as deVuetify } from "vuetify/locale";
 
@@ -15,7 +17,7 @@ const messages = {
   },
 };
 
-const datetimeFormats = {
+const datetimeFormats: Record<Locales, Record<string, DateTimeOptions>> = {
   de: {
     // TT.MM.JJJJ
     short: {
