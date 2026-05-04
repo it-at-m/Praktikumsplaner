@@ -1,13 +1,14 @@
 <template>
-  <v-row class="PageHeader">
+  <h1 class="mb-4">
     <v-btn
+      v-if="backButtonUrl"
       :to="{ path: backButtonUrl }"
       :icon="mdiArrowLeft"
       elevation="0"
     >
     </v-btn>
-    <span class="text-h5">{{ properties.pageHeaderText }}</span>
-  </v-row>
+    {{ properties.pageHeaderText }}
+  </h1>
 </template>
 
 <script setup lang="ts">
@@ -15,23 +16,6 @@ import { mdiArrowLeft } from "@mdi/js";
 
 const properties = defineProps<{
   pageHeaderText: string;
-  backButtonUrl: string;
+  backButtonUrl?: string;
 }>();
 </script>
-
-<style scoped>
-.PageHeader {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin: 1%;
-}
-
-.PageHeader > .v-btn {
-  margin-right: 10px;
-}
-
-.text-h5 {
-  margin: 0;
-}
-</style>
