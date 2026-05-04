@@ -133,17 +133,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.v-navigation-drawer .v-list-item-title {
-  font-size: 16px;
-  padding-bottom: 1px;
-}
-
 .no-underline,
 .no-underline:hover {
   text-decoration: none;
-}
-
-.customfooter {
-  justify-content: center;
 }
 </style>
