@@ -75,12 +75,6 @@
           </v-fade-transition>
         </router-view>
       </v-container>
-      <v-footer
-        class="customfooter"
-        app
-      >
-        Made with 💛 in Munich
-      </v-footer>
     </v-main>
   </v-app>
 </template>
