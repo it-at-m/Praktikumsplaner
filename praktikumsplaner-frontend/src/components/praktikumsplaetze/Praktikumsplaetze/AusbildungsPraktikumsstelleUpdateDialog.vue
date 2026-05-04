@@ -26,7 +26,11 @@
           >Praktikumsstelle bearbeiten
         </v-card-title>
         <v-container>
-          <v-container class="box">
+          <v-sheet
+            border
+            rounded
+            class="pa-3 mb-3"
+          >
             <v-row>
               <v-col>
                 <span class="text-h6">Stellenbeschreibung</span>
@@ -98,8 +102,12 @@
                 </taetigkeiten-input>
               </v-col>
             </v-row>
-          </v-container>
-          <v-container class="box">
+          </v-sheet>
+          <v-sheet
+            border
+            rounded
+            class="pa-3 mb-3"
+          >
             <v-row>
               <v-col>
                 <span class="text-h6">Nachwuchskraft</span>
@@ -146,8 +154,12 @@
                 <wuensche-tooltip></wuensche-tooltip>
               </v-col>
             </v-row>
-          </v-container>
-          <v-container class="box">
+          </v-sheet>
+          <v-sheet
+            border
+            rounded
+            class="pa-3 mb-3"
+          >
             <v-row>
               <v-col>
                 <span class="text-h6">örtliche*r Ausbilder*in</span>
@@ -193,8 +205,12 @@
                 <minderjaehrig-moeglich-tooltip></minderjaehrig-moeglich-tooltip>
               </v-col>
             </v-row>
-          </v-container>
-          <v-container class="box">
+          </v-sheet>
+          <v-sheet
+            border
+            rounded
+            class="pa-3 mb-3"
+          >
             <v-row>
               <v-col>
                 <span class="text-h6">Meldezeitraum Auswahl</span>
@@ -211,9 +227,9 @@
                 ></meldezeitraum-select>
               </v-col>
             </v-row>
-          </v-container>
+          </v-sheet>
         </v-container>
-        <v-card-actions>
+        <v-card-actions class="pb-4">
           <v-spacer />
           <v-btn
             color="primary"
@@ -223,6 +239,7 @@
             Abbrechen
           </v-btn>
           <v-btn
+            class="mr-2"
             color="primary"
             variant="flat"
             :disabled="hasAssignedNwk"
