@@ -26,13 +26,13 @@
         {{ getCardText(properties.praktikumsstelle) }}
       </p></v-card-text
     >
-    <v-col>
+    <v-col v-if="assignedNwk || loading">
       <v-skeleton-loader
         v-if="loading"
         type="chip"
       ></v-skeleton-loader>
       <v-chip
-        v-if="assignedNwk && !loading"
+        v-else-if="assignedNwk"
         :color="getNwkColor(assignedNwk)"
         variant="flat"
         class="chip"
@@ -64,18 +64,6 @@
             {{ getCardDetailText(properties.praktikumsstelle) }}
           </p>
         </v-card-text>
-        <v-card-actions>
-          <ausbildungs-praktikumsstelle-update-dialog
-            v-if="isAusbildungsPraktikumsstelle"
-            v-model="praktikumsstelle"
-            :icon-only="true"
-          ></ausbildungs-praktikumsstelle-update-dialog>
-          <studiums-praktikumsstelle-update-dialog
-            v-else-if="isStudiumsPraktikumsstelle"
-            v-model="praktikumsstelle"
-            :icon-only="true"
-          ></studiums-praktikumsstelle-update-dialog>
-        </v-card-actions>
       </div>
     </v-expand-transition>
   </v-card>
