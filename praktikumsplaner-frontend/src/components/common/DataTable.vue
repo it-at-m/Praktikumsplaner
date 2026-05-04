@@ -61,7 +61,6 @@ const props = withDefaults(
     loading?: boolean;
     groupByOptions?: GroupOption[];
     sortBy?: SortItem[];
-    showGroupBy?: boolean;
     showExpand?: boolean;
     expandOnClick?: boolean;
   }>(),
@@ -69,7 +68,6 @@ const props = withDefaults(
     loading: false,
     groupByOptions: () => [],
     sortBy: () => [],
-    showGroupBy: true,
     showExpand: false,
     expandOnClick: false,
   }

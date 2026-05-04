@@ -6,7 +6,7 @@
     class="pl-2"
   >
     <v-list-item
-      v-for="praktikumsstelle in praktikumsstellen"
+      v-for="praktikumsstelle in properties.praktikumsstellen"
       :key="praktikumsstelle.id"
       class="px-0"
       :ripple="false"

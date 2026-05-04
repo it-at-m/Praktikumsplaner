@@ -96,13 +96,8 @@ const route = router.currentRoute.value;
 const userStore = useUserStore();
 
 function collectWarnings() {
-  const stellen: Praktikumsstelle[] = [];
-  for (const value of praktikumsstellen.value.values()) {
-    stellen.push(value);
-  }
-
   warnings.value = warningsGenerator.getAfterAssignmentWarnings(
-    stellen,
+    praktikumsstellen.value,
     nwks.value
   );
 }

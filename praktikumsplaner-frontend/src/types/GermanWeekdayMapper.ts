@@ -28,24 +28,22 @@ export default class GermanWeekdayMapper {
     "SUNDAY",
   ];
 
-  public getGermanDays(daysString: string[]): string[] {
+  private normalizeAndSort(daysString: string[]): string[] {
     const normalized = daysString.map((d) => d.trim().toUpperCase());
-    const sortedDays = normalized.sort(
+    return normalized.sort(
       (a, b) => this.dayOrder.indexOf(a) - this.dayOrder.indexOf(b)
     );
+  }
 
-    return sortedDays.map(
+  public getGermanDays(daysString: string[]): string[] {
+    return this.normalizeAndSort(daysString).map(
       (day) =>
         this.germanWeekdayMap[day as keyof typeof this.germanWeekdayMap] || day
     );
   }
 
   public getGermanShortDays(daysString: string[]): string[] {
-    const normalized = daysString.map((d) => d.trim().toUpperCase());
-    const sortedDays = normalized.sort(
-      (a, b) => this.dayOrder.indexOf(a) - this.dayOrder.indexOf(b)
-    );
-    return sortedDays.map(
+    return this.normalizeAndSort(daysString).map(
       (day) =>
         this.germanWeekdayShortMap[
           day as keyof typeof this.germanWeekdayShortMap

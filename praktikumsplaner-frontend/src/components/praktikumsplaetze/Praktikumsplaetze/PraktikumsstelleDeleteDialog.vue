@@ -35,8 +35,8 @@ function openDialog() {
 }
 
 function performDelete() {
-  visible.value = false;
   PraktikumsstellenService.deletePraktikumsstelle(props.stelle).then(() => {
+    visible.value = false;
     emit("deleted");
   });
 }

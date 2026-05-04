@@ -347,14 +347,14 @@ function uploadPraktikumsstelle() {
       MeldungService.uploadAusbildungsPraktikumsstelleWithMeldezeitraum(
         praktikumsstelle.value,
         loading
-      ).finally(() => {
+      ).then(() => {
         resetForm();
       });
     } else {
       MeldungService.uploadAusbildungsPraktikumsstelle(
         praktikumsstelle.value,
         loading
-      ).finally(() => {
+      ).then(() => {
         resetForm();
       });
     }

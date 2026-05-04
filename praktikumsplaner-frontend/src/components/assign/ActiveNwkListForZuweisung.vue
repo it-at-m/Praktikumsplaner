@@ -1,6 +1,6 @@
 <template>
   <v-list
-    v-if="properties.modelValue && modelValue.length > 0"
+    v-if="properties.modelValue && properties.modelValue.length > 0"
     v-model:selected="selectedNwks"
     class="pr-2"
   >
@@ -15,7 +15,10 @@
       <nwk-card :nwk="nwk" />
     </v-list-item>
   </v-list>
-  <v-row justify="center">
+  <v-row
+    v-else
+    justify="center"
+  >
     <v-col
       cols="auto"
       class="d-flex align-center justify-center"

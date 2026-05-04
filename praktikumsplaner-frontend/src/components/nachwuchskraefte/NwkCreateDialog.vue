@@ -108,9 +108,9 @@ function saveNwk() {
   form.value?.validate().then((validation: { valid: boolean }) => {
     if (!validation.valid) return;
 
-    close();
     NwkService.saveNwk(nwk.value, loading)
       .then(() => {
+        close();
         emitter.emit("nwkCreated");
       })
       .finally(() => {

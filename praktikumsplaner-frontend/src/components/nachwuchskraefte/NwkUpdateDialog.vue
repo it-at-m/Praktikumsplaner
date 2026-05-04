@@ -2,6 +2,7 @@
   <v-btn
     :icon="mdiPencilOutline"
     color="primary"
+    aria-label="Bearbeiten"
     @click="visible = true"
   ></v-btn>
   <v-dialog
@@ -97,8 +98,8 @@ function updateNwk() {
   form.value?.validate().then((validation: { valid: boolean }) => {
     if (!validation.valid) return;
 
-    cancel();
     NwkService.updateNwk(nwkToUpdate.value, loading).then(() => {
+      cancel();
       emits("updated");
     });
   });

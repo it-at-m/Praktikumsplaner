@@ -18,7 +18,6 @@
     </v-row>
   </v-container>
   <v-container v-else>
-    <div v-if="!activeMeldezeitraum"></div>
     <v-form
       v-if="canStellenBeSubmitted()"
       ref="form"
@@ -229,8 +228,6 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const requiredFieldSymbol = "*";
 
-const activeMeldezeitraum = ref<boolean>(false);
-
 const userStore = useUserStore();
 const praktikumsstelle = ref<Praktikumsstelle>(
   new Praktikumsstelle(userStore.department)
@@ -326,14 +323,14 @@ function uploadPraktikumsstelle() {
       MeldungService.uploadStudiumsPraktikumsstelleWithMeldezeitraum(
         praktikumsstelle.value,
         loading
-      ).finally(() => {
+      ).then(() => {
         resetForm();
       });
     } else {
       MeldungService.uploadStudiumsPraktikumsstelle(
         praktikumsstelle.value,
         loading
-      ).finally(() => {
+      ).then(() => {
         resetForm();
       });
     }

@@ -323,11 +323,11 @@ function updatePraktikumsstelle() {
   form.value?.validate().then((validation: { valid: boolean }) => {
     if (!validation.valid) return;
 
-    closeDialog();
     PraktikumsstellenService.updatePraktikumsstelle(
       praktikumsstelle.value,
       loading
     ).then(() => {
+      closeDialog();
       emits("update:modelValue", praktikumsstelle.value);
       emitter.emit("praktikumsstelleUpdated");
     });
