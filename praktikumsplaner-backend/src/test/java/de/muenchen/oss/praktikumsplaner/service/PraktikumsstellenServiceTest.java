@@ -4,7 +4,6 @@ import static de.muenchen.oss.praktikumsplaner.TestUtils.getJwtAuthenticationTok
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -38,7 +37,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -202,19 +200,10 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        Map<String, List<PraktikumsstelleDto>> result = service.getRecentPraktikumsstellenGroupedByDienststelle();
+        List<PraktikumsstelleDto> result = service.getRecentPraktikumsstellen();
 
         assertNotNull(result);
-        assertEquals(4, result.size());
-        assertTrue(result.containsKey("ITM-GL1"));
-        assertTrue(result.containsKey("ITM-DKL2"));
-        assertTrue(result.containsKey("ITM-DKL-IL"));
-        assertTrue(result.containsKey("ITM-SLP3"));
-
-        assertEquals(2, result.get("ITM-SLP3").size());
-        assertEquals(1, result.get("ITM-DKL2").size());
-        assertEquals(1, result.get("ITM-DKL-IL").size());
-        assertEquals(1, result.get("ITM-GL1").size());
+        assertEquals(5, result.size());
     }
 
     @Test
@@ -259,13 +248,10 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        Map<String, List<PraktikumsstelleDto>> result = service.getRecentPraktikumsstellenGroupedByDienststelle();
+        List<PraktikumsstelleDto> result = service.getRecentPraktikumsstellen();
 
         assertNotNull(result);
-        assertEquals(2, result.size());
-
-        assertEquals(1, result.get("ITM-DKL2").size());
-        assertEquals(2, result.get("ITM-SLP3").size());
+        assertEquals(3, result.size());
     }
 
     @Test
@@ -307,19 +293,10 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        Map<String, List<PraktikumsstelleDto>> result = service.getAllInCurrentMeldezeitraumGroupedByDienststelle();
+        List<PraktikumsstelleDto> result = service.getAllInCurrentMeldezeitraum();
 
         assertNotNull(result);
-        assertEquals(4, result.size());
-        assertTrue(result.containsKey("ITM-GL1"));
-        assertTrue(result.containsKey("ITM-DKL2"));
-        assertTrue(result.containsKey("ITM-DKL-IL"));
-        assertTrue(result.containsKey("ITM-SLP3"));
-
-        assertEquals(2, result.get("ITM-SLP3").size());
-        assertEquals(1, result.get("ITM-DKL2").size());
-        assertEquals(1, result.get("ITM-DKL-IL").size());
-        assertEquals(1, result.get("ITM-GL1").size());
+        assertEquals(5, result.size());
     }
 
     @Test
@@ -364,13 +341,10 @@ public class PraktikumsstellenServiceTest {
         when(mapper.toDto(any(StudiumsPraktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((StudiumsPraktikumsstelle) invocation.getArguments()[0]));
 
-        Map<String, List<PraktikumsstelleDto>> result = service.getAllInCurrentMeldezeitraumGroupedByDienststelle();
+        List<PraktikumsstelleDto> result = service.getAllInCurrentMeldezeitraum();
 
         assertNotNull(result);
-        assertEquals(2, result.size());
-
-        assertEquals(2, result.get("ITM-SLP3").size());
-        assertEquals(1, result.get("ITM-DKL2").size());
+        assertEquals(3, result.size());
     }
 
     @Test
