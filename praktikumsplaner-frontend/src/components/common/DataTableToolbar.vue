@@ -5,17 +5,17 @@
         v-model="internalSearch"
         variant="outlined"
         density="comfortable"
-        :label="searchLabel"
+        label="Suche"
         hide-details
         clearable
       />
     </v-col>
-    <v-col v-if="showGroupBy">
+    <v-col v-if="(props.groupByOptions?.length || 0) > 0">
       <v-select
         v-model="internalGroupByRaw"
         variant="outlined"
         density="comfortable"
-        :label="groupByLabel"
+        label="Gruppierung"
         hide-details
         clearable
         :items="groupByOptions"
@@ -28,29 +28,23 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-interface GroupOption { title: string; value: string }
+interface GroupOption {
+  title: string;
+  value: string;
+}
 
 const props = withDefaults(
   defineProps<{
     search: string | undefined;
     groupByRaw: string | undefined;
     groupByOptions?: GroupOption[];
-    showGroupBy?: boolean;
-    searchLabel?: string;
-    groupByLabel?: string;
   }>(),
   {
     groupByOptions: () => [],
-    showGroupBy: true,
-    searchLabel: "Suche",
-    groupByLabel: "Gruppierung",
   }
 );
 
-const emit = defineEmits<{
-  (e: "update:search", value: string | undefined): void;
-  (e: "update:groupByRaw", value: string | undefined): void;
-}>();
+const emit = defineEmits<(e: "update:search" | "update:groupByRaw", value: string | undefined) => void>();
 
 // v-model proxies
 const internalSearch = computed({

@@ -7,26 +7,27 @@
       <data-table-toolbar
         v-model:search="internalSearch"
         v-model:group-by-raw="internalGroupByRaw"
-        :group-by-options="groupByOptions"
-        :show-group-by="showGroupBy"
-        :search-label="searchLabel"
-        :group-by-label="groupByLabel"
+        :group-by-options="props.groupByOptions"
       />
     </template>
     <v-data-table
-      :headers="headers"
-      :items="items"
+      :headers="props.headers"
+      :items="props.items"
       :group-by="groupBy"
       :search="internalSearch"
-      :sort-by="sortByProp"
-      :loading="loading"
-      :fixed-header="fixedHeader"
-      :hide-default-footer="hideFooter"
-      :show-expand="showExpand"
+      :sort-by="props.sortBy"
+      :loading="props.loading"
+      fixed-header
+      hide-default-footer
+      :show-expand="props.showExpand"
+      :expand-on-click="props.expandOnClick"
       v-bind="$attrs"
     >
       <template #[`item.actions`]="slotProps">
-        <v-btn-group density="comfortable">
+        <v-btn-group
+          density="comfortable"
+          @click.stop
+        >
           <slot
             name="item.actions"
             v-bind="slotProps"
@@ -50,12 +51,16 @@ import { computed, ref } from "vue";
 
 import DataTableToolbar from "@/components/common/DataTableToolbar.vue";
 
-type GroupOption = { title: string; value: string };
+interface GroupOption {
+  title: string;
+  value: string;
+}
 
 defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(
   defineProps<{
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     headers: any[];
     items: any[] | undefined;
     loading?: boolean;
@@ -63,11 +68,8 @@ const props = withDefaults(
     groupByRaw?: string; // deprecated external control
     sortBy?: SortItem[];
     showGroupBy?: boolean;
-    searchLabel?: string;
-    groupByLabel?: string;
-    fixedHeader?: boolean;
-    hideFooter?: boolean;
     showExpand?: boolean;
+    expandOnClick?: boolean;
   }>(),
   {
     loading: false,
@@ -75,11 +77,8 @@ const props = withDefaults(
     groupByRaw: undefined,
     sortBy: () => [],
     showGroupBy: true,
-    searchLabel: "Suche",
-    groupByLabel: "Gruppierung",
-    fixedHeader: true,
-    hideFooter: true,
     showExpand: false,
+    expandOnClick: false,
   }
 );
 
@@ -92,17 +91,4 @@ const groupBy = computed<SortItem[]>(() => {
     ? [{ key: internalGroupByRaw.value, order: "asc" }]
     : [];
 });
-
-// passthroughs for v-data-table bindings
-const headers = computed(() => props.headers);
-const items = computed(() => props.items);
-const loading = computed(() => props.loading);
-const groupByOptions = computed(() => props.groupByOptions);
-const showGroupBy = computed(() => props.showGroupBy);
-const searchLabel = computed(() => props.searchLabel);
-const groupByLabel = computed(() => props.groupByLabel);
-const fixedHeader = computed(() => props.fixedHeader);
-const hideFooter = computed(() => props.hideFooter);
-const showExpand = computed(() => props.showExpand);
-const sortByProp = computed(() => props.sortBy);
 </script>
