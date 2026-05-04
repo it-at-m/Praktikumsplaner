@@ -1,53 +1,51 @@
 <template>
-  <div>
-    <v-btn
-      :prepend-icon="mdiTrayArrowUp"
-      color="primary"
-      @click="visible = true"
-    >
-      Datei Hochladen
-    </v-btn>
-    <v-dialog
-      v-model="visible"
-      persistent
-      max-width="550"
-    >
-      <v-form ref="form">
-        <v-card>
-          <v-card-title class="text-h5 font-weight-bold">
-            Datei hochladen
-          </v-card-title>
-          <v-card-text>
-            <v-file-input
-              v-model="file"
-              :accept="excelFormat"
-              :rules="rules"
-              label="Datei auswählen"
-              :prepend-icon="mdiTrayArrowUp"
-            ></v-file-input>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              color="primary"
-              variant="outlined"
-              @click="cancel()"
-            >
-              Abbrechen
-            </v-btn>
-            <v-btn
-              color="primary"
-              variant="flat"
-              @click="uploadFile()"
-            >
-              Hochladen
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-form>
-    </v-dialog>
-    <progress-circular-overlay :loading="loading" />
-  </div>
+  <v-btn
+    :prepend-icon="mdiTrayArrowUp"
+    color="primary"
+    @click="visible = true"
+  >
+    Datei Hochladen
+  </v-btn>
+  <v-dialog
+    v-model="visible"
+    persistent
+    max-width="550"
+  >
+    <v-form ref="form">
+      <v-card>
+        <v-card-title class="text-h5 font-weight-bold">
+          Datei hochladen
+        </v-card-title>
+        <v-card-text>
+          <v-file-input
+            v-model="file"
+            :accept="excelFormat"
+            :rules="rules"
+            label="Datei auswählen"
+            :prepend-icon="mdiTrayArrowUp"
+          ></v-file-input>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="primary"
+            variant="outlined"
+            @click="cancel()"
+          >
+            Abbrechen
+          </v-btn>
+          <v-btn
+            color="primary"
+            variant="flat"
+            @click="uploadFile()"
+          >
+            Hochladen
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-form>
+  </v-dialog>
+  <progress-circular-overlay :loading="loading" />
 </template>
 
 <script setup lang="ts">

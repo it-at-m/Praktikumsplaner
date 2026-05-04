@@ -1,99 +1,101 @@
 <template>
-  <v-container>
-    <page-title
-      back-button-url="/"
-      page-header-text="Praktikumsplätze"
-    ></page-title>
-    <v-container v-if="loadingSite">
+  <page-title page-header-text="Praktikumsplätze" />
+  <v-card v-if="activeMeldezeitraum">
+    <template #title>
+      <span> Übersicht aus dem aktuellen Meldezeitraum </span>
+      <small v-if="!security.isAusbildungsleitung() && security.isAusbilder()"
+        >(Nur eigene Plätze von örtl. Ausbilder*innen angezeigt)</small
+      >
+    </template>
+    <template #text>
       <v-row>
-        <v-col cols="10"></v-col>
-        <v-col cols="2">
-          <v-skeleton-loader type="button"> </v-skeleton-loader>
+        <v-col>
+          <v-text-field
+            v-model="search"
+            variant="outlined"
+            density="comfortable"
+            label="Suche"
+            hide-details
+            clearable
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-select
+            v-model="groupByRaw"
+            variant="outlined"
+            density="comfortable"
+            label="Gruppierung"
+            hide-details
+            clearable
+            :items="groupByOptions"
+          ></v-select
+        ></v-col>
+        <v-col cols="2"></v-col>
+        <v-col
+          cols="2"
+          class="d-flex justify-end"
+        >
+          <two-choice-dialog-cards
+            v-if="canStellenBeSubmitted()"
+            v-model="twoChoiceDialogVisible"
+            buttontext="Hinzufügen"
+            :icon="mdiPlus"
+            dialogtitle="Praktikumsplatz melden"
+            dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
+            choice-one-title="Studium"
+            choice-one-subtitle="Praktikumsplatz für Studierende "
+            choice-two-title="Ausbildung"
+            choice-two-subtitle="Praktikumsplatz für Auszubildende"
+            @choice-one="toStudium"
+            @choice-two="toAusbildung"
+          />
         </v-col>
       </v-row>
-    </v-container>
-    <v-container v-else>
-      <div v-if="canStellenBeSubmitted()">
-        <v-row>
-          <v-col cols="10"></v-col>
-          <v-col cols="2">
-            <two-choice-dialog-cards
-              v-model="twoChoiceDialogVisible"
-              buttontext="Hinzufügen"
-              :icon="mdiPlus"
-              dialogtitle="Praktikumsplatz melden"
-              dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
-              choice-one-title="Studium"
-              choice-one-subtitle="Praktikumsplatz für Studierende "
-              choice-two-title="Ausbildung"
-              choice-two-subtitle="Praktikumsplatz für Auszubildende"
-              @choice-one="toStudium"
-              @choice-two="toAusbildung"
-            />
-          </v-col>
-        </v-row>
-        <v-row></v-row>
-        <v-skeleton-loader
-          v-if="loadingUebersicht"
-          type="image"
-        >
-        </v-skeleton-loader>
-        <v-row v-if="!loadingUebersicht">
-          <v-container
-            v-if="!mapIsEmpty"
-            class="box"
+    </template>
+    <v-data-table
+      fixed-header
+      hide-default-footer
+      :headers="headers"
+      :items="praktikumsstellen"
+      :group-by="groupBy"
+      :search="search"
+      :loading="loadingSite || loadingUebersicht"
+      show-expand
+    >
+      <template #[`item.actions`]="{ item }">
+        <v-btn-group density="comfortable">
+          <v-btn
+            :icon="mdiPencil"
+            color="primary"
+            @click=""
+          />
+          <v-btn
+            :icon="mdiDelete"
+            color="error"
+          />
+        </v-btn-group>
+      </template>
+      <template #expanded-row="{ columns, item }">
+        <tr>
+          <td
+            :colspan="columns.length"
+            class="py-2"
           >
-            <span> Übersicht aus dem aktuellen Meldezeitraum </span>
-            <small
-              v-if="!security.isAusbildungsleitung() && security.isAusbilder()"
-              >(Nur eigene Plätze von örtl. Ausbilder*innen angezeigt)</small
-            >
-            <praktikumsstellen-list
-              :praktikumsstellen-map="praktikumsstellenMap"
-            ></praktikumsstellen-list>
-          </v-container>
-          <v-container
-            v-else
-            class="box"
-          >
-            <v-row class="align-center">
-              <v-col
-                cols="auto"
-                class="d-flex align-center"
-              >
-                <v-icon
-                  color="blue"
-                  size="large"
-                  :icon="mdiInformationOutline"
-                />
-              </v-col>
-              <v-col class="d-flex align-center">
-                <p
-                  v-if="
-                    !security.isAusbildungsleitung() && security.isAusbilder()
-                  "
-                >
-                  Für Sie als Ausbilder*in wurden noch keine Praktikumsstellen
-                  für den aktuellen Zeitraum gemeldet.
-                </p>
-                <p v-else>
-                  Es wurden für den aktuellen Zeitraum noch keine
-                  Praktikumsstellen gemeldet.
-                </p>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-row>
-      </div>
-      <div v-else>
-        <kein-meldezeitraum-message></kein-meldezeitraum-message>
-      </div>
-    </v-container>
-  </v-container>
+            <p>
+              {{ generator.getPraktikumsstellenCardDetailText(item) }}
+            </p>
+          </td>
+        </tr>
+      </template>
+    </v-data-table>
+  </v-card>
+  <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
 </template>
 
 <script setup lang="ts">
-import { mdiInformationOutline, mdiPlus } from "@mdi/js";
+import type { SortItem } from "vuetify/lib/components/VDataTable/composables/sort";
+
+import { mdiDelete, mdiPencil, mdiPlus } from "@mdi/js";
 import { computed, onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
@@ -101,8 +103,8 @@ import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import PageTitle from "@/components/common/PageTitle.vue";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
-import PraktikumsstellenList from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstellenList.vue";
 import { useSecurity } from "@/composables/security";
+import { useTextGenerator } from "@/composables/textGenerator.ts";
 import router from "@/plugins/router";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
@@ -114,13 +116,53 @@ const loadingUebersicht = ref<boolean>(false);
 const loadingSite = ref<boolean>(true);
 const security = useSecurity();
 const twoChoiceDialogVisible = ref<boolean>(false);
-const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
-  new Map<string, Praktikumsstelle[]>()
-);
-
-const mapIsEmpty = computed(() => {
-  return praktikumsstellenMap.value.size <= 0 || false;
+const praktikumsstellen = ref<Praktikumsstelle[]>();
+const headers = [
+  { title: "Dienststelle", key: "dienststelle" },
+  {
+    title: "Art",
+    key: "art",
+    value: (item: Praktikumsstelle) =>
+      item.studiengang
+        ? "Studium"
+        : item.ausbildungsrichtung
+          ? "Ausbildung"
+          : "",
+  },
+  {
+    title: "Richtung",
+    key: "richtung",
+    value: (item: Praktikumsstelle) =>
+      item.studiengang
+        ? item.studiengang
+        : item.ausbildungsrichtung
+          ? item.ausbildungsrichtung
+          : "",
+  },
+  {
+    title: "Planstelle",
+    key: "planstelleVorhanden",
+    value: (item: Praktikumsstelle) =>
+      item.planstelleVorhanden ? "Ja" : "Nein",
+  },
+  {
+    title: "Aktionen",
+    key: "actions",
+    align: "end",
+    sortable: false,
+  },
+];
+const search = ref<string>();
+const groupByOptions = [
+  { title: "Dienststelle", value: "dienststelle" },
+  { title: "Richtung", value: "richtung" },
+];
+const groupByRaw = ref<string>();
+const groupBy = computed<SortItem[]>(() => {
+  return groupByRaw.value ? [{ key: groupByRaw.value, order: "asc" }] : [];
 });
+
+const generator = useTextGenerator();
 const route = router.currentRoute.value;
 
 onMounted(() => {
@@ -174,24 +216,14 @@ function toStudium(): void {
 }
 
 function getAllPraktikumsstellenInCurrentMeldezeitraum() {
-  const helperMap = new Map<string, Praktikumsstelle[]>();
   PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
     "current"
   )
     .then((fetchedStellen) => {
-      for (const [key, value] of Object.entries(fetchedStellen)) {
-        helperMap.set(key, value);
-      }
-      praktikumsstellenMap.value = helperMap;
+      praktikumsstellen.value = fetchedStellen;
     })
     .finally(() => {
       loadingSite.value = false;
     });
 }
 </script>
-<style>
-.box {
-  margin: 1%;
-  border: 2px solid #0000001a;
-}
-</style>

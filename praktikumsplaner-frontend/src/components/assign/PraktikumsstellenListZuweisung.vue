@@ -1,36 +1,19 @@
 <template>
   <v-container
-    v-if="
-      properties.praktikumsstellenMap &&
-      properties.praktikumsstellenMap.size > 0
-    "
-    class="mt-2"
+    v-if="properties.praktikumsstellen && properties.praktikumsstellen.length > 0"
   >
-    <v-expansion-panels multiple>
-      <v-expansion-panel
-        v-for="abteilung in properties.praktikumsstellenMap.keys()"
-        :key="abteilung"
-        class="custom-panel"
+    <v-list>
+      <v-list-item
+        v-for="praktikumsstelle in praktikumsstellen"
+        :key="praktikumsstelle.id"
+        :ripple="false"
       >
-        <v-expansion-panel-title>{{ abteilung }} </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <v-list>
-            <v-list-item
-              v-for="praktikumsstelle in properties.praktikumsstellenMap.get(
-                abteilung
-              )"
-              :key="praktikumsstelle.id"
-              :ripple="false"
-            >
-              <praktikumsstelle-card
-                :key="praktikumsstelle.id"
-                :praktikumsstelle="praktikumsstelle"
-              ></praktikumsstelle-card>
-            </v-list-item>
-          </v-list>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-    </v-expansion-panels>
+        <praktikumsstelle-card
+          :key="praktikumsstelle.id"
+          :praktikumsstelle="praktikumsstelle"
+        ></praktikumsstelle-card>
+      </v-list-item>
+    </v-list>
   </v-container>
   <v-container
     v-else
@@ -55,6 +38,7 @@
     </v-row>
   </v-container>
 </template>
+
 <script setup lang="ts">
 import { mdiInformationOutline } from "@mdi/js";
 
@@ -62,11 +46,6 @@ import PraktikumsstelleCard from "@/components/assign/PraktikumsstelleCardZuweis
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const properties = defineProps<{
-  praktikumsstellenMap: Map<string, Praktikumsstelle[]>;
+  praktikumsstellen: Praktikumsstelle[];
 }>();
 </script>
-<style scoped>
-.custom-panel {
-  margin: 2px;
-}
-</style>

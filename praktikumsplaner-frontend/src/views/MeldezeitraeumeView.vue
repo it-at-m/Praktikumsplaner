@@ -1,75 +1,72 @@
 <template>
-  <v-container class="finishedBackground">
-    <page-title
-      back-button-url="/"
-      page-header-text="Meldezeiträume"
+  <page-title
+    class="mb-0"
+    page-header-text="Meldezeiträume"
+  >
+    <template #actions>
+      <create-meldezeitraum
+        v-model="model"
+        @meldezeitraum-added="reloadMeldezeitraeume"
+      ></create-meldezeitraum>
+    </template>
+  </page-title>
+  <v-card>
+    <v-skeleton-loader
+      v-if="loading"
+      type="heading, divider, list-item, heading, divider, list-item, heading"
     >
-    </page-title>
+    </v-skeleton-loader>
     <v-row>
-      <v-col cols="9"></v-col>
       <v-col>
-        <create-meldezeitraum
-          v-model="model"
-          @meldezeitraum-added="reloadMeldezeitraeume"
-        ></create-meldezeitraum>
+        <meldezeitraum-list
+          v-if="!loading"
+          :value="current"
+          @deleted="reloadMeldezeitraeume"
+        >
+          <template #card-title-icon> <v-icon :icon="mdiStar" /> </template>
+          <template #header>
+            <h3>Aktueller Meldezeitraum</h3>
+          </template>
+          <template #notfoundmessage>
+            <p>Kein aktueller Meldezeitraum gefunden.</p>
+          </template>
+        </meldezeitraum-list>
       </v-col>
     </v-row>
-    <v-container class="box">
-      <v-skeleton-loader
-        v-if="loading"
-        type="heading, divider, list-item, heading, divider, list-item, heading"
-      >
-      </v-skeleton-loader>
-      <v-row>
-        <v-col>
-          <meldezeitraum-list
-            v-if="!loading"
-            :value="current"
-            @deleted="reloadMeldezeitraeume"
-          >
-            <template #card-title-icon>
-              <v-icon :icon="mdiStar" />
-            </template>
-            <template #notfoundmessage>
-              <p>Kein aktueller Meldezeitraum gefunden.</p>
-            </template>
-          </meldezeitraum-list>
-        </v-col>
-      </v-row>
-      <v-divider></v-divider>
-      <v-row>
-        <v-col>
-          <meldezeitraum-list
-            v-if="!loading"
-            :value="upcoming"
-            @deleted="reloadMeldezeitraeume"
-            ><template #header>
-              <h3>Kommende Meldezeiträume</h3>
-            </template>
-            <template #notfoundmessage>
-              <p>Keine kommenden Meldezeiträume gefunden.</p>
-            </template>
-          </meldezeitraum-list>
-        </v-col>
-      </v-row>
-      <v-divider></v-divider>
-      <v-row>
-        <v-col>
-          <meldezeitraum-list
-            v-if="!loading"
-            :value="passed"
-            @deleted="reloadMeldezeitraeume"
-            ><template #header>
-              <h3>Vergangene Meldezeiträume</h3>
-            </template>
-            <template #notfoundmessage>
-              <p>Keine vergangenen Meldezeiträume gefunden.</p>
-            </template>
-          </meldezeitraum-list>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-container>
+    <v-divider></v-divider>
+    <v-row>
+      <v-col>
+        <meldezeitraum-list
+          v-if="!loading"
+          :value="upcoming"
+          @deleted="reloadMeldezeitraeume"
+        >
+          <template #header>
+            <h3>Kommende Meldezeiträume</h3>
+          </template>
+          <template #notfoundmessage>
+            <p>Keine kommenden Meldezeiträume gefunden.</p>
+          </template>
+        </meldezeitraum-list>
+      </v-col>
+    </v-row>
+    <v-divider></v-divider>
+    <v-row>
+      <v-col>
+        <meldezeitraum-list
+          v-if="!loading"
+          :value="passed"
+          @deleted="reloadMeldezeitraeume"
+          ><template #header>
+            <h3>Vergangene Meldezeiträume</h3>
+          </template>
+          <template #notfoundmessage>
+            <p>Keine vergangenen Meldezeiträume gefunden.</p>
+          </template>
+        </meldezeitraum-list>
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
 
 <script setup lang="ts">

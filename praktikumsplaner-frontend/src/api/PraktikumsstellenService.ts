@@ -110,7 +110,7 @@ export default {
   },
   getAllPraktikumsstellenInSpecificMeldezeitraum(
     meldezeitraum: string
-  ): Promise<Map<string, Praktikumsstelle[]>> {
+  ): Promise<Praktikumsstelle[]> {
     return fetch(
       `${API_BASE}${PRAKTIKUMSSTELLE_BASE}?meldezeitraum=${meldezeitraum}`,
       getGETConfig()

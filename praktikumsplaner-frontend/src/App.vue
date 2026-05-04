@@ -68,10 +68,12 @@
       </v-list>
     </v-navigation-drawer>
     <v-main>
-      <v-container fluid>
+      <v-container fluid class="pa-8">
         <router-view v-slot="{ Component }">
           <v-fade-transition mode="out-in">
+            <div>
             <component :is="Component" />
+            </div>
           </v-fade-transition>
         </router-view>
       </v-container>

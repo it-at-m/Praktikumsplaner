@@ -1,58 +1,55 @@
 <template>
-  <div>
-    <v-dialog
-      v-model="visible"
-      persistent
-      width="600"
+  <v-btn
+    color="primary"
+    @click="visible = true"
     >
-      <template #activator="{ props }">
+    Meldezeitraum Anlegen
+  </v-btn>
+  <v-dialog
+    v-model="visible"
+    persistent
+    width="600"
+  >
+    <v-card>
+      <v-card-title>Meldezeitraum Anlegen</v-card-title>
+      <v-card-text>
+        <v-col>
+          <v-form ref="form">
+            <v-text-field
+              v-model="meldezeitraum.zeitraumName"
+              label="Zeitraumname"
+              :rules="zeitraumNameRules"
+              variant="outlined"
+              class="mb-3"
+            ></v-text-field>
+            <zeitraum-picker
+              :value="meldezeitraum.zeitraum"
+              :label="'Meldezeitraum'"
+            ></zeitraum-picker>
+          </v-form>
+        </v-col>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
+          variant="outlined"
+          color="primary"
+          class="ml-7 mb-2"
+          @click="clickAbbrechen()"
+        >
+          Zurück
+        </v-btn>
+        <v-spacer></v-spacer>
         <v-btn
           color="primary"
-          v-bind="props"
-          >Meldezeitraum Anlegen
+          variant="elevated"
+          class="mr-7 mb-2"
+          @click="clickSpeichern()"
+        >
+          Speichern
         </v-btn>
-      </template>
-      <v-card>
-        <v-card-title>Meldezeitraum Anlegen</v-card-title>
-        <v-card-text>
-          <v-col>
-            <v-form ref="form">
-              <v-text-field
-                v-model="meldezeitraum.zeitraumName"
-                label="Zeitraumname"
-                :rules="zeitraumNameRules"
-                variant="outlined"
-                class="mb-3"
-              ></v-text-field>
-              <zeitraum-picker
-                :value="meldezeitraum.zeitraum"
-                :label="'Meldezeitraum'"
-              ></zeitraum-picker>
-            </v-form>
-          </v-col>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn
-            variant="outlined"
-            color="primary"
-            class="ml-7 mb-2"
-            @click="clickAbbrechen()"
-          >
-            Zurück
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            variant="elevated"
-            class="mr-7 mb-2"
-            @click="clickSpeichern()"
-          >
-            Speichern
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">

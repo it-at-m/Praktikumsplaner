@@ -1,112 +1,103 @@
 <template>
-  <v-container
+  <v-card
+    width="100%"
+    border
+    @click="show = !show"
     @drop="drop($event, praktikumsstelle)"
     @dragover.prevent
     @dragenter.prevent
   >
-    <v-card
-      class="full-width-card card"
-      :class="{
-        'custom-card-active': assignedNwk,
-        spacer: true,
-      }"
-      elevation="6"
-      :ripple="false"
-      @click="show = !show"
+    <v-card-title
+      >Stelle bei
+      {{ properties.praktikumsstelle.dienststelle }}
+    </v-card-title>
+    <v-card-subtitle v-if="properties.praktikumsstelle.namentlicheAnforderung">
+      Namentliche Anforderung:
+      {{ properties.praktikumsstelle.namentlicheAnforderung }}
+    </v-card-subtitle>
+    <v-icon
+      v-if="properties.praktikumsstelle.planstelleVorhanden"
+      size="x-large"
+      class="icon-top-right-position"
+      :icon="mdiAccountStar"
+    ></v-icon>
+    <v-card-text class="pt-0 mt-0 mb-0 pb-0">
+      <p style="white-space: pre-line">
+        {{ getCardText(properties.praktikumsstelle) }}
+      </p></v-card-text
     >
-      <v-card-title
-        >Stelle bei
-        {{ properties.praktikumsstelle.dienststelle }}
-      </v-card-title>
-      <v-card-subtitle
-        v-if="properties.praktikumsstelle.namentlicheAnforderung"
+    <v-col>
+      <v-skeleton-loader
+        v-if="loading"
+        type="chip"
+      ></v-skeleton-loader>
+      <v-chip
+        v-if="assignedNwk && !loading"
+        :color="getNwkColor(assignedNwk)"
+        variant="flat"
+        class="chip"
       >
-        Namentliche Anforderung:
-        {{ properties.praktikumsstelle.namentlicheAnforderung }}
-      </v-card-subtitle>
-      <v-icon
-        v-if="properties.praktikumsstelle.planstelleVorhanden"
-        size="x-large"
-        class="icon-top-right-position"
-        :icon="mdiAccountStar"
-      ></v-icon>
-      <v-card-text class="pt-0 mt-0 mb-0 pb-0">
-        <p style="white-space: pre-line">
-          {{ getCardText(properties.praktikumsstelle) }}
-        </p></v-card-text
-      >
-      <v-col>
-        <v-skeleton-loader
-          v-if="loading"
-          type="chip"
-        ></v-skeleton-loader>
-        <v-chip
-          v-if="assignedNwk && !loading"
-          :color="getNwkColor(assignedNwk)"
-          variant="flat"
-          class="chip"
-        >
-          <span class="text-truncate chip-text">
-            {{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
-          </span>
+        <span class="text-truncate chip-text">
+          {{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
+        </span>
 
-          <template #close>
-            <v-icon
-              :icon="mdiCloseCircle"
-              @click.stop="openConfirmationDialog(praktikumsstelle)"
-            />
-          </template>
-        </v-chip>
-      </v-col>
-      <v-btn
-        :icon="show ? mdiChevronUp : mdiChevronDown"
-        :class="{ 'custom-card-active': assignedNwk }"
-        class="icon-bottom-right-position"
-        elevation="0"
-        @click.stop="show = !show"
-      ></v-btn>
-      <v-expand-transition>
-        <div v-show="show">
-          <v-divider></v-divider>
-          <v-card-text>
-            <p style="white-space: pre-line">
-              {{ getCardDetailText(properties.praktikumsstelle) }}
-            </p>
-          </v-card-text>
-          <v-card-actions>
-            <ausbildungs-praktikumsstelle-update-dialog
-              v-if="isAusbildungsPraktikumsstelle"
-              v-model="praktikumsstelle"
-              :icon-only="true"
-            ></ausbildungs-praktikumsstelle-update-dialog>
-            <studiums-praktikumsstelle-update-dialog
-              v-else-if="isStudiumsPraktikumsstelle"
-              v-model="praktikumsstelle"
-              :icon-only="true"
-            ></studiums-praktikumsstelle-update-dialog>
-          </v-card-actions>
-        </div>
-      </v-expand-transition>
-    </v-card>
-    <yes-no-dialog-without-activator
-      v-model="warningDialog"
-      :dialogtitle="warningDialogTitle"
-      :dialogtext="warningDialogText"
-      value
-      @no="resetWarningDialog"
-      @yes="assignNwk"
-    ></yes-no-dialog-without-activator>
+        <template #close>
+          <v-icon
+            :icon="mdiCloseCircle"
+            @click.stop="openConfirmationDialog(praktikumsstelle)"
+          />
+        </template>
+      </v-chip>
+    </v-col>
+    <v-btn
+      :icon="show ? mdiChevronUp : mdiChevronDown"
+      :class="{ 'custom-card-active': assignedNwk }"
+      class="icon-bottom-right-position"
+      elevation="0"
+      @click.stop="show = !show"
+    ></v-btn>
+    <v-expand-transition>
+      <div v-show="show">
+        <v-divider></v-divider>
+        <v-card-text>
+          <p style="white-space: pre-line">
+            {{ getCardDetailText(properties.praktikumsstelle) }}
+          </p>
+        </v-card-text>
+        <v-card-actions>
+          <ausbildungs-praktikumsstelle-update-dialog
+            v-if="isAusbildungsPraktikumsstelle"
+            v-model="praktikumsstelle"
+            :icon-only="true"
+          ></ausbildungs-praktikumsstelle-update-dialog>
+          <studiums-praktikumsstelle-update-dialog
+            v-else-if="isStudiumsPraktikumsstelle"
+            v-model="praktikumsstelle"
+            :icon-only="true"
+          ></studiums-praktikumsstelle-update-dialog>
+        </v-card-actions>
+      </div>
+    </v-expand-transition>
+  </v-card>
+  <yes-no-dialog-without-activator
+    v-model="warningDialog"
+    :dialogtitle="warningDialogTitle"
+    :dialogtext="warningDialogText"
+    value
+    @no="resetWarningDialog"
+    @yes="assignNwk"
+  ></yes-no-dialog-without-activator>
 
-    <yes-no-dialog-without-activator
-      v-model="unassignConfirmDialog"
-      :dialogtitle="unassignDialogTitle"
-      :dialogtext="unassignDialogContent"
-      value
-      @no="resetUnassign"
-      @yes="unassignNwk"
-    ></yes-no-dialog-without-activator>
-  </v-container>
+  <yes-no-dialog-without-activator
+    v-model="unassignConfirmDialog"
+    :dialogtitle="unassignDialogTitle"
+    :dialogtext="unassignDialogContent"
+    value
+    @no="resetUnassign"
+    @yes="unassignNwk"
+  ></yes-no-dialog-without-activator>
 </template>
+
 <script setup lang="ts">
 import {
   mdiAccountStar,
@@ -273,49 +264,3 @@ function getNwkColor(nwk: Nwk): string {
   return color;
 }
 </script>
-<style scoped>
-.custom-card-active {
-  border-color: #cfcfcf;
-  background-color: #cfcfcf;
-}
-
-.card {
-  padding-right: 45px;
-}
-
-.icon-top-right-position {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
-.icon-bottom-right-position {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-
-/*
-This code can be updated when the Firefox version is updated.
-In some browsers the pseudo-class :has() is not yet supported.  A possible implementation could look like this.
-
-.v-chip__content:has(> .chip-text) {
-    overflow: hidden;
-}
- */
-@media only screen and (max-width: 1000px) {
-  .chip-text {
-    max-width: 10vw !important;
-  }
-}
-
-@media only screen and (max-width: 1900px) and (min-width: 1000px) {
-  .chip-text {
-    max-width: 15vw !important;
-  }
-}
-
-.chip-text {
-  max-width: 25vw;
-}
-</style>

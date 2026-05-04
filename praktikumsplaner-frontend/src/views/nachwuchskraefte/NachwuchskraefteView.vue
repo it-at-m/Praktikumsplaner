@@ -1,24 +1,13 @@
 <template>
-  <v-container>
-    <page-title
-      page-header-text="Nachwuchskräfte"
-      back-button-url="/"
-    ></page-title>
-    <v-row>
-      <v-col cols="8"></v-col>
-      <v-col>
-        <excel-import-nwk></excel-import-nwk>
-      </v-col>
-      <v-col>
-        <nwk-create-dialog></nwk-create-dialog>
-      </v-col>
-    </v-row>
-    <v-row></v-row>
-    <v-container class="box">
-      <span> Übersicht</span>
-      <active-nwk-list></active-nwk-list>
-    </v-container>
-  </v-container>
+  <page-title page-header-text="Nachwuchskräfte">
+    <template #actions>
+      <excel-import-nwk></excel-import-nwk>
+      <nwk-create-dialog></nwk-create-dialog>
+    </template>
+  </page-title>
+  <v-card title="Übersicht">
+    <active-nwk-list></active-nwk-list>
+  </v-card>
 </template>
 
 <script setup lang="ts">
