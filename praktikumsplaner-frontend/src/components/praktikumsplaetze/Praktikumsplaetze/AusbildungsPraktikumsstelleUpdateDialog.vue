@@ -39,6 +39,7 @@
                     v-model="praktikumsstelle"
                     :is-required="true"
                     :required-symbol="requiredFieldSymbol"
+                    :disabled="hasAssignedNwk"
                   ></dienststellen-input>
                 </v-col>
               </v-row>
@@ -93,6 +94,7 @@
                     v-model="praktikumsstelle"
                     :is-required="true"
                     :required-symbol="requiredFieldSymbol"
+                    :disabled="hasAssignedNwk"
                   >
                   </taetigkeiten-input>
                 </v-col>
@@ -158,6 +160,7 @@
                     v-model="praktikumsstelle"
                     :is-required="true"
                     :required-symbol="requiredFieldSymbol"
+                    :disabled="hasAssignedNwk"
                   ></ausbilder-input>
                 </v-col>
                 <v-col cols="1" />
@@ -166,6 +169,7 @@
                     v-model="praktikumsstelle"
                     :is-required="true"
                     :required-symbol="requiredFieldSymbol"
+                    :disabled="hasAssignedNwk"
                   ></ausbilder-email-input>
                 </v-col>
                 <v-col cols="1" />
@@ -174,6 +178,7 @@
                 <v-col>
                   <ausbilder-erw-fuehrungszeugnis-checkbox
                     v-model="praktikumsstelle"
+                    :disabled="hasAssignedNwk"
                   ></ausbilder-erw-fuehrungszeugnis-checkbox>
                 </v-col>
                 <v-col cols="1" />
@@ -182,6 +187,7 @@
                     v-model="praktikumsstelle"
                     :is-required="true"
                     :required-symbol="requiredFieldSymbol"
+                    :disabled="hasAssignedNwk"
                   ></minderjaehrig-moeglich-radio-group>
                 </v-col>
                 <v-col cols="1">
@@ -220,6 +226,7 @@
             <v-btn
               color="primary"
               variant="flat"
+              :disabled="hasAssignedNwk"
               @click="updatePraktikumsstelle()"
             >
               Akzeptieren
