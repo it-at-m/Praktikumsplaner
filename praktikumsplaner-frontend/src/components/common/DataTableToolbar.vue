@@ -10,7 +10,10 @@
         clearable
       />
     </v-col>
-    <v-col v-if="(groupByOptions?.length || 0) > 0" cols="2">
+    <v-col
+      v-if="(groupByOptions?.length || 0) > 0"
+      cols="2"
+    >
       <v-select
         v-model="groupByRawModel"
         variant="outlined"
@@ -25,7 +28,10 @@
 </template>
 
 <script setup lang="ts">
-interface GroupOption { title: string; value: string }
+interface GroupOption {
+  title: string;
+  value: string;
+}
 
 defineProps<{
   search: string | undefined;
