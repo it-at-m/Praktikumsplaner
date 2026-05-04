@@ -1,7 +1,7 @@
 <template>
   <data-table-toolbar
     v-model:search="internalSearch"
-    v-model:group-by-raw="internalGroupByRaw"
+    v-model:group-by-raw="groupByRaw"
     :group-by-options="props.groupByOptions"
   />
   <v-data-table
@@ -38,8 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import type { SortItem } from "vuetify/lib/components/VDataTable/composables/sort";
-
 import { computed, ref } from "vue";
 
 import DataTableToolbar from "@/components/common/DataTableToolbar.vue";
@@ -47,6 +45,10 @@ import DataTableToolbar from "@/components/common/DataTableToolbar.vue";
 interface GroupOption {
   title: string;
   value: string;
+}
+interface SortItem {
+  key: string;
+  order?: string;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -58,7 +60,6 @@ const props = withDefaults(
     items: any[] | undefined;
     loading?: boolean;
     groupByOptions?: GroupOption[];
-    groupByRaw?: string; // deprecated external control
     sortBy?: SortItem[];
     showGroupBy?: boolean;
     showExpand?: boolean;
@@ -67,7 +68,6 @@ const props = withDefaults(
   {
     loading: false,
     groupByOptions: () => [],
-    groupByRaw: undefined,
     sortBy: () => [],
     showGroupBy: true,
     showExpand: false,
@@ -75,13 +75,10 @@ const props = withDefaults(
   }
 );
 
-// internal, component-scoped state for search/groupBy
 const internalSearch = ref<string | undefined>(undefined);
-const internalGroupByRaw = ref<string | undefined>(props.groupByRaw);
+const groupByRaw = ref<string | undefined>();
 
 const groupBy = computed<SortItem[]>(() => {
-  return internalGroupByRaw.value
-    ? [{ key: internalGroupByRaw.value, order: "asc" }]
-    : [];
+  return groupByRaw.value ? [{ key: groupByRaw.value, order: "asc" }] : [];
 });
 </script>

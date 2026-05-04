@@ -2,7 +2,7 @@
   <v-row>
     <v-col cols="3">
       <v-text-field
-        v-model="internalSearch"
+        v-model="searchModel"
         variant="outlined"
         density="comfortable"
         label="Suche"
@@ -10,12 +10,9 @@
         clearable
       />
     </v-col>
-    <v-col
-      v-if="(props.groupByOptions?.length || 0) > 0"
-      cols="2"
-    >
+    <v-col v-if="(groupByOptions?.length || 0) > 0" cols="2">
       <v-select
-        v-model="internalGroupByRaw"
+        v-model="groupByRawModel"
         variant="outlined"
         density="comfortable"
         label="Gruppierung"
@@ -28,39 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+interface GroupOption { title: string; value: string }
 
-interface GroupOption {
-  title: string;
-  value: string;
-}
+defineProps<{
+  search: string | undefined;
+  groupByRaw: string | undefined;
+  groupByOptions?: GroupOption[];
+}>();
 
-const props = withDefaults(
-  defineProps<{
-    search: string | undefined;
-    groupByRaw: string | undefined;
-    groupByOptions?: GroupOption[];
-  }>(),
-  {
-    groupByOptions: () => [],
-  }
-);
-
-const emit =
-  defineEmits<
-    (
-      e: "update:search" | "update:groupByRaw",
-      value: string | undefined
-    ) => void
-  >();
-
-// v-model proxies
-const internalSearch = computed({
-  get: () => props.search,
-  set: (val: string | undefined) => emit("update:search", val),
-});
-const internalGroupByRaw = computed({
-  get: () => props.groupByRaw,
-  set: (val: string | undefined) => emit("update:groupByRaw", val),
-});
+const searchModel = defineModel<string | undefined>("search");
+const groupByRawModel = defineModel<string | undefined>("groupByRaw");
 </script>

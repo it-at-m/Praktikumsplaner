@@ -40,7 +40,7 @@
       </v-row>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer">
-      <v-list nav>
+      <v-list>
         <v-list-item
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/nachwuchskraefte' }"
@@ -131,10 +131,3 @@ onMounted(() => {
   });
 });
 </script>
-
-<style scoped>
-.no-underline,
-.no-underline:hover {
-  text-decoration: none;
-}
-</style>

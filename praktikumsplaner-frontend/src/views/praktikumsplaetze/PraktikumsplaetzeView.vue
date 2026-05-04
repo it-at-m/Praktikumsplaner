@@ -17,7 +17,7 @@
       />
     </template>
   </page-title>
-  <data-table-card
+  <data-table
     v-if="activeMeldezeitraum"
     :headers="headers"
     :items="praktikumsstellenTableItems"
@@ -57,7 +57,7 @@
         </td>
       </tr>
     </template>
-  </data-table-card>
+  </data-table>
   <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
 </template>
 
@@ -67,7 +67,7 @@ import { computed, onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
-import DataTableCard from "@/components/common/DataTableCard.vue";
+import DataTable from "@/components/common/DataTable.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";

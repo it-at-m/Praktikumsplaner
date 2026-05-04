@@ -5,7 +5,7 @@
       <nwk-create-dialog></nwk-create-dialog>
     </template>
   </page-title>
-  <data-table-card
+  <data-table
     :headers="headers"
     :items="nwkTableItems"
     :group-by-options="groupByOptions"
@@ -18,7 +18,7 @@
         @updated="loadAllActiveNwks"
       />
     </template>
-  </data-table-card>
+  </data-table>
 </template>
 
 <script setup lang="ts">
@@ -27,7 +27,7 @@ import type Nwk from "@/types/Nwk";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 import NwkService from "@/api/NwkService";
-import DataTableCard from "@/components/common/DataTableCard.vue";
+import DataTable from "@/components/common/DataTable.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
