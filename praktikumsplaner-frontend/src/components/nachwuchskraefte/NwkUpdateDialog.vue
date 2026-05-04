@@ -1,72 +1,69 @@
 <template>
-  <div>
-    <v-btn
-      :prepend-icon="mdiPencilOutline"
-      color="primary"
-      variant="outlined"
-      @click="visible = true"
-      >Bearbeiten</v-btn
-    >
-    <v-dialog
-      v-model="visible"
-      persistent
-      max-width="550"
-    >
-      <v-form ref="form">
-        <v-card>
-          <v-card-title class="text-h5 font-weight-bold"
-            >NWK bearbeiten</v-card-title
+  <v-btn
+    :icon="mdiPencilOutline"
+    color="primary"
+    @click="visible = true"
+    ></v-btn
+  >
+  <v-dialog
+    v-model="visible"
+    persistent
+    max-width="550"
+  >
+    <v-form ref="form">
+      <v-card>
+        <v-card-title class="text-h5 font-weight-bold"
+          >NWK bearbeiten</v-card-title
+        >
+        <v-list>
+          <v-list-item>
+            <v-container>
+              <name-input v-model="nwkToUpdate"></name-input>
+            </v-container>
+          </v-list-item>
+          <v-list-item>
+            <v-container>
+              <v-row>
+                <v-col cols="6">
+                  <jahrgang-input v-model="nwkToUpdate"></jahrgang-input>
+                </v-col>
+                <v-col cols="6">
+                  <vorlesungstage-selector
+                    v-model="nwkToUpdate"
+                  ></vorlesungstage-selector>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-list-item>
+          <v-list-item>
+            <v-container>
+              <studienrichtung-or-ausbildungsrichtung-select
+                v-model="nwkToUpdate"
+              ></studienrichtung-or-ausbildungsrichtung-select>
+            </v-container>
+          </v-list-item>
+        </v-list>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="primary"
+            variant="outlined"
+            @click="cancel()"
           >
-          <v-list>
-            <v-list-item>
-              <v-container>
-                <name-input v-model="nwkToUpdate"></name-input>
-              </v-container>
-            </v-list-item>
-            <v-list-item>
-              <v-container>
-                <v-row>
-                  <v-col cols="6">
-                    <jahrgang-input v-model="nwkToUpdate"></jahrgang-input>
-                  </v-col>
-                  <v-col cols="6">
-                    <vorlesungstage-selector
-                      v-model="nwkToUpdate"
-                    ></vorlesungstage-selector>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-list-item>
-            <v-list-item>
-              <v-container>
-                <studienrichtung-or-ausbildungsrichtung-select
-                  v-model="nwkToUpdate"
-                ></studienrichtung-or-ausbildungsrichtung-select>
-              </v-container>
-            </v-list-item>
-          </v-list>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              color="primary"
-              variant="outlined"
-              @click="cancel()"
-            >
-              Abbrechen
-            </v-btn>
-            <v-btn
-              color="primary"
-              variant="flat"
-              @click="updateNwk()"
-            >
-              Akzeptieren
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-form>
-    </v-dialog>
-    <progress-circular-overlay :loading="loading"></progress-circular-overlay>
-  </div>
+            Abbrechen
+          </v-btn>
+          <v-btn
+            color="primary"
+            variant="flat"
+            @click="updateNwk()"
+          >
+            Akzeptieren
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-form>
+  </v-dialog>
+  <progress-circular-overlay :loading="loading"></progress-circular-overlay>
 </template>
 
 <script setup lang="ts">

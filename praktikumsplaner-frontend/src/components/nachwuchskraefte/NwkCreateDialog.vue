@@ -4,7 +4,7 @@
     color="primary"
     @click="visible = true"
   >
-    Erstellen
+    Hinzufügen
   </v-btn>
   <v-dialog
     v-model="visible"

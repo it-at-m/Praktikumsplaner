@@ -5,26 +5,93 @@
       <nwk-create-dialog></nwk-create-dialog>
     </template>
   </page-title>
-  <v-card title="Übersicht">
-    <active-nwk-list></active-nwk-list>
-  </v-card>
+  <data-table-card
+    :headers="headers"
+    :items="nwks"
+    :group-by-options="groupByOptions"
+    :loading="loading"
+  >
+    <template #title>
+      <span> Übersicht </span>
+    </template>
+    <template #[`item.actions`]="{ item }">
+      <nwk-update-dialog
+        :nwk="item"
+        @updated="loadAllActiveNwks"
+      />
+    </template>
+  </data-table-card>
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
+import type Nwk from "@/types/Nwk";
 
+import { onMounted, onUnmounted, ref, watch } from "vue";
+
+import NwkService from "@/api/NwkService";
+import DataTableCard from "@/components/common/DataTableCard.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
-import ActiveNwkList from "@/components/nachwuchskraefte/ActiveNwkList.vue";
 import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
+import NwkUpdateDialog from "@/components/nachwuchskraefte/NwkUpdateDialog.vue";
 import { useSecurity } from "@/composables/security";
 import router from "@/plugins/router";
+import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
 const route = router.currentRoute.value;
+const nwks = ref<Nwk[]>([]);
+const loading = ref<boolean>(false);
+const groupByOptions = [
+  { title: "Richtung", value: "richtung" },
+  { title: "Jahrgang", value: "jahrgang" },
+];
+const headers = [
+  {
+    title: "Vorname",
+    key: "vorname",
+  },
+  {
+    title: "Nachname",
+    key: "nachname",
+  },
+  {
+    title: "Art",
+    key: "art",
+    value: (item: Nwk) =>
+      item.studiengang
+        ? "Studium"
+        : item.ausbildungsrichtung
+          ? "Ausbildung"
+          : "",
+  },
+  {
+    title: "Richtung",
+    key: "richtung",
+    value: (item: Nwk) =>
+      item.studiengang
+        ? item.studiengang
+        : item.ausbildungsrichtung
+          ? item.ausbildungsrichtung
+          : "",
+  },
+  { title: "Jahrgang", key: "jahrgang" },
+  {
+    title: "Vorlesungstage",
+    key: "vorlesungstage",
+    value: (item: Nwk) =>
+      item.vorlesungstage && item.vorlesungstage.length > 0
+        ? item.vorlesungstage.join(", ")
+        : "",
+  },
+  { title: "Aktionen", key: "actions", align: "end", sortable: false },
+];
 
 onMounted(() => {
+  loadAllActiveNwks();
+  emitter.on("nwkCreated", loadAllActiveNwks);
+  emitter.on("nwkDeleted", loadAllActiveNwks);
   if (userStore.username) {
     redirectIfUnauthorized();
   } else {
@@ -38,6 +105,11 @@ onMounted(() => {
   }
 });
 
+onUnmounted(() => {
+  emitter.off("nwkCreated", loadAllActiveNwks);
+  emitter.off("nwkDeleted", loadAllActiveNwks);
+});
+
 function redirectIfUnauthorized() {
   const requiresRoles =
     route.meta.requiresRole != undefined
@@ -47,6 +119,12 @@ function redirectIfUnauthorized() {
   if (requiresRoles !== undefined && !security.checkForAnyRole(requiresRoles)) {
     router.push("/AccessDenied");
   }
+}
+
+function loadAllActiveNwks() {
+  NwkService.getAllActiveNwks(loading).then((fetchedNwks) => {
+    nwks.value = [...fetchedNwks];
+  });
 }
 </script>
 

@@ -1,9 +1,10 @@
 <template>
   <v-btn
+    :prepend-icon="mdiPlus"
     color="primary"
     @click="visible = true"
-    >
-    Meldezeitraum Anlegen
+  >
+    Hinzufügen
   </v-btn>
   <v-dialog
     v-model="visible"
@@ -53,6 +54,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiPlus } from "@mdi/js";
 import { ref } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";

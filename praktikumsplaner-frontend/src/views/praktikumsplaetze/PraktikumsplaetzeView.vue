@@ -1,94 +1,57 @@
 <template>
-  <page-title page-header-text="Praktikumsplätze" />
-  <v-card v-if="activeMeldezeitraum">
+  <page-title page-header-text="Praktikumsplätze">
+    <template #actions>
+      <two-choice-dialog-cards
+        v-if="canStellenBeSubmitted()"
+        v-model="twoChoiceDialogVisible"
+        buttontext="Hinzufügen"
+        :icon="mdiPlus"
+        dialogtitle="Praktikumsplatz melden"
+        dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
+        choice-one-title="Studium"
+        choice-one-subtitle="Praktikumsplatz für Studierende "
+        choice-two-title="Ausbildung"
+        choice-two-subtitle="Praktikumsplatz für Auszubildende"
+        @choice-one="toStudium"
+        @choice-two="toAusbildung"
+      />
+    </template>
+  </page-title>
+  <data-table-card
+    v-if="activeMeldezeitraum"
+    :headers="headers"
+    :items="praktikumsstellen"
+    :group-by-options="groupByOptions"
+    :loading="loadingSite || loadingUebersicht"
+    :show-expand="true"
+  >
     <template #title>
       <span> Übersicht aus dem aktuellen Meldezeitraum </span>
       <small v-if="!security.isAusbildungsleitung() && security.isAusbilder()"
         >(Nur eigene Plätze von örtl. Ausbilder*innen angezeigt)</small
       >
     </template>
-    <template #text>
-      <v-row>
-        <v-col>
-          <v-text-field
-            v-model="search"
-            variant="outlined"
-            density="comfortable"
-            label="Suche"
-            hide-details
-            clearable
-          ></v-text-field>
-        </v-col>
-        <v-col>
-          <v-select
-            v-model="groupByRaw"
-            variant="outlined"
-            density="comfortable"
-            label="Gruppierung"
-            hide-details
-            clearable
-            :items="groupByOptions"
-          ></v-select
-        ></v-col>
-        <v-col cols="2"></v-col>
-        <v-col
-          cols="2"
-          class="d-flex justify-end"
-        >
-          <two-choice-dialog-cards
-            v-if="canStellenBeSubmitted()"
-            v-model="twoChoiceDialogVisible"
-            buttontext="Hinzufügen"
-            :icon="mdiPlus"
-            dialogtitle="Praktikumsplatz melden"
-            dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
-            choice-one-title="Studium"
-            choice-one-subtitle="Praktikumsplatz für Studierende "
-            choice-two-title="Ausbildung"
-            choice-two-subtitle="Praktikumsplatz für Auszubildende"
-            @choice-one="toStudium"
-            @choice-two="toAusbildung"
-          />
-        </v-col>
-      </v-row>
+    <template #[`item.actions`]="{ item }">
+        <v-btn
+          :icon="mdiPencil"
+          color="primary"
+          @click=""
+        />
+        <v-btn
+          :icon="mdiDelete"
+          color="error"
+        />
     </template>
-    <v-data-table
-      fixed-header
-      hide-default-footer
-      :headers="headers"
-      :items="praktikumsstellen"
-      :group-by="groupBy"
-      :search="search"
-      :loading="loadingSite || loadingUebersicht"
-      show-expand
-    >
-      <template #[`item.actions`]="{ item }">
-        <v-btn-group density="comfortable">
-          <v-btn
-            :icon="mdiPencil"
-            color="primary"
-            @click=""
-          />
-          <v-btn
-            :icon="mdiDelete"
-            color="error"
-          />
-        </v-btn-group>
-      </template>
-      <template #expanded-row="{ columns, item }">
-        <tr>
-          <td
-            :colspan="columns.length"
-            class="py-2"
-          >
-            <p>
-              {{ generator.getPraktikumsstellenCardDetailText(item) }}
-            </p>
-          </td>
-        </tr>
-      </template>
-    </v-data-table>
-  </v-card>
+    <template #expanded-row="{ columns, item }">
+      <tr>
+        <td :colspan="columns.length" class="py-2">
+          <p>
+            {{ generator.getPraktikumsstellenCardDetailText(item) }}
+          </p>
+        </td>
+      </tr>
+    </template>
+  </data-table-card>
   <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
 </template>
 
@@ -101,6 +64,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import PageTitle from "@/components/common/PageTitle.vue";
+import DataTableCard from "@/components/common/DataTableCard.vue";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import { useSecurity } from "@/composables/security";
@@ -152,14 +116,13 @@ const headers = [
     sortable: false,
   },
 ];
-const search = ref<string>();
 const groupByOptions = [
   { title: "Dienststelle", value: "dienststelle" },
   { title: "Richtung", value: "richtung" },
 ];
-const groupByRaw = ref<string>();
 const groupBy = computed<SortItem[]>(() => {
-  return groupByRaw.value ? [{ key: groupByRaw.value, order: "asc" }] : [];
+  // Grouping is now handled inside DataTableCard; keep empty here
+  return [];
 });
 
 const generator = useTextGenerator();
