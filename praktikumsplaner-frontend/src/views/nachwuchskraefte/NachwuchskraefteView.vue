@@ -12,9 +12,6 @@
     :loading="loading"
     :sort-by="defaultSort"
   >
-    <template #title>
-      <span> Übersicht </span>
-    </template>
     <template #[`item.actions`]="{ item }">
       <nwk-update-dialog
         :nwk="item"
@@ -85,10 +82,18 @@ const headers = [
     key: "vorlesungstage",
     value: (item: Nwk) =>
       item.vorlesungstage && item.vorlesungstage.length > 0
-        ? new GermanWeekdayMapper().getGermanShortDays(item.vorlesungstage).join(", ")
+        ? new GermanWeekdayMapper()
+            .getGermanShortDays(item.vorlesungstage)
+            .join(", ")
         : "",
   },
-  { title: "Aktionen", key: "actions", align: "end", sortable: false },
+  {
+    title: "Aktionen",
+    key: "actions",
+    align: "center",
+    sortable: false,
+    width: 10,
+  },
 ];
 
 // FIXME: workaround to allow grouping by derived columns till backend refactored
@@ -104,9 +109,7 @@ const nwkTableItems = computed(() =>
   }))
 );
 
-const defaultSort = [
-  { key: "nachname", order: "asc" },
-];
+const defaultSort = [{ key: "nachname", order: "asc" }];
 
 onMounted(() => {
   loadAllActiveNwks();
@@ -147,10 +150,3 @@ function loadAllActiveNwks() {
   });
 }
 </script>
-
-<style scoped>
-.box {
-  margin: 2% 1% 1%;
-  border: 2px solid #0000001a;
-}
-</style>

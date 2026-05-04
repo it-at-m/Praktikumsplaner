@@ -26,6 +26,7 @@
         {{ getCardText(properties.praktikumsstelle) }}
       </p></v-card-text
     >
+    <!-- TODO btn right   -->
     <v-col v-if="assignedNwk || loading">
       <v-skeleton-loader
         v-if="loading"
@@ -97,8 +98,6 @@ import { computed, ref } from "vue";
 
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
-import AusbildungsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/AusbildungsPraktikumsstelleUpdateDialog.vue";
-import StudiumsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/StudiumsPraktikumsstelleUpdateDialog.vue";
 import { useTextGenerator } from "@/composables/textGenerator";
 import { useWarnings } from "@/composables/warningGenerator";
 import emitter from "@/stores/eventBus";
@@ -139,13 +138,6 @@ const warningDialogText = ref<string>("");
 const assignedNwk = ref(properties.praktikumsstelle.assignedNwk);
 
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
-
-const isAusbildungsPraktikumsstelle = ref<boolean>(
-  PraktikumsstellenService.isAusbildungsPraktikumsstelle(praktikumsstelle.value)
-);
-const isStudiumsPraktikumsstelle = ref<boolean>(
-  PraktikumsstellenService.isStudiumsPraktikumsstelle(praktikumsstelle.value)
-);
 
 function getCardText(stelle: Praktikumsstelle): string {
   return generator.getPraktikumsstellenCardText(stelle);

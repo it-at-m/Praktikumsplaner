@@ -10,7 +10,10 @@
       ></create-meldezeitraum>
     </template>
   </page-title>
-  <v-card>
+  <v-card
+    elevation="0"
+    border
+  >
     <v-skeleton-loader
       v-if="loading"
       type="heading, divider, list-item, heading, divider, list-item, heading"
@@ -23,7 +26,6 @@
           :value="current"
           @deleted="reloadMeldezeitraeume"
         >
-          <template #card-title-icon> <v-icon :icon="mdiStar" /> </template>
           <template #header>
             <h3>Aktueller Meldezeitraum</h3>
           </template>
@@ -70,7 +72,6 @@
 </template>
 
 <script setup lang="ts">
-import { mdiStar } from "@mdi/js";
 import { onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";

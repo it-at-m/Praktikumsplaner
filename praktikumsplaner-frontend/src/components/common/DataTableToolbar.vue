@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col>
+    <v-col cols="3">
       <v-text-field
         v-model="internalSearch"
         variant="outlined"
@@ -10,7 +10,10 @@
         clearable
       />
     </v-col>
-    <v-col v-if="(props.groupByOptions?.length || 0) > 0">
+    <v-col
+      v-if="(props.groupByOptions?.length || 0) > 0"
+      cols="2"
+    >
       <v-select
         v-model="internalGroupByRaw"
         variant="outlined"
@@ -21,7 +24,6 @@
         :items="groupByOptions"
       />
     </v-col>
-    <v-col cols="2"></v-col>
   </v-row>
 </template>
 
@@ -44,7 +46,13 @@ const props = withDefaults(
   }
 );
 
-const emit = defineEmits<(e: "update:search" | "update:groupByRaw", value: string | undefined) => void>();
+const emit =
+  defineEmits<
+    (
+      e: "update:search" | "update:groupByRaw",
+      value: string | undefined
+    ) => void
+  >();
 
 // v-model proxies
 const internalSearch = computed({

@@ -1,5 +1,5 @@
 <template>
-  <page-title page-header-text="Praktikumsplätze">
+  <page-title page-header-text="Praktikumsplätze (aktueller Meldezeitraum)">
     <template #actions>
       <two-choice-dialog-cards
         v-if="canStellenBeSubmitted()"
@@ -27,12 +27,6 @@
     :sort-by="defaultSort"
     :expand-on-click="true"
   >
-    <template #title>
-      <span> Übersicht aus dem aktuellen Meldezeitraum </span>
-      <small v-if="!security.isAusbildungsleitung() && security.isAusbilder()"
-        >(Nur eigene Plätze von örtl. Ausbilder*innen angezeigt)</small
-      >
-    </template>
     <template #[`item.actions`]="{ item }">
       <studiums-praktikumsstelle-update-dialog
         v-if="item.studiengang"
@@ -46,7 +40,7 @@
         icon-only
         @update:model-value="onRowUpdated(item.id, $event)"
       />
-      <praktikumsstelle-delete-button
+      <praktikumsstelle-delete-dialog
         :stelle="item"
         @deleted="getAllPraktikumsstellenInCurrentMeldezeitraum"
       />
@@ -68,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { mdiDelete, mdiPlus } from "@mdi/js";
+import { mdiPlus } from "@mdi/js";
 import { computed, onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
@@ -76,9 +70,9 @@ import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import DataTableCard from "@/components/common/DataTableCard.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
-import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import AusbildungsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/AusbildungsPraktikumsstelleUpdateDialog.vue";
+import PraktikumsstelleDeleteDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstelleDeleteDialog.vue";
 import StudiumsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/StudiumsPraktikumsstelleUpdateDialog.vue";
 import { useSecurity } from "@/composables/security";
 import { useTextGenerator } from "@/composables/textGenerator.ts";
@@ -86,8 +80,6 @@ import router from "@/plugins/router";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import PraktikumsstelleDeleteButton
-  from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstelleDeleteButton.vue";
 
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
@@ -96,8 +88,6 @@ const loadingSite = ref<boolean>(true);
 const security = useSecurity();
 const twoChoiceDialogVisible = ref<boolean>(false);
 const praktikumsstellen = ref<Praktikumsstelle[]>();
-const deleteDialogVisible = ref<boolean>(false);
-const pendingDeleteItem = ref<Praktikumsstelle | null>(null);
 // FIXME: workaround to get real object from derived one
 const itemProxyMap = computed<Record<string, Praktikumsstelle>>(() => {
   const map: Record<string, Praktikumsstelle> = {};
@@ -137,8 +127,9 @@ const headers = [
   {
     title: "Aktionen",
     key: "actions",
-    align: "end",
+    align: "center",
     sortable: false,
+    width: 10,
   },
 ];
 const groupByOptions = [
@@ -233,20 +224,5 @@ function onRowUpdated(id: string | undefined, updated: Praktikumsstelle) {
   if (idx >= 0 && praktikumsstellen.value) {
     praktikumsstellen.value[idx] = updated;
   }
-}
-
-function confirmDelete(item: Praktikumsstelle) {
-  pendingDeleteItem.value = item;
-  deleteDialogVisible.value = true;
-}
-
-function performDelete() {
-  const item = pendingDeleteItem.value;
-  deleteDialogVisible.value = false;
-  if (!item) return;
-  pendingDeleteItem.value = null;
-  PraktikumsstellenService.deletePraktikumsstelle(item).then(() => {
-    getAllPraktikumsstellenInCurrentMeldezeitraum();
-  });
 }
 </script>

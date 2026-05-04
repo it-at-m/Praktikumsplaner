@@ -1,6 +1,9 @@
 <template>
-  <v-row class="mb-4">
-    <v-col cols="9" class="d-flex flex-row">
+  <v-row>
+    <v-col
+      cols="9"
+      class="d-flex flex-row"
+    >
       <v-btn
         v-if="backButtonUrl"
         :to="{ path: backButtonUrl }"

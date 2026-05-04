@@ -6,14 +6,13 @@
         <v-card
           v-for="meldezeitraum in properties.value"
           :key="meldezeitraum.id"
-          rounded
           border
+          elevation="0"
+          class="mt-1"
         >
-          <v-divider></v-divider>
           <v-list-item lines="two">
             <v-list-item-title class="justify-center">
               {{ meldezeitraum.zeitraumName }}
-              <slot name="card-title-icon"></slot>
             </v-list-item-title>
             <v-list-item-subtitle>
               <v-icon :icon="mdiCalendarStart" />
@@ -31,15 +30,16 @@
               }}
             </v-list-item-subtitle>
             <template #append>
-              <v-btn
-                variant="text"
-                :icon="mdiDelete"
-                @click="warnBeforeDelete(meldezeitraum)"
-              >
-              </v-btn>
+              <v-btn-group density="comfortable">
+                <v-btn
+                  color="error"
+                  :icon="mdiDelete"
+                  @click="warnBeforeDelete(meldezeitraum)"
+                >
+                </v-btn>
+              </v-btn-group>
             </template>
           </v-list-item>
-          <v-divider></v-divider>
         </v-card>
       </v-list>
       <slot

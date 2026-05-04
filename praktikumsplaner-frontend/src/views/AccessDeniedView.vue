@@ -17,8 +17,7 @@
     <v-col>
       <h1>Zugriff verweigert</h1>
       <p class="m-2 p-2">
-        Du hast nicht die erforderlichen Rechte, um auf diese Seite
-        zuzugreifen.
+        Du hast nicht die erforderlichen Rechte, um auf diese Seite zuzugreifen.
       </p>
     </v-col>
   </v-row>

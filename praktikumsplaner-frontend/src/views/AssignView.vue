@@ -1,11 +1,9 @@
 <template>
   <page-title
-    back-button-url="/"
-    page-header-text="Zuweisung"
+    page-header-text="Zuweisung (letzter vergangener Meldezeitraum)"
   ></page-title>
   <v-row>
     <v-col
-      cols="5"
       class="overflow-y-auto"
       style="max-height: 70vh"
     >
@@ -21,7 +19,6 @@
     </v-col>
     <v-divider vertical />
     <v-col
-      cols="6"
       class="overflow-y-auto"
       style="max-height: 70vh"
     >
@@ -36,7 +33,10 @@
       />
     </v-col>
   </v-row>
-  <v-row v-if="!loadingNwk && !loadingPraktikumsstellen">
+  <v-row
+    v-if="!loadingNwk && !loadingPraktikumsstellen"
+    class="pt-4 pr-2"
+  >
     <v-spacer></v-spacer>
     <v-btn
       :prepend-icon="mdiMail"
@@ -182,7 +182,7 @@ function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
     "most_recent"
   )
     .then((fetchedStellen) => {
-      praktikumsstellen.value = fetchedStellen
+      praktikumsstellen.value = fetchedStellen;
     })
     .finally(() => (loadingPraktikumsstellen.value = false));
 }

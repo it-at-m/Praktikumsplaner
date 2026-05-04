@@ -1,47 +1,40 @@
 <template>
-  <v-card>
-    <template #title>
-      <slot name="title" />
-    </template>
-    <template #text>
-      <data-table-toolbar
-        v-model:search="internalSearch"
-        v-model:group-by-raw="internalGroupByRaw"
-        :group-by-options="props.groupByOptions"
-      />
-    </template>
-    <v-data-table
-      :headers="props.headers"
-      :items="props.items"
-      :group-by="groupBy"
-      :search="internalSearch"
-      :sort-by="props.sortBy"
-      :loading="props.loading"
-      fixed-header
-      hide-default-footer
-      :show-expand="props.showExpand"
-      :expand-on-click="props.expandOnClick"
-      v-bind="$attrs"
-    >
-      <template #[`item.actions`]="slotProps">
-        <v-btn-group
-          density="comfortable"
-          @click.stop
-        >
-          <slot
-            name="item.actions"
-            v-bind="slotProps"
-          />
-        </v-btn-group>
-      </template>
-      <template #expanded-row="slotProps">
+  <data-table-toolbar
+    v-model:search="internalSearch"
+    v-model:group-by-raw="internalGroupByRaw"
+    :group-by-options="props.groupByOptions"
+  />
+  <v-data-table
+    :headers="props.headers"
+    :items="props.items"
+    :group-by="groupBy"
+    :search="internalSearch"
+    :sort-by="props.sortBy"
+    :loading="props.loading"
+    fixed-header
+    hide-default-footer
+    :show-expand="props.showExpand"
+    :expand-on-click="props.expandOnClick"
+    v-bind="$attrs"
+  >
+    <template #[`item.actions`]="slotProps">
+      <v-btn-group
+        density="comfortable"
+        @click.stop
+      >
         <slot
-          name="expanded-row"
+          name="item.actions"
           v-bind="slotProps"
         />
-      </template>
-    </v-data-table>
-  </v-card>
+      </v-btn-group>
+    </template>
+    <template #expanded-row="slotProps">
+      <slot
+        name="expanded-row"
+        v-bind="slotProps"
+      />
+    </template>
+  </v-data-table>
 </template>
 
 <script setup lang="ts">

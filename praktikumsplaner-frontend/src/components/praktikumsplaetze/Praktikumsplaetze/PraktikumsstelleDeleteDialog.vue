@@ -1,5 +1,9 @@
 <template>
-  <v-btn :icon="mdiDelete" color="error" variant="text" @click.stop="openDialog" />
+  <v-btn
+    :icon="mdiDelete"
+    color="error"
+    @click.stop="openDialog"
+  />
   <yes-no-dialog-without-activator
     v-model="visible"
     :dialogtitle="'Stelle löschen?'"
@@ -10,12 +14,13 @@
 </template>
 
 <script setup lang="ts">
+import type Praktikumsstelle from "@/types/Praktikumsstelle";
+
 import { mdiDelete } from "@mdi/js";
 import { ref } from "vue";
 
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
-import type Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const props = defineProps<{
   stelle: Praktikumsstelle;

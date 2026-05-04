@@ -1,20 +1,22 @@
 <template>
-  <v-container
-    v-if="properties.praktikumsstellen && properties.praktikumsstellen.length > 0"
+  <v-list
+    v-if="
+      properties.praktikumsstellen && properties.praktikumsstellen.length > 0
+    "
+    class="pl-2"
   >
-    <v-list>
-      <v-list-item
-        v-for="praktikumsstelle in praktikumsstellen"
+    <v-list-item
+      v-for="praktikumsstelle in praktikumsstellen"
+      :key="praktikumsstelle.id"
+      class="px-0"
+      :ripple="false"
+    >
+      <praktikumsstelle-card
         :key="praktikumsstelle.id"
-        :ripple="false"
-      >
-        <praktikumsstelle-card
-          :key="praktikumsstelle.id"
-          :praktikumsstelle="praktikumsstelle"
-        ></praktikumsstelle-card>
-      </v-list-item>
-    </v-list>
-  </v-container>
+        :praktikumsstelle="praktikumsstelle"
+      ></praktikumsstelle-card>
+    </v-list-item>
+  </v-list>
   <v-container
     v-else
     class="d-flex justify-center align-center"
