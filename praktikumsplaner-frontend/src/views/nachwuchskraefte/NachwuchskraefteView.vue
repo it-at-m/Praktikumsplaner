@@ -7,9 +7,10 @@
   </page-title>
   <data-table-card
     :headers="headers"
-    :items="nwks"
+    :items="nwkTableItems"
     :group-by-options="groupByOptions"
     :loading="loading"
+    :sort-by="defaultSort"
   >
     <template #title>
       <span> Übersicht </span>
@@ -26,7 +27,7 @@
 <script setup lang="ts">
 import type Nwk from "@/types/Nwk";
 
-import { onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 import NwkService from "@/api/NwkService";
 import DataTableCard from "@/components/common/DataTableCard.vue";
@@ -38,12 +39,14 @@ import { useSecurity } from "@/composables/security";
 import router from "@/plugins/router";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
+import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 
 const userStore = useUserStore();
 const route = router.currentRoute.value;
 const nwks = ref<Nwk[]>([]);
 const loading = ref<boolean>(false);
 const groupByOptions = [
+  { title: "Art", value: "art" },
   { title: "Richtung", value: "richtung" },
   { title: "Jahrgang", value: "jahrgang" },
 ];
@@ -82,10 +85,27 @@ const headers = [
     key: "vorlesungstage",
     value: (item: Nwk) =>
       item.vorlesungstage && item.vorlesungstage.length > 0
-        ? item.vorlesungstage.join(", ")
+        ? new GermanWeekdayMapper().getGermanShortDays(item.vorlesungstage).join(", ")
         : "",
   },
   { title: "Aktionen", key: "actions", align: "end", sortable: false },
+];
+
+// FIXME: workaround to allow grouping by derived columns till backend refactored
+const nwkTableItems = computed(() =>
+  nwks.value.map((n) => ({
+    ...n,
+    art: n.studiengang ? "Studium" : n.ausbildungsrichtung ? "Ausbildung" : "",
+    richtung: n.studiengang
+      ? n.studiengang
+      : n.ausbildungsrichtung
+        ? n.ausbildungsrichtung
+        : "",
+  }))
+);
+
+const defaultSort = [
+  { key: "nachname", order: "asc" },
 ];
 
 onMounted(() => {

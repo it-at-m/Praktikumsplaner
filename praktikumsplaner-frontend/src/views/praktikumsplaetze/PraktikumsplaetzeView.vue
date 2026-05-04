@@ -20,10 +20,11 @@
   <data-table-card
     v-if="activeMeldezeitraum"
     :headers="headers"
-    :items="praktikumsstellen"
+    :items="praktikumsstellenTableItems"
     :group-by-options="groupByOptions"
     :loading="loadingSite || loadingUebersicht"
     :show-expand="true"
+    :sort-by="defaultSort"
   >
     <template #title>
       <span> Übersicht aus dem aktuellen Meldezeitraum </span>
@@ -32,19 +33,22 @@
       >
     </template>
     <template #[`item.actions`]="{ item }">
-        <v-btn
-          :icon="mdiPencil"
-          color="primary"
-          @click=""
-        />
-        <v-btn
-          :icon="mdiDelete"
-          color="error"
-        />
+      <v-btn
+        :icon="mdiPencil"
+        color="primary"
+        @click=""
+      />
+      <v-btn
+        :icon="mdiDelete"
+        color="error"
+      />
     </template>
     <template #expanded-row="{ columns, item }">
       <tr>
-        <td :colspan="columns.length" class="py-2">
+        <td
+          :colspan="columns.length"
+          class="py-2"
+        >
           <p>
             {{ generator.getPraktikumsstellenCardDetailText(item) }}
           </p>
@@ -63,8 +67,8 @@ import { computed, onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
-import PageTitle from "@/components/common/PageTitle.vue";
 import DataTableCard from "@/components/common/DataTableCard.vue";
+import PageTitle from "@/components/common/PageTitle.vue";
 import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import { useSecurity } from "@/composables/security";
@@ -117,16 +121,28 @@ const headers = [
   },
 ];
 const groupByOptions = [
+  { title: "Art", value: "art" },
   { title: "Dienststelle", value: "dienststelle" },
   { title: "Richtung", value: "richtung" },
 ];
-const groupBy = computed<SortItem[]>(() => {
-  // Grouping is now handled inside DataTableCard; keep empty here
-  return [];
-});
 
 const generator = useTextGenerator();
 const route = router.currentRoute.value;
+
+// FIXME: workaround to allow grouping by derived columns till backend refactored
+const praktikumsstellenTableItems = computed(() =>
+  (praktikumsstellen.value || []).map((s) => ({
+    ...s,
+    art: s.studiengang ? "Studium" : s.ausbildungsrichtung ? "Ausbildung" : "",
+    richtung: s.studiengang
+      ? s.studiengang
+      : s.ausbildungsrichtung
+        ? s.ausbildungsrichtung
+        : "",
+  }))
+);
+
+const defaultSort = [{ key: "dienststelle", order: "asc" }];
 
 onMounted(() => {
   loadingUebersicht.value = true;

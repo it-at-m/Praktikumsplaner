@@ -18,6 +18,7 @@
       :items="items"
       :group-by="groupBy"
       :search="internalSearch"
+      :sort-by="sortByProp"
       :loading="loading"
       :fixed-header="fixedHeader"
       :hide-default-footer="hideFooter"
@@ -60,6 +61,7 @@ const props = withDefaults(
     loading?: boolean;
     groupByOptions?: GroupOption[];
     groupByRaw?: string; // deprecated external control
+    sortBy?: SortItem[];
     showGroupBy?: boolean;
     searchLabel?: string;
     groupByLabel?: string;
@@ -71,6 +73,7 @@ const props = withDefaults(
     loading: false,
     groupByOptions: () => [],
     groupByRaw: undefined,
+    sortBy: () => [],
     showGroupBy: true,
     searchLabel: "Suche",
     groupByLabel: "Gruppierung",
@@ -101,4 +104,5 @@ const groupByLabel = computed(() => props.groupByLabel);
 const fixedHeader = computed(() => props.fixedHeader);
 const hideFooter = computed(() => props.hideFooter);
 const showExpand = computed(() => props.showExpand);
+const sortByProp = computed(() => props.sortBy);
 </script>
