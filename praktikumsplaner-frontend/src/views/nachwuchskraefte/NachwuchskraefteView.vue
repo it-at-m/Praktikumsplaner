@@ -38,6 +38,11 @@ import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 
+interface SortItem {
+  key: string;
+  order?: boolean | "asc" | "desc" | undefined;
+}
+
 const userStore = useUserStore();
 const route = router.currentRoute.value;
 const nwks = ref<Nwk[]>([]);
@@ -109,7 +114,7 @@ const nwkTableItems = computed(() =>
   }))
 );
 
-const defaultSort = [{ key: "nachname", order: "asc" }];
+const defaultSort: SortItem[] = [{ key: "nachname", order: "asc" }];
 
 onMounted(() => {
   loadAllActiveNwks();

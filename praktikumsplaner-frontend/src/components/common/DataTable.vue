@@ -48,7 +48,7 @@ interface GroupOption {
 }
 interface SortItem {
   key: string;
-  order?: string;
+  order?: boolean | "asc" | "desc" | undefined;
 }
 
 defineOptions({ inheritAttrs: false });

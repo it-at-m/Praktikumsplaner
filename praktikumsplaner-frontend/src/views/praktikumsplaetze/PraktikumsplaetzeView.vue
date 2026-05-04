@@ -81,6 +81,11 @@ import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
+interface SortItem {
+  key: string;
+  order?: boolean | "asc" | "desc" | undefined;
+}
+
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
 const loadingUebersicht = ref<boolean>(false);
@@ -154,7 +159,7 @@ const praktikumsstellenTableItems = computed(() =>
   }))
 );
 
-const defaultSort = [{ key: "dienststelle", order: "asc" }];
+const defaultSort: SortItem[] = [{ key: "dienststelle", order: "asc" }];
 
 onMounted(() => {
   loadingUebersicht.value = true;
