@@ -20,7 +20,7 @@
           </router-link>
           <router-link
             to="/"
-            class="no-underline"
+            class="text-decoration-none"
           >
             <v-toolbar-title class="font-weight-bold">
               <span class="text-white">Praktikumsplaner</span>
