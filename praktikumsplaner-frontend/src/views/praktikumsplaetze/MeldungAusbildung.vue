@@ -246,7 +246,6 @@ import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/Taetigkeit
 import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
 import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
 import { useSecurity } from "@/composables/security";
-import index from "@/plugins/router";
 import router from "@/plugins/router";
 import { useUserStore } from "@/stores/user";
 import Meldezeitraum from "@/types/Meldezeitraum";
@@ -336,7 +335,7 @@ function getPassedMeldezeitraeume() {
 
 function resetForm() {
   form.value?.reset();
-  index.push("/praktikumsplaetze");
+  router.push("/praktikumsplaetze");
 }
 
 function uploadPraktikumsstelle() {
