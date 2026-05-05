@@ -11,9 +11,7 @@
     persistent
     max-width="550"
   >
-    <v-form
-      ref="form"
-    >
+    <v-form ref="form">
       <v-card>
         <v-card-title class="text-h5 font-weight-bold"
           >NWK anlegen</v-card-title
@@ -104,11 +102,10 @@ function saveNwk() {
   form.value?.validate().then((validation: { valid: boolean }) => {
     if (!validation.valid) return;
 
-    NwkService.saveNwk(nwk.value, loading)
-      .then(() => {
-        close();
-        emitter.emit("nwkCreated");
-      });
+    NwkService.saveNwk(nwk.value, loading).then(() => {
+      close();
+      emitter.emit("nwkCreated");
+    });
   });
 }
 </script>

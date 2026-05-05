@@ -1,13 +1,17 @@
 import type { Ref } from "vue";
 
-
-
 import { Levels } from "@/api/Error";
-import { defaultResponseHandler, getDELETEConfig, getGETConfig, getPATCHConfig, getPOSTConfig, getPUTConfig } from "@/api/FetchUtils";
+import {
+  defaultResponseHandler,
+  getDELETEConfig,
+  getGETConfig,
+  getPATCHConfig,
+  getPOSTConfig,
+  getPUTConfig,
+} from "@/api/FetchUtils";
 import { API_BASE, PRAKTIKUMSSTELLE_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-
 
 export default {
   uploadStudiumsPraktikumsstelle(
@@ -164,7 +168,10 @@ export default {
         loading.value = false;
       });
   },
-  deletePraktikumsstelle(stelle: Praktikumsstelle, loading: Ref<boolean>): Promise<void> {
+  deletePraktikumsstelle(
+    stelle: Praktikumsstelle,
+    loading: Ref<boolean>
+  ): Promise<void> {
     if (this.isAusbildungsPraktikumsstelle(stelle)) {
       loading.value = true;
       return fetch(

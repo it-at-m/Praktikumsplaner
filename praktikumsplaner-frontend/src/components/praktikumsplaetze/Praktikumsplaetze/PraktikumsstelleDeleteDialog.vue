@@ -8,10 +8,10 @@
     v-model="visible"
     :dialogtitle="'Stelle löschen?'"
     :dialogtext="'Wollen Sie die Praktikumsstelle wirklich unwiderruflich löschen?'"
-    :loading="loading"
     @no="visible = false"
     @yes="performDelete"
   />
+  <progress-circular-overlay :loading="loading"></progress-circular-overlay>
 </template>
 
 <script setup lang="ts">
@@ -21,6 +21,7 @@ import { mdiDelete } from "@mdi/js";
 import { ref } from "vue";
 
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 
 const props = defineProps<{

@@ -12,8 +12,11 @@ import { useSnackbarStore } from "@/stores/snackbar";
 import Meldezeitraum from "@/types/Meldezeitraum";
 
 export default {
-  create(meldezeitraum: Meldezeitraum, loading: Ref<boolean>): Promise<Meldezeitraum> {
-    loading.value = true
+  create(
+    meldezeitraum: Meldezeitraum,
+    loading: Ref<boolean>
+  ): Promise<Meldezeitraum> {
+    loading.value = true;
     return fetch(
       `${API_BASE}${MELDEZEITRAUM_BASE}`,
       getPOSTConfig(meldezeitraum)
@@ -29,7 +32,9 @@ export default {
           defaultResponseHandler(response);
         }
       })
-      .finally(() => {loading.value = false});
+      .finally(() => {
+        loading.value = false;
+      });
   },
   getCurrentMeldezeitraum(
     loading: Ref<boolean> | undefined
