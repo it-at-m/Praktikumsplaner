@@ -15,18 +15,11 @@
       Namentliche Anforderung:
       {{ properties.praktikumsstelle.namentlicheAnforderung }}
     </v-card-subtitle>
-    <v-icon
-      v-if="properties.praktikumsstelle.planstelleVorhanden"
-      size="x-large"
-      class="icon-top-right-position"
-      :icon="mdiAccountStar"
-    ></v-icon>
     <v-card-text class="pt-0 mt-0 mb-0 pb-0">
       <p style="white-space: pre-line">
         {{ getCardText(properties.praktikumsstelle) }}
       </p></v-card-text
     >
-    <!-- TODO btn right   -->
     <v-col v-if="assignedNwk || loading">
       <v-skeleton-loader
         v-if="loading"
@@ -89,7 +82,6 @@
 
 <script setup lang="ts">
 import {
-  mdiAccountStar,
   mdiChevronDown,
   mdiChevronUp,
   mdiCloseCircle,

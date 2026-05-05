@@ -88,6 +88,9 @@ export function useTextGenerator() {
           stelle.ausbildungsjahr[stelle.ausbildungsjahr.length - 1]
         ) + "\n";
     }
+    if (stelle.planstelleVorhanden) {
+      cardText += "Planstelle vorhanden: JA\n"
+    }
     return cardText;
   }
 
@@ -107,6 +110,9 @@ export function useTextGenerator() {
         valueToNameStudiensemester(
           stelle.studiensemester[stelle.studiensemester.length - 1]
         ) + "\n";
+    }
+    if (stelle.planstelleVorhanden) {
+      cardText += "Planstelle vorhanden: JA\n"
     }
     return cardText;
   }
