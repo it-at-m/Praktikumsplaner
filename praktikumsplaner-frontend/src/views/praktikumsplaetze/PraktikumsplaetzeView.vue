@@ -108,22 +108,10 @@ const headers = [
   {
     title: "Art",
     key: "art",
-    value: (item: Praktikumsstelle) =>
-      item.studiengang
-        ? "Studium"
-        : item.ausbildungsrichtung
-          ? "Ausbildung"
-          : "",
   },
   {
     title: "Richtung",
     key: "richtung",
-    value: (item: Praktikumsstelle) =>
-      item.studiengang
-        ? item.studiengang
-        : item.ausbildungsrichtung
-          ? item.ausbildungsrichtung
-          : "",
   },
   {
     title: "Planstelle",

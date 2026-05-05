@@ -45,6 +45,7 @@ interface SortItem {
   order?: boolean | "asc" | "desc" | undefined;
 }
 
+const weekdayMapper = new GermanWeekdayMapper();
 const userStore = useUserStore();
 const route = router.currentRoute.value;
 const nwks = ref<Nwk[]>([]);
@@ -89,9 +90,7 @@ const headers = [
     key: "vorlesungstage",
     value: (item: Nwk) =>
       item.vorlesungstage && item.vorlesungstage.length > 0
-        ? new GermanWeekdayMapper()
-            .getGermanShortDays(item.vorlesungstage)
-            .join(", ")
+        ? weekdayMapper.getGermanShortDays(item.vorlesungstage).join(", ")
         : "",
   },
   {
