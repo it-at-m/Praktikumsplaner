@@ -90,8 +90,8 @@ function clickSpeichern() {
     if (!validation.valid) return;
 
     MeldezeitraumService.create(meldezeitraum.value, loading).then(() => {
-      close();
       emits("meldezeitraumAdded", meldezeitraum.value);
+      close();
     });
   });
 }

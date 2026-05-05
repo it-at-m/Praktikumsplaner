@@ -11,6 +11,7 @@
     v-else
     :icon="mdiPencil"
     color="primary"
+    aria-label="Bearbeiten"
     @click.stop="openDialog()"
   ></v-btn>
   <v-dialog
@@ -316,9 +317,9 @@ function updatePraktikumsstelle() {
       praktikumsstelle.value,
       loading
     ).then(() => {
-      closeDialog();
       emits("update:modelValue", praktikumsstelle.value);
       emitter.emit("praktikumsstelleUpdated");
+      closeDialog();
     });
   });
 }

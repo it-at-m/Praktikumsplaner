@@ -5,7 +5,6 @@
   >
     <template #actions>
       <create-meldezeitraum
-        v-model="model"
         @meldezeitraum-added="reloadMeldezeitraeume"
       ></create-meldezeitraum>
     </template>
@@ -80,7 +79,6 @@ import Meldezeitraum from "@/types/Meldezeitraum";
 
 const userStore = useUserStore();
 
-const model = ref<boolean>(true);
 const loading = ref<boolean>(false);
 const current = ref<Meldezeitraum[]>([]);
 const upcoming = ref<Meldezeitraum[]>([]);
