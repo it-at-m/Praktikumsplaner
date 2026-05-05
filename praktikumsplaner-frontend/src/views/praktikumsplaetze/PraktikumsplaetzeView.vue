@@ -1,64 +1,66 @@
 <template>
-  <page-title page-header-text="Praktikumsplätze (aktueller Meldezeitraum)">
-    <template #actions>
-      <two-choice-dialog-cards
-        v-if="canStellenBeSubmitted()"
-        v-model="twoChoiceDialogVisible"
-        buttontext="Hinzufügen"
-        :icon="mdiPlus"
-        dialogtitle="Praktikumsplatz melden"
-        dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
-        choice-one-title="Studium"
-        choice-one-subtitle="Praktikumsplatz für Studierende "
-        choice-two-title="Ausbildung"
-        choice-two-subtitle="Praktikumsplatz für Auszubildende"
-        @choice-one="toStudium"
-        @choice-two="toAusbildung"
-      />
-    </template>
-  </page-title>
-  <data-table
-    v-if="activeMeldezeitraum"
-    :headers="headers"
-    :items="praktikumsstellenTableItems"
-    :group-by-options="groupByOptions"
-    :loading="loadingSite || loadingUebersicht"
-    :show-expand="true"
-    :sort-by="defaultSort"
-    :expand-on-click="true"
-  >
-    <template #[`item.actions`]="{ item }">
-      <studiums-praktikumsstelle-update-dialog
-        v-if="item.studiengang"
-        v-model="itemProxyMap[item.id]!"
-        icon-only
-        @update:model-value="onRowUpdated(item.id, $event)"
-      />
-      <ausbildungs-praktikumsstelle-update-dialog
-        v-else
-        v-model="itemProxyMap[item.id]!"
-        icon-only
-        @update:model-value="onRowUpdated(item.id, $event)"
-      />
-      <praktikumsstelle-delete-dialog
-        :stelle="item"
-        @deleted="getAllPraktikumsstellenInCurrentMeldezeitraum"
-      />
-    </template>
-    <template #expanded-row="{ columns, item }">
-      <tr>
-        <td
-          :colspan="columns.length"
-          class="py-2"
-        >
-          <p style="white-space: pre-line">
-            {{ generator.getPraktikumsstellenCardDetailText(item) }}
-          </p>
-        </td>
-      </tr>
-    </template>
-  </data-table>
-  <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
+  <div>
+    <page-title page-header-text="Praktikumsplätze (aktueller Meldezeitraum)">
+      <template #actions>
+        <two-choice-dialog-cards
+          v-if="canStellenBeSubmitted()"
+          v-model="twoChoiceDialogVisible"
+          buttontext="Hinzufügen"
+          :icon="mdiPlus"
+          dialogtitle="Praktikumsplatz melden"
+          dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
+          choice-one-title="Studium"
+          choice-one-subtitle="Praktikumsplatz für Studierende "
+          choice-two-title="Ausbildung"
+          choice-two-subtitle="Praktikumsplatz für Auszubildende"
+          @choice-one="toStudium"
+          @choice-two="toAusbildung"
+        />
+      </template>
+    </page-title>
+    <data-table
+      v-if="activeMeldezeitraum"
+      :headers="headers"
+      :items="praktikumsstellenTableItems"
+      :group-by-options="groupByOptions"
+      :loading="loadingSite || loadingUebersicht"
+      :show-expand="true"
+      :sort-by="defaultSort"
+      :expand-on-click="true"
+    >
+      <template #[`item.actions`]="{ item }">
+        <studiums-praktikumsstelle-update-dialog
+          v-if="item.studiengang"
+          v-model="itemProxyMap[item.id]!"
+          icon-only
+          @update:model-value="onRowUpdated(item.id, $event)"
+        />
+        <ausbildungs-praktikumsstelle-update-dialog
+          v-else
+          v-model="itemProxyMap[item.id]!"
+          icon-only
+          @update:model-value="onRowUpdated(item.id, $event)"
+        />
+        <praktikumsstelle-delete-dialog
+          :stelle="item"
+          @deleted="getAllPraktikumsstellenInCurrentMeldezeitraum"
+        />
+      </template>
+      <template #expanded-row="{ columns, item }">
+        <tr>
+          <td
+            :colspan="columns.length"
+            class="py-2"
+          >
+            <p style="white-space: pre-line">
+              {{ generator.getPraktikumsstellenCardDetailText(item) }}
+            </p>
+          </td>
+        </tr>
+      </template>
+    </data-table>
+    <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
+  </div>
 </template>
 
 <script setup lang="ts">

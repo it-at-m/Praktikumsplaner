@@ -1,24 +1,26 @@
 <template>
-  <page-title page-header-text="Nachwuchskräfte">
-    <template #actions>
-      <excel-import-nwk></excel-import-nwk>
-      <nwk-create-dialog></nwk-create-dialog>
-    </template>
-  </page-title>
-  <data-table
-    :headers="headers"
-    :items="nwkTableItems"
-    :group-by-options="groupByOptions"
-    :loading="loading"
-    :sort-by="defaultSort"
-  >
-    <template #[`item.actions`]="{ item }">
-      <nwk-update-dialog
-        :nwk="item"
-        @updated="loadAllActiveNwks"
-      />
-    </template>
-  </data-table>
+  <div>
+    <page-title page-header-text="Nachwuchskräfte">
+      <template #actions>
+        <excel-import-nwk></excel-import-nwk>
+        <nwk-create-dialog></nwk-create-dialog>
+      </template>
+    </page-title>
+    <data-table
+      :headers="headers"
+      :items="nwkTableItems"
+      :group-by-options="groupByOptions"
+      :loading="loading"
+      :sort-by="defaultSort"
+    >
+      <template #[`item.actions`]="{ item }">
+        <nwk-update-dialog
+          :nwk="item"
+          @updated="loadAllActiveNwks"
+        />
+      </template>
+    </data-table>
+  </div>
 </template>
 
 <script setup lang="ts">

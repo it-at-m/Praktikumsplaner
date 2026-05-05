@@ -1,63 +1,65 @@
 <template>
-  <page-title
-    page-header-text="Zuweisung (letzter vergangener Meldezeitraum)"
-  ></page-title>
-  <v-row>
-    <v-col
-      class="overflow-y-auto"
-      style="max-height: 70vh"
-    >
-      <v-skeleton-loader
-        v-if="loadingNwk"
-        type="image"
-      ></v-skeleton-loader>
-      <active-nwk-list-for-zuweisung
-        v-else
-        v-model="nwks"
+  <div>
+    <page-title
+      page-header-text="Zuweisung (letzter vergangener Meldezeitraum)"
+    ></page-title>
+    <v-row>
+      <v-col
         class="overflow-y-auto"
-      />
-    </v-col>
-    <v-divider vertical />
-    <v-col
-      class="overflow-y-auto"
-      style="max-height: 70vh"
-    >
-      <v-skeleton-loader
-        v-if="loadingPraktikumsstellen"
-        type="image"
-      ></v-skeleton-loader>
-      <praktikumsstellen-list-zuweisung
-        v-else
-        :praktikumsstellen="praktikumsstellen"
+        style="max-height: 70vh"
+      >
+        <v-skeleton-loader
+          v-if="loadingNwk"
+          type="image"
+        ></v-skeleton-loader>
+        <active-nwk-list-for-zuweisung
+          v-else
+          v-model="nwks"
+          class="overflow-y-auto"
+        />
+      </v-col>
+      <v-divider vertical />
+      <v-col
         class="overflow-y-auto"
-      />
-    </v-col>
-  </v-row>
-  <v-row
-    v-if="!loadingNwk && !loadingPraktikumsstellen"
-    class="pt-4 pr-2"
-  >
-    <v-spacer></v-spacer>
-    <v-btn
-      :prepend-icon="mdiMail"
-      color="primary"
-      class="mr-4"
-      @click="openMailWarningDialog"
-      >Mails senden</v-btn
+        style="max-height: 70vh"
+      >
+        <v-skeleton-loader
+          v-if="loadingPraktikumsstellen"
+          type="image"
+        ></v-skeleton-loader>
+        <praktikumsstellen-list-zuweisung
+          v-else
+          :praktikumsstellen="praktikumsstellen"
+          class="overflow-y-auto"
+        />
+      </v-col>
+    </v-row>
+    <v-row
+      v-if="!loadingNwk && !loadingPraktikumsstellen"
+      class="pt-4 pr-2"
     >
-    <excel-export
-      :start-download="startDownload"
-      @click="openExcelWarnings"
-      @exported="exported"
-    ></excel-export>
-  </v-row>
-  <warning-dialog
-    :visible="showWarningDialog"
-    :warnings="warnings"
-    @accepted="acceptedWarningDialog"
-    @rejected="rejectedWarningDialog"
-  />
-  <send-mails-dialog v-model:show-dialog="showSendMailDialog" />
+      <v-spacer></v-spacer>
+      <v-btn
+        :prepend-icon="mdiMail"
+        color="primary"
+        class="mr-4"
+        @click="openMailWarningDialog"
+        >Mails senden</v-btn
+      >
+      <excel-export
+        :start-download="startDownload"
+        @click="openExcelWarnings"
+        @exported="exported"
+      ></excel-export>
+    </v-row>
+    <warning-dialog
+      :visible="showWarningDialog"
+      :warnings="warnings"
+      @accepted="acceptedWarningDialog"
+      @rejected="rejectedWarningDialog"
+    />
+    <send-mails-dialog v-model:show-dialog="showSendMailDialog" />
+  </div>
 </template>
 
 <script setup lang="ts">
