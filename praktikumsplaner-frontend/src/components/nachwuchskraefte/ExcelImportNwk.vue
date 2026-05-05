@@ -75,19 +75,16 @@ const rules = [
 function cancel() {
   visible.value = false;
   form.value?.reset();
+  file.value = null;
 }
 function uploadFile() {
   form.value?.validate().then((validation: { valid: boolean }) => {
     if (!validation.valid || !file.value) return;
-    visible.value = false;
-    NwkService.uploadExcelFile(file.value, loading)
-      .then(() => {
-        emitter.emit("nwkCreated");
-      })
-      .finally(() => {
-        form.value?.reset();
-        file.value = null;
-      });
+
+    NwkService.uploadExcelFile(file.value, loading).then(() => {
+      cancel();
+      emitter.emit("nwkCreated");
+    });
   });
 }
 </script>

@@ -1,17 +1,13 @@
 import type { Ref } from "vue";
 
+
+
 import { Levels } from "@/api/Error";
-import {
-  defaultResponseHandler,
-  getDELETEConfig,
-  getGETConfig,
-  getPATCHConfig,
-  getPOSTConfig,
-  getPUTConfig,
-} from "@/api/FetchUtils";
+import { defaultResponseHandler, getDELETEConfig, getGETConfig, getPATCHConfig, getPOSTConfig, getPUTConfig } from "@/api/FetchUtils";
 import { API_BASE, PRAKTIKUMSSTELLE_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
+
 
 export default {
   uploadStudiumsPraktikumsstelle(
@@ -168,29 +164,39 @@ export default {
         loading.value = false;
       });
   },
-  deletePraktikumsstelle(stelle: Praktikumsstelle): Promise<void> {
+  deletePraktikumsstelle(stelle: Praktikumsstelle, loading: Ref<boolean>): Promise<void> {
     if (this.isAusbildungsPraktikumsstelle(stelle)) {
+      loading.value = true;
       return fetch(
         `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/${stelle.id}`,
         getDELETEConfig({})
-      ).then((response) => {
-        defaultResponseHandler(response);
-        useSnackbarStore().showMessage({
-          message: "☑ Praktikumsstelle erfolgreich gelöscht",
-          level: Levels.SUCCESS,
+      )
+        .then((response) => {
+          defaultResponseHandler(response);
+          useSnackbarStore().showMessage({
+            message: "☑ Praktikumsstelle erfolgreich gelöscht",
+            level: Levels.SUCCESS,
+          });
+        })
+        .finally(() => {
+          loading.value = false;
         });
-      });
     } else if (this.isStudiumsPraktikumsstelle(stelle)) {
+      loading.value = true;
       return fetch(
         `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/${stelle.id}`,
         getDELETEConfig({})
-      ).then((response) => {
-        defaultResponseHandler(response);
-        useSnackbarStore().showMessage({
-          message: "☑ Praktikumsstelle erfolgreich gelöscht",
-          level: Levels.SUCCESS,
+      )
+        .then((response) => {
+          defaultResponseHandler(response);
+          useSnackbarStore().showMessage({
+            message: "☑ Praktikumsstelle erfolgreich gelöscht",
+            level: Levels.SUCCESS,
+          });
+        })
+        .finally(() => {
+          loading.value = false;
         });
-      });
     } else {
       throw new Error(
         "Praktikumsstelle konnte nicht nach Typ kategorisiert werden."

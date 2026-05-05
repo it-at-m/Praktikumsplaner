@@ -8,6 +8,7 @@
     v-model="visible"
     :dialogtitle="'Stelle löschen?'"
     :dialogtext="'Wollen Sie die Praktikumsstelle wirklich unwiderruflich löschen?'"
+    :loading="loading"
     @no="visible = false"
     @yes="performDelete"
   />
@@ -29,15 +30,18 @@ const props = defineProps<{
 const emit = defineEmits<(e: "deleted") => void>();
 
 const visible = ref(false);
+const loading = ref(false);
 
 function openDialog() {
   visible.value = true;
 }
 
 function performDelete() {
-  PraktikumsstellenService.deletePraktikumsstelle(props.stelle).then(() => {
-    visible.value = false;
-    emit("deleted");
-  });
+  PraktikumsstellenService.deletePraktikumsstelle(props.stelle, loading).then(
+    () => {
+      visible.value = false;
+      emit("deleted");
+    }
+  );
 }
 </script>

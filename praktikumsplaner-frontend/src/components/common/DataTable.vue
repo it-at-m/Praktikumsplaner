@@ -13,6 +13,7 @@
     :loading="props.loading"
     fixed-header
     hide-default-footer
+    items-per-page="-1"
     :show-expand="props.showExpand"
     :expand-on-click="props.expandOnClick"
     v-bind="$attrs"

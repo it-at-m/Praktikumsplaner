@@ -35,7 +35,7 @@
           variant="outlined"
           color="primary"
           class="ml-7 mb-2"
-          @click="clickAbbrechen()"
+          @click="close()"
         >
           Zurück
         </v-btn>
@@ -51,6 +51,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <progress-circular-overlay :loading="loading"></progress-circular-overlay>
 </template>
 
 <script setup lang="ts">
@@ -58,12 +59,14 @@ import { mdiPlus } from "@mdi/js";
 import { ref } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import ZeitraumPicker from "@/components/meldezeitraeume/ZeitraumPicker.vue";
 import { useRules } from "@/composables/rules";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Zeitraum from "@/types/Zeitraum";
 
 const visible = ref(false);
+const loading = ref(false);
 const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum("", new Zeitraum()));
 const form = ref<HTMLFormElement>();
 const maxLength = 255;
@@ -82,27 +85,20 @@ const emits =
     (e: "meldezeitraumAdded", meldezeitraum: Meldezeitraum) => void
   >();
 
-function resetForm() {
-  meldezeitraum.value = new Meldezeitraum("", new Zeitraum());
-  form.value?.resetValidation();
-}
-
 function clickSpeichern() {
   form.value?.validate().then((validation: { valid: boolean }) => {
-    if (validation.valid) {
-      MeldezeitraumService.create(meldezeitraum.value)
-        .then(() => {
-          emits("meldezeitraumAdded", meldezeitraum.value);
-        })
-        .finally(() => {
-          clickAbbrechen();
-        });
-    }
+    if (!validation.valid) return;
+
+    MeldezeitraumService.create(meldezeitraum.value, loading).then(() => {
+      close();
+      emits("meldezeitraumAdded", meldezeitraum.value);
+    });
   });
 }
 
-function clickAbbrechen() {
-  resetForm();
+function close() {
+  meldezeitraum.value = new Meldezeitraum("", new Zeitraum());
+  form.value?.resetValidation();
   visible.value = false;
 }
 </script>

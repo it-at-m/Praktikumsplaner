@@ -12,21 +12,24 @@ import { useSnackbarStore } from "@/stores/snackbar";
 import Meldezeitraum from "@/types/Meldezeitraum";
 
 export default {
-  create(meldezeitraum: Meldezeitraum): Promise<Meldezeitraum> {
+  create(meldezeitraum: Meldezeitraum, loading: Ref<boolean>): Promise<Meldezeitraum> {
+    loading.value = true
     return fetch(
       `${API_BASE}${MELDEZEITRAUM_BASE}`,
       getPOSTConfig(meldezeitraum)
-    ).then((response) => {
-      if (response.ok) {
-        useSnackbarStore().showMessage({
-          message: "☑ Meldezeitraum erfolgreich angelegt",
-          level: Levels.SUCCESS,
-        });
-        return response.json();
-      } else {
-        defaultResponseHandler(response);
-      }
-    });
+    )
+      .then((response) => {
+        if (response.ok) {
+          useSnackbarStore().showMessage({
+            message: "☑ Meldezeitraum erfolgreich angelegt",
+            level: Levels.SUCCESS,
+          });
+          return response.json();
+        } else {
+          defaultResponseHandler(response);
+        }
+      })
+      .finally(() => {loading.value = false});
   },
   getCurrentMeldezeitraum(
     loading: Ref<boolean> | undefined

@@ -32,9 +32,13 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <progress-circular-overlay :loading="loading"></progress-circular-overlay>
 </template>
+
 <script setup lang="ts">
 import { computed } from "vue";
+
+import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 
 const properties = defineProps<{
   dialogtitle: string;
@@ -43,6 +47,7 @@ const properties = defineProps<{
    * Steuerflag für den Dialog
    */
   modelValue: boolean;
+  loading: boolean;
 }>();
 
 const emits = defineEmits<{
@@ -63,5 +68,3 @@ function yes(): void {
   emits("yes");
 }
 </script>
-
-<style scoped></style>

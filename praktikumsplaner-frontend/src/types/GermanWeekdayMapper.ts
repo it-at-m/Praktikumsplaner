@@ -28,7 +28,7 @@ export default class GermanWeekdayMapper {
     "SUNDAY",
   ];
 
-  private normalizeAndSort(daysString: string[]): string[] {
+  public normalizeAndSort(daysString: string[]): string[] {
     const normalized = daysString.map((d) => d.trim().toUpperCase());
     return normalized.sort(
       (a, b) => this.dayOrder.indexOf(a) - this.dayOrder.indexOf(b)

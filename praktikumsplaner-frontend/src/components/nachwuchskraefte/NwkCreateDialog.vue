@@ -13,7 +13,6 @@
   >
     <v-form
       ref="form"
-      class="no-scrollbar"
     >
       <v-card>
         <v-card-title class="text-h5 font-weight-bold"
@@ -97,9 +96,6 @@ function cancel() {
 
 function close() {
   visible.value = false;
-}
-
-function clear() {
   nwk.value = new NwkCreate("", "", "", [], undefined, undefined);
   form.value?.resetValidation();
 }
@@ -112,16 +108,7 @@ function saveNwk() {
       .then(() => {
         close();
         emitter.emit("nwkCreated");
-      })
-      .finally(() => {
-        clear();
       });
   });
 }
 </script>
-
-<style scoped>
-.no-scrollbar {
-  overflow: hidden !important;
-}
-</style>
