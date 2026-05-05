@@ -81,11 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  mdiChevronDown,
-  mdiChevronUp,
-  mdiCloseCircle,
-} from "@mdi/js";
+import { mdiChevronDown, mdiChevronUp, mdiCloseCircle } from "@mdi/js";
 import { computed, ref } from "vue";
 
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";

@@ -89,7 +89,7 @@ export function useTextGenerator() {
         ) + "\n";
     }
     if (stelle.planstelleVorhanden) {
-      cardText += "Planstelle vorhanden: JA\n"
+      cardText += "Planstelle vorhanden: JA\n";
     }
     return cardText;
   }
@@ -112,7 +112,7 @@ export function useTextGenerator() {
         ) + "\n";
     }
     if (stelle.planstelleVorhanden) {
-      cardText += "Planstelle vorhanden: JA\n"
+      cardText += "Planstelle vorhanden: JA\n";
     }
     return cardText;
   }
