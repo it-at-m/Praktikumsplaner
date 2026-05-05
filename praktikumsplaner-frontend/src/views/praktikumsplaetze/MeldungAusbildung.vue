@@ -28,7 +28,8 @@
         <v-sheet
           border
           rounded
-          class="pa-5 mb-3">
+          class="pa-5 mb-3"
+        >
           <v-row>
             <v-col>
               <span class="text-h6">Stellenbeschreibung</span>
@@ -99,7 +100,8 @@
         <v-sheet
           border
           rounded
-          class="pa-5 mb-3">
+          class="pa-5 mb-3"
+        >
           <v-row>
             <v-col>
               <span class="text-h6">Nachwuchskraft</span>
@@ -146,7 +148,8 @@
         <v-sheet
           border
           rounded
-          class="pa-5 mb-3">
+          class="pa-5 mb-3"
+        >
           <v-row>
             <v-col>
               <span class="text-h6">örtliche*r Ausbilder*in</span>

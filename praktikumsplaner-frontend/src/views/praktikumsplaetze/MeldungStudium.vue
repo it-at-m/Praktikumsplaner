@@ -28,7 +28,8 @@
         <v-sheet
           border
           rounded
-          class="pa-5 mb-3">
+          class="pa-5 mb-3"
+        >
           <v-row>
             <v-col>
               <span class="text-h6">Stellenbeschreibung</span>
@@ -88,7 +89,8 @@
         <v-sheet
           border
           rounded
-          class="pa-5 mb-3">
+          class="pa-5 mb-3"
+        >
           <v-row>
             <v-col>
               <span class="text-h6">Nachwuchskraft</span>
@@ -136,7 +138,8 @@
         <v-sheet
           border
           rounded
-          class="pa-5 mb-3">
+          class="pa-5 mb-3"
+        >
           <v-row>
             <v-col>
               <span class="text-h6">örtliche*r Ausbilder*in</span>
@@ -190,16 +193,16 @@
             </v-col>
           </v-row>
         </v-sheet>
-          <v-row>
-            <v-col class="d-flex justify-end">
-              <v-btn
-                color="primary"
-                @click="uploadPraktikumsstelle"
-              >
-                speichern
-              </v-btn>
-            </v-col>
-          </v-row>
+        <v-row>
+          <v-col class="d-flex justify-end">
+            <v-btn
+              color="primary"
+              @click="uploadPraktikumsstelle"
+            >
+              speichern
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-form>
       <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
     </div>
