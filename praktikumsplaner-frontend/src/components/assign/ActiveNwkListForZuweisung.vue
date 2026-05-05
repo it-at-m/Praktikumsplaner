@@ -1,36 +1,37 @@
 <template>
-  <v-container v-if="properties.modelValue && modelValue.length > 0">
-    <v-list v-model:selected="selectedNwks">
-      <v-list-item
-        v-for="nwk in properties.modelValue"
-        :key="nwk.id"
-        :model-value="nwk"
-        draggable="true"
-        @dragstart="dragStart($event, nwk)"
-      >
-        <nwk-card :nwk="nwk" />
-      </v-list-item>
-    </v-list>
-  </v-container>
-  <v-container
-    v-else
-    class="d-flex justify-center align-center"
+  <v-list
+    v-if="properties.modelValue && properties.modelValue.length > 0"
+    v-model:selected="selectedNwks"
+    class="pr-2"
   >
-    <v-row justify="center">
-      <v-col
-        cols="auto"
-        class="d-flex align-center justify-center"
-      >
-        <v-icon
-          color="blue"
-          size="large"
-          class="mr-3"
-          :icon="mdiInformationOutline"
-        />
-        <span>Es sind noch keine Nachwuchskräfte vorhanden.</span>
-      </v-col>
-    </v-row>
-  </v-container>
+    <v-list-item
+      v-for="nwk in properties.modelValue"
+      :key="nwk.id"
+      class="px-0"
+      :model-value="nwk"
+      draggable="true"
+      @dragstart="dragStart($event, nwk)"
+    >
+      <nwk-card :nwk="nwk" />
+    </v-list-item>
+  </v-list>
+  <v-row
+    v-else
+    justify="center"
+  >
+    <v-col
+      cols="auto"
+      class="d-flex align-center justify-center"
+    >
+      <v-icon
+        color="blue"
+        size="large"
+        class="mr-3"
+        :icon="mdiInformationOutline"
+      />
+      <span>Es sind noch keine Nachwuchskräfte vorhanden.</span>
+    </v-col>
+  </v-row>
 </template>
 <script setup lang="ts">
 import { mdiInformationOutline } from "@mdi/js";

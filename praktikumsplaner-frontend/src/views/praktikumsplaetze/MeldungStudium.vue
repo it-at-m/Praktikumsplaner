@@ -1,10 +1,11 @@
 <template>
-  <v-container>
+  <div>
     <page-title
       back-button-url="/praktikumsplaetze"
       page-header-text="Praktikumsplatz für Studierende"
+      class="mb-2"
     ></page-title>
-    <v-container v-if="loadingSite">
+    <div v-if="loadingSite">
       <v-skeleton-loader type="image"> </v-skeleton-loader>
       <v-spacer />
       <v-skeleton-loader type="image"> </v-skeleton-loader>
@@ -17,15 +18,18 @@
           <v-skeleton-loader type="button"> </v-skeleton-loader>
         </v-col>
       </v-row>
-    </v-container>
-    <v-container v-else>
-      <div v-if="!activeMeldezeitraum"></div>
+    </div>
+    <div v-else>
       <v-form
         v-if="canStellenBeSubmitted()"
         ref="form"
         lazy-validation
       >
-        <v-container class="box">
+        <v-sheet
+          border
+          rounded
+          class="pa-5 mb-3"
+        >
           <v-row>
             <v-col>
               <span class="text-h6">Stellenbeschreibung</span>
@@ -81,8 +85,12 @@
             </v-col>
             <v-col cols="1" />
           </v-row>
-        </v-container>
-        <v-container class="box">
+        </v-sheet>
+        <v-sheet
+          border
+          rounded
+          class="pa-5 mb-3"
+        >
           <v-row>
             <v-col>
               <span class="text-h6">Nachwuchskraft</span>
@@ -126,8 +134,12 @@
               <wuensche-tooltip></wuensche-tooltip>
             </v-col>
           </v-row>
-        </v-container>
-        <v-container class="box">
+        </v-sheet>
+        <v-sheet
+          border
+          rounded
+          class="pa-5 mb-3"
+        >
           <v-row>
             <v-col>
               <span class="text-h6">örtliche*r Ausbilder*in</span>
@@ -158,10 +170,12 @@
               ></ausbilder-erw-fuehrungszeugnis-checkbox>
             </v-col>
           </v-row>
-        </v-container>
-        <v-container
+        </v-sheet>
+        <v-sheet
           v-if="security.isAusbildungsleitung()"
-          class="box"
+          border
+          rounded
+          class="pa-5 mb-3"
         >
           <v-row>
             <v-col>
@@ -178,25 +192,22 @@
               ></meldezeitraum-select>
             </v-col>
           </v-row>
-        </v-container>
-        <v-container>
-          <v-row>
-            <v-col cols="10" />
-            <v-col>
-              <v-btn
-                color="primary"
-                @click="uploadPraktikumsstelle"
-              >
-                speichern
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
+        </v-sheet>
+        <v-row>
+          <v-col class="d-flex justify-end">
+            <v-btn
+              color="primary"
+              @click="uploadPraktikumsstelle"
+            >
+              speichern
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-form>
       <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
-    </v-container>
+    </div>
     <progress-circular-overlay :loading="loading"></progress-circular-overlay>
-  </v-container>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -230,8 +241,6 @@ import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const requiredFieldSymbol = "*";
-
-const activeMeldezeitraum = ref<boolean>(false);
 
 const userStore = useUserStore();
 const praktikumsstelle = ref<Praktikumsstelle>(
@@ -328,14 +337,14 @@ function uploadPraktikumsstelle() {
       MeldungService.uploadStudiumsPraktikumsstelleWithMeldezeitraum(
         praktikumsstelle.value,
         loading
-      ).finally(() => {
+      ).then(() => {
         resetForm();
       });
     } else {
       MeldungService.uploadStudiumsPraktikumsstelle(
         praktikumsstelle.value,
         loading
-      ).finally(() => {
+      ).then(() => {
         resetForm();
       });
     }

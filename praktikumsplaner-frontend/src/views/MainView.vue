@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <v-row class="text-center">
       <v-col class="mb-4">
         <br />
@@ -117,7 +117,7 @@
         </v-progress-circular>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script setup lang="ts">

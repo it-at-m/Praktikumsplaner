@@ -1,61 +1,57 @@
 <template>
-  <v-container>
-    <v-col>
-      <slot name="header"></slot>
-      <v-list v-if="properties.value.length > 0">
-        <v-card
-          v-for="meldezeitraum in properties.value"
-          :key="meldezeitraum.id"
-          rounded
-          border
-        >
-          <v-divider></v-divider>
-          <v-list-item lines="two">
-            <v-list-item-title class="justify-center">
-              {{ meldezeitraum.zeitraumName }}
-              <slot name="card-title-icon"></slot>
-            </v-list-item-title>
-            <v-list-item-subtitle>
-              <v-icon :icon="mdiCalendarStart" />
-              {{
-                useFormatter().formatDateFromString(
-                  meldezeitraum.zeitraum.startZeitpunkt
-                )
-              }}
+  <slot name="header"></slot>
+  <v-list v-if="properties.value.length > 0">
+    <v-card
+      v-for="meldezeitraum in properties.value"
+      :key="meldezeitraum.id"
+      border
+      elevation="0"
+      class="mt-1"
+    >
+      <v-list-item lines="two">
+        <v-list-item-title class="justify-center">
+          {{ meldezeitraum.zeitraumName }}
+        </v-list-item-title>
+        <v-list-item-subtitle>
+          <v-icon :icon="mdiCalendarStart" />
+          {{
+            useFormatter().formatDateFromString(
+              meldezeitraum.zeitraum.startZeitpunkt
+            )
+          }}
 
-              <v-icon :icon="mdiCalendarEnd" />
-              {{
-                useFormatter().formatDateFromString(
-                  meldezeitraum.zeitraum.endZeitpunkt
-                )
-              }}
-            </v-list-item-subtitle>
-            <template #append>
-              <v-btn
-                variant="text"
-                :icon="mdiDelete"
-                @click="warnBeforeDelete(meldezeitraum)"
-              >
-              </v-btn>
-            </template>
-          </v-list-item>
-          <v-divider></v-divider>
-        </v-card>
-      </v-list>
-      <slot
-        v-else
-        name="notfoundmessage"
-      ></slot>
-    </v-col>
-    <yes-no-dialog-without-activator
-      :dialogtitle="deleteWarningDialogTitle"
-      :dialogtext="deleteWarningDialogText"
-      :model-value="showDeleteWarningDialog"
-      @no="resetDeleteWarningDialog"
-      @yes="deleteMeldezeitraum"
-    ></yes-no-dialog-without-activator>
-    <progress-circular-overlay :loading="loading"></progress-circular-overlay>
-  </v-container>
+          <v-icon :icon="mdiCalendarEnd" />
+          {{
+            useFormatter().formatDateFromString(
+              meldezeitraum.zeitraum.endZeitpunkt
+            )
+          }}
+        </v-list-item-subtitle>
+        <template #append>
+          <v-btn-group density="comfortable">
+            <v-btn
+              color="error"
+              :icon="mdiDelete"
+              @click="warnBeforeDelete(meldezeitraum)"
+            >
+            </v-btn>
+          </v-btn-group>
+        </template>
+      </v-list-item>
+    </v-card>
+  </v-list>
+  <slot
+    v-else
+    name="notfoundmessage"
+  ></slot>
+  <yes-no-dialog-without-activator
+    :dialogtitle="deleteWarningDialogTitle"
+    :dialogtext="deleteWarningDialogText"
+    :model-value="showDeleteWarningDialog"
+    @no="resetDeleteWarningDialog"
+    @yes="deleteMeldezeitraum"
+  ></yes-no-dialog-without-activator>
+  <progress-circular-overlay :loading="loading"></progress-circular-overlay>
 </template>
 
 <script setup lang="ts">

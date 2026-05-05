@@ -21,14 +21,9 @@ import de.muenchen.oss.praktikumsplaner.security.AuthUtils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.TreeMap;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
@@ -135,14 +130,14 @@ public class PraktikumsstellenService {
                 .findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(lastMeldezeitraumID).stream().map(praktikumsstellenMapper::toDto).toList();
     }
 
-    public Map<String, List<PraktikumsstelleDto>> getAllInCurrentMeldezeitraumGroupedByDienststelle() {
+    public List<PraktikumsstelleDto> getAllInCurrentMeldezeitraum() {
         final UUID currentMeldezeitraumID = meldezeitraumService.getCurrentMeldezeitraum().id();
-        return filterPraktikumsstellenForCurrentRole(getPraktikumsstellenGroupedByDienststelle(currentMeldezeitraumID));
+        return filterPraktikumsstellenForCurrentRole(getPraktikumsstellen(currentMeldezeitraumID));
     }
 
-    public Map<String, List<PraktikumsstelleDto>> getRecentPraktikumsstellenGroupedByDienststelle() {
+    public List<PraktikumsstelleDto> getRecentPraktikumsstellen() {
         final UUID lastMeldezeitraumID = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
-        return filterPraktikumsstellenForCurrentRole(getPraktikumsstellenGroupedByDienststelle(lastMeldezeitraumID));
+        return filterPraktikumsstellenForCurrentRole(getPraktikumsstellen(lastMeldezeitraumID));
     }
 
     public void deleteStudiumsPraktikumsstelle(final UUID praktikumsstellenId) {
@@ -228,7 +223,7 @@ public class PraktikumsstellenService {
         studiumsPraktikumsstellenRepository.save(studiumsPraktikumsstelle);
     }
 
-    private Map<String, List<PraktikumsstelleDto>> getPraktikumsstellenGroupedByDienststelle(final UUID meldezeitraumID) {
+    private List<PraktikumsstelleDto> getPraktikumsstellen(final UUID meldezeitraumID) {
         final List<AusbildungsPraktikumsstelleDto> ausbildungsListDto = ausbildungsPraktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID)
                 .stream()
                 .map(praktikumsstellenMapper::toDto).toList();
@@ -241,49 +236,26 @@ public class PraktikumsstellenService {
         combinedList.addAll(studiumsListDto);
         combinedList.sort(Comparator.comparing(PraktikumsstelleDto::dienststelle));
 
-        return combinedList.stream()
-                .collect(Collectors.groupingBy(
-                        praktikumsstelle -> getHauptabteilung(praktikumsstelle.dienststelle()),
-                        TreeMap::new,
-                        Collectors.toList()));
+        return combinedList;
     }
 
-    private Map<String, List<PraktikumsstelleDto>> filterPraktikumsstellenForCurrentRole(
-            final Map<String, List<PraktikumsstelleDto>> abteilungsStellenMap) {
+    private List<PraktikumsstelleDto> filterPraktikumsstellenForCurrentRole(
+            final List<PraktikumsstelleDto> praktikumsstellen) {
 
         if (AuthUtils.isAusbildungsleitung()) {
-            return abteilungsStellenMap;
+            return praktikumsstellen;
         }
 
         if (AuthUtils.isAusbilder()) {
             final String usermail = AuthUtils.getMailFromUser();
             final String userDepartment = AuthUtils.getDepartmentFromUser();
 
-            return abteilungsStellenMap.entrySet().stream()
-                    .map(entry -> Map.entry(
-                            entry.getKey(),
-                            entry.getValue().stream()
-                                    .filter(dto -> usermail.equals(dto.email()) ||
-                                            dto.dienststelle().startsWith(userDepartment))
-                                    .collect(Collectors.toList())))
-                    .filter(entry -> !entry.getValue().isEmpty())
-                    .collect(Collectors.toMap(
-                            Map.Entry::getKey,
-                            Map.Entry::getValue,
-                            (a, b) -> b,
-                            TreeMap::new));
-
+            return praktikumsstellen.stream()
+                    .filter(dto -> usermail.equals(dto.email()) || dto.dienststelle().startsWith(userDepartment))
+                    .toList();
         }
 
         throw new AuthorizationDeniedException("Zugriffsrolle fehlt");
-    }
-
-    private String getHauptabteilung(final String dienststelle) {
-        final Matcher matcher = Pattern.compile("\\d").matcher(dienststelle);
-        if (matcher.find()) {
-            return dienststelle.substring(0, matcher.start() + 1);
-        }
-        return dienststelle;
     }
 
     private AusbildungsPraktikumsstelle findByIdOrThrowAusbildungspraktikumsstelle(final UUID praktikumsstellenId) {

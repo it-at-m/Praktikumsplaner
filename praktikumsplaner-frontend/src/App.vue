@@ -20,7 +20,7 @@
           </router-link>
           <router-link
             to="/"
-            class="no-underline"
+            class="text-decoration-none"
           >
             <v-toolbar-title class="font-weight-bold">
               <span class="text-white">Praktikumsplaner</span>
@@ -40,7 +40,7 @@
       </v-row>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer">
-      <v-list nav>
+      <v-list>
         <v-list-item
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/nachwuchskraefte' }"
@@ -68,19 +68,18 @@
       </v-list>
     </v-navigation-drawer>
     <v-main>
-      <v-container fluid>
+      <v-container
+        fluid
+        class="pa-8"
+      >
         <router-view v-slot="{ Component }">
           <v-fade-transition mode="out-in">
-            <component :is="Component" />
+            <div>
+              <component :is="Component" />
+            </div>
           </v-fade-transition>
         </router-view>
       </v-container>
-      <v-footer
-        class="customfooter"
-        app
-      >
-        Made with 💛 in Munich
-      </v-footer>
     </v-main>
   </v-app>
 </template>
@@ -132,19 +131,3 @@ onMounted(() => {
   });
 });
 </script>
-
-<style scoped>
-.v-navigation-drawer .v-list-item-title {
-  font-size: 16px;
-  padding-bottom: 1px;
-}
-
-.no-underline,
-.no-underline:hover {
-  text-decoration: none;
-}
-
-.customfooter {
-  justify-content: center;
-}
-</style>

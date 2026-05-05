@@ -7,6 +7,7 @@
     <template #activator="{ props }">
       <template v-if="properties.icon">
         <v-btn
+          class="h-100"
           color="primary"
           :prepend-icon="properties.icon"
           v-bind="props"

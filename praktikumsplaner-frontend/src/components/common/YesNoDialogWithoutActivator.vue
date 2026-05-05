@@ -33,6 +33,7 @@
     </v-card>
   </v-dialog>
 </template>
+
 <script setup lang="ts">
 import { computed } from "vue";
 
@@ -63,5 +64,3 @@ function yes(): void {
   emits("yes");
 }
 </script>
-
-<style scoped></style>

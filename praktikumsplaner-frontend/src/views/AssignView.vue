@@ -1,12 +1,10 @@
 <template>
-  <v-container>
+  <div>
     <page-title
-      back-button-url="/"
-      page-header-text="Zuweisung"
+      page-header-text="Zuweisung (letzter vergangener Meldezeitraum)"
     ></page-title>
     <v-row>
       <v-col
-        cols="5"
         class="overflow-y-auto"
         style="max-height: 70vh"
       >
@@ -22,7 +20,6 @@
       </v-col>
       <v-divider vertical />
       <v-col
-        cols="6"
         class="overflow-y-auto"
         style="max-height: 70vh"
       >
@@ -32,12 +29,15 @@
         ></v-skeleton-loader>
         <praktikumsstellen-list-zuweisung
           v-else
-          :praktikumsstellen-map="praktikumsstellenMap"
+          :praktikumsstellen="praktikumsstellen"
           class="overflow-y-auto"
         />
       </v-col>
     </v-row>
-    <v-row v-if="!loadingNwk && !loadingPraktikumsstellen">
+    <v-row
+      v-if="!loadingNwk && !loadingPraktikumsstellen"
+      class="pt-4 pr-2"
+    >
       <v-spacer></v-spacer>
       <v-btn
         :prepend-icon="mdiMail"
@@ -59,8 +59,9 @@
       @rejected="rejectedWarningDialog"
     />
     <send-mails-dialog v-model:show-dialog="showSendMailDialog" />
-  </v-container>
+  </div>
 </template>
+
 <script setup lang="ts">
 import { mdiMail } from "@mdi/js";
 import { onMounted, ref, watch } from "vue";
@@ -90,24 +91,15 @@ const showSendMailDialog = ref(false);
 const showWarningDialog = ref(false);
 const warnings = ref<Warning[]>([]);
 const nwks = ref<Nwk[]>([]);
-const praktikumsstellenMap = ref<Map<string, Praktikumsstelle[]>>(
-  new Map<string, Praktikumsstelle[]>()
-);
+const praktikumsstellen = ref<Praktikumsstelle[]>([]);
 const startDownload = ref(false);
 const isExcelWarningDialog = ref(false);
 const route = router.currentRoute.value;
 const userStore = useUserStore();
 
 function collectWarnings() {
-  const stellen: Praktikumsstelle[] = [];
-  for (const value of praktikumsstellenMap.value.values()) {
-    for (const stelle of value) {
-      stellen.push(stelle);
-    }
-  }
-
   warnings.value = warningsGenerator.getAfterAssignmentWarnings(
-    stellen,
+    praktikumsstellen.value,
     nwks.value
   );
 }
@@ -183,15 +175,11 @@ function getAllActiveNwks() {
 }
 
 function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
-  const helperMap = new Map<string, Praktikumsstelle[]>();
   PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
     "most_recent"
   )
     .then((fetchedStellen) => {
-      for (const [key, value] of Object.entries(fetchedStellen)) {
-        helperMap.set(key, value);
-      }
-      praktikumsstellenMap.value = helperMap;
+      praktikumsstellen.value = fetchedStellen;
     })
     .finally(() => (loadingPraktikumsstellen.value = false));
 }
