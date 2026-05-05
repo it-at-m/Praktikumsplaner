@@ -7,6 +7,13 @@
     @dragover.prevent
     @dragenter.prevent
   >
+    <v-btn
+      :icon="show ? mdiChevronUp : mdiChevronDown"
+      :class="{ 'custom-card-active': assignedNwk }"
+      class="position-absolute top-0 right-0 mr-1 mt-1"
+      elevation="0"
+      @click.stop="show = !show"
+    ></v-btn>
     <v-card-title
       >Stelle bei
       {{ properties.praktikumsstelle.dienststelle }}
@@ -15,12 +22,15 @@
       Namentliche Anforderung:
       {{ properties.praktikumsstelle.namentlicheAnforderung }}
     </v-card-subtitle>
-    <v-card-text class="pt-0 mt-0 mb-0 pb-0">
+    <v-card-text class="pt-0 mb-0">
       <p style="white-space: pre-line">
         {{ getCardText(properties.praktikumsstelle) }}
       </p></v-card-text
     >
-    <v-col v-if="assignedNwk || loading">
+    <v-col
+      v-if="assignedNwk || loading"
+      class="pt-0"
+    >
       <v-skeleton-loader
         v-if="loading"
         type="chip"
@@ -29,9 +39,8 @@
         v-else-if="assignedNwk"
         :color="getNwkColor(assignedNwk)"
         variant="flat"
-        class="chip"
       >
-        <span class="text-truncate chip-text">
+        <span class="text-truncate">
           {{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
         </span>
 
@@ -43,13 +52,6 @@
         </template>
       </v-chip>
     </v-col>
-    <v-btn
-      :icon="show ? mdiChevronUp : mdiChevronDown"
-      :class="{ 'custom-card-active': assignedNwk }"
-      class="icon-bottom-right-position"
-      elevation="0"
-      @click.stop="show = !show"
-    ></v-btn>
     <v-expand-transition>
       <div v-show="show">
         <v-divider></v-divider>
