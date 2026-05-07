@@ -10,7 +10,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Praktikumsart;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.security.Authorities;
 import java.util.List;
-import java.util.Objects;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
