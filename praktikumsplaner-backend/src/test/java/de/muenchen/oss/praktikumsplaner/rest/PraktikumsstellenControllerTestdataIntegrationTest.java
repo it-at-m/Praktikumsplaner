@@ -4,9 +4,9 @@ import static de.muenchen.oss.praktikumsplaner.TestUtils.getJwtAuthenticationTok
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleViewDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Praktikumsart;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.security.Authorities;
 import java.util.List;
@@ -39,9 +39,7 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
     @Nested
     class GetAllPraktiumsstellenInSpecificMeldezeitraum {
 
-        final TypeReference<List<StudiumsPraktikumsstelleDto>> studiumsstelleTreeMapRef = new TypeReference<>() {
-        };
-        final TypeReference<List<AusbildungsPraktikumsstelleDto>> ausbildungsstelleTreeMapRef = new TypeReference<>() {
+        final TypeReference<List<PraktikumsstelleViewDto>> praktikumsstelleListRef = new TypeReference<>() {
         };
 
         @ParameterizedTest(name = "when meldezeitraum is {0}")
@@ -50,11 +48,12 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
             final MockHttpServletRequestBuilder request = createGetRequestWithZeitraum(meldezeitraumAlias);
 
             final MvcResult requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
-            final List<StudiumsPraktikumsstelleDto> responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(),
-                    studiumsstelleTreeMapRef);
+            final List<PraktikumsstelleViewDto> responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(),
+                    praktikumsstelleListRef);
 
             final List<Studiengang> studiengaenge = responseBody.stream()
-                    .map(StudiumsPraktikumsstelleDto::studiengang)
+                    .filter(dto -> dto.art() == Praktikumsart.STUDIUM)
+                    .map(dto -> Studiengang.valueOf(dto.richtung().name()))
                     .filter(Objects::nonNull)
                     .toList();
 
@@ -67,11 +66,12 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
             final MockHttpServletRequestBuilder request = createGetRequestWithZeitraum(meldezeitraumAlias);
 
             final MvcResult requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
-            final List<AusbildungsPraktikumsstelleDto> responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(),
-                    ausbildungsstelleTreeMapRef);
+            final List<PraktikumsstelleViewDto> responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(),
+                    praktikumsstelleListRef);
 
             List<Ausbildungsrichtung> ausbildungsrichtungen = responseBody.stream()
-                    .map(AusbildungsPraktikumsstelleDto::ausbildungsrichtung)
+                    .filter(dto -> dto.art() == Praktikumsart.AUSBILDUNG)
+                    .map(dto -> Ausbildungsrichtung.valueOf(dto.richtung().name()))
                     .filter(Objects::nonNull)
                     .toList();
 
