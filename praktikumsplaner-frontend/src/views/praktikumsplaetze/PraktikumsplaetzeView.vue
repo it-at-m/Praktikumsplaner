@@ -2,20 +2,14 @@
   <v-container class="pa-xl-8">
     <page-title page-header-text="Praktikumsplätze (aktueller Meldezeitraum)">
       <template #actions>
-        <two-choice-dialog-cards
+        <v-btn
           v-if="canStellenBeSubmitted"
-          v-model="twoChoiceDialogVisible"
-          buttontext="Hinzufügen"
-          :icon="mdiPlus"
-          dialogtitle="Praktikumsplatz melden"
-          dialogsubtitle="Welche Art von Praktikumsplatz möchtest du melden?"
-          choice-one-title="Studium"
-          choice-one-subtitle="Praktikumsplatz für Studierende "
-          choice-two-title="Ausbildung"
-          choice-two-subtitle="Praktikumsplatz für Auszubildende"
-          @choice-one="toStudium"
-          @choice-two="toAusbildung"
-        />
+          color="primary"
+          :prepend-icon="mdiPlus"
+          @click="toMeldung"
+        >
+          Hinzufügen
+        </v-btn>
       </template>
     </page-title>
     <data-table
@@ -29,14 +23,7 @@
       expand-on-click
     >
       <template #[`item.actions`]="{ item }">
-        <studiums-praktikumsstelle-update-dialog
-          v-if="item.studiengang"
-          v-model="itemProxyMap[item.id]!"
-          icon-only
-          @update:model-value="(newItem) => onRowUpdated(item.id, newItem)"
-        />
-        <ausbildungs-praktikumsstelle-update-dialog
-          v-else
+        <praktikumsstelle-update-dialog
           v-model="itemProxyMap[item.id]!"
           icon-only
           @update:model-value="(newItem) => onRowUpdated(item.id, newItem)"
@@ -73,11 +60,9 @@ import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import DataTable from "@/components/common/DataTable.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
-import TwoChoiceDialogCards from "@/components/common/TwoChoiceDialogCards.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
-import AusbildungsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/AusbildungsPraktikumsstelleUpdateDialog.vue";
 import PraktikumsstelleDeleteDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstelleDeleteDialog.vue";
-import StudiumsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/StudiumsPraktikumsstelleUpdateDialog.vue";
+import PraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstelleUpdateDialog.vue";
 import { useSecurity } from "@/composables/security";
 import { useTextGenerator } from "@/composables/textGenerator";
 import router from "@/plugins/router";
@@ -90,7 +75,6 @@ const activeMeldezeitraum = ref<boolean>(false);
 const loadingUebersicht = ref<boolean>(false);
 const loadingSite = ref<boolean>(true);
 const security = useSecurity();
-const twoChoiceDialogVisible = ref<boolean>(false);
 const praktikumsstellen = ref<Praktikumsstelle[]>();
 // FIXME: workaround to get real object from derived one
 const itemProxyMap = computed<Record<string, Praktikumsstelle>>(() => {
@@ -137,12 +121,8 @@ const route = router.currentRoute.value;
 const praktikumsstellenTableItems = computed(() =>
   (praktikumsstellen.value || []).map((s) => ({
     ...s,
-    art: s.studiengang ? "Studium" : s.ausbildungsrichtung ? "Ausbildung" : "",
-    richtung: s.studiengang
-      ? s.studiengang
-      : s.ausbildungsrichtung
-        ? s.ausbildungsrichtung
-        : "",
+    art: s.art || deriveArt(s.richtung),
+    richtung: s.richtung || "",
   }))
 );
 
@@ -192,11 +172,14 @@ const canStellenBeSubmitted = computed(
   () => security.isAusbildungsleitung() || activeMeldezeitraum.value
 );
 
-function toAusbildung(): void {
-  router.push("/praktikumsplaetze/meldungAusbildung");
+function toMeldung(): void {
+  router.push("/praktikumsplaetze/meldung");
 }
-function toStudium(): void {
-  router.push("/praktikumsplaetze/meldungStudium");
+
+function deriveArt(richtung?: string): string {
+  if (!richtung) return "";
+  const studium = ["BSC", "BWI", "VI", "LLB", "PUMA", "QE3"];
+  return studium.includes(richtung) ? "Studium" : "Ausbildung";
 }
 
 function getAllPraktikumsstellenInCurrentMeldezeitraum() {

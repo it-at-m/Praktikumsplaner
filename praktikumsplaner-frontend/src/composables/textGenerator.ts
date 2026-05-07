@@ -2,17 +2,50 @@ import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { valueToNameStudiensemester } from "@/types/Studiensemester";
 
+
 export function useTextGenerator() {
   function getPraktikumsstellenDescription(
     stelle: Praktikumsstelle | undefined | null
   ): string {
     let cardText = "";
     if (!stelle) return cardText;
+    cardText += "Richtung: " + (stelle.richtung || "") + "\n";
 
-    if (stelle.studiengang) {
-      cardText += getStudiumsPraktikumsstellenDescription(stelle);
-    } else if (stelle.ausbildungsrichtung) {
-      cardText += getAusbildungsPraktikumsstellenDescription(stelle);
+    switch (stelle.art) {
+      case "STUDIUM": {
+        if (stelle.studiensemester) {
+          cardText += "Semester: ";
+          stelle.studiensemester.sort();
+          for (let i = 0; i < (stelle.studiensemester?.length || 0) - 1; i++) {
+            cardText +=
+              valueToNameStudiensemester(stelle.studiensemester[i]) + ", ";
+          }
+          cardText +=
+            valueToNameStudiensemester(
+              stelle.studiensemester[stelle.studiensemester.length - 1]
+            ) + "\n";
+        }
+        break;
+      }
+      case "AUSBILDUNG": {
+        if (stelle.ausbildungsjahr) {
+          cardText += "Ausbildungsjahr: ";
+          stelle.ausbildungsjahr.sort();
+          for (let i = 0; i < stelle.ausbildungsjahr.length - 1; i++) {
+            cardText +=
+              valueToNameAusbildungsjahr(stelle.ausbildungsjahr[i]) + ", ";
+          }
+          cardText +=
+            valueToNameAusbildungsjahr(
+              stelle.ausbildungsjahr[stelle.ausbildungsjahr.length - 1]
+            ) + "\n";
+        }
+        break;
+      }
+    }
+
+    if (stelle.planstelleVorhanden) {
+      cardText += "Planstelle vorhanden: JA\n";
     }
 
     return cardText;
@@ -43,7 +76,7 @@ export function useTextGenerator() {
           break;
       }
     }
-    if (stelle.ausbildungsrichtung) {
+    if (stelle.art == "AUSBILDUNG") {
       cardText +=
         "Projektarbeit: " + (stelle.projektarbeit ? "Ja" : "Nein") + "\n";
       cardText +=
@@ -67,52 +100,6 @@ export function useTextGenerator() {
       "\n";
     if (stelle.wuensche) {
       cardText += "Wünsche: " + stelle.wuensche.split(/\n+ */).join(", ");
-    }
-    return cardText;
-  }
-
-  function getAusbildungsPraktikumsstellenDescription(
-    stelle: Praktikumsstelle
-  ): string {
-    let cardText = "";
-    cardText += "Ausbildungsrichtung: " + stelle.ausbildungsrichtung + "\n";
-    if (stelle.ausbildungsjahr) {
-      cardText += "Ausbildungsjahr: ";
-      stelle.ausbildungsjahr.sort();
-      for (let i = 0; i < stelle.ausbildungsjahr.length - 1; i++) {
-        cardText +=
-          valueToNameAusbildungsjahr(stelle.ausbildungsjahr[i]) + ", ";
-      }
-      cardText +=
-        valueToNameAusbildungsjahr(
-          stelle.ausbildungsjahr[stelle.ausbildungsjahr.length - 1]
-        ) + "\n";
-    }
-    if (stelle.planstelleVorhanden) {
-      cardText += "Planstelle vorhanden: JA\n";
-    }
-    return cardText;
-  }
-
-  function getStudiumsPraktikumsstellenDescription(
-    stelle: Praktikumsstelle
-  ): string {
-    let cardText = "";
-    cardText += "Studiengang: " + stelle.studiengang + "\n";
-    cardText += "Semester: ";
-    if (stelle.studiensemester) {
-      stelle.studiensemester.sort();
-      for (let i = 0; i < (stelle.studiensemester?.length || 0) - 1; i++) {
-        cardText +=
-          valueToNameStudiensemester(stelle.studiensemester[i]) + ", ";
-      }
-      cardText +=
-        valueToNameStudiensemester(
-          stelle.studiensemester[stelle.studiensemester.length - 1]
-        ) + "\n";
-    }
-    if (stelle.planstelleVorhanden) {
-      cardText += "Planstelle vorhanden: JA\n";
     }
     return cardText;
   }

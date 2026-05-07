@@ -29,30 +29,22 @@
     </template>
     <template #item="{ item, props }">
       <v-list-item v-bind="props">
-        <v-list-item-subtitle v-if="praktikumsstelle.studiengang === 'BSC'">
+        <v-list-item-subtitle v-if="praktikumsstelle.richtung === 'BSC'">
           {{ item.raw.zeitraumBSC }}
         </v-list-item-subtitle>
-        <v-list-item-subtitle
-          v-else-if="praktikumsstelle.studiengang === 'BWI'"
-        >
+        <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'BWI'">
           {{ item.raw.zeitraumBWI }}
         </v-list-item-subtitle>
-        <v-list-item-subtitle v-else-if="praktikumsstelle.studiengang === 'VI'">
+        <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'VI'">
           {{ item.raw.zeitraumVI }}
         </v-list-item-subtitle>
-        <v-list-item-subtitle
-          v-else-if="praktikumsstelle.studiengang === 'LLB'"
-        >
+        <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'LLB'">
           {{ item.raw.zeitraumLLB }}
         </v-list-item-subtitle>
-        <v-list-item-subtitle
-          v-else-if="praktikumsstelle.studiengang === 'PUMA'"
-        >
+        <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'PUMA'">
           {{ item.raw.zeitraumPUMA }}
         </v-list-item-subtitle>
-        <v-list-item-subtitle
-          v-else-if="praktikumsstelle.studiengang === 'QE3'"
-        >
+        <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'QE3'">
           {{ item.raw.zeitraumQE3 }}
         </v-list-item-subtitle>
       </v-list-item>
