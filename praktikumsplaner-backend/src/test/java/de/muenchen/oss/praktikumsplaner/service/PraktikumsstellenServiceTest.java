@@ -3,6 +3,7 @@ package de.muenchen.oss.praktikumsplaner.service;
 import static de.muenchen.oss.praktikumsplaner.TestUtils.getJwtAuthenticationToken;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -213,7 +214,7 @@ public class PraktikumsstellenServiceTest {
         when(praktikumsstellenRepository.save(any(Praktikumsstelle.class))).thenReturn(stelle);
         var unassignedDto = service.unassignNwk(stelle.getId());
         assertEquals(stelle.getId(), unassignedDto.id());
-        assertEquals(null, unassignedDto.assignedNwk());
+        assertNull(unassignedDto.assignedNwk());
 
         // Delete
         when(praktikumsstellenRepository.existsById(stelle.getId())).thenReturn(true);

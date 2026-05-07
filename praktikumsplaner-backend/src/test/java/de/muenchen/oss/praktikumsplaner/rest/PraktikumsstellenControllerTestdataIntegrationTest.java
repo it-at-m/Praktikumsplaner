@@ -54,7 +54,6 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
             final List<Studiengang> studiengaenge = responseBody.stream()
                     .filter(dto -> dto.art() == Praktikumsart.STUDIUM)
                     .map(dto -> Studiengang.valueOf(dto.richtung().name()))
-                    .filter(Objects::nonNull)
                     .toList();
 
             Assertions.assertThat(studiengaenge).containsOnly(Studiengang.values());
@@ -72,7 +71,6 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
             List<Ausbildungsrichtung> ausbildungsrichtungen = responseBody.stream()
                     .filter(dto -> dto.art() == Praktikumsart.AUSBILDUNG)
                     .map(dto -> Ausbildungsrichtung.valueOf(dto.richtung().name()))
-                    .filter(Objects::nonNull)
                     .toList();
 
             Assertions.assertThat(ausbildungsrichtungen).containsOnly(Ausbildungsrichtung.values());
