@@ -17,6 +17,9 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleD
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -154,14 +157,16 @@ public class ExcelExportService {
         final List<AusbildungsPraktikumsstelleDto> toDeleteAusbildungspraktikumsstellen = new ArrayList<>();
         final List<StudiumsPraktikumsstelleDto> toDeleteStudiumspraktikumsstellen = new ArrayList<>();
 
-        assignedAusbildungspraktikumsstellen.stream().filter(praktikumsstelle -> praktikumsstelle.assignedNwk().ausbildungsrichtung() == null)
+        assignedAusbildungspraktikumsstellen.stream()
+                .filter(praktikumsstelle -> praktikumsstelle.assignedNwk().richtung().getArt() == Bildungsrichtung.Art.STUDIUM)
                 .forEach(praktikumsstelle -> {
                     assignedStudiumspraktikumsstellen.add(turnAusbildungsIntoStudiumspraktikumsstelle(praktikumsstelle));
                     toDeleteAusbildungspraktikumsstellen.add(praktikumsstelle);
                 });
         assignedAusbildungspraktikumsstellen.removeAll(toDeleteAusbildungspraktikumsstellen);
 
-        assignedStudiumspraktikumsstellen.stream().filter(praktikumsstelle -> praktikumsstelle.assignedNwk().studiengang() == null)
+        assignedStudiumspraktikumsstellen.stream()
+                .filter(praktikumsstelle -> praktikumsstelle.assignedNwk().richtung().getArt() == Bildungsrichtung.Art.AUSBILDUNG)
                 .forEach(praktikumsstelle -> {
                     assignedAusbildungspraktikumsstellen.add(turnStudiumsIntoAusbildungspraktikumsstelle(praktikumsstelle));
                     toDeleteStudiumspraktikumsstellen.add(praktikumsstelle);
@@ -182,7 +187,7 @@ public class ExcelExportService {
                 .programmierkenntnisse(praktikumsstelle.programmierkenntnisse())
                 .dringlichkeit(praktikumsstelle.dringlichkeit())
                 .ausbildungsjahr(Set.of(JAHR1, JAHR2, JAHR3))
-                .ausbildungsrichtung(praktikumsstelle.assignedNwk().ausbildungsrichtung())
+                .ausbildungsrichtung(Ausbildungsrichtung.fromBildungsrichtung(praktikumsstelle.assignedNwk().richtung()))
                 .planstelleVorhanden(praktikumsstelle.planstelleVorhanden())
                 .assignedNwk(praktikumsstelle.assignedNwk())
                 .build();
@@ -200,7 +205,7 @@ public class ExcelExportService {
                 .dringlichkeit(praktikumsstelle.dringlichkeit())
                 .studiensemester(Set.of(SEMESTER1, SEMESTER2, SEMESTER3,
                         SEMESTER4, SEMESTER5, SEMESTER6))
-                .studiengang(praktikumsstelle.assignedNwk().studiengang())
+                .studiengang(Studiengang.fromBildungsrichtung(praktikumsstelle.assignedNwk().richtung()))
                 .planstelleVorhanden(praktikumsstelle.planstelleVorhanden())
                 .assignedNwk(praktikumsstelle.assignedNwk())
                 .build();
