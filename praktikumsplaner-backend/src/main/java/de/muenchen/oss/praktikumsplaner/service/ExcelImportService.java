@@ -66,13 +66,11 @@ public class ExcelImportService {
                 log.trace("NWK ist leer.");
                 continue;
             }
-            validator.validate(createNwkDto).forEach(violation -> {
-                importExceptionInfoList.add(
-                        new ExcelImportException.ExcelImportExceptionInfo(
-                                row.getRowNum(),
-                                violation.getPropertyPath().toString(),
-                                violation.getMessage()));
-            });
+            validator.validate(createNwkDto).forEach(violation -> importExceptionInfoList.add(
+                    new ExcelImportException.ExcelImportExceptionInfo(
+                            row.getRowNum(),
+                            violation.getPropertyPath().toString(),
+                            violation.getMessage())));
 
             createNwkDtos.add(createNwkDto);
             log.trace("NWK wurde geaddet.");

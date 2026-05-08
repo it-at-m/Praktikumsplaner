@@ -90,11 +90,3 @@ function getSubtitle(nwk: Nwk): string {
   return subtitle;
 }
 </script>
-<style scoped>
-.cards {
-  margin-bottom: 20px;
-}
-.v-card .v-card-title {
-  color: #000000;
-}
-</style>
