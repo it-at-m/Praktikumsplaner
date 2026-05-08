@@ -55,10 +55,9 @@
 import { computed } from "vue";
 
 import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
-import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
+import { findBildungsrichtungColorByValue } from "@/types/Bildungsrichtung.ts";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 import Nwk, { hasDetails } from "@/types/Nwk";
-import { findStudiengangColorByValue } from "@/types/Studiengang";
 
 const properties = defineProps<{
   nwk: Nwk;
@@ -74,20 +73,16 @@ function getFullName(nwk: Nwk): string {
 
 function getSubtitle(nwk: Nwk): string {
   let subtitle = "Daten konnten nicht geladen werden.";
-  if (nwk.studiengang) {
-    subtitle = nwk.studiengang + " / " + nwk.jahrgang;
-  } else if (nwk.ausbildungsrichtung) {
-    subtitle = nwk.ausbildungsrichtung + " / " + nwk.jahrgang;
+  if (nwk.richtung) {
+    subtitle = nwk.richtung + " / " + nwk.jahrgang;
   }
   return subtitle;
 }
 
 function getNwkColor(nwk: Nwk): string {
   let color = "white";
-  if (nwk.studiengang && nwk.ausbildungsrichtung == undefined) {
-    color = findStudiengangColorByValue(nwk.studiengang);
-  } else if (nwk.ausbildungsrichtung && nwk.studiengang == undefined) {
-    color = findAusbildungsrichtungColorByValue(nwk.ausbildungsrichtung);
+  if (nwk.richtung) {
+    color = findBildungsrichtungColorByValue(nwk.richtung);
   }
   return color;
 }

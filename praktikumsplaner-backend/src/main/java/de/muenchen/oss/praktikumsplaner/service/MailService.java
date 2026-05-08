@@ -56,15 +56,13 @@ public class MailService {
     }
 
     private Map<String, String> buildMailData(final PraktikumsstelleDto praktikumsstelleDto) {
-        final String studiengangOderAusbildungsrichtung = praktikumsstelleDto.assignedNwk().studiengang() != null
-                ? praktikumsstelleDto.assignedNwk().studiengang().getLongName()
-                : praktikumsstelleDto.assignedNwk().ausbildungsrichtung().getLongName();
+        final String bildungsrichtung = praktikumsstelleDto.assignedNwk().richtung().getLongName();
 
         return Map.of(
                 "ausbilder", praktikumsstelleDto.oertlicheAusbilder(),
                 "nachwuchskraftName", praktikumsstelleDto.assignedNwk().vorname() + " " + praktikumsstelleDto.assignedNwk().nachname(),
                 "jahrgang", praktikumsstelleDto.assignedNwk().jahrgang(),
-                "studiengangOderAusbildungsrichtung", studiengangOderAusbildungsrichtung,
+                "bildungsrichtung", bildungsrichtung,
                 "ausbildungsleitungNamen", praktikumsplanerProperties.getOertlAusbildungsleitungName());
     }
 }

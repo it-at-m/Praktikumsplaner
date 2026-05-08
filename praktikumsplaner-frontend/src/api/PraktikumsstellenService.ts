@@ -110,7 +110,7 @@ export default {
   },
   getAllPraktikumsstellenInSpecificMeldezeitraum(
     meldezeitraum: string
-  ): Promise<Map<string, Praktikumsstelle[]>> {
+  ): Promise<Praktikumsstelle[]> {
     return fetch(
       `${API_BASE}${PRAKTIKUMSSTELLE_BASE}?meldezeitraum=${meldezeitraum}`,
       getGETConfig()
@@ -168,29 +168,42 @@ export default {
         loading.value = false;
       });
   },
-  deletePraktikumsstelle(stelle: Praktikumsstelle): Promise<void> {
+  deletePraktikumsstelle(
+    stelle: Praktikumsstelle,
+    loading: Ref<boolean>
+  ): Promise<void> {
     if (this.isAusbildungsPraktikumsstelle(stelle)) {
+      loading.value = true;
       return fetch(
         `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/ausbildung/${stelle.id}`,
         getDELETEConfig({})
-      ).then((response) => {
-        defaultResponseHandler(response);
-        useSnackbarStore().showMessage({
-          message: "☑ Praktikumsstelle erfolgreich gelöscht",
-          level: Levels.SUCCESS,
+      )
+        .then((response) => {
+          defaultResponseHandler(response);
+          useSnackbarStore().showMessage({
+            message: "☑ Praktikumsstelle erfolgreich gelöscht",
+            level: Levels.SUCCESS,
+          });
+        })
+        .finally(() => {
+          loading.value = false;
         });
-      });
     } else if (this.isStudiumsPraktikumsstelle(stelle)) {
+      loading.value = true;
       return fetch(
         `${API_BASE}${PRAKTIKUMSSTELLE_BASE}/studium/${stelle.id}`,
         getDELETEConfig({})
-      ).then((response) => {
-        defaultResponseHandler(response);
-        useSnackbarStore().showMessage({
-          message: "☑ Praktikumsstelle erfolgreich gelöscht",
-          level: Levels.SUCCESS,
+      )
+        .then((response) => {
+          defaultResponseHandler(response);
+          useSnackbarStore().showMessage({
+            message: "☑ Praktikumsstelle erfolgreich gelöscht",
+            level: Levels.SUCCESS,
+          });
+        })
+        .finally(() => {
+          loading.value = false;
         });
-      });
     } else {
       throw new Error(
         "Praktikumsstelle konnte nicht nach Typ kategorisiert werden."

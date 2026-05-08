@@ -9,7 +9,11 @@
         :icon="mdiInformation"
       />
     </template>
-    <span>Die Projektarbeit ist die Abschlussarbeit der Auszubildenden</span>
+    <span
+      >Die Projektarbeit stellt die Abschlussarbeit der Auszubildenden dar und
+      ist ausschließlich für die Fachrichtung FISI relevant.<br />
+      Bei VD-Auszubildenden bitte stets "Nein" auswählen.</span
+    >
   </v-tooltip>
 </template>
 

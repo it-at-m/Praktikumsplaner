@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <page-title
       back-button-url="/"
       page-header-text="Zurück zur Startseite"
@@ -31,7 +31,7 @@
         alt="cat image did not load :("
       />
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script setup lang="ts">

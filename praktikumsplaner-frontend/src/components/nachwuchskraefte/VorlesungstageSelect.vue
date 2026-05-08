@@ -40,8 +40,8 @@ const nwk = computed({
 });
 
 function sortVorlesungstage() {
-  germanWeekdayMapper.getGermanDays(nwk.value.vorlesungstage).sort();
+  nwk.value.vorlesungstage = germanWeekdayMapper.normalizeAndSort(
+    nwk.value.vorlesungstage
+  );
 }
 </script>
-
-<style scoped></style>

@@ -9,11 +9,8 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.security.Authorities;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.TreeMap;
-import lombok.val;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +18,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -41,21 +39,21 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
     @Nested
     class GetAllPraktiumsstellenInSpecificMeldezeitraum {
 
-        final TypeReference<TreeMap<String, List<StudiumsPraktikumsstelleDto>>> studiumsstelleTreeMapRef = new TypeReference<>() {
+        final TypeReference<List<StudiumsPraktikumsstelleDto>> studiumsstelleTreeMapRef = new TypeReference<>() {
         };
-        final TypeReference<TreeMap<String, List<AusbildungsPraktikumsstelleDto>>> ausbildungsstelleTreeMapRef = new TypeReference<>() {
+        final TypeReference<List<AusbildungsPraktikumsstelleDto>> ausbildungsstelleTreeMapRef = new TypeReference<>() {
         };
 
         @ParameterizedTest(name = "when meldezeitraum is {0}")
         @ValueSource(strings = { "current", "most_recent" })
         void hasStelleOfAllStudiengang(final String meldezeitraumAlias) throws Exception {
-            val request = createGetRequestWithZeitraum(meldezeitraumAlias);
+            final MockHttpServletRequestBuilder request = createGetRequestWithZeitraum(meldezeitraumAlias);
 
-            val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
-            val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), studiumsstelleTreeMapRef);
+            final MvcResult requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
+            final List<StudiumsPraktikumsstelleDto> responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(),
+                    studiumsstelleTreeMapRef);
 
-            val studiengaenge = responseBody.values().stream()
-                    .flatMap(Collection::stream)
+            final List<Studiengang> studiengaenge = responseBody.stream()
                     .map(StudiumsPraktikumsstelleDto::studiengang)
                     .filter(Objects::nonNull)
                     .toList();
@@ -66,18 +64,18 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
         @ParameterizedTest(name = "when meldezeitraum is {0}")
         @ValueSource(strings = { "current", "most_recent" })
         void hasStellenOfAllAusbildungsrichtung(final String meldezeitraumAlias) throws Exception {
-            val request = createGetRequestWithZeitraum("current");
+            final MockHttpServletRequestBuilder request = createGetRequestWithZeitraum(meldezeitraumAlias);
 
-            val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
-            val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), ausbildungsstelleTreeMapRef);
+            final MvcResult requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
+            final List<AusbildungsPraktikumsstelleDto> responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(),
+                    ausbildungsstelleTreeMapRef);
 
-            val studiengaenge = responseBody.values().stream()
-                    .flatMap(Collection::stream)
+            List<Ausbildungsrichtung> ausbildungsrichtungen = responseBody.stream()
                     .map(AusbildungsPraktikumsstelleDto::ausbildungsrichtung)
                     .filter(Objects::nonNull)
                     .toList();
 
-            Assertions.assertThat(studiengaenge).containsOnly(Ausbildungsrichtung.values());
+            Assertions.assertThat(ausbildungsrichtungen).containsOnly(Ausbildungsrichtung.values());
         }
     }
 

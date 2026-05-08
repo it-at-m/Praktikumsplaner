@@ -1,79 +1,73 @@
 <template>
-  <v-container class="finishedBackground">
+  <div>
     <page-title
-      back-button-url="/"
+      class="mb-0"
       page-header-text="Meldezeiträume"
     >
-    </page-title>
-    <v-row>
-      <v-col cols="9"></v-col>
-      <v-col>
+      <template #actions>
         <create-meldezeitraum
-          v-model="model"
           @meldezeitraum-added="reloadMeldezeitraeume"
         ></create-meldezeitraum>
+      </template>
+    </page-title>
+    <v-skeleton-loader
+      v-if="loading"
+      type="heading, divider, list-item, heading, divider, list-item, heading"
+    >
+    </v-skeleton-loader>
+    <v-row class="mt-0">
+      <v-col>
+        <meldezeitraum-list
+          v-if="!loading"
+          :value="current"
+          @deleted="reloadMeldezeitraeume"
+        >
+          <template #header>
+            <h3>Aktueller Meldezeitraum</h3>
+          </template>
+          <template #notfoundmessage>
+            <p>Kein aktueller Meldezeitraum gefunden.</p>
+          </template>
+        </meldezeitraum-list>
       </v-col>
     </v-row>
-    <v-container class="box">
-      <v-skeleton-loader
-        v-if="loading"
-        type="heading, divider, list-item, heading, divider, list-item, heading"
-      >
-      </v-skeleton-loader>
-      <v-row>
-        <v-col>
-          <meldezeitraum-list
-            v-if="!loading"
-            :value="current"
-            @deleted="reloadMeldezeitraeume"
-          >
-            <template #card-title-icon>
-              <v-icon :icon="mdiStar" />
-            </template>
-            <template #notfoundmessage>
-              <p>Kein aktueller Meldezeitraum gefunden.</p>
-            </template>
-          </meldezeitraum-list>
-        </v-col>
-      </v-row>
-      <v-divider></v-divider>
-      <v-row>
-        <v-col>
-          <meldezeitraum-list
-            v-if="!loading"
-            :value="upcoming"
-            @deleted="reloadMeldezeitraeume"
-            ><template #header>
-              <h3>Kommende Meldezeiträume</h3>
-            </template>
-            <template #notfoundmessage>
-              <p>Keine kommenden Meldezeiträume gefunden.</p>
-            </template>
-          </meldezeitraum-list>
-        </v-col>
-      </v-row>
-      <v-divider></v-divider>
-      <v-row>
-        <v-col>
-          <meldezeitraum-list
-            v-if="!loading"
-            :value="passed"
-            @deleted="reloadMeldezeitraeume"
-            ><template #header>
-              <h3>Vergangene Meldezeiträume</h3>
-            </template>
-            <template #notfoundmessage>
-              <p>Keine vergangenen Meldezeiträume gefunden.</p>
-            </template>
-          </meldezeitraum-list>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-container>
+    <v-divider class="my-3"></v-divider>
+    <v-row>
+      <v-col>
+        <meldezeitraum-list
+          v-if="!loading"
+          :value="upcoming"
+          @deleted="reloadMeldezeitraeume"
+        >
+          <template #header>
+            <h3>Kommende Meldezeiträume</h3>
+          </template>
+          <template #notfoundmessage>
+            <p>Keine kommenden Meldezeiträume gefunden.</p>
+          </template>
+        </meldezeitraum-list>
+      </v-col>
+    </v-row>
+    <v-divider class="my-3"></v-divider>
+    <v-row>
+      <v-col>
+        <meldezeitraum-list
+          v-if="!loading"
+          :value="passed"
+          @deleted="reloadMeldezeitraeume"
+          ><template #header>
+            <h3>Vergangene Meldezeiträume</h3>
+          </template>
+          <template #notfoundmessage>
+            <p>Keine vergangenen Meldezeiträume gefunden.</p>
+          </template>
+        </meldezeitraum-list>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { mdiStar } from "@mdi/js";
 import { onMounted, ref, watch } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
@@ -87,7 +81,6 @@ import Meldezeitraum from "@/types/Meldezeitraum";
 
 const userStore = useUserStore();
 
-const model = ref<boolean>(true);
 const loading = ref<boolean>(false);
 const current = ref<Meldezeitraum[]>([]);
 const upcoming = ref<Meldezeitraum[]>([]);

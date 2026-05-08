@@ -3,8 +3,7 @@ package de.muenchen.oss.praktikumsplaner.rest;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
@@ -28,17 +27,12 @@ class NwkControllerTestdataIntegrationTest extends AbstractTestdataIntegrationTe
             val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
             val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsString(), NwkDto[].class);
 
-            val ausbildungsrichtungen = Arrays.stream(responseBody)
-                    .map(NwkDto::ausbildungsrichtung)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
-            val studiumsrichtungen = Arrays.stream(responseBody)
-                    .map(NwkDto::studiengang)
+            val richtungen = Arrays.stream(responseBody)
+                    .map(NwkDto::richtung)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toSet());
 
-            Assertions.assertThat(ausbildungsrichtungen).containsOnly(Ausbildungsrichtung.values());
-            Assertions.assertThat(studiumsrichtungen).containsOnly(Studiengang.values());
+            Assertions.assertThat(richtungen).containsOnly(Bildungsrichtung.values());
         }
 
         @Test

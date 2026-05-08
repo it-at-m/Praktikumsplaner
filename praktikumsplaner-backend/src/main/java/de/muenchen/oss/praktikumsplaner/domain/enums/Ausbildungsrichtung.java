@@ -15,4 +15,7 @@ public enum Ausbildungsrichtung {
         this.longName = longName;
     }
 
+    public static Ausbildungsrichtung fromBildungsrichtung(final Bildungsrichtung bildungsrichtung) {
+        return Ausbildungsrichtung.valueOf(bildungsrichtung.name());
+    }
 }

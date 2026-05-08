@@ -1,72 +1,69 @@
 <template>
-  <div>
-    <v-btn
-      :prepend-icon="mdiPencilOutline"
-      color="primary"
-      variant="outlined"
-      @click="visible = true"
-      >Bearbeiten</v-btn
-    >
-    <v-dialog
-      v-model="visible"
-      persistent
-      max-width="550"
-    >
-      <v-form ref="form">
-        <v-card>
-          <v-card-title class="text-h5 font-weight-bold"
-            >NWK bearbeiten</v-card-title
+  <v-btn
+    :icon="mdiPencilOutline"
+    color="primary"
+    aria-label="Bearbeiten"
+    @click="visible = true"
+  ></v-btn>
+  <v-dialog
+    v-model="visible"
+    persistent
+    max-width="550"
+  >
+    <v-form ref="form">
+      <v-card>
+        <v-card-title class="text-h5 font-weight-bold"
+          >NWK bearbeiten</v-card-title
+        >
+        <v-list>
+          <v-list-item>
+            <v-container>
+              <name-input v-model="nwkToUpdate"></name-input>
+            </v-container>
+          </v-list-item>
+          <v-list-item>
+            <v-container>
+              <v-row>
+                <v-col cols="6">
+                  <jahrgang-input v-model="nwkToUpdate"></jahrgang-input>
+                </v-col>
+                <v-col cols="6">
+                  <vorlesungstage-selector
+                    v-model="nwkToUpdate"
+                  ></vorlesungstage-selector>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-list-item>
+          <v-list-item>
+            <v-container>
+              <bildungsrichtung-select
+                v-model="nwkToUpdate.richtung"
+              ></bildungsrichtung-select>
+            </v-container>
+          </v-list-item>
+        </v-list>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="primary"
+            variant="outlined"
+            @click="cancel()"
           >
-          <v-list>
-            <v-list-item>
-              <v-container>
-                <name-input v-model="nwkToUpdate"></name-input>
-              </v-container>
-            </v-list-item>
-            <v-list-item>
-              <v-container>
-                <v-row>
-                  <v-col cols="6">
-                    <jahrgang-input v-model="nwkToUpdate"></jahrgang-input>
-                  </v-col>
-                  <v-col cols="6">
-                    <vorlesungstage-selector
-                      v-model="nwkToUpdate"
-                    ></vorlesungstage-selector>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-list-item>
-            <v-list-item>
-              <v-container>
-                <studienrichtung-or-ausbildungsrichtung-select
-                  v-model="nwkToUpdate"
-                ></studienrichtung-or-ausbildungsrichtung-select>
-              </v-container>
-            </v-list-item>
-          </v-list>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              color="primary"
-              variant="outlined"
-              @click="cancel()"
-            >
-              Abbrechen
-            </v-btn>
-            <v-btn
-              color="primary"
-              variant="flat"
-              @click="updateNwk()"
-            >
-              Akzeptieren
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-form>
-    </v-dialog>
-    <progress-circular-overlay :loading="loading"></progress-circular-overlay>
-  </div>
+            Abbrechen
+          </v-btn>
+          <v-btn
+            color="primary"
+            variant="flat"
+            @click="updateNwk()"
+          >
+            Akzeptieren
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-form>
+  </v-dialog>
+  <progress-circular-overlay :loading="loading"></progress-circular-overlay>
 </template>
 
 <script setup lang="ts">
@@ -74,10 +71,10 @@ import { mdiPencilOutline } from "@mdi/js";
 import { ref } from "vue";
 
 import NwkService from "@/api/NwkService";
+import BildungsrichtungSelect from "@/components/common/BildungsrichtungSelect.vue";
 import JahrgangInput from "@/components/common/JahrgangInput.vue";
 import NameInput from "@/components/common/NameInput.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
-import StudienrichtungOrAusbildungsrichtungSelect from "@/components/common/StudienrichtungOrAusbildungsrichtungSelect.vue";
 import VorlesungstageSelector from "@/components/nachwuchskraefte/VorlesungstageSelect.vue";
 import Nwk from "@/types/Nwk";
 
@@ -101,8 +98,8 @@ function updateNwk() {
   form.value?.validate().then((validation: { valid: boolean }) => {
     if (!validation.valid) return;
 
-    cancel();
     NwkService.updateNwk(nwkToUpdate.value, loading).then(() => {
+      cancel();
       emits("updated");
     });
   });

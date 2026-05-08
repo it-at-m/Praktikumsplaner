@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -39,7 +39,7 @@ public class ExcelImportServiceTest {
 
     @Test
     public void testExcelToNwkDtoListValidData() throws IOException {
-        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname("Max").nachname("Mustermann").studiengang(Studiengang.BSC).jahrgang("21/24")
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname("Max").nachname("Mustermann").richtung(Bildungsrichtung.BSC).jahrgang("21/24")
                 .vorlesungstage(Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)).build();
 
         List<CreateNwkDto> createNwkDtos = new ArrayList<>();
@@ -67,7 +67,7 @@ public class ExcelImportServiceTest {
 
         assertEquals(4, violations.stream().filter(e -> e.columName().equals("nachname")).count());
         assertEquals(6, violations.stream().filter(e -> e.columName().equals("vorname")).count());
-        assertEquals(6, violations.stream().filter(e -> e.columName().equals("studiengang")).count());
+        assertEquals(6, violations.stream().filter(e -> e.columName().equals("richtung")).count());
         assertEquals(5, violations.stream().filter(e -> e.columName().equals("jahrgang")).count());
         assertEquals(2, violations.stream().filter(e -> e.columName().equals("vorlesungstage")).count());
     }

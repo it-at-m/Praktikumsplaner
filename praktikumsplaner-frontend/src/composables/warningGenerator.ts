@@ -1,3 +1,4 @@
+import { findBildungsrichtung } from "@/types/Bildungsrichtung.ts";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Warning from "@/types/Warning";
@@ -11,7 +12,7 @@ export function useWarnings() {
     // Check if Studiums or Ausbildungspraktikumsstelle
     if (
       stelle.ausbildungsrichtung == undefined &&
-      nwk.studiengang == undefined
+      findBildungsrichtung(nwk.richtung)?.art == "AUSBILDUNG"
     ) {
       const warningText =
         "Wollen sie wirklich " +
@@ -24,7 +25,7 @@ export function useWarnings() {
 
     if (
       stelle.studiengang == undefined &&
-      nwk.ausbildungsrichtung == undefined
+      findBildungsrichtung(nwk.richtung)?.art == "STUDIUM"
     ) {
       const warningText =
         "Wollen sie wirklich " +
@@ -36,14 +37,10 @@ export function useWarnings() {
     }
 
     // Check if studiengang is the same
-    if (
-      stelle.studiengang &&
-      nwk.ausbildungsrichtung == undefined &&
-      stelle.studiengang != nwk.studiengang
-    ) {
+    if (stelle.studiengang && stelle.studiengang != nwk.richtung) {
       const warningText =
         "Wollen sie wirklich eine/n " +
-        nwk.studiengang +
+        nwk.richtung +
         " Student*in auf eine " +
         stelle.studiengang +
         " Stelle setzen?";
@@ -70,8 +67,7 @@ export function useWarnings() {
     // Check if Nwk is in the right semester
     if (
       stelle.studiengang != undefined &&
-      nwk.ausbildungsrichtung == undefined &&
-      nwk.studiengang != undefined &&
+      findBildungsrichtung(nwk.richtung)?.art == "STUDIUM" &&
       stelle.studiensemester
     ) {
       const expectedSemesters: number[] = [];
@@ -99,8 +95,7 @@ export function useWarnings() {
     // Check if Nwk is in the right Lehrjahr
     if (
       stelle.ausbildungsrichtung != undefined &&
-      nwk.studiengang == undefined &&
-      nwk.ausbildungsrichtung != undefined &&
+      findBildungsrichtung(nwk.richtung)?.art == "AUSBILDUNG" &&
       stelle.ausbildungsjahr
     ) {
       const expectedLehrjahre: number[] = [];
@@ -180,7 +175,7 @@ export function useWarnings() {
 
   function calculateSemester(nwk: Nwk) {
     if (!nwk) return -1;
-    if (nwk.studiengang == undefined) return 0;
+    if (findBildungsrichtung(nwk.richtung)?.art != "STUDIUM") return 0;
     let semester: number;
     const startYear: number = +nwk.jahrgang.substring(0, 2) + 2000;
     const currentYear: number = new Date().getFullYear();
@@ -193,7 +188,7 @@ export function useWarnings() {
 
   function calculateLehrjahr(nwk: Nwk) {
     if (!nwk) return -1;
-    if (nwk.ausbildungsrichtung == undefined) return 0;
+    if (findBildungsrichtung(nwk.richtung)?.art != "AUSBILDUNG") return 0;
 
     let lehrjahr: number;
     const startYear: number = +nwk.jahrgang.substring(0, 2) + 2000;
