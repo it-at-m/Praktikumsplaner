@@ -11,6 +11,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
@@ -20,14 +21,13 @@ import java.util.Set;
 import java.util.UUID;
 
 public class ServiceTestHelper {
-    public Nwk createNwkEntity(final String vorname, final String nachname, final Studiengang studiengang, final Ausbildungsrichtung ausbildungsrichtung,
+    public Nwk createNwkEntity(final String vorname, final String nachname, final Bildungsrichtung richtung,
             final String jahrgang, final Set<DayOfWeek> vorlesungstage, final boolean isActive) {
         Nwk newNwk = new Nwk();
         newNwk.setId(UUID.randomUUID());
         newNwk.setVorname(vorname);
         newNwk.setNachname(nachname);
-        newNwk.setStudiengang(studiengang);
-        newNwk.setAusbildungsrichtung(ausbildungsrichtung);
+        newNwk.setRichtung(richtung);
         newNwk.setJahrgang(jahrgang);
         newNwk.setVorlesungstage(vorlesungstage);
         newNwk.setActive(isActive);
@@ -39,8 +39,7 @@ public class ServiceTestHelper {
                 .id(nwk.getId())
                 .vorname(nwk.getVorname())
                 .nachname(nwk.getNachname())
-                .studiengang(nwk.getStudiengang())
-                .ausbildungsrichtung(nwk.getAusbildungsrichtung())
+                .richtung(nwk.getRichtung())
                 .jahrgang(nwk.getJahrgang())
                 .vorlesungstage(nwk.getVorlesungstage())
                 .active(nwk.isActive())

@@ -2,10 +2,8 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import static org.apache.logging.log4j.util.Strings.isBlank;
 
-import de.muenchen.oss.praktikumsplaner.annotations.StudiengangOrAusbildungsrichtungConstraint;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.exception.ExcelImportException;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Validator;
@@ -38,7 +36,7 @@ public class ExcelImportService {
     private static final int FIRST_ROW = 0;
     private static final int NACHNAME_COLUM = 0;
     private static final int VORNAME_COLUM = 1;
-    private static final int STUDIENGANG_COLUM = 2;
+    private static final int BILDUNGSRICHTUNG_COLUM = 2;
     private static final int JAHRGANG_COLUM = 3;
     private static final int VORLESUNGSTAGE_COLUM = 4;
     private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
@@ -65,41 +63,32 @@ public class ExcelImportService {
                 importExceptionInfoList.addAll(ex.getExceptionInfos());
             }
             if (createNwkDto == null || isCreateNwkDtoEmpty(createNwkDto)) {
-                log.error("NWK ist leer.");
+                log.trace("NWK ist leer.");
                 continue;
             }
             validator.validate(createNwkDto).forEach(violation -> {
-                final Class<?> annotationType = violation.getConstraintDescriptor().getAnnotation().annotationType();
-                final String propertyPath;
-                // Checks which annotation triggered the violation and sets the propertyPath accordingly
-                if (annotationType.equals(StudiengangOrAusbildungsrichtungConstraint.class)) {
-                    propertyPath = "studiengang";
-                } else {
-                    propertyPath = violation.getPropertyPath().toString();
-                }
-
                 importExceptionInfoList.add(
                         new ExcelImportException.ExcelImportExceptionInfo(
                                 row.getRowNum(),
-                                propertyPath,
+                                violation.getPropertyPath().toString(),
                                 violation.getMessage()));
             });
 
             createNwkDtos.add(createNwkDto);
-            log.error("NWK wurde geaddet.");
+            log.trace("NWK wurde geaddet.");
         }
-        log.error(importExceptionInfoList.toString());
+        log.debug(importExceptionInfoList.toString());
         if (!importExceptionInfoList.isEmpty()) {
             throw new ExcelImportException(importExceptionInfoList);
         }
-        log.error("NWKS: {}", createNwkDtos);
+        log.debug("NWKS: {}", createNwkDtos);
         return createNwkDtos;
     }
 
     private boolean isCreateNwkDtoEmpty(final CreateNwkDto createNwkDto) {
         return StringUtils.isEmpty(createNwkDto.vorname())
                 && StringUtils.isEmpty(createNwkDto.nachname())
-                && createNwkDto.studiengang() == null && createNwkDto.ausbildungsrichtung() == null
+                && createNwkDto.richtung() == null
                 && StringUtils.isEmpty(createNwkDto.jahrgang());
     }
 
@@ -111,7 +100,7 @@ public class ExcelImportService {
             switch (cell.getColumnIndex()) {
             case NACHNAME_COLUM -> createNwkDtoBuilder.nachname(cellValue);
             case VORNAME_COLUM -> createNwkDtoBuilder.vorname(cellValue);
-            case STUDIENGANG_COLUM -> handleStudiengangColumn(row, cellValue, createNwkDtoBuilder);
+            case BILDUNGSRICHTUNG_COLUM -> handleBildungsrichtungColumn(row, cellValue, createNwkDtoBuilder);
             case JAHRGANG_COLUM -> createNwkDtoBuilder.jahrgang(cellValue);
             case VORLESUNGSTAGE_COLUM -> {
                 try {
@@ -125,33 +114,24 @@ public class ExcelImportService {
             }
             }
         }
-        log.error("NWK wird gebuildet.");
+        log.trace("NWK wird gebuildet.");
         return createNwkDtoBuilder.build();
     }
 
     @SuppressWarnings("PMD.PreserveStackTrace")
-    private static void handleStudiengangColumn(final Row row, final String cellValue, final CreateNwkDto.CreateNwkDtoBuilder createNwkDtoBuilder) {
+    private static void handleBildungsrichtungColumn(final Row row, final String cellValue, final CreateNwkDto.CreateNwkDtoBuilder createNwkDtoBuilder) {
         try {
-            log.error("Column Value: {}", cellValue);
+            log.trace("Column Value: {}", cellValue);
             if (isBlank(cellValue)) {
-                log.error("leere Zelle.");
-                createNwkDtoBuilder.studiengang(null);
-                createNwkDtoBuilder.ausbildungsrichtung(null);
+                log.trace("leere Zelle.");
+                createNwkDtoBuilder.richtung(null);
             } else {
-                createNwkDtoBuilder.studiengang(Studiengang.valueOf(cellValue));
-                createNwkDtoBuilder.ausbildungsrichtung(null);
-                log.error("Studiengang: {}", cellValue);
+                createNwkDtoBuilder.richtung(Bildungsrichtung.valueOf(cellValue));
+                log.trace("Studiengang: {}", cellValue);
             }
         } catch (final IllegalArgumentException ex) {
-            try {
-                createNwkDtoBuilder.ausbildungsrichtung(Ausbildungsrichtung.valueOf(cellValue));
-                createNwkDtoBuilder.studiengang(null);
-                log.error("Ausbildungsrichtung: {}", cellValue);
-            } catch (final IllegalArgumentException ex2) {
-                throw new ExcelImportException(
-                        List.of(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "studiengang", ex.getMessage()),
-                                new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "ausbildungsrichtung", ex2.getMessage())));
-            }
+            throw new ExcelImportException(
+                    List.of(new ExcelImportException.ExcelImportExceptionInfo(row.getRowNum(), "richtung", ex.getMessage())));
         }
     }
 

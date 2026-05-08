@@ -17,4 +17,7 @@ public enum Studiengang {
         this.longName = longName;
     }
 
+    public static Studiengang fromBildungsrichtung(final Bildungsrichtung bildungsrichtung) {
+        return Studiengang.valueOf(bildungsrichtung.name());
+    }
 }

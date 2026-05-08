@@ -39,6 +39,7 @@ import { useSecurity } from "@/composables/security";
 import router from "@/plugins/router";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
+import { findBildungsrichtung } from "@/types/Bildungsrichtung.ts";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 
 const weekdayMapper = new GermanWeekdayMapper();
@@ -63,24 +64,15 @@ const headers = [
   {
     title: "Art",
     key: "art",
-    value: (item: Nwk) =>
-      item.studiengang
-        ? "Studium"
-        : item.ausbildungsrichtung
-          ? "Ausbildung"
-          : "",
   },
   {
     title: "Richtung",
     key: "richtung",
-    value: (item: Nwk) =>
-      item.studiengang
-        ? item.studiengang
-        : item.ausbildungsrichtung
-          ? item.ausbildungsrichtung
-          : "",
   },
-  { title: "Jahrgang", key: "jahrgang" },
+  {
+    title: "Jahrgang",
+    key: "jahrgang",
+  },
   {
     title: "Vorlesungstage",
     key: "vorlesungstage",
@@ -98,16 +90,10 @@ const headers = [
   },
 ];
 
-// FIXME: workaround to allow grouping by derived columns till backend refactored
 const nwkTableItems = computed(() =>
   nwks.value.map((n) => ({
     ...n,
-    art: n.studiengang ? "Studium" : n.ausbildungsrichtung ? "Ausbildung" : "",
-    richtung: n.studiengang
-      ? n.studiengang
-      : n.ausbildungsrichtung
-        ? n.ausbildungsrichtung
-        : "",
+    art: findBildungsrichtung(n.richtung)?.art,
   }))
 );
 

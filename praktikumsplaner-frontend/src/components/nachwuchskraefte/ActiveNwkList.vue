@@ -84,10 +84,8 @@ function loadAllActiveNwks() {
 
 function getSubtitle(nwk: Nwk): string {
   let subtitle = "Daten konnten nicht geladen werden.";
-  if (nwk.studiengang) {
-    subtitle = "(" + nwk.studiengang + " / " + nwk.jahrgang + ")";
-  } else if (nwk.ausbildungsrichtung) {
-    subtitle = "(" + nwk.ausbildungsrichtung + " / " + nwk.jahrgang + ")";
+  if (nwk.richtung) {
+    subtitle = "(" + nwk.richtung + " / " + nwk.jahrgang + ")";
   }
   return subtitle;
 }

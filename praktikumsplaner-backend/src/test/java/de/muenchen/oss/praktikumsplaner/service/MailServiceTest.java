@@ -15,6 +15,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
@@ -74,9 +75,9 @@ public class MailServiceTest {
         when(mailSender.createMimeMessage()).thenReturn(mockMimeMessage);
         when(templateEngine.process(anyString(), any(Context.class))).thenReturn("Mock-Mail-Body");
 
-        NwkDto assignedNwk1 = createNwkDto("Max", "Mustermann", Studiengang.BSC, null, "19/25");
-        NwkDto assignedNwk2 = createNwkDto("Erika", "Musterfrau", Studiengang.BWI, null, "23/27");
-        NwkDto assignedNwk3 = createNwkDto("John", "Smith", null, Ausbildungsrichtung.FISI, "25/29");
+        NwkDto assignedNwk1 = createNwkDto("Max", "Mustermann", Bildungsrichtung.BSC, "19/25");
+        NwkDto assignedNwk2 = createNwkDto("Erika", "Musterfrau", Bildungsrichtung.BWI, "23/27");
+        NwkDto assignedNwk3 = createNwkDto("John", "Smith", Bildungsrichtung.FISI, "25/29");
 
         List<PraktikumsstelleDto> allPraktikumsstellen = new ArrayList<>();
 
@@ -122,8 +123,8 @@ public class MailServiceTest {
     }
 
     private NwkDto createNwkDto(
-            final String vorname, final String nachname, final Studiengang studiengang, final Ausbildungsrichtung ausbildungsrichtung, String jahrgang) {
-        return NwkDto.builder().id(UUID.randomUUID()).vorname(vorname).nachname(nachname).studiengang(studiengang)
-                .ausbildungsrichtung(ausbildungsrichtung).jahrgang(jahrgang).build();
+            final String vorname, final String nachname, final Bildungsrichtung richtung, String jahrgang) {
+        return NwkDto.builder().id(UUID.randomUUID()).vorname(vorname).nachname(nachname).richtung(richtung)
+                .jahrgang(jahrgang).build();
     }
 }
