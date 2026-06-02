@@ -1,12 +1,10 @@
 <template>
   <v-list
-    v-if="
-      properties.praktikumsstellen && properties.praktikumsstellen.length > 0
-    "
+    v-if="praktikumsstellen && praktikumsstellen.length > 0"
     class="pl-2"
   >
     <v-list-item
-      v-for="praktikumsstelle in properties.praktikumsstellen"
+      v-for="praktikumsstelle in praktikumsstellen"
       :key="praktikumsstelle.id"
       class="px-0"
       :ripple="false"
@@ -47,7 +45,7 @@ import { mdiInformationOutline } from "@mdi/js";
 import PraktikumsstelleCard from "@/components/assign/PraktikumsstelleCardZuweisung.vue";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
-const properties = defineProps<{
+defineProps<{
   praktikumsstellen: Praktikumsstelle[];
 }>();
 </script>

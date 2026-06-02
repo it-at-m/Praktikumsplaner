@@ -2,10 +2,9 @@
   <v-btn
     :prepend-icon="mdiPlus"
     color="primary"
+    text="Hinzufügen"
     @click="visible = true"
-  >
-    Hinzufügen
-  </v-btn>
+  />
   <v-dialog
     v-model="visible"
     persistent

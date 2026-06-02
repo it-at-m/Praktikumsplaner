@@ -11,7 +11,7 @@
       />
     </v-col>
     <v-col
-      v-if="(groupByOptions?.length || 0) > 0"
+      v-if="(groupByOptions?.length ?? 0) > 0"
       cols="2"
     >
       <v-select
@@ -24,18 +24,14 @@
         :items="groupByOptions"
       />
     </v-col>
+    <v-col></v-col>
   </v-row>
 </template>
 
 <script setup lang="ts">
-interface GroupOption {
-  title: string;
-  value: string;
-}
+import type GroupOption from "@/types/DataTableGroupOption.ts";
 
 defineProps<{
-  search: string | undefined;
-  groupByRaw: string | undefined;
   groupByOptions?: GroupOption[];
 }>();
 

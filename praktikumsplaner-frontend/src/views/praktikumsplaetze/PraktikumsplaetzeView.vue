@@ -3,7 +3,7 @@
     <page-title page-header-text="Praktikumsplätze (aktueller Meldezeitraum)">
       <template #actions>
         <two-choice-dialog-cards
-          v-if="canStellenBeSubmitted()"
+          v-if="canStellenBeSubmitted"
           v-model="twoChoiceDialogVisible"
           buttontext="Hinzufügen"
           :icon="mdiPlus"
@@ -24,22 +24,22 @@
       :items="praktikumsstellenTableItems"
       :group-by-options="groupByOptions"
       :loading="loadingSite || loadingUebersicht"
-      :show-expand="true"
+      show-expand
       :sort-by="defaultSort"
-      :expand-on-click="true"
+      expand-on-click
     >
       <template #[`item.actions`]="{ item }">
         <studiums-praktikumsstelle-update-dialog
           v-if="item.studiengang"
           v-model="itemProxyMap[item.id]!"
           icon-only
-          @update:model-value="onRowUpdated(item.id, $event)"
+          @update:model-value="(newItem) => onRowUpdated(item.id, newItem)"
         />
         <ausbildungs-praktikumsstelle-update-dialog
           v-else
           v-model="itemProxyMap[item.id]!"
           icon-only
-          @update:model-value="onRowUpdated(item.id, $event)"
+          @update:model-value="(newItem) => onRowUpdated(item.id, newItem)"
         />
         <praktikumsstelle-delete-dialog
           :stelle="item"
@@ -64,6 +64,8 @@
 </template>
 
 <script setup lang="ts">
+import type SortItem from "@/types/DataTableSortItem.ts";
+
 import { mdiPlus } from "@mdi/js";
 import { computed, onMounted, ref, watch } from "vue";
 
@@ -82,11 +84,6 @@ import router from "@/plugins/router";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-
-interface SortItem {
-  key: string;
-  order?: boolean | "asc" | "desc" | undefined;
-}
 
 const userStore = useUserStore();
 const activeMeldezeitraum = ref<boolean>(false);
@@ -191,9 +188,10 @@ function redirectIfUnauthorized() {
 
 emitter.on("nwkDeleted", getAllPraktikumsstellenInCurrentMeldezeitraum);
 
-function canStellenBeSubmitted() {
-  return security.isAusbildungsleitung() || activeMeldezeitraum.value;
-}
+const canStellenBeSubmitted = computed(
+  () => security.isAusbildungsleitung() || activeMeldezeitraum.value
+);
+
 function toAusbildung(): void {
   router.push("/praktikumsplaetze/meldungAusbildung");
 }

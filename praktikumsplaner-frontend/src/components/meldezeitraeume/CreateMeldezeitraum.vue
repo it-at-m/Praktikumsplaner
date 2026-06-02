@@ -2,10 +2,9 @@
   <v-btn
     :prepend-icon="mdiPlus"
     color="primary"
+    text="Hinzufügen"
     @click="visible = true"
-  >
-    Hinzufügen
-  </v-btn>
+  />
   <v-dialog
     v-model="visible"
     persistent
@@ -35,7 +34,7 @@
           variant="outlined"
           color="primary"
           class="ml-7 mb-2"
-          @click="close()"
+          @click="close"
         >
           Zurück
         </v-btn>
@@ -44,7 +43,7 @@
           color="primary"
           variant="elevated"
           class="mr-7 mb-2"
-          @click="clickSpeichern()"
+          @click="clickSpeichern"
         >
           Speichern
         </v-btn>
@@ -56,7 +55,7 @@
 
 <script setup lang="ts">
 import { mdiPlus } from "@mdi/js";
-import { ref } from "vue";
+import { ref, useTemplateRef } from "vue";
 
 import MeldezeitraumService from "@/api/MeldezeitraumService";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
@@ -68,7 +67,7 @@ import Zeitraum from "@/types/Zeitraum";
 const visible = ref(false);
 const loading = ref(false);
 const meldezeitraum = ref<Meldezeitraum>(new Meldezeitraum("", new Zeitraum()));
-const form = ref<HTMLFormElement>();
+const form = useTemplateRef("form");
 const maxLength = 255;
 const validationRules = useRules();
 

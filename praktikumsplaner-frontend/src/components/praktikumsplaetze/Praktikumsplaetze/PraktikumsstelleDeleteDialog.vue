@@ -2,6 +2,7 @@
   <v-btn
     :icon="mdiDelete"
     color="error"
+    alt-text="Löschen"
     @click.stop="openDialog"
   />
   <yes-no-dialog-without-activator
@@ -28,7 +29,7 @@ const props = defineProps<{
   stelle: Praktikumsstelle;
 }>();
 
-const emit = defineEmits<(e: "deleted") => void>();
+const emit = defineEmits<{ deleted: [] }>();
 
 const visible = ref(false);
 const loading = ref(false);

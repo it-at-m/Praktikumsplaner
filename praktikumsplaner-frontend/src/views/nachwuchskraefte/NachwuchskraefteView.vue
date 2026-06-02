@@ -24,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import type SortItem from "@/types/DataTableSortItem.ts";
 import type Nwk from "@/types/Nwk";
 
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
@@ -40,16 +41,11 @@ import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 
-interface SortItem {
-  key: string;
-  order?: boolean | "asc" | "desc" | undefined;
-}
-
 const weekdayMapper = new GermanWeekdayMapper();
 const userStore = useUserStore();
 const route = router.currentRoute.value;
 const nwks = ref<Nwk[]>([]);
-const loading = ref<boolean>(false);
+const loading = ref(false);
 const groupByOptions = [
   { title: "Art", value: "art" },
   { title: "Richtung", value: "richtung" },

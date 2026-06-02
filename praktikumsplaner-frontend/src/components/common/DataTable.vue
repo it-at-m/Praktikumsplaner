@@ -2,20 +2,20 @@
   <data-table-toolbar
     v-model:search="internalSearch"
     v-model:group-by-raw="groupByRaw"
-    :group-by-options="props.groupByOptions"
+    :group-by-options="groupByOptions"
   />
   <v-data-table
-    :headers="props.headers"
-    :items="props.items"
+    :headers="headers"
+    :items="items"
     :group-by="groupBy"
     :search="internalSearch"
-    :sort-by="props.sortBy"
-    :loading="props.loading"
+    :sort-by="sortBy"
+    :loading="loading"
     fixed-header
     hide-default-footer
     items-per-page="-1"
-    :show-expand="props.showExpand"
-    :expand-on-click="props.expandOnClick"
+    :show-expand="showExpand"
+    :expand-on-click="expandOnClick"
     v-bind="$attrs"
   >
     <template #[`item.actions`]="slotProps">
@@ -39,22 +39,16 @@
 </template>
 
 <script setup lang="ts">
+import type GroupOption from "@/types/DataTableGroupOption.ts";
+import type SortItem from "@/types/DataTableSortItem";
+
 import { computed, ref } from "vue";
 
 import DataTableToolbar from "@/components/common/DataTableToolbar.vue";
 
-interface GroupOption {
-  title: string;
-  value: string;
-}
-interface SortItem {
-  key: string;
-  order?: boolean | "asc" | "desc" | undefined;
-}
-
 defineOptions({ inheritAttrs: false });
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     /* eslint-disable @typescript-eslint/no-explicit-any */
     headers: any[];
