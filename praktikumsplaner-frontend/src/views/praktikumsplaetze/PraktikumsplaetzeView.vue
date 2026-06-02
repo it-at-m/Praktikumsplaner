@@ -53,7 +53,7 @@
             class="py-2"
           >
             <p style="white-space: pre-line">
-              {{ generator.getPraktikumsstellenCardDetailText(item) }}
+              {{ generator.getPraktikumsstellenDetailDescription(item) }}
             </p>
           </td>
         </tr>

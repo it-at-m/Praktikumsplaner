@@ -16,7 +16,6 @@
     items-per-page="-1"
     :show-expand="showExpand"
     :expand-on-click="expandOnClick"
-    v-bind="$attrs"
   >
     <template #[`item.actions`]="slotProps">
       <v-btn-group
@@ -45,8 +44,6 @@ import type SortItem from "@/types/DataTableSortItem";
 import { computed, ref } from "vue";
 
 import DataTableToolbar from "@/components/common/DataTableToolbar.vue";
-
-defineOptions({ inheritAttrs: false });
 
 withDefaults(
   defineProps<{

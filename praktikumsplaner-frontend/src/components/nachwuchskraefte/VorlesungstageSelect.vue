@@ -1,6 +1,6 @@
 <template>
   <v-select
-    v-model="nwk.vorlesungstage"
+    v-model="vorlesungstageSortWrapper"
     :items="days"
     color="primary"
     label="Vorlesungstage"
@@ -8,7 +8,6 @@
     item-title="germanWeekDay"
     variant="outlined"
     multiple
-    @update:model-value="sortVorlesungstage"
   >
   </v-select>
 </template>
@@ -39,9 +38,12 @@ const nwk = computed({
   set: (newValue) => emits("input", newValue),
 });
 
-function sortVorlesungstage() {
-  nwk.value.vorlesungstage = germanWeekdayMapper.normalizeAndSort(
-    nwk.value.vorlesungstage
-  );
-}
+const vorlesungstageSortWrapper = computed({
+  get() {
+    return germanWeekdayMapper.normalizeAndSort(nwk.value.vorlesungstage);
+  },
+  set(newValue) {
+    nwk.value.vorlesungstage = germanWeekdayMapper.normalizeAndSort(newValue);
+  },
+});
 </script>

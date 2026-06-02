@@ -130,11 +130,11 @@ const assignedNwk = ref(properties.praktikumsstelle.assignedNwk);
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
 
 function getCardText(stelle: Praktikumsstelle): string {
-  return generator.getPraktikumsstellenCardText(stelle);
+  return generator.getPraktikumsstellenDescription(stelle);
 }
 
 function getCardDetailText(stelle: Praktikumsstelle): string {
-  return generator.getPraktikumsstellenCardDetailText(stelle);
+  return generator.getPraktikumsstellenDetailDescription(stelle);
 }
 
 function drop(event: DragEvent, stelle: Praktikumsstelle) {
