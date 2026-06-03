@@ -22,7 +22,7 @@ export default createVuetify({
     themes: {
       light: {
         colors: {
-          primary: "#005A9F",
+          primary: "#1E6CFF",
           secondary: "#FFCC00",
           accent: "#7BA4D9",
           success: "#69BE28",

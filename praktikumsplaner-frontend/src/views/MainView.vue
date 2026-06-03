@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="pa-xl-8">
     <v-row class="text-center">
       <v-col class="mb-4">
         <br />

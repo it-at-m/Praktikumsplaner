@@ -3,22 +3,22 @@ import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { valueToNameStudiensemester } from "@/types/Studiensemester";
 
 export function useTextGenerator() {
-  function getPraktikumsstellenCardText(
+  function getPraktikumsstellenDescription(
     stelle: Praktikumsstelle | undefined | null
   ): string {
     let cardText = "";
     if (!stelle) return cardText;
 
     if (stelle.studiengang) {
-      cardText += getStudiumssPraktikumsstellenCardText(stelle);
+      cardText += getStudiumsPraktikumsstellenDescription(stelle);
     } else if (stelle.ausbildungsrichtung) {
-      cardText += getAusbildungsPraktikumsstellenCardText(stelle);
+      cardText += getAusbildungsPraktikumsstellenDescription(stelle);
     }
 
     return cardText;
   }
 
-  function getPraktikumsstellenCardDetailText(
+  function getPraktikumsstellenDetailDescription(
     stelle: Praktikumsstelle | undefined | null
   ): string {
     let cardText = "";
@@ -71,7 +71,7 @@ export function useTextGenerator() {
     return cardText;
   }
 
-  function getAusbildungsPraktikumsstellenCardText(
+  function getAusbildungsPraktikumsstellenDescription(
     stelle: Praktikumsstelle
   ): string {
     let cardText = "";
@@ -88,10 +88,13 @@ export function useTextGenerator() {
           stelle.ausbildungsjahr[stelle.ausbildungsjahr.length - 1]
         ) + "\n";
     }
+    if (stelle.planstelleVorhanden) {
+      cardText += "Planstelle vorhanden: JA\n";
+    }
     return cardText;
   }
 
-  function getStudiumssPraktikumsstellenCardText(
+  function getStudiumsPraktikumsstellenDescription(
     stelle: Praktikumsstelle
   ): string {
     let cardText = "";
@@ -108,8 +111,14 @@ export function useTextGenerator() {
           stelle.studiensemester[stelle.studiensemester.length - 1]
         ) + "\n";
     }
+    if (stelle.planstelleVorhanden) {
+      cardText += "Planstelle vorhanden: JA\n";
+    }
     return cardText;
   }
 
-  return { getPraktikumsstellenCardText, getPraktikumsstellenCardDetailText };
+  return {
+    getPraktikumsstellenDescription,
+    getPraktikumsstellenDetailDescription,
+  };
 }

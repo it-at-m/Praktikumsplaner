@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="pa-xl-8">
     <page-title
       back-button-url="/"
       page-header-text="Zurück zur Startseite"

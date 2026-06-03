@@ -15,7 +15,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstel
 import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -77,12 +76,12 @@ public class PraktikumsstellenController {
 
     @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
     @GetMapping
-    public Map<String, List<PraktikumsstelleDto>> getAllPraktiumsstellenInSpecificMeldezeitraum(
+    public List<PraktikumsstelleDto> getAllPraktiumsstellenInSpecificMeldezeitraum(
             @RequestParam(name = "meldezeitraum", required = false) final String meldezeitraum) {
         if (MELDEZEITRAUM_CURRENT.equals(meldezeitraum)) {
-            return praktikumsstellenService.getAllInCurrentMeldezeitraumGroupedByDienststelle();
+            return praktikumsstellenService.getAllInCurrentMeldezeitraum();
         } else if (MELDEZEITRAUM_MOST_RECENT.equals(meldezeitraum)) {
-            return praktikumsstellenService.getRecentPraktikumsstellenGroupedByDienststelle();
+            return praktikumsstellenService.getRecentPraktikumsstellen();
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wert '" + meldezeitraum + "' für Parameter 'meldezeitraum' ist nicht unterstützt.");
     }

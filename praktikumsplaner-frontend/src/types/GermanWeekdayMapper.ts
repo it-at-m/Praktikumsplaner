@@ -8,6 +8,15 @@ export default class GermanWeekdayMapper {
     SATURDAY: "Samstag",
     SUNDAY: "Sonntag",
   };
+  private germanWeekdayShortMap = {
+    MONDAY: "Mo",
+    TUESDAY: "Di",
+    WEDNESDAY: "Mi",
+    THURSDAY: "Do",
+    FRIDAY: "Fr",
+    SATURDAY: "Sa",
+    SUNDAY: "So",
+  };
 
   private dayOrder = [
     "MONDAY",
@@ -19,17 +28,26 @@ export default class GermanWeekdayMapper {
     "SUNDAY",
   ];
 
-  public getGermanDays(daysString: string[]): string[] {
-    const sortedDays = daysString.sort(
+  public normalizeAndSort(daysString: string[]): string[] {
+    const normalized = daysString.map((d) => d.trim().toUpperCase());
+    return normalized.sort(
       (a, b) => this.dayOrder.indexOf(a) - this.dayOrder.indexOf(b)
     );
-    sortedDays.forEach((day) => {
-      day.trim().toUpperCase();
-    });
+  }
 
-    return sortedDays.map(
+  public getGermanDays(daysString: string[]): string[] {
+    return this.normalizeAndSort(daysString).map(
       (day) =>
         this.germanWeekdayMap[day as keyof typeof this.germanWeekdayMap] || day
+    );
+  }
+
+  public getGermanShortDays(daysString: string[]): string[] {
+    return this.normalizeAndSort(daysString).map(
+      (day) =>
+        this.germanWeekdayShortMap[
+          day as keyof typeof this.germanWeekdayShortMap
+        ] || day
     );
   }
 }
