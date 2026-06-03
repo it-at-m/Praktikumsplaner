@@ -1,34 +1,37 @@
 <template>
-  <page-title
-    back-button-url="/"
-    page-header-text="Zurück zur Startseite"
-  ></page-title>
-  <v-row
-    align="center"
-    class="ml-auto"
-  >
-    <v-col cols="auto">
-      <v-icon
-        size="large"
-        color="red"
-        :icon="mdiAlertOctagon"
+  <v-container class="pa-xl-8">
+    <page-title
+      back-button-url="/"
+      page-header-text="Zurück zur Startseite"
+    ></page-title>
+    <v-row
+      align="center"
+      class="ml-auto"
+    >
+      <v-col cols="auto">
+        <v-icon
+          size="large"
+          color="red"
+          :icon="mdiAlertOctagon"
+        />
+      </v-col>
+      <v-col>
+        <h1>Zugriff verweigert</h1>
+        <p class="m-2 p-2">
+          Du hast nicht die erforderlichen Rechte, um auf diese Seite
+          zuzugreifen.
+        </p>
+      </v-col>
+    </v-row>
+    <div class="d-flex justify-center">
+      <img
+        :src="catImagePath"
+        height="650"
+        width="650"
+        alt="cat image did not load :("
       />
-    </v-col>
-    <v-col>
-      <h1>Zugriff verweigert</h1>
-      <p class="m-2 p-2">
-        Du hast nicht die erforderlichen Rechte, um auf diese Seite zuzugreifen.
-      </p>
-    </v-col>
-  </v-row>
-  <div class="d-flex justify-center">
-    <img
-      :src="catImagePath"
-      height="650"
-      width="650"
-      alt="cat image did not load :("
-    />
-  </div>
+    </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">

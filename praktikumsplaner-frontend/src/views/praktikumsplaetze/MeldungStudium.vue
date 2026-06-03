@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="pa-xl-8">
     <page-title
       back-button-url="/praktikumsplaetze"
       page-header-text="Praktikumsplatz für Studierende"
@@ -207,7 +207,7 @@
       <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
     </div>
     <progress-circular-overlay :loading="loading"></progress-circular-overlay>
-  </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">

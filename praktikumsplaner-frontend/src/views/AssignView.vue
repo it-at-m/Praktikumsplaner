@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="pa-xl-8">
     <page-title
       page-header-text="Zuweisung (letzter vergangener Meldezeitraum)"
     ></page-title>
@@ -59,7 +59,7 @@
       @rejected="rejectedWarningDialog"
     />
     <send-mails-dialog v-model:show-dialog="showSendMailDialog" />
-  </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">

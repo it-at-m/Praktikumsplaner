@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="pa-xl-8">
     <page-title page-header-text="Nachwuchskräfte">
       <template #actions>
         <excel-import-nwk></excel-import-nwk>
@@ -20,7 +20,7 @@
         />
       </template>
     </data-table>
-  </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">

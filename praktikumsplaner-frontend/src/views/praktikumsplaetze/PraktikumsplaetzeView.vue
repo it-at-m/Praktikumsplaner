@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="pa-xl-8">
     <page-title page-header-text="Praktikumsplätze (aktueller Meldezeitraum)">
       <template #actions>
         <two-choice-dialog-cards
@@ -60,7 +60,7 @@
       </template>
     </data-table>
     <kein-meldezeitraum-message v-else></kein-meldezeitraum-message>
-  </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">
