@@ -125,7 +125,7 @@ public class ExcelImportService {
                 createNwkDtoBuilder.richtung(null);
             } else {
                 createNwkDtoBuilder.richtung(Bildungsrichtung.valueOf(cellValue));
-                log.trace("Studiengang: {}", cellValue);
+                log.trace("Bildungsrichtung: {}", cellValue);
             }
         } catch (final IllegalArgumentException ex) {
             throw new ExcelImportException(

@@ -16,6 +16,9 @@ public enum Ausbildungsrichtung {
     }
 
     public static Ausbildungsrichtung fromBildungsrichtung(final Bildungsrichtung bildungsrichtung) {
+        if (bildungsrichtung.getArt() != Bildungsrichtung.Art.AUSBILDUNG) {
+            throw new IllegalArgumentException("Bildungsrichtung " + bildungsrichtung + " ist keine Ausbildungsrichtung");
+        }
         return Ausbildungsrichtung.valueOf(bildungsrichtung.name());
     }
 }

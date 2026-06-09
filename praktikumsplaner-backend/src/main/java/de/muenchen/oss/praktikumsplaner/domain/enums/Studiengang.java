@@ -18,6 +18,9 @@ public enum Studiengang {
     }
 
     public static Studiengang fromBildungsrichtung(final Bildungsrichtung bildungsrichtung) {
+        if (bildungsrichtung.getArt() != Bildungsrichtung.Art.STUDIUM) {
+            throw new IllegalArgumentException("Bildungsrichtung " + bildungsrichtung + " ist kein Studiengang");
+        }
         return Studiengang.valueOf(bildungsrichtung.name());
     }
 }

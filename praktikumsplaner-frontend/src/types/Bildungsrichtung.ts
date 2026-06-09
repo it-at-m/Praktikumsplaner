@@ -103,6 +103,5 @@ export function findBildungsrichtung(
 }
 
 export function findBildungsrichtungColorByValue(value: string): string {
-  const bildungsrichtung = Bildungsrichtungen.find((s) => s.value === value);
-  return bildungsrichtung ? bildungsrichtung.color : "";
+  return findBildungsrichtung(value)?.color ?? "";
 }

@@ -14,10 +14,11 @@ import { computed } from "vue";
 
 import {
   Ausbildungsrichtungen,
+  BildungsrichtungKey,
   Studienrichtungen,
 } from "@/types/Bildungsrichtung.ts";
 
-const model = defineModel<string>();
+const model = defineModel<BildungsrichtungKey | null | undefined>();
 const items = computed(() => [
   { type: "subheader", name: "Ausbildung" },
   ...Ausbildungsrichtungen,
