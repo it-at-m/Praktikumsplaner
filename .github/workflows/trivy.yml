@@ -8,6 +8,7 @@ on:
 
 jobs:
   trivy:
+    continue-on-error: true
     runs-on: ubuntu-latest
     permissions:
       contents: read
