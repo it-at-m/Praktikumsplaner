@@ -8,11 +8,12 @@ on:
 
 jobs:
   trivy:
-    continue-on-error: true
     runs-on: ubuntu-latest
     permissions:
       contents: read
       security-events: write # Required to upload SARIF results to the GitHub Security tab
     if: github.event_name != 'schedule' || github.ref == 'refs/heads/main'
     steps:
-      - uses: it-at-m/lhm_actions/action-templates/actions/action-trivy@acb09213786b76dd7aa52ec1d901390d28c60eb0 # v1.0.29
+      - uses: it-at-m/lhm_actions/action-templates/actions/action-trivy@0efb173471993cc62633c64985d1e6daeaa1cb73
+        with:
+          allow-failure: 'true'
