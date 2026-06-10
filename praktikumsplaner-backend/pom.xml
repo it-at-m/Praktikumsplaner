@@ -11,7 +11,7 @@
 
     <groupId>de.muenchen.oss.praktikumsplaner</groupId>
     <artifactId>praktikumsplaner-backend</artifactId>
-    <version>0.30.0-SNAPSHOT</version>
+    <version>0.31.0-SNAPSHOT</version>
 
     <name>praktikumsplaner-backend</name>
     <description>Backend service of the Praktikumsplaner</description>
