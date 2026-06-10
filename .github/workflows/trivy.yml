@@ -16,4 +16,4 @@ jobs:
     steps:
       - uses: it-at-m/lhm_actions/action-templates/actions/action-trivy@8743ef6c6599717280e242bc6e2c326b43518c0c
         with:
-          allow-failure: 'true'
+          path: './praktikumsplaner-backend'
