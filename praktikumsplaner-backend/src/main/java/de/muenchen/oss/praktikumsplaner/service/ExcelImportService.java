@@ -75,11 +75,11 @@ public class ExcelImportService {
             createNwkDtos.add(createNwkDto);
             log.trace("NWK wurde geaddet.");
         }
-        log.debug(importExceptionInfoList.toString());
+        log.error(importExceptionInfoList.toString());
         if (!importExceptionInfoList.isEmpty()) {
             throw new ExcelImportException(importExceptionInfoList);
         }
-        log.debug("NWKS: {}", createNwkDtos);
+        log.trace("NWKS: {}", createNwkDtos);
         return createNwkDtos;
     }
 
