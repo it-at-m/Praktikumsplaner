@@ -34,11 +34,11 @@ public class ExcelImportService {
     private final DataFormatter dataFormatter = new DataFormatter();
     private static final int FIRST_SHEET = 0;
     private static final int FIRST_ROW = 0;
-    private static final int NACHNAME_COLUM = 0;
-    private static final int VORNAME_COLUM = 1;
-    private static final int BILDUNGSRICHTUNG_COLUM = 2;
-    private static final int JAHRGANG_COLUM = 3;
-    private static final int VORLESUNGSTAGE_COLUM = 4;
+    private static final int NACHNAME_COL = 0;
+    private static final int VORNAME_COL = 1;
+    private static final int BILDUNGSRICHTUNG_COL = 2;
+    private static final int JAHRGANG_COL = 3;
+    private static final int VORLESUNGSTAGE_COL = 4;
     private static final String SPLIT_VORLESUNGSTAGE_REGEX = "[+]";
 
     public List<CreateNwkDto> excelToNwkDtoList(final String base64String) throws IOException {
@@ -96,11 +96,11 @@ public class ExcelImportService {
         for (final Cell cell : row) {
             final String cellValue = dataFormatter.formatCellValue(cell);
             switch (cell.getColumnIndex()) {
-            case NACHNAME_COLUM -> createNwkDtoBuilder.nachname(cellValue);
-            case VORNAME_COLUM -> createNwkDtoBuilder.vorname(cellValue);
-            case BILDUNGSRICHTUNG_COLUM -> handleBildungsrichtungColumn(row, cellValue, createNwkDtoBuilder);
-            case JAHRGANG_COLUM -> createNwkDtoBuilder.jahrgang(cellValue);
-            case VORLESUNGSTAGE_COLUM -> {
+            case NACHNAME_COL -> createNwkDtoBuilder.nachname(cellValue);
+            case VORNAME_COL -> createNwkDtoBuilder.vorname(cellValue);
+            case BILDUNGSRICHTUNG_COL -> handleBildungsrichtungColumn(row, cellValue, createNwkDtoBuilder);
+            case JAHRGANG_COL -> createNwkDtoBuilder.jahrgang(cellValue);
+            case VORLESUNGSTAGE_COL -> {
                 try {
                     createNwkDtoBuilder.vorlesungstage(extractVorlesungstage(cellValue));
                 } catch (final IllegalArgumentException ex) {
