@@ -21,7 +21,7 @@ services:
       - keycloak
 
   pp-backend:
-    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-backend:latest@sha256:4c6c88de9b2906e0930f37bc0ac8d5666a8c6f3013442af81b4cb9490f8a9089
+    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-backend:latest@sha256:e2b3aea1693b53e2315469738fe30deb6949177b720164213f219ae4631f18ef
     ports:
       - "8082:8082"
     profiles:
