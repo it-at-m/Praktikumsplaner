@@ -5,7 +5,6 @@ import de.muenchen.oss.praktikumsplaner.domain.converter.AusbildungsjahrConverte
 import de.muenchen.oss.praktikumsplaner.domain.converter.StudiensemesterConverter;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Praktikumsart;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -50,8 +49,4 @@ public class Praktikumsstelle extends BasePraktikumsstelle {
 
     // AUSBILDUNG-only: required when art == AUSBILDUNG
     private Boolean minderjaehrigMoeglich;
-
-    public Praktikumsart getArt() {
-        return this.richtung.getArt();
-    }
 }

@@ -14,7 +14,10 @@ export function useWarnings() {
   ): Warning[] {
     const warnings: Warning[] = [];
     // Check if Studiums or Ausbildungspraktikumsstelle
-    if (stelle.richtung == undefined && isAusbildung(findBildungsrichtung(nwk.richtung))) {
+    if (
+      stelle.richtung == undefined &&
+      isAusbildung(findBildungsrichtung(nwk.richtung))
+    ) {
       const warningText =
         "Wollen sie wirklich " +
         nwk.vorname +
@@ -24,7 +27,10 @@ export function useWarnings() {
       warnings.push(new Warning("", warningText));
     }
 
-    if (stelle.richtung == undefined && isStudium(findBildungsrichtung(nwk.richtung))) {
+    if (
+      stelle.richtung == undefined &&
+      isStudium(findBildungsrichtung(nwk.richtung))
+    ) {
       const warningText =
         "Wollen sie wirklich " +
         nwk.vorname +

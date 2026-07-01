@@ -5,10 +5,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleViewDto;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Praktikumsart;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
+import de.muenchen.oss.praktikumsplaner.domain.enums.RichtungsArt;
 import de.muenchen.oss.praktikumsplaner.security.Authorities;
+
+import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -50,12 +51,15 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
             final List<PraktikumsstelleViewDto> responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(),
                     praktikumsstelleListRef);
 
-            final List<Studiengang> studiengaenge = responseBody.stream()
-                    .filter(dto -> dto.art() == Praktikumsart.STUDIUM)
-                    .map(dto -> Studiengang.valueOf(dto.richtung().name()))
+            final List<Bildungsrichtung> studiengaenge = responseBody.stream()
+                    .filter(dto -> dto.art() == RichtungsArt.STUDIUM)
+                    .map(dto -> Bildungsrichtung.valueOf(dto.richtung().name()))
                     .toList();
 
-            Assertions.assertThat(studiengaenge).containsOnly(Studiengang.values());
+            final Bildungsrichtung[] richtungen = Arrays.stream(Bildungsrichtung.values())
+                    .filter(i -> i.getArt() == RichtungsArt.STUDIUM)
+                    .toList().toArray(new Bildungsrichtung[0]);
+            Assertions.assertThat(studiengaenge).containsOnly(richtungen);
         }
 
         @ParameterizedTest(name = "when meldezeitraum is {0}")
@@ -67,12 +71,15 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
             final List<PraktikumsstelleViewDto> responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(),
                     praktikumsstelleListRef);
 
-            List<Ausbildungsrichtung> ausbildungsrichtungen = responseBody.stream()
-                    .filter(dto -> dto.art() == Praktikumsart.AUSBILDUNG)
-                    .map(dto -> Ausbildungsrichtung.valueOf(dto.richtung().name()))
+            List<Bildungsrichtung> ausbildungsrichtungen = responseBody.stream()
+                    .filter(dto -> dto.art() == RichtungsArt.AUSBILDUNG)
+                    .map(dto -> Bildungsrichtung.valueOf(dto.richtung().name()))
                     .toList();
 
-            Assertions.assertThat(ausbildungsrichtungen).containsOnly(Ausbildungsrichtung.values());
+            final Bildungsrichtung[] richtungen = Arrays.stream(Bildungsrichtung.values())
+                    .filter(i -> i.getArt() == RichtungsArt.AUSBILDUNG)
+                    .toList().toArray(new Bildungsrichtung[0]);
+            Assertions.assertThat(ausbildungsrichtungen).containsOnly(richtungen);
         }
     }
 

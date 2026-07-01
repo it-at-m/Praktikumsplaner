@@ -6,7 +6,7 @@ import com.nimbusds.jose.util.Pair;
 import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Praktikumsart;
+import de.muenchen.oss.praktikumsplaner.domain.enums.RichtungsArt;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -139,8 +139,8 @@ public class ExcelExportService {
     private Pair<List<PraktikumsstelleDto>, List<PraktikumsstelleDto>> preparePraktikumsstellen() {
         final List<PraktikumsstelleDto> assigned = new ArrayList<>(praktikumsstellenService
                 .getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum());
-        final List<PraktikumsstelleDto> ausbildung = assigned.stream().filter(p -> Praktikumsart.AUSBILDUNG.equals(p.art())).toList();
-        final List<PraktikumsstelleDto> studium = assigned.stream().filter(p -> Praktikumsart.STUDIUM.equals(p.art())).toList();
+        final List<PraktikumsstelleDto> ausbildung = assigned.stream().filter(p -> RichtungsArt.AUSBILDUNG.equals(p.art())).toList();
+        final List<PraktikumsstelleDto> studium = assigned.stream().filter(p -> RichtungsArt.STUDIUM.equals(p.art())).toList();
         return Pair.of(ausbildung, studium);
     }
 

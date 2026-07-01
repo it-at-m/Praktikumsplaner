@@ -9,10 +9,8 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleViewDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -57,7 +55,7 @@ public class ServiceTestHelper {
 
     public Praktikumsstelle createAusbildungsPraktikumsstelleEntity(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final String wuensche,
-            final Dringlichkeit dringlichkeit, final Set<Ausbildungsjahr> ausbildungsjahr, final Ausbildungsrichtung ausbildungsrichtung,
+            final Dringlichkeit dringlichkeit, final Set<Ausbildungsjahr> ausbildungsjahr, final Bildungsrichtung bildungsrichtung,
             final boolean projektarbeit, final boolean minderjaehrigMoeglich, final UUID meldezeitraumId, final Nwk assignedNwk) {
         Praktikumsstelle p = new Praktikumsstelle();
         p.setId(UUID.randomUUID());
@@ -68,7 +66,7 @@ public class ServiceTestHelper {
         p.setWuensche(wuensche);
         p.setDringlichkeit(dringlichkeit);
         p.setAusbildungsjahr(ausbildungsjahr);
-        p.setRichtung(Bildungsrichtung.valueOf(ausbildungsrichtung.name()));
+        p.setRichtung(Bildungsrichtung.valueOf(bildungsrichtung.name()));
         p.setProjektarbeit(projektarbeit);
         p.setAssignedNwk(assignedNwk);
         p.setMinderjaehrigMoeglich(minderjaehrigMoeglich);
@@ -79,7 +77,7 @@ public class ServiceTestHelper {
     public Praktikumsstelle createStudiumsPraktikumsstelleEntity(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final String wuensche,
             final Dringlichkeit dringlichkeit, final Set<Studiensemester> semester,
-            final Studiengang studiengang, final String programmierkenntnisse, final UUID meldezeitraumId, final Nwk assignedNwk) {
+            final Bildungsrichtung studiengang, final String programmierkenntnisse, final UUID meldezeitraumId, final Nwk assignedNwk) {
         Praktikumsstelle p = new Praktikumsstelle();
         p.setId(UUID.randomUUID());
         p.setDienststelle(dienststelle);
@@ -111,7 +109,7 @@ public class ServiceTestHelper {
                 .ausbildungsjahr(stelle.getAusbildungsjahr())
                 .richtung(stelle.getRichtung())
                 .richtungLongName(stelle.getRichtung().getLongName())
-                .art(stelle.getArt())
+                .art(stelle.getRichtung().getArt())
                 .assignedNwk(createNwkDto(stelle.getAssignedNwk()))
                 .planstelleVorhanden(stelle.isPlanstelleVorhanden())
                 .minderjaehrigMoeglich(stelle.getMinderjaehrigMoeglich())

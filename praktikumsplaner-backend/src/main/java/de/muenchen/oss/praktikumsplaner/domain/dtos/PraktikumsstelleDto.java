@@ -3,7 +3,7 @@ package de.muenchen.oss.praktikumsplaner.domain.dtos;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Praktikumsart;
+import de.muenchen.oss.praktikumsplaner.domain.enums.RichtungsArt;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -40,7 +40,7 @@ public interface PraktikumsstelleDto {
 
     // Unified fields
     // art is derived from richtung on the server side and exposed via DTO
-    @NotNull Praktikumsart art();
+    @NotNull RichtungsArt art();
 
     // Unified Richtung (covers former Studiengang and Ausbildungsrichtung)
     @NotNull Bildungsrichtung richtung();

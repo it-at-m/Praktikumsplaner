@@ -2,7 +2,7 @@ package de.muenchen.oss.praktikumsplaner.validators;
 
 import de.muenchen.oss.praktikumsplaner.annotations.RichtungValid;
 import de.muenchen.oss.praktikumsplaner.domain.Praktikumsstelle;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Praktikumsart;
+import de.muenchen.oss.praktikumsplaner.domain.enums.RichtungsArt;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -14,8 +14,8 @@ public class RichtungValidValidator implements ConstraintValidator<RichtungValid
             return false;
         }
 
-        final Praktikumsart art = value.getArt();
-        if (art == Praktikumsart.STUDIUM) {
+        final RichtungsArt art = value.getRichtung().getArt();
+        if (art == RichtungsArt.STUDIUM) {
             final boolean hasSem = value.getStudiensemester() != null && !value.getStudiensemester().isEmpty();
             final boolean hasProg = value.getProgrammierkenntnisse() != null && !value.getProgrammierkenntnisse().isBlank();
             final boolean ausbJahrEmpty = value.getAusbildungsjahr() == null || value.getAusbildungsjahr().isEmpty();
@@ -23,7 +23,7 @@ public class RichtungValidValidator implements ConstraintValidator<RichtungValid
             // projektarbeit is primitive boolean, treat false as unset for STUDIUM
 
             return hasSem && hasProg && ausbJahrEmpty && minderNull;
-        } else if (art == Praktikumsart.AUSBILDUNG) {
+        } else if (art == RichtungsArt.AUSBILDUNG) {
             final boolean hasAusbJahr = value.getAusbildungsjahr() != null && !value.getAusbildungsjahr().isEmpty();
             final boolean minderSet = value.getMinderjaehrigMoeglich() != null; // required
             final boolean studSemEmpty = value.getStudiensemester() == null || value.getStudiensemester().isEmpty();

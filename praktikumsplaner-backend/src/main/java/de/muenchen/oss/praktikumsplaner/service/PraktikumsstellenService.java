@@ -115,7 +115,7 @@ public class PraktikumsstellenService {
         }
 
         // Per-art immutables
-        switch (current.getArt()) {
+        switch (current.getRichtung().getArt()) {
         case AUSBILDUNG -> {
             if (current.isProjektarbeit()
                     || !Objects.equals(current.getAusbildungsjahr(), dto.ausbildungsjahr())

@@ -2,7 +2,6 @@ import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { valueToNameStudiensemester } from "@/types/Studiensemester";
 
-
 export function useTextGenerator() {
   function getPraktikumsstellenDescription(
     stelle: Praktikumsstelle | undefined | null

@@ -18,6 +18,7 @@ public interface PraktikumsstellenMapper {
 
     @Mapping(target = ASSIGNED_NWK, source = "praktikumsstelle.assignedNwk")
     @Mapping(target = "richtungLongName", expression = "java(praktikumsstelle.getRichtung().getLongName())")
+    @Mapping(target = "art", source = "richtung.art")
     PraktikumsstelleViewDto toDto(Praktikumsstelle praktikumsstelle);
 
     @Mapping(target = "id", ignore = true)
