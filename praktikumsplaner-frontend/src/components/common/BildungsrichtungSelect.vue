@@ -16,9 +16,9 @@ import {
   Ausbildungsrichtungen,
   BildungsrichtungKey,
   Studienrichtungen,
-} from "@/types/Bildungsrichtung.ts";
+} from "@/types/Bildungsrichtung";
 
-const model = defineModel<BildungsrichtungKey | null | undefined>();
+const model = defineModel<BildungsrichtungKey | undefined>();
 const items = computed(() => [
   { type: "subheader", name: "Ausbildung" },
   ...Ausbildungsrichtungen,

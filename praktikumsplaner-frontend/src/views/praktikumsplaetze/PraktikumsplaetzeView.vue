@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import type SortItem from "@/types/DataTableSortItem.ts";
+import type SortItem from "@/types/DataTableSortItem";
 
 import { mdiPlus } from "@mdi/js";
 import { computed, onMounted, ref, watch } from "vue";
@@ -79,7 +79,7 @@ import AusbildungsPraktikumsstelleUpdateDialog from "@/components/praktikumsplae
 import PraktikumsstelleDeleteDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstelleDeleteDialog.vue";
 import StudiumsPraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/StudiumsPraktikumsstelleUpdateDialog.vue";
 import { useSecurity } from "@/composables/security";
-import { useTextGenerator } from "@/composables/textGenerator.ts";
+import { useTextGenerator } from "@/composables/textGenerator";
 import router from "@/plugins/router";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";

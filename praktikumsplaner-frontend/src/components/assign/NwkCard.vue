@@ -13,8 +13,8 @@
           >
             <v-col cols="auto">
               <initials-avatar
-                :nwk-name="getFullName(properties.nwk)"
-                :background-color="getNwkColor(properties.nwk)"
+                :nwk-name="fullName"
+                :background-color="nwkColor"
               />
             </v-col>
             <v-col
@@ -23,10 +23,10 @@
               xl="10"
             >
               <v-card-title>
-                {{ getFullName(properties.nwk) }}
+                {{ fullName }}
               </v-card-title>
               <v-card-subtitle>
-                {{ getSubtitle(properties.nwk) }}
+                {{ subtitle }}
               </v-card-subtitle>
             </v-col>
           </v-row>
@@ -55,7 +55,7 @@
 import { computed } from "vue";
 
 import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
-import { findBildungsrichtungColorByValue } from "@/types/Bildungsrichtung.ts";
+import { findBildungsrichtungColorByValue } from "@/types/Bildungsrichtung";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 import Nwk, { hasDetails } from "@/types/Nwk";
 
@@ -67,26 +67,25 @@ const germanDays = computed(() => {
   return new GermanWeekdayMapper().getGermanDays(properties.nwk.vorlesungstage);
 });
 
-function getFullName(nwk: Nwk): string {
-  return nwk.vorname + " " + nwk.nachname;
-}
-
-function getSubtitle(nwk: Nwk): string {
+const fullName = computed(
+  () => properties.nwk.vorname + " " + properties.nwk.nachname
+);
+const subtitle = computed(() => {
   let subtitle = "Daten konnten nicht geladen werden.";
-  if (nwk.richtung) {
-    subtitle = nwk.richtung + " / " + nwk.jahrgang;
+  if (properties.nwk.richtung) {
+    subtitle = properties.nwk.richtung + " / " + properties.nwk.jahrgang;
   }
   return subtitle;
-}
-
-function getNwkColor(nwk: Nwk): string {
+});
+const nwkColor = computed(() => {
   let color = "white";
-  if (nwk.richtung) {
-    color = findBildungsrichtungColorByValue(nwk.richtung);
+  if (properties.nwk.richtung) {
+    color = findBildungsrichtungColorByValue(properties.nwk.richtung);
   }
   return color;
-}
+});
 </script>
+
 <style scoped>
 .full-width {
   max-width: 100%;

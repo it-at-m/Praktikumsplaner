@@ -96,6 +96,14 @@ export const Bildungsrichtungen: Bildungsrichtung[] = [
   ...Studienrichtungen,
 ];
 
+export function isAusbildung(bildungsrichtung: Bildungsrichtung | undefined): boolean {
+  return bildungsrichtung?.art == Bildungsart.AUSBILDUNG
+}
+
+export function isStudium(bildungsrichtung: Bildungsrichtung | undefined): boolean {
+  return bildungsrichtung?.art == Bildungsart.STUDIUM;
+}
+
 export function findBildungsrichtung(
   value: string
 ): Bildungsrichtung | undefined {

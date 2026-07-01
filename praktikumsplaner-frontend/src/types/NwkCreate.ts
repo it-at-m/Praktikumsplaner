@@ -1,4 +1,4 @@
-import type { BildungsrichtungKey } from "@/types/Bildungsrichtung.ts";
+import type { BildungsrichtungKey } from "@/types/Bildungsrichtung";
 
 export default class NwkCreate {
   constructor(

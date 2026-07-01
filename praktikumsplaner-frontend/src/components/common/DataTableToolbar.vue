@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import type GroupOption from "@/types/DataTableGroupOption.ts";
+import type GroupOption from "@/types/DataTableGroupOption";
 
 defineProps<{
   groupByOptions?: GroupOption[];

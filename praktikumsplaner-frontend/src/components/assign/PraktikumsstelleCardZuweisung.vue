@@ -91,7 +91,7 @@ import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutA
 import { useTextGenerator } from "@/composables/textGenerator";
 import { useWarnings } from "@/composables/warningGenerator";
 import emitter from "@/stores/eventBus";
-import { findBildungsrichtungColorByValue } from "@/types/Bildungsrichtung.ts";
+import { findBildungsrichtungColorByValue } from "@/types/Bildungsrichtung";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 

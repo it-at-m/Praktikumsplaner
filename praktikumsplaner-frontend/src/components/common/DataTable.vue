@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import type GroupOption from "@/types/DataTableGroupOption.ts";
+import type GroupOption from "@/types/DataTableGroupOption";
 import type SortItem from "@/types/DataTableSortItem";
 
 import { computed, ref } from "vue";

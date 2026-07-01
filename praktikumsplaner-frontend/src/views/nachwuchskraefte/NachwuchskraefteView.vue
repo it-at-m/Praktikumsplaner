@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import type SortItem from "@/types/DataTableSortItem.ts";
+import type SortItem from "@/types/DataTableSortItem";
 import type Nwk from "@/types/Nwk";
 
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
@@ -39,7 +39,7 @@ import { useSecurity } from "@/composables/security";
 import router from "@/plugins/router";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
-import { findBildungsrichtung } from "@/types/Bildungsrichtung.ts";
+import { findBildungsrichtung } from "@/types/Bildungsrichtung";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 
 const weekdayMapper = new GermanWeekdayMapper();

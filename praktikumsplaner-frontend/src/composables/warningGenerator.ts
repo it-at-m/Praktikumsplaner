@@ -1,7 +1,8 @@
-import { findBildungsrichtung } from "@/types/Bildungsrichtung.ts";
+import { findBildungsrichtung, isAusbildung, isStudium } from "@/types/Bildungsrichtung";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Warning from "@/types/Warning";
+
 
 export function useWarnings() {
   function getBeforeAssignmentWarnings(
@@ -12,7 +13,7 @@ export function useWarnings() {
     // Check if Studiums or Ausbildungspraktikumsstelle
     if (
       stelle.ausbildungsrichtung == undefined &&
-      findBildungsrichtung(nwk.richtung)?.art == "AUSBILDUNG"
+      isAusbildung(findBildungsrichtung(nwk.richtung))
     ) {
       const warningText =
         "Wollen sie wirklich " +
@@ -25,7 +26,7 @@ export function useWarnings() {
 
     if (
       stelle.studiengang == undefined &&
-      findBildungsrichtung(nwk.richtung)?.art == "STUDIUM"
+      isStudium(findBildungsrichtung(nwk.richtung))
     ) {
       const warningText =
         "Wollen sie wirklich " +
@@ -67,7 +68,7 @@ export function useWarnings() {
     // Check if Nwk is in the right semester
     if (
       stelle.studiengang != undefined &&
-      findBildungsrichtung(nwk.richtung)?.art == "STUDIUM" &&
+      isStudium(findBildungsrichtung(nwk.richtung)) &&
       stelle.studiensemester
     ) {
       const expectedSemesters: number[] = [];
@@ -95,7 +96,7 @@ export function useWarnings() {
     // Check if Nwk is in the right Lehrjahr
     if (
       stelle.ausbildungsrichtung != undefined &&
-      findBildungsrichtung(nwk.richtung)?.art == "AUSBILDUNG" &&
+      isAusbildung(findBildungsrichtung(nwk.richtung)) &&
       stelle.ausbildungsjahr
     ) {
       const expectedLehrjahre: number[] = [];
