@@ -59,28 +59,26 @@ import { findBildungsrichtungColorByValue } from "@/types/Bildungsrichtung";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 import Nwk, { hasDetails } from "@/types/Nwk";
 
-const properties = defineProps<{
+const { nwk } = defineProps<{
   nwk: Nwk;
 }>();
 
 const germanDays = computed(() => {
-  return new GermanWeekdayMapper().getGermanDays(properties.nwk.vorlesungstage);
+  return new GermanWeekdayMapper().getGermanDays(nwk.vorlesungstage);
 });
 
-const fullName = computed(
-  () => properties.nwk.vorname + " " + properties.nwk.nachname
-);
+const fullName = computed(() => nwk.vorname + " " + nwk.nachname);
 const subtitle = computed(() => {
   let subtitle = "Daten konnten nicht geladen werden.";
-  if (properties.nwk.richtung) {
-    subtitle = properties.nwk.richtung + " / " + properties.nwk.jahrgang;
+  if (nwk.richtung) {
+    subtitle = nwk.richtung + " / " + nwk.jahrgang;
   }
   return subtitle;
 });
 const nwkColor = computed(() => {
   let color = "white";
-  if (properties.nwk.richtung) {
-    color = findBildungsrichtungColorByValue(properties.nwk.richtung);
+  if (nwk.richtung) {
+    color = findBildungsrichtungColorByValue(nwk.richtung);
   }
   return color;
 });
