@@ -82,6 +82,7 @@
 
         <!-- TEMPORARY TRANSITIVE DEPENDENCY OVERRIDES FOR SECURITY FIXES -->
         <!-- Preferably override properties defined in spring-boot-starter -> spring-boot-dependencies POM -->
+        <jackson-bom.version>2.21.5</jackson-bom.version> <!-- Added to fix CVE-2026-54515 -->
     </properties>
 
     <dependencies>
