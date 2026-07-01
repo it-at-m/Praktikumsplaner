@@ -91,10 +91,9 @@ import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutA
 import { useTextGenerator } from "@/composables/textGenerator";
 import { useWarnings } from "@/composables/warningGenerator";
 import emitter from "@/stores/eventBus";
-import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
+import { findBildungsrichtungColorByValue } from "@/types/Bildungsrichtung";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
-import { findStudiengangColorByValue } from "@/types/Studiengang";
 
 const generator = useTextGenerator();
 const warningsGenerator = useWarnings();
@@ -149,8 +148,7 @@ function drop(event: DragEvent, stelle: Praktikumsstelle) {
       draggedNwk.jahrgang,
       draggedNwk.vorlesungstage,
       draggedNwk.isActive,
-      draggedNwk.studiengang,
-      draggedNwk.ausbildungsrichtung
+      draggedNwk.richtung
     );
   } catch {
     return;
@@ -226,10 +224,8 @@ function resetUnassign() {
 
 function getNwkColor(nwk: Nwk): string {
   let color = "primary";
-  if (nwk.studiengang && nwk.ausbildungsrichtung == undefined) {
-    color = findStudiengangColorByValue(nwk.studiengang);
-  } else if (nwk.ausbildungsrichtung && nwk.studiengang == undefined) {
-    color = findAusbildungsrichtungColorByValue(nwk.ausbildungsrichtung);
+  if (nwk.richtung) {
+    color = findBildungsrichtungColorByValue(nwk.richtung);
   }
   return color;
 }

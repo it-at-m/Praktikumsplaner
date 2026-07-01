@@ -1,3 +1,5 @@
+import type { BildungsrichtungKey } from "@/types/Bildungsrichtung";
+
 export default class Nwk {
   constructor(
     public id: string,
@@ -6,8 +8,7 @@ export default class Nwk {
     public jahrgang: string,
     public vorlesungstage: string[],
     public isActive: boolean,
-    public studiengang?: string,
-    public ausbildungsrichtung?: string
+    public richtung: BildungsrichtungKey
   ) {}
 }
 

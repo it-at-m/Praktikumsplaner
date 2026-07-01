@@ -13,8 +13,8 @@
           >
             <v-col cols="auto">
               <initials-avatar
-                :nwk-name="getFullName(properties.nwk)"
-                :background-color="getNwkColor(properties.nwk)"
+                :nwk-name="fullName"
+                :background-color="nwkColor"
               />
             </v-col>
             <v-col
@@ -23,10 +23,10 @@
               xl="10"
             >
               <v-card-title>
-                {{ getFullName(properties.nwk) }}
+                {{ fullName }}
               </v-card-title>
               <v-card-subtitle>
-                {{ getSubtitle(properties.nwk) }}
+                {{ subtitle }}
               </v-card-subtitle>
             </v-col>
           </v-row>
@@ -55,43 +55,35 @@
 import { computed } from "vue";
 
 import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
-import { findAusbildungsrichtungColorByValue } from "@/types/Ausbildungsrichtung";
+import { findBildungsrichtungColorByValue } from "@/types/Bildungsrichtung";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 import Nwk, { hasDetails } from "@/types/Nwk";
-import { findStudiengangColorByValue } from "@/types/Studiengang";
 
-const properties = defineProps<{
+const { nwk } = defineProps<{
   nwk: Nwk;
 }>();
 
 const germanDays = computed(() => {
-  return new GermanWeekdayMapper().getGermanDays(properties.nwk.vorlesungstage);
+  return new GermanWeekdayMapper().getGermanDays(nwk.vorlesungstage);
 });
 
-function getFullName(nwk: Nwk): string {
-  return nwk.vorname + " " + nwk.nachname;
-}
-
-function getSubtitle(nwk: Nwk): string {
+const fullName = computed(() => nwk.vorname + " " + nwk.nachname);
+const subtitle = computed(() => {
   let subtitle = "Daten konnten nicht geladen werden.";
-  if (nwk.studiengang) {
-    subtitle = nwk.studiengang + " / " + nwk.jahrgang;
-  } else if (nwk.ausbildungsrichtung) {
-    subtitle = nwk.ausbildungsrichtung + " / " + nwk.jahrgang;
+  if (nwk.richtung) {
+    subtitle = nwk.richtung + " / " + nwk.jahrgang;
   }
   return subtitle;
-}
-
-function getNwkColor(nwk: Nwk): string {
+});
+const nwkColor = computed(() => {
   let color = "white";
-  if (nwk.studiengang && nwk.ausbildungsrichtung == undefined) {
-    color = findStudiengangColorByValue(nwk.studiengang);
-  } else if (nwk.ausbildungsrichtung && nwk.studiengang == undefined) {
-    color = findAusbildungsrichtungColorByValue(nwk.ausbildungsrichtung);
+  if (nwk.richtung) {
+    color = findBildungsrichtungColorByValue(nwk.richtung);
   }
   return color;
-}
+});
 </script>
+
 <style scoped>
 .full-width {
   max-width: 100%;

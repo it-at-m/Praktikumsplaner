@@ -15,8 +15,7 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateNwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.NwkMapper;
 import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import jakarta.validation.ConstraintViolationException;
@@ -56,17 +55,17 @@ public class NwkServiceTest {
     public void testCreateNwkSuccess() {
         final String nachname = "Mustermann";
         final String vorname = "Max";
-        final Studiengang studiengang = Studiengang.BSC;
+        final Bildungsrichtung richtung = Bildungsrichtung.BSC;
         final String jahrgang = "21/24";
         final Set<DayOfWeek> vorlesungstage = new HashSet<>();
         final boolean isActive = true;
         vorlesungstage.add(DayOfWeek.MONDAY);
         vorlesungstage.add(DayOfWeek.TUESDAY);
 
-        Nwk nwk = new Nwk(vorname, nachname, studiengang, null, jahrgang, vorlesungstage, isActive);
-        NwkDto nwkDto = NwkDto.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        Nwk nwk = new Nwk(vorname, nachname, richtung, jahrgang, vorlesungstage, isActive);
+        NwkDto nwkDto = NwkDto.builder().id(nwk.getId()).vorname(vorname).nachname(nachname).richtung(richtung).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).active(isActive).build();
-        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).studiengang(studiengang).jahrgang(jahrgang)
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname(vorname).nachname(nachname).richtung(richtung).jahrgang(jahrgang)
                 .vorlesungstage(vorlesungstage).build();
 
         when(repository.save(any(Nwk.class))).thenReturn(nwk);
@@ -82,7 +81,7 @@ public class NwkServiceTest {
         final String base64 = "WAAAAAAGGHHH=";
         final int EXCEL_TO_NWK_DTO_LIST_EXECUTIONS = 1;
 
-        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname("Max").nachname("Mustermann").studiengang(Studiengang.BSC).ausbildungsrichtung(null)
+        CreateNwkDto createNwkDto = CreateNwkDto.builder().vorname("Max").nachname("Mustermann").richtung(Bildungsrichtung.BSC)
                 .jahrgang("21/24")
                 .vorlesungstage(Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)).build();
 
@@ -107,10 +106,10 @@ public class NwkServiceTest {
 
     @Test
     public void testFindAllActiveNwks() {
-        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, null, "21/25", Set.of(DayOfWeek.MONDAY), true);
-        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", null, Ausbildungsrichtung.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Bildungsrichtung.VI, "21/25", Set.of(DayOfWeek.MONDAY), true);
+        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", Bildungsrichtung.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
 
         List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
 
@@ -120,10 +119,10 @@ public class NwkServiceTest {
 
     @Test
     public void testFindAllUnassigned() {
-        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, null, "21/25", Set.of(DayOfWeek.MONDAY), true);
-        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", null, Ausbildungsrichtung.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Bildungsrichtung.VI, "21/25", Set.of(DayOfWeek.MONDAY), true);
+        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", Bildungsrichtung.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
 
         List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum())
@@ -134,10 +133,10 @@ public class NwkServiceTest {
 
     @Test
     public void testFindAllNwks() {
-        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
-        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Studiengang.VI, null, "21/25", Set.of(DayOfWeek.MONDAY), true);
-        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", null, Ausbildungsrichtung.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk2 = helper.createNwkEntity("Erika", "Musterfrau", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk3 = helper.createNwkEntity("Hans", "Peter", Bildungsrichtung.VI, "21/25", Set.of(DayOfWeek.MONDAY), true);
+        Nwk nwk4 = helper.createNwkEntity("Anna", "Müller", Bildungsrichtung.FISI, "21/23", Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY), true);
 
         List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
 
@@ -147,7 +146,7 @@ public class NwkServiceTest {
 
     @Test
     public void testSaveNwk() {
-        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
         NwkDto nwkDto = mapper.toDto(nwk1);
         service.saveNwk(nwkDto);
         verify(repository, times(1)).save(any(Nwk.class));
@@ -155,14 +154,14 @@ public class NwkServiceTest {
 
     @Test
     public void testNwkExistsById() {
-        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
+        Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
         when(repository.existsById(nwk1.getId())).thenReturn(true);
         assertTrue(service.nwkExistsById(nwk1.getId()));
     }
 
     @Test
     public void testSaveNwkCreateDto() {
-        CreateNwkDto createNwkDto = new CreateNwkDto("Max", "Mustermann", Studiengang.BSC, null, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY));
+        CreateNwkDto createNwkDto = new CreateNwkDto("Max", "Mustermann", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY));
         service.saveNwk(createNwkDto);
         verify(repository, times(1)).save(any(Nwk.class));
     }

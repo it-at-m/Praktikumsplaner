@@ -1,0 +1,2 @@
+# fix with v2.21.5 not released yet, but not critical as jackson is not used to prevent modification of some fields
+CVE-2026-54515

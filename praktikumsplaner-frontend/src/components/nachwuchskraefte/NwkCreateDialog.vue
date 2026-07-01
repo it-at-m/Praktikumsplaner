@@ -38,9 +38,9 @@
           </v-list-item>
           <v-list-item>
             <v-container>
-              <studienrichtung-or-ausbildungsrichtung-select
-                v-model="nwk"
-              ></studienrichtung-or-ausbildungsrichtung-select>
+              <bildungsrichtung-select
+                v-model="nwk.richtung"
+              ></bildungsrichtung-select>
             </v-container>
           </v-list-item>
         </v-list>
@@ -72,10 +72,10 @@ import { mdiPlus } from "@mdi/js";
 import { ref } from "vue";
 
 import NwkService from "@/api/NwkService";
+import BildungsrichtungSelect from "@/components/common/BildungsrichtungSelect.vue";
 import JahrgangInput from "@/components/common/JahrgangInput.vue";
 import NameInput from "@/components/common/NameInput.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
-import StudienrichtungOrAusbildungsrichtungSelect from "@/components/common/StudienrichtungOrAusbildungsrichtungSelect.vue";
 import VorlesungstageSelector from "@/components/nachwuchskraefte/VorlesungstageSelect.vue";
 import emitter from "@/stores/eventBus";
 import NwkCreate from "@/types/NwkCreate";
@@ -84,7 +84,7 @@ const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
 
-const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined, undefined));
+const nwk = ref<NwkCreate>(new NwkCreate("", "", "", [], undefined));
 
 function cancel() {
   visible.value = false;
@@ -93,7 +93,7 @@ function cancel() {
 
 function close() {
   visible.value = false;
-  nwk.value = new NwkCreate("", "", "", [], undefined, undefined);
+  nwk.value = new NwkCreate("", "", "", [], undefined);
   form.value?.resetValidation();
 }
 
