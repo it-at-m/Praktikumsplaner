@@ -179,7 +179,7 @@ export function useWarnings() {
 
   function calculateSemester(nwk: Nwk) {
     if (!nwk) return -1;
-    if (findBildungsrichtung(nwk.richtung)?.art != "STUDIUM") return 0;
+    if (!isStudium(findBildungsrichtung(nwk.richtung))) return 0;
     let semester: number;
     const startYear: number = +nwk.jahrgang.substring(0, 2) + 2000;
     const currentYear: number = new Date().getFullYear();
@@ -192,7 +192,7 @@ export function useWarnings() {
 
   function calculateLehrjahr(nwk: Nwk) {
     if (!nwk) return -1;
-    if (findBildungsrichtung(nwk.richtung)?.art != "AUSBILDUNG") return 0;
+    if (!isAusbildung(findBildungsrichtung(nwk.richtung))) return 0;
 
     let lehrjahr: number;
     const startYear: number = +nwk.jahrgang.substring(0, 2) + 2000;
