@@ -1,8 +1,11 @@
-import { findBildungsrichtung, isAusbildung, isStudium } from "@/types/Bildungsrichtung";
+import {
+  findBildungsrichtung,
+  isAusbildung,
+  isStudium,
+} from "@/types/Bildungsrichtung";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Warning from "@/types/Warning";
-
 
 export function useWarnings() {
   function getBeforeAssignmentWarnings(
