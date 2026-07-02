@@ -8,7 +8,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleViewDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.RichtungsArt;
 import de.muenchen.oss.praktikumsplaner.security.Authorities;
-
 import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.api.Assertions;
