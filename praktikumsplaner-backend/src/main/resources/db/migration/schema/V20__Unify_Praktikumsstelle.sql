@@ -78,6 +78,6 @@ select a.id,
        a.minderjaehrigMoeglich
 from AUSBILDUNGSPRAKTIKUMSSTELLE a;
 
--- Drop old tables (optional step after verification)
--- drop table STUDIUMSPRAKTIKUMSSTELLE;
--- drop table AUSBILDUNGSPRAKTIKUMSSTELLE;
+-- Drop old tables
+drop table STUDIUMSPRAKTIKUMSSTELLE;
+drop table AUSBILDUNGSPRAKTIKUMSSTELLE;
