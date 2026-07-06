@@ -8,6 +8,7 @@
         label="Suche"
         hide-details
         clearable
+        :data-test="testIds.common.dataTableSearch"
       />
     </v-col>
     <v-col
@@ -22,6 +23,7 @@
         hide-details
         clearable
         :items="groupByOptions"
+        :data-test="testIds.common.dataTableGroupBy"
       />
     </v-col>
     <v-col></v-col>
@@ -30,6 +32,8 @@
 
 <script setup lang="ts">
 import type GroupOption from "@/types/DataTableGroupOption";
+
+import { testIds } from "@/testIds";
 
 defineProps<{
   groupByOptions?: GroupOption[];

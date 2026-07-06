@@ -218,6 +218,7 @@
           <v-col class="d-flex justify-end">
             <v-btn
               color="primary"
+              :data-test="testIds.praktikumsstelle.saveBtn"
               @click="uploadPraktikumsstelle"
             >
               speichern
@@ -262,6 +263,7 @@ import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTool
 import { useSecurity } from "@/composables/security";
 import router from "@/plugins/router";
 import { useUserStore } from "@/stores/user";
+import { testIds } from "@/testIds";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 

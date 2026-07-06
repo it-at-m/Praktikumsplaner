@@ -10,6 +10,7 @@
     :rules="conditionalRequiredRules"
     :clearable="!isRequired"
     :disabled="disabled"
+    :data-test="testIds.praktikumsstelle.studiensemesterSelect"
     @update:model-value="sortSemester"
   >
     <template #prepend-item>
@@ -63,6 +64,7 @@
 import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { Studiensemester } from "@/types/Studiensemester";
 

@@ -5,6 +5,7 @@
     inline
     :rules="conditionalRequiredRules"
     :disabled="disabled"
+    :data-test="testIds.praktikumsstelle.projektarbeitRadio"
   >
     <template #label>
       <span class="custom-label">{{ conditionalRequiredLabel }}:</span>
@@ -23,6 +24,7 @@
 import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
 

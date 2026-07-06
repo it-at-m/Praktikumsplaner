@@ -18,12 +18,14 @@
         <v-spacer />
         <v-btn
           id="yesnodialog-btn-no"
+          :data-test="testIds.dialog.yesNoNoBtn"
           variant="outlined"
           @click="no"
           >Nein
         </v-btn>
         <v-btn
           id="yesnodialog-btn-yes"
+          :data-test="testIds.dialog.yesNoYesBtn"
           variant="flat"
           color="primary"
           @click="yes"
@@ -36,6 +38,8 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
+import { testIds } from "@/testIds";
 
 const properties = defineProps<{
   dialogtitle: string;

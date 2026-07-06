@@ -3,12 +3,14 @@
     :prepend-icon="mdiPlus"
     color="primary"
     text="Hinzufügen"
+    :data-test="testIds.nwk.createDialogOpenBtn"
     @click="visible = true"
   />
   <v-dialog
     v-model="visible"
     persistent
     max-width="550"
+    :data-test="testIds.nwk.createDialog"
   >
     <v-form ref="form">
       <v-card>
@@ -49,6 +51,7 @@
           <v-btn
             color="primary"
             variant="outlined"
+            :data-test="testIds.nwk.cancelBtn"
             @click="cancel()"
           >
             Abbrechen
@@ -56,6 +59,7 @@
           <v-btn
             color="primary"
             variant="flat"
+            :data-test="testIds.nwk.acceptBtn"
             @click="saveNwk()"
           >
             Akzeptieren
@@ -78,6 +82,7 @@ import NameInput from "@/components/common/NameInput.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import VorlesungstageSelector from "@/components/nachwuchskraefte/VorlesungstageSelect.vue";
 import emitter from "@/stores/eventBus";
+import { testIds } from "@/testIds";
 import NwkCreate from "@/types/NwkCreate";
 
 const visible = ref<boolean>(false);

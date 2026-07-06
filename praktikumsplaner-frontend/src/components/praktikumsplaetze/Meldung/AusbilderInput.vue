@@ -6,6 +6,7 @@
     variant="outlined"
     :clearable="!isRequired"
     :disabled="disabled"
+    :data-test="testIds.praktikumsstelle.ausbilderInput"
   ></v-text-field>
 </template>
 
@@ -13,6 +14,7 @@
 import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();

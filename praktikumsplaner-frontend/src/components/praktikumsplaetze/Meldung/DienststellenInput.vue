@@ -8,6 +8,7 @@
     :rules="conditionalRequiredRules"
     variant="outlined"
     :clearable="!isRequired"
+    :data-test="testIds.praktikumsstelle.dienststelleInput"
   ></v-text-field>
 </template>
 
@@ -17,6 +18,7 @@ import { computed } from "vue";
 import { useRules } from "@/composables/rules";
 import { useSecurity } from "@/composables/security";
 import { useUserStore } from "@/stores/user";
+import { testIds } from "@/testIds";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();

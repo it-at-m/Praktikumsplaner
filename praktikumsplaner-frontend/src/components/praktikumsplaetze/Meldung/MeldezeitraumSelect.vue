@@ -9,6 +9,7 @@
     variant="outlined"
     :clearable="!isRequired"
     :disabled="disabled"
+    :data-test="testIds.praktikumsstelle.meldezeitraumSelect"
     @select="onClick"
   >
     <template #item="{ props, item }">
@@ -33,6 +34,7 @@ import { computed } from "vue";
 
 import { useFormatter } from "@/composables/formatter";
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 

@@ -11,6 +11,7 @@
           color="primary"
           :prepend-icon="properties.icon"
           v-bind="props"
+          :data-test="testIds.dialog.twoChoiceActivatorBtn"
         >
           {{ buttontext }}
         </v-btn>
@@ -19,6 +20,7 @@
         <v-btn
           color="primary"
           v-bind="props"
+          :data-test="testIds.dialog.twoChoiceActivatorBtn"
         >
           {{ buttontext }}
         </v-btn>
@@ -40,6 +42,7 @@
               max-width="300"
               variant="outlined"
               rounded
+              :data-test="testIds.dialog.twoChoiceOne"
               @click="choiceOne"
             >
               <v-card-title class="mt-1">
@@ -56,6 +59,7 @@
               max-width="300"
               variant="outlined"
               rounded
+              :data-test="testIds.dialog.twoChoiceTwo"
               @click="choiceTwo"
             >
               <v-card-title class="mt-1">
@@ -74,6 +78,7 @@
         <v-btn
           variant="text"
           color="primary"
+          :data-test="testIds.dialog.twoChoiceCloseBtn"
           @click="close"
         >
           Schließen
@@ -85,6 +90,8 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
+import { testIds } from "@/testIds";
 
 const properties = defineProps<{
   buttontext: string;

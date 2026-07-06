@@ -3,6 +3,7 @@
     :model-value="properties.showUndeliveredMailsDialog"
     persistent
     max-width="850px"
+    :data-test="testIds.assign.undeliveredMailsDialog"
   >
     <v-card>
       <v-card-title>
@@ -27,6 +28,7 @@
           <v-col class="col-auto mr-auto">
             <v-btn
               color="primary"
+              :data-test="testIds.assign.undeliveredMailsCloseBtn"
               @click="closeDialog"
             >
               Schließen
@@ -38,6 +40,7 @@
   </v-dialog>
 </template>
 <script setup lang="ts">
+import { testIds } from "@/testIds";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const properties = defineProps<{

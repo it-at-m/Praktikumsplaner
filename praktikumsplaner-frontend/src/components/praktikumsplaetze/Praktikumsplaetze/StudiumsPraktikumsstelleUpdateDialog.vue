@@ -4,6 +4,7 @@
     :prepend-icon="mdiPencilOutline"
     color="primary"
     variant="outlined"
+    :data-test="testIds.praktikumsstelle.editBtn"
     @click.stop="openDialog()"
     >Bearbeiten
   </v-btn>
@@ -12,12 +13,14 @@
     :icon="mdiPencil"
     color="primary"
     aria-label="Bearbeiten"
+    :data-test="testIds.praktikumsstelle.editBtn"
     @click.stop="openDialog()"
   ></v-btn>
   <v-dialog
     v-model="visible"
     persistent
     max-width="1000"
+    :data-test="testIds.praktikumsstelle.editDialog"
   >
     <v-form ref="form">
       <v-card>
@@ -210,6 +213,7 @@
           <v-btn
             color="primary"
             variant="outlined"
+            :data-test="testIds.praktikumsstelle.cancelBtn"
             @click="closeDialog()"
           >
             Abbrechen
@@ -219,6 +223,7 @@
             color="primary"
             variant="flat"
             :disabled="hasAssignedNwk"
+            :data-test="testIds.praktikumsstelle.acceptBtn"
             @click="updatePraktikumsstelle()"
           >
             Akzeptieren
@@ -256,6 +261,7 @@ import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/Taetigkeit
 import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
 import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
 import emitter from "@/stores/eventBus";
+import { testIds } from "@/testIds";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Zeitraum from "@/types/Zeitraum";
 

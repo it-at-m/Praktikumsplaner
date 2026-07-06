@@ -3,6 +3,7 @@
     v-if="properties.modelValue && properties.modelValue.length > 0"
     v-model:selected="selectedNwks"
     class="pr-2"
+    :data-test="testIds.assign.nwkList"
   >
     <v-list-item
       v-for="nwk in properties.modelValue"
@@ -39,6 +40,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 
 import NwkCard from "@/components/assign/NwkCard.vue";
 import emitter from "@/stores/eventBus";
+import { testIds } from "@/testIds";
 import Nwk from "@/types/Nwk";
 
 const properties = defineProps<{

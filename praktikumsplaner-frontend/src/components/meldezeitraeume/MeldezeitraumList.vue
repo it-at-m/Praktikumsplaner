@@ -7,6 +7,7 @@
       border
       elevation="0"
       class="mt-1"
+      :data-test="testIds.meldezeitraum.listCard"
     >
       <v-list-item lines="two">
         <v-list-item-title class="justify-center">
@@ -32,6 +33,7 @@
             <v-btn
               color="error"
               :icon="mdiDelete"
+              :data-test="testIds.meldezeitraum.deleteBtn"
               @click="warnBeforeDelete(meldezeitraum)"
             >
             </v-btn>
@@ -62,6 +64,7 @@ import MeldezeitraumService from "@/api/MeldezeitraumService";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
 import { useFormatter } from "@/composables/formatter";
+import { testIds } from "@/testIds";
 import Meldezeitraum from "@/types/Meldezeitraum";
 
 const showDeleteWarningDialog = ref(false);
