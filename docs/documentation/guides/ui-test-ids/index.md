@@ -51,13 +51,13 @@ discoverable, typo-free and refactor-safe.
 
 Examples:
 
-| Constant                         | Rendered `data-test` value       |
-| -------------------------------- | -------------------------------- |
-| `testIds.nav.nachwuchskraefte`   | `nav-nachwuchskraefte`           |
-| `testIds.nwk.createDialogOpenBtn`| `nwk-create-dialog-open-btn`     |
-| `testIds.nwk.vornameInput`       | `nwk-vorname-input`              |
-| `testIds.dataTable.search`       | `data-table-search`             |
-| `testIds.dialog.yesNoYesBtn`     | `yesno-dialog-yes-btn`          |
+| Constant                          | Rendered `data-test` value   |
+| --------------------------------- | ---------------------------- |
+| `testIds.nav.nachwuchskraefte`    | `nav-nachwuchskraefte`       |
+| `testIds.nwk.createDialogOpenBtn` | `nwk-create-dialog-open-btn` |
+| `testIds.nwk.vornameInput`        | `nwk-vorname-input`          |
+| `testIds.common.dataTableSearch`  | `data-table-search`          |
+| `testIds.dialog.yesNoYesBtn`      | `yesno-dialog-yes-btn`       |
 
 ## What gets an ID
 
