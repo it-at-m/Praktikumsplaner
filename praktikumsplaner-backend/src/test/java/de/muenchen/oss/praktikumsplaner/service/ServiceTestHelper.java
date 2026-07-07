@@ -1,19 +1,16 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
-import de.muenchen.oss.praktikumsplaner.domain.AusbildungsPraktikumsstelle;
+// removed legacy Ausbildungs/StudiumsPraktikumsstelle imports after unification
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
-import de.muenchen.oss.praktikumsplaner.domain.StudiumsPraktikumsstelle;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.Praktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleViewDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -35,6 +32,9 @@ public class ServiceTestHelper {
     }
 
     public NwkDto createNwkDto(final Nwk nwk) {
+        if (nwk == null) {
+            return null;
+        }
         return NwkDto.builder()
                 .id(nwk.getId())
                 .vorname(nwk.getVorname())
@@ -53,67 +53,50 @@ public class ServiceTestHelper {
                 .zeitraum(ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build()).build();
     }
 
-    public AusbildungsPraktikumsstelle createAusbildungsPraktikumsstelleEntity(
+    public Praktikumsstelle createAusbildungsPraktikumsstelleEntity(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final String wuensche,
-            final Dringlichkeit dringlichkeit, final Set<Ausbildungsjahr> ausbildungsjahr, final Ausbildungsrichtung ausbildungsrichtung,
+            final Dringlichkeit dringlichkeit, final Set<Ausbildungsjahr> ausbildungsjahr, final Bildungsrichtung bildungsrichtung,
             final boolean projektarbeit, final boolean minderjaehrigMoeglich, final UUID meldezeitraumId, final Nwk assignedNwk) {
-        AusbildungsPraktikumsstelle newAusbildungsPraktikumsstelle = new AusbildungsPraktikumsstelle();
-        newAusbildungsPraktikumsstelle.setId(UUID.randomUUID());
-        newAusbildungsPraktikumsstelle.setDienststelle(dienststelle);
-        newAusbildungsPraktikumsstelle.setOertlicheAusbilder(ausbilder);
-        newAusbildungsPraktikumsstelle.setEmail(email);
-        newAusbildungsPraktikumsstelle.setTaetigkeiten(taetigkeiten);
-        newAusbildungsPraktikumsstelle.setWuensche(wuensche);
-        newAusbildungsPraktikumsstelle.setDringlichkeit(dringlichkeit);
-        newAusbildungsPraktikumsstelle.setAusbildungsjahr(ausbildungsjahr);
-        newAusbildungsPraktikumsstelle.setAusbildungsrichtung(ausbildungsrichtung);
-        newAusbildungsPraktikumsstelle.setProjektarbeit(projektarbeit);
-        newAusbildungsPraktikumsstelle.setAssignedNwk(assignedNwk);
-        newAusbildungsPraktikumsstelle.setMinderjaehrigMoeglich(minderjaehrigMoeglich);
-        newAusbildungsPraktikumsstelle.setMeldezeitraumID(meldezeitraumId);
-        return newAusbildungsPraktikumsstelle;
+        Praktikumsstelle p = new Praktikumsstelle();
+        p.setId(UUID.randomUUID());
+        p.setDienststelle(dienststelle);
+        p.setOertlicheAusbilder(ausbilder);
+        p.setEmail(email);
+        p.setTaetigkeiten(taetigkeiten);
+        p.setWuensche(wuensche);
+        p.setDringlichkeit(dringlichkeit);
+        p.setAusbildungsjahr(ausbildungsjahr);
+        p.setRichtung(Bildungsrichtung.valueOf(bildungsrichtung.name()));
+        p.setProjektarbeit(projektarbeit);
+        p.setAssignedNwk(assignedNwk);
+        p.setMinderjaehrigMoeglich(minderjaehrigMoeglich);
+        p.setMeldezeitraumID(meldezeitraumId);
+        return p;
     }
 
-    public StudiumsPraktikumsstelle createStudiumsPraktikumsstelleEntity(
+    public Praktikumsstelle createStudiumsPraktikumsstelleEntity(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final String wuensche,
             final Dringlichkeit dringlichkeit, final Set<Studiensemester> semester,
-            final Studiengang studiengang, final String programmierkenntnisse, final UUID meldezeitraumId, final Nwk assignedNwk) {
-        StudiumsPraktikumsstelle newStudiumsPraktikumsstelle = new StudiumsPraktikumsstelle();
-        newStudiumsPraktikumsstelle.setId(UUID.randomUUID());
-        newStudiumsPraktikumsstelle.setDienststelle(dienststelle);
-        newStudiumsPraktikumsstelle.setOertlicheAusbilder(ausbilder);
-        newStudiumsPraktikumsstelle.setEmail(email);
-        newStudiumsPraktikumsstelle.setTaetigkeiten(taetigkeiten);
-        newStudiumsPraktikumsstelle.setWuensche(wuensche);
-        newStudiumsPraktikumsstelle.setDringlichkeit(dringlichkeit);
-        newStudiumsPraktikumsstelle.setStudiensemester(semester);
-        newStudiumsPraktikumsstelle.setProgrammierkenntnisse(programmierkenntnisse);
-        newStudiumsPraktikumsstelle.setStudiengang(studiengang);
-        newStudiumsPraktikumsstelle.setAssignedNwk(assignedNwk);
-        newStudiumsPraktikumsstelle.setMeldezeitraumID(meldezeitraumId);
-        return newStudiumsPraktikumsstelle;
+            final Bildungsrichtung studiengang, final String programmierkenntnisse, final UUID meldezeitraumId, final Nwk assignedNwk) {
+        Praktikumsstelle p = new Praktikumsstelle();
+        p.setId(UUID.randomUUID());
+        p.setDienststelle(dienststelle);
+        p.setOertlicheAusbilder(ausbilder);
+        p.setEmail(email);
+        p.setTaetigkeiten(taetigkeiten);
+        p.setWuensche(wuensche);
+        p.setDringlichkeit(dringlichkeit);
+        p.setStudiensemester(semester);
+        p.setProgrammierkenntnisse(programmierkenntnisse);
+        p.setRichtung(Bildungsrichtung.valueOf(studiengang.name()));
+        p.setAssignedNwk(assignedNwk);
+        p.setMeldezeitraumID(meldezeitraumId);
+        return p;
     }
 
-    public AusbildungsPraktikumsstelleDto createPraktikumsstelleDto(AusbildungsPraktikumsstelle stelle) {
-        return AusbildungsPraktikumsstelleDto.builder()
-                .dienststelle(stelle.getDienststelle())
-                .oertlicheAusbilder(stelle.getOertlicheAusbilder())
-                .email(stelle.getEmail())
-                .taetigkeiten(stelle.getTaetigkeiten())
-                .wuensche(stelle.getWuensche())
-                .dringlichkeit(stelle.getDringlichkeit())
-                .namentlicheAnforderung(stelle.getNamentlicheAnforderung())
-                .projektarbeit(stelle.isProjektarbeit())
-                .ausbildungsjahr(stelle.getAusbildungsjahr())
-                .ausbildungsrichtung(stelle.getAusbildungsrichtung())
-                .assignedNwk(createNwkDto(stelle.getAssignedNwk()))
-                .planstelleVorhanden(stelle.isPlanstelleVorhanden())
-                .minderjaehrigMoeglich(stelle.isMinderjaehrigMoeglich())
-                .build();
-    }
-
-    public StudiumsPraktikumsstelleDto createPraktikumsstelleDto(StudiumsPraktikumsstelle stelle) {
-        return StudiumsPraktikumsstelleDto.builder()
+    public PraktikumsstelleViewDto createPraktikumsstelleDto(Praktikumsstelle stelle) {
+        return PraktikumsstelleViewDto.builder()
+                .id(stelle.getId())
                 .dienststelle(stelle.getDienststelle())
                 .oertlicheAusbilder(stelle.getOertlicheAusbilder())
                 .email(stelle.getEmail())
@@ -123,9 +106,15 @@ public class ServiceTestHelper {
                 .namentlicheAnforderung(stelle.getNamentlicheAnforderung())
                 .programmierkenntnisse(stelle.getProgrammierkenntnisse())
                 .studiensemester(stelle.getStudiensemester())
-                .studiengang(stelle.getStudiengang())
+                .ausbildungsjahr(stelle.getAusbildungsjahr())
+                .richtung(stelle.getRichtung())
+                .richtungLongName(stelle.getRichtung().getLongName())
+                .art(stelle.getRichtung().getArt())
                 .assignedNwk(createNwkDto(stelle.getAssignedNwk()))
                 .planstelleVorhanden(stelle.isPlanstelleVorhanden())
+                .minderjaehrigMoeglich(stelle.getMinderjaehrigMoeglich())
+                .projektarbeit(stelle.isProjektarbeit())
+                .meldezeitraumID(stelle.getMeldezeitraumID())
                 .build();
     }
 

@@ -15,7 +15,7 @@ export function useWarnings() {
     const warnings: Warning[] = [];
     // Check if Studiums or Ausbildungspraktikumsstelle
     if (
-      stelle.ausbildungsrichtung == undefined &&
+      stelle.richtung == undefined &&
       isAusbildung(findBildungsrichtung(nwk.richtung))
     ) {
       const warningText =
@@ -28,7 +28,7 @@ export function useWarnings() {
     }
 
     if (
-      stelle.studiengang == undefined &&
+      stelle.richtung == undefined &&
       isStudium(findBildungsrichtung(nwk.richtung))
     ) {
       const warningText =
@@ -41,12 +41,12 @@ export function useWarnings() {
     }
 
     // Check if studiengang is the same
-    if (stelle.studiengang && stelle.studiengang != nwk.richtung) {
+    if (stelle.richtung && stelle.richtung != nwk.richtung) {
       const warningText =
         "Wollen sie wirklich eine/n " +
         nwk.richtung +
         " Student*in auf eine " +
-        stelle.studiengang +
+        stelle.richtung +
         " Stelle setzen?";
       warnings.push(new Warning("", warningText));
     }
@@ -70,7 +70,7 @@ export function useWarnings() {
 
     // Check if Nwk is in the right semester
     if (
-      stelle.studiengang != undefined &&
+      stelle.richtung != undefined &&
       isStudium(findBildungsrichtung(nwk.richtung)) &&
       stelle.studiensemester
     ) {
@@ -98,7 +98,7 @@ export function useWarnings() {
 
     // Check if Nwk is in the right Lehrjahr
     if (
-      stelle.ausbildungsrichtung != undefined &&
+      stelle.richtung != undefined &&
       isAusbildung(findBildungsrichtung(nwk.richtung)) &&
       stelle.ausbildungsjahr
     ) {

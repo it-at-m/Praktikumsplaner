@@ -1,7 +1,5 @@
 package de.muenchen.oss.praktikumsplaner.domain;
 
-import static java.sql.Types.VARCHAR;
-
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.JdbcTypeCode;
 
 @MappedSuperclass
 @NoArgsConstructor
@@ -44,8 +41,7 @@ public abstract class BasePraktikumsstelle extends BaseEntity {
 
     @Size(max = 255, message = "Die angeforderte Nachwuchskraft darf nur {max} Zeichen lang sein") private String namentlicheAnforderung;
 
-    @NotNull @JdbcTypeCode(VARCHAR)
-    private UUID meldezeitraumID;
+    @NotNull private UUID meldezeitraumID;
 
     @ManyToOne
     @JoinColumn(name = "assignedNwk")

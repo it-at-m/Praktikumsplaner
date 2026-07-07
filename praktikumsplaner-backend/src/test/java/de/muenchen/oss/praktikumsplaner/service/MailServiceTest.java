@@ -9,15 +9,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleViewDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
+import de.muenchen.oss.praktikumsplaner.domain.enums.RichtungsArt;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.mail.internet.MimeMessage;
 import java.util.ArrayList;
@@ -79,19 +77,19 @@ public class MailServiceTest {
         NwkDto assignedNwk2 = createNwkDto("Erika", "Musterfrau", Bildungsrichtung.BWI, "23/27");
         NwkDto assignedNwk3 = createNwkDto("John", "Smith", Bildungsrichtung.FISI, "25/29");
 
-        List<PraktikumsstelleDto> allPraktikumsstellen = new ArrayList<>();
+        List<PraktikumsstelleViewDto> allPraktikumsstellen = new ArrayList<>();
 
-        AusbildungsPraktikumsstelleDto ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelleDto("ITM-SLP31", "Max Musterfrau", "max@musterfrau.de",
+        PraktikumsstelleViewDto ausbildungsPraktikumsstelle1 = createAusbildungsPraktikumsstelleDto("ITM-SLP31", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND,
-                Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, assignedNwk3);
+                Set.of(Ausbildungsjahr.JAHR2), Bildungsrichtung.FISI, assignedNwk3);
         allPraktikumsstellen.add(ausbildungsPraktikumsstelle1);
 
-        StudiumsPraktikumsstelleDto studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelleDto("ITM-SLP33", "Test Tester", "test@tester.de",
+        PraktikumsstelleViewDto studiumsPraktikumsstelle1 = createStudiumsPraktikumsstelleDto("ITM-SLP33", "Test Tester", "test@tester.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.NACHRANGIG,
-                Set.of(Studiensemester.SEMESTER5), Studiengang.BSC, assignedNwk2);
-        StudiumsPraktikumsstelleDto studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelleDto("ITM-DKL-IL", "Test Testerin", "test@testerin.de",
+                Set.of(Studiensemester.SEMESTER5), Bildungsrichtung.BSC, assignedNwk2);
+        PraktikumsstelleViewDto studiumsPraktikumsstelle2 = createStudiumsPraktikumsstelleDto("ITM-DKL-IL", "Test Testerin", "test@testerin.de",
                 "Design eines Praktikumsplaners", Dringlichkeit.NACHRANGIG,
-                Set.of(Studiensemester.SEMESTER5), Studiengang.BWI, assignedNwk1);
+                Set.of(Studiensemester.SEMESTER5), Bildungsrichtung.BWI, assignedNwk1);
         allPraktikumsstellen.add(studiumsPraktikumsstelle1);
         allPraktikumsstellen.add(studiumsPraktikumsstelle2);
 
@@ -105,21 +103,27 @@ public class MailServiceTest {
         verify(mailSender, times(3)).createMimeMessage();
     }
 
-    private AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto(
+    private PraktikumsstelleViewDto createAusbildungsPraktikumsstelleDto(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final Dringlichkeit dringlichkeit,
-            final Set<Ausbildungsjahr> semester, final Ausbildungsrichtung ausbildungsrichtung, final NwkDto assignedNwk) {
-        return AusbildungsPraktikumsstelleDto.builder()
+            final Set<Ausbildungsjahr> semester, final Bildungsrichtung bildungsrichtung, final NwkDto assignedNwk) {
+        return PraktikumsstelleViewDto.builder()
                 .dienststelle(dienststelle).oertlicheAusbilder(ausbilder).email(email).taetigkeiten(taetigkeiten)
                 .dringlichkeit(dringlichkeit).ausbildungsjahr(semester)
-                .ausbildungsrichtung(ausbildungsrichtung).assignedNwk(assignedNwk).build();
+                .richtung(de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung.valueOf(bildungsrichtung.name()))
+                .richtungLongName(de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung.valueOf(bildungsrichtung.name()).getLongName())
+                .art(RichtungsArt.AUSBILDUNG)
+                .assignedNwk(assignedNwk).build();
     }
 
-    private StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto(
+    private PraktikumsstelleViewDto createStudiumsPraktikumsstelleDto(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final Dringlichkeit dringlichkeit,
-            final Set<Studiensemester> semester, final Studiengang studiengang, final NwkDto assignedNwk) {
-        return StudiumsPraktikumsstelleDto.builder().dienststelle(dienststelle).oertlicheAusbilder(ausbilder).email(email).taetigkeiten(taetigkeiten)
+            final Set<Studiensemester> semester, final Bildungsrichtung bildungsrichtung, final NwkDto assignedNwk) {
+        return PraktikumsstelleViewDto.builder().dienststelle(dienststelle).oertlicheAusbilder(ausbilder).email(email).taetigkeiten(taetigkeiten)
                 .dringlichkeit(dringlichkeit).studiensemester(semester)
-                .studiengang(studiengang).assignedNwk(assignedNwk).build();
+                .richtung(de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung.valueOf(bildungsrichtung.name()))
+                .richtungLongName(de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung.valueOf(bildungsrichtung.name()).getLongName())
+                .art(RichtungsArt.STUDIUM)
+                .assignedNwk(assignedNwk).build();
     }
 
     private NwkDto createNwkDto(

@@ -1,7 +1,9 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
+import de.muenchen.oss.praktikumsplaner.annotations.RichtungValid;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +12,9 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-public record CreateStudiumsPraktikumsstelleWithMeldezeitraumDto(@NotNull String dienststelle,
+@RichtungValid
+public record UpdatePraktikumsstelleDto(
+        @NotNull String dienststelle,
 
         @NotNull String oertlicheAusbilder,
 
@@ -24,15 +28,19 @@ public record CreateStudiumsPraktikumsstelleWithMeldezeitraumDto(@NotNull String
 
         String namentlicheAnforderung,
 
-        @NotNull String programmierkenntnisse,
+        @NotNull Bildungsrichtung richtung,
+
+        String programmierkenntnisse,
 
         String wuensche,
 
         boolean planstelleVorhanden,
 
-        @NotNull Set<Studiensemester> studiensemester,
+        Set<Studiensemester> studiensemester,
 
-        @NotNull Studiengang studiengang,
+        Set<Ausbildungsjahr> ausbildungsjahr,
+
+        Boolean minderjaehrigMoeglich,
 
         @NotNull UUID meldezeitraumID) {
 }

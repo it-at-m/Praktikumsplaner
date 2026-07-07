@@ -5,7 +5,8 @@
     color="primary"
     variant="outlined"
     @click.stop="openDialog()"
-    >Bearbeiten
+  >
+    Bearbeiten
   </v-btn>
   <v-btn
     v-else
@@ -13,7 +14,7 @@
     color="primary"
     aria-label="Bearbeiten"
     @click.stop="openDialog()"
-  ></v-btn>
+  />
   <v-dialog
     v-model="visible"
     persistent
@@ -22,8 +23,8 @@
     <v-form ref="form">
       <v-card>
         <v-card-title class="text-h5 font-weight-bold"
-          >Praktikumsstelle bearbeiten
-        </v-card-title>
+          >Praktikumsstelle bearbeiten</v-card-title
+        >
         <v-container>
           <v-sheet
             border
@@ -31,9 +32,7 @@
             class="pa-3 mb-3"
           >
             <v-row>
-              <v-col>
-                <span class="text-h6">Stellenbeschreibung</span>
-              </v-col>
+              <v-col><span class="text-h6">Stellenbeschreibung</span></v-col>
             </v-row>
             <v-row>
               <v-col cols="5">
@@ -42,41 +41,27 @@
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
                   :disabled="hasAssignedNwk"
-                ></dienststellen-input>
+                />
               </v-col>
             </v-row>
             <v-row>
               <v-col>
                 <dringlichkeit-select
                   v-model="praktikumsstelle"
-                  :disabled="hasAssignedNwk"
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
-                ></dringlichkeit-select>
+                  :disabled="hasAssignedNwk"
+                />
               </v-col>
-              <v-col cols="1">
-                <dringlichkeit-tooltip></dringlichkeit-tooltip>
-              </v-col>
+              <v-col cols="1"><dringlichkeit-tooltip /></v-col>
               <v-col>
                 <namentliche-anforderung-input
                   v-model="praktikumsstelle"
-                  :disabled="hasAssignedNwk"
                   :is-required="false"
-                ></namentliche-anforderung-input>
-              </v-col>
-              <v-col cols="1">
-                <namentliche-anforderung-tooltip></namentliche-anforderung-tooltip>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="5">
-                <planstelle-radio-group
-                  v-model="praktikumsstelle"
                   :disabled="hasAssignedNwk"
-                  :is-required="true"
-                  :required-symbol="requiredFieldSymbol"
-                ></planstelle-radio-group>
+                />
               </v-col>
+              <v-col cols="1"><namentliche-anforderung-tooltip /></v-col>
             </v-row>
             <v-row>
               <v-col cols="11">
@@ -85,73 +70,102 @@
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
                   :disabled="hasAssignedNwk"
-                >
-                </taetigkeiten-input>
+                />
               </v-col>
             </v-row>
           </v-sheet>
+
           <v-sheet
             border
             rounded
             class="pa-3 mb-3"
           >
             <v-row>
-              <v-col>
-                <span class="text-h6">Nachwuchskraft</span>
-              </v-col>
+              <v-col><span class="text-h6">Nachwuchskraft</span></v-col>
             </v-row>
-            <v-row>
-              <v-col>
-                <studienrichtung-select
-                  v-model="praktikumsstelle"
-                  :disabled="hasAssignedNwk"
-                  :is-required="true"
-                  :required-symbol="requiredFieldSymbol"
-                ></studienrichtung-select>
-              </v-col>
-              <v-col cols="1" />
-              <v-col>
-                <semester-select
-                  v-model="praktikumsstelle"
-                  :disabled="hasAssignedNwk"
-                  :is-required="true"
-                  :required-symbol="requiredFieldSymbol"
-                ></semester-select>
-              </v-col>
-              <v-col cols="1" />
-            </v-row>
-            <v-row>
-              <v-col cols="5">
-                <programmier-kenntnisse-select
-                  v-model="praktikumsstelle"
-                  :disabled="hasAssignedNwk"
-                  :is-required="true"
-                  :required-symbol="requiredFieldSymbol"
-                ></programmier-kenntnisse-select>
-              </v-col>
-            </v-row>
+            <template v-if="art === 'STUDIUM'">
+              <v-row>
+                <v-col>
+                  <semester-select
+                    v-model="praktikumsstelle"
+                    :is-required="true"
+                    :required-symbol="requiredFieldSymbol"
+                    :disabled="hasAssignedNwk"
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="5">
+                  <programmier-kenntnisse-select
+                    v-model="praktikumsstelle"
+                    :is-required="true"
+                    :disabled="hasAssignedNwk"
+                  />
+                </v-col>
+              </v-row>
+            </template>
+            <template v-else>
+              <v-row>
+                <v-col>
+                  <ausbildungs-jahr-select
+                    v-model="praktikumsstelle"
+                    :is-required="true"
+                    :required-symbol="requiredFieldSymbol"
+                    :disabled="hasAssignedNwk"
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="5">
+                  <programmier-kenntnisse-select
+                    v-model="praktikumsstelle"
+                    :is-required="false"
+                    :disabled="hasAssignedNwk"
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <projektarbeit-radio-group
+                    v-model="praktikumsstelle"
+                    :is-required="true"
+                    :required-symbol="requiredFieldSymbol"
+                    :disabled="hasAssignedNwk"
+                  />
+                </v-col>
+                <v-col cols="1"><projektarbeit-tooltip /></v-col>
+                <v-col>
+                  <minderjaehrig-moeglich-radio-group
+                    v-model="praktikumsstelle"
+                    :is-required="true"
+                    :required-symbol="requiredFieldSymbol"
+                    :disabled="hasAssignedNwk"
+                  />
+                </v-col>
+                <v-col cols="1"><minderjaehrig-moeglich-tooltip /></v-col>
+              </v-row>
+            </template>
             <v-row>
               <v-col cols="11">
                 <wuensche-input
                   v-model="praktikumsstelle"
                   :is-required="false"
                   :disabled="hasAssignedNwk"
-                ></wuensche-input>
+                />
               </v-col>
-              <v-col>
-                <wuensche-tooltip></wuensche-tooltip>
-              </v-col>
+              <v-col cols="1"><wuensche-tooltip /></v-col>
             </v-row>
           </v-sheet>
+
           <v-sheet
             border
             rounded
             class="pa-3 mb-3"
           >
             <v-row>
-              <v-col>
-                <span class="text-h6">örtliche*r Ausbilder*in</span>
-              </v-col>
+              <v-col
+                ><span class="text-h6">örtliche*r Ausbilder*in</span></v-col
+              >
             </v-row>
             <v-row>
               <v-col>
@@ -160,7 +174,7 @@
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
                   :disabled="hasAssignedNwk"
-                ></ausbilder-input>
+                />
               </v-col>
               <v-col cols="1" />
               <v-col>
@@ -169,38 +183,36 @@
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
                   :disabled="hasAssignedNwk"
-                ></ausbilder-email-input>
+                />
               </v-col>
-              <v-col cols="1" />
             </v-row>
             <v-row>
               <v-col>
                 <ausbilder-erw-fuehrungszeugnis-checkbox
                   v-model="praktikumsstelle"
                   :disabled="hasAssignedNwk"
-                ></ausbilder-erw-fuehrungszeugnis-checkbox>
+                />
               </v-col>
             </v-row>
           </v-sheet>
+
           <v-sheet
             border
             rounded
             class="pa-3 mb-3"
           >
             <v-row>
-              <v-col>
-                <span class="text-h6">Meldezeitraum Auswahl</span>
-              </v-col>
+              <v-col><span class="text-h6">Meldezeitraum Auswahl</span></v-col>
             </v-row>
             <v-row>
               <v-col cols="5">
                 <meldezeitraum-select
                   v-model="praktikumsstelle"
-                  :disabled="hasAssignedNwk"
                   :meldezeitraueme="meldezeitraeume"
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
-                ></meldezeitraum-select>
+                  :disabled="hasAssignedNwk"
+                />
               </v-col>
             </v-row>
           </v-sheet>
@@ -211,28 +223,24 @@
             color="primary"
             variant="outlined"
             @click="closeDialog()"
+            >Abbrechen</v-btn
           >
-            Abbrechen
-          </v-btn>
           <v-btn
             class="mr-2"
             color="primary"
             variant="flat"
             :disabled="hasAssignedNwk"
             @click="updatePraktikumsstelle()"
+            >Akzeptieren</v-btn
           >
-            Akzeptieren
-          </v-btn>
         </v-card-actions>
       </v-card>
     </v-form>
   </v-dialog>
-  <progress-circular-overlay :loading="loading"></progress-circular-overlay>
+  <progress-circular-overlay :loading="loading" />
 </template>
 
 <script setup lang="ts">
-import type Praktikumsstelle from "@/types/Praktikumsstelle";
-
 import { mdiPencil, mdiPencilOutline } from "@mdi/js";
 import { computed, ref } from "vue";
 
@@ -242,21 +250,25 @@ import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay
 import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
 import AusbilderErwFuehrungszeugnisCheckbox from "@/components/praktikumsplaetze/Meldung/AusbilderErwFuehrungszeugnisCheckbox.vue";
 import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
+import AusbildungsJahrSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsJahrSelect.vue";
 import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
 import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
 import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
+import MinderjaehrigMoeglichRadioGroup from "@/components/praktikumsplaetze/Meldung/MinderjaehrigMoeglichRadioGroup.vue";
+import MinderjaehrigMoeglichTooltip from "@/components/praktikumsplaetze/Meldung/MinderjaehrigMoeglichTooltip.vue";
 import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
 import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
-import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
 import ProgrammierKenntnisseSelect from "@/components/praktikumsplaetze/Meldung/ProgrammierKenntnisseSelect.vue";
-import StudienrichtungSelect from "@/components/praktikumsplaetze/Meldung/StudienrichtungSelect.vue";
+import ProjektarbeitRadioGroup from "@/components/praktikumsplaetze/Meldung/ProjektarbeitRadioGroup.vue";
+import ProjektarbeitTooltip from "@/components/praktikumsplaetze/Meldung/ProjektarbeitTooltip.vue";
 import SemesterSelect from "@/components/praktikumsplaetze/Meldung/StudiensemesterSelect.vue";
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
 import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
 import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
 import emitter from "@/stores/eventBus";
 import Meldezeitraum from "@/types/Meldezeitraum";
+import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Zeitraum from "@/types/Zeitraum";
 
 const visible = ref<boolean>(false);
@@ -273,6 +285,10 @@ const properties = withDefaults(defineProps<Properties>(), {
   iconOnly: false,
 });
 
+const hasAssignedNwk = computed(() => {
+  return properties.modelValue.assignedNwk != undefined;
+});
+
 const meldezeitraeume = ref<Meldezeitraum[]>([
   new Meldezeitraum("", new Zeitraum(), ""),
 ]);
@@ -282,13 +298,16 @@ const emits =
     (e: "update:modelValue", praktikumsstelleToUpdate: Praktikumsstelle) => void
   >();
 
-const hasAssignedNwk = computed(() => {
-  return properties.modelValue.assignedNwk != undefined;
-});
-
 const praktikumsstelle = computed({
   get: () => properties.modelValue,
   set: (newValue) => emits("update:modelValue", newValue),
+});
+
+const art = computed(() => {
+  const value = praktikumsstelle.value.richtung;
+  if (!value) return undefined;
+  const studium = ["BSC", "BWI", "VI", "LLB", "PUMA", "QE3"];
+  return studium.includes(value) ? "STUDIUM" : "AUSBILDUNG";
 });
 
 function closeDialog() {

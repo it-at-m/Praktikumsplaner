@@ -10,8 +10,7 @@ import assignView from "@/views/AssignView.vue";
 import Main from "@/views/MainView.vue";
 import Meldezeitraeume from "@/views/MeldezeitraeumeView.vue";
 import NachwuchskraefteView from "@/views/nachwuchskraefte/NachwuchskraefteView.vue";
-import MeldungAusbildung from "@/views/praktikumsplaetze/MeldungAusbildung.vue";
-import MeldungStudium from "@/views/praktikumsplaetze/MeldungStudium.vue";
+import PraktikumsplaetzeMeldung from "@/views/praktikumsplaetze/PraktikumsplaetzeMeldung.vue";
 import PraktikumsplaetzeView from "@/views/praktikumsplaetze/PraktikumsplaetzeView.vue";
 
 const routes = [
@@ -47,17 +46,9 @@ const routes = [
     },
   },
   {
-    path: "/praktikumsplaetze/meldungAusbildung",
-    name: "MeldungAusbildung",
-    component: MeldungAusbildung,
-    meta: {
-      requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
-    },
-  },
-  {
-    path: "/praktikumsplaetze/meldungStudium",
-    name: "MeldungStudium",
-    component: MeldungStudium,
+    path: "/praktikumsplaetze/meldung",
+    name: "Meldung",
+    component: PraktikumsplaetzeMeldung,
     meta: {
       requiresRole: ["AUSBILDUNGSLEITUNG", "AUSBILDER"],
     },

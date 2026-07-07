@@ -9,13 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleViewDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -48,17 +45,16 @@ public class ExcelExportServiceTest {
 
     @Test
     public void testFillTemplatePraktikumsstellen() throws IOException {
-        when(praktikumsstellenService.getAllAssignedAusbildungspraktikumsstellenInMostRecentPassedMeldezeitraum())
-                .thenReturn(getTestListOfAusbildungsPraktikumsstelleDto());
-        when(praktikumsstellenService.getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum())
-                .thenReturn(getTestListOfStudiumsPraktikumsstelleDto());
+        when(praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum())
+                .thenReturn(getTestListOfAssignedPraktikumsstellen());
         try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
                 Base64.getDecoder().decode(service.getBase64EncodedExcelFile())))) {
 
             XSSFSheet ausbildungsSheet = workbook.getSheetAt(ExcelExportService.AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX);
             XSSFSheet studiumsSheet = workbook.getSheetAt(ExcelExportService.STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX);
 
-            List<AusbildungsPraktikumsstelleDto> ausbildungsPraktikumsstellen = getTestListOfAusbildungsPraktikumsstelleDto();
+            List<PraktikumsstelleViewDto> ausbildungsPraktikumsstellen = getTestListOfAssignedPraktikumsstellen().stream()
+                    .filter(p -> p.art().name().equals("AUSBILDUNG")).toList();
 
             assertNotNull(workbook);
             assertEquals(4, workbook.getNumberOfSheets());
@@ -74,7 +70,7 @@ public class ExcelExportServiceTest {
             assertEquals("Nein", ausbildungsSheet.getRow(3).getCell(9).getStringCellValue());
             assertEquals("vorrangig 2., 3. Lehrjahr", ausbildungsSheet.getRow(3).getCell(13).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.getFirst().dringlichkeit().name(), ausbildungsSheet.getRow(3).getCell(12).getStringCellValue());
-            assertEquals(ausbildungsPraktikumsstellen.getFirst().ausbildungsrichtung().name(), ausbildungsSheet.getRow(3).getCell(14).getStringCellValue());
+            assertEquals(ausbildungsPraktikumsstellen.getFirst().richtung().name(), ausbildungsSheet.getRow(3).getCell(14).getStringCellValue());
             assertEquals("Praktikumsplatz", ausbildungsSheet.getRow(3).getCell(11).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.getFirst().assignedNwk().nachname(), ausbildungsSheet.getRow(3).getCell(15).getStringCellValue());
             assertEquals(ausbildungsPraktikumsstellen.getFirst().assignedNwk().vorname(), ausbildungsSheet.getRow(3).getCell(16).getStringCellValue());
@@ -82,7 +78,8 @@ public class ExcelExportServiceTest {
             assertEquals("Ja", ausbildungsSheet.getRow(3).getCell(18).getStringCellValue());
             assertEquals("Ja", ausbildungsSheet.getRow(4).getCell(9).getStringCellValue());
 
-            List<StudiumsPraktikumsstelleDto> studiumsPraktikumsstellen = getTestListOfStudiumsPraktikumsstelleDto();
+            List<PraktikumsstelleViewDto> studiumsPraktikumsstellen = getTestListOfAssignedPraktikumsstellen().stream()
+                    .filter(p -> p.art().name().equals("STUDIUM")).toList();
 
             assertEquals("ITM", studiumsSheet.getRow(3).getCell(0).getStringCellValue());
             assertEquals("oertlAL", studiumsSheet.getRow(3).getCell(1).getStringCellValue());
@@ -96,7 +93,7 @@ public class ExcelExportServiceTest {
             assertEquals("Ja", studiumsSheet.getRow(3).getCell(10).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().dringlichkeit().name(), studiumsSheet.getRow(3).getCell(12).getStringCellValue());
             assertEquals("vorrangig 4., 5. Semester", studiumsSheet.getRow(3).getCell(13).getStringCellValue());
-            assertEquals(studiumsPraktikumsstellen.getFirst().studiengang().name(), studiumsSheet.getRow(3).getCell(14).getStringCellValue());
+            assertEquals(studiumsPraktikumsstellen.getFirst().richtung().name(), studiumsSheet.getRow(3).getCell(14).getStringCellValue());
             assertEquals("Praktikumsplatz", studiumsSheet.getRow(3).getCell(11).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().assignedNwk().nachname(), studiumsSheet.getRow(3).getCell(15).getStringCellValue());
             assertEquals(studiumsPraktikumsstellen.getFirst().assignedNwk().vorname(), studiumsSheet.getRow(3).getCell(16).getStringCellValue());
@@ -106,29 +103,25 @@ public class ExcelExportServiceTest {
 
     @Test
     public void testSortPraktikumsstellen() throws IOException {
-        List<AusbildungsPraktikumsstelleDto> ausbildungsPraktikumsstellenWithStudent = List.of(
+        List<PraktikumsstelleViewDto> mixed = List.of(
                 helper.createPraktikumsstelleDto(helper.createAusbildungsPraktikumsstelleEntity("Dienststelle 1", "Ausbilder 1", "a@b.c", "Taetigkeiten 1",
-                        null, Dringlichkeit.DRINGEND, Set.of(Ausbildungsjahr.JAHR1), Ausbildungsrichtung.FISI, false, false, null,
-                        helper.createNwkEntity("Vorname 1", "Nachname 1", Bildungsrichtung.BSC, "22/23", null, true))));
-
-        List<StudiumsPraktikumsstelleDto> studiumsPraktikumsstellenWithAuszubildende = List.of(
+                        null, Dringlichkeit.DRINGEND, Set.of(Ausbildungsjahr.JAHR1), Bildungsrichtung.FISI, false, false, null,
+                        helper.createNwkEntity("Vorname 1", "Nachname 1", Bildungsrichtung.BSC, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createStudiumsPraktikumsstelleEntity("Dienststelle 3", "Ausbilder 3", "a@b.c", "Taetigkeiten 3",
-                        null, Dringlichkeit.DRINGEND, Set.of(Studiensemester.SEMESTER1), Studiengang.BSC, "false", null,
+                        null, Dringlichkeit.DRINGEND, Set.of(Studiensemester.SEMESTER1), Bildungsrichtung.BSC, "false", null,
                         helper.createNwkEntity("Vorname 3", "Nachname 3", Bildungsrichtung.FISI, "22/23", null, true))));
 
-        when(praktikumsstellenService.getAllAssignedAusbildungspraktikumsstellenInMostRecentPassedMeldezeitraum())
-                .thenReturn(ausbildungsPraktikumsstellenWithStudent);
-        when(praktikumsstellenService.getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum())
-                .thenReturn(studiumsPraktikumsstellenWithAuszubildende);
+        when(praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum())
+                .thenReturn(mixed);
 
         try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
                 Base64.getDecoder().decode(service.getBase64EncodedExcelFile())))) {
             XSSFSheet ausbildungsSheet = workbook.getSheetAt(ExcelExportService.AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX);
             XSSFSheet studiumsSheet = workbook.getSheetAt(ExcelExportService.STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX);
 
-            // Test if Studiums-NWKs on Ausbildungs-Stellen are sorted to Studiums-Sheet and vice versa
-            assertEquals(ausbildungsPraktikumsstellenWithStudent.getFirst().dienststelle(), studiumsSheet.getRow(3).getCell(2).getStringCellValue());
-            assertEquals(studiumsPraktikumsstellenWithAuszubildende.getFirst().dienststelle(), ausbildungsSheet.getRow(3).getCell(2).getStringCellValue());
+            // Test if entries are placed on sheets based on RichtungsArt
+            assertEquals("Dienststelle 1", ausbildungsSheet.getRow(3).getCell(2).getStringCellValue());
+            assertEquals("Dienststelle 3", studiumsSheet.getRow(3).getCell(2).getStringCellValue());
         }
     }
 
@@ -137,26 +130,22 @@ public class ExcelExportServiceTest {
         assertNotNull(service.getBase64EncodedExcelFile());
     }
 
-    private List<AusbildungsPraktikumsstelleDto> getTestListOfAusbildungsPraktikumsstelleDto() {
+    private List<PraktikumsstelleViewDto> getTestListOfAssignedPraktikumsstellen() {
         return List.of(
                 helper.createPraktikumsstelleDto(helper.createAusbildungsPraktikumsstelleEntity("ITM-DS1", "Ausbilder 1", "a@b.c", "Taetigkeiten 1",
-                        "Wuensche 1", Dringlichkeit.DRINGEND, Set.of(Ausbildungsjahr.JAHR2, Ausbildungsjahr.JAHR3), Ausbildungsrichtung.FISI, false, true, null,
+                        "Wuensche 1", Dringlichkeit.DRINGEND, Set.of(Ausbildungsjahr.JAHR2, Ausbildungsjahr.JAHR3), Bildungsrichtung.FISI, false, true, null,
                         helper.createNwkEntity("Vorname 1", "Nachname 1", Bildungsrichtung.FISI, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createAusbildungsPraktikumsstelleEntity("ITM-DS2", "Ausbilder 2", "a@b.c", "Taetigkeiten 2",
-                        null, Dringlichkeit.DRINGEND, Set.of(Ausbildungsjahr.JAHR2), Ausbildungsrichtung.FISI, true, false, null,
-                        helper.createNwkEntity("Vorname 2", "Nachname 2", Bildungsrichtung.FISI, "22/23", null, true))));
-    }
-
-    private List<StudiumsPraktikumsstelleDto> getTestListOfStudiumsPraktikumsstelleDto() {
-        return List.of(
+                        null, Dringlichkeit.DRINGEND, Set.of(Ausbildungsjahr.JAHR2), Bildungsrichtung.FISI, true, false, null,
+                        helper.createNwkEntity("Vorname 2", "Nachname 2", Bildungsrichtung.FISI, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createStudiumsPraktikumsstelleEntity("ITM-DS3", "Ausbilder 3", "a@b.c", "Taetigkeiten 3",
-                        "Wuensche 3", Dringlichkeit.DRINGEND, Set.of(Studiensemester.SEMESTER5, Studiensemester.SEMESTER4), Studiengang.BWI, "true", null,
+                        "Wuensche 3", Dringlichkeit.DRINGEND, Set.of(Studiensemester.SEMESTER5, Studiensemester.SEMESTER4), Bildungsrichtung.BWI, "true", null,
                         helper.createNwkEntity("Vorname 3", "Nachname 3", Bildungsrichtung.BSC, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createStudiumsPraktikumsstelleEntity("ITM-DS4", "Ausbilder 4", "a@b.c", "Taetigkeiten 4",
-                        null, Dringlichkeit.ZWINGEND, Set.of(Studiensemester.SEMESTER2), Studiengang.VI, "false", null,
+                        null, Dringlichkeit.ZWINGEND, Set.of(Studiensemester.SEMESTER2), Bildungsrichtung.VI, "false", null,
                         helper.createNwkEntity("Vorname 4", "Nachname 4", Bildungsrichtung.BSC, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createStudiumsPraktikumsstelleEntity("ITM-DS5", "Ausbilder 5", "a@b.c", "Taetigkeiten 5",
-                        null, Dringlichkeit.NACHRANGIG, Set.of(Studiensemester.SEMESTER3), Studiengang.BSC, "false", null,
+                        null, Dringlichkeit.NACHRANGIG, Set.of(Studiensemester.SEMESTER3), Bildungsrichtung.BSC, "false", null,
                         helper.createNwkEntity("Vorname 5", "Nachname 5", Bildungsrichtung.FISI, "22/23", null, true))));
     }
 }
