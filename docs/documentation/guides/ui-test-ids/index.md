@@ -1,7 +1,7 @@
 # UI Test IDs (`data-test`)
 
 This guide describes how the frontend is instrumented for automated UI tests
-(e.g. Selenium). The underlying decision is documented in
+(e.g. browser-based end-to-end tools). The underlying decision is documented in
 [ADR-010](../../architecture/adr/adr010-data-test-attributes.md).
 
 ## Goal
@@ -12,13 +12,13 @@ that end-to-end tests do not break when styling, DOM structure or copy changes.
 ## The attribute
 
 - We use the attribute **`data-test`**.
-- Selenium selects elements via the CSS selector `[data-test='<id>']`.
+- Test tools select elements via the CSS selector `[data-test='<id>']`.
 - For raw input access use `[data-test='<id>'] input`,
   `[data-test='<id>'] textarea` etc., because Vuetify renders a wrapper around
   the native control.
 
 ```java
-// Selenium (Java) example
+// Example with a CSS selector based UI test tool
 driver.findElement(By.cssSelector("[data-test='nwk-create-dialog-open-btn']")).click();
 driver.findElement(By.cssSelector("[data-test='nwk-vorname-input'] input")).sendKeys("Max");
 ```

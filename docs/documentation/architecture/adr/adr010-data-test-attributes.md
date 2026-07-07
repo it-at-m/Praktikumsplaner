@@ -6,8 +6,9 @@
 
 ## Context
 
-The UI is to be tested end-to-end with Selenium. Selenium locates elements via
-selectors. Selecting elements by CSS classes (e.g. Vuetify utility classes),
+The UI is to be tested end-to-end with automated browser test tools. Such
+tools locate elements via selectors. Selecting elements by CSS classes (e.g.
+Vuetify utility classes),
 tag structure or visible text is brittle: class names change with styling,
 the DOM structure produced by Vuetify changes between versions, and visible
 text changes with i18n or copy edits. Every such change silently breaks the
@@ -26,7 +27,7 @@ Every relevant UI element receives a dedicated `data-test` attribute.
 - Attribute name: **`data-test`** (not `id`, not `data-testid`, not `data-cy`).
   Using `data-test` keeps a clear separation between production concerns
   (`id`, `class`) and the test contract, and works with a simple
-  `[data-test='...']` selector in Selenium.
+  `[data-test='...']` selector in common UI test tools.
 - The values are centrally defined in
   `praktikumsplaner-frontend/src/testIds.ts` as typed constants. Templates
   reference these constants instead of inlining string literals, so that the
@@ -46,7 +47,7 @@ Every relevant UI element receives a dedicated `data-test` attribute.
 
 Vuetify components pass unknown attributes (fallthrough attributes) to their
 root element. A `data-test` on `<v-btn>` / `<v-text-field>` therefore appears
-on the rendered root element. For inputs, Selenium can select the input via
+on the rendered root element. For inputs, test tools can select the input via
 `[data-test='...'] input` when the raw `<input>` is required.
 
 Reusable wrapper components (e.g. `NameInput`, `DienststellenInput`) carry a
