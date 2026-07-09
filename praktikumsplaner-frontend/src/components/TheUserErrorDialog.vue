@@ -4,6 +4,7 @@
     :model-value="show"
     persistent
     width="800"
+    :data-test="testIds.feedback.errorDialog"
   >
     <v-card>
       <v-card-title>
@@ -18,6 +19,7 @@
         <v-spacer />
         <v-btn
           color="primary"
+          :data-test="testIds.feedback.errorDialogCloseBtn"
           @click="close"
         >
           Schließen
@@ -31,6 +33,7 @@
 import { computed } from "vue";
 
 import { useUserErrorStore } from "@/stores/user-error";
+import { testIds } from "@/testIds";
 
 const show = computed(() => errorStore.visible);
 const message = computed(() => errorStore.message ?? "");

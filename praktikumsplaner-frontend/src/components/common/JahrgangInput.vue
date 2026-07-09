@@ -4,12 +4,14 @@
     label="Jahrgang"
     :rules="jahrgangRule"
     variant="outlined"
+    :data-test="testIds.nwk.jahrgangInput"
   ></v-text-field>
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import NwkCreate from "@/types/NwkCreate";
 
 const validationRules = useRules();

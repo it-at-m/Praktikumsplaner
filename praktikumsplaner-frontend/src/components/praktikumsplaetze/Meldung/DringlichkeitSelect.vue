@@ -9,6 +9,7 @@
     :rules="conditionalRequiredRules"
     variant="outlined"
     :clearable="!isRequired"
+    :data-test="testIds.praktikumsstelle.dringlichkeitSelect"
   ></v-select>
 </template>
 
@@ -16,6 +17,7 @@
 import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import { Dringlichkeit } from "@/types/Dringlichkeit";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 

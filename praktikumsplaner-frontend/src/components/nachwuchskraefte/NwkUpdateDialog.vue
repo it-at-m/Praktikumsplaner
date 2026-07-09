@@ -3,12 +3,14 @@
     :icon="mdiPencilOutline"
     color="primary"
     aria-label="Bearbeiten"
+    :data-test="testIds.nwk.updateDialogOpenBtn"
     @click="visible = true"
   ></v-btn>
   <v-dialog
     v-model="visible"
     persistent
     max-width="550"
+    :data-test="testIds.nwk.updateDialog"
   >
     <v-form ref="form">
       <v-card>
@@ -48,6 +50,7 @@
           <v-btn
             color="primary"
             variant="outlined"
+            :data-test="testIds.nwk.cancelBtn"
             @click="cancel()"
           >
             Abbrechen
@@ -55,6 +58,7 @@
           <v-btn
             color="primary"
             variant="flat"
+            :data-test="testIds.nwk.acceptBtn"
             @click="updateNwk()"
           >
             Akzeptieren
@@ -76,6 +80,7 @@ import JahrgangInput from "@/components/common/JahrgangInput.vue";
 import NameInput from "@/components/common/NameInput.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import VorlesungstageSelector from "@/components/nachwuchskraefte/VorlesungstageSelect.vue";
+import { testIds } from "@/testIds";
 import Nwk from "@/types/Nwk";
 
 const visible = ref<boolean>(false);

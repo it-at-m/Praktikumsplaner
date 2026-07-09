@@ -2,6 +2,7 @@
   <v-list
     v-if="praktikumsstellen && praktikumsstellen.length > 0"
     class="pl-2"
+    :data-test="testIds.assign.praktikumsstellenList"
   >
     <v-list-item
       v-for="praktikumsstelle in praktikumsstellen"
@@ -43,6 +44,7 @@
 import { mdiInformationOutline } from "@mdi/js";
 
 import PraktikumsstelleCard from "@/components/assign/PraktikumsstelleCardZuweisung.vue";
+import { testIds } from "@/testIds";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 defineProps<{
