@@ -10,9 +10,12 @@
         :icon="mdiArrowLeft"
         elevation="0"
         class="mr-2"
+        :data-test="testIds.common.pageTitleBackBtn"
       >
       </v-btn>
-      <h1>{{ properties.pageHeaderText }}</h1>
+      <h1 :data-test="testIds.common.pageTitle">
+        {{ properties.pageHeaderText }}
+      </h1>
     </v-col>
     <v-col class="d-flex justify-end align-center">
       <v-btn-group>
@@ -24,6 +27,8 @@
 
 <script setup lang="ts">
 import { mdiArrowLeft } from "@mdi/js";
+
+import { testIds } from "@/testIds";
 
 const properties = defineProps<{
   pageHeaderText: string;

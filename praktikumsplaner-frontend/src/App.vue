@@ -8,8 +8,14 @@
           cols="3"
           class="d-flex align-center justify-start"
         >
-          <v-app-bar-nav-icon @click.stop="toggleDrawer" />
-          <router-link to="/">
+          <v-app-bar-nav-icon
+            :data-test="testIds.app.navToggle"
+            @click.stop="toggleDrawer"
+          />
+          <router-link
+            to="/"
+            :data-test="testIds.app.homeLogo"
+          >
             <img
               height="50"
               width="50"
@@ -21,6 +27,7 @@
           <router-link
             to="/"
             class="text-decoration-none"
+            :data-test="testIds.app.homeTitle"
           >
             <v-toolbar-title class="font-weight-bold">
               <span class="text-white">Praktikumsplaner</span>
@@ -44,24 +51,28 @@
         <v-list-item
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/nachwuchskraefte' }"
+          :data-test="testIds.nav.nachwuchskraefte"
         >
           <v-list-item-title>Nachwuchskräfte</v-list-item-title>
         </v-list-item>
         <v-list-item
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/meldezeitraum' }"
+          :data-test="testIds.nav.meldezeitraum"
         >
           <v-list-item-title>Meldezeitraum</v-list-item-title>
         </v-list-item>
         <v-list-item
           v-if="security.checkForAnyRole(['AUSBILDER', 'AUSBILDUNGSLEITUNG'])"
           :to="{ path: '/praktikumsplaetze' }"
+          :data-test="testIds.nav.praktikumsplaetze"
         >
           <v-list-item-title>Praktikumsplätze</v-list-item-title>
         </v-list-item>
         <v-list-item
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/zuweisung' }"
+          :data-test="testIds.nav.zuweisung"
         >
           <v-list-item-title>Zuweisung</v-list-item-title>
         </v-list-item>
@@ -87,6 +98,7 @@ import ErrorDialog from "@/components/TheUserErrorDialog.vue";
 import { useSecurity } from "@/composables/security";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
+import { testIds } from "@/testIds";
 
 const drawer = ref(true);
 const userStore = useUserStore();

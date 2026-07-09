@@ -14,3 +14,4 @@ The following ADRs exist:
 - [ADR-007 send errormessage](adr/adr007-send-errormessage.md)
 - [ADR-008 security roles](adr/adr008-security-roles.md)
 - [ADR-009 action reload](adr/adr009-action-reload.md)
+- [ADR-010 use data-test attributes for UI testing](adr/adr010-data-test-attributes.md)

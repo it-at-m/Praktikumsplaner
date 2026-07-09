@@ -3,12 +3,14 @@
     :prepend-icon="mdiPlus"
     color="primary"
     text="Hinzufügen"
+    :data-test="testIds.meldezeitraum.createOpenBtn"
     @click="visible = true"
   />
   <v-dialog
     v-model="visible"
     persistent
     width="600"
+    :data-test="testIds.meldezeitraum.createDialog"
   >
     <v-card>
       <v-card-title>Meldezeitraum Anlegen</v-card-title>
@@ -21,6 +23,7 @@
               :rules="zeitraumNameRules"
               variant="outlined"
               class="mb-3"
+              :data-test="testIds.meldezeitraum.nameInput"
             ></v-text-field>
             <zeitraum-picker
               :value="meldezeitraum.zeitraum"
@@ -34,6 +37,7 @@
           variant="outlined"
           color="primary"
           class="ml-7 mb-2"
+          :data-test="testIds.meldezeitraum.backBtn"
           @click="close"
         >
           Zurück
@@ -43,6 +47,7 @@
           color="primary"
           variant="elevated"
           class="mr-7 mb-2"
+          :data-test="testIds.meldezeitraum.saveBtn"
           @click="clickSpeichern"
         >
           Speichern
@@ -61,6 +66,7 @@ import MeldezeitraumService from "@/api/MeldezeitraumService";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import ZeitraumPicker from "@/components/meldezeitraeume/ZeitraumPicker.vue";
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Zeitraum from "@/types/Zeitraum";
 

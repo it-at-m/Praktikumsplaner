@@ -43,6 +43,7 @@
         :prepend-icon="mdiMail"
         color="primary"
         class="mr-4"
+        :data-test="testIds.assign.sendMailsBtn"
         @click="openMailWarningDialog"
         >Mails senden</v-btn
       >
@@ -79,6 +80,7 @@ import { useWarnings } from "@/composables/warningGenerator";
 import router from "@/plugins/router";
 import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
+import { testIds } from "@/testIds";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import Warning from "@/types/Warning";

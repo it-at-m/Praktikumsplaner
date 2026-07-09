@@ -9,6 +9,7 @@
         <v-btn
           color="primary"
           v-bind="open"
+          :data-test="testIds.dialog.yesNoActivatorBtn"
         >
           {{ buttontext }}
         </v-btn>
@@ -17,6 +18,7 @@
         <v-btn
           color="primary"
           v-bind="open"
+          :data-test="testIds.dialog.yesNoActivatorBtn"
         >
           <v-icon size="large">
             {{ icontext }}
@@ -35,6 +37,7 @@
         <v-spacer />
         <v-btn
           id="yesnodialog-btn-no"
+          :data-test="testIds.dialog.yesNoNoBtn"
           variant="outlined"
           @click="no"
         >
@@ -42,6 +45,7 @@
         </v-btn>
         <v-btn
           id="yesnodialog-btn-yes"
+          :data-test="testIds.dialog.yesNoYesBtn"
           color="primary"
           variant="elevated"
           @click="yes"
@@ -55,6 +59,8 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+
+import { testIds } from "@/testIds";
 
 /**
  * Der YesNo-Dialog ist ein generischer Dialog zur binären Abfrage beim Nutzer.

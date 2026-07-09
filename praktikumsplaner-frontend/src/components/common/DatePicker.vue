@@ -8,6 +8,7 @@
         :model-value="formatDate(properties.value)"
         :rules="properties.rules"
         v-bind="props"
+        :data-test="testIds.common.datePickerField"
       ></v-text-field>
     </template>
     <v-date-picker
@@ -19,6 +20,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+
+import { testIds } from "@/testIds";
 
 const properties = defineProps<{
   prependIcon: string;

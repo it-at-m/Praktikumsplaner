@@ -8,6 +8,7 @@
     item-title="germanWeekDay"
     variant="outlined"
     multiple
+    :data-test="testIds.nwk.vorlesungstageSelect"
   >
   </v-select>
 </template>
@@ -15,6 +16,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
+import { testIds } from "@/testIds";
 import Day from "@/types/Day";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 import NwkCreate from "@/types/NwkCreate";

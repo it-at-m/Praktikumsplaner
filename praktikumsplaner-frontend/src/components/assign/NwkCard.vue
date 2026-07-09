@@ -2,6 +2,7 @@
   <v-card
     width="100%"
     border
+    :data-test="testIds.assign.nwkCard"
   >
     <v-expansion-panels>
       <v-expansion-panel>
@@ -55,6 +56,7 @@
 import { computed } from "vue";
 
 import InitialsAvatar from "@/components/common/InitialsAvatar.vue";
+import { testIds } from "@/testIds";
 import { findBildungsrichtungColorByValue } from "@/types/Bildungsrichtung";
 import GermanWeekdayMapper from "@/types/GermanWeekdayMapper";
 import Nwk, { hasDetails } from "@/types/Nwk";
