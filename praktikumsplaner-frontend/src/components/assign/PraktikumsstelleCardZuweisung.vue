@@ -2,6 +2,7 @@
   <v-card
     width="100%"
     border
+    :data-test="testIds.assign.praktikumsstelleCard"
     @click="show = !show"
     @drop="drop($event, praktikumsstelle)"
     @dragover.prevent
@@ -91,6 +92,7 @@ import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutA
 import { useTextGenerator } from "@/composables/textGenerator";
 import { useWarnings } from "@/composables/warningGenerator";
 import emitter from "@/stores/eventBus";
+import { testIds } from "@/testIds";
 import { findBildungsrichtungColorByValue } from "@/types/Bildungsrichtung";
 import Nwk from "@/types/Nwk";
 import Praktikumsstelle from "@/types/Praktikumsstelle";

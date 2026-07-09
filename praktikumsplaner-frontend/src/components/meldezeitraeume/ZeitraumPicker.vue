@@ -11,6 +11,7 @@
             type="date"
             :label="'Beginn des ' + properties.label + 's'"
             :rules="startZeitpunktRules"
+            :data-test="testIds.meldezeitraum.startInput"
           >
           </v-text-field>
         </v-col>
@@ -23,6 +24,7 @@
             type="date"
             :label="'Ende des ' + properties.label + 's'"
             :rules="endZeitpunktRules"
+            :data-test="testIds.meldezeitraum.endInput"
           >
           </v-text-field>
         </v-col>
@@ -35,6 +37,7 @@
 import { computed, ref } from "vue";
 
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import Zeitraum from "@/types/Zeitraum";
 
 const properties = defineProps<{

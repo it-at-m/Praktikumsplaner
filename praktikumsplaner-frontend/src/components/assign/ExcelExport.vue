@@ -3,6 +3,7 @@
     <v-btn
       color="primary"
       :prepend-icon="mdiTrayArrowDown"
+      :data-test="testIds.assign.exportBtn"
       @click="clickExport"
     >
       Exportieren
@@ -17,6 +18,7 @@ import { ref, watch } from "vue";
 
 import ExportService from "@/api/ExportService";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
+import { testIds } from "@/testIds";
 
 const loading = ref<boolean>(false);
 const properties = defineProps<{

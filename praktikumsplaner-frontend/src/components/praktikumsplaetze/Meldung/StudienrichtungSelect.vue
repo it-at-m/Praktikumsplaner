@@ -9,6 +9,7 @@
     variant="outlined"
     :clearable="!isRequired"
     :disabled="disabled"
+    :data-test="testIds.praktikumsstelle.studienrichtungSelect"
   >
   </v-select>
 </template>
@@ -17,6 +18,7 @@
 import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { Studiengang } from "@/types/Studiengang";
 

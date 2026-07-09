@@ -23,6 +23,7 @@
           <router-link
             to="nachwuchskraefte"
             class="text-decoration-none"
+            :data-test="testIds.main.cardNachwuchskraefte"
           >
             <v-card class="mx-auto">
               <v-card-title> Nachwuchskräfte anlegen </v-card-title>
@@ -44,6 +45,7 @@
           <router-link
             to="meldezeitraum"
             class="text-decoration-none"
+            :data-test="testIds.main.cardMeldezeitraum"
           >
             <v-card class="mx-auto">
               <v-card-title> Meldezeitraum anlegen </v-card-title>
@@ -65,6 +67,7 @@
           <router-link
             to="praktikumsplaetze"
             class="text-decoration-none"
+            :data-test="testIds.main.cardPraktikumsplaetze"
           >
             <v-card class="mx-auto">
               <v-card-title> Praktikumsplatz melden </v-card-title>
@@ -86,6 +89,7 @@
           <router-link
             to="zuweisung"
             class="text-decoration-none"
+            :data-test="testIds.main.cardZuweisung"
           >
             <v-card class="mx-auto">
               <v-card-title> Zuweisung durchführen </v-card-title>
@@ -133,6 +137,7 @@ import { checkHealth } from "@/api/HealthService";
 import { useSecurity } from "@/composables/security";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
+import { testIds } from "@/testIds";
 
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();

@@ -10,6 +10,7 @@
     :rules="conditionalRequiredRules"
     :clearable="!isRequired"
     :disabled="disabled"
+    :data-test="testIds.praktikumsstelle.ausbildungsjahrSelect"
     @update:model-value="sortAusbildungsjahre"
   >
     <template #prepend-item>
@@ -59,6 +60,7 @@
 import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import { Ausbildungsjahr } from "@/types/Ausbildungsjahr";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 

@@ -13,12 +13,14 @@
         <v-btn
           color="primary"
           variant="elevated"
+          :data-test="testIds.dialog.warningAcceptBtn"
           @click="accept"
           >Akzeptieren
         </v-btn>
         <v-btn
           color="error"
           variant="elevated"
+          :data-test="testIds.dialog.warningRejectBtn"
           @click="reject"
           >Ablehnen
         </v-btn>
@@ -30,6 +32,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
+import { testIds } from "@/testIds";
 import Warning from "@/types/Warning";
 
 const emits = defineEmits<(e: "accepted" | "rejected") => void>();

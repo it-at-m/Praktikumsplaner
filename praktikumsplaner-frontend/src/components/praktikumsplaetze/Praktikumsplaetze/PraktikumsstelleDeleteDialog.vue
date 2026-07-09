@@ -3,6 +3,7 @@
     :icon="mdiDelete"
     color="error"
     alt-text="Löschen"
+    :data-test="testIds.praktikumsstelle.deleteBtn"
     @click.stop="openDialog"
   />
   <yes-no-dialog-without-activator
@@ -24,6 +25,7 @@ import { ref } from "vue";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import YesNoDialogWithoutActivator from "@/components/common/YesNoDialogWithoutActivator.vue";
+import { testIds } from "@/testIds";
 
 const props = defineProps<{
   stelle: Praktikumsstelle;

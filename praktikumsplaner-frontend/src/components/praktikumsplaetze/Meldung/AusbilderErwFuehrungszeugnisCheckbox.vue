@@ -3,12 +3,14 @@
     v-model="stelle.erwFuehrungszeugnisVorhanden"
     :label="label"
     :disabled="disabled"
+    :data-test="testIds.praktikumsstelle.fuehrungszeugnisCheckbox"
   ></v-checkbox>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
 
+import { testIds } from "@/testIds";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 interface Properties {

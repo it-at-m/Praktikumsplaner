@@ -2,6 +2,7 @@
   <v-btn
     :prepend-icon="mdiTrayArrowUp"
     color="primary"
+    :data-test="testIds.nwk.excelImportOpenBtn"
     @click="visible = true"
   >
     Datei Hochladen
@@ -10,6 +11,7 @@
     v-model="visible"
     persistent
     max-width="550"
+    :data-test="testIds.nwk.excelImportDialog"
   >
     <v-form ref="form">
       <v-card>
@@ -23,6 +25,7 @@
             :rules="rules"
             label="Datei auswählen"
             :prepend-icon="mdiTrayArrowUp"
+            :data-test="testIds.nwk.excelImportFileInput"
           ></v-file-input>
         </v-card-text>
         <v-card-actions>
@@ -30,6 +33,7 @@
           <v-btn
             color="primary"
             variant="outlined"
+            :data-test="testIds.nwk.excelImportCancelBtn"
             @click="cancel()"
           >
             Abbrechen
@@ -37,6 +41,7 @@
           <v-btn
             color="primary"
             variant="flat"
+            :data-test="testIds.nwk.excelImportUploadBtn"
             @click="uploadFile()"
           >
             Hochladen
@@ -56,6 +61,7 @@ import NwkService from "@/api/NwkService";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
 import { useRules } from "@/composables/rules";
 import emitter from "@/stores/eventBus";
+import { testIds } from "@/testIds";
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);

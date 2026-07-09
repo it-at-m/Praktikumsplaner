@@ -6,6 +6,7 @@
         label="Vorname"
         :rules="nameRule"
         variant="outlined"
+        :data-test="testIds.nwk.vornameInput"
       ></v-text-field>
     </v-col>
     <v-col cols="6">
@@ -14,6 +15,7 @@
         label="Nachname"
         :rules="nameRule"
         variant="outlined"
+        :data-test="testIds.nwk.nachnameInput"
       ></v-text-field>
     </v-col>
   </v-row>
@@ -22,6 +24,7 @@
 import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
+import { testIds } from "@/testIds";
 import NwkCreate from "@/types/NwkCreate";
 
 const validationRules = useRules();
