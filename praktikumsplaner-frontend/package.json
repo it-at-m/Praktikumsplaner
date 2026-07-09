@@ -19,7 +19,7 @@
   "dependencies": {
     "@fontsource/roboto": "5.2.10",
     "@muenchen/appswitcher-vue": "2.2.0",
-    "@vueuse/core": "14.2.1",
+    "@vueuse/core": "14.3.0",
     "mitt": "3.0.1",
     "moment": "2.30.1",
     "pinia": "3.0.4",
