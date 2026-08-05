@@ -1,4 +1,9 @@
 import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
+import {
+  findBildungsrichtung,
+  isAusbildung,
+  isStudium,
+} from "@/types/Bildungsrichtung";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { valueToNameStudiensemester } from "@/types/Studiensemester";
 
@@ -9,9 +14,11 @@ export function useTextGenerator() {
     let cardText = "";
     if (!stelle) return cardText;
 
-    if (stelle.studiengang) {
+    const richtung = findBildungsrichtung(stelle.richtung ?? "");
+
+    if (isStudium(richtung)) {
       cardText += getStudiumsPraktikumsstellenDescription(stelle);
-    } else if (stelle.ausbildungsrichtung) {
+    } else if (isAusbildung(richtung)) {
       cardText += getAusbildungsPraktikumsstellenDescription(stelle);
     }
 
@@ -25,6 +32,7 @@ export function useTextGenerator() {
     if (!stelle) return cardText;
     if (!stelle.dringlichkeit) return cardText;
 
+    const richtung = findBildungsrichtung(stelle.richtung ?? "");
     const dringlichkeit =
       stelle.dringlichkeit.charAt(0).toUpperCase() +
       stelle.dringlichkeit.slice(1).toLowerCase();
@@ -33,17 +41,18 @@ export function useTextGenerator() {
       cardText += "Programmierkenntnisse: ";
       switch (stelle.programmierkenntnisse) {
         case "true":
-          cardText += "Ja" + "\n";
+          cardText += "Ja\n";
           break;
         case "false":
-          cardText += "Nein" + "\n";
+          cardText += "Nein\n";
           break;
         case "EGAL":
-          cardText += "egal" + "\n";
+          cardText += "egal\n";
           break;
       }
     }
-    if (stelle.ausbildungsrichtung) {
+
+    if (isAusbildung(richtung)) {
       cardText +=
         "Projektarbeit: " + (stelle.projektarbeit ? "Ja" : "Nein") + "\n";
       cardText +=
@@ -75,7 +84,7 @@ export function useTextGenerator() {
     stelle: Praktikumsstelle
   ): string {
     let cardText = "";
-    cardText += "Ausbildungsrichtung: " + stelle.ausbildungsrichtung + "\n";
+    cardText += "Richtung: " + stelle.richtung + "\n";
     if (stelle.ausbildungsjahr) {
       cardText += "Ausbildungsjahr: ";
       stelle.ausbildungsjahr.sort();
@@ -98,11 +107,11 @@ export function useTextGenerator() {
     stelle: Praktikumsstelle
   ): string {
     let cardText = "";
-    cardText += "Studiengang: " + stelle.studiengang + "\n";
+    cardText += "Richtung: " + stelle.richtung + "\n";
     cardText += "Semester: ";
     if (stelle.studiensemester) {
       stelle.studiensemester.sort();
-      for (let i = 0; i < (stelle.studiensemester?.length || 0) - 1; i++) {
+      for (let i = 0; i < stelle.studiensemester.length - 1; i++) {
         cardText +=
           valueToNameStudiensemester(stelle.studiensemester[i]) + ", ";
       }

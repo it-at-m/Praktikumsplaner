@@ -1,8 +1,12 @@
+import type { BildungsrichtungKey } from "@/types/Bildungsrichtung.ts";
+
 import Nwk from "@/types/Nwk";
 
 export default class Praktikumsstelle {
   constructor(
     public dienststelle?: string,
+
+    public richtung?: BildungsrichtungKey,
 
     public oertlicheAusbilder?: string,
 
@@ -23,10 +27,6 @@ export default class Praktikumsstelle {
     public ausbildungsjahr?: string[],
 
     public studiensemester?: string[],
-
-    public ausbildungsrichtung?: string,
-
-    public studiengang?: string,
 
     public wuensche?: string,
 
