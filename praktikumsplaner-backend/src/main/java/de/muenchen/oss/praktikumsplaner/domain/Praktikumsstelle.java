@@ -35,7 +35,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings("PMD.MissingSerialVersionUID")
+@SuppressWarnings({"PMD.MissingSerialVersionUID", "PMD.TooManyFields"})
 public class Praktikumsstelle extends BaseEntity {
 
     @NotNull @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein") @Pattern(regexp = "^[A-Z]{3,4}-[A-Za-z\\d-]+$")

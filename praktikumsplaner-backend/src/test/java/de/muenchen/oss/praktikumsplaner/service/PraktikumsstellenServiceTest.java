@@ -182,7 +182,8 @@ class PraktikumsstellenServiceTest {
 
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDto);
         when(praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(stellen);
-        when(mapper.toDto(any(Praktikumsstelle.class))).thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
+        when(mapper.toDto(any(Praktikumsstelle.class)))
+                .thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
 
         List<PraktikumsstelleDto> result = service.getRecentPraktikumsstellen();
 
@@ -215,7 +216,8 @@ class PraktikumsstellenServiceTest {
 
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDto);
         when(praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(stellen);
-        when(mapper.toDto(any(Praktikumsstelle.class))).thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
+        when(mapper.toDto(any(Praktikumsstelle.class)))
+                .thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
 
         List<PraktikumsstelleDto> result = service.getRecentPraktikumsstellen();
 
@@ -245,7 +247,8 @@ class PraktikumsstellenServiceTest {
 
         when(meldezeitraumService.getCurrentMeldezeitraum()).thenReturn(meldezeitraumDto);
         when(praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(stellen);
-        when(mapper.toDto(any(Praktikumsstelle.class))).thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
+        when(mapper.toDto(any(Praktikumsstelle.class)))
+                .thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
 
         List<PraktikumsstelleDto> result = service.getAllInCurrentMeldezeitraum();
 
@@ -361,7 +364,8 @@ class PraktikumsstellenServiceTest {
 
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDto);
         when(praktikumsstellenRepository.findAllByMeldezeitraumIDAndAssignedNwkIsNotNull(meldezeitraumDto.id())).thenReturn(stellen);
-        when(mapper.toDto(any(Praktikumsstelle.class))).thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
+        when(mapper.toDto(any(Praktikumsstelle.class)))
+                .thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
 
         List<PraktikumsstelleDto> result = service.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum();
 

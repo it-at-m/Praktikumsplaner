@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-@SuppressWarnings("PMD.CouplingBetweenObjects")
 public class PraktikumsstellenService {
 
     public static final String PRAKTIKUMSSTELLE_NOT_FOUND = "Praktikumsstelle nicht gefunden.";

@@ -40,7 +40,8 @@ public class PraktikumsstellenController {
     @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PraktikumsstelleDto createPraktikumsstelle(final @Valid @RequestBody CreatePraktikumsstelleDto createPraktikumsstelleDto) {
+    public PraktikumsstelleDto createPraktikumsstelle(final @Valid @RequestBody
+    CreatePraktikumsstelleDto createPraktikumsstelleDto) {
         return praktikumsstellenService.normalizeAndSavePraktikumsstelle(createPraktikumsstelleDto);
     }
 

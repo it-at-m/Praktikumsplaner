@@ -12,8 +12,8 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import java.time.DayOfWeek;
-import java.util.HashSet;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 

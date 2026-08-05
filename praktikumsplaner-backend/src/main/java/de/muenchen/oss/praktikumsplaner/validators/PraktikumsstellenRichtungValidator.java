@@ -29,8 +29,8 @@ public class PraktikumsstellenRichtungValidator implements ConstraintValidator<V
             context.disableDefaultConstraintViolation();
 
             return switch (richtung.getArt()) {
-                case AUSBILDUNG -> validateAusbildung(context, ausbildungsjahr, studiensemester);
-                case STUDIUM -> validateStudium(context, ausbildungsjahr, studiensemester, programmierkenntnisse);
+            case AUSBILDUNG -> validateAusbildung(context, ausbildungsjahr, studiensemester);
+            case STUDIUM -> validateStudium(context, ausbildungsjahr, studiensemester, programmierkenntnisse);
             };
         } catch (ReflectiveOperationException exception) {
             throw new RuntimeException(exception);
