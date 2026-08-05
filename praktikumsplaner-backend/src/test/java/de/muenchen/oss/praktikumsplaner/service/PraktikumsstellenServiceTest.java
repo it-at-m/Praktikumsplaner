@@ -394,9 +394,24 @@ class PraktikumsstellenServiceTest {
     @Test
     void testUpdatePraktikumstelle() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        UpdatePraktikumsstelleDto praktikumsstelle = new UpdatePraktikumsstelleDto(
-                "ITM-GL13", "John Smith", false, "John@smith.com", "Planung von Events", Dringlichkeit.ZWINGEND, "", false, "false", null,
-                false, null, Set.of(Studiensemester.SEMESTER3), Bildungsrichtung.BWI, meldezeitraumDto.id(), false);
+        UpdatePraktikumsstelleDto praktikumsstelle = UpdatePraktikumsstelleDto.builder()
+                .richtung(Bildungsrichtung.BWI)
+                .dienststelle("ITM-GL13")
+                .taetigkeiten("Planung von Events")
+                .dringlichkeit(Dringlichkeit.ZWINGEND)
+                .namentlicheAnforderung("")
+                .projektarbeit(false)
+                .planstelleVorhanden(false)
+                .programmierkenntnisse("false")
+                .wuensche(null)
+                .ausbildungsjahr(null)
+                .studiensemester(Set.of(Studiensemester.SEMESTER3))
+                .oertlicheAusbilder("John Smith")
+                .email("John@smith.com")
+                .erwFuehrungszeugnisVorhanden(false)
+                .minderjaehrigMoeglich(false)
+                .meldezeitraumID(meldezeitraumDto.id())
+                .build();
 
         UUID uuid = UUID.randomUUID();
         Praktikumsstelle praktikumsstelleToCheck = mapper.toEntity(uuid, praktikumsstelle);
@@ -411,9 +426,24 @@ class PraktikumsstellenServiceTest {
     @Test
     void testUpdatePraktikumstelleWithoutExisting() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        UpdatePraktikumsstelleDto praktikumsstelle = new UpdatePraktikumsstelleDto(
-                "ITM-GL13", "John Smith", false, "John@smith.com", "Planung von Events", Dringlichkeit.ZWINGEND, "", false, "false", null,
-                false, null, Set.of(Studiensemester.SEMESTER3), Bildungsrichtung.BWI, meldezeitraumDto.id(), false);
+        UpdatePraktikumsstelleDto praktikumsstelle = UpdatePraktikumsstelleDto.builder()
+                .richtung(Bildungsrichtung.BWI)
+                .dienststelle("ITM-GL13")
+                .taetigkeiten("Planung von Events")
+                .dringlichkeit(Dringlichkeit.ZWINGEND)
+                .namentlicheAnforderung("")
+                .projektarbeit(false)
+                .planstelleVorhanden(false)
+                .programmierkenntnisse("false")
+                .wuensche(null)
+                .ausbildungsjahr(null)
+                .studiensemester(Set.of(Studiensemester.SEMESTER3))
+                .oertlicheAusbilder("John Smith")
+                .email("John@smith.com")
+                .erwFuehrungszeugnisVorhanden(false)
+                .minderjaehrigMoeglich(false)
+                .meldezeitraumID(meldezeitraumDto.id())
+                .build();
 
         UUID uuid = UUID.randomUUID();
         when(praktikumsstellenRepository.findById(uuid)).thenReturn(Optional.empty());
@@ -427,9 +457,24 @@ class PraktikumsstellenServiceTest {
         Nwk nwk = helper.createNwkEntity("Max", "Mustermensch", Bildungsrichtung.BSC, "23/27", null, true);
         Praktikumsstelle praktikumsstelle = helper.createPraktikumsstelleEntity("TEST", "Ausbilder", "ausbilder@email.ausbilder", "Taetigkeiten", null,
                 Dringlichkeit.ZWINGEND, Bildungsrichtung.BSC, null, Set.of(Studiensemester.SEMESTER1), null, false, false, meldezeitraumDto.id(), nwk);
-        UpdatePraktikumsstelleDto updateDto = new UpdatePraktikumsstelleDto(
-                "TESTTEST", "Ausbilder", false, "ausbilder@email.ausbilder", "Taetigkeiten", Dringlichkeit.ZWINGEND, null, false, null, null,
-                false, null, Set.of(Studiensemester.SEMESTER1), Bildungsrichtung.BSC, meldezeitraumDto.id(), false);
+        UpdatePraktikumsstelleDto updateDto = UpdatePraktikumsstelleDto.builder()
+                .richtung(Bildungsrichtung.BSC)
+                .dienststelle("TESTTEST")
+                .taetigkeiten("Taetigkeiten")
+                .dringlichkeit(Dringlichkeit.ZWINGEND)
+                .namentlicheAnforderung(null)
+                .projektarbeit(false)
+                .planstelleVorhanden(false)
+                .programmierkenntnisse(null)
+                .wuensche(null)
+                .ausbildungsjahr(null)
+                .studiensemester(Set.of(Studiensemester.SEMESTER1))
+                .oertlicheAusbilder("Ausbilder")
+                .email("ausbilder@email.ausbilder")
+                .erwFuehrungszeugnisVorhanden(false)
+                .minderjaehrigMoeglich(false)
+                .meldezeitraumID(meldezeitraumDto.id())
+                .build();
 
         when(praktikumsstellenRepository.findById(praktikumsstelle.getId())).thenReturn(Optional.of(praktikumsstelle));
 
@@ -443,9 +488,24 @@ class PraktikumsstellenServiceTest {
         Nwk nwk = helper.createNwkEntity("Max", "Mustermensch", Bildungsrichtung.BSC, "23/27", null, true);
         Praktikumsstelle praktikumsstelle = helper.createPraktikumsstelleEntity("TEST", "Ausbilder", "ausbilder@email.ausbilder", "Taetigkeiten", null,
                 Dringlichkeit.ZWINGEND, Bildungsrichtung.BSC, null, Set.of(Studiensemester.SEMESTER1), null, false, false, meldezeitraumDto.id(), nwk);
-        UpdatePraktikumsstelleDto updateDto = new UpdatePraktikumsstelleDto(
-                "TESTTEST", "Ausbilder", false, "ausbilder@email.ausbilder", "Taetigkeiten", Dringlichkeit.DRINGEND, null, false, null, null,
-                false, null, Set.of(Studiensemester.SEMESTER1), Bildungsrichtung.BSC, meldezeitraumDto.id(), false);
+        UpdatePraktikumsstelleDto updateDto = UpdatePraktikumsstelleDto.builder()
+                .richtung(Bildungsrichtung.BSC)
+                .dienststelle("TESTTEST")
+                .taetigkeiten("Taetigkeiten")
+                .dringlichkeit(Dringlichkeit.DRINGEND)
+                .namentlicheAnforderung(null)
+                .projektarbeit(false)
+                .planstelleVorhanden(false)
+                .programmierkenntnisse(null)
+                .wuensche(null)
+                .ausbildungsjahr(null)
+                .studiensemester(Set.of(Studiensemester.SEMESTER1))
+                .oertlicheAusbilder("Ausbilder")
+                .email("ausbilder@email.ausbilder")
+                .erwFuehrungszeugnisVorhanden(false)
+                .minderjaehrigMoeglich(false)
+                .meldezeitraumID(meldezeitraumDto.id())
+                .build();
 
         when(praktikumsstellenRepository.findById(praktikumsstelle.getId())).thenReturn(Optional.of(praktikumsstelle));
 

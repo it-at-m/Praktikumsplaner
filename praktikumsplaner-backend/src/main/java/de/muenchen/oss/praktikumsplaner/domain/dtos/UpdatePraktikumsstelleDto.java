@@ -14,20 +14,23 @@ import lombok.Builder;
 @Builder
 @ValidPraktikumsstellenRichtung
 public record UpdatePraktikumsstelleDto(
+        @NotNull Bildungsrichtung richtung,
         @NotNull String dienststelle,
-        @NotNull String oertlicheAusbilder,
-        boolean erwFuehrungszeugnisVorhanden,
-        @Email @NotNull String email,
         @NotNull String taetigkeiten,
         @NotNull Dringlichkeit dringlichkeit,
         String namentlicheAnforderung,
         boolean projektarbeit,
+        boolean planstelleVorhanden,
+
         String programmierkenntnisse,
         String wuensche,
-        boolean planstelleVorhanden,
         Set<Ausbildungsjahr> ausbildungsjahr,
         Set<Studiensemester> studiensemester,
-        @NotNull Bildungsrichtung richtung,
-        @NotNull UUID meldezeitraumID,
-        boolean minderjaehrigMoeglich) {
+
+        @NotNull String oertlicheAusbilder,
+        @Email @NotNull String email,
+        boolean erwFuehrungszeugnisVorhanden,
+        boolean minderjaehrigMoeglich,
+
+        @NotNull UUID meldezeitraumID) {
 }

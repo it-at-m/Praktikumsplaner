@@ -13,19 +13,21 @@ import lombok.Builder;
 @Builder
 @ValidPraktikumsstellenRichtung
 public record CreatePraktikumsstelleDto(
+        @NotNull Bildungsrichtung richtung,
         @NotNull String dienststelle,
-        @NotNull String oertlicheAusbilder,
-        boolean erwFuehrungszeugnisVorhanden,
-        @Email @NotNull String email,
         @NotNull String taetigkeiten,
         @NotNull Dringlichkeit dringlichkeit,
         String namentlicheAnforderung,
         boolean projektarbeit,
+
         String programmierkenntnisse,
         String wuensche,
-        boolean planstelleVorhanden,
         Set<Ausbildungsjahr> ausbildungsjahr,
         Set<Studiensemester> studiensemester,
-        @NotNull Bildungsrichtung richtung,
+
+        @NotNull String oertlicheAusbilder,
+        @Email @NotNull String email,
+        boolean erwFuehrungszeugnisVorhanden,
+        boolean planstelleVorhanden,
         boolean minderjaehrigMoeglich) {
 }

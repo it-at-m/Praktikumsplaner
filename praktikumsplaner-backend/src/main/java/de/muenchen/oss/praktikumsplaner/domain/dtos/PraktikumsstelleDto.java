@@ -13,21 +13,24 @@ import lombok.Builder;
 @Builder
 public record PraktikumsstelleDto(
         @NotNull UUID id,
+        @NotNull Bildungsrichtung richtung,
         @NotNull String dienststelle,
-        @NotNull String oertlicheAusbilder,
-        boolean erwFuehrungszeugnisVorhanden,
-        @Email @NotNull String email,
         @NotNull String taetigkeiten,
         @NotNull Dringlichkeit dringlichkeit,
         String namentlicheAnforderung,
         boolean projektarbeit,
+        boolean planstelleVorhanden,
+
         String programmierkenntnisse,
         String wuensche,
-        boolean planstelleVorhanden,
         Set<Ausbildungsjahr> ausbildungsjahr,
         Set<Studiensemester> studiensemester,
-        @NotNull Bildungsrichtung richtung,
+
+        @NotNull String oertlicheAusbilder,
+        @Email @NotNull String email,
+        boolean erwFuehrungszeugnisVorhanden,
+        boolean minderjaehrigMoeglich,
+
         NwkDto assignedNwk,
-        UUID meldezeitraumID,
-        boolean minderjaehrigMoeglich) {
+        UUID meldezeitraumID) {
 }

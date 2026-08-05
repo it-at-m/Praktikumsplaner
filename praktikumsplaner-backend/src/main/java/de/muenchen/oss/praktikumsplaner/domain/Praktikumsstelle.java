@@ -37,51 +37,31 @@ import org.hibernate.annotations.JdbcTypeCode;
 @NoArgsConstructor
 @SuppressWarnings({"PMD.MissingSerialVersionUID", "PMD.TooManyFields"})
 public class Praktikumsstelle extends BaseEntity {
-
-    @NotNull @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein") @Pattern(regexp = "^[A-Z]{3,4}-[A-Za-z\\d-]+$")
-    private String dienststelle;
-
-    @NotNull @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein")
-    private String oertlicheAusbilder;
-
-    private boolean erwFuehrungszeugnisVorhanden;
-
-    @NotNull @Email @Size(max = 255, message = "Die Email darf nur {max} Zeichen lang sein")
-    private String email;
-
-    @NotNull @Size(max = 5000, message = "Die Tätigkeiten dürfen nur {max} Zeichen lang sein")
-    private String taetigkeiten;
-
+    @NotNull @Enumerated(EnumType.STRING)
+    private Bildungsrichtung richtung;
+    @NotNull @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein") @Pattern(regexp = "^[A-Z]{3,4}-[A-Za-z\\d-]+$") private String dienststelle;
+    @NotNull @Size(max = 5000, message = "Die Tätigkeiten dürfen nur {max} Zeichen lang sein") private String taetigkeiten;
     @NotNull @Enumerated(EnumType.STRING)
     private Dringlichkeit dringlichkeit;
-
-    @Size(max = 255, message = "Die angeforderte Nachwuchskraft darf nur {max} Zeichen lang sein")
-    private String namentlicheAnforderung;
-
-    @NotNull @JdbcTypeCode(VARCHAR)
-    private UUID meldezeitraumID;
-
-    @ManyToOne
-    @JoinColumn(name = "assignedNwk")
-    private Nwk assignedNwk;
-
+    @Size(max = 255, message = "Die angeforderte Nachwuchskraft darf nur {max} Zeichen lang sein") private String namentlicheAnforderung;
     private boolean planstelleVorhanden;
-
-    @Size(max = 5000, message = "Die Wünsche dürfen nur {max} Zeichen lang sein")
-    private String wuensche;
-
     private boolean projektarbeit;
 
+    @Size(max = 5000, message = "Die Wünsche dürfen nur {max} Zeichen lang sein") private String wuensche;
     private String programmierkenntnisse;
-
     @Convert(converter = AusbildungsjahrConverter.class)
     private Set<Ausbildungsjahr> ausbildungsjahr;
-
     @Convert(converter = StudiensemesterConverter.class)
     private Set<Studiensemester> studiensemester;
 
-    @NotNull @Enumerated(EnumType.STRING)
-    private Bildungsrichtung richtung;
-
+    @NotNull @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein") private String oertlicheAusbilder;
+    @NotNull @Email @Size(max = 255, message = "Die Email darf nur {max} Zeichen lang sein") private String email;
+    private boolean erwFuehrungszeugnisVorhanden;
     private boolean minderjaehrigMoeglich;
+
+    @NotNull @JdbcTypeCode(VARCHAR)
+    private UUID meldezeitraumID;
+    @ManyToOne
+    @JoinColumn(name = "assignedNwk")
+    private Nwk assignedNwk;
 }
