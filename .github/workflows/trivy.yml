@@ -32,8 +32,8 @@ jobs:
       with:
         filters: |
           docs: docs/**
-          praktikumsplaner-backend: backend/**
-          praktikumsplaner-frontend: frontend/**
+          praktikumsplaner-backend: praktikumsplaner-backend/**
+          praktikumsplaner-frontend: praktikumsplaner-frontend/**
     - run: |
         echo ${{ toJSON(steps.filter.outputs.changes) }}
         
