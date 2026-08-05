@@ -3,15 +3,10 @@ package de.muenchen.oss.praktikumsplaner.rest;
 import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER;
 import static de.muenchen.oss.praktikumsplaner.security.Authorities.HAS_ROLE_AUSBILDUNGSLEITUNG;
 
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateStudiumsPraktikumsstelleWithMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdatePraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.service.PraktikumsstellenService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -43,35 +38,18 @@ public class PraktikumsstellenController {
     private final PraktikumsstellenService praktikumsstellenService;
 
     @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
-    @PostMapping("/studium")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelle(final @Valid @RequestBody
-    CreateStudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleDto) {
-        return praktikumsstellenService.normalizeAndSaveStudiumsPraktikumsstelle(createStudiumsPraktikumsstelleDto);
+    public PraktikumsstelleDto createPraktikumsstelle(final @Valid @RequestBody CreatePraktikumsstelleDto createPraktikumsstelleDto) {
+        return praktikumsstellenService.normalizeAndSavePraktikumsstelle(createPraktikumsstelleDto);
     }
 
     @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
-    @PostMapping("/studium/ausbildungsleitung")
+    @PostMapping("/ausbildungsleitung")
     @ResponseStatus(HttpStatus.CREATED)
-    public StudiumsPraktikumsstelleDto createStudiumsPraktikumsstelleWithMeldezeitraum(final @Valid @RequestBody
-    CreateStudiumsPraktikumsstelleWithMeldezeitraumDto createStudiumsPraktikumsstelleWithMeldezeitraumDto) {
-        return praktikumsstellenService.saveStudiumsPraktikumsstelleWithMeldezeitraum(createStudiumsPraktikumsstelleWithMeldezeitraumDto);
-    }
-
-    @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
-    @PostMapping("/ausbildung")
-    @ResponseStatus(HttpStatus.CREATED)
-    public AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelle(final @Valid @RequestBody
-    CreateAusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleDto) {
-        return praktikumsstellenService.normalizeAndSaveAusbildungsPraktikumsstelle(createAusbildungsPraktikumsstelleDto);
-    }
-
-    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
-    @PostMapping("/ausbildung/ausbildungsleitung")
-    @ResponseStatus(HttpStatus.CREATED)
-    public AusbildungsPraktikumsstelleDto createAusbildungsPraktikumsstelleWithMeldezeitraum(final @Valid @RequestBody
-    CreateAusbildungsPraktikumsstelleWithMeldezeitraumDto createAusbildungsPraktikumsstelleWithMeldezeitraumDto) {
-        return praktikumsstellenService.saveAusbildungsPraktikumsstelleWithMeldezeitraum(createAusbildungsPraktikumsstelleWithMeldezeitraumDto);
+    public PraktikumsstelleDto createPraktikumsstelleWithMeldezeitraum(final @Valid @RequestBody
+    CreatePraktikumsstelleWithMeldezeitraumDto createPraktikumsstelleWithMeldezeitraumDto) {
+        return praktikumsstellenService.savePraktikumsstelleWithMeldezeitraum(createPraktikumsstelleWithMeldezeitraumDto);
     }
 
     @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
@@ -97,28 +75,15 @@ public class PraktikumsstellenController {
     }
 
     @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
-    @PutMapping("/ausbildung/{praktikumsstellenId}")
-    public void updateAusbildungPraktikumsstelle(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId,
-            @RequestBody final UpdateAusbildungsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
-        praktikumsstellenService.updateAusbildungsPraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
+    @PutMapping("/{praktikumsstellenId}")
+    public void updatePraktikumsstelle(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId,
+            @Valid @RequestBody final UpdatePraktikumsstelleDto praktikumsstelleDto) {
+        praktikumsstellenService.updatePraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
     }
 
     @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
-    @PutMapping("/studium/{praktikumsstellenId}")
-    public void updateStudiumPraktikumsstelle(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId,
-            @RequestBody final UpdateStudiumsPraktikumsstelleWithMeldezeitraumDto praktikumsstelleDto) {
-        praktikumsstellenService.updateStudiumsPraktikumsstelle(praktikumsstellenId, praktikumsstelleDto);
-    }
-
-    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
-    @DeleteMapping("/studium/{praktikumsstellenId}")
-    public void deleteStudiumPratkikumsstelle(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId) {
-        praktikumsstellenService.deleteStudiumsPraktikumsstelle(praktikumsstellenId);
-    }
-
-    @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
-    @DeleteMapping("/ausbildung/{praktikumsstellenId}")
-    public void deleteAusbildungPratkikumsstelle(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId) {
-        praktikumsstellenService.deleteAusbildungsPraktikumsstelle(praktikumsstellenId);
+    @DeleteMapping("/{praktikumsstellenId}")
+    public void deletePraktikumsstelle(@PathVariable(name = PRAKTIKUMSSTELLEN_ID) final UUID praktikumsstellenId) {
+        praktikumsstellenService.deletePraktikumsstelle(praktikumsstellenId);
     }
 }

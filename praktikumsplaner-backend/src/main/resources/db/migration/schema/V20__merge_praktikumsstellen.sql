@@ -1,0 +1,110 @@
+create table praktikumsstelle
+(
+    id                         varchar(36)   not null,
+    dienststelle               varchar(10)   not null,
+    oertlicheAusbilder         varchar(255)  not null,
+    email                      varchar(255)  not null,
+    taetigkeiten               varchar(5000) not null,
+    dringlichkeit              varchar(10)   not null,
+    namentlicheAnforderung     varchar(255),
+    projektarbeit              boolean       not null default false,
+    ausbildungsjahr            varchar(255),
+    studiensemester            varchar(255),
+    richtung                   varchar(4)    not null,
+    programmierkenntnisse      varchar(255),
+    meldezeitraumID            varchar(36)   not null,
+    assignedNwk                varchar(36),
+    planstelleVorhanden        boolean       not null default false,
+    erwFuehrungszeugnisVorhanden boolean     not null default false,
+    wuensche                   varchar(5000),
+    minderjaehrigMoeglich      boolean       not null default false,
+    primary key (id),
+    foreign key (meldezeitraumID) references MELDEZEITRAUM (id) on delete cascade,
+    foreign key (assignedNwk) references NWK (id),
+    constraint uniqueNWKPerMeldezeitraumPS unique (assignedNwk, meldezeitraumId)
+);
+
+insert into praktikumsstelle (
+    id,
+    dienststelle,
+    oertlicheAusbilder,
+    email,
+    taetigkeiten,
+    dringlichkeit,
+    namentlicheAnforderung,
+    projektarbeit,
+    ausbildungsjahr,
+    studiensemester,
+    richtung,
+    programmierkenntnisse,
+    meldezeitraumID,
+    assignedNwk,
+    planstelleVorhanden,
+    erwFuehrungszeugnisVorhanden,
+    wuensche,
+    minderjaehrigMoeglich
+)
+select
+    id,
+    dienststelle,
+    oertlicheausbilder,
+    email,
+    taetigkeiten,
+    dringlichkeit,
+    namentlicheanforderung,
+    projektarbeit,
+    ausbildungsjahr,
+    null,
+    ausbildungsrichtung,
+    programmierkenntnisse,
+    meldezeitraumid,
+    assignednwk,
+    planstellevorhanden,
+    erwfuehrungszeugnisvorhanden,
+    wuensche,
+    minderjaehrigmoeglich
+from ausbildungspraktikumsstelle;
+
+insert into praktikumsstelle (
+    id,
+    dienststelle,
+    oertlicheAusbilder,
+    email,
+    taetigkeiten,
+    dringlichkeit,
+    namentlicheAnforderung,
+    projektarbeit,
+    ausbildungsjahr,
+    studiensemester,
+    richtung,
+    programmierkenntnisse,
+    meldezeitraumID,
+    assignedNwk,
+    planstelleVorhanden,
+    erwFuehrungszeugnisVorhanden,
+    wuensche,
+    minderjaehrigMoeglich
+)
+select
+    id,
+    dienststelle,
+    oertlicheausbilder,
+    email,
+    taetigkeiten,
+    dringlichkeit,
+    namentlicheanforderung,
+    false,
+    null,
+    studiensemester,
+    studiengang,
+    programmierkenntnisse,
+    meldezeitraumid,
+    assignednwk,
+    planstellevorhanden,
+    erwfuehrungszeugnisvorhanden,
+    wuensche,
+    false
+from studiumspraktikumsstelle;
+
+-- drop table ausbildungspraktikumsstelle;
+-- drop table studiumspraktikumsstelle;

@@ -13,13 +13,9 @@ import static org.apache.poi.ss.util.CellReference.convertColStringToIndex;
 
 import com.nimbusds.jose.util.Pair;
 import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbildungsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
-import de.muenchen.oss.praktikumsplaner.domain.dtos.StudiumsPraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Studiengang;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -78,9 +74,9 @@ public class ExcelExportService {
         workbook.setMissingCellPolicy(Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
         final XSSFSheet ausbildungsSheet = workbook.getSheetAt(AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX);
         final XSSFSheet studiumsSheet = workbook.getSheetAt(STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX);
-        final Pair<List<AusbildungsPraktikumsstelleDto>, List<StudiumsPraktikumsstelleDto>> sortedPraktikumsstellen = preparePraktikumsstellen();
-        final List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen = sortedPraktikumsstellen.getLeft();
-        final List<StudiumsPraktikumsstelleDto> assignedStudiumspraktikumsstellen = sortedPraktikumsstellen.getRight();
+        final Pair<List<PraktikumsstelleDto>, List<PraktikumsstelleDto>> sortedPraktikumsstellen = preparePraktikumsstellen();
+        final List<PraktikumsstelleDto> assignedAusbildungspraktikumsstellen = sortedPraktikumsstellen.getLeft();
+        final List<PraktikumsstelleDto> assignedStudiumspraktikumsstellen = sortedPraktikumsstellen.getRight();
         fillAusbildungspraktikumsstellen(assignedAusbildungspraktikumsstellen, ausbildungsSheet);
         fillStudiumspraktikumsstellen(assignedStudiumspraktikumsstellen, studiumsSheet);
         return workbook;
@@ -88,10 +84,10 @@ public class ExcelExportService {
 
     //Ignore Duplicate Code with fillStudiumspraktikumsstellen as Mapping is not always the same
     @SuppressWarnings("CPD-START")
-    private void fillAusbildungspraktikumsstellen(final List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen,
+    private void fillAusbildungspraktikumsstellen(final List<PraktikumsstelleDto> assignedAusbildungspraktikumsstellen,
             final XSSFSheet ausbildungsSheet) {
         for (int i = 0; i < assignedAusbildungspraktikumsstellen.size(); i++) {
-            final AusbildungsPraktikumsstelleDto praktikumsstelle = assignedAusbildungspraktikumsstellen.get(i);
+            final PraktikumsstelleDto praktikumsstelle = assignedAusbildungspraktikumsstellen.get(i);
             final Row row = getRow(ausbildungsSheet, i);
 
             row.getCell(convertColStringToIndex("A")).setCellValue(getReferatFromDienststelle(praktikumsstelle));
@@ -108,7 +104,7 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
             row.getCell(convertColStringToIndex("N")).setCellValue(ausbildungsjahrToStringConverter(praktikumsstelle.ausbildungsjahr()));
-            row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.ausbildungsrichtung().name());
+            row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.richtung().name());
             row.getCell(convertColStringToIndex("P")).setCellValue(praktikumsstelle.assignedNwk().nachname());
             row.getCell(convertColStringToIndex("Q")).setCellValue(praktikumsstelle.assignedNwk().vorname());
             row.getCell(convertColStringToIndex("R")).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
@@ -116,9 +112,9 @@ public class ExcelExportService {
         }
     }
 
-    private void fillStudiumspraktikumsstellen(final List<StudiumsPraktikumsstelleDto> assignedStudiumspraktikumsstellen, final XSSFSheet studiumsSheet) {
+    private void fillStudiumspraktikumsstellen(final List<PraktikumsstelleDto> assignedStudiumspraktikumsstellen, final XSSFSheet studiumsSheet) {
         for (int i = 0; i < assignedStudiumspraktikumsstellen.size(); i++) {
-            final StudiumsPraktikumsstelleDto praktikumsstelle = assignedStudiumspraktikumsstellen.get(i);
+            final PraktikumsstelleDto praktikumsstelle = assignedStudiumspraktikumsstellen.get(i);
             final Row row = getRow(studiumsSheet, i);
 
             row.getCell(convertColStringToIndex("A")).setCellValue(getReferatFromDienststelle(praktikumsstelle));
@@ -135,7 +131,7 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
             row.getCell(convertColStringToIndex("N")).setCellValue(studiensemesterToStringConverter(praktikumsstelle.studiensemester()));
-            row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.studiengang().name());
+            row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.richtung().name());
             row.getCell(convertColStringToIndex("P")).setCellValue(praktikumsstelle.assignedNwk().nachname());
             row.getCell(convertColStringToIndex("Q")).setCellValue(praktikumsstelle.assignedNwk().vorname());
             row.getCell(convertColStringToIndex("R")).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
@@ -149,35 +145,25 @@ public class ExcelExportService {
      * and all praktikumsstellen with apprentices assigned to them ausbildungspraktikumsstellen.
      */
     @SuppressWarnings("CPD-END")
-    private Pair<List<AusbildungsPraktikumsstelleDto>, List<StudiumsPraktikumsstelleDto>> preparePraktikumsstellen() {
-        final List<AusbildungsPraktikumsstelleDto> assignedAusbildungspraktikumsstellen = new ArrayList<>(praktikumsstellenService
-                .getAllAssignedAusbildungspraktikumsstellenInMostRecentPassedMeldezeitraum());
-        final List<StudiumsPraktikumsstelleDto> assignedStudiumspraktikumsstellen = new ArrayList<>(praktikumsstellenService
-                .getAllAssignedStudiumspraktikumsstellenInMostRecentPassedMeldezeitraum());
-        final List<AusbildungsPraktikumsstelleDto> toDeleteAusbildungspraktikumsstellen = new ArrayList<>();
-        final List<StudiumsPraktikumsstelleDto> toDeleteStudiumspraktikumsstellen = new ArrayList<>();
+    private Pair<List<PraktikumsstelleDto>, List<PraktikumsstelleDto>> preparePraktikumsstellen() {
+        final List<PraktikumsstelleDto> assignedAusbildungspraktikumsstellen = new ArrayList<>();
+        final List<PraktikumsstelleDto> assignedStudiumspraktikumsstellen = new ArrayList<>();
 
-        assignedAusbildungspraktikumsstellen.stream()
-                .filter(praktikumsstelle -> praktikumsstelle.assignedNwk().richtung().getArt() == Bildungsrichtung.Art.STUDIUM)
-                .forEach(praktikumsstelle -> {
-                    assignedStudiumspraktikumsstellen.add(turnAusbildungsIntoStudiumspraktikumsstelle(praktikumsstelle));
-                    toDeleteAusbildungspraktikumsstellen.add(praktikumsstelle);
-                });
-        assignedAusbildungspraktikumsstellen.removeAll(toDeleteAusbildungspraktikumsstellen);
-
-        assignedStudiumspraktikumsstellen.stream()
-                .filter(praktikumsstelle -> praktikumsstelle.assignedNwk().richtung().getArt() == Bildungsrichtung.Art.AUSBILDUNG)
-                .forEach(praktikumsstelle -> {
-                    assignedAusbildungspraktikumsstellen.add(turnStudiumsIntoAusbildungspraktikumsstelle(praktikumsstelle));
-                    toDeleteStudiumspraktikumsstellen.add(praktikumsstelle);
-                });
-        assignedStudiumspraktikumsstellen.removeAll(toDeleteStudiumspraktikumsstellen);
+        for (final PraktikumsstelleDto praktikumsstelle : praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum()) {
+            final Bildungsrichtung.Art exportArt = praktikumsstelle.assignedNwk().richtung().getArt();
+            if (exportArt == Bildungsrichtung.Art.AUSBILDUNG) {
+                assignedAusbildungspraktikumsstellen.add(asAusbildungsExport(praktikumsstelle));
+            } else {
+                assignedStudiumspraktikumsstellen.add(asStudiumsExport(praktikumsstelle));
+            }
+        }
 
         return Pair.of(assignedAusbildungspraktikumsstellen, assignedStudiumspraktikumsstellen);
     }
 
-    private static AusbildungsPraktikumsstelleDto turnStudiumsIntoAusbildungspraktikumsstelle(final StudiumsPraktikumsstelleDto praktikumsstelle) {
-        return AusbildungsPraktikumsstelleDto.builder()
+    private static PraktikumsstelleDto asAusbildungsExport(final PraktikumsstelleDto praktikumsstelle) {
+        return PraktikumsstelleDto.builder()
+                .id(praktikumsstelle.id())
                 .dienststelle(praktikumsstelle.dienststelle())
                 .oertlicheAusbilder(praktikumsstelle.oertlicheAusbilder())
                 .email(praktikumsstelle.email())
@@ -186,15 +172,21 @@ public class ExcelExportService {
                 .namentlicheAnforderung(praktikumsstelle.namentlicheAnforderung())
                 .programmierkenntnisse(praktikumsstelle.programmierkenntnisse())
                 .dringlichkeit(praktikumsstelle.dringlichkeit())
-                .ausbildungsjahr(Set.of(JAHR1, JAHR2, JAHR3))
-                .ausbildungsrichtung(Ausbildungsrichtung.fromBildungsrichtung(praktikumsstelle.assignedNwk().richtung()))
+                .ausbildungsjahr(praktikumsstelle.ausbildungsjahr() == null || praktikumsstelle.ausbildungsjahr().isEmpty()
+                        ? Set.of(JAHR1, JAHR2, JAHR3)
+                        : praktikumsstelle.ausbildungsjahr())
+                .richtung(praktikumsstelle.assignedNwk().richtung())
                 .planstelleVorhanden(praktikumsstelle.planstelleVorhanden())
                 .assignedNwk(praktikumsstelle.assignedNwk())
+                .minderjaehrigMoeglich(praktikumsstelle.minderjaehrigMoeglich())
+                .projektarbeit(praktikumsstelle.projektarbeit())
+                .wuensche(praktikumsstelle.wuensche())
                 .build();
     }
 
-    private static StudiumsPraktikumsstelleDto turnAusbildungsIntoStudiumspraktikumsstelle(final AusbildungsPraktikumsstelleDto praktikumsstelle) {
-        return StudiumsPraktikumsstelleDto.builder()
+    private static PraktikumsstelleDto asStudiumsExport(final PraktikumsstelleDto praktikumsstelle) {
+        return PraktikumsstelleDto.builder()
+                .id(praktikumsstelle.id())
                 .dienststelle(praktikumsstelle.dienststelle())
                 .oertlicheAusbilder(praktikumsstelle.oertlicheAusbilder())
                 .email(praktikumsstelle.email())
@@ -203,11 +195,13 @@ public class ExcelExportService {
                 .namentlicheAnforderung(praktikumsstelle.namentlicheAnforderung())
                 .programmierkenntnisse(praktikumsstelle.programmierkenntnisse())
                 .dringlichkeit(praktikumsstelle.dringlichkeit())
-                .studiensemester(Set.of(SEMESTER1, SEMESTER2, SEMESTER3,
-                        SEMESTER4, SEMESTER5, SEMESTER6))
-                .studiengang(Studiengang.fromBildungsrichtung(praktikumsstelle.assignedNwk().richtung()))
+                .studiensemester(praktikumsstelle.studiensemester() == null || praktikumsstelle.studiensemester().isEmpty()
+                        ? Set.of(SEMESTER1, SEMESTER2, SEMESTER3, SEMESTER4, SEMESTER5, SEMESTER6)
+                        : praktikumsstelle.studiensemester())
+                .richtung(praktikumsstelle.assignedNwk().richtung())
                 .planstelleVorhanden(praktikumsstelle.planstelleVorhanden())
                 .assignedNwk(praktikumsstelle.assignedNwk())
+                .wuensche(praktikumsstelle.wuensche())
                 .build();
     }
 
