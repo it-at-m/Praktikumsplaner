@@ -29,5 +29,5 @@ public record CreatePraktikumsstelleWithMeldezeitraumDto(
         Set<Studiensemester> studiensemester,
         @NotNull Bildungsrichtung richtung,
         @NotNull UUID meldezeitraumID,
-        boolean minderjaehrigMoeglich) {
+        boolean minderjaehrigMoeglich) implements PraktikumsstelleI {
 }

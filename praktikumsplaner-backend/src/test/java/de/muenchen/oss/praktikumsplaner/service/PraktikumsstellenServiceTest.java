@@ -480,6 +480,9 @@ class PraktikumsstellenServiceTest {
 
         assertDoesNotThrow(() -> service.updatePraktikumsstelle(praktikumsstelle.getId(), updateDto));
         verify(praktikumsstellenRepository, times(1)).save(praktikumsstelle);
+        assertEquals("TESTTEST", praktikumsstelle.getDienststelle());
+        assertEquals(Dringlichkeit.ZWINGEND, praktikumsstelle.getDringlichkeit());
+        assertEquals(nwk, praktikumsstelle.getAssignedNwk());
     }
 
     @Test

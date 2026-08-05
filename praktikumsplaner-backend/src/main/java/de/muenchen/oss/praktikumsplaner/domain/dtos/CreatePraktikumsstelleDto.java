@@ -29,5 +29,5 @@ public record CreatePraktikumsstelleDto(
         @Email @NotNull String email,
         boolean erwFuehrungszeugnisVorhanden,
         boolean planstelleVorhanden,
-        boolean minderjaehrigMoeglich) {
+        boolean minderjaehrigMoeglich) implements PraktikumsstelleI {
 }

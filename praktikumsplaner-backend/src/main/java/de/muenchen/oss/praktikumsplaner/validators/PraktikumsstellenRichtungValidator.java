@@ -1,52 +1,50 @@
 package de.muenchen.oss.praktikumsplaner.validators;
 
 import de.muenchen.oss.praktikumsplaner.annotations.ValidPraktikumsstellenRichtung;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleI;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
+import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.Set;
+import org.springframework.util.StringUtils;
 
-public class PraktikumsstellenRichtungValidator implements ConstraintValidator<ValidPraktikumsstellenRichtung, Object> {
+public class PraktikumsstellenRichtungValidator implements ConstraintValidator<ValidPraktikumsstellenRichtung, PraktikumsstelleI> {
 
     @Override
-    public boolean isValid(final Object value, final ConstraintValidatorContext context) {
+    public boolean isValid(final PraktikumsstelleI value, final ConstraintValidatorContext context) {
         if (value == null) {
             return true;
         }
 
-        try {
-            final Bildungsrichtung richtung = (Bildungsrichtung) invokeGetter(value, "richtung");
-            if (richtung == null) {
-                return true;
-            }
-
-            final Object ausbildungsjahr = invokeGetter(value, "ausbildungsjahr");
-            final Object studiensemester = invokeGetter(value, "studiensemester");
-            final Object programmierkenntnisse = invokeGetter(value, "programmierkenntnisse");
-
-            context.disableDefaultConstraintViolation();
-
-            return switch (richtung.getArt()) {
-            case AUSBILDUNG -> validateAusbildung(context, ausbildungsjahr, studiensemester);
-            case STUDIUM -> validateStudium(context, ausbildungsjahr, studiensemester, programmierkenntnisse);
-            };
-        } catch (ReflectiveOperationException exception) {
-            throw new RuntimeException(exception);
+        final Bildungsrichtung richtung = value.richtung();
+        if (richtung == null) {
+            return true;
         }
+
+        final Set<Ausbildungsjahr> ausbildungsjahr = value.ausbildungsjahr();
+        final Set<Studiensemester> studiensemester = value.studiensemester();
+        final String programmierkenntnisse = value.programmierkenntnisse();
+
+        context.disableDefaultConstraintViolation();
+
+        return switch (richtung.getArt()) {
+        case AUSBILDUNG -> validateAusbildung(context, ausbildungsjahr, studiensemester);
+        case STUDIUM -> validateStudium(context, ausbildungsjahr, studiensemester, programmierkenntnisse);
+        };
     }
 
-    private static boolean validateAusbildung(final ConstraintValidatorContext context, final Object ausbildungsjahr,
-            final Object studiensemester) {
+    private static boolean validateAusbildung(final ConstraintValidatorContext context, final Set<Ausbildungsjahr> ausbildungsjahr,
+            final Set<Studiensemester> studiensemester) {
         boolean valid = true;
 
-        if (isNullOrEmpty(ausbildungsjahr)) {
+        if (ausbildungsjahr == null || ausbildungsjahr.isEmpty()) {
             addViolation(context, "ausbildungsjahr", "Ausbildungsjahr muss fuer Ausbildungsrichtungen gesetzt sein.");
             valid = false;
         }
 
-        if (!isNullOrEmpty(studiensemester)) {
+        if (studiensemester != null && !studiensemester.isEmpty()) {
             addViolation(context, "studiensemester", "Studiensemester darf fuer Ausbildungsrichtungen nicht gesetzt sein.");
             valid = false;
         }
@@ -54,21 +52,21 @@ public class PraktikumsstellenRichtungValidator implements ConstraintValidator<V
         return valid;
     }
 
-    private static boolean validateStudium(final ConstraintValidatorContext context, final Object ausbildungsjahr,
-            final Object studiensemester, final Object programmierkenntnisse) {
+    private static boolean validateStudium(final ConstraintValidatorContext context, final Set<Ausbildungsjahr> ausbildungsjahr,
+            final Set<Studiensemester> studiensemester, final String programmierkenntnisse) {
         boolean valid = true;
 
-        if (isNullOrEmpty(studiensemester)) {
+        if (studiensemester == null || studiensemester.isEmpty()) {
             addViolation(context, "studiensemester", "Studiensemester muss fuer Studienrichtungen gesetzt sein.");
             valid = false;
         }
 
-        if (!isNullOrEmpty(ausbildungsjahr)) {
+        if (ausbildungsjahr != null && !ausbildungsjahr.isEmpty()) {
             addViolation(context, "ausbildungsjahr", "Ausbildungsjahr darf fuer Studienrichtungen nicht gesetzt sein.");
             valid = false;
         }
 
-        if (isBlank(programmierkenntnisse)) {
+        if (!StringUtils.hasText(programmierkenntnisse)) {
             addViolation(context, "programmierkenntnisse", "Programmierkenntnisse muessen fuer Studienrichtungen gesetzt sein.");
             valid = false;
         }
@@ -80,18 +78,5 @@ public class PraktikumsstellenRichtungValidator implements ConstraintValidator<V
         context.buildConstraintViolationWithTemplate(message)
                 .addPropertyNode(property)
                 .addConstraintViolation();
-    }
-
-    private static boolean isNullOrEmpty(final Object value) {
-        return value == null || value instanceof Collection<?> collection && collection.isEmpty();
-    }
-
-    private static boolean isBlank(final Object value) {
-        return value == null || value instanceof String string && string.isBlank() || Objects.equals(value, "");
-    }
-
-    private static Object invokeGetter(final Object target, final String methodName) throws ReflectiveOperationException {
-        final Method getter = target.getClass().getMethod(methodName);
-        return getter.invoke(target);
     }
 }

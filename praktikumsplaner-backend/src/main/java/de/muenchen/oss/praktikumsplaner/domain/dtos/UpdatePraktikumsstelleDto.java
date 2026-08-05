@@ -32,5 +32,5 @@ public record UpdatePraktikumsstelleDto(
         boolean erwFuehrungszeugnisVorhanden,
         boolean minderjaehrigMoeglich,
 
-        @NotNull UUID meldezeitraumID) {
+        @NotNull UUID meldezeitraumID) implements PraktikumsstelleI {
 }

@@ -8,7 +8,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.security.Authorities;
 import java.util.List;
-import java.util.Objects;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,9 +50,9 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
 
             final List<Bildungsrichtung> richtungen = responseBody.stream()
                     .map(PraktikumsstelleDto::richtung)
-                    .filter(Objects::nonNull)
                     .toList();
 
+            Assertions.assertThat(richtungen).doesNotContainNull();
             Assertions.assertThat(richtungen).containsOnly(Bildungsrichtung.values());
         }
     }
