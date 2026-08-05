@@ -35,7 +35,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings({"PMD.MissingSerialVersionUID", "PMD.TooManyFields"})
+@SuppressWarnings({ "PMD.MissingSerialVersionUID", "PMD.TooManyFields" })
 public class Praktikumsstelle extends BaseEntity {
     @NotNull @Enumerated(EnumType.STRING)
     private Bildungsrichtung richtung;
