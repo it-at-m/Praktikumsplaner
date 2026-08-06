@@ -20,7 +20,7 @@ public interface NwkRepository extends CrudRepository<Nwk, UUID> {
         """
                     SELECT n FROM Nwk n
                     WHERE n.active = true AND
-                    NOT EXISTS (SELECT 1 FROM Praktikumsstelle p WHERE p.meldezeitraumID=:meldezeitraumId AND p.assignedNwk = n.id)
+                    NOT EXISTS (SELECT 1 FROM Praktikumsstelle p WHERE p.meldezeitraumID = :meldezeitraumId AND p.assignedNwk = n)
                     ORDER BY n.nachname
                 """
     )
