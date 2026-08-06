@@ -39,8 +39,8 @@
             <v-col cols="5">
               <bildungsrichtung-select
                 v-model="praktikumsstelle.richtung"
-                :is-required="true"
-              ></bildungsrichtung-select>
+                is-required
+              />
             </v-col>
           </v-row>
         </v-sheet>
@@ -344,13 +344,17 @@ onMounted(() => {
   }
 });
 const isAusbildung = computed<boolean>(() => {
-  if (!praktikumsstelle.value.richtung) return false;
+  if (!praktikumsstelle.value.richtung) {
+    return false;
+  }
   return isAusbildungB(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });
 const isStudium = computed<boolean>(() => {
-  if (!praktikumsstelle.value.richtung) return false;
+  if (!praktikumsstelle.value.richtung) {
+    return false;
+  }
   return isStudiumB(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );

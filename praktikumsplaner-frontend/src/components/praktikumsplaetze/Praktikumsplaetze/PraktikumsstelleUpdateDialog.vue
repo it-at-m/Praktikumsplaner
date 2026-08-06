@@ -44,9 +44,9 @@
               <v-col>
                 <bildungsrichtung-select
                   v-model="praktikumsstelle.richtung"
-                  :is-required="true"
+                  is-required
                   :disabled="hasAssignedNwk"
-                ></bildungsrichtung-select>
+                />
               </v-col>
             </v-row>
           </v-sheet>
@@ -356,13 +356,17 @@ const praktikumsstelle = computed({
   set: (newValue) => emits("update:modelValue", newValue),
 });
 const isAusbildung = computed<boolean>(() => {
-  if (!praktikumsstelle.value.richtung) return false;
+  if (!praktikumsstelle.value.richtung) {
+    return false;
+  }
   return isAusbildungB(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });
 const isStudium = computed<boolean>(() => {
-  if (!praktikumsstelle.value.richtung) return false;
+  if (!praktikumsstelle.value.richtung) {
+    return false;
+  }
   return isStudiumB(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );

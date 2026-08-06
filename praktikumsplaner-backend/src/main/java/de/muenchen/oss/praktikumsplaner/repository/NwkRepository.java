@@ -17,10 +17,12 @@ public interface NwkRepository extends CrudRepository<Nwk, UUID> {
     List<Nwk> findAll();
 
     @Query(
-        "SELECT n FROM Nwk n " +
-                "WHERE n.id NOT IN " +
-                "(SELECT p.assignedNwk.id FROM Praktikumsstelle p WHERE p.meldezeitraumID=:meldezeitraumId AND p.assignedNwk IS NOT null) " +
-                "AND n.active = true order by n.nachname"
+        """
+                    SELECT n FROM Nwk n
+                    WHERE n.active = true AND
+                    NOT EXISTS (SELECT 1 FROM Praktikumsstelle p WHERE p.meldezeitraumID=:meldezeitraumId AND p.assignedNwk = n.id)
+                    ORDER BY n.nachname
+                """
     )
     List<Nwk> findAllUnassignedInSpecificMeldzeitraum(@Param("meldezeitraumId") UUID meldezeitraumId);
 }

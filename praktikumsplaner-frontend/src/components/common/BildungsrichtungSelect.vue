@@ -6,7 +6,7 @@
     item-title="name"
     variant="outlined"
     clearable
-    :disabled="props.disabled"
+    :disabled="disabled"
     :rules="conditionalRequiredRules"
     :data-test="testIds.nwk.richtungSelect"
   ></v-autocomplete>
@@ -25,15 +25,11 @@ import {
 
 const validationRules = useRules();
 
-export interface Props {
-  isRequired: boolean;
+const model = defineModel<BildungsrichtungKey | null>();
+const { isRequired = false, disabled = false } = defineProps<{
+  isRequired?: boolean;
   disabled?: boolean;
-}
-
-const model = defineModel<BildungsrichtungKey | null | undefined>();
-const props = withDefaults(defineProps<Props>(), {
-  disabled: false,
-});
+}>();
 const items = computed(() => [
   { type: "subheader", name: "Ausbildung" },
   ...Ausbildungsrichtungen,
@@ -41,7 +37,7 @@ const items = computed(() => [
   ...Studienrichtungen,
 ]);
 const conditionalRequiredRules = computed(() => {
-  return props.isRequired
+  return isRequired
     ? [validationRules.notEmptyRule("Darf nicht leer sein.")]
     : undefined;
 });
