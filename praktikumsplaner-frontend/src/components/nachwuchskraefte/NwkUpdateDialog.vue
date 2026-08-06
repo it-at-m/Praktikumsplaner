@@ -41,7 +41,8 @@
             <v-container>
               <bildungsrichtung-select
                 v-model="nwkToUpdate.richtung"
-              ></bildungsrichtung-select>
+                is-required
+              />
             </v-container>
           </v-list-item>
         </v-list>

@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.domain.dtos;
 
+import de.muenchen.oss.praktikumsplaner.annotations.ValidPraktikumsstellenRichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
@@ -11,8 +12,8 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-public record PraktikumsstelleDto(
-        @NotNull UUID id,
+@ValidPraktikumsstellenRichtung
+public record UpdatePraktikumsstelleDto(
         @NotNull Bildungsrichtung richtung,
         @NotNull String dienststelle,
         @NotNull String taetigkeiten,
@@ -31,6 +32,5 @@ public record PraktikumsstelleDto(
         boolean erwFuehrungszeugnisVorhanden,
         boolean minderjaehrigMoeglich,
 
-        NwkDto assignedNwk,
-        UUID meldezeitraumID) {
+        @NotNull UUID meldezeitraumID) implements PraktikumsstelleI {
 }

@@ -13,11 +13,10 @@ export function useWarnings() {
     nwk: Nwk
   ): Warning[] {
     const warnings: Warning[] = [];
-    // Check if Studiums or Ausbildungspraktikumsstelle
-    if (
-      stelle.ausbildungsrichtung == undefined &&
-      isAusbildung(findBildungsrichtung(nwk.richtung))
-    ) {
+    const stellenRichtung = findBildungsrichtung(stelle.richtung ?? "");
+    const nwkRichtung = findBildungsrichtung(nwk.richtung);
+
+    if (isStudium(stellenRichtung) && isAusbildung(nwkRichtung)) {
       const warningText =
         "Wollen sie wirklich " +
         nwk.vorname +
@@ -27,10 +26,7 @@ export function useWarnings() {
       warnings.push(new Warning("", warningText));
     }
 
-    if (
-      stelle.studiengang == undefined &&
-      isStudium(findBildungsrichtung(nwk.richtung))
-    ) {
+    if (isAusbildung(stellenRichtung) && isStudium(nwkRichtung)) {
       const warningText =
         "Wollen sie wirklich " +
         nwk.vorname +
@@ -40,21 +36,23 @@ export function useWarnings() {
       warnings.push(new Warning("", warningText));
     }
 
-    // Check if studiengang is the same
-    if (stelle.studiengang && stelle.studiengang != nwk.richtung) {
+    if (
+      isStudium(stellenRichtung) &&
+      stelle.richtung &&
+      stelle.richtung != nwk.richtung
+    ) {
       const warningText =
         "Wollen sie wirklich eine/n " +
         nwk.richtung +
         " Student*in auf eine " +
-        stelle.studiengang +
+        stelle.richtung +
         " Stelle setzen?";
       warnings.push(new Warning("", warningText));
     }
 
-    // Check if requested Nwk is the same
     if (
       stelle.namentlicheAnforderung &&
-      stelle.namentlicheAnforderung?.toUpperCase() !=
+      stelle.namentlicheAnforderung.toUpperCase() !=
         nwk.vorname.toUpperCase() + " " + nwk.nachname.toUpperCase()
     ) {
       const warningText =
@@ -68,10 +66,9 @@ export function useWarnings() {
       warnings.push(new Warning("", warningText));
     }
 
-    // Check if Nwk is in the right semester
     if (
-      stelle.studiengang != undefined &&
-      isStudium(findBildungsrichtung(nwk.richtung)) &&
+      isStudium(stellenRichtung) &&
+      isStudium(nwkRichtung) &&
       stelle.studiensemester
     ) {
       const expectedSemesters: number[] = [];
@@ -86,8 +83,7 @@ export function useWarnings() {
           actualSemester +
           " Semester auf diese Stelle setzen, obwohl ein/e Student*in im ";
         for (let i = 0; i < expectedSemesters.length - 1; i++) {
-          warningText += expectedSemesters[i] + ". Semester";
-          warningText += ", ";
+          warningText += expectedSemesters[i] + ". Semester, ";
         }
         warningText +=
           expectedSemesters[expectedSemesters.length - 1] + ". Semester";
@@ -96,10 +92,9 @@ export function useWarnings() {
       }
     }
 
-    // Check if Nwk is in the right Lehrjahr
     if (
-      stelle.ausbildungsrichtung != undefined &&
-      isAusbildung(findBildungsrichtung(nwk.richtung)) &&
+      isAusbildung(stellenRichtung) &&
+      isAusbildung(nwkRichtung) &&
       stelle.ausbildungsjahr
     ) {
       const expectedLehrjahre: number[] = [];
@@ -113,8 +108,7 @@ export function useWarnings() {
           actualLehrjahr +
           ". Lehrjahr auf diese Stelle setzen, obwohl ein/e Auszubildende/r im ";
         for (let i = 0; i < expectedLehrjahre.length - 1; i++) {
-          warningText += expectedLehrjahre[i] + ". Lehrjahr";
-          warningText += ", ";
+          warningText += expectedLehrjahre[i] + ". Lehrjahr, ";
         }
         warningText +=
           expectedLehrjahre[expectedLehrjahre.length - 1] + ". Lehrjahr";

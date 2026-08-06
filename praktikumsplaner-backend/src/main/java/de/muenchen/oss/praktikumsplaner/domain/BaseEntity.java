@@ -26,7 +26,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 @Setter
 @ToString
 @EqualsAndHashCode
-public abstract class BaseEntity implements Cloneable, Serializable {
+public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
