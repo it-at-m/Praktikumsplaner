@@ -46,6 +46,7 @@
                   v-model="praktikumsstelle.richtung"
                   is-required
                   :disabled="hasAssignedNwk"
+                  :data-test="testIds.praktikumsstelle.richtungSelect"
                 />
               </v-col>
             </v-row>
@@ -103,7 +104,7 @@
                 ></planstelle-radio-group>
               </v-col>
               <v-col cols="1" />
-              <v-col v-if="isAusbildung">
+              <v-col v-if="isAusbildungComp">
                 <projektarbeit-radio-group
                   v-model="praktikumsstelle"
                   :disabled="hasAssignedNwk"
@@ -112,7 +113,7 @@
                 ></projektarbeit-radio-group>
               </v-col>
               <v-col
-                v-if="isAusbildung"
+                v-if="isAusbildungComp"
                 cols="1"
               >
                 <projektarbeit-tooltip></projektarbeit-tooltip>
@@ -143,7 +144,7 @@
             <v-row>
               <v-col>
                 <ausbildungs-jahr-select
-                  v-if="isAusbildung"
+                  v-if="isAusbildungComp"
                   v-model="praktikumsstelle"
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
@@ -163,7 +164,7 @@
               <v-col cols="5">
                 <programmier-kenntnisse-select
                   v-model="praktikumsstelle"
-                  :is-required="isStudium"
+                  :is-required="isStudiumComp"
                   :disabled="hasAssignedNwk"
                 ></programmier-kenntnisse-select>
               </v-col>
@@ -219,7 +220,7 @@
                 ></ausbilder-erw-fuehrungszeugnis-checkbox>
               </v-col>
               <v-col cols="1" />
-              <v-col v-if="isAusbildung">
+              <v-col v-if="isAusbildungComp">
                 <minderjaehrig-moeglich-radio-group
                   v-model="praktikumsstelle"
                   :is-required="true"
@@ -228,7 +229,7 @@
                 ></minderjaehrig-moeglich-radio-group>
               </v-col>
               <v-col
-                v-if="isAusbildung"
+                v-if="isAusbildungComp"
                 cols="1"
               >
                 <minderjaehrig-moeglich-tooltip></minderjaehrig-moeglich-tooltip>
@@ -317,8 +318,8 @@ import emitter from "@/stores/eventBus";
 import { testIds } from "@/testIds";
 import {
   findBildungsrichtung,
-  isAusbildung as isAusbildungB,
-  isStudium as isStudiumB,
+  isAusbildung,
+  isStudium,
 } from "@/types/Bildungsrichtung.ts";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -355,19 +356,19 @@ const praktikumsstelle = computed({
   get: () => properties.modelValue,
   set: (newValue) => emits("update:modelValue", newValue),
 });
-const isAusbildung = computed<boolean>(() => {
+const isAusbildungComp = computed<boolean>(() => {
   if (!praktikumsstelle.value.richtung) {
     return false;
   }
-  return isAusbildungB(
+  return isAusbildung(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });
-const isStudium = computed<boolean>(() => {
+const isStudiumComp = computed<boolean>(() => {
   if (!praktikumsstelle.value.richtung) {
     return false;
   }
-  return isStudiumB(
+  return isStudium(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });
