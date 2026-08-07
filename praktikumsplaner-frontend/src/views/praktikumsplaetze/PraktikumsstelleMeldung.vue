@@ -40,6 +40,7 @@
               <bildungsrichtung-select
                 v-model="praktikumsstelle.richtung"
                 is-required
+                :data-test="testIds.praktikumsstelle.richtungSelect"
               />
             </v-col>
           </v-row>
@@ -93,7 +94,7 @@
               ></planstelle-radio-group>
             </v-col>
             <v-col cols="1" />
-            <v-col v-if="isAusbildung">
+            <v-col v-if="isAusbildungComp">
               <projektarbeit-radio-group
                 v-model="praktikumsstelle"
                 :is-required="true"
@@ -101,7 +102,7 @@
               ></projektarbeit-radio-group>
             </v-col>
             <v-col
-              v-if="isAusbildung"
+              v-if="isAusbildungComp"
               cols="1"
             >
               <projektarbeit-tooltip></projektarbeit-tooltip>
@@ -132,13 +133,13 @@
           <v-row>
             <v-col cols="5">
               <ausbildungs-jahr-select
-                v-if="isAusbildung"
+                v-if="isAusbildungComp"
                 v-model="praktikumsstelle"
                 :is-required="true"
                 :required-symbol="requiredFieldSymbol"
               ></ausbildungs-jahr-select>
               <semester-select
-                v-else-if="isStudium"
+                v-else-if="isStudiumComp"
                 v-model="praktikumsstelle"
                 :is-required="true"
                 :required-symbol="requiredFieldSymbol"
@@ -148,7 +149,7 @@
             <v-col cols="5">
               <programmier-kenntnisse-select
                 v-model="praktikumsstelle"
-                :is-required="isStudium"
+                :is-required="isStudiumComp"
               ></programmier-kenntnisse-select>
             </v-col>
           </v-row>
@@ -201,7 +202,7 @@
             <v-col cols="1" />
             <v-col>
               <minderjaehrig-moeglich-radio-group
-                v-if="isAusbildung"
+                v-if="isAusbildungComp"
                 v-model="praktikumsstelle"
                 :is-required="true"
                 :required-symbol="requiredFieldSymbol"
@@ -287,8 +288,8 @@ import { useUserStore } from "@/stores/user";
 import { testIds } from "@/testIds";
 import {
   findBildungsrichtung,
-  isAusbildung as isAusbildungB,
-  isStudium as isStudiumB,
+  isAusbildung,
+  isStudium,
 } from "@/types/Bildungsrichtung.ts";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -343,19 +344,19 @@ onMounted(() => {
     );
   }
 });
-const isAusbildung = computed<boolean>(() => {
+const isAusbildungComp = computed<boolean>(() => {
   if (!praktikumsstelle.value.richtung) {
     return false;
   }
-  return isAusbildungB(
+  return isAusbildung(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });
-const isStudium = computed<boolean>(() => {
+const isStudiumComp = computed<boolean>(() => {
   if (!praktikumsstelle.value.richtung) {
     return false;
   }
-  return isStudiumB(
+  return isStudium(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });
