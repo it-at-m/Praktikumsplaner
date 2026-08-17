@@ -39,7 +39,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 public class Praktikumsstelle extends BaseEntity {
     @NotNull @Enumerated(EnumType.STRING)
     private Bildungsrichtung richtung;
-    @NotNull @Size(max = 10, message = "Die Dienststelle darf {max} Zeichen lang sein") @Pattern(regexp = "^[A-Z]{3,4}-[A-Za-z\\d-]+$") private String dienststelle;
+    @NotNull @Size(max = 20, message = "Die Dienststelle darf {max} Zeichen lang sein") @Pattern(regexp = "^[A-Z]{3,4}-[A-Za-z\\d-]+$") private String dienststelle;
     @NotNull @Size(max = 5000, message = "Die Tätigkeiten dürfen nur {max} Zeichen lang sein") private String taetigkeiten;
     @NotNull @Enumerated(EnumType.STRING)
     private Dringlichkeit dringlichkeit;
