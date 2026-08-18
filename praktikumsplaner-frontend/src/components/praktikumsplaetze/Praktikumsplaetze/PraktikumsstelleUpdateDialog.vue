@@ -142,7 +142,7 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
+              <v-col cols="5">
                 <ausbildungs-jahr-select
                   v-if="isAusbildungComp"
                   v-model="praktikumsstelle"
