@@ -28,7 +28,7 @@
         <v-sheet
           border
           rounded
-          class="pa-3 mb-3"
+          class="pa-5 mb-3"
         >
           <v-row>
             <v-col>
