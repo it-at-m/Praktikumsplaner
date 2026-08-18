@@ -22,7 +22,7 @@ public record CreatePraktikumsstelleWithMeldezeitraumDto(
         @NotNull Dringlichkeit dringlichkeit,
         String namentlicheAnforderung,
         boolean projektarbeit,
-        String programmierkenntnisse,
+        boolean programmierkenntnisse,
         String wuensche,
         boolean planstelleVorhanden,
         Set<Ausbildungsjahr> ausbildungsjahr,

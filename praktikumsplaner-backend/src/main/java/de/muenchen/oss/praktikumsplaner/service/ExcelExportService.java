@@ -127,7 +127,7 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("H")).setCellValue(praktikumsstelle.taetigkeiten());
             row.getCell(convertColStringToIndex("I")).setCellValue(getWuensche(praktikumsstelle));
             row.getCell(convertColStringToIndex("J")).setCellValue(praktikumsstelle.erwFuehrungszeugnisVorhanden() ? YES : NO);
-            row.getCell(convertColStringToIndex("K")).setCellValue(mapProgrammierkenntnisse(praktikumsstelle.programmierkenntnisse()));
+            row.getCell(convertColStringToIndex("K")).setCellValue(praktikumsstelle.programmierkenntnisse() ? YES : NO);
             row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
             row.getCell(convertColStringToIndex("N")).setCellValue(studiensemesterToStringConverter(praktikumsstelle.studiensemester()));
@@ -221,17 +221,10 @@ public class ExcelExportService {
         return wuensche.toString();
     }
 
-    private static void addProgrammierkenntnisseWunsch(final StringJoiner wuensche, final String programmierkenntnisse) {
-        if (!StringUtils.hasText(programmierkenntnisse)) {
-            return;
-        }
-        if (Boolean.parseBoolean(programmierkenntnisse.trim())) {
+    private static void addProgrammierkenntnisseWunsch(final StringJoiner wuensche, final boolean programmierkenntnisse) {
+        if (programmierkenntnisse) {
             wuensche.add("Programmierkenntnisse von Vorteil");
         }
-    }
-
-    private static String mapProgrammierkenntnisse(final String programmierkenntnisse) {
-        return (StringUtils.hasText(programmierkenntnisse) && Boolean.parseBoolean(programmierkenntnisse.trim())) ? YES : NO;
     }
 
     private static String ausbildungsjahrToStringConverter(final Set<Ausbildungsjahr> ausbildungsjahr) {

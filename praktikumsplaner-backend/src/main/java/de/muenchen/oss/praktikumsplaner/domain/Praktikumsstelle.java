@@ -48,7 +48,7 @@ public class Praktikumsstelle extends BaseEntity {
     private boolean projektarbeit;
 
     @Size(max = 5000, message = "Die Wünsche dürfen nur {max} Zeichen lang sein") private String wuensche;
-    private String programmierkenntnisse;
+    private boolean programmierkenntnisse;
     @Convert(converter = AusbildungsjahrConverter.class)
     private Set<Ausbildungsjahr> ausbildungsjahr;
     @Convert(converter = StudiensemesterConverter.class)

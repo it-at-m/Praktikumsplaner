@@ -2,84 +2,84 @@ insert into PRAKTIKUMSSTELLE (ID, DIENSTSTELLE, OERTLICHEAUSBILDER, EMAIL, TAETI
 values
     -- aktueller Zeitraum
      ( '00000000-0000-0000-0000-000000000001', 'ITM-SLP322', 'Wade Douglas', 'wade.douglas@localhost.de',
-      'diverse Aufgaben', 'NACHRANGIG', null, 'ja',
+      'diverse Aufgaben', 'NACHRANGIG', null, true,
       'SEMESTER1,SEMESTER2,SEMESTER3,SEMESTER4', 'VI', '00000000-0000-0000-0000-000000000001', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0000-000000000002', 'ITM-SLP322', 'Wade Douglas', 'wade.douglas@localhost.de',
-      'diverse Aufgaben', 'NACHRANGIG', null, 'ja',
+      'diverse Aufgaben', 'NACHRANGIG', null, true,
       'SEMESTER1,SEMESTER2,SEMESTER3,SEMESTER4', 'BWI', '00000000-0000-0000-0000-000000000001', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0000-000000000003', 'ITM-SLP322', 'Wade Douglas', 'wade.douglas@localhost.de',
-      'diverse Aufgaben', 'NACHRANGIG', null, 'ja',
+      'diverse Aufgaben', 'NACHRANGIG', null, true,
       'SEMESTER1,SEMESTER2,SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000001', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0000-000000000004', 'ITM-SLP322', 'Bobbie Valdez', 'Bobbie.valdez@localhost.de',
-      'diverse Aufgaben', 'NACHRANGIG', null, 'ja',
+      'diverse Aufgaben', 'NACHRANGIG', null, true,
       'SEMESTER3,SEMESTER4', 'LLB', '00000000-0000-0000-0000-000000000001', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0000-000000000005', 'ITM-SLP322', 'Sonia Guerrero', 'sonia.guerrero@localhost.de',
-      'diverse Aufgaben', 'DRINGEND', null, 'ja',
+      'diverse Aufgaben', 'DRINGEND', null, true,
       'SEMESTER3,SEMESTER4', 'PUMA', '00000000-0000-0000-0000-000000000001', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0000-000000000006', 'ITM-SLP322', 'Alberto Burton', 'alberto.burton@localhost.de',
-      'diverse Aufgaben', 'DRINGEND', null, 'ja',
+      'diverse Aufgaben', 'DRINGEND', null, true,
       'SEMESTER3,SEMESTER4', 'QE3', '00000000-0000-0000-0000-000000000001', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0000-000000000007', 'ITM-DKL12', 'Brett Hoffman', 'brett.hoffman@localhost.de',
-      'diverse Aufgaben', 'NACHRANGIG', null, 'ja',
+      'diverse Aufgaben', 'NACHRANGIG', null, true,
       'SEMESTER1,SEMESTER2,SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000001', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0000-000000000008', 'ITM-DKL12', 'Cecil Bradley', 'cecil.bradley@localhost.de',
-      'Projekt', 'ZWINGEND', 'Arthur Edwards', 'ja',
+      'Projekt', 'ZWINGEND', 'Arthur Edwards', true,
       'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000001', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0000-000000000009', 'ITM-DKL23', 'Eileen Andrews', 'eileen.andrews@localhost.de',
-      'Projekt', 'ZWINGEND', 'Francisco Olson', 'ja',
+      'Projekt', 'ZWINGEND', 'Francisco Olson', true,
       'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000001', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0000-000000000010', 'ITM-DKL24', 'Alma Burton', 'alma.castro@localhost.de',
-      'Projektunterstützung', 'DRINGEND', 'Janet Roberts', 'ja',
+      'Projektunterstützung', 'DRINGEND', 'Janet Roberts', true,
       'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000001', null, false, false, false, null, false),
 
     -- previous zeitraum
     ( '00000000-0000-0000-0001-000000000001', 'ITM-SLP322', 'Wade Douglas', 'wade.douglas@localhost.de',
-      'diverse Aufgaben', 'NACHRANGIG', null, 'ja',
+      'diverse Aufgaben', 'NACHRANGIG', null, true,
       'SEMESTER1,SEMESTER2,SEMESTER3,SEMESTER4', 'VI', '00000000-0000-0000-0000-000000000005', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0001-000000000002', 'ITM-SLP322', 'Wade Douglas', 'wade.douglas@localhost.de',
-      'diverse Aufgaben', 'NACHRANGIG', null, 'ja',
+      'diverse Aufgaben', 'NACHRANGIG', null, true,
       'SEMESTER1,SEMESTER2,SEMESTER3,SEMESTER4', 'BWI', '00000000-0000-0000-0000-000000000005', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0001-000000000003', 'ITM-SLP322', 'Wade Douglas', 'wade.douglas@localhost.de',
-      'diverse Aufgaben', 'NACHRANGIG', null, 'ja',
+      'diverse Aufgaben', 'NACHRANGIG', null, true,
       'SEMESTER1,SEMESTER2,SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000005', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0001-000000000004', 'ITM-SLP322', 'Bobbie Valdez', 'Bobbie.valdez@localhost.de',
-      'diverse Aufgaben', 'NACHRANGIG', null, 'ja',
+      'diverse Aufgaben', 'NACHRANGIG', null, true,
       'SEMESTER3,SEMESTER4', 'LLB', '00000000-0000-0000-0000-000000000005', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0001-000000000005', 'ITM-SLP322', 'Sonia Guerrero', 'sonia.guerrero@localhost.de',
-      'diverse Aufgaben', 'DRINGEND', null, 'ja',
+      'diverse Aufgaben', 'DRINGEND', null, true,
       'SEMESTER3,SEMESTER4', 'PUMA', '00000000-0000-0000-0000-000000000005', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0001-000000000006', 'ITM-SLP322', 'Alberto Burton', 'alberto.burton@localhost.de',
-      'diverse Aufgaben', 'DRINGEND', null, 'ja',
+      'diverse Aufgaben', 'DRINGEND', null, true,
       'SEMESTER3,SEMESTER4', 'QE3', '00000000-0000-0000-0000-000000000005', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0001-000000000007', 'ITM-DKL12', 'Brett Hoffman', 'brett.hoffman@localhost.de',
-      'diverse Aufgaben', 'NACHRANGIG', null, 'ja',
+      'diverse Aufgaben', 'NACHRANGIG', null, true,
       'SEMESTER1,SEMESTER2,SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000005', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0001-000000000008', 'ITM-DKL12', 'Cecil Bradley', 'cecil.bradley@localhost.de',
-      'Projekt', 'ZWINGEND', 'Marcus Harrison', 'ja',
+      'Projekt', 'ZWINGEND', 'Marcus Harrison', true,
       'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000005', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0001-000000000009', 'ITM-DKL23', 'Eileen Andrews', 'eileen.andrews@localhost.de',
-      'Projekt', 'ZWINGEND', 'Russell Long', 'ja',
+      'Projekt', 'ZWINGEND', 'Russell Long', true,
       'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000005', null, false, false, false, null, false),
 
     ( '00000000-0000-0000-0001-000000000010', 'ITM-DKL24', 'Alma Burton', 'alma.castro@localhost.de',
-      'Projektunterstützung', 'DRINGEND', 'Lynn Holmes', 'ja',
+      'Projektunterstützung', 'DRINGEND', 'Lynn Holmes', true,
       'SEMESTER3,SEMESTER4', 'BSC', '00000000-0000-0000-0000-000000000005', null, false, false, false, null, false)
 ;
 
