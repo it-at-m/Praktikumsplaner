@@ -37,20 +37,7 @@ export function useTextGenerator() {
       stelle.dringlichkeit.charAt(0).toUpperCase() +
       stelle.dringlichkeit.slice(1).toLowerCase();
     cardText += "Dringlichkeit: " + dringlichkeit + "\n";
-    if (stelle.programmierkenntnisse) {
-      cardText += "Programmierkenntnisse: ";
-      switch (stelle.programmierkenntnisse) {
-        case "true":
-          cardText += "Ja\n";
-          break;
-        case "false":
-          cardText += "Nein\n";
-          break;
-        case "EGAL":
-          cardText += "egal\n";
-          break;
-      }
-    }
+    cardText += "Programmierkenntnisse: " + (stelle.programmierkenntnisse ? "Ja" : "Nein") + "\n";
 
     if (isAusbildung(richtung)) {
       cardText +=

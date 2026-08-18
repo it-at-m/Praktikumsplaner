@@ -159,12 +159,11 @@
                 ></semester-select>
               </v-col>
               <v-col cols="1" />
-            </v-row>
-            <v-row>
               <v-col cols="5">
                 <programmier-kenntnisse-select
-                  v-model="praktikumsstelle"
-                  :is-required="isStudiumComp"
+                  v-model="praktikumsstelle.programmierkenntnisse"
+                  :is-required="true"
+                  :required-symbol="requiredFieldSymbol"
                   :disabled="hasAssignedNwk"
                 ></programmier-kenntnisse-select>
               </v-col>
@@ -249,7 +248,7 @@
             <v-row>
               <v-col cols="5">
                 <meldezeitraum-select
-                  v-model="praktikumsstelle"
+                  v-model="praktikumsstelle.meldezeitraumID"
                   :meldezeitraueme="meldezeitraeume"
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"

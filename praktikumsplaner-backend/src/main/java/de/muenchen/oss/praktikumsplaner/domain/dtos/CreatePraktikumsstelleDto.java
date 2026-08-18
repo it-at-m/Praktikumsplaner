@@ -20,7 +20,7 @@ public record CreatePraktikumsstelleDto(
         String namentlicheAnforderung,
         boolean projektarbeit,
 
-        String programmierkenntnisse,
+        boolean programmierkenntnisse,
         String wuensche,
         Set<Ausbildungsjahr> ausbildungsjahr,
         Set<Studiensemester> studiensemester,

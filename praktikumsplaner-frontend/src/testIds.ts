@@ -115,8 +115,8 @@ export const testIds = {
     taetigkeitenInput: "praktikumsstelle-taetigkeiten-input",
     studiensemesterSelect: "praktikumsstelle-studiensemester-select",
     ausbildungsjahrSelect: "praktikumsstelle-ausbildungsjahr-select",
-    programmierkenntnisseSelect:
-      "praktikumsstelle-programmierkenntnisse-select",
+    programmierkenntnisseRadio:
+      "praktikumsstelle-programmierkenntnisse-radio",
     wuenscheInput: "praktikumsstelle-wuensche-input",
     ausbilderInput: "praktikumsstelle-ausbilder-input",
     ausbilderEmailInput: "praktikumsstelle-ausbilder-email-input",
