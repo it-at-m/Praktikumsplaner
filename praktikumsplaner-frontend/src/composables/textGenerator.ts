@@ -1,8 +1,11 @@
 import { valueToNameAusbildungsjahr } from "@/types/Ausbildungsjahr";
-import { findBildungsrichtung, isAusbildung, isStudium } from "@/types/Bildungsrichtung";
+import {
+  findBildungsrichtung,
+  isAusbildung,
+  isStudium,
+} from "@/types/Bildungsrichtung";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { valueToNameStudiensemester } from "@/types/Studiensemester";
-
 
 export function useTextGenerator() {
   function getPraktikumsstellenDescription(
@@ -34,7 +37,10 @@ export function useTextGenerator() {
       stelle.dringlichkeit.charAt(0).toUpperCase() +
       stelle.dringlichkeit.slice(1).toLowerCase();
     cardText += "Dringlichkeit: " + dringlichkeit + "\n";
-    cardText += "Programmierkenntnisse: " + (stelle.programmierkenntnisse ? "Ja" : "Nein") + "\n";
+    cardText +=
+      "Programmierkenntnisse: " +
+      (stelle.programmierkenntnisse ? "Ja" : "Nein") +
+      "\n";
 
     if (stelle.ausbildungsjahr && stelle.ausbildungsjahr.length > 0) {
       cardText +=
@@ -105,13 +111,11 @@ export function useTextGenerator() {
     if (stelle.ausbildungsjahr) {
       stelle.ausbildungsjahr.sort();
       for (let i = 0; i < stelle.ausbildungsjahr.length - 1; i++) {
-        text +=
-          valueToNameAusbildungsjahr(stelle.ausbildungsjahr[i]) + ", ";
+        text += valueToNameAusbildungsjahr(stelle.ausbildungsjahr[i]) + ", ";
       }
-      text +=
-        valueToNameAusbildungsjahr(
-          stelle.ausbildungsjahr[stelle.ausbildungsjahr.length - 1]
-        );
+      text += valueToNameAusbildungsjahr(
+        stelle.ausbildungsjahr[stelle.ausbildungsjahr.length - 1]
+      );
     }
     return text;
   }
@@ -121,13 +125,11 @@ export function useTextGenerator() {
     if (stelle.studiensemester) {
       stelle.studiensemester.sort();
       for (let i = 0; i < stelle.studiensemester.length - 1; i++) {
-        text +=
-          valueToNameStudiensemester(stelle.studiensemester[i]) + ", ";
+        text += valueToNameStudiensemester(stelle.studiensemester[i]) + ", ";
       }
-      text +=
-        valueToNameStudiensemester(
-          stelle.studiensemester[stelle.studiensemester.length - 1]
-        );
+      text += valueToNameStudiensemester(
+        stelle.studiensemester[stelle.studiensemester.length - 1]
+      );
     }
     return text;
   }

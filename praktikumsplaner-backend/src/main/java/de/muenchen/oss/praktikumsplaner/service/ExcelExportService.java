@@ -1,21 +1,11 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
-import static de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr.JAHR1;
-import static de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr.JAHR2;
-import static de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr.JAHR3;
-import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER1;
-import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER2;
-import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER3;
-import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER4;
-import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER5;
-import static de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester.SEMESTER6;
 import static org.apache.poi.ss.util.CellReference.convertColStringToIndex;
 
 import com.nimbusds.jose.util.Pair;
 import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
-import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -154,9 +144,9 @@ public class ExcelExportService {
         final List<PraktikumsstelleDto> studiumsPraktikumsstellen = new ArrayList<>();
 
         for (final PraktikumsstelleDto praktikumsstelle : praktikumsstellenService.getRecentPraktikumsstellen()) {
-            switch(praktikumsstelle.richtung().getArt()) {
-                case AUSBILDUNG -> ausbildungsPraktikumsstellen.add(praktikumsstelle);
-                case STUDIUM -> studiumsPraktikumsstellen.add(praktikumsstelle);
+            switch (praktikumsstelle.richtung().getArt()) {
+            case AUSBILDUNG -> ausbildungsPraktikumsstellen.add(praktikumsstelle);
+            case STUDIUM -> studiumsPraktikumsstellen.add(praktikumsstelle);
             }
         }
 

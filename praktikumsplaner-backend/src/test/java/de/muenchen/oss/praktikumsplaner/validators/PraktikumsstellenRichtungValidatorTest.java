@@ -32,7 +32,7 @@ class PraktikumsstellenRichtungValidatorTest {
                 .richtung(Bildungsrichtung.FISI)
                 .ausbildungsjahr(Set.of(Ausbildungsjahr.JAHR2))
                 .studiensemester(null)
-                .programmierkenntnisse(null)
+                .programmierkenntnisse(false)
                 .build();
 
         assertTrue(validator.validate(dto).isEmpty());
@@ -44,7 +44,7 @@ class PraktikumsstellenRichtungValidatorTest {
                 .richtung(Bildungsrichtung.FISI)
                 .ausbildungsjahr(null)
                 .studiensemester(null)
-                .programmierkenntnisse(null)
+                .programmierkenntnisse(false)
                 .build();
 
         final Set<ConstraintViolation<CreatePraktikumsstelleDto>> violations = validator.validate(dto);
@@ -59,7 +59,7 @@ class PraktikumsstellenRichtungValidatorTest {
                 .richtung(Bildungsrichtung.FISI)
                 .ausbildungsjahr(Set.of(Ausbildungsjahr.JAHR1))
                 .studiensemester(Set.of(Studiensemester.SEMESTER1))
-                .programmierkenntnisse(null)
+                .programmierkenntnisse(false)
                 .build();
 
         final Set<ConstraintViolation<CreatePraktikumsstelleDto>> violations = validator.validate(dto);
@@ -74,7 +74,7 @@ class PraktikumsstellenRichtungValidatorTest {
                 .richtung(Bildungsrichtung.BSC)
                 .ausbildungsjahr(null)
                 .studiensemester(Set.of(Studiensemester.SEMESTER4))
-                .programmierkenntnisse("true")
+                .programmierkenntnisse(true)
                 .build();
 
         assertTrue(validator.validate(dto).isEmpty());
@@ -86,7 +86,7 @@ class PraktikumsstellenRichtungValidatorTest {
                 .richtung(Bildungsrichtung.BSC)
                 .ausbildungsjahr(null)
                 .studiensemester(null)
-                .programmierkenntnisse("true")
+                .programmierkenntnisse(true)
                 .build();
 
         final Set<ConstraintViolation<CreatePraktikumsstelleDto>> violations = validator.validate(dto);
@@ -101,7 +101,7 @@ class PraktikumsstellenRichtungValidatorTest {
                 .richtung(Bildungsrichtung.BSC)
                 .ausbildungsjahr(Set.of(Ausbildungsjahr.JAHR3))
                 .studiensemester(Set.of(Studiensemester.SEMESTER2))
-                .programmierkenntnisse("true")
+                .programmierkenntnisse(true)
                 .build();
 
         final Set<ConstraintViolation<CreatePraktikumsstelleDto>> violations = validator.validate(dto);
@@ -116,7 +116,7 @@ class PraktikumsstellenRichtungValidatorTest {
                 .richtung(Bildungsrichtung.BSC)
                 .ausbildungsjahr(null)
                 .studiensemester(Set.of(Studiensemester.SEMESTER2))
-                .programmierkenntnisse(null)
+                .programmierkenntnisse(false)
                 .build();
 
         final Set<ConstraintViolation<CreatePraktikumsstelleDto>> violations = validator.validate(dto);
@@ -131,7 +131,7 @@ class PraktikumsstellenRichtungValidatorTest {
                 .richtung(Bildungsrichtung.FISI)
                 .ausbildungsjahr(Set.of(Ausbildungsjahr.JAHR1))
                 .studiensemester(null)
-                .programmierkenntnisse(null)
+                .programmierkenntnisse(false)
                 .build();
 
         assertTrue(validator.validate(dto).isEmpty());
