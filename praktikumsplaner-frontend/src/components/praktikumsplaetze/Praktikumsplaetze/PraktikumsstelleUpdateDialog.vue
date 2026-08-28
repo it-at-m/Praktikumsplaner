@@ -318,7 +318,6 @@ import { testIds } from "@/testIds";
 import {
   findBildungsrichtung,
   isAusbildung,
-  isStudium,
 } from "@/types/Bildungsrichtung.ts";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -360,14 +359,6 @@ const isAusbildungComp = computed<boolean>(() => {
     return false;
   }
   return isAusbildung(
-    findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
-  );
-});
-const isStudiumComp = computed<boolean>(() => {
-  if (!praktikumsstelle.value.richtung) {
-    return false;
-  }
-  return isStudium(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });

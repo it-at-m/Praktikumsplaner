@@ -8,7 +8,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Set;
-import org.springframework.util.StringUtils;
 
 public class PraktikumsstellenRichtungValidator implements ConstraintValidator<ValidPraktikumsstellenRichtung, PraktikumsstelleI> {
 

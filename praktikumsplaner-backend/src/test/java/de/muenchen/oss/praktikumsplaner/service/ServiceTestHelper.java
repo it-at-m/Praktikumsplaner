@@ -60,7 +60,7 @@ public class ServiceTestHelper {
             final Bildungsrichtung richtung,
             final Set<Ausbildungsjahr> ausbildungsjahr,
             final Set<Studiensemester> studiensemester,
-            final String programmierkenntnisse,
+            final boolean programmierkenntnisse,
             final boolean projektarbeit,
             final boolean minderjaehrigMoeglich,
             final UUID meldezeitraumId,
@@ -94,7 +94,7 @@ public class ServiceTestHelper {
                 .namentlicheAnforderung(stelle.getNamentlicheAnforderung())
                 .projektarbeit(stelle.isProjektarbeit())
                 .planstelleVorhanden(stelle.isPlanstelleVorhanden())
-                .programmierkenntnisse(stelle.getProgrammierkenntnisse())
+                .programmierkenntnisse(stelle.isProgrammierkenntnisse())
                 .wuensche(stelle.getWuensche())
                 .ausbildungsjahr(stelle.getAusbildungsjahr())
                 .studiensemester(stelle.getStudiensemester())
