@@ -46,16 +46,16 @@ class ExcelExportServiceTest {
 
     @Test
     void testFillTemplatePraktikumsstellen() throws IOException {
-        when(praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum())
-                .thenReturn(getAssignedPraktikumsstellen());
+        when(praktikumsstellenService.getRecentPraktikumsstellen())
+                .thenReturn(getPraktikumsstellen());
 
         try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
                 Base64.getDecoder().decode(service.getBase64EncodedExcelFile())))) {
             XSSFSheet ausbildungsSheet = workbook.getSheetAt(ExcelExportService.AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX);
             XSSFSheet studiumsSheet = workbook.getSheetAt(ExcelExportService.STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX);
 
-            PraktikumsstelleDto ausbildungsstelle = getAssignedPraktikumsstellen().getFirst();
-            PraktikumsstelleDto studiumsstelle = getAssignedPraktikumsstellen().get(2);
+            PraktikumsstelleDto ausbildungsstelle = getPraktikumsstellen().getFirst();
+            PraktikumsstelleDto studiumsstelle = getPraktikumsstellen().get(2);
 
             assertNotNull(workbook);
             assertEquals(4, workbook.getNumberOfSheets());
@@ -117,7 +117,7 @@ class ExcelExportServiceTest {
                         false,
                         false,
                         null,
-                        helper.createNwkEntity("Vorname 1", "Nachname 1", Bildungsrichtung.BSC, "22/23", null, true))),
+                        helper.createNwkEntity("Vorname 1", "Nachname 1", Bildungsrichtung.FISI, "22/23", null, true))),
                 helper.createPraktikumsstelleDto(helper.createPraktikumsstelleEntity(
                         "Dienststelle 3",
                         "Ausbilder 3",
@@ -132,9 +132,9 @@ class ExcelExportServiceTest {
                         false,
                         false,
                         null,
-                        helper.createNwkEntity("Vorname 3", "Nachname 3", Bildungsrichtung.FISI, "22/23", null, true))));
+                        helper.createNwkEntity("Vorname 3", "Nachname 3", Bildungsrichtung.BSC, "22/23", null, true))));
 
-        when(praktikumsstellenService.getAllAssignedPraktikumsstellenInMostRecentPassedMeldezeitraum())
+        when(praktikumsstellenService.getRecentPraktikumsstellen())
                 .thenReturn(assignedPraktikumsstellen);
 
         try (XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(
@@ -142,8 +142,8 @@ class ExcelExportServiceTest {
             XSSFSheet ausbildungsSheet = workbook.getSheetAt(ExcelExportService.AUSBILDUNGSPRAKTIKUMSSTELLEN_SHEET_INDEX);
             XSSFSheet studiumsSheet = workbook.getSheetAt(ExcelExportService.STUDIUMSPRAKTIKUMSSTELLEN_SHEET_INDEX);
 
-            assertEquals(assignedPraktikumsstellen.getFirst().dienststelle(), studiumsSheet.getRow(3).getCell(2).getStringCellValue());
-            assertEquals(assignedPraktikumsstellen.get(1).dienststelle(), ausbildungsSheet.getRow(3).getCell(2).getStringCellValue());
+            assertEquals(assignedPraktikumsstellen.getFirst().dienststelle(), ausbildungsSheet.getRow(3).getCell(2).getStringCellValue());
+            assertEquals(assignedPraktikumsstellen.get(1).dienststelle(), studiumsSheet.getRow(3).getCell(2).getStringCellValue());
         }
     }
 
@@ -153,7 +153,7 @@ class ExcelExportServiceTest {
         assertNotNull(service.getBase64EncodedExcelFile());
     }
 
-    private List<PraktikumsstelleDto> getAssignedPraktikumsstellen() {
+    private List<PraktikumsstelleDto> getPraktikumsstellen() {
         return List.of(
                 helper.createPraktikumsstelleDto(helper.createPraktikumsstelleEntity(
                         "ITM-DS1",
