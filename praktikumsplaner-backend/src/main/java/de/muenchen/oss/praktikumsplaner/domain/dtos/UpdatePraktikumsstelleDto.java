@@ -22,7 +22,7 @@ public record UpdatePraktikumsstelleDto(
         boolean projektarbeit,
         boolean planstelleVorhanden,
 
-        boolean programmierkenntnisse,
+        @NotNull Boolean programmierkenntnisse,
         String wuensche,
         Set<Ausbildungsjahr> ausbildungsjahr,
         Set<Studiensemester> studiensemester,
