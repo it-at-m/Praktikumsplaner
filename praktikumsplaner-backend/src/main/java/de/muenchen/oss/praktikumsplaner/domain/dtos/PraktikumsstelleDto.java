@@ -21,7 +21,7 @@ public record PraktikumsstelleDto(
         boolean projektarbeit,
         boolean planstelleVorhanden,
 
-        boolean programmierkenntnisse,
+        Boolean programmierkenntnisse,
         String wuensche,
         Set<Ausbildungsjahr> ausbildungsjahr,
         Set<Studiensemester> studiensemester,
