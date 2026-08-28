@@ -96,6 +96,7 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("N")).setCellValue(ausbildungsjahrToStringConverter(praktikumsstelle.ausbildungsjahr()));
             row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.richtung().name());
             if (praktikumsstelle.assignedNwk() != null) {
+                row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.assignedNwk().richtung().name());
                 row.getCell(convertColStringToIndex("P")).setCellValue(praktikumsstelle.assignedNwk().nachname());
                 row.getCell(convertColStringToIndex("Q")).setCellValue(praktikumsstelle.assignedNwk().vorname());
                 row.getCell(convertColStringToIndex("R")).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
