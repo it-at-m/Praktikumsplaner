@@ -123,8 +123,8 @@ public class ExcelExportService {
             row.getCell(convertColStringToIndex("L")).setCellValue(praktikumsstelle.planstelleVorhanden() ? "Planstelle" : "Praktikumsplatz");
             row.getCell(convertColStringToIndex("M")).setCellValue(praktikumsstelle.dringlichkeit().name());
             row.getCell(convertColStringToIndex("N")).setCellValue(studiensemesterToStringConverter(praktikumsstelle.studiensemester()));
-            row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.richtung().name());
             if (praktikumsstelle.assignedNwk() != null) {
+                row.getCell(convertColStringToIndex("O")).setCellValue(praktikumsstelle.assignedNwk().richtung().name());
                 row.getCell(convertColStringToIndex("P")).setCellValue(praktikumsstelle.assignedNwk().nachname());
                 row.getCell(convertColStringToIndex("Q")).setCellValue(praktikumsstelle.assignedNwk().vorname());
                 row.getCell(convertColStringToIndex("R")).setCellValue(praktikumsstelle.assignedNwk().jahrgang());
