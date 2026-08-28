@@ -248,7 +248,7 @@
             <v-row>
               <v-col cols="5">
                 <meldezeitraum-select
-                  v-model="praktikumsstelle.meldezeitraumID"
+                  v-model="praktikumsstelle"
                   :meldezeitraueme="meldezeitraeume"
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
