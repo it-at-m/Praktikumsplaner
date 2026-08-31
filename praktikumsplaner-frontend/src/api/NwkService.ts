@@ -1,9 +1,13 @@
 import type { Ref } from "vue";
 
-
-
 import { Levels } from "@/api/Error";
-import { defaultResponseHandler, getDELETEConfig, getGETConfig, getPOSTConfig, getPUTConfig } from "@/api/FetchUtils";
+import {
+  defaultResponseHandler,
+  getDELETEConfig,
+  getGETConfig,
+  getPOSTConfig,
+  getPUTConfig,
+} from "@/api/FetchUtils";
 import { API_BASE, NWK_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import Nwk from "@/types/Nwk";
@@ -65,18 +69,19 @@ export default {
     });
   },
   getAllActiveNwks(): Promise<Nwk[]> {
-    return fetch(`${API_BASE}${NWK_BASE}`, getGETConfig())
-      .then((response) => {
-        defaultResponseHandler(response);
-        return response.json();
-      });
+    return fetch(`${API_BASE}${NWK_BASE}`, getGETConfig()).then((response) => {
+      defaultResponseHandler(response);
+      return response.json();
+    });
   },
   getAllUnassignedNwks(): Promise<Nwk[]> {
-    return fetch(`${API_BASE}${NWK_BASE}?state=UNASSIGNED`, getGETConfig())
-      .then((response) => {
-        defaultResponseHandler(response);
-        return response.json();
-      });
+    return fetch(
+      `${API_BASE}${NWK_BASE}?state=UNASSIGNED`,
+      getGETConfig()
+    ).then((response) => {
+      defaultResponseHandler(response);
+      return response.json();
+    });
   },
   updateNwk(nwk: Nwk, loading: Ref<boolean>): Promise<void> {
     loading.value = true;
@@ -95,16 +100,15 @@ export default {
         loading.value = false;
       });
   },
-  deleteNwk(
-    nwkId: string
-  ): Promise<void> {
-    return fetch(`${API_BASE}${NWK_BASE}/${nwkId}`,getDELETEConfig({}))
-      .then((response) => {
+  deleteNwk(nwkId: string): Promise<void> {
+    return fetch(`${API_BASE}${NWK_BASE}/${nwkId}`, getDELETEConfig({})).then(
+      (response) => {
         defaultResponseHandler(response);
         useSnackbarStore().showMessage({
           message: "☑ NWK erfolgreich gelöscht",
           level: Levels.SUCCESS,
         });
-      });
+      }
+    );
   },
 };

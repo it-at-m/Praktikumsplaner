@@ -171,12 +171,14 @@ function redirectIfUnauthorized() {
 }
 
 function getAllActiveNwks() {
-  loadingNwk.value = true
-  NwkService.getAllUnassignedNwks().then((fetchedNwks) => {
-    nwks.value = [...fetchedNwks];
-  }).finally(() => {
-    loadingNwk.value = false
-  });
+  loadingNwk.value = true;
+  NwkService.getAllUnassignedNwks()
+    .then((fetchedNwks) => {
+      nwks.value = [...fetchedNwks];
+    })
+    .finally(() => {
+      loadingNwk.value = false;
+    });
 }
 
 function getAllPraktikumsstellenInMostRecentMeldezeitraum() {
