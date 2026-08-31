@@ -18,6 +18,10 @@
           :nwk="item"
           @updated="loadAllActiveNwks"
         />
+        <nwk-delete-dialog
+          :nwk-id="item.id"
+          @deleted="loadAllActiveNwks"
+        />
       </template>
     </data-table>
   </v-container>
@@ -34,6 +38,7 @@ import DataTable from "@/components/common/DataTable.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import ExcelImportNwk from "@/components/nachwuchskraefte/ExcelImportNwk.vue";
 import NwkCreateDialog from "@/components/nachwuchskraefte/NwkCreateDialog.vue";
+import NwkDeleteDialog from "@/components/nachwuchskraefte/NwkDeleteDialog.vue";
 import NwkUpdateDialog from "@/components/nachwuchskraefte/NwkUpdateDialog.vue";
 import { useSecurity } from "@/composables/security";
 import router from "@/plugins/router";
@@ -133,8 +138,13 @@ function redirectIfUnauthorized() {
 }
 
 function loadAllActiveNwks() {
-  NwkService.getAllActiveNwks(loading).then((fetchedNwks) => {
-    nwks.value = [...fetchedNwks];
-  });
+  loading.value = true;
+  NwkService.getAllActiveNwks()
+    .then((fetchedNwks) => {
+      nwks.value = [...fetchedNwks];
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 }
 </script>

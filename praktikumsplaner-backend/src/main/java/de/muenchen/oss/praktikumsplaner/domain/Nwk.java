@@ -2,6 +2,7 @@ package de.muenchen.oss.praktikumsplaner.domain;
 
 import de.muenchen.oss.praktikumsplaner.domain.converter.DayOfWeekSetConverter;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
+import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Getter
@@ -25,6 +27,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE nwk SET active = false WHERE id = ?")
 @SuppressWarnings({ "PMD.MissingSerialVersionUID", "PMD.ShortClassName" })
 /*
  * Nwk is short for Nachwuchskraft (young talent)
@@ -43,5 +46,6 @@ public class Nwk extends BaseEntity {
     @Convert(converter = DayOfWeekSetConverter.class)
     private Set<DayOfWeek> vorlesungstage;
 
+    @Column(insertable = false, updatable = false)
     private boolean active;
 }
