@@ -2,14 +2,14 @@
   <v-btn
     :icon="mdiDelete"
     color="error"
-    alt-text="Löschen"
+    aria-label="Löschen"
     :data-test="testIds.nwk.deleteBtn"
     @click.stop="openDialog"
   />
   <yes-no-dialog-without-activator
     v-model="visible"
     :dialogtitle="'NWK löschen?'"
-    :dialogtext="'Wollen Sie die NWK wirklich unwiderruflich löschen?'"
+    :dialogtext="'Wollen Sie die NWK wirklich löschen?'"
     @no="visible = false"
     @yes="performDelete"
   />
