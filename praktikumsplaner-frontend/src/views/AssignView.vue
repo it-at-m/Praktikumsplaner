@@ -171,8 +171,11 @@ function redirectIfUnauthorized() {
 }
 
 function getAllActiveNwks() {
-  NwkService.getAllUnassignedNwks(loadingNwk).then((fetchedNwks) => {
+  loadingNwk.value = true
+  NwkService.getAllUnassignedNwks().then((fetchedNwks) => {
     nwks.value = [...fetchedNwks];
+  }).finally(() => {
+    loadingNwk.value = false
   });
 }
 

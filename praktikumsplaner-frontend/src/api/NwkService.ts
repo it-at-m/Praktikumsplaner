@@ -1,12 +1,9 @@
 import type { Ref } from "vue";
 
+
+
 import { Levels } from "@/api/Error";
-import {
-  defaultResponseHandler,
-  getGETConfig,
-  getPOSTConfig,
-  getPUTConfig,
-} from "@/api/FetchUtils";
+import { defaultResponseHandler, getDELETEConfig, getGETConfig, getPOSTConfig, getPUTConfig } from "@/api/FetchUtils";
 import { API_BASE, NWK_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import Nwk from "@/types/Nwk";
@@ -67,30 +64,18 @@ export default {
       reader.readAsDataURL(excelDatei);
     });
   },
-  getAllActiveNwks(loading: Ref<boolean>): Promise<Nwk[]> {
-    loading.value = true;
-    return fetch(`${API_BASE}${NWK_BASE}?status=aktiv`, getGETConfig())
+  getAllActiveNwks(): Promise<Nwk[]> {
+    return fetch(`${API_BASE}${NWK_BASE}`, getGETConfig())
       .then((response) => {
         defaultResponseHandler(response);
         return response.json();
-      })
-      .finally(() => {
-        loading.value = false;
       });
   },
-  getAllUnassignedNwks(loading: Ref<boolean> | undefined): Promise<Nwk[]> {
-    if (loading !== undefined) {
-      loading.value = true;
-    }
-    return fetch(`${API_BASE}${NWK_BASE}?unassigned=true`, getGETConfig())
+  getAllUnassignedNwks(): Promise<Nwk[]> {
+    return fetch(`${API_BASE}${NWK_BASE}?state=UNASSIGNED`, getGETConfig())
       .then((response) => {
         defaultResponseHandler(response);
         return response.json();
-      })
-      .finally(() => {
-        if (loading !== undefined) {
-          loading.value = false;
-        }
       });
   },
   updateNwk(nwk: Nwk, loading: Ref<boolean>): Promise<void> {
@@ -108,6 +93,18 @@ export default {
       })
       .finally(() => {
         loading.value = false;
+      });
+  },
+  deleteNwk(
+    nwkId: string
+  ): Promise<void> {
+    return fetch(`${API_BASE}${NWK_BASE}/${nwkId}`,getDELETEConfig({}))
+      .then((response) => {
+        defaultResponseHandler(response);
+        useSnackbarStore().showMessage({
+          message: "☑ NWK erfolgreich gelöscht",
+          level: Levels.SUCCESS,
+        });
       });
   },
 };
