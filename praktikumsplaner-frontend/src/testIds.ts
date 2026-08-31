@@ -73,6 +73,7 @@ export const testIds = {
     updateDialog: "nwk-update-dialog",
     cancelBtn: "nwk-cancel-btn",
     acceptBtn: "nwk-accept-btn",
+    deleteBtn: "nwk-delete-btn",
     vornameInput: "nwk-vorname-input",
     nachnameInput: "nwk-nachname-input",
     jahrgangInput: "nwk-jahrgang-input",
