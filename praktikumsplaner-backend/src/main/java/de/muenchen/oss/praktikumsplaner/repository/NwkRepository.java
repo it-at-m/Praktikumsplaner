@@ -18,7 +18,8 @@ public interface NwkRepository extends ListCrudRepository<Nwk, UUID> {
     @Query(
         """
                     SELECT n FROM Nwk n
-                    WHERE NOT EXISTS (SELECT 1 FROM Praktikumsstelle p WHERE p.meldezeitraumID = :meldezeitraumId AND p.assignedNwk = n)
+                    WHERE n.active = true AND
+                    NOT EXISTS (SELECT 1 FROM Praktikumsstelle p WHERE p.meldezeitraumID = :meldezeitraumId AND p.assignedNwk = n)
                     ORDER BY n.nachname
                 """
     )
