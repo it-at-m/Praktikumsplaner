@@ -9,7 +9,7 @@
   ],
   "exclude": ["tests/**/*"],
   "compilerOptions": {
-    "lib": ["ES2023.Array"],
+    "lib": ["ES2023", "DOM"],
     "composite": true,
     "tsBuildInfoFile": "./cache/tsconfig.app.tsbuildinfo",
     "paths": {
