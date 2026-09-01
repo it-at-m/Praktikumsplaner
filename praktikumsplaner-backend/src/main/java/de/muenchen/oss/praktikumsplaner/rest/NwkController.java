@@ -47,10 +47,8 @@ public class NwkController {
     @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
     @GetMapping
     public List<NwkDto> getNwks(@RequestParam(required = false) final NwkState state) {
-        if (state == null) {
-            return nwkService.findAllActiveNwks();
-        }
         return switch (state) {
+        case null -> nwkService.findAllActiveNwks();
         case INACTIVE -> nwkService.findAllInactiveNwks();
         case UNASSIGNED -> nwkService.findAllUnassignedNwksInCurrentMeldezeitraum();
         };
