@@ -107,31 +107,23 @@ export function useTextGenerator() {
   }
 
   function getAusbildungsjahreString(stelle: Praktikumsstelle): string {
-    let text = "";
     if (stelle.ausbildungsjahr) {
-      stelle.ausbildungsjahr.sort();
-      for (let i = 0; i < stelle.ausbildungsjahr.length - 1; i++) {
-        text += valueToNameAusbildungsjahr(stelle.ausbildungsjahr[i]) + ", ";
-      }
-      text += valueToNameAusbildungsjahr(
-        stelle.ausbildungsjahr[stelle.ausbildungsjahr.length - 1]
-      );
+      return stelle.ausbildungsjahr
+        .toSorted()
+        .map(valueToNameAusbildungsjahr)
+        .join(", ");
     }
-    return text;
+    return "";
   }
 
   function getStudiumssemesterString(stelle: Praktikumsstelle): string {
-    let text = "";
     if (stelle.studiensemester) {
-      stelle.studiensemester.sort();
-      for (let i = 0; i < stelle.studiensemester.length - 1; i++) {
-        text += valueToNameStudiensemester(stelle.studiensemester[i]) + ", ";
-      }
-      text += valueToNameStudiensemester(
-        stelle.studiensemester[stelle.studiensemester.length - 1]
-      );
+      return stelle.studiensemester
+        ?.toSorted()
+        .map(valueToNameStudiensemester)
+        .join(", ");
     }
-    return text;
+    return "";
   }
 
   return {
