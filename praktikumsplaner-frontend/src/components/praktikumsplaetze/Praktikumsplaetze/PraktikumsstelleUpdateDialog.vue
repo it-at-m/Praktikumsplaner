@@ -162,7 +162,7 @@
               <v-col cols="5">
                 <programmier-kenntnisse-select
                   v-model="praktikumsstelle.programmierkenntnisse"
-                  :is-required="true"
+                  is-required
                   :required-symbol="requiredFieldSymbol"
                   :disabled="hasAssignedNwk"
                 ></programmier-kenntnisse-select>

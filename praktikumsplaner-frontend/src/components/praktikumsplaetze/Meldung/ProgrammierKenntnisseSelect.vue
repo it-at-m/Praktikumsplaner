@@ -16,7 +16,7 @@
       :label="item.name"
       :value="item.value"
       class="ml-5"
-    ></v-radio>
+    />
   </v-radio-group>
 </template>
 
