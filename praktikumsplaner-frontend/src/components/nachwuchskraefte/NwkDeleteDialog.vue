@@ -4,12 +4,12 @@
     color="error"
     aria-label="Löschen"
     :data-test="testIds.nwk.deleteBtn"
-    @click.stop="openDialog"
+    @click.stop="visible = true"
   />
   <yes-no-dialog-without-activator
     v-model="visible"
-    :dialogtitle="'NWK löschen?'"
-    :dialogtext="'Wollen Sie die NWK wirklich löschen?'"
+    dialogtitle="NWK löschen?"
+    dialogtext="Wollen Sie die NWK wirklich löschen?"
     @no="visible = false"
     @yes="performDelete"
   />
@@ -33,10 +33,6 @@ const emit = defineEmits<{ deleted: [] }>();
 
 const visible = ref(false);
 const loading = ref(false);
-
-function openDialog() {
-  visible.value = true;
-}
 
 function performDelete() {
   loading.value = true;
