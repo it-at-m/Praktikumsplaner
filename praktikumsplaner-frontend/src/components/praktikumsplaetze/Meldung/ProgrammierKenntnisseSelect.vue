@@ -1,15 +1,12 @@
 <template>
   <v-radio-group
     v-model="value"
-    class="radios custom-label"
     inline
     :rules="conditionalRequiredRules"
     :disabled="disabled"
     :data-test="testIds.praktikumsstelle.programmierkenntnisseRadio"
+    :label="conditionalRequiredLabel"
   >
-    <template #label>
-      <span class="custom-label">{{ conditionalRequiredLabel }}:</span>
-    </template>
     <v-radio
       v-for="item in YesNoBoolean"
       :key="item.name"
