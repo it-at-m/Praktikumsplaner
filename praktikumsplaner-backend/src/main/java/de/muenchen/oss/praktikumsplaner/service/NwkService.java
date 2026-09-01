@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -52,5 +53,9 @@ public class NwkService {
 
     public boolean nwkExistsById(final UUID id) {
         return nwkRepository.existsById(id);
+    }
+
+    public Nwk getNwk(final UUID id) {
+        return nwkRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 }

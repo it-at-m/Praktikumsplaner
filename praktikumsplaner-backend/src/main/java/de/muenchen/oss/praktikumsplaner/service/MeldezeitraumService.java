@@ -5,12 +5,12 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.CreateMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -53,7 +53,7 @@ public class MeldezeitraumService {
     public MeldezeitraumDto getMostRecentPassedMeldezeitraum() {
         final List<Meldezeitraum> passedZeitraueme = meldezeitraumRepository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now());
         if (passedZeitraueme.isEmpty()) {
-            throw new EntityNotFoundException("Kein vergangener Meldezeitraum gefunden.");
+            throw new ResourceNotFoundException("Kein vergangener Meldezeitraum gefunden.");
         }
         return meldezeitraumMapper.toDto(passedZeitraueme.getFirst());
     }
@@ -64,5 +64,9 @@ public class MeldezeitraumService {
 
     public void deleteMeldezeitraumById(final UUID id) {
         meldezeitraumRepository.deleteById(id);
+    }
+
+    public Meldezeitraum getMeldezeitraum(final UUID id) {
+        return meldezeitraumRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 }

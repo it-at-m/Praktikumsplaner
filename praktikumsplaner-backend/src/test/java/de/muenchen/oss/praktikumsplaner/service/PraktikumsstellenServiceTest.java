@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -23,7 +24,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
-import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import de.muenchen.oss.praktikumsplaner.repository.PraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.security.Authorities;
 import java.time.LocalDate;
@@ -56,7 +56,7 @@ class PraktikumsstellenServiceTest {
     private MeldezeitraumService meldezeitraumService;
 
     @Mock
-    private NwkRepository nwkRepository;
+    private NwkService nwkService;
 
     @InjectMocks
     private PraktikumsstellenService service;
@@ -181,6 +181,7 @@ class PraktikumsstellenServiceTest {
                         meldezeitraumDto.id(), helper.createNwkEntity("TestNwk", "TestNwk", Bildungsrichtung.BWI, "22/23", null, false)));
 
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDto);
+        when(meldezeitraumService.getMeldezeitraum(eq(meldezeitraumDto.id()))).thenReturn(helper.meldezeitraumWithId(meldezeitraumDto.id()));
         when(praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(stellen);
         when(mapper.toDto(any(Praktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
@@ -215,6 +216,7 @@ class PraktikumsstellenServiceTest {
                         meldezeitraumDto.id(), helper.createNwkEntity("TestNwk", "TestNwk", Bildungsrichtung.BWI, "22/23", null, false)));
 
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDto);
+        when(meldezeitraumService.getMeldezeitraum(eq(meldezeitraumDto.id()))).thenReturn(helper.meldezeitraumWithId(meldezeitraumDto.id()));
         when(praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(stellen);
         when(mapper.toDto(any(Praktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
@@ -246,6 +248,7 @@ class PraktikumsstellenServiceTest {
                         meldezeitraumDto.id(), helper.createNwkEntity("TestNwk", "TestNwk", Bildungsrichtung.BWI, "22/23", null, false)));
 
         when(meldezeitraumService.getCurrentMeldezeitraum()).thenReturn(meldezeitraumDto);
+        when(meldezeitraumService.getMeldezeitraum(eq(meldezeitraumDto.id()))).thenReturn(helper.meldezeitraumWithId(meldezeitraumDto.id()));
         when(praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(stellen);
         when(mapper.toDto(any(Praktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
@@ -268,7 +271,7 @@ class PraktikumsstellenServiceTest {
         withAssigned.setId(stelle.getId());
 
         when(praktikumsstellenRepository.findById(stelle.getId())).thenReturn(Optional.of(stelle));
-        when(nwkRepository.findById(any(UUID.class))).thenReturn(Optional.of(assigningNwk));
+        when(nwkService.getNwk(any(UUID.class))).thenReturn(assigningNwk);
         when(praktikumsstellenRepository.save(any(Praktikumsstelle.class))).thenReturn(withAssigned);
 
         assertEquals(mapper.toDto(withAssigned), service.assignNwk(stelle.getId(), assigningNwk.getId()));
@@ -282,7 +285,7 @@ class PraktikumsstellenServiceTest {
                 Dringlichkeit.ZWINGEND, Bildungsrichtung.BWI, null, Set.of(Studiensemester.SEMESTER1), "false", false, false, UUID.randomUUID(), nwk);
 
         when(praktikumsstellenRepository.findById(stelle.getId())).thenReturn(Optional.of(stelle));
-        when(nwkRepository.findById(any(UUID.class))).thenReturn(Optional.of(nwk));
+        when(nwkService.getNwk(any(UUID.class))).thenReturn(nwk);
 
         assertThrows(ResourceConflictException.class, () -> service.assignNwk(stelle.getId(), nwk.getId()));
     }
@@ -290,7 +293,7 @@ class PraktikumsstellenServiceTest {
     @Test
     void testAssignNwkToNotExistingPraktikumsstelle() {
         when(praktikumsstellenRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-        when(nwkRepository.findById(any(UUID.class))).thenReturn(Optional.of(new Nwk()));
+        when(nwkService.getNwk(any(UUID.class))).thenReturn(new Nwk());
         assertThrows(ResourceNotFoundException.class, () -> service.assignNwk(UUID.randomUUID(), UUID.randomUUID()));
     }
 

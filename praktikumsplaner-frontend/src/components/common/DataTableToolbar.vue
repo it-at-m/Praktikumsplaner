@@ -9,6 +9,7 @@
         hide-details
         clearable
         :data-test="testIds.common.dataTableSearch"
+        :disabled="disabled"
       />
     </v-col>
     <v-col
@@ -24,6 +25,7 @@
         clearable
         :items="groupByOptions"
         :data-test="testIds.common.dataTableGroupBy"
+        :disabled="disabled"
       />
     </v-col>
     <v-col></v-col>
@@ -35,9 +37,16 @@ import type GroupOption from "@/types/DataTableGroupOption";
 
 import { testIds } from "@/testIds";
 
-defineProps<{
-  groupByOptions?: GroupOption[];
-}>();
+withDefaults(
+  defineProps<{
+    groupByOptions?: GroupOption[];
+    disabled?: boolean;
+  }>(),
+  {
+    groupByOptions: () => [],
+    disabled: false,
+  }
+);
 
 const searchModel = defineModel<string | undefined>("search");
 const groupByRawModel = defineModel<string | undefined>("groupByRaw");

@@ -93,21 +93,11 @@ export default {
         }
       });
   },
-  getAllMeldezeitraeume(
-    loading: Ref<boolean> | undefined
-  ): Promise<Meldezeitraum[]> {
-    if (loading !== undefined) {
-      loading.value = true;
-    }
+  getAllMeldezeitraeume(): Promise<Meldezeitraum[]> {
     return fetch(`${API_BASE}${MELDEZEITRAUM_BASE}`, getGETConfig())
       .then((response) => {
         defaultResponseHandler(response);
         return response.json();
-      })
-      .finally(() => {
-        if (loading !== undefined) {
-          loading.value = false;
-        }
       });
   },
   deleteMeldezeitraumById(
@@ -137,4 +127,9 @@ export default {
         loading.value = false;
       });
   },
+  getCurrentMeldezeitraumFromList(meldezeitraeume: Meldezeitraum[]): Meldezeitraum | undefined {
+    const now = new Date();
+    return meldezeitraeume.find((mz) => mz.zeitraum.startZeitpunkt && mz.zeitraum.endZeitpunkt &&
+      new Date(mz.zeitraum.startZeitpunkt) <= now && now <= new Date(mz.zeitraum.endZeitpunkt))
+  }
 };

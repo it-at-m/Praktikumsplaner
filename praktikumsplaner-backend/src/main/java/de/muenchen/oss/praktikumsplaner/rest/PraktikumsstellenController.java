@@ -61,8 +61,9 @@ public class PraktikumsstellenController {
             return praktikumsstellenService.getAllInCurrentMeldezeitraum();
         } else if (MELDEZEITRAUM_MOST_RECENT.equals(meldezeitraum)) {
             return praktikumsstellenService.getRecentPraktikumsstellen();
+        } else {
+            return praktikumsstellenService.getPraktikumsstellen(UUID.fromString(meldezeitraum));
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wert '" + meldezeitraum + "' für Parameter 'meldezeitraum' ist nicht unterstützt.");
     }
 
     @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)
