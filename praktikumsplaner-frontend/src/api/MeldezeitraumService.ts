@@ -94,11 +94,12 @@ export default {
       });
   },
   getAllMeldezeitraeume(): Promise<Meldezeitraum[]> {
-    return fetch(`${API_BASE}${MELDEZEITRAUM_BASE}`, getGETConfig())
-      .then((response) => {
+    return fetch(`${API_BASE}${MELDEZEITRAUM_BASE}`, getGETConfig()).then(
+      (response) => {
         defaultResponseHandler(response);
         return response.json();
-      });
+      }
+    );
   },
   deleteMeldezeitraumById(
     id: string | undefined,
@@ -127,9 +128,16 @@ export default {
         loading.value = false;
       });
   },
-  getCurrentMeldezeitraumFromList(meldezeitraeume: Meldezeitraum[]): Meldezeitraum | undefined {
+  getCurrentMeldezeitraumFromList(
+    meldezeitraeume: Meldezeitraum[]
+  ): Meldezeitraum | undefined {
     const now = new Date();
-    return meldezeitraeume.find((mz) => mz.zeitraum.startZeitpunkt && mz.zeitraum.endZeitpunkt &&
-      new Date(mz.zeitraum.startZeitpunkt) <= now && now <= new Date(mz.zeitraum.endZeitpunkt))
-  }
+    return meldezeitraeume.find(
+      (mz) =>
+        mz.zeitraum.startZeitpunkt &&
+        mz.zeitraum.endZeitpunkt &&
+        new Date(mz.zeitraum.startZeitpunkt) <= now &&
+        now <= new Date(mz.zeitraum.endZeitpunkt)
+    );
+  },
 };

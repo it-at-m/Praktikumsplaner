@@ -28,7 +28,7 @@
         <v-sheet
           border
           rounded
-          class="pa-3 mb-3"
+          class="pa-5 mb-3"
         >
           <v-row>
             <v-col>
@@ -418,11 +418,3 @@ function uploadPraktikumsstelle() {
   });
 }
 </script>
-
-<style>
-.box {
-  margin: 3%;
-  border: 2px solid #0000001a;
-  border-radius: 5px;
-}
-</style>

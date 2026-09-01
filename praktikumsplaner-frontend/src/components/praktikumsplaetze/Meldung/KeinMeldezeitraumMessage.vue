@@ -14,9 +14,7 @@ import { mdiInformationOutline } from "@mdi/js";
       />
     </v-col>
     <v-col class="d-flex align-center">
-      <p class="mt-5">
-        Es gibt keinen aktuellen Meldezeitraum.
-      </p>
+      <p class="mt-5">Es gibt keinen aktuellen Meldezeitraum.</p>
     </v-col>
   </v-row>
 </template>

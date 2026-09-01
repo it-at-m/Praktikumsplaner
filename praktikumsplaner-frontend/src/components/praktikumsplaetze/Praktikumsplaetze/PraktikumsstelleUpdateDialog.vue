@@ -377,20 +377,22 @@ function closeDialog() {
 }
 
 function openDialog() {
-  loading.value = true
-  MeldezeitraumService.getAllMeldezeitraeume().then((zeitraume) => {
-    meldezeitraeume.value = zeitraume;
-    if (praktikumsstelle.value.meldezeitraumID == null) {
-      MeldezeitraumService.getCurrentMeldezeitraum(undefined).then(
-        (zeitraum) => {
-          praktikumsstelle.value.meldezeitraumID = zeitraum[0]?.id;
-        }
-      );
-    }
-    visible.value = true;
-  }).finally(() => {
-    loading.value = false
-  });
+  loading.value = true;
+  MeldezeitraumService.getAllMeldezeitraeume()
+    .then((zeitraume) => {
+      meldezeitraeume.value = zeitraume;
+      if (praktikumsstelle.value.meldezeitraumID == null) {
+        MeldezeitraumService.getCurrentMeldezeitraum(undefined).then(
+          (zeitraum) => {
+            praktikumsstelle.value.meldezeitraumID = zeitraum[0]?.id;
+          }
+        );
+      }
+      visible.value = true;
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 }
 
 function updatePraktikumsstelle() {
