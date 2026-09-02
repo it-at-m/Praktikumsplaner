@@ -94,7 +94,7 @@
               ></planstelle-radio-group>
             </v-col>
             <v-col cols="1" />
-            <v-col v-if="isAusbildungComp">
+            <v-col v-if="isAusbildung">
               <projektarbeit-radio-group
                 v-model="praktikumsstelle"
                 :is-required="true"
@@ -102,7 +102,7 @@
               ></projektarbeit-radio-group>
             </v-col>
             <v-col
-              v-if="isAusbildungComp"
+              v-if="isAusbildung"
               cols="1"
             >
               <projektarbeit-tooltip></projektarbeit-tooltip>
@@ -133,13 +133,13 @@
           <v-row>
             <v-col cols="5">
               <ausbildungs-jahr-select
-                v-if="isAusbildungComp"
+                v-if="isAusbildung"
                 v-model="praktikumsstelle"
                 :is-required="true"
                 :required-symbol="requiredFieldSymbol"
               ></ausbildungs-jahr-select>
               <semester-select
-                v-else-if="isStudiumComp"
+                v-else-if="isStudium"
                 v-model="praktikumsstelle"
                 :is-required="true"
                 :required-symbol="requiredFieldSymbol"
@@ -203,7 +203,7 @@
             <v-col cols="1" />
             <v-col>
               <minderjaehrig-moeglich-radio-group
-                v-if="isAusbildungComp"
+                v-if="isAusbildung"
                 v-model="praktikumsstelle"
                 :is-required="true"
                 :required-symbol="requiredFieldSymbol"
@@ -289,8 +289,8 @@ import { useUserStore } from "@/stores/user";
 import { testIds } from "@/testIds";
 import {
   findBildungsrichtung,
-  isAusbildung,
-  isStudium,
+  isAusbildung as isAusbildungB,
+  isStudium as isStudiumB,
 } from "@/types/Bildungsrichtung.ts";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -345,19 +345,19 @@ onMounted(() => {
     );
   }
 });
-const isAusbildungComp = computed<boolean>(() => {
+const isAusbildung = computed<boolean>(() => {
   if (!praktikumsstelle.value.richtung) {
     return false;
   }
-  return isAusbildung(
+  return isAusbildungB(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });
-const isStudiumComp = computed<boolean>(() => {
+const isStudium = computed<boolean>(() => {
   if (!praktikumsstelle.value.richtung) {
     return false;
   }
-  return isStudium(
+  return isStudiumB(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });
