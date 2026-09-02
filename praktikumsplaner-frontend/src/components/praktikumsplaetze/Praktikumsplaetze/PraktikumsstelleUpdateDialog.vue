@@ -104,7 +104,7 @@
                 ></planstelle-radio-group>
               </v-col>
               <v-col cols="1" />
-              <v-col v-if="isAusbildungComp">
+              <v-col v-if="isAusbildung">
                 <projektarbeit-radio-group
                   v-model="praktikumsstelle"
                   :disabled="hasAssignedNwk"
@@ -113,7 +113,7 @@
                 ></projektarbeit-radio-group>
               </v-col>
               <v-col
-                v-if="isAusbildungComp"
+                v-if="isAusbildung"
                 cols="1"
               >
                 <projektarbeit-tooltip></projektarbeit-tooltip>
@@ -144,7 +144,7 @@
             <v-row>
               <v-col cols="5">
                 <ausbildungs-jahr-select
-                  v-if="isAusbildungComp"
+                  v-if="isAusbildung"
                   v-model="praktikumsstelle"
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
@@ -219,7 +219,7 @@
                 ></ausbilder-erw-fuehrungszeugnis-checkbox>
               </v-col>
               <v-col cols="1" />
-              <v-col v-if="isAusbildungComp">
+              <v-col v-if="isAusbildung">
                 <minderjaehrig-moeglich-radio-group
                   v-model="praktikumsstelle"
                   :is-required="true"
@@ -228,7 +228,7 @@
                 ></minderjaehrig-moeglich-radio-group>
               </v-col>
               <v-col
-                v-if="isAusbildungComp"
+                v-if="isAusbildung"
                 cols="1"
               >
                 <minderjaehrig-moeglich-tooltip></minderjaehrig-moeglich-tooltip>
@@ -317,7 +317,7 @@ import emitter from "@/stores/eventBus";
 import { testIds } from "@/testIds";
 import {
   findBildungsrichtung,
-  isAusbildung,
+  isAusbildung as isAusbildungB,
 } from "@/types/Bildungsrichtung.ts";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -354,11 +354,11 @@ const praktikumsstelle = computed({
   get: () => properties.modelValue,
   set: (newValue) => emits("update:modelValue", newValue),
 });
-const isAusbildungComp = computed<boolean>(() => {
+const isAusbildung = computed<boolean>(() => {
   if (!praktikumsstelle.value.richtung) {
     return false;
   }
-  return isAusbildung(
+  return isAusbildungB(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });
