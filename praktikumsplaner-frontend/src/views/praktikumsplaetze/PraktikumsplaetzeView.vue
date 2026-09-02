@@ -144,16 +144,20 @@ const praktikumsstellenTableItems = computed(() =>
 const defaultSort: SortItem[] = [{ key: "dienststelle", order: "asc" }];
 
 onMounted(() => {
-  MeldezeitraumService.getAllMeldezeitraeume().then((mz) => {
-    meldezeitraeume.value = mz;
-    currentMeldezeitraumId.value =
-      MeldezeitraumService.getCurrentMeldezeitraumFromList(mz)?.id;
-    if (selectedMeldezeitraumId.value == null) {
+  MeldezeitraumService.getAllMeldezeitraeume()
+    .then((mz) => {
+      meldezeitraeume.value = mz;
+      currentMeldezeitraumId.value =
+        MeldezeitraumService.getCurrentMeldezeitraumFromList(mz)?.id;
+      if (currentMeldezeitraumId.value == null) {
+        loading.value = false;
+      } else {
+        selectedMeldezeitraumId.value = currentMeldezeitraumId.value;
+      }
+    })
+    .catch(() => {
       loading.value = false;
-    } else {
-      selectedMeldezeitraumId.value = currentMeldezeitraumId.value;
-    }
-  });
+    });
 
   if (userStore.username) {
     redirectIfUnauthorized();
@@ -189,7 +193,10 @@ function redirectIfUnauthorized() {
 
 // TODO hide actions and create button for Ausbilder if not current Meldezeitraum
 const canStellenBeSubmitted = computed(
-  () => isAusbildungsleitung.value || currentMeldezeitraumId.value
+  () =>
+    isAusbildungsleitung.value ||
+    (currentMeldezeitraumId.value &&
+      currentMeldezeitraumId.value == selectedMeldezeitraumId.value)
 );
 const isAusbildungsleitung = computed(() => security.isAusbildungsleitung());
 const activeMeldezeitraum = computed<boolean>(

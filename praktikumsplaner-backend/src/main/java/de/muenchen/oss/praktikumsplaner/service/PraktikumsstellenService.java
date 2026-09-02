@@ -122,10 +122,11 @@ public class PraktikumsstellenService {
 
     public List<PraktikumsstelleDto> getPraktikumsstellen(final UUID meldezeitraumID) {
         final Meldezeitraum meldezeitraum = meldezeitraumService.getMeldezeitraum(meldezeitraumID);
-        return praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraum.getId()).stream()
+        final List<PraktikumsstelleDto> praktikumsstellen = praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraum.getId()).stream()
                 .map(praktikumsstellenMapper::toDto)
                 .sorted(Comparator.comparing(PraktikumsstelleDto::dienststelle))
                 .toList();
+        return filterPraktikumsstellenForCurrentRole(praktikumsstellen);
     }
 
     private List<PraktikumsstelleDto> filterPraktikumsstellenForCurrentRole(final List<PraktikumsstelleDto> praktikumsstellen) {
