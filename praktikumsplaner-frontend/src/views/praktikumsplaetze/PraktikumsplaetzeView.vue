@@ -12,7 +12,7 @@
         />
         <v-btn-group>
           <v-btn
-            v-if="canStellenBeSubmitted"
+            :disabled="!canStellenBeSubmitted"
             text="Hinzufügen"
             :prepend-icon="mdiPlus"
             color="primary"

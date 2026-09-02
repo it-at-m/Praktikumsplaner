@@ -132,12 +132,18 @@ export default {
     meldezeitraeume: Meldezeitraum[]
   ): Meldezeitraum | undefined {
     const now = new Date();
+    const currentDate = [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0"),
+    ].join("-");
+
     return meldezeitraeume.find(
       (mz) =>
         mz.zeitraum.startZeitpunkt &&
         mz.zeitraum.endZeitpunkt &&
-        new Date(mz.zeitraum.startZeitpunkt) <= now &&
-        now <= new Date(mz.zeitraum.endZeitpunkt)
+        mz.zeitraum.startZeitpunkt <= currentDate &&
+        currentDate <= mz.zeitraum.endZeitpunkt
     );
   },
 };
