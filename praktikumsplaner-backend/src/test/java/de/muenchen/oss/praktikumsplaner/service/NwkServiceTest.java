@@ -35,6 +35,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 public class NwkServiceTest {
@@ -113,7 +114,7 @@ public class NwkServiceTest {
 
         List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
 
-        when(repository.findNwksByActiveIsTrueOrderByNachname()).thenReturn(nwks);
+        when(repository.findAllByActiveIsTrueOrderByNachname()).thenReturn(nwks);
         assertEquals(service.findAllActiveNwks(), nwks.stream().map(mapper::toDto).toList());
     }
 
@@ -127,7 +128,7 @@ public class NwkServiceTest {
         List<Nwk> nwks = List.of(nwk1, nwk2, nwk3, nwk4);
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum())
                 .thenReturn(new MeldezeitraumDto(UUID.randomUUID(), "", new ZeitraumDto(LocalDate.now(), LocalDate.now())));
-        when(repository.findAllUnassignedInSpecificMeldzeitraum(any(UUID.class))).thenReturn(nwks);
+        when(repository.findAllUnassignedInSpecificMeldezeitraum(any(UUID.class))).thenReturn(nwks);
         assertEquals(service.findAllUnassignedNwksInCurrentMeldezeitraum(), nwks.stream().map(mapper::toDto).toList());
     }
 
@@ -157,6 +158,28 @@ public class NwkServiceTest {
         Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
         when(repository.existsById(nwk1.getId())).thenReturn(true);
         assertTrue(service.nwkExistsById(nwk1.getId()));
+    }
+
+    @Test
+    public void testDeleteNwkWhenNwkExists() {
+        UUID nwkId = UUID.randomUUID();
+        when(repository.existsById(nwkId)).thenReturn(true);
+
+        service.deleteNwk(nwkId);
+
+        verify(repository, times(1)).existsById(nwkId);
+        verify(repository, times(1)).deleteById(nwkId);
+    }
+
+    @Test
+    public void testDeleteNwkWhenNwkDoesNotExist() {
+        UUID nwkId = UUID.randomUUID();
+        when(repository.existsById(nwkId)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> service.deleteNwk(nwkId));
+
+        verify(repository, times(1)).existsById(nwkId);
+        verify(repository, times(0)).deleteById(nwkId);
     }
 
     @Test
