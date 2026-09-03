@@ -8,7 +8,6 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Set;
-import org.springframework.util.StringUtils;
 
 public class PraktikumsstellenRichtungValidator implements ConstraintValidator<ValidPraktikumsstellenRichtung, PraktikumsstelleI> {
 
@@ -25,13 +24,12 @@ public class PraktikumsstellenRichtungValidator implements ConstraintValidator<V
 
         final Set<Ausbildungsjahr> ausbildungsjahr = value.ausbildungsjahr();
         final Set<Studiensemester> studiensemester = value.studiensemester();
-        final String programmierkenntnisse = value.programmierkenntnisse();
 
         context.disableDefaultConstraintViolation();
 
         return switch (richtung.getArt()) {
         case AUSBILDUNG -> validateAusbildung(context, ausbildungsjahr, studiensemester);
-        case STUDIUM -> validateStudium(context, ausbildungsjahr, studiensemester, programmierkenntnisse);
+        case STUDIUM -> validateStudium(context, ausbildungsjahr, studiensemester);
         };
     }
 
@@ -53,7 +51,7 @@ public class PraktikumsstellenRichtungValidator implements ConstraintValidator<V
     }
 
     private static boolean validateStudium(final ConstraintValidatorContext context, final Set<Ausbildungsjahr> ausbildungsjahr,
-            final Set<Studiensemester> studiensemester, final String programmierkenntnisse) {
+            final Set<Studiensemester> studiensemester) {
         boolean valid = true;
 
         if (studiensemester == null || studiensemester.isEmpty()) {
@@ -63,11 +61,6 @@ public class PraktikumsstellenRichtungValidator implements ConstraintValidator<V
 
         if (ausbildungsjahr != null && !ausbildungsjahr.isEmpty()) {
             addViolation(context, "ausbildungsjahr", "Ausbildungsjahr darf fuer Studienrichtungen nicht gesetzt sein.");
-            valid = false;
-        }
-
-        if (!StringUtils.hasText(programmierkenntnisse)) {
-            addViolation(context, "programmierkenntnisse", "Programmierkenntnisse muessen fuer Studienrichtungen gesetzt sein.");
             valid = false;
         }
 

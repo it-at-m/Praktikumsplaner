@@ -46,6 +46,7 @@
                   v-model="praktikumsstelle.richtung"
                   is-required
                   :disabled="hasAssignedNwk"
+                  :data-test="testIds.praktikumsstelle.richtungSelect"
                 />
               </v-col>
             </v-row>
@@ -141,7 +142,7 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
+              <v-col cols="5">
                 <ausbildungs-jahr-select
                   v-if="isAusbildung"
                   v-model="praktikumsstelle"
@@ -158,12 +159,11 @@
                 ></semester-select>
               </v-col>
               <v-col cols="1" />
-            </v-row>
-            <v-row>
               <v-col cols="5">
                 <programmier-kenntnisse-select
-                  v-model="praktikumsstelle"
-                  :is-required="isStudium"
+                  v-model="praktikumsstelle.programmierkenntnisse"
+                  is-required
+                  :required-symbol="requiredFieldSymbol"
                   :disabled="hasAssignedNwk"
                 ></programmier-kenntnisse-select>
               </v-col>
@@ -318,7 +318,6 @@ import { testIds } from "@/testIds";
 import {
   findBildungsrichtung,
   isAusbildung as isAusbildungB,
-  isStudium as isStudiumB,
 } from "@/types/Bildungsrichtung.ts";
 import Meldezeitraum from "@/types/Meldezeitraum";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
@@ -360,14 +359,6 @@ const isAusbildung = computed<boolean>(() => {
     return false;
   }
   return isAusbildungB(
-    findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
-  );
-});
-const isStudium = computed<boolean>(() => {
-  if (!praktikumsstelle.value.richtung) {
-    return false;
-  }
-  return isStudiumB(
     findBildungsrichtung(praktikumsstelle.value.richtung.valueOf())
   );
 });

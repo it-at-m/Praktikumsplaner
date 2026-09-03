@@ -28,7 +28,7 @@
         <v-sheet
           border
           rounded
-          class="pa-3 mb-3"
+          class="pa-5 mb-3"
         >
           <v-row>
             <v-col>
@@ -40,6 +40,7 @@
               <bildungsrichtung-select
                 v-model="praktikumsstelle.richtung"
                 is-required
+                :data-test="testIds.praktikumsstelle.richtungSelect"
               />
             </v-col>
           </v-row>
@@ -147,8 +148,9 @@
             <v-col cols="1" />
             <v-col cols="5">
               <programmier-kenntnisse-select
-                v-model="praktikumsstelle"
-                :is-required="isStudium"
+                v-model="praktikumsstelle.programmierkenntnisse"
+                is-required
+                :required-symbol="requiredFieldSymbol"
               ></programmier-kenntnisse-select>
             </v-col>
           </v-row>

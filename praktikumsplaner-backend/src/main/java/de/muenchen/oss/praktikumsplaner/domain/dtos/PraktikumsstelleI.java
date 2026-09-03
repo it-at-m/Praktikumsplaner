@@ -21,7 +21,7 @@ public interface PraktikumsstelleI {
 
     boolean planstelleVorhanden();
 
-    String programmierkenntnisse();
+    Boolean programmierkenntnisse();
 
     String wuensche();
 

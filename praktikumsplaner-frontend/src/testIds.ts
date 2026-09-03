@@ -104,7 +104,8 @@ export const testIds = {
     cancelBtn: "praktikumsstelle-cancel-btn",
     acceptBtn: "praktikumsstelle-accept-btn",
     saveBtn: "praktikumsstelle-save-btn",
-    // form fields (shared between Studium/Ausbildung meldung and edit dialogs)
+    // form fields (shared between meldung and edit dialogs)
+    richtungSelect: "praktikumsstelle-richtung-select",
     dienststelleInput: "praktikumsstelle-dienststelle-input",
     dringlichkeitSelect: "praktikumsstelle-dringlichkeit-select",
     namentlicheAnforderungInput:
@@ -112,12 +113,9 @@ export const testIds = {
     planstelleRadio: "praktikumsstelle-planstelle-radio",
     projektarbeitRadio: "praktikumsstelle-projektarbeit-radio",
     taetigkeitenInput: "praktikumsstelle-taetigkeiten-input",
-    studienrichtungSelect: "praktikumsstelle-studienrichtung-select",
     studiensemesterSelect: "praktikumsstelle-studiensemester-select",
-    ausbildungsrichtungSelect: "praktikumsstelle-ausbildungsrichtung-select",
     ausbildungsjahrSelect: "praktikumsstelle-ausbildungsjahr-select",
-    programmierkenntnisseSelect:
-      "praktikumsstelle-programmierkenntnisse-select",
+    programmierkenntnisseRadio: "praktikumsstelle-programmierkenntnisse-radio",
     wuenscheInput: "praktikumsstelle-wuensche-input",
     ausbilderInput: "praktikumsstelle-ausbilder-input",
     ausbilderEmailInput: "praktikumsstelle-ausbilder-email-input",
