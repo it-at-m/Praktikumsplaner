@@ -50,6 +50,12 @@ public class ServiceTestHelper {
                 .zeitraum(ZeitraumDto.builder().startZeitpunkt(start).endZeitpunkt(end).build()).build();
     }
 
+    public Meldezeitraum meldezeitraumWithId(final UUID id) {
+        final Meldezeitraum meldezeitraum = new Meldezeitraum(null, null, null);
+        meldezeitraum.setId(id);
+        return meldezeitraum;
+    }
+
     public Praktikumsstelle createPraktikumsstelleEntity(
             final String dienststelle,
             final String ausbilder,

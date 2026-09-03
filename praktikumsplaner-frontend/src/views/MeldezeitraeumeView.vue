@@ -5,9 +5,11 @@
       page-header-text="Meldezeiträume"
     >
       <template #actions>
-        <create-meldezeitraum
-          @meldezeitraum-added="reloadMeldezeitraeume"
-        ></create-meldezeitraum>
+        <v-btn-group>
+          <create-meldezeitraum
+            @meldezeitraum-added="reloadMeldezeitraeume"
+          ></create-meldezeitraum>
+        </v-btn-group>
       </template>
     </page-title>
     <v-skeleton-loader

@@ -14,6 +14,7 @@ import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -56,13 +57,15 @@ public class PraktikumsstellenController {
     @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
     @GetMapping
     public List<PraktikumsstelleDto> getAllPraktiumsstellenInSpecificMeldezeitraum(
-            @RequestParam(name = "meldezeitraum", required = false) final String meldezeitraum) {
+            @RequestParam(name = "meldezeitraum") final String meldezeitraum) {
         if (MELDEZEITRAUM_CURRENT.equals(meldezeitraum)) {
             return praktikumsstellenService.getAllInCurrentMeldezeitraum();
         } else if (MELDEZEITRAUM_MOST_RECENT.equals(meldezeitraum)) {
             return praktikumsstellenService.getRecentPraktikumsstellen();
+        } else if (StringUtils.hasText(meldezeitraum)) {
+            return praktikumsstellenService.getPraktikumsstellen(UUID.fromString(meldezeitraum));
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wert '" + meldezeitraum + "' für Parameter 'meldezeitraum' ist nicht unterstützt.");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ungültiger Wert für Parameter 'meldezeitraum'.");
     }
 
     @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)

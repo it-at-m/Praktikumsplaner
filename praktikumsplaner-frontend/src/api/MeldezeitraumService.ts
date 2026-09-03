@@ -93,22 +93,13 @@ export default {
         }
       });
   },
-  getAllMeldezeitraeume(
-    loading: Ref<boolean> | undefined
-  ): Promise<Meldezeitraum[]> {
-    if (loading !== undefined) {
-      loading.value = true;
-    }
-    return fetch(`${API_BASE}${MELDEZEITRAUM_BASE}`, getGETConfig())
-      .then((response) => {
+  getAllMeldezeitraeume(): Promise<Meldezeitraum[]> {
+    return fetch(`${API_BASE}${MELDEZEITRAUM_BASE}`, getGETConfig()).then(
+      (response) => {
         defaultResponseHandler(response);
         return response.json();
-      })
-      .finally(() => {
-        if (loading !== undefined) {
-          loading.value = false;
-        }
-      });
+      }
+    );
   },
   deleteMeldezeitraumById(
     id: string | undefined,
@@ -136,5 +127,23 @@ export default {
       .finally(() => {
         loading.value = false;
       });
+  },
+  getCurrentMeldezeitraumFromList(
+    meldezeitraeume: Meldezeitraum[]
+  ): Meldezeitraum | undefined {
+    const now = new Date();
+    const currentDate = [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0"),
+    ].join("-");
+
+    return meldezeitraeume.find(
+      (mz) =>
+        mz.zeitraum.startZeitpunkt &&
+        mz.zeitraum.endZeitpunkt &&
+        mz.zeitraum.startZeitpunkt <= currentDate &&
+        currentDate <= mz.zeitraum.endZeitpunkt
+    );
   },
 };

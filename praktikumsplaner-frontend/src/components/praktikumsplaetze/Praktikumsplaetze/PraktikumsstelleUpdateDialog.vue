@@ -248,7 +248,7 @@
             <v-row>
               <v-col cols="5">
                 <meldezeitraum-select
-                  v-model="praktikumsstelle"
+                  v-model="praktikumsstelle.meldezeitraumID"
                   :meldezeitraueme="meldezeitraeume"
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
@@ -377,17 +377,22 @@ function closeDialog() {
 }
 
 function openDialog() {
-  MeldezeitraumService.getAllMeldezeitraeume(loading).then((zeitraume) => {
-    meldezeitraeume.value = zeitraume;
-    if (praktikumsstelle.value.meldezeitraumID == null) {
-      MeldezeitraumService.getCurrentMeldezeitraum(undefined).then(
-        (zeitraum) => {
-          praktikumsstelle.value.meldezeitraumID = zeitraum[0]?.id;
-        }
-      );
-    }
-    visible.value = true;
-  });
+  loading.value = true;
+  MeldezeitraumService.getAllMeldezeitraeume()
+    .then((zeitraume) => {
+      meldezeitraeume.value = zeitraume;
+      if (praktikumsstelle.value.meldezeitraumID == null) {
+        MeldezeitraumService.getCurrentMeldezeitraum(undefined).then(
+          (zeitraum) => {
+            praktikumsstelle.value.meldezeitraumID = zeitraum[0]?.id;
+          }
+        );
+      }
+      visible.value = true;
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 }
 
 function updatePraktikumsstelle() {

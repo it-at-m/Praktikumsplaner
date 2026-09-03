@@ -1,9 +1,6 @@
 <template>
   <v-row>
-    <v-col
-      cols="9"
-      class="d-flex flex-row"
-    >
+    <v-col class="d-flex flex-row">
       <v-btn
         v-if="backButtonUrl"
         :to="{ path: backButtonUrl }"
@@ -17,10 +14,11 @@
         {{ properties.pageHeaderText }}
       </h1>
     </v-col>
-    <v-col class="d-flex justify-end align-center">
-      <v-btn-group>
-        <slot name="actions" />
-      </v-btn-group>
+    <v-col
+      cols="4"
+      class="d-flex flex-row align-center justify-end"
+    >
+      <slot name="actions" />
     </v-col>
   </v-row>
 </template>

@@ -16,7 +16,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.List;
@@ -28,6 +27,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 public class MeldezeitraumServiceTest {
@@ -146,7 +146,7 @@ public class MeldezeitraumServiceTest {
         List<Meldezeitraum> meldezeitraume = List.of();
 
         when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
-        assertThrows(EntityNotFoundException.class, () -> service.getMostRecentPassedMeldezeitraum());
+        assertThrows(ResourceNotFoundException.class, () -> service.getMostRecentPassedMeldezeitraum());
     }
 
     @Test
