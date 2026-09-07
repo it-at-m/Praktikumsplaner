@@ -92,7 +92,7 @@ class ExcelExportServiceTest {
             assertEquals("Ja", studiumsSheet.getRow(3).getCell(10).getStringCellValue());
             assertEquals(studiumsstelle.dringlichkeit().name(), studiumsSheet.getRow(3).getCell(12).getStringCellValue());
             assertEquals("vorrangig 4., 5. Semester", studiumsSheet.getRow(3).getCell(13).getStringCellValue());
-            assertEquals(Bildungsrichtung.BSC.name(), studiumsSheet.getRow(3).getCell(14).getStringCellValue());
+            assertEquals(Bildungsrichtung.BWI.name(), studiumsSheet.getRow(3).getCell(14).getStringCellValue());
             assertEquals("Praktikumsplatz", studiumsSheet.getRow(3).getCell(11).getStringCellValue());
             assertEquals(studiumsstelle.assignedNwk().nachname(), studiumsSheet.getRow(3).getCell(15).getStringCellValue());
             assertEquals(studiumsstelle.assignedNwk().vorname(), studiumsSheet.getRow(3).getCell(16).getStringCellValue());
