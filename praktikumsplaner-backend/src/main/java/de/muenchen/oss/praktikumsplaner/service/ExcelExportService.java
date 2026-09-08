@@ -126,12 +126,10 @@ public class ExcelExportService {
         row.getCell(convertColStringToIndex("S")).setCellValue(NO);
     }
 
-    /*
-     * This method prepares the praktikumsstellen by making all praktikumsstellen with students assigned
-     * to them studiumspraktikumsstellen, regardless if they were ausbildungspraktikumsstellen before,
-     * and all praktikumsstellen with apprentices assigned to them ausbildungspraktikumsstellen.
+    /**
+     * Splits praktikumsstellen into two groups (Ausbildung, Studium) based on {@link Bildungsrichtung.Art}.
+     * The Bildungsrichtung of the assigned NWK is not relevant.
      */
-    @SuppressWarnings("CPD-END")
     private Pair<List<PraktikumsstelleDto>, List<PraktikumsstelleDto>> preparePraktikumsstellen() {
         final List<PraktikumsstelleDto> ausbildungsPraktikumsstellen = new ArrayList<>();
         final List<PraktikumsstelleDto> studiumsPraktikumsstellen = new ArrayList<>();

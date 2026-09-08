@@ -33,7 +33,6 @@
           <v-btn
             variant="text"
             :disabled="disabled"
-            is-required
             @click="removeSecondAusbilder"
           >
             zweiten Ausbilder entfernen
@@ -42,6 +41,7 @@
       </v-row>
       <ausbilder-form
         v-model="secondAusbilder"
+        is-required
         :show-ausbildung-inputs="showAusbildungInputs"
         :disabled="disabled"
       />
