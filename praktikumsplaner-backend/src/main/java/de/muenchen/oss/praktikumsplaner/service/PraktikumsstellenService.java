@@ -108,7 +108,7 @@ public class PraktikumsstellenService {
                 || praktikumsstelle.isPlanstelleVorhanden() != praktikumsstelleDto.planstelleVorhanden()
                 || !praktikumsstelle.getMeldezeitraumID().equals(praktikumsstelleDto.meldezeitraumID())
                 || praktikumsstelle.isProjektarbeit() != praktikumsstelleDto.projektarbeit()
-                || !Objects.equals(praktikumsstelle.getProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
+                || !Objects.equals(praktikumsstelle.isProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
                 || !Objects.equals(praktikumsstelle.getAusbildungsjahr(), praktikumsstelleDto.ausbildungsjahr())
                 || !Objects.equals(praktikumsstelle.getStudiensemester(), praktikumsstelleDto.studiensemester())
                 || praktikumsstelle.getRichtung() != praktikumsstelleDto.richtung()

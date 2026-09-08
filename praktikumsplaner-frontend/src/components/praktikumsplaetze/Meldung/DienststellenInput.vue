@@ -49,8 +49,8 @@ const conditionalRequiredLabel = computed(() => {
 const dienststelleRule = [
   validationRules.notEmptyRule("Darf nicht leer sein."),
   validationRules.maxLengthRule(
-    10,
-    "Die Dienststelle darf nicht länger als 10 Zeichen sein."
+    20,
+    "Die Dienststelle darf nicht länger als 20 Zeichen sein."
   ),
   validationRules.regexRule(
     /^[A-Z]{3,4}-[A-Za-z\d-]+$/,

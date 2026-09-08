@@ -21,7 +21,7 @@ public record PraktikumsstelleDto(
         boolean projektarbeit,
         boolean planstelleVorhanden,
 
-        String programmierkenntnisse,
+        Boolean programmierkenntnisse,
         String wuensche,
         Set<Ausbildungsjahr> ausbildungsjahr,
         Set<Studiensemester> studiensemester,
@@ -32,5 +32,5 @@ public record PraktikumsstelleDto(
         boolean minderjaehrigMoeglich,
 
         NwkDto assignedNwk,
-        UUID meldezeitraumID) {
+        UUID meldezeitraumID) implements PraktikumsstelleI {
 }

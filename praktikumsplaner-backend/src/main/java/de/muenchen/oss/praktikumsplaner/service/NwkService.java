@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class NwkService {
+    public static final String NWK_NOT_FOUND = "Nachwuchskraft nicht gefunden.";
 
     private final NwkMapper nwkMapper;
     private final NwkRepository nwkRepository;
@@ -35,12 +36,16 @@ public class NwkService {
     }
 
     public List<NwkDto> findAllActiveNwks() {
-        return nwkRepository.findNwksByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDto).toList();
+        return nwkRepository.findAllByActiveIsTrueOrderByNachname().stream().map(nwkMapper::toDto).toList();
+    }
+
+    public List<NwkDto> findAllInactiveNwks() {
+        return nwkRepository.findAllByActiveIsFalse().stream().map(nwkMapper::toDto).toList();
     }
 
     public List<NwkDto> findAllUnassignedNwksInCurrentMeldezeitraum() {
         final UUID meldezeitraumId = meldezeitraumService.getMostRecentPassedMeldezeitraum().id();
-        return nwkRepository.findAllUnassignedInSpecificMeldzeitraum(meldezeitraumId).stream().map(nwkMapper::toDto).toList();
+        return nwkRepository.findAllUnassignedInSpecificMeldezeitraum(meldezeitraumId).stream().map(nwkMapper::toDto).toList();
     }
 
     public List<NwkDto> findAllNwks() {
@@ -57,5 +62,12 @@ public class NwkService {
 
     public Nwk getNwk(final UUID id) {
         return nwkRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    public void deleteNwk(final UUID nwkId) {
+        if (!nwkRepository.existsById(nwkId)) {
+            throw new ResourceNotFoundException(NWK_NOT_FOUND);
+        }
+        nwkRepository.deleteById(nwkId);
     }
 }

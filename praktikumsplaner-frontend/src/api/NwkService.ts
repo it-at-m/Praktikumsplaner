@@ -3,6 +3,7 @@ import type { Ref } from "vue";
 import { Levels } from "@/api/Error";
 import {
   defaultResponseHandler,
+  getDELETEConfig,
   getGETConfig,
   getPOSTConfig,
   getPUTConfig,
@@ -67,31 +68,20 @@ export default {
       reader.readAsDataURL(excelDatei);
     });
   },
-  getAllActiveNwks(loading: Ref<boolean>): Promise<Nwk[]> {
-    loading.value = true;
-    return fetch(`${API_BASE}${NWK_BASE}?status=aktiv`, getGETConfig())
-      .then((response) => {
-        defaultResponseHandler(response);
-        return response.json();
-      })
-      .finally(() => {
-        loading.value = false;
-      });
+  getAllActiveNwks(): Promise<Nwk[]> {
+    return fetch(`${API_BASE}${NWK_BASE}`, getGETConfig()).then((response) => {
+      defaultResponseHandler(response);
+      return response.json();
+    });
   },
-  getAllUnassignedNwks(loading: Ref<boolean> | undefined): Promise<Nwk[]> {
-    if (loading !== undefined) {
-      loading.value = true;
-    }
-    return fetch(`${API_BASE}${NWK_BASE}?unassigned=true`, getGETConfig())
-      .then((response) => {
-        defaultResponseHandler(response);
-        return response.json();
-      })
-      .finally(() => {
-        if (loading !== undefined) {
-          loading.value = false;
-        }
-      });
+  getAllUnassignedNwks(): Promise<Nwk[]> {
+    return fetch(
+      `${API_BASE}${NWK_BASE}?state=UNASSIGNED`,
+      getGETConfig()
+    ).then((response) => {
+      defaultResponseHandler(response);
+      return response.json();
+    });
   },
   updateNwk(nwk: Nwk, loading: Ref<boolean>): Promise<void> {
     loading.value = true;
@@ -109,5 +99,16 @@ export default {
       .finally(() => {
         loading.value = false;
       });
+  },
+  deleteNwk(nwkId: string): Promise<void> {
+    return fetch(`${API_BASE}${NWK_BASE}/${nwkId}`, getDELETEConfig({})).then(
+      (response) => {
+        defaultResponseHandler(response);
+        useSnackbarStore().showMessage({
+          message: "☑ NWK erfolgreich gelöscht",
+          level: Levels.SUCCESS,
+        });
+      }
+    );
   },
 };
