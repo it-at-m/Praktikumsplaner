@@ -294,15 +294,15 @@ const meldezeitraeume = ref<Meldezeitraum[]>([
   new Meldezeitraum("", new Zeitraum(), ""),
 ]);
 
+const praktikumsstelle = ref<Praktikumsstelle>(
+  Praktikumsstelle.clone(properties.modelValue)
+);
+
 const emits =
   defineEmits<
     (e: "update:modelValue", praktikumsstelleToUpdate: Praktikumsstelle) => void
   >();
 
-const praktikumsstelle = computed({
-  get: () => properties.modelValue,
-  set: (newValue) => emits("update:modelValue", newValue),
-});
 const isAusbildung = computed<boolean>(() => {
   if (!praktikumsstelle.value.richtung) {
     return false;
@@ -317,6 +317,7 @@ function closeDialog() {
 }
 
 function openDialog() {
+  praktikumsstelle.value = Praktikumsstelle.clone(properties.modelValue);
   MeldezeitraumService.getAllMeldezeitraeume(loading).then((zeitraume) => {
     meldezeitraeume.value = zeitraume;
     if (praktikumsstelle.value.meldezeitraumID == null) {

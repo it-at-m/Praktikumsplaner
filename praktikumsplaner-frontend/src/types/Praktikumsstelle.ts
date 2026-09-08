@@ -25,4 +25,32 @@ export default class Praktikumsstelle {
     public assignedNwk?: Nwk,
     public meldezeitraumID?: string
   ) {}
+
+  static clone(stelle: Praktikumsstelle): Praktikumsstelle {
+    return new Praktikumsstelle(
+      stelle.dienststelle,
+      stelle.richtung,
+      stelle.taetigkeiten,
+      stelle.dringlichkeit,
+      stelle.projektarbeit,
+      stelle.planstelleVorhanden,
+      stelle.namentlicheAnforderung,
+      stelle.programmierkenntnisse,
+      stelle.ausbildungsjahr ? [...stelle.ausbildungsjahr] : undefined,
+      stelle.studiensemester ? [...stelle.studiensemester] : undefined,
+      stelle.wuensche,
+      stelle.ausbilder.map(
+        (ausbilder) =>
+          new Ausbilder(
+            ausbilder.name,
+            ausbilder.email,
+            ausbilder.erwFuehrungszeugnisVorhanden,
+            ausbilder.minderjaehrigMoeglich
+          )
+      ),
+      stelle.id,
+      stelle.assignedNwk,
+      stelle.meldezeitraumID
+    );
+  }
 }
