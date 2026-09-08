@@ -1,6 +1,6 @@
 <template>
   <v-radio-group
-    v-model="stelle.minderjaehrigMoeglich"
+    v-model="model"
     class="radios custom-label"
     inline
     :rules="conditionalRequiredRules"
@@ -25,13 +25,11 @@ import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
 import { testIds } from "@/testIds";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
 import { YesNoBoolean } from "@/types/YesNoBoolean";
 
 const validationRules = useRules();
 
 interface Properties {
-  modelValue: Praktikumsstelle;
   isRequired: boolean;
   requiredSymbol?: string;
   disabled?: boolean;
@@ -40,9 +38,7 @@ const properties = withDefaults(defineProps<Properties>(), {
   requiredSymbol: "*",
   disabled: false,
 });
-
-const emits =
-  defineEmits<(e: "update:modelValue", model: Praktikumsstelle) => void>();
+const model = defineModel<boolean>();
 
 const label = "Betreuung minderjährige NWK möglich?";
 const conditionalRequiredLabel = computed(() => {
@@ -54,17 +50,6 @@ const booleanRule = [
 ];
 const conditionalRequiredRules = computed(() => {
   return properties.isRequired ? booleanRule : undefined;
-});
-
-const stelle = computed({
-  // getter
-  get() {
-    return properties.modelValue;
-  },
-  // setter
-  set(newValue) {
-    emits("update:modelValue", newValue);
-  },
 });
 </script>
 

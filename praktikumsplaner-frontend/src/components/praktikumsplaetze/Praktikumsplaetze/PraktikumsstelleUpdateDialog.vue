@@ -181,60 +181,12 @@
               </v-col>
             </v-row>
           </v-sheet>
-          <v-sheet
-            border
-            rounded
+          <ausbilder-sheet
+            v-model="praktikumsstelle.ausbilder"
+            :show-ausbildung-inputs="isAusbildung"
+            :disabled="hasAssignedNwk"
             class="pa-3 mb-3"
-          >
-            <v-row>
-              <v-col>
-                <span class="text-h6">örtliche*r Ausbilder*in</span>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
-                <ausbilder-input
-                  v-model="praktikumsstelle"
-                  :is-required="true"
-                  :required-symbol="requiredFieldSymbol"
-                  :disabled="hasAssignedNwk"
-                ></ausbilder-input>
-              </v-col>
-              <v-col cols="1" />
-              <v-col>
-                <ausbilder-email-input
-                  v-model="praktikumsstelle"
-                  :is-required="true"
-                  :required-symbol="requiredFieldSymbol"
-                  :disabled="hasAssignedNwk"
-                ></ausbilder-email-input>
-              </v-col>
-              <v-col cols="1" />
-            </v-row>
-            <v-row>
-              <v-col>
-                <ausbilder-erw-fuehrungszeugnis-checkbox
-                  v-model="praktikumsstelle"
-                  :disabled="hasAssignedNwk"
-                ></ausbilder-erw-fuehrungszeugnis-checkbox>
-              </v-col>
-              <v-col cols="1" />
-              <v-col v-if="isAusbildung">
-                <minderjaehrig-moeglich-radio-group
-                  v-model="praktikumsstelle"
-                  :is-required="true"
-                  :required-symbol="requiredFieldSymbol"
-                  :disabled="hasAssignedNwk"
-                ></minderjaehrig-moeglich-radio-group>
-              </v-col>
-              <v-col
-                v-if="isAusbildung"
-                cols="1"
-              >
-                <minderjaehrig-moeglich-tooltip></minderjaehrig-moeglich-tooltip>
-              </v-col>
-            </v-row>
-          </v-sheet>
+          />
           <v-sheet
             border
             rounded
@@ -293,16 +245,12 @@ import MeldezeitraumService from "@/api/MeldezeitraumService";
 import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import BildungsrichtungSelect from "@/components/common/BildungsrichtungSelect.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
-import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
-import AusbilderErwFuehrungszeugnisCheckbox from "@/components/praktikumsplaetze/Meldung/AusbilderErwFuehrungszeugnisCheckbox.vue";
-import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
+import AusbilderSheet from "@/components/praktikumsplaetze/Meldung/AusbilderSheet.vue";
 import AusbildungsJahrSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsJahrSelect.vue";
 import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
 import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
 import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
-import MinderjaehrigMoeglichRadioGroup from "@/components/praktikumsplaetze/Meldung/MinderjaehrigMoeglichRadioGroup.vue";
-import MinderjaehrigMoeglichTooltip from "@/components/praktikumsplaetze/Meldung/MinderjaehrigMoeglichTooltip.vue";
 import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
 import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
 import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";
@@ -328,14 +276,15 @@ const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
 const requiredFieldSymbol = "*";
 
-interface Properties {
-  modelValue: Praktikumsstelle;
-  iconOnly?: boolean;
-}
-
-const properties = withDefaults(defineProps<Properties>(), {
-  iconOnly: false,
-});
+const properties = withDefaults(
+  defineProps<{
+    modelValue: Praktikumsstelle;
+    iconOnly?: boolean;
+  }>(),
+  {
+    iconOnly: false,
+  }
+);
 
 const hasAssignedNwk = computed(() => {
   return properties.modelValue.assignedNwk != undefined;

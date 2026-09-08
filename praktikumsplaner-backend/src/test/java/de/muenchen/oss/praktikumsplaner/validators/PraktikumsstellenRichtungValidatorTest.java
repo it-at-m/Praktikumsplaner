@@ -3,6 +3,7 @@ package de.muenchen.oss.praktikumsplaner.validators;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbilderDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
@@ -12,6 +13,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -113,8 +115,7 @@ class PraktikumsstellenRichtungValidatorTest {
     private static CreatePraktikumsstelleDto.CreatePraktikumsstelleDtoBuilder createBaseBuilder() {
         return CreatePraktikumsstelleDto.builder()
                 .dienststelle("ITM-TEST")
-                .oertlicheAusbilder("Max Mustermann")
-                .email("max.mustermann@example.org")
+                .ausbilder(List.of(new AusbilderDto("Max Mustermann", "max.mustermann@example.org", false, false)))
                 .taetigkeiten("Testtaetigkeiten")
                 .dringlichkeit(Dringlichkeit.DRINGEND);
     }

@@ -8,10 +8,12 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.security.Authorities;
 import java.util.List;
+import java.util.UUID;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -54,6 +56,27 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
 
             Assertions.assertThat(richtungen).doesNotContainNull();
             Assertions.assertThat(richtungen).containsOnly(Bildungsrichtung.values());
+        }
+
+        @Test
+        void hasOneOrTwoAusbilderAsConfiguredInTestdata() throws Exception {
+            final MockHttpServletRequestBuilder request = createGetRequestWithZeitraum("current");
+
+            final MvcResult requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
+            final List<PraktikumsstelleDto> responseBody = objectMapper.readValue(
+                    requestResult.getResponse().getContentAsByteArray(),
+                    praktikumsstellenRef);
+
+            Assertions.assertThat(responseBody)
+                    .filteredOn(stelle -> stelle.id().equals(UUID.fromString("00000000-0000-0000-0000-000000000001")))
+                    .singleElement()
+                    .extracting(stelle -> stelle.ausbilder().size())
+                    .isEqualTo(2);
+            Assertions.assertThat(responseBody)
+                    .filteredOn(stelle -> stelle.id().equals(UUID.fromString("00000000-0000-0000-0000-000000000002")))
+                    .singleElement()
+                    .extracting(stelle -> stelle.ausbilder().size())
+                    .isEqualTo(1);
         }
     }
 
