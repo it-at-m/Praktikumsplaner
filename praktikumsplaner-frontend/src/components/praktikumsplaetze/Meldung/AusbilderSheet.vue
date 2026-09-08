@@ -33,6 +33,7 @@
           <v-btn
             variant="text"
             :disabled="disabled"
+            is-required
             @click="removeSecondAusbilder"
           >
             zweiten Ausbilder entfernen

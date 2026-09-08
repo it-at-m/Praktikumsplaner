@@ -137,9 +137,7 @@ public class ExcelExportService {
         final List<PraktikumsstelleDto> studiumsPraktikumsstellen = new ArrayList<>();
 
         for (final PraktikumsstelleDto praktikumsstelle : praktikumsstellenService.getRecentPraktikumsstellen()) {
-            final Bildungsrichtung.Art art = praktikumsstelle.assignedNwk() != null ? praktikumsstelle.assignedNwk().richtung().getArt()
-                    : praktikumsstelle.richtung().getArt();
-            switch (art) {
+            switch (praktikumsstelle.richtung().getArt()) {
             case AUSBILDUNG -> ausbildungsPraktikumsstellen.add(praktikumsstelle);
             case STUDIUM -> studiumsPraktikumsstellen.add(praktikumsstelle);
             }
