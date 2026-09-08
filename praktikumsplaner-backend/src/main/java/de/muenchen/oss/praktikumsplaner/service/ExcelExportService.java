@@ -127,7 +127,8 @@ public class ExcelExportService {
     }
 
     /**
-     * Splits praktikumsstellen into two groups (Ausbildung, Studium) based on {@link Bildungsrichtung.Art}.
+     * Splits praktikumsstellen into two groups (Ausbildung, Studium) based on
+     * {@link Bildungsrichtung.Art}.
      * The Bildungsrichtung of the assigned NWK is not relevant.
      */
     private Pair<List<PraktikumsstelleDto>, List<PraktikumsstelleDto>> preparePraktikumsstellen() {
