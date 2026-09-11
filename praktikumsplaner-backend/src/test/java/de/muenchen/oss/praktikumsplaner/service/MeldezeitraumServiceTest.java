@@ -20,6 +20,7 @@ import jakarta.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -206,5 +207,30 @@ public class MeldezeitraumServiceTest {
         service.deleteMeldezeitraumById(id);
 
         verify(repository, times(1)).deleteById(id);
+    }
+
+    @Nested
+    class CheckExists {
+
+        @Test
+        void giveExistingId_thenDoesNotThrow() {
+            final UUID id = UUID.randomUUID();
+            when(repository.existsById(id)).thenReturn(true);
+
+            assertDoesNotThrow(() -> service.checkExists(id));
+            verify(repository).existsById(id);
+        }
+
+        @Test
+        void giveMissingId_thenThrowsResourceNotFoundException() {
+            final UUID id = UUID.randomUUID();
+            when(repository.existsById(id)).thenReturn(false);
+
+            final ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
+                    () -> service.checkExists(id));
+
+            assertEquals("Meldezeitraum mit id '%s' existiert nicht".formatted(id), exception.getMessage());
+            verify(repository).existsById(id);
+        }
     }
 }

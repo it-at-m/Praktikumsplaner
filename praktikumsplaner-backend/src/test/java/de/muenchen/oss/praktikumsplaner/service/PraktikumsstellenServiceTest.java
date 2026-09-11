@@ -58,6 +58,7 @@ class PraktikumsstellenServiceTest {
     private NwkService nwkService;
 
     @InjectMocks
+    @Spy
     private PraktikumsstellenService service;
 
     private final ServiceTestHelper helper = new ServiceTestHelper();
@@ -186,7 +187,6 @@ class PraktikumsstellenServiceTest {
 
         List<PraktikumsstelleDto> result = service.getRecentPraktikumsstellen();
 
-        assertNotNull(result);
         assertEquals(5, result.size());
     }
 
@@ -220,7 +220,6 @@ class PraktikumsstellenServiceTest {
 
         List<PraktikumsstelleDto> result = service.getRecentPraktikumsstellen();
 
-        assertNotNull(result);
         assertEquals(3, result.size());
     }
 
@@ -251,8 +250,26 @@ class PraktikumsstellenServiceTest {
 
         List<PraktikumsstelleDto> result = service.getAllInCurrentMeldezeitraum();
 
-        assertNotNull(result);
         assertEquals(5, result.size());
+    }
+
+    @Test
+    void giveMeldezeitraumId_thenReturnsSortedPraktikumsstellen() {
+        final UUID meldezeitraumId = UUID.randomUUID();
+        final Praktikumsstelle first = helper.createPraktikumsstelleEntity("B-Dienststelle", "Ausbilder", "b@test.de", "Alles", null,
+                Dringlichkeit.NACHRANGIG, Bildungsrichtung.BWI, null, Set.of(Studiensemester.SEMESTER1), false, false, false,
+                meldezeitraumId, null);
+        final Praktikumsstelle second = helper.createPraktikumsstelleEntity("A-Dienststelle", "Ausbilder", "a@test.de", "Alles", null,
+                Dringlichkeit.NACHRANGIG, Bildungsrichtung.BWI, null, Set.of(Studiensemester.SEMESTER1), false, false, false,
+                meldezeitraumId, null);
+        when(praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumId)).thenReturn(List.of(first, second));
+
+        final List<PraktikumsstelleDto> result = service.getPraktikumsstellen(meldezeitraumId);
+
+        assertEquals(List.of("A-Dienststelle", "B-Dienststelle"), result.stream().map(PraktikumsstelleDto::dienststelle).toList());
+        verify(meldezeitraumService).checkExists(meldezeitraumId);
+        verify(praktikumsstellenRepository).findAllByMeldezeitraumID(meldezeitraumId);
+        verify(service).filterPraktikumsstellenForCurrentRole(any());
     }
 
     @Test

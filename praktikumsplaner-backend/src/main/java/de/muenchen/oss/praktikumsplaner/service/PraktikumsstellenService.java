@@ -128,7 +128,7 @@ public class PraktikumsstellenService {
         return filterPraktikumsstellenForCurrentRole(praktikumsstellen);
     }
 
-    private List<PraktikumsstelleDto> filterPraktikumsstellenForCurrentRole(final List<PraktikumsstelleDto> praktikumsstellen) {
+    protected List<PraktikumsstelleDto> filterPraktikumsstellenForCurrentRole(final List<PraktikumsstelleDto> praktikumsstellen) {
         if (AuthUtils.isAusbildungsleitung()) {
             return praktikumsstellen;
         }

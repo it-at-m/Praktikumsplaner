@@ -12,6 +12,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +40,7 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
         };
 
         @ParameterizedTest(name = "when meldezeitraum is {0}")
-        @ValueSource(strings = { "current", "most_recent" })
+        @ValueSource(strings = { "current", "most_recent", "00000000-0000-0000-0000-000000000001" })
         void hasStellenOfAllRichtungen(final String meldezeitraumAlias) throws Exception {
             final MockHttpServletRequestBuilder request = createGetRequestWithZeitraum(meldezeitraumAlias);
 
@@ -54,6 +55,13 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
 
             Assertions.assertThat(richtungen).doesNotContainNull();
             Assertions.assertThat(richtungen).containsOnly(Bildungsrichtung.values());
+        }
+
+        @Test
+        void giveMissingMeldezeitraumId_thenReturnsNotFound() throws Exception {
+            final MockHttpServletRequestBuilder request = createGetRequestWithZeitraum("00000000-0000-0000-0000-000000000099");
+
+            mockMvc.perform(request).andExpect(status().isNotFound());
         }
     }
 
