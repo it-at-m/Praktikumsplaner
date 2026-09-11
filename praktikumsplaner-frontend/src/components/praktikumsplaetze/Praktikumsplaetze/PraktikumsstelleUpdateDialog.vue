@@ -200,7 +200,7 @@
             <v-row>
               <v-col cols="5">
                 <meldezeitraum-select
-                  v-model="praktikumsstelle"
+                  v-model="praktikumsstelle.meldezeitraumID"
                   :meldezeitraueme="meldezeitraeume"
                   :is-required="true"
                   :required-symbol="requiredFieldSymbol"
@@ -261,7 +261,6 @@ import SemesterSelect from "@/components/praktikumsplaetze/Meldung/Studiensemest
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
 import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
 import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
-import emitter from "@/stores/eventBus";
 import { testIds } from "@/testIds";
 import {
   findBildungsrichtung,
@@ -318,17 +317,22 @@ function closeDialog() {
 
 function openDialog() {
   praktikumsstelle.value = Praktikumsstelle.clone(properties.modelValue);
-  MeldezeitraumService.getAllMeldezeitraeume(loading).then((zeitraume) => {
-    meldezeitraeume.value = zeitraume;
-    if (praktikumsstelle.value.meldezeitraumID == null) {
-      MeldezeitraumService.getCurrentMeldezeitraum(undefined).then(
-        (zeitraum) => {
-          praktikumsstelle.value.meldezeitraumID = zeitraum[0]?.id;
-        }
-      );
-    }
-    visible.value = true;
-  });
+  loading.value = true;
+  MeldezeitraumService.getAllMeldezeitraeume()
+    .then((zeitraume) => {
+      meldezeitraeume.value = zeitraume;
+      if (praktikumsstelle.value.meldezeitraumID == null) {
+        MeldezeitraumService.getCurrentMeldezeitraum(undefined).then(
+          (zeitraum) => {
+            praktikumsstelle.value.meldezeitraumID = zeitraum[0]?.id;
+          }
+        );
+      }
+      visible.value = true;
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 }
 
 function updatePraktikumsstelle() {
@@ -340,7 +344,6 @@ function updatePraktikumsstelle() {
       loading
     ).then(() => {
       emits("update:modelValue", praktikumsstelle.value);
-      emitter.emit("praktikumsstelleUpdated");
       closeDialog();
     });
   });

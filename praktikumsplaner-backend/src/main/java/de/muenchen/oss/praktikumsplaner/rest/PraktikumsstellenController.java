@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @AllArgsConstructor
@@ -56,13 +55,13 @@ public class PraktikumsstellenController {
     @PreAuthorize(HAS_ANY_ROLE_AUSBILDUNGSLEITUNG_AUSBILDER)
     @GetMapping
     public List<PraktikumsstelleDto> getAllPraktiumsstellenInSpecificMeldezeitraum(
-            @RequestParam(name = "meldezeitraum", required = false) final String meldezeitraum) {
+            @RequestParam(name = "meldezeitraum") final String meldezeitraum) {
         if (MELDEZEITRAUM_CURRENT.equals(meldezeitraum)) {
             return praktikumsstellenService.getAllInCurrentMeldezeitraum();
         } else if (MELDEZEITRAUM_MOST_RECENT.equals(meldezeitraum)) {
             return praktikumsstellenService.getRecentPraktikumsstellen();
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wert '" + meldezeitraum + "' für Parameter 'meldezeitraum' ist nicht unterstützt.");
+        return praktikumsstellenService.getPraktikumsstellen(UUID.fromString(meldezeitraum));
     }
 
     @PreAuthorize(HAS_ROLE_AUSBILDUNGSLEITUNG)

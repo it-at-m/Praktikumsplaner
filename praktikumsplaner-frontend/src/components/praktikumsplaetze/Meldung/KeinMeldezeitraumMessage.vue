@@ -14,11 +14,7 @@ import { mdiInformationOutline } from "@mdi/js";
       />
     </v-col>
     <v-col class="d-flex align-center">
-      <p class="mt-5">
-        Ihre örtliche Ausbildungsleitung hat die Meldung von Stellen noch nicht
-        freigegeben, daher können aktuell leider noch keine Praktikumsplätze
-        gemeldet werden.
-      </p>
+      <p class="mt-5">Es gibt keinen aktuellen Meldezeitraum.</p>
     </v-col>
   </v-row>
 </template>

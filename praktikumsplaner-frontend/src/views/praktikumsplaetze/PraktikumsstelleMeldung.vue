@@ -2,7 +2,7 @@
   <v-container class="pa-xl-8">
     <page-title
       back-button-url="/praktikumsplaetze"
-      page-header-text="Praktikumsplatz für Auszubildende"
+      page-header-text="Praktikumsplatz melden"
       class="mb-2"
     ></page-title>
     <div v-if="loadingSite">
@@ -185,7 +185,7 @@
           <v-row>
             <v-col cols="5">
               <meldezeitraum-select
-                v-model="praktikumsstelle"
+                v-model="praktikumsstelle.meldezeitraumID"
                 :meldezeitraueme="meldezeitraeume"
                 :is-required="true"
                 :required-symbol="requiredFieldSymbol"
@@ -373,11 +373,3 @@ function uploadPraktikumsstelle() {
   });
 }
 </script>
-
-<style>
-.box {
-  margin: 3%;
-  border: 2px solid #0000001a;
-  border-radius: 5px;
-}
-</style>

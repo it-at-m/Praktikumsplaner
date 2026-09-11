@@ -10,7 +10,6 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.UpdatePraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.PraktikumsstellenMapper;
 import de.muenchen.oss.praktikumsplaner.exception.ResourceConflictException;
-import de.muenchen.oss.praktikumsplaner.repository.NwkRepository;
 import de.muenchen.oss.praktikumsplaner.repository.PraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.security.AuthUtils;
 import java.util.Comparator;
@@ -31,7 +30,7 @@ public class PraktikumsstellenService {
     private final PraktikumsstellenMapper praktikumsstellenMapper;
     private final PraktikumsstellenRepository praktikumsstellenRepository;
     private final MeldezeitraumService meldezeitraumService;
-    private final NwkRepository nwkRepository;
+    private final NwkService nwkService;
 
     public PraktikumsstelleDto normalizeAndSavePraktikumsstelle(final CreatePraktikumsstelleDto createPraktikumsstelleDto) {
         final Praktikumsstelle entityPraktikumsstelle = praktikumsstellenMapper.toEntity(createPraktikumsstelleDto,
@@ -48,7 +47,7 @@ public class PraktikumsstellenService {
     }
 
     public PraktikumsstelleDto assignNwk(final UUID praktikumsstellenID, final UUID nwkID) {
-        final Nwk assignedNwk = nwkRepository.findById(nwkID).orElseThrow();
+        final Nwk assignedNwk = nwkService.getNwk(nwkID);
         final Praktikumsstelle praktikumsstelle = findByIdOrThrow(praktikumsstellenID);
 
         if (praktikumsstelle.getAssignedNwk() != null) {
@@ -139,14 +138,16 @@ public class PraktikumsstellenService {
         return true;
     }
 
-    private List<PraktikumsstelleDto> getPraktikumsstellen(final UUID meldezeitraumID) {
-        return praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID).stream()
+    public List<PraktikumsstelleDto> getPraktikumsstellen(final UUID meldezeitraumID) {
+        meldezeitraumService.checkExists(meldezeitraumID);
+        final List<PraktikumsstelleDto> praktikumsstellen = praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID).stream()
                 .map(praktikumsstellenMapper::toDto)
                 .sorted(Comparator.comparing(PraktikumsstelleDto::dienststelle))
                 .toList();
+        return filterPraktikumsstellenForCurrentRole(praktikumsstellen);
     }
 
-    private List<PraktikumsstelleDto> filterPraktikumsstellenForCurrentRole(final List<PraktikumsstelleDto> praktikumsstellen) {
+    protected List<PraktikumsstelleDto> filterPraktikumsstellenForCurrentRole(final List<PraktikumsstelleDto> praktikumsstellen) {
         if (AuthUtils.isAusbildungsleitung()) {
             return praktikumsstellen;
         }

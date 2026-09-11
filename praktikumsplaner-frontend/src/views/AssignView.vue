@@ -78,7 +78,6 @@ import WarningDialog from "@/components/common/WarningDialog.vue";
 import { useSecurity } from "@/composables/security";
 import { useWarnings } from "@/composables/warningGenerator";
 import router from "@/plugins/router";
-import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import { testIds } from "@/testIds";
 import Nwk from "@/types/Nwk";
@@ -152,10 +151,6 @@ onMounted(() => {
     );
   }
   getAllActiveNwks();
-  getAllPraktikumsstellenInMostRecentMeldezeitraum();
-});
-
-emitter.on("praktikumsstelleUpdated", () => {
   getAllPraktikumsstellenInMostRecentMeldezeitraum();
 });
 

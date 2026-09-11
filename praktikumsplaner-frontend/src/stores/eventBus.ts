@@ -4,8 +4,7 @@ export type Eventtypes =
   | "assignedNwk"
   | "unassignedNwk"
   | "nwkCreated"
-  | "nwkDeleted"
-  | "praktikumsstelleUpdated";
+  | "nwkDeleted";
 
 const emitter = mitt<Record<Eventtypes, unknown>>();
 

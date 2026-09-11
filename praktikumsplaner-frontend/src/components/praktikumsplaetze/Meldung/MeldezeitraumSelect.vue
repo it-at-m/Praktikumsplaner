@@ -1,6 +1,6 @@
 <template>
   <v-select
-    v-model="stelle.meldezeitraumID"
+    v-model="model"
     :label="conditionalRequiredLabel"
     item-value="id"
     item-title="zeitraumName"
@@ -10,7 +10,7 @@
     :clearable="!isRequired"
     :disabled="disabled"
     :data-test="testIds.praktikumsstelle.meldezeitraumSelect"
-    @select="onClick"
+    :loading="loading"
   >
     <template #item="{ props, item }">
       <v-list-item v-bind="props">
@@ -36,24 +36,22 @@ import { useFormatter } from "@/composables/formatter";
 import { useRules } from "@/composables/rules";
 import { testIds } from "@/testIds";
 import Meldezeitraum from "@/types/Meldezeitraum";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
 interface Properties {
-  modelValue: Praktikumsstelle;
   meldezeitraueme: Meldezeitraum[];
   isRequired: boolean;
   requiredSymbol?: string;
   disabled?: boolean;
+  loading?: boolean;
 }
 const properties = withDefaults(defineProps<Properties>(), {
   requiredSymbol: "*",
   disabled: false,
+  loading: false,
 });
-
-const emits =
-  defineEmits<(e: "update:modelValue", stelle: Praktikumsstelle) => void>();
+const model = defineModel<string | null>();
 
 const label = "Meldezeitraum";
 const conditionalRequiredLabel = computed(() => {
@@ -66,20 +64,4 @@ const conditionalRequiredRules = computed(() => {
 });
 
 const formatter = useFormatter();
-
-const stelle = computed({
-  // getter
-  get() {
-    return properties.modelValue;
-  },
-  // setter
-  set(newValue) {
-    emits("update:modelValue", newValue);
-  },
-});
-
-function onClick(item: Meldezeitraum) {
-  stelle.value.meldezeitraumID = item.id;
-  emits("update:modelValue", stelle.value);
-}
 </script>

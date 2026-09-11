@@ -41,7 +41,7 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
         };
 
         @ParameterizedTest(name = "when meldezeitraum is {0}")
-        @ValueSource(strings = { "current", "most_recent" })
+        @ValueSource(strings = { "current", "most_recent", "00000000-0000-0000-0000-000000000001" })
         void hasStellenOfAllRichtungen(final String meldezeitraumAlias) throws Exception {
             final MockHttpServletRequestBuilder request = createGetRequestWithZeitraum(meldezeitraumAlias);
 
@@ -56,6 +56,13 @@ class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdat
 
             Assertions.assertThat(richtungen).doesNotContainNull();
             Assertions.assertThat(richtungen).containsOnly(Bildungsrichtung.values());
+        }
+
+        @Test
+        void giveMissingMeldezeitraumId_thenReturnsNotFound() throws Exception {
+            final MockHttpServletRequestBuilder request = createGetRequestWithZeitraum("00000000-0000-0000-0000-000000000099");
+
+            mockMvc.perform(request).andExpect(status().isNotFound());
         }
 
         @Test
