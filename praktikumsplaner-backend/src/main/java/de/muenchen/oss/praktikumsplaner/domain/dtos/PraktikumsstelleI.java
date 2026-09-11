@@ -4,6 +4,7 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
+import java.util.List;
 import java.util.Set;
 
 public interface PraktikumsstelleI {
@@ -29,12 +30,6 @@ public interface PraktikumsstelleI {
 
     Set<Studiensemester> studiensemester();
 
-    String oertlicheAusbilder();
-
-    String email();
-
-    boolean erwFuehrungszeugnisVorhanden();
-
-    boolean minderjaehrigMoeglich();
+    List<AusbilderDto> ausbilder();
 
 }

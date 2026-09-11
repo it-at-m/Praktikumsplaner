@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbilderDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
@@ -22,6 +23,7 @@ import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +81,8 @@ public class MailServiceTest {
 
         PraktikumsstelleDto ausbildungsPraktikumsstelle1 = createPraktikumsstelleDto("ITM-SLP31", "Max Musterfrau", "max@musterfrau.de",
                 "Entwicklung eines Praktikumsplaners", Dringlichkeit.ZWINGEND,
-                Set.of(Ausbildungsjahr.JAHR2), null, Bildungsrichtung.FISI, assignedNwk3);
+                Set.of(Ausbildungsjahr.JAHR2), null, Bildungsrichtung.FISI, assignedNwk3,
+                new AusbilderDto("Second Instructor", "second.instructor@localhost.de", false, false));
         allPraktikumsstellen.add(ausbildungsPraktikumsstelle1);
 
         PraktikumsstelleDto studiumsPraktikumsstelle1 = createPraktikumsstelleDto("ITM-SLP33", "Test Tester", "test@tester.de",
@@ -99,14 +102,21 @@ public class MailServiceTest {
         // Assert
         assertEquals(0, result.size());
         verify(mailSender, times(3)).createMimeMessage();
+
+        final ArgumentCaptor<Context> contextCaptor = ArgumentCaptor.forClass(Context.class);
+        verify(templateEngine, times(3)).process(anyString(), contextCaptor.capture());
+        assertEquals("Max Musterfrau, Second Instructor", contextCaptor.getAllValues().getFirst().getVariable("ausbilder"));
     }
 
     private PraktikumsstelleDto createPraktikumsstelleDto(
             final String dienststelle, final String ausbilder, final String email, final String taetigkeiten, final Dringlichkeit dringlichkeit,
             final Set<Ausbildungsjahr> ausbildungsjahre, final Set<Studiensemester> studiensemester,
-            final Bildungsrichtung richtung, final NwkDto assignedNwk) {
+            final Bildungsrichtung richtung, final NwkDto assignedNwk, final AusbilderDto... additionalAusbilder) {
+        final List<AusbilderDto> ausbilderList = new ArrayList<>();
+        ausbilderList.add(new AusbilderDto(ausbilder, email, false, false));
+        ausbilderList.addAll(List.of(additionalAusbilder));
         return PraktikumsstelleDto.builder()
-                .dienststelle(dienststelle).oertlicheAusbilder(ausbilder).email(email).taetigkeiten(taetigkeiten)
+                .dienststelle(dienststelle).ausbilder(ausbilderList).taetigkeiten(taetigkeiten)
                 .dringlichkeit(dringlichkeit).ausbildungsjahr(ausbildungsjahre).studiensemester(studiensemester)
                 .richtung(richtung).assignedNwk(assignedNwk).build();
     }

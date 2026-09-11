@@ -1,7 +1,9 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import de.muenchen.oss.praktikumsplaner.domain.Ausbilder;
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.Praktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbilderDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
@@ -112,11 +114,28 @@ public class PraktikumsstellenService {
                 || !Objects.equals(praktikumsstelle.getStudiensemester(), praktikumsstelleDto.studiensemester())
                 || praktikumsstelle.getRichtung() != praktikumsstelleDto.richtung()
                 || !Objects.equals(praktikumsstelle.getWuensche(), praktikumsstelleDto.wuensche())
-                || praktikumsstelle.isMinderjaehrigMoeglich() != praktikumsstelleDto.minderjaehrigMoeglich()) {
+                || !areAusbilderEqual(praktikumsstelle.getAusbilder(), praktikumsstelleDto.ausbilder())) {
             throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
         }
         praktikumsstellenMapper.updatePraktikumsstelle(praktikumsstelle, praktikumsstelleDto);
         praktikumsstellenRepository.save(praktikumsstelle);
+    }
+
+    private boolean areAusbilderEqual(final List<Ausbilder> ausbilder, final List<AusbilderDto> ausbilderDto) {
+        if (ausbilder == null || ausbilderDto == null || ausbilder.size() != ausbilderDto.size()) {
+            return false;
+        }
+        for (int i = 0; i < ausbilder.size(); i++) {
+            final Ausbilder current = ausbilder.get(i);
+            final AusbilderDto requested = ausbilderDto.get(i);
+            if (!Objects.equals(current.name(), requested.name())
+                    || !Objects.equals(current.email(), requested.email())
+                    || current.erwFuehrungszeugnisVorhanden() != requested.erwFuehrungszeugnisVorhanden()
+                    || current.minderjaehrigMoeglich() != requested.minderjaehrigMoeglich()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public List<PraktikumsstelleDto> getPraktikumsstellen(final UUID meldezeitraumID) {
@@ -138,7 +157,8 @@ public class PraktikumsstellenService {
             final String userDepartment = AuthUtils.getDepartmentFromUser();
 
             return praktikumsstellen.stream()
-                    .filter(dto -> usermail.equals(dto.email()) || dto.dienststelle().startsWith(userDepartment))
+                    .filter(dto -> dto.dienststelle().startsWith(userDepartment) ||
+                            dto.ausbilder().stream().map(AusbilderDto::email).anyMatch(email -> email.equals(usermail)))
                     .toList();
         }
 

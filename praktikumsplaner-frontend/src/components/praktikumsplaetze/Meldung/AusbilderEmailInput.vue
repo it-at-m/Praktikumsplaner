@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-    v-model="stelle.email"
+    v-model="model"
     :label="conditionalRequiredLabel"
     :rules="conditionalRequiredRules"
     variant="outlined"
@@ -15,12 +15,10 @@ import { computed } from "vue";
 
 import { useRules } from "@/composables/rules";
 import { testIds } from "@/testIds";
-import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const validationRules = useRules();
 
 interface Properties {
-  modelValue: Praktikumsstelle;
   isRequired: boolean;
   requiredSymbol?: string;
   disabled?: boolean;
@@ -29,9 +27,7 @@ const properties = withDefaults(defineProps<Properties>(), {
   requiredSymbol: "*",
   disabled: false,
 });
-
-const emits =
-  defineEmits<(e: "update:modelValue", email: Praktikumsstelle) => void>();
+const model = defineModel<string>();
 
 const label = "E-mail örtliche*r Ausbilder*in";
 const conditionalRequiredLabel = computed(() => {
@@ -51,16 +47,5 @@ const emailRule = [
 ];
 const conditionalRequiredRules = computed(() => {
   return properties.isRequired ? emailRule : undefined;
-});
-
-const stelle = computed({
-  // getter
-  get() {
-    return properties.modelValue;
-  },
-  // setter
-  set(newValue) {
-    emits("update:modelValue", newValue);
-  },
 });
 </script>

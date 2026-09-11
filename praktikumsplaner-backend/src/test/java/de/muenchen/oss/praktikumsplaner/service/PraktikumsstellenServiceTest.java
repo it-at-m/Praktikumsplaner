@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.Praktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbilderDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
@@ -91,8 +92,7 @@ class PraktikumsstellenServiceTest {
 
         CreatePraktikumsstelleDto createDto = CreatePraktikumsstelleDto.builder()
                 .dienststelle("TEST-001")
-                .oertlicheAusbilder("TestoertlicheAusbilder")
-                .email("test@test.de")
+                .ausbilder(List.of(new AusbilderDto("TestoertlicheAusbilder", "test@test.de", false, false)))
                 .taetigkeiten("Testtaetigkeiten")
                 .wuensche("Wuensche")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG)
@@ -136,14 +136,12 @@ class PraktikumsstellenServiceTest {
 
         CreatePraktikumsstelleDto createDto = CreatePraktikumsstelleDto.builder()
                 .dienststelle("TEST-001")
-                .oertlicheAusbilder("TestoertlicheAusbilder")
-                .email("test@test.de")
+                .ausbilder(List.of(new AusbilderDto("TestoertlicheAusbilder", "test@test.de", false, true)))
                 .taetigkeiten("Testtaetigkeiten")
                 .wuensche("Wuensche")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG)
                 .namentlicheAnforderung("TestnamentlicheAnforderung")
                 .projektarbeit(true)
-                .minderjaehrigMoeglich(true)
                 .ausbildungsjahr(Set.of(Ausbildungsjahr.JAHR1))
                 .richtung(Bildungsrichtung.FISI)
                 .build();
@@ -342,8 +340,7 @@ class PraktikumsstellenServiceTest {
 
         CreatePraktikumsstelleWithMeldezeitraumDto createDto = CreatePraktikumsstelleWithMeldezeitraumDto.builder()
                 .dienststelle(praktikumsstelle.getDienststelle())
-                .oertlicheAusbilder(praktikumsstelle.getOertlicheAusbilder())
-                .email(praktikumsstelle.getEmail())
+                .ausbilder(helper.createPraktikumsstelleDto(praktikumsstelle).ausbilder())
                 .taetigkeiten(praktikumsstelle.getTaetigkeiten())
                 .dringlichkeit(praktikumsstelle.getDringlichkeit())
                 .namentlicheAnforderung(praktikumsstelle.getNamentlicheAnforderung())
@@ -422,10 +419,7 @@ class PraktikumsstellenServiceTest {
                 .wuensche(null)
                 .ausbildungsjahr(null)
                 .studiensemester(Set.of(Studiensemester.SEMESTER3))
-                .oertlicheAusbilder("John Smith")
-                .email("John@smith.com")
-                .erwFuehrungszeugnisVorhanden(false)
-                .minderjaehrigMoeglich(false)
+                .ausbilder(List.of(new AusbilderDto("John Smith", "John@smith.com", false, false)))
                 .meldezeitraumID(meldezeitraumDto.id())
                 .build();
 
@@ -454,10 +448,7 @@ class PraktikumsstellenServiceTest {
                 .wuensche(null)
                 .ausbildungsjahr(null)
                 .studiensemester(Set.of(Studiensemester.SEMESTER3))
-                .oertlicheAusbilder("John Smith")
-                .email("John@smith.com")
-                .erwFuehrungszeugnisVorhanden(false)
-                .minderjaehrigMoeglich(false)
+                .ausbilder(List.of(new AusbilderDto("John Smith", "John@smith.com", false, false)))
                 .meldezeitraumID(meldezeitraumDto.id())
                 .build();
 
@@ -485,10 +476,7 @@ class PraktikumsstellenServiceTest {
                 .wuensche(null)
                 .ausbildungsjahr(null)
                 .studiensemester(Set.of(Studiensemester.SEMESTER1))
-                .oertlicheAusbilder("Ausbilder")
-                .email("ausbilder@email.ausbilder")
-                .erwFuehrungszeugnisVorhanden(false)
-                .minderjaehrigMoeglich(false)
+                .ausbilder(List.of(new AusbilderDto("Ausbilder", "ausbilder@email.ausbilder", false, false)))
                 .meldezeitraumID(meldezeitraumDto.id())
                 .build();
 
@@ -519,10 +507,7 @@ class PraktikumsstellenServiceTest {
                 .wuensche(null)
                 .ausbildungsjahr(null)
                 .studiensemester(Set.of(Studiensemester.SEMESTER1))
-                .oertlicheAusbilder("Ausbilder")
-                .email("ausbilder@email.ausbilder")
-                .erwFuehrungszeugnisVorhanden(false)
-                .minderjaehrigMoeglich(false)
+                .ausbilder(List.of(new AusbilderDto("Ausbilder", "ausbilder@email.ausbilder", false, false)))
                 .meldezeitraumID(meldezeitraumDto.id())
                 .build();
 

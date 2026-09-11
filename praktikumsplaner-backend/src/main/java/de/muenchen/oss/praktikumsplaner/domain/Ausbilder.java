@@ -1,0 +1,19 @@
+package de.muenchen.oss.praktikumsplaner.domain;
+
+import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import java.io.Serial;
+import java.io.Serializable;
+
+@Embeddable
+public record Ausbilder(
+        @NotBlank @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein") String name,
+        @NotBlank @Email @Size(max = 255, message = "Die Email darf nur {max} Zeichen lang sein") String email,
+        boolean erwFuehrungszeugnisVorhanden,
+        boolean minderjaehrigMoeglich) implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+}

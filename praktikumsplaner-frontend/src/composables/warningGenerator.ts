@@ -142,8 +142,8 @@ export function useWarnings() {
           "Dringlichkeit",
           "Der Praktikumsstelle " +
             stelle.dienststelle +
-            " bei " +
-            stelle.oertlicheAusbilder +
+            " der Richtung " +
+            stelle.richtung +
             " ist keine NWK zugewiesen, die Dringlichkeit ist jedoch mit " +
             stelle.dringlichkeit +
             " angegeben."
@@ -159,8 +159,8 @@ export function useWarnings() {
           "Namentliche Anforderung",
           "Der Praktikumsstelle " +
             stelle.dienststelle +
-            " bei " +
-            stelle.oertlicheAusbilder +
+            " der Richtung " +
+            stelle.richtung +
             " ist keine NWK zugewiesen, es liegt jedoch eine namentliche Anforderung für " +
             stelle.namentlicheAnforderung +
             " vor."
