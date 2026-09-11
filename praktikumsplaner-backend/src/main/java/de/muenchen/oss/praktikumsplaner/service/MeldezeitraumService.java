@@ -66,7 +66,9 @@ public class MeldezeitraumService {
         meldezeitraumRepository.deleteById(id);
     }
 
-    public Meldezeitraum getMeldezeitraum(final UUID id) {
-        return meldezeitraumRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    public void checkExists(final UUID id) {
+        if (!meldezeitraumRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Meldezeitraum mit id '%s' existiert nicht".formatted(id));
+        }
     }
 }

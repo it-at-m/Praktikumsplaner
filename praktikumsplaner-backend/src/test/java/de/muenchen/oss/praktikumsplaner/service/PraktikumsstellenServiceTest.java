@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -181,7 +180,6 @@ class PraktikumsstellenServiceTest {
                         meldezeitraumDto.id(), helper.createNwkEntity("TestNwk", "TestNwk", Bildungsrichtung.BWI, "22/23", null, false)));
 
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDto);
-        when(meldezeitraumService.getMeldezeitraum(eq(meldezeitraumDto.id()))).thenReturn(helper.meldezeitraumWithId(meldezeitraumDto.id()));
         when(praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(stellen);
         when(mapper.toDto(any(Praktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
@@ -216,7 +214,6 @@ class PraktikumsstellenServiceTest {
                         meldezeitraumDto.id(), helper.createNwkEntity("TestNwk", "TestNwk", Bildungsrichtung.BWI, "22/23", null, false)));
 
         when(meldezeitraumService.getMostRecentPassedMeldezeitraum()).thenReturn(meldezeitraumDto);
-        when(meldezeitraumService.getMeldezeitraum(eq(meldezeitraumDto.id()))).thenReturn(helper.meldezeitraumWithId(meldezeitraumDto.id()));
         when(praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(stellen);
         when(mapper.toDto(any(Praktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));
@@ -248,7 +245,6 @@ class PraktikumsstellenServiceTest {
                         meldezeitraumDto.id(), helper.createNwkEntity("TestNwk", "TestNwk", Bildungsrichtung.BWI, "22/23", null, false)));
 
         when(meldezeitraumService.getCurrentMeldezeitraum()).thenReturn(meldezeitraumDto);
-        when(meldezeitraumService.getMeldezeitraum(eq(meldezeitraumDto.id()))).thenReturn(helper.meldezeitraumWithId(meldezeitraumDto.id()));
         when(praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumDto.id())).thenReturn(stellen);
         when(mapper.toDto(any(Praktikumsstelle.class)))
                 .thenAnswer(invocation -> helper.createPraktikumsstelleDto((Praktikumsstelle) invocation.getArguments()[0]));

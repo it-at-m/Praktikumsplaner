@@ -3,8 +3,8 @@
     <page-title page-header-text="Nachwuchskräfte">
       <template #actions>
         <v-btn-group>
-          <excel-import-nwk></excel-import-nwk>
-          <nwk-create-dialog></nwk-create-dialog>
+          <excel-import-nwk />
+          <nwk-create-dialog />
         </v-btn-group>
       </template>
     </page-title>

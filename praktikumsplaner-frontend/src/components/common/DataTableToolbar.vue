@@ -37,16 +37,10 @@ import type GroupOption from "@/types/DataTableGroupOption";
 
 import { testIds } from "@/testIds";
 
-withDefaults(
-  defineProps<{
-    groupByOptions?: GroupOption[];
-    disabled?: boolean;
-  }>(),
-  {
-    groupByOptions: () => [],
-    disabled: false,
-  }
-);
+const { groupByOptions = [], disabled = false } = defineProps<{
+  groupByOptions?: GroupOption[];
+  disabled?: boolean;
+}>();
 
 const searchModel = defineModel<string | undefined>("search");
 const groupByRawModel = defineModel<string | undefined>("groupByRaw");

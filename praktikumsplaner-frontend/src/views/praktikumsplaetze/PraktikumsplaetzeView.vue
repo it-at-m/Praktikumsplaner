@@ -5,7 +5,7 @@
         <meldezeitraum-select
           v-model="selectedMeldezeitraumId"
           :meldezeitraueme="meldezeitraeume || []"
-          :is-required="true"
+          is-required
           :disabled="loading"
           hide-details
           class="mr-5"
@@ -38,7 +38,7 @@
         <praktikumsstelle-update-dialog
           v-model="itemProxyMap[item.id]!"
           icon-only
-          @update:model-value="(newItem) => onRowUpdated(item.id, newItem)"
+          @update:model-value="getAllPraktikumsstellenInSelectedMeldezeitraum"
         />
         <praktikumsstelle-delete-dialog
           :stelle="item"
@@ -79,7 +79,6 @@ import PraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktik
 import { useSecurity } from "@/composables/security";
 import { useTextGenerator } from "@/composables/textGenerator";
 import router from "@/plugins/router";
-import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import { findBildungsrichtung } from "@/types/Bildungsrichtung.ts";
 import Meldezeitraum from "@/types/Meldezeitraum.ts";
@@ -172,10 +171,6 @@ onMounted(() => {
   }
 });
 
-emitter.on("praktikumsstelleUpdated", () => {
-  getAllPraktikumsstellenInSelectedMeldezeitraum();
-});
-
 watch(selectedMeldezeitraumId, () => {
   getAllPraktikumsstellenInSelectedMeldezeitraum();
 });
@@ -191,7 +186,6 @@ function redirectIfUnauthorized() {
   }
 }
 
-// TODO hide actions and create button for Ausbilder if not current Meldezeitraum
 const canStellenBeSubmitted = computed(
   () =>
     isAusbildungsleitung.value ||
@@ -221,13 +215,5 @@ function getAllPraktikumsstellenInSelectedMeldezeitraum() {
     .finally(() => {
       loading.value = false;
     });
-}
-
-function onRowUpdated(id: string | undefined, updated: Praktikumsstelle) {
-  if (!id) return;
-  const idx = (praktikumsstellen.value || []).findIndex((s) => s.id === id);
-  if (idx >= 0 && praktikumsstellen.value) {
-    praktikumsstellen.value[idx] = updated;
-  }
 }
 </script>

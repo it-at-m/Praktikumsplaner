@@ -313,7 +313,6 @@ import SemesterSelect from "@/components/praktikumsplaetze/Meldung/Studiensemest
 import TaetigkeitenInput from "@/components/praktikumsplaetze/Meldung/TaetigkeitenInput.vue";
 import WuenscheInput from "@/components/praktikumsplaetze/Meldung/WuenscheInput.vue";
 import WuenscheTooltip from "@/components/praktikumsplaetze/Meldung/WuenscheTooltip.vue";
-import emitter from "@/stores/eventBus";
 import { testIds } from "@/testIds";
 import {
   findBildungsrichtung,
@@ -395,7 +394,6 @@ function updatePraktikumsstelle() {
       loading
     ).then(() => {
       emits("update:modelValue", praktikumsstelle.value);
-      emitter.emit("praktikumsstelleUpdated");
       closeDialog();
     });
   });

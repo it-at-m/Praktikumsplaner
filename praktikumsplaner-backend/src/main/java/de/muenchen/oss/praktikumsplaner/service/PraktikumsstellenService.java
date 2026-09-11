@@ -1,6 +1,5 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
-import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.Praktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleDto;
@@ -121,8 +120,8 @@ public class PraktikumsstellenService {
     }
 
     public List<PraktikumsstelleDto> getPraktikumsstellen(final UUID meldezeitraumID) {
-        final Meldezeitraum meldezeitraum = meldezeitraumService.getMeldezeitraum(meldezeitraumID);
-        final List<PraktikumsstelleDto> praktikumsstellen = praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraum.getId()).stream()
+        meldezeitraumService.checkExists(meldezeitraumID);
+        final List<PraktikumsstelleDto> praktikumsstellen = praktikumsstellenRepository.findAllByMeldezeitraumID(meldezeitraumID).stream()
                 .map(praktikumsstellenMapper::toDto)
                 .sorted(Comparator.comparing(PraktikumsstelleDto::dienststelle))
                 .toList();

@@ -6,9 +6,7 @@
     >
       <template #actions>
         <v-btn-group>
-          <create-meldezeitraum
-            @meldezeitraum-added="reloadMeldezeitraeume"
-          ></create-meldezeitraum>
+          <create-meldezeitraum @meldezeitraum-added="reloadMeldezeitraeume" />
         </v-btn-group>
       </template>
     </page-title>
