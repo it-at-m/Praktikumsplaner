@@ -5,7 +5,7 @@ import { API_BASE } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 
 export class UserService {
-  private static URL: string = API_BASE + "/api/sso/userinfo/";
+  private static URL: string = API_BASE + "/api/sso/userinfo";
 
   getPermissions(): Promise<UserInfo> {
     return fetch(UserService.URL, getGETConfig())
