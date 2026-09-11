@@ -3,6 +3,7 @@
     v-model:search="internalSearch"
     v-model:group-by-raw="groupByRaw"
     :group-by-options="groupByOptions"
+    :disabled="loading"
   />
   <v-data-table
     :headers="headers"

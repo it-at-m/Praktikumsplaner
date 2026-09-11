@@ -16,11 +16,11 @@ import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.ZeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.mappers.MeldezeitraumMapper;
 import de.muenchen.oss.praktikumsplaner.repository.MeldezeitraumRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -28,6 +28,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 public class MeldezeitraumServiceTest {
@@ -146,7 +147,7 @@ public class MeldezeitraumServiceTest {
         List<Meldezeitraum> meldezeitraume = List.of();
 
         when(repository.findByEndZeitpunktBeforeOrderByEndZeitpunktDesc(LocalDate.now())).thenReturn(meldezeitraume);
-        assertThrows(EntityNotFoundException.class, () -> service.getMostRecentPassedMeldezeitraum());
+        assertThrows(ResourceNotFoundException.class, () -> service.getMostRecentPassedMeldezeitraum());
     }
 
     @Test
@@ -206,5 +207,30 @@ public class MeldezeitraumServiceTest {
         service.deleteMeldezeitraumById(id);
 
         verify(repository, times(1)).deleteById(id);
+    }
+
+    @Nested
+    class CheckExists {
+
+        @Test
+        void giveExistingId_thenDoesNotThrow() {
+            final UUID id = UUID.randomUUID();
+            when(repository.existsById(id)).thenReturn(true);
+
+            assertDoesNotThrow(() -> service.checkExists(id));
+            verify(repository).existsById(id);
+        }
+
+        @Test
+        void giveMissingId_thenThrowsResourceNotFoundException() {
+            final UUID id = UUID.randomUUID();
+            when(repository.existsById(id)).thenReturn(false);
+
+            final ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
+                    () -> service.checkExists(id));
+
+            assertEquals("Meldezeitraum mit id '%s' existiert nicht".formatted(id), exception.getMessage());
+            verify(repository).existsById(id);
+        }
     }
 }

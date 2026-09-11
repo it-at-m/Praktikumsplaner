@@ -60,6 +60,10 @@ public class NwkService {
         return nwkRepository.existsById(id);
     }
 
+    public Nwk getNwk(final UUID id) {
+        return nwkRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    }
+
     public void deleteNwk(final UUID nwkId) {
         if (!nwkRepository.existsById(nwkId)) {
             throw new ResourceNotFoundException(NWK_NOT_FOUND);

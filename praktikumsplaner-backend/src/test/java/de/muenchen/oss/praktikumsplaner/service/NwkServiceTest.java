@@ -25,9 +25,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import lombok.val;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -158,6 +160,30 @@ public class NwkServiceTest {
         Nwk nwk1 = helper.createNwkEntity("Max", "Mustermann", Bildungsrichtung.BSC, "21/24", Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), true);
         when(repository.existsById(nwk1.getId())).thenReturn(true);
         assertTrue(service.nwkExistsById(nwk1.getId()));
+    }
+
+    @Nested
+    class GetNwk {
+
+        @Test
+        void giveExistingId_thenReturnsNwk() {
+            final UUID id = UUID.randomUUID();
+            final Nwk nwk = helper.createNwkEntity("Max", "Mustermann", Bildungsrichtung.BSC, "21/24", null, true);
+            nwk.setId(id);
+            when(repository.findById(id)).thenReturn(Optional.of(nwk));
+
+            assertEquals(nwk, service.getNwk(id));
+            verify(repository).findById(id);
+        }
+
+        @Test
+        void giveMissingId_thenThrowsResourceNotFoundException() {
+            final UUID id = UUID.randomUUID();
+            when(repository.findById(id)).thenReturn(Optional.empty());
+
+            assertThrows(ResourceNotFoundException.class, () -> service.getNwk(id));
+            verify(repository).findById(id);
+        }
     }
 
     @Test

@@ -1,14 +1,24 @@
 <template>
   <v-container class="pa-xl-8">
-    <page-title page-header-text="Praktikumsplätze (aktueller Meldezeitraum)">
+    <page-title page-header-text="Praktikumsplätze">
       <template #actions>
-        <v-btn
-          v-if="canStellenBeSubmitted"
-          text="Hinzufügen"
-          :prepend-icon="mdiPlus"
-          color="primary"
-          @click="toMeldung"
+        <meldezeitraum-select
+          v-model="selectedMeldezeitraumId"
+          :meldezeitraueme="meldezeitraeume || []"
+          is-required
+          :disabled="loading"
+          hide-details
+          class="mr-5"
         />
+        <v-btn-group>
+          <v-btn
+            :disabled="!canStellenBeSubmitted"
+            text="Hinzufügen"
+            :prepend-icon="mdiPlus"
+            color="primary"
+            @click="toMeldung"
+          />
+        </v-btn-group>
       </template>
     </page-title>
     <data-table
@@ -16,20 +26,23 @@
       :headers="headers"
       :items="praktikumsstellenTableItems"
       :group-by-options="groupByOptions"
-      :loading="loadingSite || loadingUebersicht"
+      :loading="loading"
       show-expand
       :sort-by="defaultSort"
       expand-on-click
     >
-      <template #[`item.actions`]="{ item }">
+      <template
+        v-if="isAusbildungsleitung"
+        #[`item.actions`]="{ item }"
+      >
         <praktikumsstelle-update-dialog
           v-model="itemProxyMap[item.id]!"
           icon-only
-          @update:model-value="(newItem) => onRowUpdated(item.id, newItem)"
+          @update:model-value="getAllPraktikumsstellenInSelectedMeldezeitraum"
         />
         <praktikumsstelle-delete-dialog
           :stelle="item"
-          @deleted="getAllPraktikumsstellenInCurrentMeldezeitraum"
+          @deleted="getAllPraktikumsstellenInSelectedMeldezeitraum"
         />
       </template>
       <template #expanded-row="{ columns, item }">
@@ -60,20 +73,22 @@ import PraktikumsstellenService from "@/api/PraktikumsstellenService";
 import DataTable from "@/components/common/DataTable.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
+import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
 import PraktikumsstelleDeleteDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstelleDeleteDialog.vue";
 import PraktikumsstelleUpdateDialog from "@/components/praktikumsplaetze/Praktikumsplaetze/PraktikumsstelleUpdateDialog.vue";
 import { useSecurity } from "@/composables/security";
 import { useTextGenerator } from "@/composables/textGenerator";
 import router from "@/plugins/router";
-import emitter from "@/stores/eventBus";
 import { useUserStore } from "@/stores/user";
 import { findBildungsrichtung } from "@/types/Bildungsrichtung.ts";
+import Meldezeitraum from "@/types/Meldezeitraum.ts";
 import Praktikumsstelle from "@/types/Praktikumsstelle";
 
 const userStore = useUserStore();
-const activeMeldezeitraum = ref<boolean>(false);
-const loadingUebersicht = ref<boolean>(false);
-const loadingSite = ref<boolean>(true);
+const loading = ref<boolean>(true);
+const meldezeitraeume = ref<Meldezeitraum[]>();
+const selectedMeldezeitraumId = ref<string>();
+const currentMeldezeitraumId = ref<string>();
 const security = useSecurity();
 ref<boolean>(false);
 const praktikumsstellen = ref<Praktikumsstelle[]>();
@@ -128,14 +143,20 @@ const praktikumsstellenTableItems = computed(() =>
 const defaultSort: SortItem[] = [{ key: "dienststelle", order: "asc" }];
 
 onMounted(() => {
-  loadingUebersicht.value = true;
-  MeldezeitraumService.getCurrentMeldezeitraum(loadingUebersicht).then(
-    (zeitraueme) => {
-      activeMeldezeitraum.value = zeitraueme.length > 0;
-    }
-  );
-
-  getAllPraktikumsstellenInCurrentMeldezeitraum();
+  MeldezeitraumService.getAllMeldezeitraeume()
+    .then((mz) => {
+      meldezeitraeume.value = mz;
+      currentMeldezeitraumId.value =
+        MeldezeitraumService.getCurrentMeldezeitraumFromList(mz)?.id;
+      if (currentMeldezeitraumId.value == null) {
+        loading.value = false;
+      } else {
+        selectedMeldezeitraumId.value = currentMeldezeitraumId.value;
+      }
+    })
+    .catch(() => {
+      loading.value = false;
+    });
 
   if (userStore.username) {
     redirectIfUnauthorized();
@@ -150,8 +171,8 @@ onMounted(() => {
   }
 });
 
-emitter.on("praktikumsstelleUpdated", () => {
-  getAllPraktikumsstellenInCurrentMeldezeitraum();
+watch(selectedMeldezeitraumId, () => {
+  getAllPraktikumsstellenInSelectedMeldezeitraum();
 });
 
 function redirectIfUnauthorized() {
@@ -165,33 +186,34 @@ function redirectIfUnauthorized() {
   }
 }
 
-emitter.on("nwkDeleted", getAllPraktikumsstellenInCurrentMeldezeitraum);
-
 const canStellenBeSubmitted = computed(
-  () => security.isAusbildungsleitung() || activeMeldezeitraum.value
+  () =>
+    isAusbildungsleitung.value ||
+    (currentMeldezeitraumId.value &&
+      currentMeldezeitraumId.value == selectedMeldezeitraumId.value)
+);
+const isAusbildungsleitung = computed(() => security.isAusbildungsleitung());
+const activeMeldezeitraum = computed<boolean>(
+  () => !!selectedMeldezeitraumId.value
 );
 
 function toMeldung(): void {
   router.push("/praktikumsplaetze/meldung");
 }
 
-function getAllPraktikumsstellenInCurrentMeldezeitraum() {
+function getAllPraktikumsstellenInSelectedMeldezeitraum() {
+  if (!selectedMeldezeitraumId.value) {
+    return;
+  }
+  loading.value = true;
   PraktikumsstellenService.getAllPraktikumsstellenInSpecificMeldezeitraum(
-    "current"
+    selectedMeldezeitraumId.value
   )
     .then((fetchedStellen) => {
       praktikumsstellen.value = fetchedStellen;
     })
     .finally(() => {
-      loadingSite.value = false;
+      loading.value = false;
     });
-}
-
-function onRowUpdated(id: string | undefined, updated: Praktikumsstelle) {
-  if (!id) return;
-  const idx = (praktikumsstellen.value || []).findIndex((s) => s.id === id);
-  if (idx >= 0 && praktikumsstellen.value) {
-    praktikumsstellen.value[idx] = updated;
-  }
 }
 </script>
