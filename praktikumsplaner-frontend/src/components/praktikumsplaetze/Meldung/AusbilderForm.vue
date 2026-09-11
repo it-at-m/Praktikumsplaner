@@ -7,7 +7,7 @@
           :is-required="isRequired"
           required-symbol="*"
           :disabled="disabled"
-        ></ausbilder-input>
+        />
       </v-col>
       <v-col cols="1" />
       <v-col>
@@ -47,8 +47,6 @@
 <script setup lang="ts">
 import type Ausbilder from "@/types/Ausbilder.ts";
 
-import { computed } from "vue";
-
 import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
 import AusbilderErwFuehrungszeugnisCheckbox from "@/components/praktikumsplaetze/Meldung/AusbilderErwFuehrungszeugnisCheckbox.vue";
 import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
@@ -56,20 +54,13 @@ import MinderjaehrigMoeglichRadioGroup from "@/components/praktikumsplaetze/Meld
 import MinderjaehrigMoeglichTooltip from "@/components/praktikumsplaetze/Meldung/MinderjaehrigMoeglichTooltip.vue";
 
 const model = defineModel<Ausbilder>({ required: true });
-const props = withDefaults(
-  defineProps<{
-    isRequired?: boolean;
-    showAusbildungInputs: boolean;
-    disabled?: boolean;
-  }>(),
-  {
-    isRequired: false,
-    disabled: false,
-  }
-);
-
-const isRequired = computed(() =>
-  Boolean(props.isRequired || model.value?.name || model.value?.email)
-);
-const disabled = computed(() => props.disabled);
+const {
+  isRequired = false,
+  showAusbildungInputs,
+  disabled = false,
+} = defineProps<{
+  isRequired?: boolean;
+  showAusbildungInputs: boolean;
+  disabled?: boolean;
+}>();
 </script>

@@ -50,25 +50,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 import AusbilderForm from "@/components/praktikumsplaetze/Meldung/AusbilderForm.vue";
 import Ausbilder from "@/types/Ausbilder.ts";
 
 const model = defineModel<Ausbilder[]>({ required: true });
-withDefaults(
-  defineProps<{
-    showAusbildungInputs: boolean;
-    disabled?: boolean;
-  }>(),
-  {
-    disabled: false,
-  }
-);
+const { showAusbildungInputs, disabled = false } = defineProps<{
+  showAusbildungInputs: boolean;
+  disabled?: boolean;
+}>();
 
-if (model.value.length === 0) {
-  model.value.push(Ausbilder.empty());
-}
+onMounted(() => {
+  if (model.value.length === 0) {
+    model.value.push(Ausbilder.empty());
+  }
+});
 
 const firstAusbilder = computed({
   get: () => model.value[0] ?? Ausbilder.empty(),
@@ -84,9 +81,7 @@ const secondAusbilder = computed({
 });
 
 function addSecondAusbilder() {
-  if (model.value.length < 2) {
-    model.value.push(Ausbilder.empty());
-  }
+  secondAusbilder.value = Ausbilder.empty();
 }
 
 function removeSecondAusbilder() {

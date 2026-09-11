@@ -275,18 +275,13 @@ const loading = ref<boolean>(false);
 const form = ref<HTMLFormElement>();
 const requiredFieldSymbol = "*";
 
-const properties = withDefaults(
-  defineProps<{
-    modelValue: Praktikumsstelle;
-    iconOnly?: boolean;
-  }>(),
-  {
-    iconOnly: false,
-  }
-);
+const { modelValue, iconOnly = false } = defineProps<{
+  modelValue: Praktikumsstelle;
+  iconOnly?: boolean;
+}>();
 
 const hasAssignedNwk = computed(() => {
-  return properties.modelValue.assignedNwk != undefined;
+  return modelValue.assignedNwk != undefined;
 });
 
 const meldezeitraeume = ref<Meldezeitraum[]>([
@@ -294,7 +289,7 @@ const meldezeitraeume = ref<Meldezeitraum[]>([
 ]);
 
 const praktikumsstelle = ref<Praktikumsstelle>(
-  Praktikumsstelle.clone(properties.modelValue)
+  Praktikumsstelle.clone(modelValue)
 );
 
 const emits =
@@ -316,7 +311,7 @@ function closeDialog() {
 }
 
 function openDialog() {
-  praktikumsstelle.value = Praktikumsstelle.clone(properties.modelValue);
+  praktikumsstelle.value = Praktikumsstelle.clone(modelValue);
   loading.value = true;
   MeldezeitraumService.getAllMeldezeitraeume()
     .then((zeitraume) => {
