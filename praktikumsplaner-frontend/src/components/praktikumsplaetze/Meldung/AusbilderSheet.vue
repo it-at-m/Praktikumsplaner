@@ -10,7 +10,7 @@
       <v-col class="d-flex justify-end">
         <v-btn
           v-if="model.length < 2"
-          variant="text"
+          variant="tonal"
           :disabled="disabled"
           @click="addSecondAusbilder"
         >
@@ -31,7 +31,7 @@
         </v-col>
         <v-col class="d-flex justify-end">
           <v-btn
-            variant="text"
+            variant="tonal"
             :disabled="disabled"
             @click="removeSecondAusbilder"
           >

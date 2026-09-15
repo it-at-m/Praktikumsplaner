@@ -16,7 +16,7 @@
           :is-required="isRequired"
           required-symbol="*"
           :disabled="disabled"
-        ></ausbilder-email-input>
+        />
       </v-col>
       <v-col cols="1" />
     </v-row>
@@ -25,7 +25,7 @@
         <ausbilder-erw-fuehrungszeugnis-checkbox
           v-model="model.erwFuehrungszeugnisVorhanden"
           :disabled="disabled"
-        ></ausbilder-erw-fuehrungszeugnis-checkbox>
+        />
       </v-col>
       <v-col cols="1" />
       <v-col>
@@ -35,10 +35,10 @@
           :is-required="isRequired"
           required-symbol="*"
           :disabled="disabled"
-        ></minderjaehrig-moeglich-radio-group>
+        />
       </v-col>
       <v-col cols="1">
-        <minderjaehrig-moeglich-tooltip></minderjaehrig-moeglich-tooltip>
+        <minderjaehrig-moeglich-tooltip />
       </v-col>
     </v-row>
   </div>

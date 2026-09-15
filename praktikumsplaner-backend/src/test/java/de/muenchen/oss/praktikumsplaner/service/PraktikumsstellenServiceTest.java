@@ -42,6 +42,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.server.ResponseStatusException;
 
 @ExtendWith(MockitoExtension.class)
 class PraktikumsstellenServiceTest {
@@ -459,37 +460,6 @@ class PraktikumsstellenServiceTest {
     }
 
     @Test
-    void testUpdatePraktikumsstelleWithAssignedNwkThenSuccess() {
-        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        Nwk nwk = helper.createNwkEntity("Max", "Mustermensch", Bildungsrichtung.BSC, "23/27", null, true);
-        Praktikumsstelle praktikumsstelle = helper.createPraktikumsstelleEntity("TEST", "Ausbilder", "ausbilder@email.ausbilder", "Taetigkeiten", null,
-                Dringlichkeit.ZWINGEND, Bildungsrichtung.BSC, null, Set.of(Studiensemester.SEMESTER1), false, false, false, meldezeitraumDto.id(), nwk);
-        UpdatePraktikumsstelleDto updateDto = UpdatePraktikumsstelleDto.builder()
-                .richtung(Bildungsrichtung.BSC)
-                .dienststelle("TESTTEST")
-                .taetigkeiten("Taetigkeiten")
-                .dringlichkeit(Dringlichkeit.ZWINGEND)
-                .namentlicheAnforderung(null)
-                .projektarbeit(false)
-                .planstelleVorhanden(false)
-                .programmierkenntnisse(false)
-                .wuensche(null)
-                .ausbildungsjahr(null)
-                .studiensemester(Set.of(Studiensemester.SEMESTER1))
-                .ausbilder(List.of(new AusbilderDto("Ausbilder", "ausbilder@email.ausbilder", false, false)))
-                .meldezeitraumID(meldezeitraumDto.id())
-                .build();
-
-        when(praktikumsstellenRepository.findById(praktikumsstelle.getId())).thenReturn(Optional.of(praktikumsstelle));
-
-        assertDoesNotThrow(() -> service.updatePraktikumsstelle(praktikumsstelle.getId(), updateDto));
-        verify(praktikumsstellenRepository, times(1)).save(praktikumsstelle);
-        assertEquals("TESTTEST", praktikumsstelle.getDienststelle());
-        assertEquals(Dringlichkeit.ZWINGEND, praktikumsstelle.getDringlichkeit());
-        assertEquals(nwk, praktikumsstelle.getAssignedNwk());
-    }
-
-    @Test
     void testUpdatePraktikumsstelleWithAssignedNwkThenError() {
         MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
         Nwk nwk = helper.createNwkEntity("Max", "Mustermensch", Bildungsrichtung.BSC, "23/27", null, true);
@@ -513,6 +483,6 @@ class PraktikumsstellenServiceTest {
 
         when(praktikumsstellenRepository.findById(praktikumsstelle.getId())).thenReturn(Optional.of(praktikumsstelle));
 
-        Assertions.assertThrows(ResourceConflictException.class, () -> service.updatePraktikumsstelle(praktikumsstelle.getId(), updateDto));
+        Assertions.assertThrows(ResponseStatusException.class, () -> service.updatePraktikumsstelle(praktikumsstelle.getId(), updateDto));
     }
 }

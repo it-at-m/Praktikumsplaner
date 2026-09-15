@@ -1,6 +1,5 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
-import de.muenchen.oss.praktikumsplaner.domain.Ausbilder;
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.Praktikumsstelle;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbilderDto;
@@ -14,12 +13,13 @@ import de.muenchen.oss.praktikumsplaner.repository.PraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.security.AuthUtils;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 @Service
@@ -94,48 +94,10 @@ public class PraktikumsstellenService {
         final Praktikumsstelle praktikumsstelleToUpdate = findByIdOrThrow(praktikumsstellenId);
 
         if (praktikumsstelleToUpdate.getAssignedNwk() != null) {
-            updatePraktikumsstelleWithAssignedNwk(praktikumsstelleToUpdate, praktikumsstelleDto);
-            return;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Eine zugewiesene Praktikumsstelle darf nicht bearbeitet werden.");
         }
 
         praktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
-    }
-
-    @SuppressWarnings("PMD.CyclomaticComplexity")
-    private void updatePraktikumsstelleWithAssignedNwk(final Praktikumsstelle praktikumsstelle,
-            final UpdatePraktikumsstelleDto praktikumsstelleDto) {
-        if (praktikumsstelle.getDringlichkeit() != praktikumsstelleDto.dringlichkeit()
-                || !Objects.equals(praktikumsstelle.getNamentlicheAnforderung(), praktikumsstelleDto.namentlicheAnforderung())
-                || praktikumsstelle.isPlanstelleVorhanden() != praktikumsstelleDto.planstelleVorhanden()
-                || !praktikumsstelle.getMeldezeitraumID().equals(praktikumsstelleDto.meldezeitraumID())
-                || praktikumsstelle.isProjektarbeit() != praktikumsstelleDto.projektarbeit()
-                || !Objects.equals(praktikumsstelle.isProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
-                || !Objects.equals(praktikumsstelle.getAusbildungsjahr(), praktikumsstelleDto.ausbildungsjahr())
-                || !Objects.equals(praktikumsstelle.getStudiensemester(), praktikumsstelleDto.studiensemester())
-                || praktikumsstelle.getRichtung() != praktikumsstelleDto.richtung()
-                || !Objects.equals(praktikumsstelle.getWuensche(), praktikumsstelleDto.wuensche())
-                || !areAusbilderEqual(praktikumsstelle.getAusbilder(), praktikumsstelleDto.ausbilder())) {
-            throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
-        }
-        praktikumsstellenMapper.updatePraktikumsstelle(praktikumsstelle, praktikumsstelleDto);
-        praktikumsstellenRepository.save(praktikumsstelle);
-    }
-
-    private boolean areAusbilderEqual(final List<Ausbilder> ausbilder, final List<AusbilderDto> ausbilderDto) {
-        if (ausbilder == null || ausbilderDto == null || ausbilder.size() != ausbilderDto.size()) {
-            return false;
-        }
-        for (int i = 0; i < ausbilder.size(); i++) {
-            final Ausbilder current = ausbilder.get(i);
-            final AusbilderDto requested = ausbilderDto.get(i);
-            if (!Objects.equals(current.name(), requested.name())
-                    || !Objects.equals(current.email(), requested.email())
-                    || current.erwFuehrungszeugnisVorhanden() != requested.erwFuehrungszeugnisVorhanden()
-                    || current.minderjaehrigMoeglich() != requested.minderjaehrigMoeglich()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public List<PraktikumsstelleDto> getPraktikumsstellen(final UUID meldezeitraumID) {
