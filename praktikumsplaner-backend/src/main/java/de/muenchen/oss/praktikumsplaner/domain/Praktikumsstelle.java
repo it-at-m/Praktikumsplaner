@@ -9,15 +9,19 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import jakarta.persistence.Convert;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.OrderColumn;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -35,7 +39,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings({ "PMD.MissingSerialVersionUID", "PMD.TooManyFields" })
+@SuppressWarnings("PMD.MissingSerialVersionUID")
 public class Praktikumsstelle extends BaseEntity {
     @NotNull @Enumerated(EnumType.STRING)
     private Bildungsrichtung richtung;
@@ -54,10 +58,9 @@ public class Praktikumsstelle extends BaseEntity {
     @Convert(converter = StudiensemesterConverter.class)
     private Set<Studiensemester> studiensemester;
 
-    @NotNull @Size(max = 255, message = "Der örtliche Ausbilder darf nur {max} Zeichen lang sein") private String oertlicheAusbilder;
-    @NotNull @Email @Size(max = 255, message = "Die Email darf nur {max} Zeichen lang sein") private String email;
-    private boolean erwFuehrungszeugnisVorhanden;
-    private boolean minderjaehrigMoeglich;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @OrderColumn(name = "position")
+    @Size(min = 1, max = 2) private List<@Valid @NotNull Ausbilder> ausbilder;
 
     @NotNull @JdbcTypeCode(VARCHAR)
     private UUID meldezeitraumID;

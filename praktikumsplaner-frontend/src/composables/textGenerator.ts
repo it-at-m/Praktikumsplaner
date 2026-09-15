@@ -54,19 +54,19 @@ export function useTextGenerator() {
         "Projektarbeit: " + (stelle.projektarbeit ? "Ja" : "Nein") + "\n";
       cardText +=
         "Betreuung minderjähriger NWK Möglich? " +
-        (stelle.minderjaehrigMoeglich ? "Ja" : "Nein") +
+        (stelle.ausbilder.find((i) => i.minderjaehrigMoeglich)
+          ? "Ja"
+          : "Nein") +
         "\n";
     }
 
     cardText +=
-      "Ausbilder*in: " +
-      stelle.oertlicheAusbilder +
-      "\n" +
-      "Mailadresse Ausbilder*in: " +
-      stelle.email +
-      "\n" +
+      "Ausbilder*innen: \n" +
+      stelle.ausbilder.map((i) => `\t- ${i.name} (${i.email})\n`).join("") +
       "Erw. Führungszeugnis: " +
-      (stelle.erwFuehrungszeugnisVorhanden ? "Ja" : "Nein") +
+      (stelle.ausbilder.find((i) => i.erwFuehrungszeugnisVorhanden)
+        ? "Ja"
+        : "Nein") +
       "\n" +
       "Tätigkeiten: " +
       stelle.taetigkeiten +

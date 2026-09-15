@@ -1,8 +1,10 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import de.muenchen.oss.praktikumsplaner.domain.Ausbilder;
 import de.muenchen.oss.praktikumsplaner.domain.Meldezeitraum;
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.Praktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbilderDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.NwkDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
@@ -13,7 +15,9 @@ import de.muenchen.oss.praktikumsplaner.domain.enums.Dringlichkeit;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Studiensemester;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -68,8 +72,7 @@ public class ServiceTestHelper {
         Praktikumsstelle praktikumsstelle = new Praktikumsstelle();
         praktikumsstelle.setId(UUID.randomUUID());
         praktikumsstelle.setDienststelle(dienststelle);
-        praktikumsstelle.setOertlicheAusbilder(ausbilder);
-        praktikumsstelle.setEmail(email);
+        praktikumsstelle.setAusbilder(new ArrayList<>(List.of(new Ausbilder(ausbilder, email, false, minderjaehrigMoeglich))));
         praktikumsstelle.setTaetigkeiten(taetigkeiten);
         praktikumsstelle.setWuensche(wuensche);
         praktikumsstelle.setDringlichkeit(dringlichkeit);
@@ -79,8 +82,32 @@ public class ServiceTestHelper {
         praktikumsstelle.setProgrammierkenntnisse(programmierkenntnisse);
         praktikumsstelle.setProjektarbeit(projektarbeit);
         praktikumsstelle.setAssignedNwk(assignedNwk);
-        praktikumsstelle.setMinderjaehrigMoeglich(minderjaehrigMoeglich);
         praktikumsstelle.setMeldezeitraumID(meldezeitraumId);
+        return praktikumsstelle;
+    }
+
+    public Praktikumsstelle createPraktikumsstelleEntity(
+            final String dienststelle,
+            final String ausbilder,
+            final String email,
+            final String taetigkeiten,
+            final String wuensche,
+            final Dringlichkeit dringlichkeit,
+            final Bildungsrichtung richtung,
+            final Set<Ausbildungsjahr> ausbildungsjahr,
+            final Set<Studiensemester> studiensemester,
+            final boolean programmierkenntnisse,
+            final boolean projektarbeit,
+            final boolean minderjaehrigMoeglich,
+            final UUID meldezeitraumId,
+            final Nwk assignedNwk,
+            final List<Ausbilder> additionalAusbilder) {
+        final Praktikumsstelle praktikumsstelle = createPraktikumsstelleEntity(
+                dienststelle, ausbilder, email, taetigkeiten, wuensche, dringlichkeit, richtung, ausbildungsjahr,
+                studiensemester, programmierkenntnisse, projektarbeit, minderjaehrigMoeglich, meldezeitraumId, assignedNwk);
+        final List<Ausbilder> ausbilderList = new ArrayList<>(praktikumsstelle.getAusbilder());
+        ausbilderList.addAll(additionalAusbilder);
+        praktikumsstelle.setAusbilder(ausbilderList);
         return praktikumsstelle;
     }
 
@@ -98,10 +125,10 @@ public class ServiceTestHelper {
                 .wuensche(stelle.getWuensche())
                 .ausbildungsjahr(stelle.getAusbildungsjahr())
                 .studiensemester(stelle.getStudiensemester())
-                .oertlicheAusbilder(stelle.getOertlicheAusbilder())
-                .email(stelle.getEmail())
-                .erwFuehrungszeugnisVorhanden(stelle.isErwFuehrungszeugnisVorhanden())
-                .minderjaehrigMoeglich(stelle.isMinderjaehrigMoeglich())
+                .ausbilder(stelle.getAusbilder().stream()
+                        .map(ausbilder -> new AusbilderDto(ausbilder.name(), ausbilder.email(),
+                                ausbilder.erwFuehrungszeugnisVorhanden(), ausbilder.minderjaehrigMoeglich()))
+                        .toList())
                 .assignedNwk(stelle.getAssignedNwk() == null ? null : createNwkDto(stelle.getAssignedNwk()))
                 .meldezeitraumID(stelle.getMeldezeitraumID())
                 .build();

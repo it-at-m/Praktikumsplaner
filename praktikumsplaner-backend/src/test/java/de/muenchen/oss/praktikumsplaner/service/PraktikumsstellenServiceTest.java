@@ -1,7 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import static de.muenchen.oss.praktikumsplaner.TestUtils.getJwtAuthenticationToken;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -12,6 +11,7 @@ import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.Praktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbilderDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.MeldezeitraumDto;
@@ -41,6 +41,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.server.ResponseStatusException;
 
 @ExtendWith(MockitoExtension.class)
 class PraktikumsstellenServiceTest {
@@ -91,8 +92,7 @@ class PraktikumsstellenServiceTest {
 
         CreatePraktikumsstelleDto createDto = CreatePraktikumsstelleDto.builder()
                 .dienststelle("TEST-001")
-                .oertlicheAusbilder("TestoertlicheAusbilder")
-                .email("test@test.de")
+                .ausbilder(List.of(new AusbilderDto("TestoertlicheAusbilder", "test@test.de", false, false)))
                 .taetigkeiten("Testtaetigkeiten")
                 .wuensche("Wuensche")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG)
@@ -136,14 +136,12 @@ class PraktikumsstellenServiceTest {
 
         CreatePraktikumsstelleDto createDto = CreatePraktikumsstelleDto.builder()
                 .dienststelle("TEST-001")
-                .oertlicheAusbilder("TestoertlicheAusbilder")
-                .email("test@test.de")
+                .ausbilder(List.of(new AusbilderDto("TestoertlicheAusbilder", "test@test.de", false, true)))
                 .taetigkeiten("Testtaetigkeiten")
                 .wuensche("Wuensche")
                 .dringlichkeit(Dringlichkeit.NACHRANGIG)
                 .namentlicheAnforderung("TestnamentlicheAnforderung")
                 .projektarbeit(true)
-                .minderjaehrigMoeglich(true)
                 .ausbildungsjahr(Set.of(Ausbildungsjahr.JAHR1))
                 .richtung(Bildungsrichtung.FISI)
                 .build();
@@ -342,8 +340,7 @@ class PraktikumsstellenServiceTest {
 
         CreatePraktikumsstelleWithMeldezeitraumDto createDto = CreatePraktikumsstelleWithMeldezeitraumDto.builder()
                 .dienststelle(praktikumsstelle.getDienststelle())
-                .oertlicheAusbilder(praktikumsstelle.getOertlicheAusbilder())
-                .email(praktikumsstelle.getEmail())
+                .ausbilder(helper.createPraktikumsstelleDto(praktikumsstelle).ausbilder())
                 .taetigkeiten(praktikumsstelle.getTaetigkeiten())
                 .dringlichkeit(praktikumsstelle.getDringlichkeit())
                 .namentlicheAnforderung(praktikumsstelle.getNamentlicheAnforderung())
@@ -422,10 +419,7 @@ class PraktikumsstellenServiceTest {
                 .wuensche(null)
                 .ausbildungsjahr(null)
                 .studiensemester(Set.of(Studiensemester.SEMESTER3))
-                .oertlicheAusbilder("John Smith")
-                .email("John@smith.com")
-                .erwFuehrungszeugnisVorhanden(false)
-                .minderjaehrigMoeglich(false)
+                .ausbilder(List.of(new AusbilderDto("John Smith", "John@smith.com", false, false)))
                 .meldezeitraumID(meldezeitraumDto.id())
                 .build();
 
@@ -454,10 +448,7 @@ class PraktikumsstellenServiceTest {
                 .wuensche(null)
                 .ausbildungsjahr(null)
                 .studiensemester(Set.of(Studiensemester.SEMESTER3))
-                .oertlicheAusbilder("John Smith")
-                .email("John@smith.com")
-                .erwFuehrungszeugnisVorhanden(false)
-                .minderjaehrigMoeglich(false)
+                .ausbilder(List.of(new AusbilderDto("John Smith", "John@smith.com", false, false)))
                 .meldezeitraumID(meldezeitraumDto.id())
                 .build();
 
@@ -465,40 +456,6 @@ class PraktikumsstellenServiceTest {
         when(praktikumsstellenRepository.findById(uuid)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(ResourceNotFoundException.class, () -> service.updatePraktikumsstelle(uuid, praktikumsstelle));
-    }
-
-    @Test
-    void testUpdatePraktikumsstelleWithAssignedNwkThenSuccess() {
-        MeldezeitraumDto meldezeitraumDto = helper.createMeldezeitraumDto(LocalDate.now().minusDays(8), LocalDate.now().minusDays(1), "letzte woche");
-        Nwk nwk = helper.createNwkEntity("Max", "Mustermensch", Bildungsrichtung.BSC, "23/27", null, true);
-        Praktikumsstelle praktikumsstelle = helper.createPraktikumsstelleEntity("TEST", "Ausbilder", "ausbilder@email.ausbilder", "Taetigkeiten", null,
-                Dringlichkeit.ZWINGEND, Bildungsrichtung.BSC, null, Set.of(Studiensemester.SEMESTER1), false, false, false, meldezeitraumDto.id(), nwk);
-        UpdatePraktikumsstelleDto updateDto = UpdatePraktikumsstelleDto.builder()
-                .richtung(Bildungsrichtung.BSC)
-                .dienststelle("TESTTEST")
-                .taetigkeiten("Taetigkeiten")
-                .dringlichkeit(Dringlichkeit.ZWINGEND)
-                .namentlicheAnforderung(null)
-                .projektarbeit(false)
-                .planstelleVorhanden(false)
-                .programmierkenntnisse(false)
-                .wuensche(null)
-                .ausbildungsjahr(null)
-                .studiensemester(Set.of(Studiensemester.SEMESTER1))
-                .oertlicheAusbilder("Ausbilder")
-                .email("ausbilder@email.ausbilder")
-                .erwFuehrungszeugnisVorhanden(false)
-                .minderjaehrigMoeglich(false)
-                .meldezeitraumID(meldezeitraumDto.id())
-                .build();
-
-        when(praktikumsstellenRepository.findById(praktikumsstelle.getId())).thenReturn(Optional.of(praktikumsstelle));
-
-        assertDoesNotThrow(() -> service.updatePraktikumsstelle(praktikumsstelle.getId(), updateDto));
-        verify(praktikumsstellenRepository, times(1)).save(praktikumsstelle);
-        assertEquals("TESTTEST", praktikumsstelle.getDienststelle());
-        assertEquals(Dringlichkeit.ZWINGEND, praktikumsstelle.getDringlichkeit());
-        assertEquals(nwk, praktikumsstelle.getAssignedNwk());
     }
 
     @Test
@@ -519,15 +476,12 @@ class PraktikumsstellenServiceTest {
                 .wuensche(null)
                 .ausbildungsjahr(null)
                 .studiensemester(Set.of(Studiensemester.SEMESTER1))
-                .oertlicheAusbilder("Ausbilder")
-                .email("ausbilder@email.ausbilder")
-                .erwFuehrungszeugnisVorhanden(false)
-                .minderjaehrigMoeglich(false)
+                .ausbilder(List.of(new AusbilderDto("Ausbilder", "ausbilder@email.ausbilder", false, false)))
                 .meldezeitraumID(meldezeitraumDto.id())
                 .build();
 
         when(praktikumsstellenRepository.findById(praktikumsstelle.getId())).thenReturn(Optional.of(praktikumsstelle));
 
-        Assertions.assertThrows(ResourceConflictException.class, () -> service.updatePraktikumsstelle(praktikumsstelle.getId(), updateDto));
+        Assertions.assertThrows(ResponseStatusException.class, () -> service.updatePraktikumsstelle(praktikumsstelle.getId(), updateDto));
     }
 }

@@ -166,54 +166,11 @@
             </v-col>
           </v-row>
         </v-sheet>
-        <v-sheet
-          border
-          rounded
+        <ausbilder-sheet
+          v-model="praktikumsstelle.ausbilder"
+          :show-ausbildung-inputs="isAusbildung"
           class="pa-5 mb-3"
-        >
-          <v-row>
-            <v-col>
-              <span class="text-h6">örtliche*r Ausbilder*in</span>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <ausbilder-input
-                v-model="praktikumsstelle"
-                :is-required="true"
-                :required-symbol="requiredFieldSymbol"
-              ></ausbilder-input>
-            </v-col>
-            <v-col cols="1" />
-            <v-col>
-              <ausbilder-email-input
-                v-model="praktikumsstelle"
-                :is-required="true"
-                :required-symbol="requiredFieldSymbol"
-              ></ausbilder-email-input>
-            </v-col>
-            <v-col cols="1" />
-          </v-row>
-          <v-row>
-            <v-col>
-              <ausbilder-erw-fuehrungszeugnis-checkbox
-                v-model="praktikumsstelle"
-              ></ausbilder-erw-fuehrungszeugnis-checkbox>
-            </v-col>
-            <v-col cols="1" />
-            <v-col>
-              <minderjaehrig-moeglich-radio-group
-                v-if="isAusbildung"
-                v-model="praktikumsstelle"
-                :is-required="true"
-                :required-symbol="requiredFieldSymbol"
-              ></minderjaehrig-moeglich-radio-group>
-            </v-col>
-            <v-col cols="1">
-              <minderjaehrig-moeglich-tooltip></minderjaehrig-moeglich-tooltip>
-            </v-col>
-          </v-row>
-        </v-sheet>
+        />
         <v-sheet
           v-if="security.isAusbildungsleitung()"
           border
@@ -262,17 +219,13 @@ import MeldungService from "@/api/PraktikumsstellenService";
 import BildungsrichtungSelect from "@/components/common/BildungsrichtungSelect.vue";
 import PageTitle from "@/components/common/PageTitle.vue";
 import ProgressCircularOverlay from "@/components/common/ProgressCircularOverlay.vue";
-import AusbilderEmailInput from "@/components/praktikumsplaetze/Meldung/AusbilderEmailInput.vue";
-import AusbilderErwFuehrungszeugnisCheckbox from "@/components/praktikumsplaetze/Meldung/AusbilderErwFuehrungszeugnisCheckbox.vue";
-import AusbilderInput from "@/components/praktikumsplaetze/Meldung/AusbilderInput.vue";
+import AusbilderSheet from "@/components/praktikumsplaetze/Meldung/AusbilderSheet.vue";
 import AusbildungsJahrSelect from "@/components/praktikumsplaetze/Meldung/AusbildungsJahrSelect.vue";
 import DienststellenInput from "@/components/praktikumsplaetze/Meldung/DienststellenInput.vue";
 import DringlichkeitSelect from "@/components/praktikumsplaetze/Meldung/DringlichkeitSelect.vue";
 import DringlichkeitTooltip from "@/components/praktikumsplaetze/Meldung/DringlichkeitTooltip.vue";
 import KeinMeldezeitraumMessage from "@/components/praktikumsplaetze/Meldung/KeinMeldezeitraumMessage.vue";
 import MeldezeitraumSelect from "@/components/praktikumsplaetze/Meldung/MeldezeitraumSelect.vue";
-import MinderjaehrigMoeglichRadioGroup from "@/components/praktikumsplaetze/Meldung/MinderjaehrigMoeglichRadioGroup.vue";
-import MinderjaehrigMoeglichTooltip from "@/components/praktikumsplaetze/Meldung/MinderjaehrigMoeglichTooltip.vue";
 import NamentlicheAnforderungInput from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungInput.vue";
 import NamentlicheAnforderungTooltip from "@/components/praktikumsplaetze/Meldung/NamentlicheAnforderungTooltip.vue";
 import PlanstelleRadioGroup from "@/components/praktikumsplaetze/Meldung/PlanstelleRadioGroup.vue";

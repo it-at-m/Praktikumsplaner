@@ -1,5 +1,6 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbilderDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -33,7 +34,8 @@ public class AsyncMailSender {
     public CompletableFuture<PraktikumsstelleDto> sendSingleMailAsync(final PraktikumsstelleDto stelle, final String mailBody) {
         try {
             log.debug("Start Mail-Send for Praktikumsstelle id={}, dienststelle={}", stelle.id(), stelle.dienststelle());
-            sendSingleMail(stelle.email(), "Praktikumsplatz zugeteilt", mailBody);
+            final String[] emails = stelle.ausbilder().stream().map(AusbilderDto::email).toArray(String[]::new);
+            sendSingleMail(emails, "Praktikumsplatz zugeteilt", mailBody);
             return CompletableFuture.completedFuture(null); // null for success, could also use Optional
         } catch (Exception e) {
             log.error("Error on Mail-Send for Praktikumsstelle id={}, dienststelle={}", stelle.id(), stelle.dienststelle(), e);
@@ -41,7 +43,7 @@ public class AsyncMailSender {
         }
     }
 
-    private void sendSingleMail(final String to, final String subject, final String body) throws MessagingException {
+    private void sendSingleMail(final String[] to, final String subject, final String body) throws MessagingException {
         final MimeMessage mimeMessage = mailSender.createMimeMessage();
         final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "utf-8");
 

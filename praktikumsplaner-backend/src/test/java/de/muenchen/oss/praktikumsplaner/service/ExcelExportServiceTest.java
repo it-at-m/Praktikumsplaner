@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
+import de.muenchen.oss.praktikumsplaner.domain.Ausbilder;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Ausbildungsjahr;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
@@ -64,7 +65,8 @@ class ExcelExportServiceTest {
             assertEquals("oertlAL", ausbildungsSheet.getRow(3).getCell(1).getStringCellValue());
             assertEquals(ausbildungsstelle.dienststelle(), ausbildungsSheet.getRow(3).getCell(2).getStringCellValue());
             assertEquals("dienststellen Adresse", ausbildungsSheet.getRow(3).getCell(4).getStringCellValue());
-            assertEquals(ausbildungsstelle.oertlicheAusbilder(), ausbildungsSheet.getRow(3).getCell(5).getStringCellValue());
+            assertEquals("Ausbilder 1; Ausbilder 1b", ausbildungsSheet.getRow(3).getCell(5).getStringCellValue());
+            assertEquals("a@b.c; b@c.d", ausbildungsSheet.getRow(3).getCell(6).getStringCellValue());
             assertEquals(ausbildungsstelle.taetigkeiten(), ausbildungsSheet.getRow(3).getCell(7).getStringCellValue());
             assertThat(ausbildungsSheet.getRow(3).getCell(8).getStringCellValue(), not(containsString("Programmierkenntnisse von Vorteil")));
             assertThat(ausbildungsSheet.getRow(3).getCell(8).getStringCellValue(), not(containsString("Namentliche Anforderung:")));
@@ -84,7 +86,7 @@ class ExcelExportServiceTest {
             assertEquals("oertlAL", studiumsSheet.getRow(3).getCell(1).getStringCellValue());
             assertEquals(studiumsstelle.dienststelle(), studiumsSheet.getRow(3).getCell(2).getStringCellValue());
             assertEquals("dienststellen Adresse", studiumsSheet.getRow(3).getCell(4).getStringCellValue());
-            assertEquals(studiumsstelle.oertlicheAusbilder(), studiumsSheet.getRow(3).getCell(5).getStringCellValue());
+            assertEquals(studiumsstelle.ausbilder().getFirst().name(), studiumsSheet.getRow(3).getCell(5).getStringCellValue());
             assertEquals(studiumsstelle.taetigkeiten(), studiumsSheet.getRow(3).getCell(7).getStringCellValue());
             assertThat(studiumsSheet.getRow(3).getCell(8).getStringCellValue(), not(containsString("Namentliche Anforderung:")));
             assertThat(studiumsSheet.getRow(3).getCell(8).getStringCellValue(), containsString("Programmierkenntnisse von Vorteil"));
@@ -169,7 +171,8 @@ class ExcelExportServiceTest {
                         false,
                         true,
                         null,
-                        helper.createNwkEntity("Vorname 1", "Nachname 1", Bildungsrichtung.FISI, "22/23", null, true))),
+                        helper.createNwkEntity("Vorname 1", "Nachname 1", Bildungsrichtung.FISI, "22/23", null, true),
+                        List.of(new Ausbilder("Ausbilder 1b", "b@c.d", false, false)))),
                 helper.createPraktikumsstelleDto(helper.createPraktikumsstelleEntity(
                         "ITM-DS2",
                         "Ausbilder 2",

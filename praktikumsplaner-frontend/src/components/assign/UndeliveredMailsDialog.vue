@@ -16,7 +16,9 @@
         >
           <h4>Stelle bei {{ stelle.dienststelle }}</h4>
           <p>
-            Ausbilder*in: {{ stelle.email }} (Zugewiesene NWK:
+            Ausbilder*innen:
+            {{ stelle.ausbilder.map((value) => value.email).join(", ") }}
+            (Zugewiesene NWK:
             {{ stelle.assignedNwk?.vorname }}
             {{ stelle.assignedNwk?.nachname }})
           </p>

@@ -33,8 +33,6 @@ public interface PraktikumsstellenMapper {
     Praktikumsstelle toEntity(UUID id, UpdatePraktikumsstelleDto praktikumsstelleDto);
 
     @Mapping(target = "dienststelle", source = "praktikumsstelleDto.dienststelle")
-    @Mapping(target = "oertlicheAusbilder", source = "praktikumsstelleDto.oertlicheAusbilder")
-    @Mapping(target = "email", source = "praktikumsstelleDto.email")
     @Mapping(target = "taetigkeiten", source = "praktikumsstelleDto.taetigkeiten")
     @Mapping(target = "wuensche", source = "praktikumsstelleDto.wuensche")
     @Mapping(target = "id", ignore = true)

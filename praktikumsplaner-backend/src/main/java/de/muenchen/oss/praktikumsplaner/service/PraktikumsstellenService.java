@@ -2,6 +2,7 @@ package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.domain.Nwk;
 import de.muenchen.oss.praktikumsplaner.domain.Praktikumsstelle;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbilderDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.CreatePraktikumsstelleWithMeldezeitraumDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
@@ -12,12 +13,13 @@ import de.muenchen.oss.praktikumsplaner.repository.PraktikumsstellenRepository;
 import de.muenchen.oss.praktikumsplaner.security.AuthUtils;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 @Service
@@ -92,31 +94,10 @@ public class PraktikumsstellenService {
         final Praktikumsstelle praktikumsstelleToUpdate = findByIdOrThrow(praktikumsstellenId);
 
         if (praktikumsstelleToUpdate.getAssignedNwk() != null) {
-            updatePraktikumsstelleWithAssignedNwk(praktikumsstelleToUpdate, praktikumsstelleDto);
-            return;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Eine zugewiesene Praktikumsstelle darf nicht bearbeitet werden.");
         }
 
         praktikumsstellenRepository.save(praktikumsstellenMapper.toEntity(praktikumsstellenId, praktikumsstelleDto));
-    }
-
-    @SuppressWarnings("PMD.CyclomaticComplexity")
-    private void updatePraktikumsstelleWithAssignedNwk(final Praktikumsstelle praktikumsstelle,
-            final UpdatePraktikumsstelleDto praktikumsstelleDto) {
-        if (praktikumsstelle.getDringlichkeit() != praktikumsstelleDto.dringlichkeit()
-                || !Objects.equals(praktikumsstelle.getNamentlicheAnforderung(), praktikumsstelleDto.namentlicheAnforderung())
-                || praktikumsstelle.isPlanstelleVorhanden() != praktikumsstelleDto.planstelleVorhanden()
-                || !praktikumsstelle.getMeldezeitraumID().equals(praktikumsstelleDto.meldezeitraumID())
-                || praktikumsstelle.isProjektarbeit() != praktikumsstelleDto.projektarbeit()
-                || !Objects.equals(praktikumsstelle.isProgrammierkenntnisse(), praktikumsstelleDto.programmierkenntnisse())
-                || !Objects.equals(praktikumsstelle.getAusbildungsjahr(), praktikumsstelleDto.ausbildungsjahr())
-                || !Objects.equals(praktikumsstelle.getStudiensemester(), praktikumsstelleDto.studiensemester())
-                || praktikumsstelle.getRichtung() != praktikumsstelleDto.richtung()
-                || !Objects.equals(praktikumsstelle.getWuensche(), praktikumsstelleDto.wuensche())
-                || praktikumsstelle.isMinderjaehrigMoeglich() != praktikumsstelleDto.minderjaehrigMoeglich()) {
-            throw new ResourceConflictException("Unerlaubter Versuch der Änderung von Daten");
-        }
-        praktikumsstellenMapper.updatePraktikumsstelle(praktikumsstelle, praktikumsstelleDto);
-        praktikumsstellenRepository.save(praktikumsstelle);
     }
 
     public List<PraktikumsstelleDto> getPraktikumsstellen(final UUID meldezeitraumID) {
@@ -138,7 +119,8 @@ public class PraktikumsstellenService {
             final String userDepartment = AuthUtils.getDepartmentFromUser();
 
             return praktikumsstellen.stream()
-                    .filter(dto -> usermail.equals(dto.email()) || dto.dienststelle().startsWith(userDepartment))
+                    .filter(dto -> dto.dienststelle().startsWith(userDepartment) ||
+                            dto.ausbilder().stream().map(AusbilderDto::email).anyMatch(email -> email.equals(usermail)))
                     .toList();
         }
 

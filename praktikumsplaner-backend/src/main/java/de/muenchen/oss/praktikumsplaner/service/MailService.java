@@ -1,6 +1,7 @@
 package de.muenchen.oss.praktikumsplaner.service;
 
 import de.muenchen.oss.praktikumsplaner.configuration.PraktikumsplanerProperties;
+import de.muenchen.oss.praktikumsplaner.domain.dtos.AusbilderDto;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -59,7 +61,7 @@ public class MailService {
         final String bildungsrichtung = praktikumsstelleDto.assignedNwk().richtung().getLongName();
 
         return Map.of(
-                "ausbilder", praktikumsstelleDto.oertlicheAusbilder(),
+                "ausbilder", praktikumsstelleDto.ausbilder().stream().map(AusbilderDto::name).collect(Collectors.joining(", ")),
                 "nachwuchskraftName", praktikumsstelleDto.assignedNwk().vorname() + " " + praktikumsstelleDto.assignedNwk().nachname(),
                 "jahrgang", praktikumsstelleDto.assignedNwk().jahrgang(),
                 "bildungsrichtung", bildungsrichtung,
