@@ -4,7 +4,7 @@ services:
   # Praktikumsplaner Services
   #
   pp-frontend:
-    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest@sha256:f4ce85ef47345fe0c7286bc90ebdc0c6caa68bc74fbb9190ec46ec43ab81853d
+    image: ghcr.io/it-at-m/praktikumsplaner/praktikumsplaner-frontend:latest@sha256:55178a4cfff9667e27a47f40503f8cb6436ee670af18b3424ce9c644be9e7b5a
     depends_on:
       init-keycloak:
         condition: service_completed_successfully
