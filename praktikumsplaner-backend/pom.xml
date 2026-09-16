@@ -52,7 +52,7 @@
         <!-- SonarQube -->
         <sonar.scanner.version>5.5.0.6356</sonar.scanner.version>
         <!-- TestCoverage -->
-        <jacoco.version>0.8.14</jacoco.version>
+        <jacoco.version>0.8.15</jacoco.version>
         <argLine /> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
         <!-- Plugins -->
         <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
