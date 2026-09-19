@@ -41,7 +41,7 @@ services:
   # Database
   #
   postgres:
-    image: postgres:17.6@sha256:00bc86618629af00d2937fdc5a5d63db3ff8450acf52f0636ec813c7f4902929
+    image: postgres:17.11@sha256:f4c66b820c6f974249089d3d16d86a3698eae11e8746eb6644b2271031e91232
     environment:
       POSTGRES_DB: praktikumsplaner
       POSTGRES_USER: db-backend-user
