@@ -18,7 +18,9 @@ export default class Nwk {
   ) {}
 
   calculateLehrjahr() {
-    if (!isAusbildung(findBildungsrichtung(this.richtung))) return -1;
+    if (!isAusbildung(findBildungsrichtung(this.richtung))) {
+      return -1;
+    }
 
     let lehrjahr: number;
     const startYear: number = +this.jahrgang.substring(0, 2) + 2000;
@@ -33,7 +35,9 @@ export default class Nwk {
   }
 
   calculateSemester() {
-    if (!isStudium(findBildungsrichtung(this.richtung))) return -1;
+    if (!isStudium(findBildungsrichtung(this.richtung))) {
+      return -1;
+    }
     let semester: number;
     const startYear: number = +this.jahrgang.substring(0, 2) + 2000;
     const now = new Date();
