@@ -25,8 +25,8 @@ export default class Nwk {
     const now = new Date();
     const currentYear: number = now.getFullYear();
     lehrjahr = currentYear - startYear;
-    // next after September
-    if (now.getMonth() > 8) {
+    // next from September
+    if (now.getMonth() >= 8) {
       lehrjahr += 1;
     }
     return lehrjahr;
@@ -40,10 +40,14 @@ export default class Nwk {
     const currentYear: number = now.getFullYear();
     const difference = currentYear - startYear;
     semester = difference * 2;
-    // next after September
-    if (now.getMonth() > 8) semester += 1;
-    // previous before April
-    if (now.getMonth() < 3) semester -= 1;
+    // next from September
+    if (now.getMonth() >= 8) {
+      semester += 1;
+    }
+    // previous before March
+    if (now.getMonth() < 2) {
+      semester -= 1;
+    }
     return semester;
   }
 }
