@@ -21,38 +21,43 @@ export default class Nwk {
     if (!isAusbildung(findBildungsrichtung(this.richtung))) {
       return -1;
     }
+calculateLehrjahr() {
+    if (!isAusbildung(findBildungsrichtung(this.richtung))) {
+      return -1;
+    }
 
-    let lehrjahr: number;
     const startYear: number = +this.jahrgang.substring(0, 2) + 2000;
     const now = new Date();
-    const currentYear: number = now.getFullYear();
-    lehrjahr = currentYear - startYear;
+    const baseLehrjahr: number = now.getFullYear() - startYear;
+
     // next from October
     if (now.getMonth() > 8) {
-      lehrjahr += 1;
+      return baseLehrjahr + 1;
     }
-    return lehrjahr;
+
+    return baseLehrjahr;
   }
 
   calculateSemester() {
     if (!isStudium(findBildungsrichtung(this.richtung))) {
       return -1;
     }
-    let semester: number;
+
     const startYear: number = +this.jahrgang.substring(0, 2) + 2000;
     const now = new Date();
-    const currentYear: number = now.getFullYear();
-    const difference = currentYear - startYear;
-    semester = difference * 2;
+    const baseSemester: number = (now.getFullYear() - startYear) * 2;
+
     // next from October
     if (now.getMonth() > 8) {
-      semester += 1;
+      return baseSemester + 1;
     }
+
     // previous before March
     if (now.getMonth() < 3) {
-      semester -= 1;
+      return baseSemester - 1;
     }
-    return semester;
+
+    return baseSemester;
   }
 }
 
