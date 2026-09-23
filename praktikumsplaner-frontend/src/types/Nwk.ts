@@ -1,5 +1,11 @@
 import type { BildungsrichtungKey } from "@/types/Bildungsrichtung";
 
+import {
+  findBildungsrichtung,
+  isAusbildung,
+  isStudium,
+} from "@/types/Bildungsrichtung";
+
 export default class Nwk {
   constructor(
     public id: string,
@@ -10,6 +16,45 @@ export default class Nwk {
     public isActive: boolean,
     public richtung: BildungsrichtungKey
   ) {}
+
+  calculateLehrjahr() {
+    if (!isAusbildung(findBildungsrichtung(this.richtung))) {
+      return -1;
+    }
+
+    const startYear: number = +this.jahrgang.substring(0, 2) + 2000;
+    const now = new Date();
+    const baseLehrjahr: number = now.getFullYear() - startYear;
+
+    // next from October
+    if (now.getMonth() > 8) {
+      return baseLehrjahr + 1;
+    }
+
+    return baseLehrjahr;
+  }
+
+  calculateSemester() {
+    if (!isStudium(findBildungsrichtung(this.richtung))) {
+      return -1;
+    }
+
+    const startYear: number = +this.jahrgang.substring(0, 2) + 2000;
+    const now = new Date();
+    const baseSemester: number = (now.getFullYear() - startYear) * 2;
+
+    // next from October
+    if (now.getMonth() > 8) {
+      return baseSemester + 1;
+    }
+
+    // previous before March
+    if (now.getMonth() < 3) {
+      return baseSemester - 1;
+    }
+
+    return baseSemester;
+  }
 }
 
 // Used in NwkCards to determine if the details button should be shown

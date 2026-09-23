@@ -76,7 +76,7 @@ export function useWarnings() {
         expectedSemesters.push(+semester.substring(8, 9));
       }
 
-      const actualSemester = calculateSemester(nwk);
+      const actualSemester = nwk.calculateSemester();
       if (!expectedSemesters.includes(actualSemester)) {
         let warningText =
           "Wollen sie wirklich eine/n Student*in im " +
@@ -101,7 +101,7 @@ export function useWarnings() {
       for (const ausbildungsjahr of stelle.ausbildungsjahr) {
         expectedLehrjahre.push(+ausbildungsjahr.substring(4, 5));
       }
-      const actualLehrjahr = calculateLehrjahr(nwk);
+      const actualLehrjahr = nwk.calculateLehrjahr();
       if (!expectedLehrjahre.includes(actualLehrjahr)) {
         let warningText =
           "Wollen sie wirklich eine/n Auszubildende/n im " +
@@ -169,35 +169,6 @@ export function useWarnings() {
       }
     }
     return warnings;
-  }
-
-  function calculateSemester(nwk: Nwk) {
-    if (!nwk) return -1;
-    if (!isStudium(findBildungsrichtung(nwk.richtung))) return 0;
-    let semester: number;
-    const startYear: number = +nwk.jahrgang.substring(0, 2) + 2000;
-    const currentYear: number = new Date().getFullYear();
-    const difference = currentYear - startYear;
-    semester = difference * 2;
-    if (new Date().getMonth() > 8) semester += 1;
-    if (new Date().getMonth() < 3) semester -= 1;
-    return semester;
-  }
-
-  function calculateLehrjahr(nwk: Nwk) {
-    if (!nwk) return -1;
-    if (!isAusbildung(findBildungsrichtung(nwk.richtung))) return 0;
-
-    let lehrjahr: number;
-    const startYear: number = +nwk.jahrgang.substring(0, 2) + 2000;
-    const currentYear: number = new Date().getFullYear();
-    lehrjahr = currentYear - startYear;
-    if (new Date().getMonth() > 8) {
-      lehrjahr += 1;
-    } else {
-      lehrjahr -= 1;
-    }
-    return lehrjahr;
   }
 
   return {
