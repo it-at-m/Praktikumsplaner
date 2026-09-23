@@ -8,9 +8,9 @@ describe("Nwk", () => {
     vi.useRealTimers();
   });
 
-  it("calculateSemester before March threshold", () => {
+  it("calculateSemester before April threshold", () => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(2027, 1, 28));
+    vi.setSystemTime(new Date(2027, 2, 30));
 
     const nwk = new Nwk(
       undefined,
@@ -25,9 +25,9 @@ describe("Nwk", () => {
     expect(nwk.calculateSemester()).toBe(1);
   });
 
-  it("calculateSemester March threshold", () => {
+  it("calculateSemester April threshold", () => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(2027, 2, 30));
+    vi.setSystemTime(new Date(2027, 3, 1));
 
     const nwk = new Nwk(
       undefined,
@@ -42,9 +42,9 @@ describe("Nwk", () => {
     expect(nwk.calculateSemester()).toBe(2);
   });
 
-  it("calculateSemester before September threshold", () => {
+  it("calculateSemester before October threshold", () => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(2027, 7, 30));
+    vi.setSystemTime(new Date(2027, 8, 30));
 
     const nwk = new Nwk(
       undefined,
@@ -59,7 +59,7 @@ describe("Nwk", () => {
     expect(nwk.calculateSemester()).toBe(2);
   });
 
-  it("calculateSemester September threshold", () => {
+  it("calculateSemester October threshold", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(2027, 9, 1));
 
@@ -78,7 +78,7 @@ describe("Nwk", () => {
 
   it("calculateLehrjahr before October threshold", () => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(2026, 7, 31));
+    vi.setSystemTime(new Date(2026, 8, 30));
 
     const nwk = new Nwk(
       undefined,
