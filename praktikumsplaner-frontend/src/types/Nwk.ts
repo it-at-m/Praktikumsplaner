@@ -21,10 +21,6 @@ export default class Nwk {
     if (!isAusbildung(findBildungsrichtung(this.richtung))) {
       return -1;
     }
-calculateLehrjahr() {
-    if (!isAusbildung(findBildungsrichtung(this.richtung))) {
-      return -1;
-    }
 
     const startYear: number = +this.jahrgang.substring(0, 2) + 2000;
     const now = new Date();
