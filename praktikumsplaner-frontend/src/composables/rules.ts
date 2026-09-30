@@ -27,8 +27,7 @@ export function useRules() {
   }
 
   function notEmptyDateRule(message = "error") {
-    return (value: string | null | undefined) =>
-      (value && value.trim() != "-") || message;
+    return (value: Date | null | undefined) => !!value || message;
   }
 
   function notEmptyRule(message = "error") {

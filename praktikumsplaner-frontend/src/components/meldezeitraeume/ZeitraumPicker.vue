@@ -3,30 +3,32 @@
     <v-col>
       <v-row>
         <v-col cols="12">
-          <v-text-field
-            ref="startZeitpunktInput"
-            v-model="range.startZeitpunkt"
+          <v-date-input
+            ref="startInput"
+            v-model="model.startZeitpunkt"
+            prepend-icon=""
+            :append-inner-icon="mdiCalendarOutline"
             density="compact"
             variant="outlined"
-            type="date"
-            :label="'Beginn des ' + properties.label + 's'"
+            :label="`Beginn des ${label}s`"
             :rules="startZeitpunktRules"
             :data-test="testIds.meldezeitraum.startInput"
-          >
-          </v-text-field>
+            @update:model-value="model.endZeitpunkt && endInput?.validate()"
+          />
         </v-col>
         <v-col cols="12">
-          <v-text-field
-            ref="endZeitpunktInput"
-            v-model="range.endZeitpunkt"
+          <v-date-input
+            ref="endInput"
+            v-model="model.endZeitpunkt"
+            prepend-icon=""
+            :append-inner-icon="mdiCalendarOutline"
             density="compact"
             variant="outlined"
-            type="date"
-            :label="'Ende des ' + properties.label + 's'"
+            :label="`Ende des ${label}s`"
             :rules="endZeitpunktRules"
             :data-test="testIds.meldezeitraum.endInput"
-          >
-          </v-text-field>
+            @update:model-value="model.startZeitpunkt && startInput?.validate()"
+          />
         </v-col>
       </v-row>
     </v-col>
@@ -34,54 +36,38 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { mdiCalendarOutline } from "@mdi/js";
+import { useTemplateRef } from "vue";
 
 import { useRules } from "@/composables/rules";
 import { testIds } from "@/testIds";
 import Zeitraum from "@/types/Zeitraum";
 
-const properties = defineProps<{
-  value: Zeitraum;
+const props = defineProps<{
   label: string;
 }>();
 
+const model = defineModel<Zeitraum>({ required: true });
+
 const validationRules = useRules();
-const startZeitpunktInput = ref<HTMLFormElement>();
-const endZeitpunktInput = ref<HTMLFormElement>();
+const startInput = useTemplateRef("startInput");
+const endInput = useTemplateRef("endInput");
 
-const range = computed(() => properties.value);
+const startZeitpunktRules = [
+  validationRules.notEmptyDateRule(
+    "Es muss ein Startzeitpunkt angegeben werden."
+  ),
+  () =>
+    model.value.isStartBeforeEnd ||
+    `Der Beginn des ${props.label}s muss vor dem Ende liegen.`,
+];
 
-const isStartBeforeEnd = computed(() => {
-  if (range.value.startZeitpunkt) startZeitpunktInput.value?.validate();
-  return (
-    range.value.isStartBeforeEnd ||
-    "Der Beginn des " + properties.label + "s muss vor dem Ende liegen."
-  );
-});
-
-const isEndAfterStart = computed(() => {
-  if (range.value.endZeitpunkt) endZeitpunktInput.value?.validate();
-  return (
-    range.value.isStartBeforeEnd ||
-    "Das Ende des " + properties.label + "s darf nicht vor dem Beginn liegen."
-  );
-});
-
-const endZeitpunktRules = computed(() => {
-  return [
-    validationRules.notEmptyDateRule(
-      "Es muss ein Endzeitpunkt angegeben werden"
-    ),
-    isEndAfterStart.value,
-  ];
-});
-
-const startZeitpunktRules = computed(() => {
-  return [
-    validationRules.notEmptyDateRule(
-      "Es muss ein Startzeitpunkt angegeben werden."
-    ),
-    isStartBeforeEnd.value,
-  ];
-});
+const endZeitpunktRules = [
+  validationRules.notEmptyDateRule(
+    "Es muss ein Endzeitpunkt angegeben werden."
+  ),
+  () =>
+    model.value.isStartBeforeEnd ||
+    `Das Ende des ${props.label}s darf nicht vor dem Beginn liegen.`,
+];
 </script>
