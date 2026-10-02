@@ -23,7 +23,7 @@
           @deleted="reloadMeldezeitraeume"
         >
           <template #header>
-            <h3>Aktueller Meldezeitraum</h3>
+            <h3 class="mb-0">Aktueller Meldezeitraum</h3>
           </template>
           <template #notfoundmessage>
             <p>Kein aktueller Meldezeitraum gefunden.</p>
@@ -40,7 +40,7 @@
           @deleted="reloadMeldezeitraeume"
         >
           <template #header>
-            <h3>Kommende Meldezeiträume</h3>
+            <h3 class="mb-0">Kommende Meldezeiträume</h3>
           </template>
           <template #notfoundmessage>
             <p>Keine kommenden Meldezeiträume gefunden.</p>
@@ -55,8 +55,9 @@
           v-if="!loading"
           :value="passed"
           @deleted="reloadMeldezeitraeume"
-          ><template #header>
-            <h3>Vergangene Meldezeiträume</h3>
+        >
+          <template #header>
+            <h3 class="mb-0">Vergangene Meldezeiträume</h3>
           </template>
           <template #notfoundmessage>
             <p>Keine vergangenen Meldezeiträume gefunden.</p>

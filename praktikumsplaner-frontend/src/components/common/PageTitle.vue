@@ -10,12 +10,15 @@
         :data-test="testIds.common.pageTitleBackBtn"
       >
       </v-btn>
-      <h1 :data-test="testIds.common.pageTitle">
+      <h1
+        :data-test="testIds.common.pageTitle"
+        class="my-0"
+      >
         {{ properties.pageHeaderText }}
       </h1>
     </v-col>
     <v-col
-      cols="4"
+      cols="5"
       class="d-flex flex-row align-center justify-end"
     >
       <slot name="actions" />

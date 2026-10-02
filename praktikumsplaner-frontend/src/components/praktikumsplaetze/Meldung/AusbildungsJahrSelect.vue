@@ -33,16 +33,16 @@
     <template #item="{ item, props }">
       <v-list-item v-bind="props">
         <v-list-item-subtitle v-if="praktikumsstelle.richtung === 'FISI'">
-          {{ item.raw.zeitraumFISI }}
+          {{ item.zeitraumFISI }}
         </v-list-item-subtitle>
         <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'QE2'">
-          {{ item.raw.zeitraumQE2 }}
+          {{ item.zeitraumQE2 }}
         </v-list-item-subtitle>
         <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'KFB'">
-          {{ item.raw.zeitraumKFB }}
+          {{ item.zeitraumKFB }}
         </v-list-item-subtitle>
         <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'VFAK'">
-          {{ item.raw.zeitraumVFAK }}
+          {{ item.zeitraumVFAK }}
         </v-list-item-subtitle>
       </v-list-item>
     </template>

@@ -3,7 +3,7 @@
     border
     rounded
   >
-    <v-row>
+    <v-row class="mb-2">
       <v-col>
         <span class="text-h6">örtliche*r Ausbilder*in</span>
       </v-col>
@@ -25,7 +25,7 @@
       :disabled="disabled"
     />
     <template v-if="model.length > 1">
-      <v-row>
+      <v-row class="mb-2">
         <v-col>
           <span class="text-h6">zweite*r örtliche*r Ausbilder*in</span>
         </v-col>

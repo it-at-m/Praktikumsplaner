@@ -31,22 +31,22 @@
     <template #item="{ item, props }">
       <v-list-item v-bind="props">
         <v-list-item-subtitle v-if="praktikumsstelle.richtung === 'BSC'">
-          {{ item.raw.zeitraumBSC }}
+          {{ item.zeitraumBSC }}
         </v-list-item-subtitle>
         <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'BWI'">
-          {{ item.raw.zeitraumBWI }}
+          {{ item.zeitraumBWI }}
         </v-list-item-subtitle>
         <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'VI'">
-          {{ item.raw.zeitraumVI }}
+          {{ item.zeitraumVI }}
         </v-list-item-subtitle>
         <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'LLB'">
-          {{ item.raw.zeitraumLLB }}
+          {{ item.zeitraumLLB }}
         </v-list-item-subtitle>
         <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'PUMA'">
-          {{ item.raw.zeitraumPUMA }}
+          {{ item.zeitraumPUMA }}
         </v-list-item-subtitle>
         <v-list-item-subtitle v-else-if="praktikumsstelle.richtung === 'QE3'">
-          {{ item.raw.zeitraumQE3 }}
+          {{ item.zeitraumQE3 }}
         </v-list-item-subtitle>
       </v-list-item>
     </template>

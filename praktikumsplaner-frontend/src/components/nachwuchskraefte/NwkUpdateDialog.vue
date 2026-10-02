@@ -13,10 +13,7 @@
     :data-test="testIds.nwk.updateDialog"
   >
     <v-form ref="form">
-      <v-card>
-        <v-card-title class="text-h5 font-weight-bold"
-          >NWK bearbeiten</v-card-title
-        >
+      <v-card title="NWK bearbeiten">
         <v-list>
           <v-list-item>
             <v-container>
