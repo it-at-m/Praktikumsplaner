@@ -37,14 +37,17 @@ export function useWarnings() {
     }
 
     if (
-      isStudium(stellenRichtung) &&
+      ((isStudium(stellenRichtung) && isStudium(nwkRichtung)) ||
+        (isAusbildung(stellenRichtung) && isAusbildung(nwkRichtung))) &&
       stelle.richtung &&
       stelle.richtung != nwk.richtung
     ) {
       const warningText =
         "Wollen sie wirklich eine/n " +
         nwk.richtung +
-        " Student*in auf eine " +
+        (isStudium(nwkRichtung)
+          ? " Student*in auf eine "
+          : " Auszubildende/n auf eine ") +
         stelle.richtung +
         " Stelle setzen?";
       warnings.push(new Warning("", warningText));
@@ -81,7 +84,7 @@ export function useWarnings() {
         let warningText =
           "Wollen sie wirklich eine/n Student*in im " +
           actualSemester +
-          " Semester auf diese Stelle setzen, obwohl ein/e Student*in im ";
+          ". Semester auf diese Stelle setzen, obwohl ein/e Student*in im ";
         for (let i = 0; i < expectedSemesters.length - 1; i++) {
           warningText += expectedSemesters[i] + ". Semester, ";
         }
