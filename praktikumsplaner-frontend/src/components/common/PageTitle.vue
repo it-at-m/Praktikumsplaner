@@ -18,7 +18,7 @@
       </h1>
     </v-col>
     <v-col
-      cols="4"
+      cols="5"
       class="d-flex flex-row align-center justify-end"
     >
       <slot name="actions" />

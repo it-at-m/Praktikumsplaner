@@ -6,7 +6,8 @@
           <v-date-input
             ref="startInput"
             v-model="startDatum"
-            density="compact"
+            :append-inner-icon="mdiCalendar"
+            prepend-icon=""
             variant="outlined"
             :label="`Beginn des ${label}s`"
             :rules="startZeitpunktRules"
@@ -18,7 +19,8 @@
           <v-date-input
             ref="endInput"
             v-model="endDatum"
-            density="compact"
+            :append-inner-icon="mdiCalendar"
+            prepend-icon=""
             variant="outlined"
             :label="`Ende des ${label}s`"
             :rules="endZeitpunktRules"
@@ -32,6 +34,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiCalendar } from "@mdi/js";
 import { computed, useTemplateRef } from "vue";
 
 import { useRules } from "@/composables/rules";

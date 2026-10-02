@@ -24,7 +24,10 @@
       {{ properties.praktikumsstelle.namentlicheAnforderung }}
     </v-card-subtitle>
     <v-card-text class="pt-0 mb-0">
-      <p style="white-space: pre-line">
+      <p
+        style="white-space: pre-line"
+        class="my-0"
+      >
         {{ getCardText(properties.praktikumsstelle) }}
       </p></v-card-text
     >
@@ -40,6 +43,7 @@
         v-else-if="assignedNwk"
         :color="getNwkColor(assignedNwk)"
         variant="flat"
+        class="mb-4 ml-4"
       >
         <span class="text-truncate">
           {{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
