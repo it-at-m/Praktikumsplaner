@@ -9,7 +9,6 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import lombok.val;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,35 +22,35 @@ class MeldezeitraumControllerTestdataIntegrationTest extends AbstractTestdataInt
 
         @Test
         void shouldReturnMeldezeitraumOfNextYearsWhenPeriodIsFuture() throws Exception {
-            val request = createGetRequestWithPeriod("future");
+            final var request = createGetRequestWithPeriod("future");
 
-            val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
-            val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), MeldezeitraumDto[].class);
+            final var requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
+            final var responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), MeldezeitraumDto[].class);
 
             Assertions.assertThat(responseBody).allMatch(meldezeitraumDto -> meldezeitraumIsAfterCurrentYear(meldezeitraumDto.zeitraum()));
         }
 
         @Test
         void shouldReturnMeldezeitraumOfPreviousYearsWhenPeriodIsPast() throws Exception {
-            val request = createGetRequestWithPeriod("past");
+            final var request = createGetRequestWithPeriod("past");
 
-            val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
-            val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), MeldezeitraumDto[].class);
+            final var requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
+            final var responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), MeldezeitraumDto[].class);
 
             Assertions.assertThat(responseBody).allMatch(meldezeitraumDto -> meldezeitraumIsBeforeCurrentYear(meldezeitraumDto.zeitraum()));
         }
 
         @Test
         void shouldReturnMeldezeitraumOfCurrentYearWhenPeriodIsCurrent() throws Exception {
-            val request = createGetRequestWithPeriod("current");
+            final var request = createGetRequestWithPeriod("current");
 
-            val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
-            val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), MeldezeitraumDto[].class);
+            final var requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
+            final var responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), MeldezeitraumDto[].class);
 
-            val expectedName = "Jahr " + (LocalDate.now().getYear() % 100);
-            val expectedZeitraum = new ZeitraumDto(LocalDate.now().with(TemporalAdjusters.firstDayOfYear()),
+            final var expectedName = "Jahr " + (LocalDate.now().getYear() % 100);
+            final var expectedZeitraum = new ZeitraumDto(LocalDate.now().with(TemporalAdjusters.firstDayOfYear()),
                     LocalDate.now().with(TemporalAdjusters.lastDayOfYear()));
-            val expectedMeldezeitraum = new MeldezeitraumDto(UUID.fromString("00000000-0000-0000-0000-000000000001"), expectedName, expectedZeitraum);
+            final var expectedMeldezeitraum = new MeldezeitraumDto(UUID.fromString("00000000-0000-0000-0000-000000000001"), expectedName, expectedZeitraum);
 
             Assertions.assertThat(responseBody).hasSize(1);
             Assertions.assertThat(responseBody[0]).isEqualTo(expectedMeldezeitraum);
@@ -59,17 +58,17 @@ class MeldezeitraumControllerTestdataIntegrationTest extends AbstractTestdataInt
 
         @Test
         void shouldReturnAllMeldezeitraeumeWhenPeriodIsNull() throws Exception {
-            val request = createGetRequestWithPeriod(null);
+            final var request = createGetRequestWithPeriod(null);
 
-            val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
-            val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), MeldezeitraumDto[].class);
+            final var requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
+            final var responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsByteArray(), MeldezeitraumDto[].class);
 
-            val idsOfResponse = Arrays.stream(responseBody).map(MeldezeitraumDto::id).collect(Collectors.toSet());
+            final var idsOfResponse = Arrays.stream(responseBody).map(MeldezeitraumDto::id).collect(Collectors.toSet());
             Assertions.assertThat(idsOfResponse).hasSize(7);
         }
 
         private MockHttpServletRequestBuilder createGetRequestWithPeriod(final String periodParameterValue) {
-            val getRequest = MockMvcRequestBuilders.get("/meldezeitraum");
+            final var getRequest = MockMvcRequestBuilders.get("/meldezeitraum");
             if (periodParameterValue != null) {
                 getRequest.param("period", periodParameterValue);
             }
@@ -78,13 +77,13 @@ class MeldezeitraumControllerTestdataIntegrationTest extends AbstractTestdataInt
         }
 
         private boolean meldezeitraumIsAfterCurrentYear(final ZeitraumDto zeitraum) {
-            val currentYear = LocalDate.now().getYear();
+            final var currentYear = LocalDate.now().getYear();
             return zeitraum.startZeitpunkt().getYear() > currentYear && zeitraum.endZeitpunkt()
                     .getYear() > currentYear;
         }
 
         private boolean meldezeitraumIsBeforeCurrentYear(final ZeitraumDto zeitraum) {
-            val currentYear = LocalDate.now().getYear();
+            final var currentYear = LocalDate.now().getYear();
             return zeitraum.startZeitpunkt().getYear() < currentYear && zeitraum.endZeitpunkt()
                     .getYear() < currentYear;
         }

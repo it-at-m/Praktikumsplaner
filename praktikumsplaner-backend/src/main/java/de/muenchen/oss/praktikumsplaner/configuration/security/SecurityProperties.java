@@ -3,6 +3,7 @@ package de.muenchen.oss.praktikumsplaner.configuration.security;
 import de.muenchen.oss.praktikumsplaner.configuration.filter.RequestResponseLoggingFilter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import edu.umd.cs.findbugs.annotations.SuppressMatchType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -49,7 +50,7 @@ public class SecurityProperties {
      * Logging mode for incoming HTTP requests, see also
      * {@link RequestResponseLoggingFilter}
      */
-    @NotNull private RequestResponseLoggingFilter.LoggingMode loggingMode = RequestResponseLoggingFilter.LoggingMode.NONE;
+    @NotNull @Valid private RequestResponseLoggingFilter.LoggingMode loggingMode = RequestResponseLoggingFilter.LoggingMode.NONE;
 
     /**
      * List of paths to ignore when logging HTTP requests, see also
