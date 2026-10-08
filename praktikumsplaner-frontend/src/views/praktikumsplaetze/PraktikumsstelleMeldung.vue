@@ -3,7 +3,7 @@
     <page-title
       back-button-url="/praktikumsplaetze"
       page-header-text="Praktikumsplatz melden"
-      class="mb-2"
+      class="mb-4"
     ></page-title>
     <div v-if="loadingSite">
       <v-skeleton-loader type="image"> </v-skeleton-loader>

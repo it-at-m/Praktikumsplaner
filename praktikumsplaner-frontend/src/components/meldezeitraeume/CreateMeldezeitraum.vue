@@ -26,7 +26,7 @@
               :data-test="testIds.meldezeitraum.nameInput"
             ></v-text-field>
             <zeitraum-picker
-              :value="meldezeitraum.zeitraum"
+              v-model="meldezeitraum.zeitraum"
               :label="'Meldezeitraum'"
             ></zeitraum-picker>
           </v-form>
