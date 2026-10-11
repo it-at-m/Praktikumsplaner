@@ -179,7 +179,7 @@ services:
   # Mail
   #
   mail-mailpit:
-    image: axllent/mailpit:v1.29.7@sha256:757f22b56c1da03570afdb3d259effe5091018008a81bbedc8158cee7e16fdbc
+    image: axllent/mailpit:v1.31.5@sha256:94f6b70c1436defae6799d9ac7ff0eeff9540465b842026d5cdb018f1c0234ea
     ports:
       - "8025:8025"
       - "1025:1025"
