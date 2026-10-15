@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import lombok.val;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -101,7 +100,7 @@ public class NwkServiceTest {
 
     @Test
     public void testImportNwkFailed() throws IOException {
-        val base64 = "WAAAAAAGGHHH=";
+        final var base64 = "WAAAAAAGGHHH=";
         when(excelImportService.excelToNwkDtoList(base64)).thenThrow(ConstraintViolationException.class);
         assertThrows(ConstraintViolationException.class, () -> service.importNwk(base64));
         verifyNoInteractions(repository);
