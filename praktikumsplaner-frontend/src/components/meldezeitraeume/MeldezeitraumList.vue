@@ -34,9 +34,9 @@
               color="error"
               :icon="mdiDelete"
               :data-test="testIds.meldezeitraum.deleteBtn"
+              aria-label="Löschen"
               @click="warnBeforeDelete(meldezeitraum)"
-            >
-            </v-btn>
+            />
           </v-btn-group>
         </template>
       </v-list-item>

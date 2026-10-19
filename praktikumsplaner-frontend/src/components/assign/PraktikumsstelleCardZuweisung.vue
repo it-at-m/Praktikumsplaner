@@ -10,11 +10,12 @@
   >
     <v-btn
       :icon="show ? mdiChevronUp : mdiChevronDown"
+      :aria-label="chevronAriaLabel"
       :class="{ 'custom-card-active': assignedNwk }"
       class="position-absolute top-0 right-0 mr-1 mt-1"
       elevation="0"
       @click.stop="show = !show"
-    ></v-btn>
+    />
     <v-card-title
       >Stelle bei
       {{ properties.praktikumsstelle.dienststelle }}
@@ -131,6 +132,10 @@ const warningDialogTitle = ref<string>(
 );
 const warningDialogText = ref<string>("");
 const assignedNwk = ref(properties.praktikumsstelle.assignedNwk);
+
+const chevronAriaLabel = computed(
+  () => `Weitere Informationen ${show.value ? "ausblenden" : "anzeigen"}`
+);
 
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
 
