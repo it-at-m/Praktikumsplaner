@@ -49,6 +49,7 @@
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/nachwuchskraefte' }"
           :data-test="testIds.nav.nachwuchskraefte"
+          tabindex="0"
         >
           <v-list-item-title>Nachwuchskräfte</v-list-item-title>
         </v-list-item>
@@ -56,6 +57,7 @@
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/meldezeitraum' }"
           :data-test="testIds.nav.meldezeitraum"
+          tabindex="0"
         >
           <v-list-item-title>Meldezeitraum</v-list-item-title>
         </v-list-item>
@@ -63,6 +65,7 @@
           v-if="security.checkForAnyRole(['AUSBILDER', 'AUSBILDUNGSLEITUNG'])"
           :to="{ path: '/praktikumsplaetze' }"
           :data-test="testIds.nav.praktikumsplaetze"
+          tabindex="0"
         >
           <v-list-item-title>Praktikumsplätze</v-list-item-title>
         </v-list-item>
@@ -70,6 +73,7 @@
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/zuweisung' }"
           :data-test="testIds.nav.zuweisung"
+          tabindex="0"
         >
           <v-list-item-title>Zuweisung</v-list-item-title>
         </v-list-item>
