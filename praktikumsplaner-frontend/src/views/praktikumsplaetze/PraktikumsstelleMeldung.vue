@@ -32,7 +32,7 @@
         >
           <v-row>
             <v-col>
-              <span class="text-h6">Richtung</span>
+              <span class="text-title-large">Richtung</span>
             </v-col>
           </v-row>
           <v-row>
@@ -52,7 +52,7 @@
         >
           <v-row>
             <v-col>
-              <span class="text-h6">Stellenbeschreibung</span>
+              <span class="text-title-large">Stellenbeschreibung</span>
             </v-col>
           </v-row>
           <v-row>
@@ -127,7 +127,7 @@
         >
           <v-row>
             <v-col>
-              <span class="text-h6">Nachwuchskraft</span>
+              <span class="text-title-large">Nachwuchskraft</span>
             </v-col>
           </v-row>
           <v-row>
@@ -179,7 +179,7 @@
         >
           <v-row>
             <v-col>
-              <span class="text-h6">Meldezeitraum Auswahl</span>
+              <span class="text-title-large">Meldezeitraum Auswahl</span>
             </v-col>
           </v-row>
           <v-row>

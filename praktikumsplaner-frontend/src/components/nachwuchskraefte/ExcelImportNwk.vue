@@ -15,7 +15,7 @@
   >
     <v-form ref="form">
       <v-card>
-        <v-card-title class="text-h5 font-weight-bold">
+        <v-card-title class="text-headline-small font-weight-bold">
           Datei hochladen
         </v-card-title>
         <v-card-text>
