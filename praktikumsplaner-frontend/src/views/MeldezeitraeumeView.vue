@@ -31,7 +31,6 @@
         </meldezeitraum-list>
       </v-col>
     </v-row>
-    <v-divider class="my-3"></v-divider>
     <v-row>
       <v-col>
         <meldezeitraum-list
@@ -48,7 +47,6 @@
         </meldezeitraum-list>
       </v-col>
     </v-row>
-    <v-divider class="my-3"></v-divider>
     <v-row>
       <v-col>
         <meldezeitraum-list
