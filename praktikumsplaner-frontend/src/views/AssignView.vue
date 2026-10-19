@@ -2,31 +2,34 @@
   <v-container fluid>
     <page-title
       page-header-text="Zuweisung (letzter vergangener Meldezeitraum)"
-    ></page-title>
+    />
     <v-row>
       <v-col
+        cols="12"
+        md="6"
         class="overflow-y-auto"
         style="max-height: 70vh"
       >
         <v-skeleton-loader
           v-if="loadingNwk"
           type="image"
-        ></v-skeleton-loader>
+        />
         <active-nwk-list-for-zuweisung
           v-else
           v-model="nwks"
           class="overflow-y-auto"
         />
       </v-col>
-      <v-divider vertical />
       <v-col
+        cols="12"
+        md="6"
         class="overflow-y-auto"
         style="max-height: 70vh"
       >
         <v-skeleton-loader
           v-if="loadingPraktikumsstellen"
           type="image"
-        ></v-skeleton-loader>
+        />
         <praktikumsstellen-list-zuweisung
           v-else
           :praktikumsstellen="praktikumsstellen"

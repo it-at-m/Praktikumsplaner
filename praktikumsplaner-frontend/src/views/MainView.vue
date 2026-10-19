@@ -19,7 +19,9 @@
       <v-row class="justify-center text-center">
         <v-col
           v-if="security.isAusbildungsleitung()"
-          cols="3"
+          cols="12"
+          md="6"
+          xl="3"
           class="mb-4"
         >
           <router-link
@@ -41,7 +43,9 @@
         </v-col>
         <v-col
           v-if="security.isAusbildungsleitung()"
-          cols="3"
+          cols="12"
+          md="6"
+          xl="3"
           class="mb-4"
         >
           <router-link
@@ -63,7 +67,9 @@
         </v-col>
         <v-col
           v-if="security.checkForAnyRole(['AUSBILDER', 'AUSBILDUNGSLEITUNG'])"
-          cols="3"
+          cols="12"
+          md="6"
+          xl="3"
           class="mb-4"
         >
           <router-link
@@ -85,7 +91,9 @@
         </v-col>
         <v-col
           v-if="security.isAusbildungsleitung()"
-          cols="3"
+          cols="12"
+          md="6"
+          xl="3"
           class="mb-4"
         >
           <router-link
@@ -111,17 +119,11 @@
       v-else
       class="justify-center text-center"
     >
-      <v-col
-        cols="3"
-        class="mb-4"
-      >
-        <v-progress-circular
-          indeterminate
-          size="100"
-          color="primary"
-        >
-        </v-progress-circular>
-      </v-col>
+      <v-progress-circular
+        indeterminate
+        size="100"
+        color="primary"
+      />
     </v-row>
   </v-container>
 </template>
