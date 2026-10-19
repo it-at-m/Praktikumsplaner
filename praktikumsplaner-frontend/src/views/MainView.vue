@@ -11,7 +11,9 @@
     <template v-if="userStore.username">
       <v-row class="text-center">
         <v-col class="mb-4">
-          <h2>Hallo {{ userStore.username }}! Was möchtest du machen?</h2>
+          <p class="text-headline-small font-weight-bold">
+            Hallo {{ userStore.username }}! Was möchtest du machen?
+          </p>
         </v-col>
       </v-row>
       <v-row class="justify-center text-center">

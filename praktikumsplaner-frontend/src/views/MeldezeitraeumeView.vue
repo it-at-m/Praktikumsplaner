@@ -23,7 +23,7 @@
           @deleted="reloadMeldezeitraeume"
         >
           <template #header>
-            <h3 class="mb-0">Aktueller Meldezeitraum</h3>
+            <h2 class="mb-0">Aktueller Meldezeitraum</h2>
           </template>
           <template #notfoundmessage>
             <p>Kein aktueller Meldezeitraum gefunden.</p>
@@ -40,7 +40,7 @@
           @deleted="reloadMeldezeitraeume"
         >
           <template #header>
-            <h3 class="mb-0">Kommende Meldezeiträume</h3>
+            <h2 class="mb-0">Kommende Meldezeiträume</h2>
           </template>
           <template #notfoundmessage>
             <p>Keine kommenden Meldezeiträume gefunden.</p>
@@ -57,7 +57,7 @@
           @deleted="reloadMeldezeitraeume"
         >
           <template #header>
-            <h3 class="mb-0">Vergangene Meldezeiträume</h3>
+            <h2 class="mb-0">Vergangene Meldezeiträume</h2>
           </template>
           <template #notfoundmessage>
             <p>Keine vergangenen Meldezeiträume gefunden.</p>
