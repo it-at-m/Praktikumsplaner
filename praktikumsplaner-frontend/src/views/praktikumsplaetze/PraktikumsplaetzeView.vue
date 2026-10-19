@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-xl-8">
+  <v-container fluid>
     <page-title page-header-text="Praktikumsplätze">
       <template #actions>
         <v-row

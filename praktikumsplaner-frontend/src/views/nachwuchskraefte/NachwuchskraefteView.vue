@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-xl-8">
+  <v-container fluid>
     <page-title page-header-text="Nachwuchskräfte">
       <template #actions>
         <v-btn-group class="w-100">

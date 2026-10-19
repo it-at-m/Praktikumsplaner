@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-xl-8">
+  <v-container fluid>
     <page-title
       page-header-text="Zuweisung (letzter vergangener Meldezeitraum)"
     ></page-title>
@@ -36,22 +36,28 @@
     </v-row>
     <v-row
       v-if="!loadingNwk && !loadingPraktikumsstellen"
-      class="pt-4 pr-2"
+      class="pt-4 pr-2 justify-end"
     >
-      <v-spacer></v-spacer>
-      <v-btn
-        :prepend-icon="mdiMail"
-        color="primary"
-        class="mr-4"
-        :data-test="testIds.assign.sendMailsBtn"
-        @click="openMailWarningDialog"
-        >Mails senden</v-btn
+      <v-col
+        cols="12"
+        sm="auto"
       >
-      <excel-export
-        :start-download="startDownload"
-        @click="openExcelWarnings"
-        @exported="exported"
-      ></excel-export>
+        <v-btn-group class="w-100">
+          <v-btn
+            :prepend-icon="mdiMail"
+            color="primary"
+            class="flex-grow-1"
+            :data-test="testIds.assign.sendMailsBtn"
+            @click="openMailWarningDialog"
+            >Mails senden</v-btn
+          >
+          <excel-export
+            :start-download="startDownload"
+            @click="openExcelWarnings"
+            @exported="exported"
+          />
+        </v-btn-group>
+      </v-col>
     </v-row>
     <warning-dialog
       :visible="showWarningDialog"

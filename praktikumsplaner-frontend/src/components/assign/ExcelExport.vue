@@ -1,15 +1,14 @@
 <template>
-  <div>
-    <v-btn
-      color="primary"
-      :prepend-icon="mdiTrayArrowDown"
-      :data-test="testIds.assign.exportBtn"
-      @click="clickExport"
-    >
-      Exportieren
-    </v-btn>
-    <progress-circular-overlay :loading="loading"></progress-circular-overlay>
-  </div>
+  <v-btn
+    color="primary"
+    :prepend-icon="mdiTrayArrowDown"
+    :data-test="testIds.assign.exportBtn"
+    class="flex-grow-1"
+    @click="clickExport"
+  >
+    Exportieren
+  </v-btn>
+  <progress-circular-overlay :loading="loading" />
 </template>
 
 <script setup lang="ts">

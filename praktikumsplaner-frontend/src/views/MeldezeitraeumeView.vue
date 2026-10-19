@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-xl-8">
+  <v-container fluid>
     <page-title
       class="mb-0"
       page-header-text="Meldezeiträume"
