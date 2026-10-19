@@ -3,6 +3,7 @@
     :prepend-icon="mdiTrayArrowUp"
     color="primary"
     :data-test="testIds.nwk.excelImportOpenBtn"
+    class="flex-grow-1"
     @click="visible = true"
   >
     Datei Hochladen

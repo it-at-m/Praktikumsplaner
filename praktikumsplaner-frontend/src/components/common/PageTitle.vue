@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col class="d-flex flex-row">
+    <v-col>
       <v-btn
         v-if="backButtonUrl"
         :to="{ path: backButtonUrl }"
@@ -18,8 +18,8 @@
       </h1>
     </v-col>
     <v-col
-      cols="5"
-      class="d-flex flex-row align-center justify-end"
+      cols="12"
+      sm="auto"
     >
       <slot name="actions" />
     </v-col>

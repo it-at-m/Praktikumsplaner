@@ -4,6 +4,7 @@
     color="primary"
     text="Hinzufügen"
     :data-test="testIds.meldezeitraum.createOpenBtn"
+    class="flex-grow-1"
     @click="visible = true"
   />
   <v-dialog

@@ -2,7 +2,7 @@
   <v-container class="pa-xl-8">
     <page-title page-header-text="Nachwuchskräfte">
       <template #actions>
-        <v-btn-group>
+        <v-btn-group class="w-100">
           <excel-import-nwk />
           <nwk-create-dialog />
         </v-btn-group>
