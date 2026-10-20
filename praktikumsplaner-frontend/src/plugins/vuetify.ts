@@ -42,13 +42,19 @@ export default createVuetify({
   },
   defaults: {
     VBtn: {
-      class: "accessible-focus",
-    },
-    VTextField: {
-      class: "accessible-focus",
+      class: "high-contrast-focus",
     },
     VListItem: {
-      class: "accessible-focus",
+      class: "high-contrast-focus",
+    },
+    VTextField: {
+      class: "high-contrast-label",
+    },
+    VSelect: {
+      class: "high-contrast-label",
+    },
+    VFileInput: {
+      class: "high-contrast-label",
     },
   },
   date: {

@@ -143,8 +143,14 @@ onMounted(() => {
 </script>
 
 <style>
-.accessible-focus:focus-visible {
-  outline: 3px solid rgb(var(--v-theme-focus));
-  outline-offset: -3px;
+@layer vuetify-overrides {
+  .high-contrast-focus:focus-visible {
+    outline: 3px solid rgb(var(--v-theme-focus));
+    outline-offset: -3px;
+  }
+  .high-contrast-label .v-label {
+    color: rgb(var(--v-theme-text));
+    opacity: 1;
+  }
 }
 </style>
