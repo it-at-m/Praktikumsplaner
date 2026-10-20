@@ -141,3 +141,10 @@ onMounted(() => {
   });
 });
 </script>
+
+<style>
+.accessible-focus:focus-visible {
+  outline: 3px solid rgb(var(--v-theme-focus));
+  outline-offset: -3px;
+}
+</style>
