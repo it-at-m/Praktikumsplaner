@@ -24,22 +24,20 @@
           xl="3"
           class="mb-4"
         >
-          <router-link
+          <v-card
+            class="mx-auto"
             to="nachwuchskraefte"
-            class="text-decoration-none"
             :data-test="testIds.main.cardNachwuchskraefte"
           >
-            <v-card class="mx-auto">
-              <v-card-title> Nachwuchskräfte anlegen </v-card-title>
-              <v-card-text>
-                <v-icon
-                  color="primary"
-                  size="100"
-                  :icon="mdiAccountPlus"
-                />
-              </v-card-text>
-            </v-card>
-          </router-link>
+            <v-card-title> Nachwuchskräfte anlegen </v-card-title>
+            <v-card-text>
+              <v-icon
+                color="primary"
+                size="100"
+                :icon="mdiAccountPlus"
+              />
+            </v-card-text>
+          </v-card>
         </v-col>
         <v-col
           v-if="security.isAusbildungsleitung()"
@@ -48,22 +46,20 @@
           xl="3"
           class="mb-4"
         >
-          <router-link
+          <v-card
+            class="mx-auto"
             to="meldezeitraum"
-            class="text-decoration-none"
             :data-test="testIds.main.cardMeldezeitraum"
           >
-            <v-card class="mx-auto">
-              <v-card-title> Meldezeitraum anlegen </v-card-title>
-              <v-card-text>
-                <v-icon
-                  color="primary"
-                  size="100"
-                  :icon="mdiCalendarPlus"
-                />
-              </v-card-text>
-            </v-card>
-          </router-link>
+            <v-card-title> Meldezeitraum anlegen </v-card-title>
+            <v-card-text>
+              <v-icon
+                color="primary"
+                size="100"
+                :icon="mdiCalendarPlus"
+              />
+            </v-card-text>
+          </v-card>
         </v-col>
         <v-col
           v-if="security.checkForAnyRole(['AUSBILDER', 'AUSBILDUNGSLEITUNG'])"
@@ -72,22 +68,20 @@
           xl="3"
           class="mb-4"
         >
-          <router-link
+          <v-card
+            class="mx-auto"
             to="praktikumsplaetze"
-            class="text-decoration-none"
             :data-test="testIds.main.cardPraktikumsplaetze"
           >
-            <v-card class="mx-auto">
-              <v-card-title> Praktikumsplatz melden </v-card-title>
-              <v-card-text>
-                <v-icon
-                  color="primary"
-                  size="100"
-                  :icon="mdiAccountArrowRight"
-                />
-              </v-card-text>
-            </v-card>
-          </router-link>
+            <v-card-title> Praktikumsplatz melden </v-card-title>
+            <v-card-text>
+              <v-icon
+                color="primary"
+                size="100"
+                :icon="mdiAccountArrowRight"
+              />
+            </v-card-text>
+          </v-card>
         </v-col>
         <v-col
           v-if="security.isAusbildungsleitung()"
@@ -96,22 +90,20 @@
           xl="3"
           class="mb-4"
         >
-          <router-link
+          <v-card
+            class="mx-auto"
             to="zuweisung"
-            class="text-decoration-none"
             :data-test="testIds.main.cardZuweisung"
           >
-            <v-card class="mx-auto">
-              <v-card-title> Zuweisung durchführen </v-card-title>
-              <v-card-text>
-                <v-icon
-                  color="primary"
-                  size="100"
-                  :icon="mdiAccountCheck"
-                />
-              </v-card-text>
-            </v-card>
-          </router-link>
+            <v-card-title> Zuweisung durchführen </v-card-title>
+            <v-card-text>
+              <v-icon
+                color="primary"
+                size="100"
+                :icon="mdiAccountCheck"
+              />
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
     </template>
@@ -153,5 +145,3 @@ onMounted(() => {
   });
 });
 </script>
-
-<style scoped></style>
