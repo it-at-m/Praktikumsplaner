@@ -1,6 +1,10 @@
 <template>
-  <v-row>
-    <v-col cols="3">
+  <v-row class="pb-4">
+    <v-col
+      cols="12"
+      sm="6"
+      md="3"
+    >
       <v-text-field
         v-model="searchModel"
         variant="outlined"
@@ -14,7 +18,9 @@
     </v-col>
     <v-col
       v-if="(groupByOptions?.length ?? 0) > 0"
-      cols="2"
+      cols="12"
+      sm="6"
+      md="3"
     >
       <v-select
         v-model="groupByRawModel"
@@ -28,7 +34,6 @@
         :disabled="disabled"
       />
     </v-col>
-    <v-col></v-col>
   </v-row>
 </template>
 

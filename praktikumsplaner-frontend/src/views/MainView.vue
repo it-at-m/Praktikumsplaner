@@ -1,9 +1,9 @@
 <template>
-  <v-container class="pa-xl-8">
+  <v-container fluid>
     <v-row class="text-center">
       <v-col class="mb-4">
         <br />
-        <h1 class="text-h3 font-weight-bold mb-3">
+        <h1 class="text-display-medium font-weight-bold mb-3">
           Willkommen beim Praktikumsplaner!
         </h1>
       </v-col>
@@ -11,97 +11,99 @@
     <template v-if="userStore.username">
       <v-row class="text-center">
         <v-col class="mb-4">
-          <h2>Hallo {{ userStore.username }}! Was möchtest du machen?</h2>
+          <p class="text-headline-small font-weight-bold">
+            Hallo {{ userStore.username }}! Was möchtest du machen?
+          </p>
         </v-col>
       </v-row>
       <v-row class="justify-center text-center">
         <v-col
           v-if="security.isAusbildungsleitung()"
-          cols="3"
+          cols="12"
+          md="6"
+          xl="3"
           class="mb-4"
         >
-          <router-link
+          <v-card
+            class="mx-auto"
             to="nachwuchskraefte"
-            class="text-decoration-none"
             :data-test="testIds.main.cardNachwuchskraefte"
           >
-            <v-card class="mx-auto">
-              <v-card-title> Nachwuchskräfte anlegen </v-card-title>
-              <v-card-text>
-                <v-icon
-                  color="primary"
-                  size="100"
-                  :icon="mdiAccountPlus"
-                />
-              </v-card-text>
-            </v-card>
-          </router-link>
+            <v-card-title>Nachwuchskräfte anlegen</v-card-title>
+            <v-card-text>
+              <v-icon
+                color="primary"
+                size="100"
+                :icon="mdiAccountPlus"
+              />
+            </v-card-text>
+          </v-card>
         </v-col>
         <v-col
           v-if="security.isAusbildungsleitung()"
-          cols="3"
+          cols="12"
+          md="6"
+          xl="3"
           class="mb-4"
         >
-          <router-link
+          <v-card
+            class="mx-auto"
             to="meldezeitraum"
-            class="text-decoration-none"
             :data-test="testIds.main.cardMeldezeitraum"
           >
-            <v-card class="mx-auto">
-              <v-card-title> Meldezeitraum anlegen </v-card-title>
-              <v-card-text>
-                <v-icon
-                  color="primary"
-                  size="100"
-                  :icon="mdiCalendarPlus"
-                />
-              </v-card-text>
-            </v-card>
-          </router-link>
+            <v-card-title>Meldezeitraum anlegen</v-card-title>
+            <v-card-text>
+              <v-icon
+                color="primary"
+                size="100"
+                :icon="mdiCalendarPlus"
+              />
+            </v-card-text>
+          </v-card>
         </v-col>
         <v-col
           v-if="security.checkForAnyRole(['AUSBILDER', 'AUSBILDUNGSLEITUNG'])"
-          cols="3"
+          cols="12"
+          md="6"
+          xl="3"
           class="mb-4"
         >
-          <router-link
+          <v-card
+            class="mx-auto"
             to="praktikumsplaetze"
-            class="text-decoration-none"
             :data-test="testIds.main.cardPraktikumsplaetze"
           >
-            <v-card class="mx-auto">
-              <v-card-title> Praktikumsplatz melden </v-card-title>
-              <v-card-text>
-                <v-icon
-                  color="primary"
-                  size="100"
-                  :icon="mdiAccountArrowRight"
-                />
-              </v-card-text>
-            </v-card>
-          </router-link>
+            <v-card-title>Praktikumsplatz melden</v-card-title>
+            <v-card-text>
+              <v-icon
+                color="primary"
+                size="100"
+                :icon="mdiAccountArrowRight"
+              />
+            </v-card-text>
+          </v-card>
         </v-col>
         <v-col
           v-if="security.isAusbildungsleitung()"
-          cols="3"
+          cols="12"
+          md="6"
+          xl="3"
           class="mb-4"
         >
-          <router-link
+          <v-card
+            class="mx-auto"
             to="zuweisung"
-            class="text-decoration-none"
             :data-test="testIds.main.cardZuweisung"
           >
-            <v-card class="mx-auto">
-              <v-card-title> Zuweisung durchführen </v-card-title>
-              <v-card-text>
-                <v-icon
-                  color="primary"
-                  size="100"
-                  :icon="mdiAccountCheck"
-                />
-              </v-card-text>
-            </v-card>
-          </router-link>
+            <v-card-title>Zuweisung durchführen</v-card-title>
+            <v-card-text>
+              <v-icon
+                color="primary"
+                size="100"
+                :icon="mdiAccountCheck"
+              />
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
     </template>
@@ -109,17 +111,11 @@
       v-else
       class="justify-center text-center"
     >
-      <v-col
-        cols="3"
-        class="mb-4"
-      >
-        <v-progress-circular
-          indeterminate
-          size="100"
-          color="primary"
-        >
-        </v-progress-circular>
-      </v-col>
+      <v-progress-circular
+        indeterminate
+        size="100"
+        color="primary"
+      />
     </v-row>
   </v-container>
 </template>
@@ -149,5 +145,3 @@ onMounted(() => {
   });
 });
 </script>
-
-<style scoped></style>

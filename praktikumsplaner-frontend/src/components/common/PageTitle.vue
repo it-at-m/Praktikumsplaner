@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col class="d-flex flex-row">
+    <v-col class="d-flex">
       <v-btn
         v-if="backButtonUrl"
         :to="{ path: backButtonUrl }"
@@ -8,8 +8,8 @@
         elevation="0"
         class="mr-2"
         :data-test="testIds.common.pageTitleBackBtn"
-      >
-      </v-btn>
+        aria-label="Zur vorherigen Seite zurückkehren"
+      />
       <h1
         :data-test="testIds.common.pageTitle"
         class="my-0"
@@ -18,8 +18,9 @@
       </h1>
     </v-col>
     <v-col
-      cols="5"
-      class="d-flex flex-row align-center justify-end"
+      v-if="$slots.actions"
+      cols="12"
+      sm="auto"
     >
       <slot name="actions" />
     </v-col>

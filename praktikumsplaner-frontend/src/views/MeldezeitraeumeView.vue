@@ -1,11 +1,11 @@
 <template>
-  <v-container class="pa-xl-8">
+  <v-container fluid>
     <page-title
       class="mb-0"
       page-header-text="Meldezeiträume"
     >
       <template #actions>
-        <v-btn-group>
+        <v-btn-group class="w-100">
           <create-meldezeitraum @meldezeitraum-added="reloadMeldezeitraeume" />
         </v-btn-group>
       </template>
@@ -23,7 +23,7 @@
           @deleted="reloadMeldezeitraeume"
         >
           <template #header>
-            <h3 class="mb-0">Aktueller Meldezeitraum</h3>
+            <h2 class="mb-0">Aktueller Meldezeitraum</h2>
           </template>
           <template #notfoundmessage>
             <p>Kein aktueller Meldezeitraum gefunden.</p>
@@ -31,7 +31,6 @@
         </meldezeitraum-list>
       </v-col>
     </v-row>
-    <v-divider class="my-3"></v-divider>
     <v-row>
       <v-col>
         <meldezeitraum-list
@@ -40,7 +39,7 @@
           @deleted="reloadMeldezeitraeume"
         >
           <template #header>
-            <h3 class="mb-0">Kommende Meldezeiträume</h3>
+            <h2 class="mb-0">Kommende Meldezeiträume</h2>
           </template>
           <template #notfoundmessage>
             <p>Keine kommenden Meldezeiträume gefunden.</p>
@@ -48,7 +47,6 @@
         </meldezeitraum-list>
       </v-col>
     </v-row>
-    <v-divider class="my-3"></v-divider>
     <v-row>
       <v-col>
         <meldezeitraum-list
@@ -57,7 +55,7 @@
           @deleted="reloadMeldezeitraeume"
         >
           <template #header>
-            <h3 class="mb-0">Vergangene Meldezeiträume</h3>
+            <h2 class="mb-0">Vergangene Meldezeiträume</h2>
           </template>
           <template #notfoundmessage>
             <p>Keine vergangenen Meldezeiträume gefunden.</p>

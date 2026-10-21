@@ -5,7 +5,7 @@
     aria-label="Bearbeiten"
     :data-test="testIds.nwk.updateDialogOpenBtn"
     @click="visible = true"
-  ></v-btn>
+  />
   <v-dialog
     v-model="visible"
     persistent

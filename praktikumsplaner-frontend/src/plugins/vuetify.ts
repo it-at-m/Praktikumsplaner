@@ -26,6 +26,7 @@ export default createVuetify({
           primary: "#1E6CFF",
           secondary: "#FFCC00",
           accent: "#7BA4D9",
+          focus: "#000000",
           success: "#69BE28",
           error: "#9A1818",
           errorBtnText: "#96E6E9",
@@ -37,6 +38,23 @@ export default createVuetify({
           text: "#000000",
         },
       },
+    },
+  },
+  defaults: {
+    VBtn: {
+      class: "high-contrast-focus",
+    },
+    VListItem: {
+      class: "high-contrast-focus",
+    },
+    VTextField: {
+      class: "high-contrast-label",
+    },
+    VSelect: {
+      class: "high-contrast-label",
+    },
+    VFileInput: {
+      class: "high-contrast-label",
     },
   },
   date: {

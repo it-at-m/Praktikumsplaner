@@ -1,21 +1,21 @@
 <template>
-  <v-container class="pa-xl-8">
+  <v-container fluid>
     <page-title
       back-button-url="/praktikumsplaetze"
       page-header-text="Praktikumsplatz melden"
       class="mb-4"
     ></page-title>
     <div v-if="loadingSite">
-      <v-skeleton-loader type="image"> </v-skeleton-loader>
+      <v-skeleton-loader type="image" />
       <v-spacer />
-      <v-skeleton-loader type="image"> </v-skeleton-loader>
+      <v-skeleton-loader type="image" />
       <v-spacer />
-      <v-skeleton-loader type="image"> </v-skeleton-loader>
+      <v-skeleton-loader type="image" />
       <v-spacer />
       <v-row>
         <v-col cols="10" />
         <v-col>
-          <v-skeleton-loader type="button"> </v-skeleton-loader>
+          <v-skeleton-loader type="button" />
         </v-col>
       </v-row>
     </div>
@@ -32,7 +32,7 @@
         >
           <v-row>
             <v-col>
-              <span class="text-h6">Richtung</span>
+              <span class="text-title-large">Richtung</span>
             </v-col>
           </v-row>
           <v-row>
@@ -52,7 +52,7 @@
         >
           <v-row>
             <v-col>
-              <span class="text-h6">Stellenbeschreibung</span>
+              <span class="text-title-large">Stellenbeschreibung</span>
             </v-col>
           </v-row>
           <v-row>
@@ -127,7 +127,7 @@
         >
           <v-row>
             <v-col>
-              <span class="text-h6">Nachwuchskraft</span>
+              <span class="text-title-large">Nachwuchskraft</span>
             </v-col>
           </v-row>
           <v-row>
@@ -179,7 +179,7 @@
         >
           <v-row>
             <v-col>
-              <span class="text-h6">Meldezeitraum Auswahl</span>
+              <span class="text-title-large">Meldezeitraum Auswahl</span>
             </v-col>
           </v-row>
           <v-row>

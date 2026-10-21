@@ -6,6 +6,8 @@
     :disabled="loading"
   />
   <v-data-table
+    :density="smAndDown ? 'compact' : undefined"
+    mobile-breakpoint="sm"
     :headers="headers"
     :items="items"
     :group-by="groupBy"
@@ -44,9 +46,12 @@ import type GroupOption from "@/types/DataTableGroupOption";
 import type SortItem from "@/types/DataTableSortItem";
 
 import { computed, ref } from "vue";
+import { useDisplay } from "vuetify";
 
 import DataTableToolbar from "@/components/common/DataTableToolbar.vue";
 import { testIds } from "@/testIds";
+
+const { smAndDown } = useDisplay();
 
 withDefaults(
   defineProps<{
