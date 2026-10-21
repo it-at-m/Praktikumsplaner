@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row class="pb-4">
     <v-col
       cols="12"
       sm="6"
@@ -34,7 +34,6 @@
         :disabled="disabled"
       />
     </v-col>
-    <v-col></v-col>
   </v-row>
 </template>
 

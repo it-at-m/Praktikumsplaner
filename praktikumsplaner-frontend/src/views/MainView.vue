@@ -29,7 +29,7 @@
             to="nachwuchskraefte"
             :data-test="testIds.main.cardNachwuchskraefte"
           >
-            <v-card-title> Nachwuchskräfte anlegen </v-card-title>
+            <v-card-title>Nachwuchskräfte anlegen</v-card-title>
             <v-card-text>
               <v-icon
                 color="primary"
@@ -51,7 +51,7 @@
             to="meldezeitraum"
             :data-test="testIds.main.cardMeldezeitraum"
           >
-            <v-card-title> Meldezeitraum anlegen </v-card-title>
+            <v-card-title>Meldezeitraum anlegen</v-card-title>
             <v-card-text>
               <v-icon
                 color="primary"
@@ -73,7 +73,7 @@
             to="praktikumsplaetze"
             :data-test="testIds.main.cardPraktikumsplaetze"
           >
-            <v-card-title> Praktikumsplatz melden </v-card-title>
+            <v-card-title>Praktikumsplatz melden</v-card-title>
             <v-card-text>
               <v-icon
                 color="primary"
@@ -95,7 +95,7 @@
             to="zuweisung"
             :data-test="testIds.main.cardZuweisung"
           >
-            <v-card-title> Zuweisung durchführen </v-card-title>
+            <v-card-title>Zuweisung durchführen</v-card-title>
             <v-card-text>
               <v-icon
                 color="primary"

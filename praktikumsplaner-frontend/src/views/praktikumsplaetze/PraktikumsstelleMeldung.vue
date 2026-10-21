@@ -6,16 +6,16 @@
       class="mb-4"
     ></page-title>
     <div v-if="loadingSite">
-      <v-skeleton-loader type="image"> </v-skeleton-loader>
+      <v-skeleton-loader type="image" />
       <v-spacer />
-      <v-skeleton-loader type="image"> </v-skeleton-loader>
+      <v-skeleton-loader type="image" />
       <v-spacer />
-      <v-skeleton-loader type="image"> </v-skeleton-loader>
+      <v-skeleton-loader type="image" />
       <v-spacer />
       <v-row>
         <v-col cols="10" />
         <v-col>
-          <v-skeleton-loader type="button"> </v-skeleton-loader>
+          <v-skeleton-loader type="button" />
         </v-col>
       </v-row>
     </div>
