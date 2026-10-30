@@ -3,7 +3,6 @@ package de.muenchen.oss.praktikumsplaner.rest;
 import static de.muenchen.oss.praktikumsplaner.TestUtils.getJwtAuthenticationToken;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import de.muenchen.oss.praktikumsplaner.domain.dtos.PraktikumsstelleDto;
 import de.muenchen.oss.praktikumsplaner.domain.enums.Bildungsrichtung;
 import de.muenchen.oss.praktikumsplaner.security.Authorities;
@@ -20,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import tools.jackson.core.type.TypeReference;
 
 class PraktikumsstellenControllerTestdataIntegrationTest extends AbstractTestdataIntegrationTest {
 
