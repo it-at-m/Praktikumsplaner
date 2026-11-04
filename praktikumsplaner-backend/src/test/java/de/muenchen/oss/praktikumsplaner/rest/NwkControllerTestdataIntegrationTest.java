@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import lombok.val;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,12 +23,12 @@ class NwkControllerTestdataIntegrationTest extends AbstractTestdataIntegrationTe
 
         @Test
         void hasNwksForAllDirectionsWhenRequestingWithStatusActive() throws Exception {
-            val request = MockMvcRequestBuilders.get("/nachwuchskraft");
+            final var request = MockMvcRequestBuilders.get("/nachwuchskraft");
 
-            val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
-            val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsString(), NwkDto[].class);
+            final var requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
+            final var responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsString(), NwkDto[].class);
 
-            val richtungen = Arrays.stream(responseBody)
+            final var richtungen = Arrays.stream(responseBody)
                     .map(NwkDto::richtung)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toSet());
@@ -39,13 +38,13 @@ class NwkControllerTestdataIntegrationTest extends AbstractTestdataIntegrationTe
 
         @Test
         void hasJahrgangOfTheCurrentAndUpToLastTwoYearsWhenRequestingWithStatusActive() throws Exception {
-            val request = MockMvcRequestBuilders.get("/nachwuchskraft");
+            final var request = MockMvcRequestBuilders.get("/nachwuchskraft");
 
-            val requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
-            val responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsString(), NwkDto[].class);
+            final var requestResult = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
+            final var responseBody = objectMapper.readValue(requestResult.getResponse().getContentAsString(), NwkDto[].class);
 
-            val jahrgaengeOfNwks = Arrays.stream(responseBody).map(NwkDto::jahrgang).collect(Collectors.toSet());
-            val expectedJahrgaenge = new String[] { createJahrgangStarting(LocalDate.now()),
+            final var jahrgaengeOfNwks = Arrays.stream(responseBody).map(NwkDto::jahrgang).collect(Collectors.toSet());
+            final var expectedJahrgaenge = new String[] { createJahrgangStarting(LocalDate.now()),
                     createJahrgangStarting(LocalDate.now().minusYears(1)),
                     createJahrgangStarting(LocalDate.now().minusYears(2)) };
 
