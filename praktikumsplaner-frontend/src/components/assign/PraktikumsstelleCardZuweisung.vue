@@ -10,11 +10,12 @@
   >
     <v-btn
       :icon="show ? mdiChevronUp : mdiChevronDown"
+      :aria-label="chevronAriaLabel"
       :class="{ 'custom-card-active': assignedNwk }"
       class="position-absolute top-0 right-0 mr-1 mt-1"
       elevation="0"
       @click.stop="show = !show"
-    ></v-btn>
+    />
     <v-card-title
       >Stelle bei
       {{ properties.praktikumsstelle.dienststelle }}
@@ -24,7 +25,10 @@
       {{ properties.praktikumsstelle.namentlicheAnforderung }}
     </v-card-subtitle>
     <v-card-text class="pt-0 mb-0">
-      <p style="white-space: pre-line">
+      <p
+        style="white-space: pre-line"
+        class="my-0"
+      >
         {{ getCardText(properties.praktikumsstelle) }}
       </p></v-card-text
     >
@@ -40,6 +44,7 @@
         v-else-if="assignedNwk"
         :color="getNwkColor(assignedNwk)"
         variant="flat"
+        class="mb-4 ml-4"
       >
         <span class="text-truncate">
           {{ `${assignedNwk.vorname} ${assignedNwk.nachname}` }}
@@ -127,6 +132,10 @@ const warningDialogTitle = ref<string>(
 );
 const warningDialogText = ref<string>("");
 const assignedNwk = ref(properties.praktikumsstelle.assignedNwk);
+
+const chevronAriaLabel = computed(
+  () => `Weitere Informationen ${show.value ? "ausblenden" : "anzeigen"}`
+);
 
 let stelleToAssignUnassign: Praktikumsstelle | undefined;
 

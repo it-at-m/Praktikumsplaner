@@ -1,24 +1,40 @@
 <template>
-  <v-container class="pa-xl-8">
+  <v-container fluid>
     <page-title page-header-text="Praktikumsplätze">
       <template #actions>
-        <meldezeitraum-select
-          v-model="selectedMeldezeitraumId"
-          :meldezeitraueme="meldezeitraeume || []"
-          is-required
-          :disabled="loading"
-          hide-details
-          class="mr-5"
-        />
-        <v-btn-group>
-          <v-btn
-            :disabled="!canStellenBeSubmitted"
-            text="Hinzufügen"
-            :prepend-icon="mdiPlus"
-            color="primary"
-            @click="toMeldung"
-          />
-        </v-btn-group>
+        <v-row
+          class="w-100"
+          align="center"
+        >
+          <v-col
+            cols="12"
+            sm="auto"
+          >
+            <meldezeitraum-select
+              v-model="selectedMeldezeitraumId"
+              :meldezeitraueme="meldezeitraeume || []"
+              is-required
+              :disabled="loading"
+              hide-details
+            />
+          </v-col>
+
+          <v-col
+            cols="12"
+            sm="auto"
+          >
+            <v-btn-group class="w-100">
+              <v-btn
+                :disabled="!canStellenBeSubmitted"
+                text="Hinzufügen"
+                :prepend-icon="mdiPlus"
+                color="primary"
+                class="flex-grow-1"
+                @click="toMeldung"
+              />
+            </v-btn-group>
+          </v-col>
+        </v-row>
       </template>
     </page-title>
     <data-table

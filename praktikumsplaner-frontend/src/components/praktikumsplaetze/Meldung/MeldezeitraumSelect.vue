@@ -15,17 +15,17 @@
     <template #item="{ props, item }">
       <v-list-item v-bind="props">
         <v-list-item-title>
-          {{ formatter.formatDateFromString(item.raw.zeitraum.startZeitpunkt) }}
+          {{ formatter.formatDateFromString(item.zeitraum.startZeitpunkt) }}
           -
-          {{ formatter.formatDateFromString(item.raw.zeitraum.endZeitpunkt) }}
+          {{ formatter.formatDateFromString(item.zeitraum.endZeitpunkt) }}
         </v-list-item-title>
       </v-list-item>
     </template>
     <template #selection="{ item }">
-      {{ item.raw.zeitraumName }} :
-      {{ formatter.formatDateFromString(item.raw.zeitraum.startZeitpunkt) }}
+      {{ item.zeitraumName }} :
+      {{ formatter.formatDateFromString(item.zeitraum.startZeitpunkt) }}
       -
-      {{ formatter.formatDateFromString(item.raw.zeitraum.endZeitpunkt) }}
+      {{ formatter.formatDateFromString(item.zeitraum.endZeitpunkt) }}
     </template>
   </v-select>
 </template>

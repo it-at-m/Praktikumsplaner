@@ -3,30 +3,30 @@
     <v-col>
       <v-row>
         <v-col cols="12">
-          <v-text-field
-            ref="startZeitpunktInput"
-            v-model="range.startZeitpunkt"
-            density="compact"
+          <v-date-input
+            ref="startInput"
+            v-model="startDatum"
+            :append-inner-icon="mdiCalendar"
+            prepend-icon=""
             variant="outlined"
-            type="date"
-            :label="'Beginn des ' + properties.label + 's'"
+            :label="`Beginn des ${label}s`"
             :rules="startZeitpunktRules"
             :data-test="testIds.meldezeitraum.startInput"
-          >
-          </v-text-field>
+            @update:model-value="model.endZeitpunkt && endInput?.validate()"
+          />
         </v-col>
         <v-col cols="12">
-          <v-text-field
-            ref="endZeitpunktInput"
-            v-model="range.endZeitpunkt"
-            density="compact"
+          <v-date-input
+            ref="endInput"
+            v-model="endDatum"
+            :append-inner-icon="mdiCalendar"
+            prepend-icon=""
             variant="outlined"
-            type="date"
-            :label="'Ende des ' + properties.label + 's'"
+            :label="`Ende des ${label}s`"
             :rules="endZeitpunktRules"
             :data-test="testIds.meldezeitraum.endInput"
-          >
-          </v-text-field>
+            @update:model-value="model.startZeitpunkt && startInput?.validate()"
+          />
         </v-col>
       </v-row>
     </v-col>
@@ -34,54 +34,76 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { mdiCalendar } from "@mdi/js";
+import { computed, useTemplateRef } from "vue";
 
 import { useRules } from "@/composables/rules";
 import { testIds } from "@/testIds";
 import Zeitraum from "@/types/Zeitraum";
 
-const properties = defineProps<{
-  value: Zeitraum;
-  label: string;
-}>();
+const props = defineProps<{ label: string }>();
+const model = defineModel<Zeitraum>({ required: true });
 
 const validationRules = useRules();
-const startZeitpunktInput = ref<HTMLFormElement>();
-const endZeitpunktInput = ref<HTMLFormElement>();
+const startInput = useTemplateRef("startInput");
+const endInput = useTemplateRef("endInput");
 
-const range = computed(() => properties.value);
+const toLocalDate = (value: string | undefined): Date | undefined => {
+  if (!value) {
+    return undefined;
+  }
 
-const isStartBeforeEnd = computed(() => {
-  if (range.value.startZeitpunkt) startZeitpunktInput.value?.validate();
-  return (
-    range.value.isStartBeforeEnd ||
-    "Der Beginn des " + properties.label + "s muss vor dem Ende liegen."
-  );
-});
+  const [y, m, d] = value.split("-").map(Number);
+  return y && m && d ? new Date(y, m - 1, d) : undefined;
+};
 
-const isEndAfterStart = computed(() => {
-  if (range.value.endZeitpunkt) endZeitpunktInput.value?.validate();
-  return (
-    range.value.isStartBeforeEnd ||
-    "Das Ende des " + properties.label + "s darf nicht vor dem Beginn liegen."
-  );
-});
+const toLocalDateString = (
+  value: Date | null | undefined
+): string | undefined => {
+  if (!value) {
+    return undefined;
+  }
 
-const endZeitpunktRules = computed(() => {
   return [
-    validationRules.notEmptyDateRule(
-      "Es muss ein Endzeitpunkt angegeben werden"
-    ),
-    isEndAfterStart.value,
-  ];
+    value.getFullYear(),
+    String(value.getMonth() + 1).padStart(2, "0"),
+    String(value.getDate()).padStart(2, "0"),
+  ].join("-");
+};
+
+const startDatum = computed({
+  get: (): Date | undefined => toLocalDate(model.value.startZeitpunkt),
+  set: (val: Date | null | undefined): void => {
+    model.value.startZeitpunkt = toLocalDateString(val);
+
+    if (model.value.endZeitpunkt) {
+      endInput.value?.validate();
+    }
+  },
 });
 
-const startZeitpunktRules = computed(() => {
-  return [
-    validationRules.notEmptyDateRule(
-      "Es muss ein Startzeitpunkt angegeben werden."
-    ),
-    isStartBeforeEnd.value,
-  ];
+const endDatum = computed({
+  get: () => toLocalDate(model.value.endZeitpunkt),
+  set: (val) => {
+    model.value.endZeitpunkt = toLocalDateString(val);
+  },
 });
+
+const startZeitpunktRules = [
+  validationRules.notEmptyDateRule(
+    "Es muss ein Startzeitpunkt angegeben werden."
+  ),
+  () =>
+    model.value.isStartBeforeEnd ||
+    `Der Beginn des ${props.label}s muss vor dem Ende liegen.`,
+];
+
+const endZeitpunktRules = [
+  validationRules.notEmptyDateRule(
+    "Es muss ein Endzeitpunkt angegeben werden."
+  ),
+  () =>
+    model.value.isStartBeforeEnd ||
+    `Das Ende des ${props.label}s darf nicht vor dem Beginn liegen.`,
+];
 </script>

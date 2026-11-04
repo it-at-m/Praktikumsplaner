@@ -5,7 +5,7 @@
     aria-label="Bearbeiten"
     :data-test="testIds.nwk.updateDialogOpenBtn"
     @click="visible = true"
-  ></v-btn>
+  />
   <v-dialog
     v-model="visible"
     persistent
@@ -13,10 +13,7 @@
     :data-test="testIds.nwk.updateDialog"
   >
     <v-form ref="form">
-      <v-card>
-        <v-card-title class="text-h5 font-weight-bold"
-          >NWK bearbeiten</v-card-title
-        >
+      <v-card title="NWK bearbeiten">
         <v-list>
           <v-list-item>
             <v-container>

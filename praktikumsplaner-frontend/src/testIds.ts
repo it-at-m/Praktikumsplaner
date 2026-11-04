@@ -20,8 +20,7 @@ export const testIds = {
   /** Global application shell: app bar and navigation drawer. */
   app: {
     navToggle: "app-nav-toggle",
-    homeLogo: "app-home-logo",
-    homeTitle: "app-home-title",
+    homeLink: "app-home-link",
   },
   /** Navigation drawer entries. */
   nav: {

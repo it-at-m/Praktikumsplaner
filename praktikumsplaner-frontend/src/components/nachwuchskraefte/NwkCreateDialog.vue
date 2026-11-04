@@ -4,6 +4,7 @@
     color="primary"
     text="Hinzufügen"
     :data-test="testIds.nwk.createDialogOpenBtn"
+    class="flex-grow-1"
     @click="visible = true"
   />
   <v-dialog
@@ -13,10 +14,7 @@
     :data-test="testIds.nwk.createDialog"
   >
     <v-form ref="form">
-      <v-card>
-        <v-card-title class="text-h5 font-weight-bold"
-          >NWK anlegen</v-card-title
-        >
+      <v-card title="NWK anlegen">
         <v-list>
           <v-list-item>
             <v-container>

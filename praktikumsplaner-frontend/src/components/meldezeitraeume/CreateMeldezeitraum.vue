@@ -4,6 +4,7 @@
     color="primary"
     text="Hinzufügen"
     :data-test="testIds.meldezeitraum.createOpenBtn"
+    class="flex-grow-1"
     @click="visible = true"
   />
   <v-dialog
@@ -26,7 +27,7 @@
               :data-test="testIds.meldezeitraum.nameInput"
             ></v-text-field>
             <zeitraum-picker
-              :value="meldezeitraum.zeitraum"
+              v-model="meldezeitraum.zeitraum"
               :label="'Meldezeitraum'"
             ></zeitraum-picker>
           </v-form>

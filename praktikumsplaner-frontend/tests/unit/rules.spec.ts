@@ -61,7 +61,7 @@ describe("rules maxLength test", () => {
 describe("rules notEmptyDate test", () => {
   const rule = validationRules.notEmptyDateRule(errorMessage);
   it("tests notEmptyDateRule return true", () => {
-    const date = "2023-10-10";
+    const date = new Date("2023-10-10");
 
     expect(rule(date)).toBe(true);
   });

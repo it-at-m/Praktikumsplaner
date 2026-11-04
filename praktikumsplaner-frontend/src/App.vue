@@ -9,26 +9,23 @@
           class="d-flex align-center justify-start"
         >
           <v-app-bar-nav-icon
+            :aria-label="navIconAriaLabel"
             :data-test="testIds.app.navToggle"
             @click.stop="toggleDrawer"
           />
           <router-link
             to="/"
-            :data-test="testIds.app.homeLogo"
+            class="text-decoration-none d-flex align-center"
+            :data-test="testIds.app.homeLink"
+            aria-label="Zurück zur Startseite"
           >
             <img
               height="50"
               width="50"
               src="@/assets/logo.png"
-              alt="Logo der Applikation"
-              class="mt-1 mr-1"
+              class="mr-3"
+              alt=""
             />
-          </router-link>
-          <router-link
-            to="/"
-            class="text-decoration-none"
-            :data-test="testIds.app.homeTitle"
-          >
             <v-toolbar-title class="font-weight-bold">
               <span class="text-white">Praktikumsplaner</span>
             </v-toolbar-title>
@@ -52,6 +49,7 @@
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/nachwuchskraefte' }"
           :data-test="testIds.nav.nachwuchskraefte"
+          tabindex="0"
         >
           <v-list-item-title>Nachwuchskräfte</v-list-item-title>
         </v-list-item>
@@ -59,6 +57,7 @@
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/meldezeitraum' }"
           :data-test="testIds.nav.meldezeitraum"
+          tabindex="0"
         >
           <v-list-item-title>Meldezeitraum</v-list-item-title>
         </v-list-item>
@@ -66,6 +65,7 @@
           v-if="security.checkForAnyRole(['AUSBILDER', 'AUSBILDUNGSLEITUNG'])"
           :to="{ path: '/praktikumsplaetze' }"
           :data-test="testIds.nav.praktikumsplaetze"
+          tabindex="0"
         >
           <v-list-item-title>Praktikumsplätze</v-list-item-title>
         </v-list-item>
@@ -73,6 +73,7 @@
           v-if="security.isAusbildungsleitung()"
           :to="{ path: '/zuweisung' }"
           :data-test="testIds.nav.zuweisung"
+          tabindex="0"
         >
           <v-list-item-title>Zuweisung</v-list-item-title>
         </v-list-item>
@@ -89,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref } from "vue";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
 
 import { getInfo } from "@/api/InfoService";
 import { UserService } from "@/api/UserService";
@@ -109,6 +110,10 @@ const security = useSecurity();
 const toggleDrawer = () => {
   drawer.value = !drawer.value;
 };
+
+const navIconAriaLabel = computed(
+  () => `Navigationsleiste ${drawer.value ? "schließen" : "öffnen"}`
+);
 
 onBeforeMount(() => {
   userService.getPermissions().then((userinfo) => {
@@ -136,3 +141,16 @@ onMounted(() => {
   });
 });
 </script>
+
+<style>
+@layer vuetify-overrides {
+  .high-contrast-focus:focus-visible {
+    outline: 3px solid rgb(var(--v-theme-focus));
+    outline-offset: -3px;
+  }
+  .high-contrast-label .v-label {
+    color: rgb(var(--v-theme-text));
+    opacity: 1;
+  }
+}
+</style>
