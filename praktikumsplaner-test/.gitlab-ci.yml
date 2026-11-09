@@ -1,0 +1,93 @@
+# Reihenfolge für die Ausführung der Schritte
+stages:
+  - test
+
+# Auswahl der Runner
+default:
+  tags:
+    - openshift-test-capk
+
+variables:
+  #Maven Image, was verwendet wird.
+  MAVEN_IMAGE: docker.io/library/maven:3.9-eclipse-temurin-21
+
+  # Legt das locale .m2-Repository fest - wird für den cache genutzt.
+  # Unterdrückt die Download-Meldungen von Artefakten.
+  MAVEN_OPTS: >-
+    -Dmaven.repo.local=.m2/repository
+    -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
+
+  # Pfad der settings.xml wird angegeben
+  # '--batch-mode' verhindert das Auftauchen von Benutzereingabeaufforderungen
+  # Profil "gitlab-cicd" wird ausgewählt, relevant für Frontend-Projekte
+  MAVEN_CLI_OPTS: >-
+    -s $MAVEN_SETTINGS
+    --batch-mode
+    -Pgitlab-cicd
+
+  JAVA_TOOL_OPTIONS: >-
+    -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts
+    -Djavax.net.ssl.trustStorePassword=changeit
+
+  # Variablen zum Hinzufügen von Maven-OPTs zu den Standard Ops. Variable kann auch nur Job-Spezifik definiert werden.
+  MAVEN_CLI_PRJ_OPTS: ""
+
+  # zeitzone setzen
+  TZ: Europe/Berlin
+
+  # testspezifische Variablen
+  CREATE_TEST_EXECUTION:
+    value: "true"
+    options:
+      - "true"
+      - "false"
+    description: "Select true if pipeline should create a new test execution. Warning Jira keys most contain valid issue keys!"
+
+  JIRA_KEYS:
+    value: "KM74TESTS-6"
+    description: "The jira issue key(s) of either test, test set, test plan or test execution issues. Use comma , as a separator for multiple keys."
+
+  JIRA_FILTER_ID:
+    value: "131300"
+    description: "The ID of the Jira filter to be used to search for test execution issues."
+
+  TEST_PLAN_KEY:
+    value: "KM74TESTS-9"
+    description: "The issue key of the test plan which will be associated to the generated test execution."
+
+###########################
+# Gitlab-Instanz-Variable #
+###########################
+#  MAVEN_REPO_USER: [MASKED]
+#  MAVEN_SETTINGS: [File_With_Settings]
+
+run-tests:
+  image: $MAVEN_IMAGE
+  timeout: 3h
+  stage: test
+  cache:
+    key: mvn
+    paths:
+      - .m2/repository
+  script:
+    - echo "MAVEN_OPTS is set to $MAVEN_OPTS"
+    - echo "MAVEN_CLI_OPTS is set to $MAVEN_CLI_OPTS"
+    - |
+      mvn $MAVEN_CLI_OPTS verify test \
+        -Dtaf.testDataEncryptionPassword="$DATA_PASSWORD" \
+        -Dauth_token="$JIRA_AUTH_TOKEN" \
+        -Djira.boolean.createTestExecution="$CREATE_TEST_EXECUTION" \
+        -Djira.testPlanKey="$TEST_PLAN_KEY" \
+        -Djira.issueKeys="$JIRA_KEYS" \
+        -Djira.filterId="$JIRA_FILTER_ID"
+  artifacts:
+    when: always
+    expire_in: 14 days
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+    paths:
+      - target/surefire-reports/
+      - target/cucumber.json
+      - target/site/cucumber-pretty/
+      - logs/
