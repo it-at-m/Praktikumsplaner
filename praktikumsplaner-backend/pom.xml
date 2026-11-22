@@ -73,7 +73,7 @@
         <findsecbugs-plugin.version>1.14.0</findsecbugs-plugin.version>
         <refarch-tools.version>1.2.2</refarch-tools.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.8.17</springdoc-openapi-starter-webmvc-ui.version>
-        <springdoc-openapi-maven-plugin.version>1.5</springdoc-openapi-maven-plugin.version>
+        <springdoc-openapi-maven-plugin.version>1.6</springdoc-openapi-maven-plugin.version>
 
         <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
         <p2.username /> <!-- must be empty, override via Maven settings.xml if needed -->
